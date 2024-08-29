@@ -31,16 +31,16 @@ html {
 }
 
 body {
-    margin: 0;
+    margin: 0;    
 }
 
 main {
-    display: block;
+    display: block;  
 }
 
 h1 {
     font-size: 2em;
-    margin: 0.67em 0;
+    margin: 0;
 }
 
 hr {
