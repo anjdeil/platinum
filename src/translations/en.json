@@ -1,0 +1,6 @@
+{
+    "TestLanguages": {
+        "title": "The locale provided via server side is \"{locale}\"",
+        "link": "Just link to another page translated"
+    }
+}
