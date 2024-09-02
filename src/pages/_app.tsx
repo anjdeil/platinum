@@ -2,14 +2,23 @@ import GlobalStyle from '@/styles/global';
 import { NextIntlClientProvider } from 'next-intl';
 import App, { AppContext, AppProps } from 'next/app';
 import { useRouter } from 'next/router';
+import Layout from "@/components/Layout/Layout";
+import { setupStore } from "@/store";
+import { Provider } from "react-redux";
 
 function MyApp({ Component, pageProps }: AppProps) {
     const { locale } = useRouter();
 
+    const store = setupStore();
+
     return (
         <NextIntlClientProvider locale={locale} messages={pageProps.messages}>
-            <GlobalStyle />
-            <Component {...pageProps} />
+            <Provider store={store}>
+                <Layout>
+                    <GlobalStyle />
+                    <Component {...pageProps} />
+                </Layout>
+            </Provider>
         </NextIntlClientProvider>
     );
 }
