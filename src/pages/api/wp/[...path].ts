@@ -1,12 +1,10 @@
-// import { validateApiError } from "@/Utils/validateApiError";
-import wpRestApi from '@/services/wp/wpRestApi';
+import wpRestApi from "@/services/wpRestApi";
+import { validateApiError } from "@/utils/validateApiError";
 import { NextApiRequest, NextApiResponse } from 'next';
 
-export default function handler(req: NextApiRequest, res: NextApiResponse)
+export default async function handler(req: NextApiRequest, res: NextApiResponse)
 {
     const { ...params } = req.query;
-    const headers = req.headers;
-    const authorization = "authorization" in headers ? headers.authorization : null;
     let slug = req.query.path;
 
     if (!slug || slug.length === 0)
@@ -15,11 +13,30 @@ export default function handler(req: NextApiRequest, res: NextApiResponse)
     if (Array.isArray(slug))
         slug = slug.join('/');
 
-    wpRestApi.get(slug, params, authorization)
-        .then((response) => res.status(200).json(response.data))
-        .catch((error) =>
+    const { method, body, headers } = req;
+    const authorization = "authorization" in headers ? headers.authorization : null;
+    let response;
+
+    try
+    {
+        switch (method)
         {
-            console.error(error);
-            // validateApiError(error, res);
-        })
+            case 'GET':
+                response = await wpRestApi.get(slug, params, authorization);
+                break;
+            case 'POST':
+                response = await wpRestApi.get(slug, params, body);
+                break;
+            default:
+                res.setHeader('Allow', ['POST', 'GET']);
+                return res.status(405).end(`Method ${method} Not Allowed`);
+        }
+
+        if (response && response.data)
+            return res.status(200).json(response?.data);
+
+    } catch (error)
+    {
+        validateApiError(error, res);
+    }
 }
