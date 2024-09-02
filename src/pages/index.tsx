@@ -1,18 +1,22 @@
 import { Title } from "@/styles/components";
 import { Inter } from "next/font/google";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
-
+import { useGetMenusQuery } from "@/store/rtk-queries/wpCustomApi";
+import { MenusContext } from "@/components/Layout";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home()
 {
   const [data, setData] = useState<null | any>(null);
+  const menus = useContext(MenusContext);
+
+  console.log(menus);
 
   async function check()
   {
-    const res = await axios.get('/api/wp/posts');
+    const res = await axios.get('/api/wp/users');
     if (res.status === 200)
     {
       setData(res.data);
