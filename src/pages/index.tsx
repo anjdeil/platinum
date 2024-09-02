@@ -2,8 +2,8 @@ import { Title } from "@/styles/components";
 import { Inter } from "next/font/google";
 import { useContext, useState } from "react";
 import axios from "axios";
-import { useGetMenusQuery } from "@/store/rtk-queries/wpCustomApi";
 import { MenusContext } from "@/components/Layout";
+import TestSelect from "@/components/TestSelect/TestSelect";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,6 +30,7 @@ export default function Home()
 
   return (
     <main className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}>
+      <TestSelect />
       <Title fontSize={24}>Title</Title>
       <button onClick={() => check()}>Fetch</button>
     </main >
