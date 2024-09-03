@@ -13,8 +13,8 @@ const currencySymbols: { [key: string]: string } = {
 };
 
 const initialState: CurrencyState = {
-    code: 'PLN',
-    symbol: 'zł',
+    code: 'EUR',
+    symbol: '€',
 };
 
 const currencySlice = createSlice({

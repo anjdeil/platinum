@@ -19,6 +19,7 @@ const currency = 'USD';
 export default function Layout({ children }: { children: React.ReactNode })
 {
     const { data: menus, error, isLoading } = useGetMenusQuery({});
+
     return (
         <Box>
             <MenusContext.Provider value={menus}>

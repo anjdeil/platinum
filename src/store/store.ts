@@ -1,9 +1,10 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { wpCustomRtkApi } from "./rtk-queries/wpCustomApi";
+import currencySlice from "./slices/currencySlice";
 
 const rootReducer = combineReducers({
     [wpCustomRtkApi.reducerPath]: wpCustomRtkApi.reducer,
-    // currentOrder: CurrentOrder,
+    currentCurrency: currencySlice,
 });
 
 export const setupStore = () =>
