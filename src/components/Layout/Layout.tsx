@@ -14,11 +14,12 @@ interface MenuItemType
 }
 
 export const MenusContext = createContext<MenuItemType[] | undefined>(undefined);
+const currency = 'USD';
 
 export default function Layout({ children }: { children: React.ReactNode })
 {
     const { data: menus, error, isLoading } = useGetMenusQuery({});
-    // lang
+
     return (
         <Box>
             <MenusContext.Provider value={menus}>
