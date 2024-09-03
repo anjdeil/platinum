@@ -1,20 +1,37 @@
+import GlobalStyle from '@/styles/global';
+import { NextIntlClientProvider } from 'next-intl';
+import App, { AppContext, AppProps } from 'next/app';
+import { useRouter } from 'next/router';
 import Layout from "@/components/Layout/Layout";
 import { setupStore } from "@/store";
-import GlobalStyle from "@/styles/global";
-import type { AppProps } from "next/app";
 import { Provider } from "react-redux";
 
-export default function App({ Component, pageProps }: AppProps)
-{
-  const store = setupStore();
+function MyApp({ Component, pageProps }: AppProps) {
+    const { locale } = useRouter();
 
-  return (
-    <Provider store={store}>
-      <Layout>
-        <GlobalStyle />
-        <Component {...pageProps} />
-      </Layout>
-    </Provider>
-  )
+    const store = setupStore();
 
+    return (
+        <NextIntlClientProvider locale={locale} messages={pageProps.messages}>
+            <Provider store={store}>
+                <Layout>
+                    <GlobalStyle />
+                    <Component {...pageProps} />
+                </Layout>
+            </Provider>
+        </NextIntlClientProvider>
+    );
 }
+
+MyApp.getInitialProps = async (appContext: AppContext) => {
+    const appProps = await App.getInitialProps(appContext);
+    return {
+        ...appProps,
+        pageProps: {
+            ...appProps.pageProps,
+            messages: (await import(`../translations/${appContext.router.locale}.json`)).default
+        }
+    };
+};
+
+export default MyApp;
