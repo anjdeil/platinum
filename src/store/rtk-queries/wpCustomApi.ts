@@ -10,7 +10,16 @@ export const wpCustomRtkApi = createApi({
                 params,
             }),
         }),
+        getCategories: builder.query<any, any>({
+            query: (params) => ({
+                url: `/categories`,
+                params,
+            }),
+        }),
     }),
 });
 
-export const { useGetMenusQuery } = wpCustomRtkApi;
+export const {
+    useGetMenusQuery,
+    useGetCategoriesQuery,
+} = wpCustomRtkApi;
