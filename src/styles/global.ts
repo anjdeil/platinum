@@ -32,6 +32,7 @@ html {
 
 body {
     margin: 0;
+    font-family: 'Montserrat', sans-serif;
 }
 
 main {
@@ -217,6 +218,16 @@ template {
 
 [hidden] {
     display: none;
+}
+
+.container {
+    margin: 0 auto;
+    padding: 0 32px;
+    max-width: 1280px;
+
+    @media (max-width: 768px) {
+        padding: 0 20px;
+    }
 }
 `;
 

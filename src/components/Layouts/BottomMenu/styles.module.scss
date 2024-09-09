@@ -1,0 +1,29 @@
+.bottom-menu {
+    z-index: 2000;
+    height: 60px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    background-color: #F2F8FE;
+
+    &__nav {
+        width: 100%;
+        padding: 0 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+
+        &:hover {
+            background-color: transparent !important;
+        }
+    }
+}

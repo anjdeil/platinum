@@ -1,0 +1,33 @@
+.hamburger-menu {
+    &__nav-wrap {
+        padding: 50px 0;
+        max-width: 200px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    &__nav {
+        ul {
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        a {
+            display: block;
+            font-weight: 400;
+            transition: .2s ease;
+
+            &:hover,
+            &_active {
+                font-weight: 600;
+            }
+        }
+    }
+
+    &__select {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}

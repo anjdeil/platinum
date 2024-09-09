@@ -1,0 +1,40 @@
+.nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    &__list {
+        display: flex;
+        padding: 0;
+        gap: 40px;
+        justify-content: center;
+        list-style: none;
+    }
+
+    &__item {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 1.5em;
+        text-decoration: none;
+        color: inherit;
+    }
+}
+
+@media(max-width: 1200px) {
+    .nav {
+        &__list {
+            gap: 0px 20px;
+        }
+    }
+}
+
+@media(max-width: 1024px) {
+    .nav {
+        &__list {
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+    }
+}

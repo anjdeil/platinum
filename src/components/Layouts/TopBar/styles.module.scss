@@ -1,0 +1,90 @@
+.topBar {   
+    &__stack {
+        height: 92px;
+        margin: 10px auto;
+        align-items: center;
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 16px;
+    }
+
+    &__logoLink {
+        grid-column: 1 / span 1;
+        display: flex;
+    }
+
+    &__nav {
+        grid-column: 2 / -3;
+        display: flex;
+        gap: 79px;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+
+    &__selects {
+        display: flex;
+        gap: 52px;
+    }
+
+    &__button {
+        height: 56px;
+        grid-column: -3 / span 2;
+        border-radius: 10px;
+        font-family: 'Montserrat', sans-serif;
+        color: #000;
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: 400;
+        text-transform: none;
+        border: 1px solid #738EBC;
+        transition: all 0.3s ease;
+
+        &:hover {
+            color: #fff;
+            background: #063E7B;
+        }
+    }
+
+    &__burgerButton {
+        grid-column: -4 / -3;
+        display: none;
+    }
+ }
+
+@media(max-width: 1200px) {
+    .topBar {
+        &__nav {
+            gap: 0px 20px;
+        }
+
+        &__selects {
+            gap: 20px;
+        }        
+    }
+}
+
+@media(max-width: 1024px) {
+    .topBar {
+        &__stack {
+            height: 44px;
+        }
+        &__nav {            
+            display: none;
+        }
+
+        &__button {
+            height: 42px;
+            font-size: 14px;
+            line-height: 20px;
+        }
+
+        &__burgerButton {            
+            display: flex;
+        }
+
+        &__logoLinkImage {
+            width: 44px;
+            height: 44px;
+        }
+    }
+}

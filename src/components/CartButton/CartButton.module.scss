@@ -1,0 +1,12 @@
+.cart {
+    &__button {
+        padding: 8px;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+
+        &:hover {
+            background-color: transparent !important;
+        }
+    }
+}
