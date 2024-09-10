@@ -57,7 +57,7 @@ const PopupContainer = () => {
         dispatch(popupClosed());
     }
 
-    switch (popup) {
+    switch (popup) {        
         case 'hamburger-menu': {
             return (
                 <HamburgerMenu onClose={closePopup} />

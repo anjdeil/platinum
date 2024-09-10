@@ -11,19 +11,15 @@
     }
 
     &__nav {
-        grid-column: span 7;
+        grid-column: span 6;        
     }
 
     &__navList {
-        gap: 80px;
-        justify-content: flex-start;
-
-        @media (max-width: 1024px) {
-            gap: 24px;
-        }
+        justify-content: space-between;
     }
 
-    &__navItem {       
+    &__navItem {
+        min-width: 80px;
         color: #fff;
         text-transform: uppercase;
         transition: all 0.2s ease;
@@ -38,7 +34,7 @@
     }
 
     &__container {
-        grid-column: span 5;
+        grid-column: 8 / 13;
         display: flex;
         gap: 24px;
         justify-content: space-between;
@@ -57,7 +53,7 @@
         width: 210px;
 
          @media (max-width: 1024px) {
-            width: 120px;
+            width: 124px;
         }
     }
 }

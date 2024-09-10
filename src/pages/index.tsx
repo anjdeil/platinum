@@ -2,11 +2,7 @@ import { MenusContext } from "@/components/Layout";
 import { useAppSelector } from "@/store";
 import { Title } from "@/styles/components";
 import axios from "axios";
-import { Montserrat } from "next/font/google";
 import { useContext, useState } from "react";
-
-
-const montserrat = Montserrat({ subsets: ["latin", "cyrillic"], weight: ["400", "500", "600", "700"] });
 
 export default function Home()
 {
@@ -28,9 +24,9 @@ export default function Home()
 
   { data && <p>{data}</p> }
   return (
-    <main className={montserrat.className}>
+    <main>
       {/* <TestSelect /> */}
-      <Title fontSize={24}>Symbol of {currency.code} currency is {currency.symbol}</Title>
+      <Title fontSize={24}>Symbol of {currency.code} currency isQQ {currency.symbol}</Title>
       <button onClick={() => check()}>Fetch</button>
     </main >
   )

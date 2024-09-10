@@ -14,7 +14,7 @@
     }
 
     &__nav {
-        grid-column: 2 / -3;
+        grid-column: span 7;
         display: flex;
         gap: 79px;
         justify-content: space-evenly;
@@ -22,6 +22,7 @@
     }
 
     &__selects {
+        grid-column: span 2;
         display: flex;
         gap: 52px;
     }
@@ -30,7 +31,6 @@
         height: 56px;
         grid-column: -3 / span 2;
         border-radius: 10px;
-        font-family: 'Montserrat', sans-serif;
         color: #000;
         font-size: 16px;
         line-height: 24px;
@@ -49,12 +49,20 @@
         grid-column: -4 / -3;
         display: none;
     }
+
+    &__navItem {
+        color: #000;
+        
+        &:hover {
+            font-weight: 600;
+        }
+    }
  }
 
 @media(max-width: 1200px) {
     .topBar {
         &__nav {
-            gap: 0px 20px;
+            gap: 20px;
         }
 
         &__selects {
@@ -68,7 +76,12 @@
         &__stack {
             height: 44px;
         }
+
         &__nav {            
+            display: none;
+        }
+
+        &__selects {            
             display: none;
         }
 

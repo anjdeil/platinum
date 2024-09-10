@@ -1,10 +1,13 @@
+import Layout from "@/components/Layout/Layout";
+import { setupStore } from "@/store";
 import GlobalStyle from '@/styles/global';
+import theme from '@/styles/theme';
+import { CssBaseline } from "@mui/material";
 import { NextIntlClientProvider } from 'next-intl';
 import App, { AppContext, AppProps } from 'next/app';
 import { useRouter } from 'next/router';
-import Layout from "@/components/Layout/Layout";
-import { setupStore } from "@/store";
 import { Provider } from "react-redux";
+import { ThemeProvider } from 'styled-components';
 
 function MyApp({ Component, pageProps }: AppProps) {
     const { locale } = useRouter();
@@ -14,10 +17,13 @@ function MyApp({ Component, pageProps }: AppProps) {
     return (
         <NextIntlClientProvider locale={locale} messages={pageProps.messages}>
             <Provider store={store}>
-                <Layout>
-                    <GlobalStyle />
-                    <Component {...pageProps} />
-                </Layout>
+                <ThemeProvider theme={theme}>
+                    <CssBaseline />
+                    <Layout>
+                        <GlobalStyle />
+                        <Component {...pageProps} />
+                    </Layout>
+                </ThemeProvider>
             </Provider>
         </NextIntlClientProvider>
     );

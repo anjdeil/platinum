@@ -28,7 +28,7 @@ const Nav: FC<wpMenuProps> = ({ menuId, className = "", classItem = "", classLis
             <nav>
                 <ul className={`list-reset ${styles.nav__list} ${classList}`}>
                     {menuItems && menuItems.map(({ title, url }) => (
-                        <li key={title}>
+                        <li key={title} className={classItem}>
                             <Link className={`desc nav-link link ${styles.nav__item} ${classItem}`} href={url}>
                                 {title}
                             </Link>

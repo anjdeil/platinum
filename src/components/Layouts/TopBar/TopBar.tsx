@@ -26,11 +26,12 @@ const TopBar: React.FC = () =>
                                 gap: '40px'
                             }
                         }
+                        classItem={styles.topBar__navItem}
                     />
-                    <Box className={styles.topBar__selects}>
-                        <LanguageSelect />
-                        <CurrencySelect />
-                    </Box>
+                </Box>
+                <Box className={styles.topBar__selects}>
+                    <LanguageSelect />
+                    <CurrencySelect />
                 </Box>
                 <Box className={styles.topBar__burgerButton}>
                     <BurgerButton />
