@@ -7,7 +7,8 @@ import Link from "next/link";
 import { useTheme } from "styled-components";
 import styles from "./styles.module.scss";
 
-const BottomMenu = () => {
+const BottomMenu = () =>
+{
     const theme = useTheme();
     return (
         <div className={styles['bottom-menu']}>
@@ -22,7 +23,7 @@ const BottomMenu = () => {
                     `}
                     aria-label="Open your cart"
                 >
-                    <CartButton color={theme.colors.primary} count={2}  />
+                    <CartButton color={theme.colors.primary} count={2} />
                 </Link>
                 <Link
                     href={"/my-account"}
