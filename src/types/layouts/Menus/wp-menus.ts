@@ -11,10 +11,9 @@ const wpNavLinkSchema = z.object({
 
 export const wpMenuPropsSchema = z.object({
     menuId: z.number(),
+    skeleton: MenuSkeletonPropsSchema.optional(),
     className: z.string().optional(),
-    classItem: z.string().optional(),
-    classList: z.string().optional(),
-    skeleton: MenuSkeletonPropsSchema.optional()
+    topbar: z.boolean().optional(),
 });
 
 export const VerticalWpMenuPropsSchema = z.object({

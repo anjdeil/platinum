@@ -1,35 +1,46 @@
-import CurrencySelect from "@/components/CurrencySelect/CurrencySelect";
-import LanguageSelect from "@/components/LanguageSelect/LanguageSelect";
+import CurrencySelect from "@/components/Common/Selects/CurrencySelect/CurrencySelect";
+import LanguageSelect from "@/components/Common/Selects/LanguageSelect/LanguageSelect";
 import Nav from "@/components/Layouts/Navigation/Nav";
 import { PopupType } from "@/types/Popups/PopupType";
-import { Box } from "@mui/material";
 import { FC } from "react";
+import styled from "styled-components";
 import MobilePopup from "../MobilePopup";
-import styles from "./styles.module.scss";
+
+const NavWrap = styled.div`
+    padding: 50px 0;
+    max-width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;    
+`;
+
+const SelectWrapper = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`;
 
 const HamburgerMenu: FC<PopupType> = ({ onClose }) => {
 
     return (
         <MobilePopup onClose={onClose}>
-            <div className={styles['hamburger-menu__nav-wrap']}>
+            <NavWrap>
                 <Nav
                     menuId={335}
-                    className={styles['hamburger-menu__nav']}
-                    skeleton={
-                        {
-                            isColumn: true,
-                            elements: 5,
-                            width: "200px",
-                            height: "40px",
-                            gap: '10px'
-                        }
-                    }
+                    className="hamburger-menu"
+                    skeleton={{
+                        isColumn: true,
+                        elements: 5,
+                        width: "200px",
+                        height: "40px",
+                        gap: '10px'
+                    }}
                 />
-                <Box className={styles['hamburger-menu__select']}>
+                <SelectWrapper>
                     <LanguageSelect />
                     <CurrencySelect />
-                </Box>
-            </div>
+                </SelectWrapper>
+            </NavWrap>
         </MobilePopup>
     );
 }
