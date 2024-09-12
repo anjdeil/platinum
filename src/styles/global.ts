@@ -4,6 +4,11 @@ const GlobalStyle = createGlobalStyle`
  * {
     padding: 0;
     margin: 0;
+    scrollbar-width: 4px;     
+
+    @media (min-width: 1024px) {
+        scrollbar-width: 8px;
+    }
 }
 
 input[type=search]::-ms-clear {
@@ -217,6 +222,24 @@ template {
 
 [hidden] {
     display: none;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+
+  @media (min-width: 1024px) {
+    width: 8px;
+  }
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #113760;
+    border-radius: 10px;
 }
 `;
 
