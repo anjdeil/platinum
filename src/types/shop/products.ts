@@ -80,5 +80,11 @@ export const ResponseProductListSchema = z.object({
     }).optional()
 });
 
+export const ProductDataResponseSchema = z.object({
+    products_count: z.number(),
+    products: z.array(ProductSchema).optional(),
+});
+
 export type ProductType = z.infer<typeof ProductSchema>;
 export type ProductListType = z.infer<typeof ResponseProductListSchema>;
+export type ProductDataResponseType = z.infer<typeof ProductDataResponseSchema>;

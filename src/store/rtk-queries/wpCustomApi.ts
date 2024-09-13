@@ -1,25 +1,31 @@
-import { CustomDataType, QueryParamsType } from '@/types/services/wpCustomApi';
+import { CustomDataCategoriesType, CustomDataMenuResponseType, CustomDataProductsType, CustomDataProductType, QueryParamsType } from '@/types/services/wpCustomApi';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const wpCustomRtkApi = createApi({
     reducerPath: 'wpCustomRtkApi',
     baseQuery: fetchBaseQuery({ baseUrl: '/api/wp-custom' }),
     endpoints: (builder) => ({
-        getMenus: builder.query<CustomDataType, QueryParamsType>({
+        getMenus: builder.query<CustomDataMenuResponseType, QueryParamsType>({
             query: (params: QueryParamsType) => ({
                 url: `/menus`,
                 params,
             }),
         }),
-        getCategories: builder.query<CustomDataType, QueryParamsType>({
+        getCategories: builder.query<CustomDataCategoriesType, QueryParamsType>({
             query: (params: QueryParamsType) => ({
                 url: `/categories`,
                 params,
             }),
         }),
-        getProduct: builder.query<CustomDataType, QueryParamsType>({
+        getProducts: builder.query<CustomDataProductsType, QueryParamsType>({
             query: (params: QueryParamsType) => ({
                 url: `/products`,
+                params,
+            }),
+        }),
+        getProduct: builder.query<CustomDataProductType, QueryParamsType>({
+            query: (params: QueryParamsType) => ({
+                url: `/products/${params.slug}`,
                 params,
             }),
         }),
@@ -29,5 +35,6 @@ export const wpCustomRtkApi = createApi({
 export const {
     useGetMenusQuery,
     useGetCategoriesQuery,
+    useGetProductsQuery,
     useGetProductQuery,
 } = wpCustomRtkApi;

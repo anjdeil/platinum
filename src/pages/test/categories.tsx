@@ -1,10 +1,9 @@
-//@ts-nocheck
 import LanguageSwitcher from "@/components/Global/LanguageSwitcher";
 import { useGetCategoriesQuery } from "@/store/rtk-queries/wpCustomApi";
-import { CustomDataType, LangParamType } from "@/types/services/wpCustomApi";
+import { LangParamType } from "@/types/services/wpCustomApi";
 import CategoryType from "@/types/shop/categories";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function Categories()
 {
@@ -12,9 +11,15 @@ export default function Categories()
     const { locale } = useRouter();
     const langParam: LangParamType | object = locale ? { lang: locale } : {};
     const { data: categoriesData, isLoading: isCategoriesLoading } = useGetCategoriesQuery(langParam);
+    const [categories, setCategories] = useState<CategoryType[] | null>(null);
 
-    const categories: CategoryType | null = categoriesData?.data || null;
-
+    useEffect(() =>
+    {
+        if (categoriesData)
+        {
+            setCategories(categoriesData.data.items);
+        }
+    }, [])
 
     return (
         <>
