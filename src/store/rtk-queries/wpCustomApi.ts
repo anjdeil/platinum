@@ -1,4 +1,4 @@
-import { CustomDataCategoriesType, CustomDataMenuResponseType, CustomDataProductsType, QueryParamsType } from '@/types/services/wpCustomApi';
+import { CustomDataCategoriesType, CustomDataMenuResponseType, CustomDataProductsType, CustomDataProductType, QueryParamsType } from '@/types/services/wpCustomApi';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const wpCustomRtkApi = createApi({
@@ -23,7 +23,7 @@ export const wpCustomRtkApi = createApi({
                 params,
             }),
         }),
-        getProduct: builder.query<CustomDataProductsType, QueryParamsType>({
+        getProduct: builder.query<CustomDataProductType, QueryParamsType>({
             query: (params: QueryParamsType) => ({
                 url: `/products/${params.slug}`,
                 params,
