@@ -1,10 +1,11 @@
 import { Title } from "@/styles/components";
 import { Inter } from "next/font/google";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { MenusContext } from "@/components/Layout";
 import TestSelect from "@/components/TestSelect/TestSelect";
 import { useAppSelector } from "@/store";
+import { useRouter } from "next/router";
 
 const inter = Inter({ subsets: ["latin"] });
 
