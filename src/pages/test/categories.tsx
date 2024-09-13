@@ -17,7 +17,7 @@ export default function Categories()
     {
         if (categoriesData)
         {
-            setCategories(categoriesData.data);
+            setCategories(categoriesData.data.items);
         }
     }, [])
 

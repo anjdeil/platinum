@@ -5,23 +5,23 @@ import Box from '@mui/material/Box';
 import { useRouter } from 'next/router';
 import { createContext, useEffect, useState } from 'react';
 
-export const MenusContext = createContext<WpMenuResponseType | []>([]);
+export const MenusContext = createContext<WpMenuResponseType[] | []>([]);
 const currency = 'USD';
 
 export default function Layout({ children }: { children: React.ReactNode })
 {
     const { locale } = useRouter();
     const langParam: LangParamType | object = locale ? { lang: locale } : {};
-    const [menus, setMenus] = useState<WpMenuResponseType | []>([]);
+    const [menus, setMenus] = useState<WpMenuResponseType[] | []>([]);
 
     const { data: menusResp, error, isLoading } = useGetMenusQuery(langParam);
     const { data: products, error: productError, isError } = useGetProductsQuery(langParam);
 
     useEffect(() =>
     {
-        if (menusResp && menusResp.data)
+        if (menusResp && menusResp.data && menusResp.data.items)
         {
-            setMenus(menusResp.data);
+            setMenus(menusResp.data.items);
         }
     }, [menusResp])
 
