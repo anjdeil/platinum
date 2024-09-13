@@ -67,4 +67,18 @@ export const ProductSchema = z.object({
     variations: z.array(ProductVariationSchema),
 })
 
+export const ResponseProductListSchema = z.object({
+    success: z.boolean(),
+    data: z.object({
+        statistic: z.object({
+            products_count: z.number(),
+        }),
+        items: z.array(ProductSchema)
+    }).optional(),
+    error: z.object({
+        message: z.string()
+    }).optional()
+});
+
 export type ProductType = z.infer<typeof ProductSchema>;
+export type ProductListType = z.infer<typeof ResponseProductListSchema>;
