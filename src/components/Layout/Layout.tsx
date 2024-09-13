@@ -1,24 +1,29 @@
-import { useGetMenusQuery } from '@/store/rtk-queries/wpCustomApi';
+import { useGetMenusQuery, useGetProductsQuery } from '@/store/rtk-queries/wpCustomApi';
+import { WpMenuResponseType } from '@/types/layouts/menus';
+import { LangParamType } from '@/types/services/wpCustomApi';
 import Box from '@mui/material/Box';
 import { useRouter } from 'next/router';
-import { createContext } from 'react';
+import { createContext, useEffect, useState } from 'react';
 
-// When someone will be adding Menus component, it's important to change it to zod and add in types
-interface MenuItemType {
-    id: number,
-    name: string,
-    url: string,
-    description: string
-    link: string
-    slug: string
-}
-
-export const MenusContext = createContext<MenuItemType[] | undefined>(undefined);
+export const MenusContext = createContext<WpMenuResponseType | []>([]);
 const currency = 'USD';
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout({ children }: { children: React.ReactNode })
+{
     const { locale } = useRouter();
-    const { data: menus, error, isLoading } = useGetMenusQuery({ lang: locale });
+    const langParam: LangParamType | object = locale ? { lang: locale } : {};
+    const [menus, setMenus] = useState<WpMenuResponseType | []>([]);
+
+    const { data: menusResp, error, isLoading } = useGetMenusQuery(langParam);
+    const { data: products, error: productError, isError } = useGetProductsQuery(langParam);
+
+    useEffect(() =>
+    {
+        if (menusResp && menusResp.data)
+        {
+            setMenus(menusResp.data);
+        }
+    }, [menusResp])
 
     return (
         <Box>
