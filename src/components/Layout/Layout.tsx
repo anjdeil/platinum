@@ -1,35 +1,29 @@
-import { useGetMenusQuery, useGetProductQuery } from '@/store/rtk-queries/wpCustomApi';
+import { useGetMenusQuery, useGetProductsQuery } from '@/store/rtk-queries/wpCustomApi';
+import { WpMenuResponseType } from '@/types/layouts/menus';
 import { LangParamType } from '@/types/services/wpCustomApi';
 import Box from '@mui/material/Box';
 import { useRouter } from 'next/router';
-import { createContext, useEffect } from 'react';
+import { createContext, useEffect, useState } from 'react';
 
-export const MenusContext = createContext<any>(undefined);
+export const MenusContext = createContext<WpMenuResponseType | []>([]);
 const currency = 'USD';
 
 export default function Layout({ children }: { children: React.ReactNode })
 {
     const { locale } = useRouter();
     const langParam: LangParamType | object = locale ? { lang: locale } : {};
+    const [menus, setMenus] = useState<WpMenuResponseType | []>([]);
 
-    const { data: menus, error, isLoading } = useGetMenusQuery(langParam);
-    const { data: products, error: productError, isError } = useGetProductQuery(langParam);
-
-    // useEffect(() =>
-    // {
-    //     if (products)
-    //     {
-    //         console.log(products);
-    //     }
-    // }, [products])
+    const { data: menusResp, error, isLoading } = useGetMenusQuery(langParam);
+    const { data: products, error: productError, isError } = useGetProductsQuery(langParam);
 
     useEffect(() =>
     {
-        if (menus)
+        if (menusResp && menusResp.data)
         {
-            console.log(menus);
+            setMenus(menusResp.data);
         }
-    }, [menus])
+    }, [menusResp])
 
     return (
         <Box>
