@@ -17,7 +17,7 @@ const getBackgroundColor = (type: "new" | "best" | "hot") => {
     }
 };
 
-const BadgeStyled = styled.span<BadgeProps>`
+const StyledBadge = styled.span<BadgeProps>`
     box-sizing: border-box;
     min-width: 39px;
     text-align: center;
@@ -44,9 +44,9 @@ const BadgeStyled = styled.span<BadgeProps>`
 
 const Badge: React.FC<BadgeProps> = ({ type }) => {
     return (
-        <BadgeStyled type={type}>
+        <StyledBadge type={type}>
             {type}
-        </BadgeStyled>
+        </StyledBadge>
     );
 };
 

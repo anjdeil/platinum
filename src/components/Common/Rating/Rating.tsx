@@ -4,10 +4,6 @@ interface StarProps {
   filled: boolean;
 }
 
-interface RatingProps {
-  rating: number;
-}
-
 const Star = styled.svg<StarProps>`
   width: 20px;
   height: 20px;
@@ -19,6 +15,10 @@ const StarsWrapper = styled.div`
   display: flex;
   gap: 1px;
 `;
+
+interface RatingProps {
+  rating: number;
+}
 
 const Rating: React.FC<RatingProps> = ({ rating }) => {
   const totalStars = 5;

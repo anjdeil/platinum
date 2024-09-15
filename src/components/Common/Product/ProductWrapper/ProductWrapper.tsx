@@ -1,6 +1,7 @@
+import { FC, ReactNode } from "react";
 import styled from "styled-components";
 
-export const ProductWrapper = styled.div`
+const StyledProductWrapper = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -8,4 +9,12 @@ export const ProductWrapper = styled.div`
     justify-content: space-between;
     align-items: center;
     position: relative;
-`
+`;
+
+interface ProductWrapperProps {
+    children: ReactNode;
+}
+
+export const ProductWrapper: FC<ProductWrapperProps> = ({ children }) => {
+    return <StyledProductWrapper>{children}</StyledProductWrapper>;
+};

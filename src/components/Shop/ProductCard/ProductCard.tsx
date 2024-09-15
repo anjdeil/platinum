@@ -1,8 +1,10 @@
 import Badge from "@/components/Common/Badge/Badge";
 import AddToBasketButton from "@/components/Common/Buttons/AddToBasketButton/AddToBasketButton";
 import FavoriteButton from "@/components/Common/Buttons/FavoriteButton/FavoriteButton";
+import { BadgeWrapper } from "@/components/Common/Product/BadgeWrapper/BadgeWrapper";
 import { ProductImageWrapper } from "@/components/Common/Product/ProductImageWrapper/ProductImageWrapper";
 import { ProductWrapper } from "@/components/Common/Product/ProductWrapper/ProductWrapper";
+import { TitlePriceWrapper } from "@/components/Common/Product/TitlePriceWrapper/TitlePriceWrapper";
 import Rating from "@/components/Common/Rating/Rating";
 import { ProductPrice } from "@/components/Common/Typography/ProductPrice/ProductPrice";
 import { ProductTitle } from "@/components/Common/Typography/ProductTitle/ProductTitle";
@@ -10,7 +12,7 @@ import { ProductType } from "@/types/shop";
 import Image from "next/image";
 import styled from "styled-components";
 
-const ProductCardStyled = styled.div`
+const StyledProductCard = styled.div`
     grid-column: span 1;
     padding: 8px;
     display: flex;
@@ -27,42 +29,24 @@ const ProductCardStyled = styled.div`
     }
 `
 
-const TitlePriceWrapper = styled.div`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    row-gap: 8px;
-    justify-content: space-between;
-    align-items: center;
-`
-
-const BadgeWrapper = styled.div`
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: absolute;
-    top: 0;
-`
-
 interface ProductCardPropsType {
     product: ProductType,   
 }
 
 const ProductCard: React.FC<ProductCardPropsType> = ({ product }) => {
     return (
-        <ProductCardStyled>
+        <StyledProductCard>
             <ProductWrapper>
                 <ProductImageWrapper>
                     <Image
-                        src={product.images[0].src}
+                        src={product.images[0].src || ''}
                         layout="fill"
                         objectFit="cover" 
                         alt="image"
                         unoptimized={true}
                     />
                 </ProductImageWrapper>
-                <Rating rating={4} />
+                <Rating rating={5} />
                 <TitlePriceWrapper>
                     <ProductTitle>{ product.name }</ProductTitle>
                     <ProductPrice>{ product.min_price} zl</ProductPrice>
@@ -73,7 +57,7 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product }) => {
                 </BadgeWrapper>
             </ProductWrapper>
             <AddToBasketButton />
-        </ProductCardStyled>
+        </StyledProductCard>
     );
 }
 
