@@ -21,6 +21,7 @@ const theme = {
     },
     colors: {
         primary: '#113760',
+        primaryGradient: 'radial-gradient(79.43% 79.43% at 49.95% 64.07%, #024584 0%, #0B233D 100%)',
         secondary: '#738ebc',
         tertiary: '#0000FF',
         grey: '#878787',
