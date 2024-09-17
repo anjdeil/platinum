@@ -1,5 +1,5 @@
+import styled from "@emotion/styled";
 import { FC, ReactNode } from "react";
-import styled from "styled-components";
 
 const StyledProductTitle = styled.p`
     color: ${({ theme }) => theme.colors.black};

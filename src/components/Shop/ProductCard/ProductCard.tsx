@@ -9,8 +9,8 @@ import Rating from "@/components/Common/Rating/Rating";
 import { ProductPrice } from "@/components/Common/Typography/ProductPrice/ProductPrice";
 import { ProductTitle } from "@/components/Common/Typography/ProductTitle/ProductTitle";
 import { ProductType } from "@/types/shop";
+import styled from "@emotion/styled";
 import Image from "next/image";
-import styled from "styled-components";
 
 const StyledProductCard = styled.div`
     grid-column: span 1;

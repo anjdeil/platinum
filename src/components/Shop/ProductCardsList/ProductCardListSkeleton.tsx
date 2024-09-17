@@ -1,5 +1,5 @@
 import { useResponsive } from '@/hooks/useResponsive';
-import styled from 'styled-components';
+import styled from "@emotion/styled";
 import { ProductCardSkeleton } from '../ProductCard/ProductCardSkeleton';
 
 const SkeletonWrapper = styled.div<{ column: number }>`

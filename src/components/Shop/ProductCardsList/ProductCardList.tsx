@@ -1,7 +1,7 @@
 import { useResponsive } from "@/hooks/useResponsive";
 import { ProductCardListProps } from "@/types/shop/ProductsList";
+import styled from "@emotion/styled";
 import { FC } from "react";
-import styled from "styled-components";
 import ProductCard from "../ProductCard/ProductCard";
 import { ProductCardListSkeleton } from "./ProductCardListSkeleton";
 

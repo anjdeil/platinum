@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 interface BadgeProps {
     type: "new" | "best" | "hot";
