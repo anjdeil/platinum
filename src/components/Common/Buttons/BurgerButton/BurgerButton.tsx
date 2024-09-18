@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from '@/store';
 import { popupToggle } from '@/store/slices/PopupSlice';
+import { StyledIconButton } from '@/styles/components';
 import Image from 'next/image';
-import { StyledIconButton } from '../StyledIconButton/StyledIconButton';
 
 export default function BurgerButton() {
   const dispatch = useAppDispatch();

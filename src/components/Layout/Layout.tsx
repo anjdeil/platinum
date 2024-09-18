@@ -26,7 +26,7 @@ export default function Layout({ children }: { children: React.ReactNode })
         include: menuIds.join(',')        
     });
 
-    const menus = menusData?.data ? menusData.data as MenuItemsType[] : [];
+    const menus = menusData?.data ? menusData.data.items as MenuItemsType[] : [];
     console.log('menusData...', menusData);
     console.log('menus...', menus);
     

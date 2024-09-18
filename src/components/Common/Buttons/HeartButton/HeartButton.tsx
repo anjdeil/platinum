@@ -9,6 +9,7 @@ interface HeartButtonProps {
 const StyledButton = styled.button`
   padding: 8px;
   background-color: transparent;
+  display: flex;
   border: none;
   cursor: pointer;
   position: relative;

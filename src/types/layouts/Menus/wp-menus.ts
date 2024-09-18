@@ -1,3 +1,4 @@
+import { NavLinkPropsSchema, NavListPropsSchema } from "@/types/layouts/Nav";
 import { z } from "zod";
 import { MenuSkeletonPropsSchema } from "./Skeletons";
 
@@ -13,7 +14,8 @@ export const wpMenuPropsSchema = z.object({
     menuId: z.number(),
     skeleton: MenuSkeletonPropsSchema.optional(),
     className: z.string().optional(),
-    topbar: z.boolean().optional(),
+    ...NavListPropsSchema.shape,
+    ...NavLinkPropsSchema.shape,
 });
 
 export const VerticalWpMenuPropsSchema = z.object({

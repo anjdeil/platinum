@@ -9,10 +9,6 @@ const StyledButton = styled.button`
   background-color: transparent;
   border: none;
   cursor: pointer;
-
-  &:hover {
-    background-color: transparent;
-  }
 `;
 
 export default function AccountButton({ color = "#fff" }: AccountButtonProps) {  

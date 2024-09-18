@@ -10,15 +10,6 @@ const theme = {
         fontFamily: `${montserrat.style.fontFamily} !important`,
         fontSize: '16px',
     },
-    components: {
-        MuiButton: {
-            styleOverrides: {
-                root: {
-                    fontFamily: `${montserrat.style.fontFamily} !important`,
-                },
-            },
-        },
-    },
     colors: {
         primary: '#113760',
         secondary: '#738ebc',

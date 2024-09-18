@@ -27,14 +27,16 @@ const HamburgerMenu: FC<PopupType> = ({ onClose }) => {
             <NavWrap>
                 <Nav
                     menuId={335}
-                    className="hamburger-menu"
                     skeleton={{
-                        isColumn: true,
+                        direction: 'column',
                         elements: 5,
                         width: "200px",
                         height: "40px",
                         gap: '10px'
                     }}
+                    color={({ theme }) => theme.colors.black}
+                    direction='column'
+                    align='flex-start'
                 />
                 <SelectWrapper>
                     <LanguageSelect />
