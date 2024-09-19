@@ -1,8 +1,7 @@
 import { useGetMenusQuery } from '@/store/rtk-queries/wpCustomApi';
-import Box from '@mui/material/Box';
 import { useRouter } from 'next/router';
 import { createContext } from 'react';
-import PopupContainer from '../Popups/PopupContainer';
+import PopupContainer from '../Popups/PopupContainer/PopupContainer';
 
 // When someone will be adding Menus component, it's important to change it to zod and add in types
 interface MenuItemType {
@@ -22,11 +21,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     const { data: menus, error, isLoading } = useGetMenusQuery({ lang: locale });
 
     return (
-        <Box>
+        <div>
             <MenusContext.Provider value={menus}>
                 <PopupContainer />
                 {children}
             </MenusContext.Provider>
-        </Box>
+        </div>
     );
 } 

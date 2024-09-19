@@ -1,2 +1,1 @@
-import SideList from "./SideList";
-export default SideList;
+export * from './SideList';

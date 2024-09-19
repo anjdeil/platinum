@@ -18,6 +18,13 @@ const theme = {
         medium: '16px',
         large: '24px',
     },
+    media: {
+        medium: '(min-width: 768px)',
+        large: '(min-width: 1024px)',
+        midle: '(min-width: 1100px)',
+        xl: '(min-width: 1200px)',
+        extraLarge: '(min-width: 1440px)',
+    },
 };
 
 export default theme;

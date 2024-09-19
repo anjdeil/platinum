@@ -3,7 +3,7 @@ import { popupClosed } from "@/store/slices/PopupSlice";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import MobileCategoriesMenu from "../MobileCategoriesMenu";
+import MobileCategoriesMenu from "../MobileCategoriesMenu/MobileCategoriesMenu";
 
 const unscrollablePopups = ['mobile-search', 'hamburger-menu', 'swiper-popup', 'mobile-cart', 'mobile-categories'];
 

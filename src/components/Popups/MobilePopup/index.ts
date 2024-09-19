@@ -1,2 +1,1 @@
-import MobilePopup from "./MobilePopup";
-export default MobilePopup;
+export * from './MobilePopup';

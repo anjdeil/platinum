@@ -1,2 +1,1 @@
-import MobileCategoriesMenu from "./MobileCategoriesMenu";
-export default MobileCategoriesMenu;
+export * from './MobileCategoriesMenu';
