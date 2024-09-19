@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { ProductCardList } from "@/components/Shop/ProductCardsList";
 import { useGetProductsQuery } from "@/store/rtk-queries/wpCustomApi";
 import { LangParamType } from "@/types/services/wpCustomApi";

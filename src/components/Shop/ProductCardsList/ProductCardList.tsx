@@ -1,24 +1,9 @@
 import { useResponsive } from "@/hooks/useResponsive";
 import { ProductCardListProps } from "@/types/shop/ProductsList";
-import styled from "@emotion/styled";
 import { FC } from "react";
 import ProductCard from "../ProductCard/ProductCard";
-import { ProductCardListSkeleton } from "./ProductCardListSkeleton";
-
-interface ProductListProps {
-   column: number;
-}
-
-const StyledProductCardList = styled.div<ProductListProps>`
-    display: grid;
-    justify-content: space-between;
-    gap: 8px;
-    grid-template-columns: ${({ column }) => `repeat(${column}, 1fr)`};
-
-    @media ${({ theme }) => theme.media.medium} {
-        gap: 16px;
-    }
-`;
+import { ProductCardListSkeleton } from "../ProductCardListSkeleton";
+import { StyledProductCardList } from "./styles";
 
 export const ProductCardList: FC<ProductCardListProps> = ({ isLoading = false, isError = false, products, columns }) => {
     const { isMobile, isTablet } = useResponsive();

@@ -1,24 +1,5 @@
-import styled from "@emotion/styled";
-
-interface StarProps {
-  filled: boolean;
-}
-
-const Star = styled.svg<StarProps>`
-  width: 20px;
-  height: 20px;
-  fill: ${({ filled, theme }) => (filled ? theme.colors.primary : "white")};
-  stroke: #113760;
-`;
-
-const StarsWrapper = styled.div`
-  display: flex;
-  gap: 1px;
-`;
-
-interface RatingProps {
-  rating: number;
-}
+import { RatingProps } from "@/types/layouts/Rating";
+import { Star, StarsWrapper } from "./styles";
 
 const Rating: React.FC<RatingProps> = ({ rating }) => {
   const totalStars = 5;

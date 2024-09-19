@@ -1,20 +1,9 @@
-import styled from "@emotion/styled";
-
-interface FavoriteButtonProps {
-    active?: boolean;
-}
-
-const Heart = styled.svg<FavoriteButtonProps>`
-  width: 24px;
-  height: 24px;
-  fill: ${({ active, theme }) => (active ? theme.colors.best : theme.colors.primary)};
-  stroke: ${({ active, theme }) => (active ? theme.colors.best : theme.colors.primary)};
-  cursor: pointer;
-`;
+import { FavoriteButtonProps } from "@/types/layouts/Button";
+import { Heart } from "./styles";
 
 const FavoriteButton: React.FC<FavoriteButtonProps> = ({ active = false }) => {
     return (
-        <Heart 
+        <Heart
             active={active} 
             xmlns="http://www.w3.org/2000/svg" 
             viewBox="0 0 24 24" 

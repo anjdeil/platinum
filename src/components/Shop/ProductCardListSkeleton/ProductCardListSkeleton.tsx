@@ -1,32 +1,7 @@
 import { useResponsive } from '@/hooks/useResponsive';
-import styled from "@emotion/styled";
-import { ProductCardSkeleton } from '../ProductCard/ProductCardSkeleton';
-
-const SkeletonWrapper = styled.div<{ column: number }>`
-    display: grid;
-    gap: 8px;
-    grid-template-columns: ${({ column }) => `repeat(${column}, 1fr)`};
-    justify-content: space-between;
-
-    @media ${({ theme }) => theme.media.medium} {
-        gap: 16px;
-    }
-`;
-
-const SkeletonItem = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 8px;
-`;
-
-interface ProductCardListSkeletonProps {
-    columns?: {
-        mobile?: number;
-        tablet?: number;
-        desktop?: number;
-    };
-}
+import { ProductCardListSkeletonProps } from '@/types/layouts/Skeleton';
+import { ProductCardSkeleton } from '../ProductCardSkeleton';
+import { SkeletonItem, SkeletonWrapper } from './styles';
 
 export const ProductCardListSkeleton: React.FC<ProductCardListSkeletonProps> = ({ columns }) => {
     const { isMobile, isTablet } = useResponsive();
