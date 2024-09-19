@@ -1,22 +1,10 @@
-import styled from 'styled-components';
+import { StyledIconButton } from '@/styles/components';
+import { IconButtonProps } from '@/types/layouts/Buttons';
 import Badge from '../../Badge/Badge';
 
-interface CartButtonProps {
-  count?: number;
-  color?: string;
-}
-
-const StyledButton = styled.button`
-  padding: 8px;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  position: relative;
-`;
-
-export default function CartButton({ count = 0, color = "#fff" }: CartButtonProps) {  
+export default function CartButton({ count = 0, color = "#fff" }: IconButtonProps) {  
   return (
-    <StyledButton>
+    <StyledIconButton>
       <Badge count={count} />
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
         <path d="M2 2H3.96495C4.84275 2 5.28165 2 5.61209 2.22909C5.94252 2.45818 6.08125 2.85818 6.35872 3.65818L7.04481 5.63636" stroke={color} stroke-linecap="round"/>
@@ -25,6 +13,6 @@ export default function CartButton({ count = 0, color = "#fff" }: CartButtonProp
         <path d="M19.0268 22.0004C19.7234 22.0004 20.288 21.4577 20.288 20.7883C20.288 20.1189 19.7234 19.5762 19.0268 19.5762C18.3303 19.5762 17.7656 20.1189 17.7656 20.7883C17.7656 21.4577 18.3303 22.0004 19.0268 22.0004Z" fill={color}/>
         <path d="M8.93698 22.0004C9.63353 22.0004 10.1982 21.4577 10.1982 20.7883C10.1982 20.1189 9.63353 19.5762 8.93698 19.5762C8.24044 19.5762 7.67578 20.1189 7.67578 20.7883C7.67578 21.4577 8.24044 22.0004 8.93698 22.0004Z" fill={color}/>
       </svg>
-    </StyledButton>
+    </StyledIconButton>
   );
 }

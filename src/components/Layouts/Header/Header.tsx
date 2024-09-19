@@ -1,6 +1,6 @@
-import HeaderIconButtons from '@/components/Common/Buttons/HeaderIconButtons';
+import HeaderIconButtons from '@/components/Common/Buttons/HeaderIconButtons/HeaderIconButtons';
 import React from 'react';
-import Nav from '../Navigation/Nav';
+import Nav from '../Nav/Nav';
 import SearchBar from '../SearchBar/SearchBar';
 import { HeaderContainer, HeaderContent, HeaderIcons, HeaderNav, HeaderSearch, HeaderWrapper } from './styles';
 

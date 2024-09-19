@@ -1,63 +1,6 @@
-import { FC, ReactElement } from "react";
-import styled from "styled-components";
-
-interface MobilePopupPropsType {
-    onClose: () => void,
-    title?: string | ReactElement,
-    children: ReactElement
-}
-
-const Overlay = styled.div`
-    position: fixed;
-    z-index: 1000;
-    inset: 0;
-`;
-
-const Popup = styled.div`
-    position: fixed;
-    background-color: ${({ theme }) => theme.background.secondary};
-    width: 241px;
-    top: 136px;
-    left: 0;
-    display: grid;
-    z-index: 1100;
-
-    @media(max-width: 768px) {
-        width: 241px;
-        top: 60px;
-        bottom: 0;
-        grid-template-rows: 60px 1fr;
-    }
-`;
-
-const Header = styled.div`
-    display: none;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 20px;
-
-    @media(max-width: 768px) {
-        display: flex;
-    }
-`;
-
-const Title = styled.div`
-    font-size: 1.5rem;
-`;
-
-const CloseButton = styled.button`
-    display: block;
-    padding: 10px;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-`;
-
-const Content = styled.div`
-    padding: 0 20px;
-    overflow: visible;
-    position: relative;
-`;
+import { MobilePopupPropsType } from "@/types/layouts/MobilePopup";
+import { FC } from "react";
+import { CloseButton, Content, Header, Overlay, PopupContainer, Title } from "./styles";
 
 const MobilePopup: FC<MobilePopupPropsType> = ({ onClose, title = "", children }) => {
 
@@ -69,7 +12,7 @@ const MobilePopup: FC<MobilePopupPropsType> = ({ onClose, title = "", children }
 
     return (
         <Overlay onClick={handleOverlayClick}>
-            <Popup>
+            <PopupContainer>
                 <Header>
                     <Title>{title}</Title>
                     <CloseButton onClick={onClose} aria-label="Close hamburger menu">
@@ -81,7 +24,7 @@ const MobilePopup: FC<MobilePopupPropsType> = ({ onClose, title = "", children }
                 <Content>
                     {children}
                 </Content>
-            </Popup>
+            </PopupContainer>
         </Overlay>
     )
 }

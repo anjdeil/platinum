@@ -1,27 +1,12 @@
 import CurrencySelect from "@/components/Common/Selects/CurrencySelect/CurrencySelect";
 import LanguageSelect from "@/components/Common/Selects/LanguageSelect/LanguageSelect";
-import Nav from "@/components/Layouts/Navigation/Nav";
+import Nav from "@/components/Layouts/Nav/Nav";
 import { PopupType } from "@/types/Popups/PopupType";
 import { FC } from "react";
-import styled from "styled-components";
-import MobilePopup from "../MobilePopup";
-
-const NavWrap = styled.div`
-    padding: 50px 0;
-    max-width: 200px;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;    
-`;
-
-const SelectWrapper = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-`;
+import MobilePopup from "../MobilePopup/MobilePopup";
+import { NavWrap, SelectWrapper } from "./styles";
 
 const HamburgerMenu: FC<PopupType> = ({ onClose }) => {
-
     return (
         <MobilePopup onClose={onClose}>
             <NavWrap>
@@ -29,10 +14,10 @@ const HamburgerMenu: FC<PopupType> = ({ onClose }) => {
                     menuId={335}
                     skeleton={{
                         direction: 'column',
-                        elements: 5,
+                        elements: 4,
                         width: "200px",
-                        height: "40px",
-                        gap: '10px'
+                        height: "24px",
+                        gap: '20px'
                     }}
                     color={({ theme }) => theme.colors.black}
                     direction='column'

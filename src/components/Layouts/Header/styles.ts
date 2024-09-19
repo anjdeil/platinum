@@ -7,10 +7,10 @@ export const HeaderWrapper = styled.div<HeaderWrapperProps>`
 `
 
 export const HeaderContainer = styled.div<HeaderContainerProps>`
-  height: ${({ height }) => height || '72px'};
+  height: ${({ height = '72px' }) => height};
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  gap: ${({ gap }) => gap || '16px'};
+  gap: ${({ gap = '16px' }) => gap};
   align-items: center;
 
   @media ${({ theme }) => theme.media.large} {

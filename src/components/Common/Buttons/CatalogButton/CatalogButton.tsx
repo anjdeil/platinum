@@ -1,30 +1,17 @@
 import { useAppDispatch, useAppSelector } from '@/store';
 import { popupToggle } from '@/store/slices/PopupSlice';
-import styled from 'styled-components';
-
-const Button = styled.button<{ strokeColor: string }>`
-  padding: 8px;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-
-  &:hover {
-    background-color: transparent !important;
-  }
-
-  svg path {
-    stroke: ${({ strokeColor }) => strokeColor};
-  }
-`;
+import { useTheme } from 'styled-components';
+import { StyledCatalogButton } from './styles';
 
 export default function CatalogButton() {
   const dispatch = useAppDispatch();
   const popup = useAppSelector(state => state.Popup);
+  const theme = useTheme();
 
-  const strokeColor = popup === 'mobile-categories' ? '#1E71BE' : '#113760';
+  const strokeColor = popup === 'mobile-categories' ? theme.colors.active : theme.colors.primary;
 
   return (
-    <Button
+    <StyledCatalogButton
       onClick={() => dispatch(popupToggle('mobile-categories'))}
       strokeColor={strokeColor}
       aria-label="Open hamburger"
@@ -35,6 +22,6 @@ export default function CatalogButton() {
         <path d="M19.4 14H15.6C15.0399 14 14.7599 14 14.546 14.109C14.3578 14.2049 14.2049 14.3578 14.109 14.546C14 14.7599 14 15.0399 14 15.6V19.4C14 19.9601 14 20.2401 14.109 20.454C14.2049 20.6422 14.3578 20.7951 14.546 20.891C14.7599 21 15.0399 21 15.6 21H19.4C19.9601 21 20.2401 21 20.454 20.891C20.6422 20.7951 20.7951 20.6422 20.891 20.454C21 20.2401 21 19.9601 21 19.4V15.6C21 15.0399 21 14.7599 20.891 14.546C20.7951 14.3578 20.6422 14.2049 20.454 14.109C20.2401 14 19.9601 14 19.4 14Z" strokeLinecap="round" strokeLinejoin="round"/>
         <path d="M8.4 14H4.6C4.03995 14 3.75992 14 3.54601 14.109C3.35785 14.2049 3.20487 14.3578 3.10899 14.546C3 14.7599 3 15.0399 3 15.6V19.4C3 19.9601 3 20.2401 3.10899 20.454C3.20487 20.6422 3.35785 20.7951 3.54601 20.891C3.75992 21 4.03995 21 4.6 21H8.4C8.96005 21 9.24008 21 9.45399 20.891C9.64215 20.7951 9.79513 20.6422 9.89101 20.454C10 20.2401 10 19.9601 10 19.4V15.6C10 15.0399 10 14.7599 9.89101 14.546C9.79513 14.3578 9.64215 14.2049 9.45399 14.109C9.24008 14 8.96005 14 8.4 14Z" strokeLinecap="round" strokeLinejoin="round"/>
       </svg>
-    </Button>
+    </StyledCatalogButton>
   );
 }

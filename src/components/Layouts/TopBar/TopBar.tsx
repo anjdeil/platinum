@@ -3,7 +3,7 @@ import CurrencySelect from '@/components/Common/Selects/CurrencySelect/CurrencyS
 import LanguageSelect from '@/components/Common/Selects/LanguageSelect/LanguageSelect';
 import { StyledButton } from '@/styles/components';
 import React from 'react';
-import Nav from "../Navigation/Nav";
+import Nav from "../Nav/Nav";
 import { BurgerButtonWrapper, ButtonWrapper, LogoLink, LogoLinkImage, NavWrapper, SelectsWrapper, Stack } from './styles';
 
 const TopBar: React.FC = () =>

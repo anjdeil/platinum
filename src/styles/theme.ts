@@ -7,7 +7,7 @@ const montserrat = Montserrat({
 
 const theme = {
     typography: {
-        fontFamily: `${montserrat.style.fontFamily} !important`,
+        fontFamily: `${montserrat.style.fontFamily}`,
         fontSize: '16px',
     },
     colors: {
@@ -17,6 +17,7 @@ const theme = {
         grey: '#878787',
         white: '#fff',
         black: '#000',
+        active: '#1E71BE',
     },
     background: {
         secondary: '#f2f8fe',
