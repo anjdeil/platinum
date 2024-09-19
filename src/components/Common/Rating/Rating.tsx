@@ -1,24 +1,5 @@
-import styled from "styled-components";
-
-interface StarProps {
-  filled: boolean;
-}
-
-interface RatingProps {
-  rating: number;
-}
-
-const Star = styled.svg<StarProps>`
-  width: 20px;
-  height: 20px;
-  fill: ${({ filled, theme }) => (filled ? theme.colors.primary : "white")};
-  stroke: #113760;
-`;
-
-const StarsWrapper = styled.div`
-  display: flex;
-  gap: 1px;
-`;
+import { RatingProps } from "@/types/Layouts/Rating";
+import { Star, StarsWrapper } from "./styles";
 
 const Rating: React.FC<RatingProps> = ({ rating }) => {
   const totalStars = 5;

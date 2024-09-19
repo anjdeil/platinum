@@ -1,28 +1,26 @@
-import styled from "styled-components";
+import { BadgeStyledProps } from "@/types/Layouts/ProductBadge";
+import styled from "@emotion/styled";
 
-interface BadgeProps {
-    type: "new" | "best" | "hot";
-}
 
 const getBackgroundColor = (type: "new" | "best" | "hot") => {
     switch (type) {
-         case "new":
+        case "new":
             return (props: any) => props.theme.colors.new;
         case "best":
             return (props: any) => props.theme.colors.best;
         case "hot":
             return (props: any) => props.theme.colors.hot;
         default:
-            return (props: any) => props.theme.colors.black; 
+            return (props: any) => props.theme.colors.black;
     }
 };
 
-const BadgeStyled = styled.span<BadgeProps>`
+export const BadgeStyled = styled.span<BadgeStyledProps>`
     box-sizing: border-box;
-    min-width: 39px;
+    min-width: ${({ minWidth = '39px' }) => minWidth};
     text-align: center;
     padding: 4px;
-    border-radius: 8px;
+    border-radius: ${({ borderRadius = '8px' }) => borderRadius};
     font-size: 10px;
     line-height: 16px;
     font-weight: 400;
@@ -43,13 +41,3 @@ const BadgeStyled = styled.span<BadgeProps>`
         text-transform: uppercase;
     }
 `;
-
-const Badge: React.FC<BadgeProps> = ({ type }) => {
-    return (
-        <BadgeStyled type={type}>
-            {type}
-        </BadgeStyled>
-    );
-};
-
-export default Badge;

@@ -1,14 +1,12 @@
 import ProductCard from "@/components/Common/Product/ProductCard/ProductCard";
 import SortSelect from "@/components/Common/SortSelect/SortSelect";
-import { TitleCatalog } from "@/components/Common/Typography/TitleCatalog/TitleCatalog";
 import { MenusContext } from "@/components/Layout";
-import TestSelect from "@/components/TestSelect/TestSelect";
 import { useAppSelector } from "@/store";
-import { Title } from "@/styles/components";
+import { TitleCatalog } from "@/styles/components";
+import styled from "@emotion/styled";
 import axios from "axios";
 import { Inter } from "next/font/google";
 import { useContext, useState } from "react";
-import styled from "styled-components";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -45,7 +43,7 @@ export default function Home()
   { data && <p>{data}</p> }
   return (
     <main className={`grid min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}>
-      <TestSelect />
+      {/* <TestSelect /> */}
       <TitleCatalog>Colored eyelashes</TitleCatalog>
       <SortSelect />
       <ProductGrid>
@@ -55,7 +53,6 @@ export default function Home()
         <ProductCard />
         <ProductCard />
       </ProductGrid>
-      <Title fontSize={24}>Symbol of {currency.code} currency is {currency.symbol}</Title>
       <button onClick={() => check()}>Fetch</button>
     </main >
   )

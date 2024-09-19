@@ -1,5 +1,4 @@
 import { useGetMenusQuery } from '@/store/rtk-queries/wpCustomApi';
-import Box from '@mui/material/Box';
 import { createContext } from 'react';
 
 // When someone will be adding Menus component, it's important to change it to zod and add in types
@@ -21,10 +20,10 @@ export default function Layout({ children }: { children: React.ReactNode })
     const { data: menus, error, isLoading } = useGetMenusQuery({});
 
     return (
-        <Box>
+        <div>
             <MenusContext.Provider value={menus}>
                 {children}
             </MenusContext.Provider>
-        </Box>
+        </div>
     );
 } 

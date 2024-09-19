@@ -1,50 +1,9 @@
 import Image from "next/image";
-import styled from "styled-components";
-import Badge from "../../Badge/Badge";
 import AddToBasketButton from "../../Buttons/AddToBasketButton/AddToBasketButton";
-import FavoriteButton from "../../Buttons/AddToBasketButton/FavoriteButton/FavoriteButton";
+import FavoriteButton from "../../Buttons/FavoriteButton/FavoriteButton";
+import Badge from "../../ProductBadge/ProductBadge";
 import Rating from "../../Rating/Rating";
-import { ProductPrice } from "../../Typography/ProductPrice/ProductPrice";
-import { ProductTitle } from "../../Typography/ProductTitle/ProductTitle";
-import { ProductImageWrapper } from "../ProductImageWrapper/ProductImageWrapper";
-import { ProductWrapper } from "../ProductWrapper/ProductWrapper";
-
-const ProductCardStyled = styled.div`
-    grid-column: span 2;
-    padding: 8px;
-    display: flex;
-    flex-direction: column;
-    row-gap: 8px;
-    align-items: center;
-
-        @media ${({ theme }) => theme.media.medium} {
-            grid-column: span 3;
-            padding: 16px 8px;
-            row-gap: 16px;
-        }
-
-        @media ${({ theme }) => theme.media.large} {
-            padding: 24px;
-        }
-`
-
-const TitlePriceWrapper = styled.div`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    row-gap: 8px;
-    justify-content: space-between;
-    align-items: center;
-`
-
-const BadgeWrapper = styled.div`
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: absolute;
-    top: 0;
-`
+import { BadgeWrapper, ProductCardStyled, ProductImageWrapper, ProductPrice, ProductTitle, ProductWrapper, TitlePriceWrapper } from "./styles";
 
 const ProductCard: React.FC = () => {
     return (

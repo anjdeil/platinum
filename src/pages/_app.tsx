@@ -2,11 +2,11 @@ import Layout from "@/components/Layout/Layout";
 import { setupStore } from "@/store";
 import GlobalStyle from '@/styles/global';
 import theme from "@/styles/theme";
+import { ThemeProvider } from "@emotion/react";
 import { NextIntlClientProvider } from 'next-intl';
 import App, { AppContext, AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import { Provider } from "react-redux";
-import { ThemeProvider } from 'styled-components';
 
 function MyApp({ Component, pageProps }: AppProps) {
     const { locale } = useRouter();
