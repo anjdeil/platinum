@@ -1,3 +1,4 @@
+import { Theme } from "@emotion/react";
 import { Montserrat } from "next/font/google";
 
 const montserrat = Montserrat({
@@ -5,7 +6,7 @@ const montserrat = Montserrat({
     weight: ['400', '500', '600', '700'],
 });
 
-const theme = {
+const theme: Theme = {
     typography: {
         fontFamily: `${montserrat.style.fontFamily}`,
         fontSize: '16px',
