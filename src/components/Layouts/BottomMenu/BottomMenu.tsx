@@ -3,8 +3,8 @@ import BurgerButton from "@/components/Common/Buttons/BurgerButton/BurgerButton"
 import CartButton from "@/components/Common/Buttons/CartButton/CartButton";
 import CatalogButton from "@/components/Common/Buttons/CatalogButton/CatalogButton";
 import HeartButton from "@/components/Common/Buttons/HeartButton/HeartButton";
+import { useTheme } from "@emotion/react";
 import Link from "next/link";
-import { useTheme } from "styled-components";
 import { BottomMenuNav, BottomMenuWrapper } from "./styles";
 
 

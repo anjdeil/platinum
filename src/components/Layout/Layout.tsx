@@ -20,6 +20,7 @@ const montserrat = Montserrat({
 export default function Layout({ children }: { children: React.ReactNode })
 {
     const { isMobile } = useResponsive();
+
     const menuIds = [335, 344];
 
     const { data: menusData } = useGetMenusQuery({

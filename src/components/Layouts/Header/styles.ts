@@ -1,5 +1,5 @@
 import { HeaderContainerProps, HeaderWrapperProps } from "@/types/layouts/Header";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 export const HeaderWrapper = styled.div<HeaderWrapperProps>`
     background: ${({ backgroundColor }) =>

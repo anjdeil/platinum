@@ -1,5 +1,5 @@
 import { BottomMenuWrapperProps } from "@/types/layouts/BottomMenu";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 export const BottomMenuWrapper = styled.div<BottomMenuWrapperProps>`
   z-index: 2000;

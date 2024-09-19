@@ -2,11 +2,13 @@ import CurrencySelect from "@/components/Common/Selects/CurrencySelect/CurrencyS
 import LanguageSelect from "@/components/Common/Selects/LanguageSelect/LanguageSelect";
 import Nav from "@/components/Layouts/Nav/Nav";
 import { PopupType } from "@/types/Popups/PopupType";
+import { useTheme } from "@emotion/react";
 import { FC } from "react";
 import MobilePopup from "../MobilePopup/MobilePopup";
 import { NavWrap, SelectWrapper } from "./styles";
 
 const HamburgerMenu: FC<PopupType> = ({ onClose }) => {
+    const theme = useTheme();
     return (
         <MobilePopup onClose={onClose}>
             <NavWrap>
@@ -19,7 +21,7 @@ const HamburgerMenu: FC<PopupType> = ({ onClose }) => {
                         height: "24px",
                         gap: '20px'
                     }}
-                    color={({ theme }) => theme.colors.black}
+                    color={theme.colors.black}
                     direction='column'
                     align='flex-start'
                 />

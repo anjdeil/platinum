@@ -1,5 +1,5 @@
+import styled from "@emotion/styled";
 import Image from "next/image";
-import styled from "styled-components";
 
 export const ButtonStyled = styled.button`
     box-sizing: border-box;

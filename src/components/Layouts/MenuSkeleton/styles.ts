@@ -1,5 +1,6 @@
-import { SkeletonContainerProps, SkeletonElementProps } from "@/types/styles/Skeleton";
-import styled, { keyframes } from "styled-components";
+import { SkeletonContainerProps, SkeletonElementProps } from "@/types/layouts/Menus";
+import { keyframes } from "@emotion/react";
+import styled from "@emotion/styled";
 
 const waveAnimation = keyframes`
   0% {

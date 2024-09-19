@@ -26,7 +26,7 @@ export default function Home()
   return (
     <main>
       {/* <TestSelect /> */}
-      <Title fontSize={24}>Symbol of {currency.code} currency isQQ {currency.symbol}</Title>
+      <Title as='h2' fontSize={20}>Symbol of {currency.code} currency isQQ {currency.symbol}</Title>
       <button onClick={() => check()}>Fetch</button>
     </main >
   )

@@ -1,12 +1,10 @@
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 interface MenuProps {
     isOpen?: boolean;
 }
 
-export const SortSelectStyled = styled.div.attrs<MenuProps>(({ isOpen }) => ({
-    'aria-expanded': isOpen,
-})) <MenuProps>`
+export const SortSelectStyled = styled.div<MenuProps>`
     box-sizing: border-box;
     width: 53px;
     height: 32px;
@@ -50,9 +48,7 @@ export const MenuItem = styled.div`
     }    
 `;
 
-export const Arrow = styled.svg.attrs<MenuProps>(({ isOpen }) => ({
-    'aria-expanded': isOpen,
-})) <MenuProps>`
+export const Arrow = styled.svg<MenuProps>`
     margin-left: auto;
     transform: ${({ isOpen }) => (isOpen ? 'rotate(180deg)' : 'rotate(0deg)')};
 `;

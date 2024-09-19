@@ -1,5 +1,5 @@
 import { SearchFormProps, SearchInputProps } from "@/types/layouts/SearchBar";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 export const SearchForm = styled.form<SearchFormProps>`
     position: relative;

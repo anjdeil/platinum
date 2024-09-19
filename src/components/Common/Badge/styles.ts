@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 export const BadgeWrapper = styled.span<{ count: number }>`
     display: ${({ count }) => (count > 0 ? 'inline-block' : 'none')};

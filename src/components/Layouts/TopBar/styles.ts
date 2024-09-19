@@ -1,6 +1,6 @@
+import styled from "@emotion/styled";
 import Image from "next/image";
 import Link from "next/link";
-import styled from "styled-components";
 
 export const Stack = styled.div`
   height: 44px;

@@ -1,5 +1,5 @@
 import { StyledButtonProps } from '@/types/styles/components';
-import styled from 'styled-components';
+import styled from "@emotion/styled";
 
 interface TitleProps {
     as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
@@ -7,7 +7,7 @@ interface TitleProps {
     fontSize: number;
 }
 
-export const Title = styled.h1.attrs<TitleProps>(({ as = "h2" }) => ({ as })) <TitleProps>`
+export const Title = styled.h1<TitleProps>`
     color: black;
     font-size: ${({ fontSize = 24 }) => fontSize}px;
     font-weight: ${({ fontWeight = 600 }) => fontWeight};

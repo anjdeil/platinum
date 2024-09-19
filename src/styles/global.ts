@@ -228,9 +228,13 @@ template {
     @media (max-width: 768px) {
         padding: 0 20px;
     }
+}
 
-    @media (max-width: 768px) {
-        padding: 0 20px;
+.hideMobile {
+    display: none;
+
+    @media (min-width: 768px) {
+        display: block;
     }
 }
 `;

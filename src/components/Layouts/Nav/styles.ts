@@ -1,6 +1,6 @@
 import { NavLinkProps, NavListProps } from "@/types/layouts/Nav";
+import styled from "@emotion/styled";
 import Link from "next/link";
-import { styled } from "styled-components";
 
 export const NavList = styled.ul<NavListProps>`
     display: flex;

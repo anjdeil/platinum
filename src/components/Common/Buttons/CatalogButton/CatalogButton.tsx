@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '@/store';
 import { popupToggle } from '@/store/slices/PopupSlice';
-import { useTheme } from 'styled-components';
+import { useTheme } from '@emotion/react';
 import { StyledCatalogButton } from './styles';
 
 export default function CatalogButton() {
