@@ -8,6 +8,7 @@ import Header from '../Layouts/Header/Header';
 import MobileHeader from '../Layouts/MobileHeader/MobileHeader';
 import TopBar from '../Layouts/TopBar/TopBar';
 import PopupContainer from '../Popups/PopupContainer/PopupContainer';
+import { Footer } from '../Layouts/Footer';
 
 export const MenusContext = createContext<MenuItemsType[] | undefined>(undefined);
 
@@ -37,6 +38,7 @@ export default function Layout({ children }: { children: React.ReactNode })
                 <PopupContainer />
                 {isMobile && (<BottomMenu />)}
                 {children}
+                <Footer/>
             </MenusContext.Provider>
         </div>
     );
