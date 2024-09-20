@@ -25,7 +25,7 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product }) => {
                     <ProductPrice>{ product.min_price} zl</ProductPrice>
                 </TitlePriceWrapper>
                 <BadgeWrapper>
-                    <ProductBadge type="new" />
+                    <ProductBadge type="sale" />
                     <FavoriteButton active={ true } />
                 </BadgeWrapper>
             </ProductWrapper>

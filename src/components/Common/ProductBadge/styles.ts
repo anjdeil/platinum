@@ -1,8 +1,7 @@
-import { BadgeStyledProps } from "@/types/layouts/ProductBadge";
+import { BadgeStyledProps, ProductBadgeProps } from "@/types/layouts/ProductBadge";
 import styled from "@emotion/styled";
 
-
-const getBackgroundColor = (type: "new" | "best" | "hot") => {
+const getBackgroundColor = (type: ProductBadgeProps['type']) => {
     switch (type) {
         case "new":
             return (props: any) => props.theme.colors.new;
@@ -10,8 +9,10 @@ const getBackgroundColor = (type: "new" | "best" | "hot") => {
             return (props: any) => props.theme.colors.best;
         case "hot":
             return (props: any) => props.theme.colors.hot;
+        case "sale":
+            return (props: any) => props.theme.colors.sale;
         default:
-            return (props: any) => props.theme.colors.black;
+            return (props: any) => props.theme.colors.new;
     }
 };
 

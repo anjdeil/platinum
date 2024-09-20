@@ -12,6 +12,7 @@ declare module '@emotion/react' {
             new: string,
             best: string,
             hot: string,
+            sale: string,
         },
         background: {
             secondary: string,

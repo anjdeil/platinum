@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const ProductBadgePropsSchema = z.object({
-    type: z.enum(['new', 'best', 'hot']),
+    type: z.enum(['new', 'best', 'hot', 'sale']),
 });
 
 export const BadgeStyledPropsSchema = ProductBadgePropsSchema.extend({

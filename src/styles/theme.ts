@@ -11,6 +11,7 @@ const theme: Theme = {
         new: '#17AA40',
         best: '#1E71BE',
         hot: '#F2B517',
+        sale: '#D92D20',
     },
     background: {
         secondary: '#F2F8FE',
