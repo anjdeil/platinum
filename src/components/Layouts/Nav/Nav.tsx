@@ -4,6 +4,7 @@ import { MenuItemsType } from '@/types/services/customApi/Menu/MenuItemsType';
 import { FC, useContext } from 'react';
 import { MenuSkeleton } from '../MenuSkeleton';
 import { NavLink, NavList } from './styles';
+import { menus } from '@/components/mockmenus';
 
 const Nav: FC<wpMenuProps> = ({
     menuId,
@@ -20,7 +21,7 @@ const Nav: FC<wpMenuProps> = ({
     gap,
     mobGap,
 }) => {
-    const menus: MenuItemsType[] | undefined = useContext(MenusContext);
+   /*  const menus: MenuItemsType[] | undefined = useContext(MenusContext); */
     const menuItems = menus?.find(({ id }) => id === menuId)?.items;
     
     if (!menuItems && skeleton) {

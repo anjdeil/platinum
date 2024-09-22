@@ -1,27 +1,44 @@
 import { Accordion, AccordionSummary } from "@mui/material";
-import styled from "styled-components";
-
-import theme from "../../../styles/theme";
+import styled from "@emotion/styled";
 import Nav from "../Nav/Nav";
+import theme from "@/styles/theme";
 
 export const FooterGridContainer = styled.div`
-
+    width:100%;
+    margin-bottom:25px;
     display: grid;
-    grid-template-columns: 175px repeat(3, 1fr) 1.5fr;
+    grid-template-columns:  repeat(3, 1fr) 1.5fr;
     gap: 53px;
-
-     @media (max-width: 768px) {
-        grid-template-columns: 1fr;
+     @media (max-width: 1100px) {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
     } 
-    margin-bottom: 30px
-`;
-export const FooterContainer = styled.div`
-    background-color: ${theme.colors.primary};
-    padding: 50px 80px 24px 80px;
+     @media (max-width: 768px) {
+        display: flex;           // кривое решение но на гридах аккордион увеличивает высоту при открытии первых двух элементов
+        flex-direction: column;
+    } 
     
 `;
+export const FooterContainer = styled.div`
+overflow: hidden;
+    background: ${theme.colors.backgroundGradient};
+    padding: 50px 80px 24px 80px;
+    @media (max-width: 768px) {
+        padding: 50px 32px 24px 32px;
+    } 
+    
+`;
+export const FooterMainWrapper = styled.div`
+    display: flex;
+    @media (max-width: 340px) {
+
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    } 
+
+`;
 export const PaymentAndDeliveryMethods = styled.div`
-   
     display: flex;
     justify-content: start;
     align-items: center;
@@ -31,11 +48,13 @@ export const PaymentAndDeliveryMethods = styled.div`
   &:not(:last-of-type) {
     margin-bottom: 20px;
   }
+  
+    /*  @media (max-width: 340px) {
+      flex-direction:column;
+      align-items: center;
+      justify-content: center
+    }  */
 `;
-
-
-
-
 
 export const PaymentAndDeliveryMethodsContainer = styled.div`
     display: flex;
@@ -46,19 +65,6 @@ export const PaymentAndDeliveryMethodsContainer = styled.div`
 `;
 
 export const FooterColumn = styled.div`
-
-   /*  &:first-child {
-        justify-self: start;
-    }
-    &:nth-child(2) {
-        justify-self: center;
-    }
-    &:nth-child(3) {
-        justify-self: center;
-    }
-    &:last-child {
-        justify-self: end;
-    } */
 `;
 
 export const FooterAccordion = styled(Accordion)`
@@ -74,23 +80,30 @@ export const FooterAccordion = styled(Accordion)`
         display: none;
     }
     .MuiAccordionDetails-root {
+        
         padding: 0;
     }
+    .MuiAccordionSummary-expandIconWrapper {
+    color: ${theme.colors.white};
+  }
     .MuiAccordionSummary-expandIconWrapper.Mui-expanded {
+        color:  ${theme.colors.white};
         display: none;
     }
-    @media (max-width: 992px) {
+    @media (max-width: 768px) {
         .MuiAccordionSummary-expandIconWrapper.Mui-expanded {
+           
             display: flex;
         }
     }
 `;
 
 export const AccordionSummaryCustom = styled(AccordionSummary)`
-    margin-bottom: 50px;
+    margin-bottom: 23px;
     padding: 0;
     min-height: fit-content!important;
     .MuiAccordionSummary-content.Mui-expanded {
+        color:  ${theme.colors.white};
         margin: 0;
     }
     @media (max-width: 1024px) {
@@ -105,12 +118,21 @@ export const AccordionSummaryCustom = styled(AccordionSummary)`
 `;
 
 export const FooterTitle = styled.h3`
-    font-size: 1.5rem;
-    font-weight: 500;
-    line-height: 2rem;
+   font: ${theme.fonts.titleH2Medium} !important;
     margin: 0;
     text-transform: uppercase;
+    white-space: nowrap;
 `;
+
+export const Contact = styled.div`
+> *:first-child {
+    margin-right: 20px;
+}
+   display:flex;
+   align-items:center;
+   margin-bottom:16px;
+`;
+
 
 export const FooterSecondTitle = styled.h3`
     color:  ${theme.colors.white};
@@ -146,8 +168,9 @@ const FooterSocials = styled(Socials)`
 `;
  */
 export const FooterLogoWrapper = styled.div`
-    width: 175px;
-    height: 158px;
+margin-right:36px;
+    width: 10vw;
+   max-height: 158px;
     display: flex;
     align-items: center;
     & a {

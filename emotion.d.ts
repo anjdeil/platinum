@@ -6,6 +6,9 @@ declare module '@emotion/react' {
             fontFamily: string;
             fontSize: string;
         };
+        fonts: {
+            [key: string]: string
+        };
         colors: {
             primary: string;
             secondary: string;
@@ -14,6 +17,7 @@ declare module '@emotion/react' {
             white: string;
             black: string;
             active: string;
+            backgroundGradient: string;
         };
         background: {
             secondary: string;

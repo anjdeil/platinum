@@ -8,17 +8,17 @@ import { SubscriptionForm } from "@/components/Forms"; */
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useContext, useState } from 'react';
-import { AccordionSummaryCustom, FooterAccordion, FooterColumn, FooterContainer, FooterGridContainer, FooterLogoWrapper, FooterNav, FooterSecondTitle, FooterTitle, PaymentAndDeliveryMethods, PaymentAndDeliveryMethodsContainer, } from './styles';
+import { AccordionSummaryCustom, Contact, FooterAccordion, FooterColumn, FooterContainer, FooterGridContainer, FooterLogoWrapper, FooterMainWrapper, FooterNav, FooterSecondTitle, FooterTitle, PaymentAndDeliveryMethods, PaymentAndDeliveryMethodsContainer, } from './styles';
 import Link from 'next/link';
 import Image from 'next/image';
-import { VerticalSliderMenu } from '../VerticalSliderMenu';
-
+import VerticalSlider from '../VerticalSliderMenu/VerticalSliderMenu';
 
 
 
 export const Footer = () => {
 
     const isMobile = useMediaQuery('(max-width: 768px)');
+
     const [expanded, setExpanded] = useState<string | false>(!isMobile ? 'panel1' : false);
 
     const handleChange = (panel: string) => (_: unknown, isExpanded: boolean) => {
@@ -28,76 +28,92 @@ export const Footer = () => {
 
     return (
         <FooterContainer >
-            <FooterGridContainer>
-            <FooterColumn>
+            <FooterMainWrapper>
                 <FooterLogoWrapper>
                     <Link href={'/'} passHref>
-                        <Image src="/assets/icons/logo_white.svg" alt="Logo" width={176} height={158} unoptimized={true} />
+                         <Image src="/assets/icons/logo_white.svg" alt="Logo"  width={175} height={158} /> 
+                        {/*      <Image src="/assets/icons/logo_white.svg" alt="Logo"   fill sizes="(max-width: 768px) 10vw, (max-width: 1400px) 10vw," /> */}
                     </Link>
                 </FooterLogoWrapper>
-            </FooterColumn>
-            <FooterColumn>
-                <FooterAccordion expanded={!isMobile || expanded === 'panel1'} onChange={handleChange('panel1')}>
-                    <AccordionSummaryCustom
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel1a-content"
-                        id="panel1a-header"
-                    >
-                        <FooterTitle>My account</FooterTitle>
-                    </AccordionSummaryCustom>
-                    <AccordionDetails>
-                        <FooterNav menuId={1} ></FooterNav>
-                        <p>1</p>
-                    </AccordionDetails>
-                </FooterAccordion>
-            </FooterColumn>
-            <FooterColumn>
-                <FooterAccordion expanded={!isMobile || expanded === 'panel2'} onChange={handleChange('panel2')}>
-                    <AccordionSummaryCustom
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel2a-content"
-                        id="panel2a-header"
-                    >
-                        <FooterTitle>Categories</FooterTitle>
-                    </AccordionSummaryCustom>
-                    <AccordionDetails>
-                        <p>1</p>
-                        <VerticalSliderMenu menuId={1}/> 
-                    </AccordionDetails>
-                </FooterAccordion>
-            </FooterColumn>
-            <FooterColumn>
-                <FooterAccordion expanded={!isMobile || expanded === 'panel3'} onChange={handleChange('panel3')}>
-                    <AccordionSummaryCustom
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls={`"panel3a-content"`}
-                        id="panel3a-header"
-                    >
-                        <FooterTitle>Information</FooterTitle>
-                    </AccordionSummaryCustom>
-                    <AccordionDetails>
-                        <p>1</p>
-                        {/*   <FooterNav menuId={2} />   */}
-                    </AccordionDetails>
-                </FooterAccordion>
-            </FooterColumn>
-            <FooterColumn>
-                <FooterAccordion expanded={!isMobile || expanded === 'panel4'} onChange={handleChange('panel4')}>
-                    <AccordionSummaryCustom
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls={`"panel4a-content"`}
-                        id="panel4a-header"
-                    >
-                        <FooterTitle>Contacts</FooterTitle>
-                    </AccordionSummaryCustom>
-                    <AccordionDetails>
-                        <p>1</p>
-                        <FooterNav menuId={3} />
-                    </AccordionDetails>
-                </FooterAccordion>
-            </FooterColumn>
-            </FooterGridContainer>
-          
+                <FooterGridContainer>
+                    <FooterColumn>
+                        <FooterAccordion expanded={!isMobile || expanded === 'panel1'} onChange={handleChange('panel1')}>
+                            <AccordionSummaryCustom
+                                expandIcon={<ExpandMoreIcon />}
+                               /*  aria-controls="panel2a-content"
+                                id="panel2a-header" */
+                            >
+                                <FooterTitle>My account</FooterTitle>
+                            </AccordionSummaryCustom>
+                            <AccordionDetails>
+                                <FooterNav menuId={1} ></FooterNav>
+                            </AccordionDetails>
+                        </FooterAccordion>
+                    </FooterColumn>
+                    <FooterColumn>
+                        <FooterAccordion expanded={!isMobile || expanded === 'panel2'} onChange={handleChange('panel2')}>
+                            <AccordionSummaryCustom
+                                expandIcon={<ExpandMoreIcon />}
+                              /*   aria-controls="panel2a-content"
+                                id="panel2a-header" */
+                            >
+                                <FooterTitle>Categories</FooterTitle>
+                            </AccordionSummaryCustom>
+                            <AccordionDetails>
+                              
+                                <VerticalSlider menuId={3} />
+                                
+                          
+                            </AccordionDetails>
+                        </FooterAccordion>
+                    </FooterColumn>
+                    <FooterColumn>
+                        <FooterAccordion expanded={!isMobile || expanded === 'panel3'} onChange={handleChange('panel3')}>
+                            <AccordionSummaryCustom
+                                expandIcon={<ExpandMoreIcon />}
+                              /*   aria-controls={`"panel3a-content"`}
+                                id="panel3a-header" */
+                            >
+                                <FooterTitle>Information</FooterTitle>
+                            </AccordionSummaryCustom>
+                            <AccordionDetails>
+
+                                <FooterNav menuId={2} />
+                            </AccordionDetails>
+                        </FooterAccordion>
+                    </FooterColumn>
+                    <FooterColumn>
+                        <FooterAccordion expanded={!isMobile || expanded === 'panel4'} onChange={handleChange('panel4')}>
+                            <AccordionSummaryCustom
+                                expandIcon={<ExpandMoreIcon />}
+                               /*  aria-controls={`"panel4a-content"`}
+                                id="panel4a-header" */
+                            >
+                                <FooterTitle>Contacts</FooterTitle>
+                            </AccordionSummaryCustom>
+                            <AccordionDetails>
+                                <Contact>
+                                <Image src="/assets/icons/contact_place.svg" alt="Logo" width={24} height={24} unoptimized={true} />
+                                <p>Poland, Warsaw, Kolejowa 45, <br /> location U6</p>
+                                </Contact>
+                                <Contact>
+                                <Image src="/assets/icons/contact_phone.svg" alt="Logo" width={24} height={24} unoptimized={true} />
+                                <p>+48883462736</p>
+                                </Contact>
+                                <Contact>
+                                <Image src="/assets/icons/contact_mail.svg" alt="Logo" width={24} height={24} unoptimized={true} />
+                                <p>polandplatinum@gmail.com</p>
+                                </Contact>
+                                <Contact>
+                                <Image src="/assets/icons/contact_time.svg" alt="Logo" width={24} height={24} unoptimized={true} />
+                                <p>Mon-Fri: from 9-00 to 18-00 <br />
+                                Sat-Sun day is a day off</p>
+                                </Contact>
+                            </AccordionDetails>
+                        </FooterAccordion>
+                    </FooterColumn>
+                </FooterGridContainer>
+            </FooterMainWrapper>
             <PaymentAndDeliveryMethodsContainer>
                 <PaymentAndDeliveryMethods>
                     <FooterSecondTitle>DELIVERY</FooterSecondTitle>
@@ -114,11 +130,8 @@ export const Footer = () => {
                     <Image src="/assets/icons/pay_mc-logo.svg" alt="Logo" width={32} height={22} unoptimized={true} />
                     <Image src="/assets/icons/pay_pp-logo.svg" alt="Logo" width={28} height={22} unoptimized={true} />
                     <Image src="/assets/icons/pay_g-logo.svg" alt="Logo" width={46} height={22} unoptimized={true} />
-                  
-             
                 </PaymentAndDeliveryMethods>
             </PaymentAndDeliveryMethodsContainer>
-
         </FooterContainer>
     )
 }
