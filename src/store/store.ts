@@ -1,9 +1,11 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { wpCustomRtkApi } from "./rtk-queries/wpCustomApi";
 import currencySlice from "./slices/currencySlice";
+import { wooCustomRktApi } from "./rtk-queries/wooCustomApi";
 
 const rootReducer = combineReducers({
     [wpCustomRtkApi.reducerPath]: wpCustomRtkApi.reducer,
+    [wooCustomRktApi.reducerPath]: wooCustomRktApi.reducer,
     currentCurrency: currencySlice,
 });
 
@@ -14,6 +16,7 @@ export const setupStore = () =>
         middleware: (getDefaultMiddleware) =>
             getDefaultMiddleware()
                 .concat(wpCustomRtkApi.middleware)
+                .concat(wooCustomRktApi.middleware)
     })
 }
 
