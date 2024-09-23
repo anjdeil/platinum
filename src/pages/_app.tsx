@@ -8,9 +8,9 @@ import App, { AppContext, AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import { Provider } from "react-redux";
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps }: AppProps)
+{
     const { locale } = useRouter();
-
     const store = setupStore();
 
     return (
@@ -27,7 +27,8 @@ function MyApp({ Component, pageProps }: AppProps) {
     );
 }
 
-MyApp.getInitialProps = async (appContext: AppContext) => {
+MyApp.getInitialProps = async (appContext: AppContext) =>
+{
     const appProps = await App.getInitialProps(appContext);
     return {
         ...appProps,
