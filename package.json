@@ -11,6 +11,7 @@
   "dependencies": {
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
+    "@hookform/resolvers": "^3.9.0",
     "@mui/material": "^6.0.1",
     "@reduxjs/toolkit": "^2.2.7",
     "@types/react-redux": "^7.1.33",
@@ -22,6 +23,7 @@
     "next-intl": "^3.19.0",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.53.0",
     "react-redux": "^9.1.2",
     "styled-components": "^6.1.12",
     "zod": "^3.23.8"
