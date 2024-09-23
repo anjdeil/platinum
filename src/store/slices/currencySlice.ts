@@ -1,17 +1,13 @@
+import { SelectOptionsProps } from '@/types/layouts/Select';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export interface CurrencyState {
-    code: string;
-    symbol: string;
-}
-
-export const currencySymbols: CurrencyState[] = [
+export const currencySymbols: SelectOptionsProps[] = [
     { code: 'EUR', symbol: '€' },
     { code: 'PLN', symbol: 'zł' },
     { code: 'USD', symbol: '$' },
 ];
 
-const initialState: CurrencyState = {
+const initialState: SelectOptionsProps = {
     code: 'EUR',
     symbol: '€',
 };

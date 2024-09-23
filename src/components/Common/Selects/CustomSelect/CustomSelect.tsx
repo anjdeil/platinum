@@ -1,13 +1,7 @@
-import { CurrencyState } from "@/store/slices/currencySlice";
+import { CustomSelectProps } from "@/types/layouts/Select";
 import { useCallback, useEffect, useRef, useState } from "react";
 import ArrowIcon from "../../Icons/ArrowIcon/ArrowIcon";
 import { DropdownMenu, MenuItem, SortSelectStyled, StyledSelect } from "./styles";
-
-interface CustomSelectProps {
-  options: CurrencyState[];
-  value: string;
-  onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-}
 
 export default function CustomSelect({ options, value, onChange }: CustomSelectProps) {
     const [isOpen, setIsOpen] = useState(false);
@@ -44,7 +38,6 @@ export default function CustomSelect({ options, value, onChange }: CustomSelectP
             </option>
           ))}
         </StyledSelect>
-        <div>{options.find(option => option.code === value)?.symbol}</div>
         <ArrowIcon isOpen={isOpen} />
         <DropdownMenu isOpen={isOpen}>
           {options.map(option => (
