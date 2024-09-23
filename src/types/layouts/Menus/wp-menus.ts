@@ -13,7 +13,6 @@ const wpNavLinkSchema = z.object({
 export const wpMenuPropsSchema = z.object({
     menuId: z.number(),
     skeleton: MenuSkeletonPropsSchema.optional(),
-    className: z.string().optional(),
     ...NavListPropsSchema.shape,
     ...NavLinkPropsSchema.shape,
 });

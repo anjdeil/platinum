@@ -12,7 +12,7 @@ const waveAnimation = keyframes`
 `;
 
 export const SkeletonElement = styled.div<SkeletonElementProps>`
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background: ${({ theme }) => theme.background.skeleton};
   background-size: 200px 100%;
   animation: ${waveAnimation} 1.5s infinite ease-in-out;
   width: ${({ width }) => width};
@@ -23,5 +23,5 @@ export const SkeletonElement = styled.div<SkeletonElementProps>`
 export const SkeletonContainer = styled.div<SkeletonContainerProps>`
   display: flex;
   flex-direction: ${({ direction = 'row' }) => direction};
-  gap: ${({ gap }) => gap || "10px"};
+  gap: ${({ gap = "10px" }) => gap};
 `;

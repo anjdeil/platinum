@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 export const BadgeWrapper = styled.span<{ count: number }>`
-    display: ${({ count }) => (count > 0 ? 'inline-block' : 'none')};
+    display: ${({ count }) => (count > 0 ? 'flex' : 'none')};
     box-sizing: border-box;
     font-size: 12px;
     line-height: 16px;
@@ -14,7 +14,6 @@ export const BadgeWrapper = styled.span<{ count: number }>`
     position: absolute;
     top: 0;
     right: 0;
-    display: flex;
     justify-content: center;
     align-items: center;
     color: ${({ theme }) => theme.colors.white};

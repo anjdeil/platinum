@@ -21,8 +21,10 @@ const theme: Theme = {
         active: '#1E71BE',
     },
     background: {
+        primaryGradient: 'radial-gradient(79.43% 79.43% at 49.95% 64.07%, #024584 0%, #0B233D 100%)',
         secondary: '#f2f8fe',
-        hover: '#063e7b'
+        hover: '#063e7b',
+        skeleton: 'linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%)',
     },
     spacing: {
         small: '8px',

@@ -28,11 +28,12 @@ export const DropdownMenu = styled.div<MenuProps>`
     top: 100%;
     left: 0;
     width: 100%;
-    height: ${({ isOpen }) => (isOpen ? 'auto' : '0')};
+    height: auto;
+    max-height: ${({ isOpen }) => (isOpen ? '200px' : '0')};
     overflow-y: auto;
     background: ${({ theme }) => theme.colors.white};
     z-index: 1000;
-    transition: height 0.3s ease-out, opacity 0.3s ease-out;
+    transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
     opacity: ${({ isOpen }) => (isOpen ? '1' : '0')};
     visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
 `;
@@ -48,7 +49,7 @@ export const MenuItem = styled.div`
     }    
 `;
 
-export const Arrow = styled.svg<MenuProps>`
+export const StyledArrow = styled.svg<MenuProps>`
     margin-left: auto;
     transform: ${({ isOpen }) => (isOpen ? 'rotate(180deg)' : 'rotate(0deg)')};
 `;

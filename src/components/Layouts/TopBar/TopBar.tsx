@@ -1,20 +1,26 @@
-import BurgerButton from '@/components/Common/Buttons/BurgerButton/BurgerButton';
+import IconButton from '@/components/Common/Buttons/IconButton/IconButton';
+import BurgerIcon from '@/components/Common/Icons/BurgerIcon/BurgerIcon';
+import BurgerIconActive from '@/components/Common/Icons/BurgerIconActive/BurgerIconActive';
 import CurrencySelect from '@/components/Common/Selects/CurrencySelect/CurrencySelect';
 import LanguageSelect from '@/components/Common/Selects/LanguageSelect/LanguageSelect';
-import { StyledButton } from '@/styles/components';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { popupToggle } from '@/store/slices/PopupSlice';
+import { Container, LogoLinkImage, StyledButton } from '@/styles/components';
 import { useTheme } from '@emotion/react';
 import React from 'react';
 import Nav from "../Nav/Nav";
-import { BurgerButtonWrapper, ButtonWrapper, LogoLink, LogoLinkImage, NavWrapper, SelectsWrapper, Stack } from './styles';
+import { BurgerButtonWrapper, ButtonWrapper, LogoLink, NavWrapper, SelectsWrapper, Stack } from './styles';
 
 const TopBar: React.FC = () =>
-{
+{   const dispatch = useAppDispatch();
     const theme = useTheme();
+    const popup = useAppSelector(state => state.Popup);
+
     return (
-        <div className="container hideMobile">
+        <Container>
             <Stack>
-                <LogoLink href="/" passHref>
-                    <LogoLinkImage src="/assets/icons/logo.svg" alt="Logo" width={92} height={92} />
+                <LogoLink href="/">
+                    <LogoLinkImage src="/assets/icons/logo.svg" alt="Logo" width={44} height={44} desktopWidth={92} desktopHeight={92} />
                 </LogoLink>
                 <NavWrapper>
                     <Nav
@@ -36,13 +42,13 @@ const TopBar: React.FC = () =>
                      <CurrencySelect />
                 </SelectsWrapper>
                 <BurgerButtonWrapper>
-                    <BurgerButton />
+                    <IconButton onClick={() => dispatch(popupToggle('hamburger-menu'))} color={ theme.colors.primary } IconComponent={popup === 'hamburger-menu' ? BurgerIconActive : BurgerIcon} />
                 </BurgerButtonWrapper>
                 <ButtonWrapper>
-                  <StyledButton height='42px'>Call us</StyledButton>
+                  <StyledButton>Call us</StyledButton>
                 </ButtonWrapper>
             </Stack>
-        </div>
+        </Container>
     )
 }
 

@@ -1,5 +1,6 @@
-import { StyledButtonProps } from '@/types/styles/components';
+import { LogoLinkImageProps, StyledButtonProps } from '@/types/styles/components';
 import styled from "@emotion/styled";
+import Image from 'next/image';
 
 interface TitleProps {
     as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
@@ -13,14 +14,21 @@ export const Title = styled.h1<TitleProps>`
     font-weight: ${({ fontWeight = 600 }) => fontWeight};
 `;
 
-const Container = styled.div`
+export const Container = styled.div`
+    box-sizing: content-box;
     margin: 0 auto;
+    padding: 0 20px;
+    max-width: 1280px;
+
+    @media ${({ theme }) => theme.media.medium} {
+        padding: 0 32px;        
+    }
 `;
 
 export const StyledButton = styled.button<StyledButtonProps>`
     box-sizing: border-box;
     width: ${({ width = '100%' }) => width};
-    height: ${({ height = '48px' }) => height};
+    padding-block: 11px;
     border-radius: 10px;
     color: ${({ theme, color = theme.colors.black }) => color};
     background-color: ${({ backgroundColor = 'transparent' }) => backgroundColor};
@@ -41,7 +49,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
     }
 
     @media ${({ theme }) => theme.media.large} {
-        height: 56px;
+        padding-block: 16px;
         line-height: 24px;
         font-size: 16px;
     }
@@ -54,4 +62,14 @@ export const StyledIconButton = styled.button`
   display: flex;
   cursor: pointer;
   position: relative;
+`;
+
+export const LogoLinkImage = styled(Image) <LogoLinkImageProps>`
+    width: ${({ width = 44 }) => `${width}px`};
+    height: ${({ height = 44 }) => `${height}px`};
+
+    @media ${({ theme }) => theme.media.large} {
+      width: ${({ desktopWidth = 92 }) => `${desktopWidth}px`};
+      height: ${({ desktopHeight = 92 }) => `${desktopHeight}px`};
+    }
 `;

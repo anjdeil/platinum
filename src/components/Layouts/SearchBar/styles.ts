@@ -1,14 +1,13 @@
-import { SearchFormProps, SearchInputProps } from "@/types/layouts/SearchBar";
+import { SearchBarProps } from "@/types/layouts/SearchBar";
 import styled from "@emotion/styled";
 
-export const SearchForm = styled.form<SearchFormProps>`
+export const SearchForm = styled.form`
     position: relative;
     display: flex;
     align-items: center;
-    height: ${({ height = '40px' }) => height};
 `;
 
-export const SearchInput = styled.input<SearchInputProps>`
+export const SearchInput = styled.input<SearchBarProps>`
     box-sizing: border-box;
     width: ${({ width = '100%' }) => width};
     border-radius: 8px;

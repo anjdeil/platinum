@@ -16,8 +16,10 @@ declare module '@emotion/react' {
             active: string;
         };
         background: {
+            primaryGradient: string;
             secondary: string;
             hover: string;
+            skeleton: string;
         };
         spacing: {
             small: string;

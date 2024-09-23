@@ -3,9 +3,9 @@ import Image from 'next/image';
 import { FC } from 'react';
 import { SearchForm, SearchIcon, SearchInput } from './styles';
 
-const SearchBar: FC<SearchBarProps> = ({ height, width, backgroundColor}) => {
+const SearchBar: FC<SearchBarProps> = ({ width, backgroundColor}) => {
     return (
-        <SearchForm height={height}>
+        <SearchForm>
             <SearchInput
                 placeholder="Search"
                 type="search"

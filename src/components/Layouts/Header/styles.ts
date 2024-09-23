@@ -1,21 +1,21 @@
+import { Container } from "@/styles/components";
 import { HeaderContainerProps, HeaderWrapperProps } from "@/types/layouts/Header";
 import styled from "@emotion/styled";
 
 export const HeaderWrapper = styled.div<HeaderWrapperProps>`
-    background: ${({ backgroundColor }) =>
-        backgroundColor || 'radial-gradient(79.43% 79.43% at 49.95% 64.07%, #024584 0%, #0B233D 100%)'};
-`
+    padding-block: 16px;
+    background: ${({ theme, backgroundColor = theme.background.primaryGradient }) => backgroundColor};
 
-export const HeaderContainer = styled.div<HeaderContainerProps>`
-  height: ${({ height = '72px' }) => height};
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: ${({ gap = '16px' }) => gap};
-  align-items: center;
+    @media ${({ theme }) => theme.media.large} {
+        padding-block: 18.5px;
+    }
+`;
 
-  @media ${({ theme }) => theme.media.large} {
-    height: ${({ desktopHeight = '77px' }) => desktopHeight};
-  }
+export const HeaderContainer = styled(Container) <HeaderContainerProps>`
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: ${({ gap = '16px' }) => gap};
+    align-items: center;
 `;
 
 export const HeaderNav = styled.div`
@@ -31,17 +31,13 @@ export const HeaderContent = styled.div`
 `;
 
 export const HeaderSearch = styled.div`
-    width: 133px;
-
-    @media ${({ theme }) => theme.media.large} {
-        width: 195px;
-    }
+    max-width: 195px;
 `;
 
 export const HeaderIcons = styled.div`
-    width: 124px;
-
-    @media ${({ theme }) => theme.media.large} {
-        width: 210px;
-    }
+    flex-grow: 1;
+    max-width: 210px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 `;

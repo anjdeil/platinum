@@ -10,7 +10,7 @@ export const Overlay = styled.div`
 export const PopupContainer = styled.div<PopupContainerProps>`
     position: fixed;
     background-color: ${({ theme }) => theme.background.secondary};
-    width: ${({ width = '241px' }) => width};
+    width: ${({ width = '70%' }) => width};
     top: 136px;
     left: 0;
     display: grid;
@@ -36,14 +36,6 @@ export const Header = styled.div`
 
 export const Title = styled.div`
     font-size: 1.5rem;
-`;
-
-export const CloseButton = styled.button`
-    display: block;
-    padding: 10px;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
 `;
 
 export const Content = styled.div`

@@ -7,7 +7,6 @@ import { NavLink, NavList } from './styles';
 
 const Nav: FC<wpMenuProps> = ({
     menuId,
-    className='',
     skeleton,
     justify,
     color,
@@ -39,7 +38,6 @@ const Nav: FC<wpMenuProps> = ({
         <nav>
             <NavList
                 justify={justify}
-                className={className}
                 direction={direction}
                 align={align}
                 gap={gap}
