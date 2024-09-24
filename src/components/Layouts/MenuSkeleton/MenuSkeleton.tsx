@@ -1,4 +1,4 @@
-import { MenuSkeletonProps } from "@/types/layouts/Menus";
+import { MenuSkeletonProps } from "@/types/layouts/menus/Skeleton";
 import { FC } from "react";
 import { SkeletonContainer, SkeletonElement } from "./styles";
 

@@ -13,5 +13,11 @@
         "loyaltyProgram": "Программа лояльности",
         "changePassword": "Изменить пароль",
         "logout": "Выход"
+    },
+    "TopBar": {
+        "CallUs": "Позвоните нам"
+    },
+    "Search": {
+        "Search": "Поиск"
     }
 }
