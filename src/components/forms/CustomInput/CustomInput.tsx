@@ -16,7 +16,7 @@ export const CustomInput: FC<CustomInputType> = ({
     className,
     isRequire = true,
     isPassword = false,
-    isCheckbox = false,
+    isCheckbox = true,
     isNumeric = false,
     isPost = false,
     placeholder,

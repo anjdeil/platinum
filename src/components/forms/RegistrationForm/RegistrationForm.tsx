@@ -52,13 +52,13 @@ export const RegistrationForm = forwardRef((props, ref) =>
 
     return (
         <CustomForm>
-            <FormWrapper>
-                <CustomInput
-                    fieldName="name"
-                    name="name"
-                    register={register}
-                />
-            </FormWrapper>
+            {/* <FormWrapper> */}
+            <CustomInput
+                fieldName="name"
+                name="name"
+                register={register}
+            />
+            {/* </FormWrapper> */}
         </CustomForm>
     );
 });

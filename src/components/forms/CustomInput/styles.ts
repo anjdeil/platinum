@@ -9,52 +9,53 @@ interface CustomInputStyleProps
 }
 
 export const CustomInputStyle = styled.label<CustomInputStyleProps>`
-    padding: 5px;
-    display: flex;
-    flex-direction: ${({ isCheckbox }) => isCheckbox ? 'row' : 'column'};
-    align-items: ${({ isCheckbox }) => isCheckbox ? 'center' : 'flex-start'};
-    position: relative;
-    width: ${({ isCheckbox }) => isCheckbox ? 'fit-content' : '100%'};
-    font-size: '16px';
-    background-color: ${({ theme }) => theme.background.formElements};
-    overflow: hidden;
 
-    div {
-        order: ${({ isCheckbox }) => isCheckbox ? '-1' : '0'};
-    }
-
-    span {
-        margin-bottom: ${({ isCheckbox }) => isCheckbox ? '0' : '5px'};
-    }
+    font-size: 14px;
 
     input {
-        margin-right: ${({ isCheckbox }) => isCheckbox ? '15px' : '0'}; 
-        padding: 15px;
-        border: ${({ isCheckbox }) => isCheckbox ? '1px solid #ccc' : 'none'};
-        border-radius: 10px;
-        min-height: ${({ isTextArea }) => isTextArea ? '150px' : 'auto'};
-        width: ${({ isCheckbox }) => isCheckbox ? '24px' : '100%'};
-        height:  ${({ isCheckbox }) => isCheckbox ? '24px' : '100%'};
-        background-color: $white-lilac;
-        transition: outline-width .2s ease-in-out;
-        outline-color: ${({ theme, isError }) => isError ? theme.colors.error : theme.background.formElements};
-
-        &::placeholder {
-            text-align: ${({ isTextArea }) => isTextArea ? 'start' : 'initial'};
-        }
-
-        &:focus {
-            outline: 1px solid $accent;
-            box-shadow: 0 0 6px 0 rgba(43, 42, 41, 0.2);
-        }
+        width: ${({ isCheckbox }) => isCheckbox ? '15px' : '100%'};
+        height:  ${({ isCheckbox }) => isCheckbox ? '15px' : '100%'};
     }
 
     @media ${({ theme }) => theme.media.medium} {
-        font-size: 14px;
+        padding: 5px;
+        display: flex;
+        flex-direction: ${({ isCheckbox }) => isCheckbox ? 'row' : 'column'};
+        align-items: ${({ isCheckbox }) => isCheckbox ? 'center' : 'flex-start'};
+        position: relative;
+        width: ${({ isCheckbox }) => isCheckbox ? 'fit-content' : '100%'};
+        font-size: 16px;
+        overflow: hidden;
+
+        div {
+            order: ${({ isCheckbox }) => isCheckbox ? '-1' : '0'};
+        }
+
+        span {
+            margin-bottom: ${({ isCheckbox }) => isCheckbox ? '0' : '5px'};
+        }
 
         input {
-            width: ${({ isCheckbox }) => isCheckbox ? '15px' : '100%'};
-            height:  ${({ isCheckbox }) => isCheckbox ? '15px' : '100%'};
+            margin-right: ${({ isCheckbox }) => isCheckbox ? '15px' : '0'}; 
+            padding: 15px;
+            border: ${({ isCheckbox }) => isCheckbox ? '1px solid #ccc' : 'none'};
+            border-radius: 10px;
+            min-height: ${({ isTextArea }) => isTextArea ? '150px' : 'auto'};
+            width: ${({ isCheckbox }) => isCheckbox ? '24px' : '100%'};
+            height:  ${({ isCheckbox }) => isCheckbox ? '24px' : '100%'};
+            background-color: $white-lilac;
+            transition: outline-width .2s ease-in-out;
+            background-color: ${({ theme }) => theme.background.formElements};
+            outline-color: ${({ theme, isError }) => isError ? theme.colors.error : theme.background.formElements};
+
+            &::placeholder {
+                text-align: ${({ isTextArea }) => isTextArea ? 'start' : 'initial'};
+            }
+
+            &:focus {
+                outline: 1px solid $accent;
+                box-shadow: 0 0 6px 0 rgba(43, 42, 41, 0.2);
+            }
         }
     }
 `;
@@ -66,12 +67,12 @@ export const CustomInputWrapper = styled.div`
 `;
 
 export const CustomRequired = styled.span`
-    margin-left: 5px;
-    font-size: 21px;
-    color: ${({ theme }) => theme.colors.primary};
+    font-size: 16px;
 
     @media ${({ theme }) => theme.media.medium} {
-        font-size: 16px;
+        margin-left: 5px;
+        font-size: 21px;
+        color: ${({ theme }) => theme.colors.primary};
     }
 `;
 
@@ -84,10 +85,11 @@ export const ShowPasswordImage = styled(Image)`
 `;
 
 export const CustomError = styled.p`
-    padding-left: 10px;
-    margin-top: 10px;
+    margin-top: 5px;
 
      @media ${({ theme }) => theme.media.medium} {
-        margin-top: 5px;
+        padding-left: 10px;
+        margin-top: 10px;
+        
     }
 `;
