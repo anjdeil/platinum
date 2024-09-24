@@ -49,12 +49,12 @@ const theme: Theme = {
         large: '24px',
     },
     media: {
-        small: '(min-width: 430px)',
-        medium: '(min-width: 768px)',
-        large: '(min-width: 1024px)',
-        middle: '(min-width: 1100px)',
-        xl: '(min-width: 1200px)',
-        extraLarge: '(min-width: 1440px)',
+        small: '(max-width: 430px)',
+        medium: '(max-width: 768px)',
+        large: '(max-width: 1024px)',
+        middle: '(max-width: 1100px)',
+        xl: '(max-width: 1200px)',
+        extraLarge: '(max-width: 1440px)',
     },
 };
 

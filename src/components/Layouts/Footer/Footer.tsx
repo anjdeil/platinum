@@ -1,11 +1,10 @@
 import styled from 'styled-components';
 import { useMediaQuery } from '@mui/material';
 /* import Socials from "../Socials/Socials"; */
-
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { FC, useContext, useState } from 'react';
-import { AccordionSummaryCustom, Contact, FooterAccordion, FooterColumn, FooterContainer, FooterGridContainer, FooterLogoWrapper, FooterMainWrapper, FooterSecondTitle, FooterTitle, PaymentAndDeliveryMethods, PaymentAndDeliveryMethodsContainer, } from './styles';
+import { AccordionSummaryCustom, Contact, ContactLink, FooterAccordion, FooterColumn, FooterContainer, FooterGridContainer, FooterLogoImage, FooterLogoWrapper, FooterMainWrapper, FooterSecondTitle, FooterTitle, PaymentAndDeliveryMethods, PaymentAndDeliveryMethodsContainer, } from './styles';
 import Link from 'next/link';
 import Image from 'next/image';
 import VerticalSlider from '../VerticalSliderMenu/VerticalSliderMenu';
@@ -26,17 +25,14 @@ export const Footer: FC = () => {
     return (
         <FooterContainer >
             <FooterMainWrapper>
-                {/* <FooterLogoWrapper>
+                <FooterLogoWrapper>
                     <Link href={'/'} passHref>
-                        <Image
+                        <FooterLogoImage
                             src="/assets/icons/logo_white.svg"
-                            alt="Logo"
-                            fill
-                            sizes="(max-width: 768px) 1vw, (max-width: 1400px) 1vw"
+                            alt="Logo" width={175} height={158}
                         />
                     </Link>
-                </FooterLogoWrapper> */}
-
+                </FooterLogoWrapper>
                 <FooterGridContainer>
                     <FooterColumn>
                         <FooterAccordion expanded={!isMobile || expanded === 'panel1'} onChange={handleChange('panel1')}>
@@ -48,7 +44,18 @@ export const Footer: FC = () => {
                                 <FooterTitle>My account</FooterTitle>
                             </AccordionSummaryCustom>
                             <AccordionDetails>
-                                <Nav menuId={1} direction='column' gap='16px' align='flex-start'></Nav>
+                                <Nav
+                                    skeleton={{
+                                        direction: 'column',
+                                        elements: 4,
+                                        width: "160px",
+                                        height: "24px",
+                                        gap: '10px'
+                                    }}
+                                    menuId={1}
+                                    direction='column'
+                                    gap='16px'
+                                    align='flex-start'></Nav>
                             </AccordionDetails>
                         </FooterAccordion>
                     </FooterColumn>
@@ -61,11 +68,19 @@ export const Footer: FC = () => {
                             >
                                 <FooterTitle>Categories</FooterTitle>
                             </AccordionSummaryCustom>
-                            <AccordionDetails>
+                            <AccordionDetails /* centered сделать */>
+                                <VerticalSlider
+                                    menuId={3}
+                                    skeleton={{
+                                        direction: 'column',
+                                        elements: 4,
+                                        width: "160px",
+                                        height: "24px",
+                                        gap: '10px'
+                                    }}
+                                    width='13vw'
 
-                                <VerticalSlider menuId={3} />
-
-
+                                />
                             </AccordionDetails>
                         </FooterAccordion>
                     </FooterColumn>
@@ -78,8 +93,19 @@ export const Footer: FC = () => {
                             >
                                 <FooterTitle>Information</FooterTitle>
                             </AccordionSummaryCustom>
-                            <AccordionDetails>
-                                <Nav menuId={1} direction='column' gap='16px' align='flex-start'></Nav>
+                            <AccordionDetails >
+                                <Nav
+                                    menuId={1}
+                                    skeleton={{
+                                        direction: 'column',
+                                        elements: 4,
+                                        width: "160px",
+                                        height: "24px",
+                                        gap: '10px'
+                                    }}
+                                    direction='column'
+                                    gap='16px'
+                                    align='flex-start'></Nav>
                             </AccordionDetails>
                         </FooterAccordion>
                     </FooterColumn>
@@ -95,21 +121,28 @@ export const Footer: FC = () => {
                             <AccordionDetails>
                                 <Contact>
                                     <Image src="/assets/icons/contact_place.svg" alt="Logo" width={24} height={24} unoptimized={true} />
-                                    <p>Poland, Warsaw, Kolejowa 45, <br /> location U6</p>
+                                    <ContactLink href="https://www.google.com/maps?q=Poland,+Warsaw,+Kolejowa+45,+location+U6" passHref>
+                                        Poland, Warsaw, Kolejowa 45,  location U6
+                                    </ContactLink>
                                 </Contact>
                                 <Contact>
                                     <Image src="/assets/icons/contact_phone.svg" alt="Logo" width={24} height={24} unoptimized={true} />
-                                    <p>+48883462736</p>
+                                    <ContactLink href="tel:+48883462736" passHref>
+                                        +48883462736
+                                    </ContactLink>
                                 </Contact>
                                 <Contact>
                                     <Image src="/assets/icons/contact_mail.svg" alt="Logo" width={24} height={24} unoptimized={true} />
-                                    <p>polandplatinum@gmail.com</p>
+                                    <ContactLink href="mailto:polandplatinum@gmail.com" passHref>
+                                        polandplatinum@gmail.com
+                                    </ContactLink>
                                 </Contact>
                                 <Contact>
                                     <Image src="/assets/icons/contact_time.svg" alt="Logo" width={24} height={24} unoptimized={true} />
                                     <p>Mon-Fri: from 9-00 to 18-00 <br />
                                         Sat-Sun day is a day off</p>
                                 </Contact>
+
                             </AccordionDetails>
                         </FooterAccordion>
                     </FooterColumn>
