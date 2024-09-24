@@ -5,13 +5,17 @@ import Image from 'next/image';
 interface TitleProps {
     as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
     fontWeight?: number;
-    fontSize: number;
+    fontSize?: number;
+    textAlign?: "center" | "left" | "right";
+    uppercase?: boolean;
 }
 
 export const Title = styled.h1<TitleProps>`
     color: black;
     font-size: ${({ fontSize = 24 }) => fontSize}px;
     font-weight: ${({ fontWeight = 600 }) => fontWeight};
+    text-transform: ${({ uppercase }) => uppercase ? "uppercase" : "none"};
+    text-align: ${({ textAlign = "left" }) => textAlign};
 `;
 
 export const Container = styled.div`
