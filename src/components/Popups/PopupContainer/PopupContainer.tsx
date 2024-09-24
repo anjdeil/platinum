@@ -1,3 +1,4 @@
+import HamburgerMenu from "@/components/Popups/HamburgerMenu";
 import { useAppSelector } from "@/store";
 import { popupClosed } from "@/store/slices/PopupSlice";
 import { usePathname } from "next/navigation";
@@ -56,11 +57,13 @@ const PopupContainer = () => {
         dispatch(popupClosed());
     }
 
-    switch (popup) {
-        
+    switch (popup) {        
+        case 'hamburger-menu': {
+            return (
+                <HamburgerMenu onClose={closePopup} />
+            )
+        }
     }
-
-    return null;
 }
 
 export default PopupContainer;
