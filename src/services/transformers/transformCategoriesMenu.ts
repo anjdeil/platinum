@@ -1,5 +1,5 @@
 import { Category, Subcategory } from "@/types/layouts/CategoriesMenu";
-import CategoryType from "@/types/services/wpCustomApi/CategoryType";
+import CategoryType from "@/types/shop/categories";
 
 const transformCategoriesMenu = (response: CategoryType[]): Category[] => {
     const categories: Category[] = [];

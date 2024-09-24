@@ -2,7 +2,6 @@ import { MenusContext } from "@/components/Layout";
 import { CategoriesMenu } from "@/components/Layouts/CategoriesMenu";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { popupToggle } from "@/store/slices/PopupSlice";
-import { Title } from "@/styles/components";
 import axios from "axios";
 import { useContext, useState } from "react";
 
@@ -31,7 +30,7 @@ export default function Home()
   return (
     <main>
       {/* <TestSelect /> */}
-      <Title as='h2' fontSize={20}>Symbol of {currency.code} currency isQQ {currency.symbol}</Title>
+      {/* <Title as='h2' fontSize={20}>Symbol of {currency.code} currency isQQ {currency.symbol}</Title> */}
       <button onClick={() => dispatch(popupToggle('categories-menu'))}>Fetch</button>
       <CategoriesMenu />
     </main >

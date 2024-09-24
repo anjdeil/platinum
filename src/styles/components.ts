@@ -1,4 +1,4 @@
-import { LogoLinkImageProps, LogoLinkProps, StyledButtonProps } from '@/types/styles/components';
+import { LogoLinkProps, StyledButtonProps } from '@/types/styles/components';
 import styled from "@emotion/styled";
 import Image from 'next/image';
 import Link from 'next/link';
@@ -75,8 +75,8 @@ export const StyledIconButton = styled.button`
 export const LogoLink = styled(Link) <LogoLinkProps>`
     display: flex;
     position: relative;
-    width: ${({ desktopWidth = 92 }) => `${desktopWidth}px`};
-    height: ${({ desktopHeight = 92 }) => `${desktopHeight}px`};
+    width: ${({ desktopwidth = 92 }) => `${desktopwidth}px`};
+    height: ${({ desktopheight = 92 }) => `${desktopheight}px`};
     
     @media ${({ theme }) => theme.media.large} {
         width: ${({ width = 44 }) => `${width}px`};
@@ -84,7 +84,7 @@ export const LogoLink = styled(Link) <LogoLinkProps>`
     }
 `;
 
-export const LogoLinkImage = styled(Image) <LogoLinkImageProps>`
+export const LogoLinkImage = styled(Image)`
     width: 100%;
     height: 100%;
 `;
