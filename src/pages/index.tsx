@@ -22,9 +22,6 @@ export default function Home()
     }
   }
 
-  const dispatch = useAppDispatch();
-  const popup = useAppSelector(state => state.Popup);
-
   { data && <p>{data}</p> }
   return (
     <main>
