@@ -99,7 +99,7 @@ export const PaymentAndDeliveryMethodsContainer = styled.div`
 //---------------ACCORDION-------------
 
 export const FooterAccordion = styled(Accordion)`
-  color:  ${({ theme }) => theme.colors.white};
+    color:  ${({ theme }) => theme.colors.white};
     background-color: transparent;
     border: none;
     box-shadow: none;
