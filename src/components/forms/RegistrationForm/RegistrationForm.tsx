@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { WooCustomerReqType } from "@/types/services";
-// import { CustomFormProps, FormWrapper } from "./styles";
 import { CustomInput } from "../CustomInput";
 import { CustomForm, FormWrapper } from "./styles";
 
@@ -25,25 +24,21 @@ interface FormHandle
 
 export const RegistrationForm = forwardRef((props, ref) =>
 {
+    useImperativeHandle(ref, () => ({
+        submit: () => handleSubmit(onSubmit)(),
+    }));
 
     useImperativeHandle(ref, () => ({ submit: () => handleSubmit(onSubmit)() }));
 
     const formSchema = RegistrationFormSchema(false, false, false);
     type RegistrationFormType = z.infer<typeof formSchema>;
 
-    const {
-        register,
+    const { register,
         handleSubmit,
         formState: { errors, isSubmitting, isSubmitSuccessful },
-        setValue,
-        reset,
-    } = useForm<RegistrationFormType>({
-        resolver: zodResolver(formSchema),
-    });
-
-    useImperativeHandle(ref, () => ({
-        submit: () => handleSubmit(onSubmit)(),
-    }));
+        setValue, reset } = useForm<RegistrationFormType>({
+            resolver: zodResolver(formSchema)
+        });
 
     const onSubmit = (data) =>
     {
@@ -52,13 +47,24 @@ export const RegistrationForm = forwardRef((props, ref) =>
 
     return (
         <CustomForm>
-            {/* <FormWrapper> */}
-            <CustomInput
-                fieldName="name"
-                name="name"
-                register={register}
-            />
-            {/* </FormWrapper> */}
+            <FormWrapper>
+                <CustomInput
+                    fieldName="Imię"
+                    name='name'
+                    register={register}
+                    errors={errors}
+                    setValue={setValue}
+                // initialValue={userFields ? userFields.first_name : null}
+                />
+
+                <CustomInput
+                    fieldName="Nazwisko"
+                    name='lastName'
+                    register={register}
+                    errors={errors}
+                    setValue={setValue}
+                />
+            </FormWrapper>
         </CustomForm>
     );
 });

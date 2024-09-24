@@ -13,10 +13,9 @@ export const CustomInput: FC<CustomInputType> = ({
     name,
     register,
     errors,
-    className,
     isRequire = true,
     isPassword = false,
-    isCheckbox = true,
+    isCheckbox = false,
     isNumeric = false,
     isPost = false,
     placeholder,
@@ -53,7 +52,7 @@ export const CustomInput: FC<CustomInputType> = ({
         ...registerProps,
         inputMode: isNumeric ? 'numeric' : undefined,
         patter: isNumeric ? '[0-9]*' : undefined,
-        oninput: isNumeric ? (e: FormEvent<HTMLInputElement>) => numericValidate(e, isPost) : undefined,
+        onInput: isNumeric ? (e: FormEvent<HTMLInputElement>) => numericValidate(e, isPost) : undefined,
         onChange,
         value,
         checked: isCheckbox ? checked : undefined,
@@ -62,7 +61,7 @@ export const CustomInput: FC<CustomInputType> = ({
 
     return (
         <div>
-            <CustomInputStyle isError isTextArea isCheckbox>
+            <CustomInputStyle isError={isError} isTextArea={isTextarea} isCheckbox={isCheckbox}>
                 <span>
                     {fieldName}
                     {isRequire && <CustomRequired>*</CustomRequired>}
@@ -70,13 +69,14 @@ export const CustomInput: FC<CustomInputType> = ({
                 <CustomInputWrapper>
                     {isTextarea ? <textarea {...commonProps} /> : <input type={type || 'text'} {...commonProps} />}
                 </CustomInputWrapper>
-                {isPassword && <ShowPasswordImage
-                    src={showPassPath}
-                    alt={'show or hidden password button'}
-                    width={24}
-                    height={24}
-                    onClick={toggleShowPassword}
-                    unoptimized={true} />}
+                {isPassword &&
+                    <ShowPasswordImage
+                        src={showPassPath}
+                        alt={'show or hidden password button'}
+                        width={24}
+                        height={24}
+                        onClick={toggleShowPassword}
+                        unoptimized={true} />}
             </CustomInputStyle>
             {isError && name && <CustomError>{errors[name]?.message}</CustomError>}
         </div>

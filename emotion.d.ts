@@ -17,6 +17,9 @@ declare module '@emotion/react' {
             active: string;
             error: string;
         };
+        shadows: {
+            primaryShadow: string;
+        },
         background: {
             secondary: string;
             hover: string;

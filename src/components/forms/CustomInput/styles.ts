@@ -9,8 +9,8 @@ interface CustomInputStyleProps
 }
 
 export const CustomInputStyle = styled.label<CustomInputStyleProps>`
-
     font-size: 14px;
+    font-family: ${({ theme }) => theme.typography.fontFamily};
 
     input {
         width: ${({ isCheckbox }) => isCheckbox ? '15px' : '100%'};
@@ -43,7 +43,7 @@ export const CustomInputStyle = styled.label<CustomInputStyleProps>`
             min-height: ${({ isTextArea }) => isTextArea ? '150px' : 'auto'};
             width: ${({ isCheckbox }) => isCheckbox ? '24px' : '100%'};
             height:  ${({ isCheckbox }) => isCheckbox ? '24px' : '100%'};
-            background-color: $white-lilac;
+            background-color: black;
             transition: outline-width .2s ease-in-out;
             background-color: ${({ theme }) => theme.background.formElements};
             outline-color: ${({ theme, isError }) => isError ? theme.colors.error : theme.background.formElements};
@@ -53,8 +53,8 @@ export const CustomInputStyle = styled.label<CustomInputStyleProps>`
             }
 
             &:focus {
-                outline: 1px solid $accent;
-                box-shadow: 0 0 6px 0 rgba(43, 42, 41, 0.2);
+                outline: 1px solid green;
+                box-shadow:  ${({ theme }) => theme.shadows.primaryShadow};
             }
         }
     }

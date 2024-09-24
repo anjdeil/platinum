@@ -5,7 +5,6 @@ export const CustomInputSchema = z.object({
     name: z.string().optional(),
     register: z.any().optional(),
     errors: z.any().optional(),
-    className: z.string().optional(),
     isRequire: z.boolean().optional(),
     isPassword: z.boolean().optional(),
     isCheckbox: z.boolean().optional(),
