@@ -2,20 +2,17 @@ import styled from 'styled-components';
 import { useMediaQuery } from '@mui/material';
 /* import Socials from "../Socials/Socials"; */
 
-/* import { SliderMenu } from "../SliderMenu";
-import { SubscriptionForm } from "@/components/Forms"; */
-
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { useContext, useState } from 'react';
-import { AccordionSummaryCustom, Contact, FooterAccordion, FooterColumn, FooterContainer, FooterGridContainer, FooterLogoWrapper, FooterMainWrapper, FooterNav, FooterSecondTitle, FooterTitle, PaymentAndDeliveryMethods, PaymentAndDeliveryMethodsContainer, } from './styles';
+import { FC, useContext, useState } from 'react';
+import { AccordionSummaryCustom, Contact, FooterAccordion, FooterColumn, FooterContainer, FooterGridContainer, FooterLogoWrapper, FooterMainWrapper, FooterSecondTitle, FooterTitle, PaymentAndDeliveryMethods, PaymentAndDeliveryMethodsContainer, } from './styles';
 import Link from 'next/link';
 import Image from 'next/image';
 import VerticalSlider from '../VerticalSliderMenu/VerticalSliderMenu';
+import Nav from '../Nav/Nav';
 
 
-
-export const Footer = () => {
+export const Footer: FC = () => {
 
     const isMobile = useMediaQuery('(max-width: 768px)');
 
@@ -29,24 +26,29 @@ export const Footer = () => {
     return (
         <FooterContainer >
             <FooterMainWrapper>
-                <FooterLogoWrapper>
+                {/* <FooterLogoWrapper>
                     <Link href={'/'} passHref>
-                         <Image src="/assets/icons/logo_white.svg" alt="Logo"  width={175} height={158} /> 
-                        {/*      <Image src="/assets/icons/logo_white.svg" alt="Logo"   fill sizes="(max-width: 768px) 10vw, (max-width: 1400px) 10vw," /> */}
+                        <Image
+                            src="/assets/icons/logo_white.svg"
+                            alt="Logo"
+                            fill
+                            sizes="(max-width: 768px) 1vw, (max-width: 1400px) 1vw"
+                        />
                     </Link>
-                </FooterLogoWrapper>
+                </FooterLogoWrapper> */}
+
                 <FooterGridContainer>
                     <FooterColumn>
                         <FooterAccordion expanded={!isMobile || expanded === 'panel1'} onChange={handleChange('panel1')}>
                             <AccordionSummaryCustom
                                 expandIcon={<ExpandMoreIcon />}
-                               /*  aria-controls="panel2a-content"
-                                id="panel2a-header" */
+                            /*  aria-controls="panel2a-content"
+                             id="panel2a-header" */
                             >
                                 <FooterTitle>My account</FooterTitle>
                             </AccordionSummaryCustom>
                             <AccordionDetails>
-                                <FooterNav menuId={1} ></FooterNav>
+                                <Nav menuId={1} direction='column' gap='16px' align='flex-start'></Nav>
                             </AccordionDetails>
                         </FooterAccordion>
                     </FooterColumn>
@@ -54,16 +56,16 @@ export const Footer = () => {
                         <FooterAccordion expanded={!isMobile || expanded === 'panel2'} onChange={handleChange('panel2')}>
                             <AccordionSummaryCustom
                                 expandIcon={<ExpandMoreIcon />}
-                              /*   aria-controls="panel2a-content"
-                                id="panel2a-header" */
+                            /*   aria-controls="panel2a-content"
+                              id="panel2a-header" */
                             >
                                 <FooterTitle>Categories</FooterTitle>
                             </AccordionSummaryCustom>
                             <AccordionDetails>
-                              
+
                                 <VerticalSlider menuId={3} />
-                                
-                          
+
+
                             </AccordionDetails>
                         </FooterAccordion>
                     </FooterColumn>
@@ -71,14 +73,13 @@ export const Footer = () => {
                         <FooterAccordion expanded={!isMobile || expanded === 'panel3'} onChange={handleChange('panel3')}>
                             <AccordionSummaryCustom
                                 expandIcon={<ExpandMoreIcon />}
-                              /*   aria-controls={`"panel3a-content"`}
-                                id="panel3a-header" */
+                            /*   aria-controls={`"panel3a-content"`}
+                              id="panel3a-header" */
                             >
                                 <FooterTitle>Information</FooterTitle>
                             </AccordionSummaryCustom>
                             <AccordionDetails>
-
-                                <FooterNav menuId={2} />
+                                <Nav menuId={1} direction='column' gap='16px' align='flex-start'></Nav>
                             </AccordionDetails>
                         </FooterAccordion>
                     </FooterColumn>
@@ -86,28 +87,28 @@ export const Footer = () => {
                         <FooterAccordion expanded={!isMobile || expanded === 'panel4'} onChange={handleChange('panel4')}>
                             <AccordionSummaryCustom
                                 expandIcon={<ExpandMoreIcon />}
-                               /*  aria-controls={`"panel4a-content"`}
-                                id="panel4a-header" */
+                            /*  aria-controls={`"panel4a-content"`}
+                             id="panel4a-header" */
                             >
                                 <FooterTitle>Contacts</FooterTitle>
                             </AccordionSummaryCustom>
                             <AccordionDetails>
                                 <Contact>
-                                <Image src="/assets/icons/contact_place.svg" alt="Logo" width={24} height={24} unoptimized={true} />
-                                <p>Poland, Warsaw, Kolejowa 45, <br /> location U6</p>
+                                    <Image src="/assets/icons/contact_place.svg" alt="Logo" width={24} height={24} unoptimized={true} />
+                                    <p>Poland, Warsaw, Kolejowa 45, <br /> location U6</p>
                                 </Contact>
                                 <Contact>
-                                <Image src="/assets/icons/contact_phone.svg" alt="Logo" width={24} height={24} unoptimized={true} />
-                                <p>+48883462736</p>
+                                    <Image src="/assets/icons/contact_phone.svg" alt="Logo" width={24} height={24} unoptimized={true} />
+                                    <p>+48883462736</p>
                                 </Contact>
                                 <Contact>
-                                <Image src="/assets/icons/contact_mail.svg" alt="Logo" width={24} height={24} unoptimized={true} />
-                                <p>polandplatinum@gmail.com</p>
+                                    <Image src="/assets/icons/contact_mail.svg" alt="Logo" width={24} height={24} unoptimized={true} />
+                                    <p>polandplatinum@gmail.com</p>
                                 </Contact>
                                 <Contact>
-                                <Image src="/assets/icons/contact_time.svg" alt="Logo" width={24} height={24} unoptimized={true} />
-                                <p>Mon-Fri: from 9-00 to 18-00 <br />
-                                Sat-Sun day is a day off</p>
+                                    <Image src="/assets/icons/contact_time.svg" alt="Logo" width={24} height={24} unoptimized={true} />
+                                    <p>Mon-Fri: from 9-00 to 18-00 <br />
+                                        Sat-Sun day is a day off</p>
                                 </Contact>
                             </AccordionDetails>
                         </FooterAccordion>

@@ -3,8 +3,8 @@ import { z } from 'zod';
 export const NavListPropsSchema = z.object({
     gap: z.string().optional(),
     mobGap: z.string().optional(),
-    justify: z.enum(['center', 'space-between']).optional(),
-    align: z.enum(['center', 'flex-start']).optional(),
+    justify: z.enum(['center', 'space-between', 'start']).optional(),
+    align: z.enum(['center', 'flex-start', 'start']).optional(),
     direction: z.enum(['row', 'column']).optional(),
 });
 

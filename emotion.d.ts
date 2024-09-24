@@ -29,9 +29,10 @@ declare module '@emotion/react' {
             large: string;
         };
         media: {
+            small: string;
             medium: string;
             large: string;
-            midle: string;
+            middle: string;
             xl: string;
             extraLarge: string;
         };

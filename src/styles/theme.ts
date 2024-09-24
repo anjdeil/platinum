@@ -1,7 +1,5 @@
 
 import { Theme } from '@emotion/react';
-
-
 import { Montserrat } from "next/font/google";
 
 const montserrat = Montserrat({
@@ -30,8 +28,6 @@ const theme: Theme = {
             '600 1.5rem/2rem ' + montserrat.style.fontFamily,
         titleH2Medium:
             '500 1.5rem/2rem ' + montserrat.style.fontFamily,
-
-
     },
     colors: {
         primary: '#113760',
@@ -53,9 +49,10 @@ const theme: Theme = {
         large: '24px',
     },
     media: {
+        small: '(min-width: 430px)',
         medium: '(min-width: 768px)',
         large: '(min-width: 1024px)',
-        midle: '(min-width: 1100px)',
+        middle: '(min-width: 1100px)',
         xl: '(min-width: 1200px)',
         extraLarge: '(min-width: 1440px)',
     },
