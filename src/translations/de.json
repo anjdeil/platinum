@@ -2,5 +2,16 @@
     "TestLanguages": {
         "title": "Das serverseitig bereitgestellte Gebietsschema ist \"{locale}\"",
         "link": "Verlinken Sie einfach auf eine andere Seite übersetzt"
+    },
+    "MyAccount": {
+        "dashboard": "Armaturenbrett",
+        "userInformation": "Benutzerinformationen",
+        "shippingAddress": "Lieferadresse",
+        "orderHistory": "Geschichte der Bestellung",
+        "wishlist": "Wunschzettel",
+        "subscription": "Anmeldung zum Newsletter",
+        "loyaltyProgram": "Loyalitätsprogramm",
+        "changePassword": "Passwort ändern",
+        "logout": "Abmeldung"
     }
 }
