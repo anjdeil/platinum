@@ -6,10 +6,10 @@ const SideList: FC<SideListPropsType> = ({ links, onClick }) => {
     return (
          <SideListContainer>
             <List>
-                {Boolean(links?.length) && links.map(({ name, slug }) => (
+                {Boolean(links?.length) && links.map(({ name, url }) => (
                     <li key={name}>
                         <Button
-                            onClick={() => onClick(slug)}
+                            onClick={() => onClick(url)}
                         >
                             <span>{name}</span>
                         </Button>

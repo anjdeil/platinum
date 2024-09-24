@@ -21,7 +21,9 @@ export const ButtonSchema = z.object({
 
 export const SideListLinkSchema = z.object({
     name: z.string(),
-    slug: z.string(),
+    url: z.string(),
+    isActive: z.boolean().optional(),
+    isNested: z.boolean().optional(),
 });
 
 export const SideListPropsSchema = z.object({
