@@ -2,5 +2,8 @@
     "TestLanguages": {
         "title": "Ustawienia regionalne dostarczane po stronie serwera to \"{locale}\"",
         "link": "Wystarczy link do innej przetłumaczonej strony"
+    },
+    "Header": {
+        "callButton": "Zadzwoń"
     }
 }

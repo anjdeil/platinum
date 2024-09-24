@@ -14,6 +14,19 @@ export const Title = styled.h1<TitleProps>`
     font-weight: ${({ fontWeight = 600 }) => fontWeight};
 `;
 
+export const AccountTitle = styled.h2`
+    color: ${({ theme }) => theme.colors.black};
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 600;
+    text-align: center;
+
+    @media ${({ theme }) => theme.media.large} {
+        font-size: 24px;
+        line-height: 32px;     
+    }
+`;
+
 export const Container = styled.div`
     box-sizing: content-box;
     margin: 0 auto;
@@ -71,5 +84,25 @@ export const LogoLinkImage = styled(Image) <LogoLinkImageProps>`
     @media ${({ theme }) => theme.media.large} {
       width: ${({ desktopWidth = 92 }) => `${desktopWidth}px`};
       height: ${({ desktopHeight = 92 }) => `${desktopHeight}px`};
+    }
+`;
+
+export const StyledIconWrapper = styled.div`
+    width: 40px;
+    height: 40px;
+    display: flex;
+
+    & svg {
+        width: 100%;
+        height: 100%;
+    }
+
+    @media ${({ theme }) => theme.media.medium} {
+        width: 24px;
+        height: 24px;
+    }
+    @media ${({ theme }) => theme.media.large} {
+        width: 40px;
+        height: 40px;
     }
 `;

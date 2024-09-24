@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from '@/store';
 import { popupToggle } from '@/store/slices/PopupSlice';
 import { Container, LogoLinkImage, StyledButton } from '@/styles/components';
 import { useTheme } from '@emotion/react';
+import { useTranslations } from 'next-intl';
 import React from 'react';
 import Nav from "../Nav/Nav";
 import { BurgerButtonWrapper, ButtonWrapper, LogoLink, NavWrapper, SelectsWrapper, Stack } from './styles';
@@ -15,6 +16,7 @@ const TopBar: React.FC = () =>
 {   const dispatch = useAppDispatch();
     const theme = useTheme();
     const popup = useAppSelector(state => state.Popup);
+    const t = useTranslations("Header");
 
     return (
         <Container>
@@ -45,7 +47,7 @@ const TopBar: React.FC = () =>
                     <IconButton onClick={() => dispatch(popupToggle('hamburger-menu'))} color={ theme.colors.primary } IconComponent={popup === 'hamburger-menu' ? BurgerIconActive : BurgerIcon} />
                 </BurgerButtonWrapper>
                 <ButtonWrapper>
-                  <StyledButton>Call us</StyledButton>
+                    <StyledButton>{t("callButton")}</StyledButton>
                 </ButtonWrapper>
             </Stack>
         </Container>

@@ -1,4 +1,4 @@
-import { SkeletonContainerProps, SkeletonElementProps } from "@/types/layouts/Menus";
+import { SkeletonContainerProps, SkeletonElementProps } from "@/types/layouts/menus/Skeleton";
 import { keyframes } from "@emotion/react";
 import styled from "@emotion/styled";
 
