@@ -19,7 +19,7 @@ export const Categories = styled.div`
   }
 
   @media ${({ theme }) => theme.media.large} {
-    top: 179px;
+    top: 189px;
     bottom: 44px;
   }
 

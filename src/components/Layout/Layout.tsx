@@ -22,19 +22,17 @@ export default function Layout({ children }: { children: React.ReactNode })
     const menuIds = [335, 344];
 
     const { data: menusData } = useGetMenusQuery({
-        include: menuIds        
+        include: menuIds
     });
 
     const menus = menusData?.data ? menusData.data.items as MenuItemsType[] : [];
-
-    console.log('menus....', menus);
        
     return (
         <Box>
             <MenusContext.Provider value={menus}>
                 {!isMobile && <TopBar />}
                 {!isMobile ? <Header /> : <MobileHeader />}
-                <PopupContainer />
+                <PopupContainer />                
                 {isMobile && (<BottomMenu />)}
                 {children}
             </MenusContext.Provider>

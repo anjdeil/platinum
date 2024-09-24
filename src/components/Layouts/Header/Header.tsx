@@ -10,7 +10,7 @@ import { HeaderContainer, HeaderContent, HeaderIcons, HeaderNav, HeaderSearch, H
 const Header: React.FC = () =>
 {
     return (
-        <HeaderWrapper>            
+        <HeaderWrapper>
             <HeaderContainer>
                 <HeaderNav>
                     <Nav    
@@ -22,7 +22,7 @@ const Header: React.FC = () =>
                             gap: '40px'
                         }}
                         textTransform='uppercase'
-                        justify='space-between'
+                        justify='space-evenly'
                     />
                 </HeaderNav>
                 <HeaderContent>
