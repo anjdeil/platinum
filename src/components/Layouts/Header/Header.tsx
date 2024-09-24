@@ -22,7 +22,7 @@ const Header: React.FC = () =>
                             gap: '40px'
                         }}
                         textTransform='uppercase'
-                        justify='space-between'
+                        justify='space-evenly'
                     />
                 </HeaderNav>
                 <HeaderContent>

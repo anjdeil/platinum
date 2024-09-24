@@ -2,6 +2,10 @@ import { NavLinkProps, NavListProps } from "@/types/layouts/Nav";
 import styled from "@emotion/styled";
 import Link from "next/link";
 
+export const StyledNav = styled.nav`
+    width: 100%;
+`;
+
 export const NavList = styled.ul<NavListProps>`
     display: flex;
     flex-direction: ${({ direction = "row" }) => direction};
@@ -16,9 +20,13 @@ export const NavList = styled.ul<NavListProps>`
     }
 `;
 
+export const StyledItem = styled.li`
+    text-align: center;
+`
+
 export const NavLink = styled(Link) <NavLinkProps>`
     display: inline-block;
-    font-size: ${({ fontSizeMob = '14px' }) => fontSizeMob};    
+    font-size: ${({ fontSize = '16px' }) => (fontSize)};    
     font-weight: 400;
     line-height: 1.5em;
     text-decoration: none;
@@ -33,6 +41,6 @@ export const NavLink = styled(Link) <NavLinkProps>`
     }
 
     @media ${({ theme }) => theme.media.large} {
-        font-size: ${({ fontSize = '16px' }) => (fontSize)};
+        font-size: ${({ fontSizeMob = '14px' }) => fontSizeMob};
     }
 `;

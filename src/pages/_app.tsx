@@ -17,8 +17,8 @@ function MyApp({ Component, pageProps }: AppProps)
         <NextIntlClientProvider locale={locale} messages={pageProps.messages}>
             <Provider store={store}>
                 <ThemeProvider theme={theme}>
+                    <GlobalStyle />
                     <Layout>
-                        <GlobalStyle />
                         <Component {...pageProps} />
                     </Layout>
                 </ThemeProvider>
