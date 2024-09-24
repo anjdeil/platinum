@@ -6,15 +6,25 @@ import { ThemeProvider } from "@emotion/react";
 import { NextIntlClientProvider } from 'next-intl';
 import App, { AppContext, AppProps } from 'next/app';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from "react";
 import { Provider } from "react-redux";
 
-function MyApp({ Component, pageProps }: AppProps)
-{
+function MyApp({ Component, pageProps }: AppProps) {
     const { locale } = useRouter();
     const store = setupStore();
+    const [messages, setMessages] = useState(pageProps.messages);
+
+    useEffect(() => {
+        const loadMessages = async () => {
+            const messages = (await import(`../translations/${locale}.json`)).default;
+            setMessages(messages);
+        };
+
+        loadMessages();
+    }, [locale]);
 
     return (
-        <NextIntlClientProvider locale={locale} messages={pageProps.messages}>
+        <NextIntlClientProvider locale={locale} messages={messages}>
             <Provider store={store}>
                 <ThemeProvider theme={theme}>
                     <GlobalStyle />
@@ -27,8 +37,7 @@ function MyApp({ Component, pageProps }: AppProps)
     );
 }
 
-MyApp.getInitialProps = async (appContext: AppContext) =>
-{
+MyApp.getInitialProps = async (appContext: AppContext) => {
     const appProps = await App.getInitialProps(appContext);
     return {
         ...appProps,

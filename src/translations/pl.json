@@ -3,6 +3,17 @@
         "title": "Ustawienia regionalne dostarczane po stronie serwera to \"{locale}\"",
         "link": "Wystarczy link do innej przetłumaczonej strony"
     },
+    "MyAccount": {
+        "dashboard": "Kokpit",
+        "userInformation": "Dane użytkownika",
+        "shippingAddress": "Adres do wysyłki",
+        "orderHistory": "Historia zamówień",
+        "wishlist": "Obserwowane",
+        "subscription": "Subskrypcja",
+        "loyaltyProgram": "Program lojalnościowy",
+        "changePassword": "Zmiana hasła",
+        "logout": "Wyloguj"
+    },
     "TopBar": {
         "CallUs": "Zadzwoń do nas"
     },
