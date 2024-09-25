@@ -2,5 +2,22 @@
     "TestLanguages": {
         "title": "Налаштування регіону для поточної сторінки це \"{locale}\"",
         "link": "Просто посилання на ішну перекладену сторінку"
+    },
+    "MyAccount": {
+        "dashboard": "Інформаційна панель",
+        "userInformation": "Інформація користувача",
+        "shippingAddress": "Адреса для доставки",
+        "orderHistory": "Історія замовлень",
+        "wishlist": "Список бажань",
+        "subscription": "Підписка на розсилку",
+        "loyaltyProgram": "Програма лояльності",
+        "changePassword": "Змінити пароль",
+        "logout": "Вихід"
+    },
+    "TopBar": {
+        "CallUs": "Зателефонуйте нам"
+    },
+    "Search": {
+        "Search": "Пошук"
     }
 }

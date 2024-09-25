@@ -1,18 +1,13 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { SelectOptionsProps } from '@/types/layouts/Select';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface CurrencyState
-{
-    code: string;
-    symbol: string;
-}
+export const currencySymbols: SelectOptionsProps[] = [
+    { code: 'EUR', symbol: '€' },
+    { code: 'PLN', symbol: 'zł' },
+    { code: 'USD', symbol: '$' },
+];
 
-const currencySymbols: { [key: string]: string } = {
-    'EUR': '€',
-    'PLN': 'zł',
-    'USD': '$',
-};
-
-const initialState: CurrencyState = {
+const initialState: SelectOptionsProps = {
     code: 'EUR',
     symbol: '€',
 };
@@ -21,17 +16,14 @@ const currencySlice = createSlice({
     name: 'currency',
     initialState,
     reducers: {
-        setCurrentCurrency: (state, action) =>
-        {
+        setCurrentCurrency: (state, action: PayloadAction<{ code: string }>) => {
             const code = action.payload.code;
-            const symbol = currencySymbols[code];
+            const currency = currencySymbols.find((curr) => curr.code === code);
 
-            if (symbol)
-            {
-                state.code = code;
-                state.symbol = symbol;
-            } else
-            {
+            if (currency) {
+                state.code = currency.code;
+                state.symbol = currency.symbol;
+            } else {
                 console.error(`Currency code "${code}" not recognized.`);
             }
         }
