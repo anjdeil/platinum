@@ -1,4 +1,4 @@
-import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
+import { Accordion,  AccordionSummary } from "@mui/material";
 import styled from "@emotion/styled";
 
 import { FooterContainerProps } from "@/types/layouts/Footer";

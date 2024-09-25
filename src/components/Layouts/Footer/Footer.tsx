@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useMediaQuery } from '@mui/material';
-/* import Socials from "../Socials/Socials"; */
+
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { FC, useContext, useState } from 'react';
@@ -9,6 +9,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import VerticalSlider from '../VerticalSliderMenu/VerticalSliderMenu';
 import Nav from '../Nav/Nav';
+import { Socials } from './Socials';
+
+
 
 
 export const Footer: FC = () => {
@@ -120,29 +123,29 @@ export const Footer: FC = () => {
                             </AccordionSummaryCustom>
                             <AccordionDetails>
                                 <Contact>
-                                    <Image src="/assets/icons/contact_place.svg" alt="Logo" width={24} height={24} unoptimized={true} />
+                                    <Image src="/assets/icons/contact_place.svg" alt="contact place" width={24} height={24} unoptimized={true} />
                                     <ContactLink href="https://www.google.com/maps?q=Poland,+Warsaw,+Kolejowa+45,+location+U6" passHref>
                                         Poland, Warsaw, Kolejowa 45,  location U6
                                     </ContactLink>
                                 </Contact>
                                 <Contact>
-                                    <Image src="/assets/icons/contact_phone.svg" alt="Logo" width={24} height={24} unoptimized={true} />
+                                    <Image src="/assets/icons/contact_phone.svg" alt="contact phone" width={24} height={24} unoptimized={true} />
                                     <ContactLink href="tel:+48883462736" passHref>
                                         +48883462736
                                     </ContactLink>
                                 </Contact>
                                 <Contact>
-                                    <Image src="/assets/icons/contact_mail.svg" alt="Logo" width={24} height={24} unoptimized={true} />
+                                    <Image src="/assets/icons/contact_mail.svg" alt="contact mail" width={24} height={24} unoptimized={true} />
                                     <ContactLink href="mailto:polandplatinum@gmail.com" passHref>
                                         polandplatinum@gmail.com
                                     </ContactLink>
                                 </Contact>
                                 <Contact>
-                                    <Image src="/assets/icons/contact_time.svg" alt="Logo" width={24} height={24} unoptimized={true} />
+                                    <Image src="/assets/icons/contact_time.svg" alt="contact time" width={24} height={24} unoptimized={true} />
                                     <p>Mon-Fri: from 9-00 to 18-00 <br />
                                         Sat-Sun day is a day off</p>
                                 </Contact>
-
+                                <Socials/>
                             </AccordionDetails>
                         </FooterAccordion>
                     </FooterColumn>
