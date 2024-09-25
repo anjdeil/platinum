@@ -5,7 +5,7 @@ import { StyledInfoContainer, StyledInfoWrapper, StyledTitle } from "./styles";
 const AccountLinkBlock: React.FC<AccountLinkBlockProps> = ({ icon: Icon, title, href }) =>
 {
     return (
-        <StyledInfoContainer href={href}>
+        <StyledInfoContainer href={href || '/'}>
             <StyledIconWrapper>
                 <Icon />
             </StyledIconWrapper>

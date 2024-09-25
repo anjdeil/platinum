@@ -3,7 +3,30 @@
         "title": "Налаштування регіону для поточної сторінки це \"{locale}\"",
         "link": "Просто посилання на ішну перекладену сторінку"
     },
-    "Header": {
-        "callButton": "Зателефонуй нам"
+    "MyAccount": {
+        "clientPersonalAccount": "Особистий кабінет клієнта",
+        "dashboard": "Інформаційна панель",
+        "userInformation": "Інформація користувача",
+        "shippingAddress": "Адреса для доставки",
+        "orderHistory": "Історія замовлень",
+        "wishlist": "Список бажань",
+        "subscription": "Підписка на розсилку",
+        "loyaltyProgram": "Програма лояльності",
+        "changePassword": "Змінити пароль",
+        "logout": "Вихід",
+        "numberOfOrders": "Кількість замовлень",
+        "totalOrderAmount": "Загальна сума замовлень",
+        "myInformation": "Моя інформація",
+        "deliveryPaymentTotal": "Доставка / Оплата / Загалом",
+        "date": "Дата",
+        "status": "Статус",
+        "value": "Значення",
+        "seeMore": "Дивитись більше"
+    },
+    "TopBar": {
+        "CallUs": "Зателефонуйте нам"
+    },
+    "Search": {
+        "Search": "Пошук"
     }
 }

@@ -3,7 +3,30 @@
         "title": "The locale provided via server side is \"{locale}\"",
         "link": "Just link to another page translated"
     },
-    "Header": {
-        "callButton": "Call us"
+    "MyAccount": {
+        "clientPersonalAccount": "Client's personal account",
+        "dashboard": "Dashboard",
+        "userInformation": "User information",
+        "shippingAddress": "Shipping address",
+        "orderHistory": "Order history",
+        "wishlist": "Wishlist",
+        "subscription": "Subscription",
+        "loyaltyProgram": "Loyalty program",
+        "changePassword": "Change password",
+        "logout": "Logout",
+        "numberOfOrders": "Number of orders",
+        "totalOrderAmount": "Total order amount",
+        "myInformation": "My information",
+        "deliveryPaymentTotal": "Delivery / Payment / Total",
+        "date": "Date",
+        "status": "Status",
+        "value": "Value",
+        "seeMore": "See more"
+    },
+    "TopBar": {
+        "CallUs": "Call us"
+    },
+    "Search": {
+        "Search": "Search"
     }
 }

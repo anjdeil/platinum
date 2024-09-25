@@ -14,13 +14,18 @@ export const StyledHead = styled.thead`
     min-height: 56px;
     background-color: ${({ theme }) => theme.colors.silver};
     padding-block: 12px;
-    display: none;
+    display: flex;
     text-transform: uppercase;
+    align-items: center;
 
-    @media ${({ theme }) => theme.media.medium} {
-        display: flex;
-        align-items: center;
+    & tr, 
+    & th {
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: 400;       
+    }
 
+    @media ${({ theme }) => theme.media.large} {
         & tr, 
         & th {
             font-size: 12px;
@@ -29,13 +34,8 @@ export const StyledHead = styled.thead`
         }         
     }
 
-    @media ${({ theme }) => theme.media.large} {
-        & tr, 
-        & th {
-            font-size: 16px;
-            line-height: 24px;
-            font-weight: 400;       
-        }
+    @media ${({ theme }) => theme.media.medium} {
+        display: none;
     }
 `;
 
@@ -49,17 +49,17 @@ export const StyledTr = styled.tr`
 
 export const StyledBodyTr = styled(StyledTr)`
     padding: 16px;
-    border-radius: 8px;
+    border-radius: 0;    
     border: ${({ theme }) => `1px solid ${theme.colors.silver}`};
+    border-top: none;
     display: flex;
-    flex-direction: column;
-    row-gap: 16px;
+    gap: 12px;
 
     @media ${({ theme }) => theme.media.medium} {
-        flex-direction: row;
-        gap: 12px;
-        border-radius: 0;
-        border-top: none;
+        flex-direction: column;        
+        row-gap: 16px;
+        border-radius: 8px;
+        border-top: ${({ theme }) => `1px solid ${theme.colors.silver}`};;
     }
 `;
 
@@ -77,10 +77,10 @@ export const StyledBody = styled.tbody`
     width: 100%;
     display: flex;
     flex-direction: column;
-    row-gap: 16px;
+    row-gap: 0;
 
     @media ${({ theme }) => theme.media.medium} {
-        row-gap: 0;
+        row-gap: 16px;
     }  
 `;
 
@@ -90,48 +90,62 @@ export const StyledNoAndDate = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    & span:first-of-type {
+        margin: auto;
+    }
+
+    & span:last-of-type {
+        display: none;
+    }
 
     @media ${({ theme }) => theme.media.medium} {
         & span:first-of-type {
-            margin: auto;
+            margin: unset;
         }
 
         & span:last-of-type {
-            display: none;
+            display: unset;
         }
     }    
 `;
 
 export const StyledSpan = styled.span`
-    font-size: 12px;
-    line-height: 16px;
+    font-size: 16px;
+    line-height: 24px;    
     font-weight: 400;
 
     @media ${({ theme }) => theme.media.large} {
-        font-size: 16px;
-        line-height: 24px;
+        font-size: 12px;
+        line-height: 16px;
     }
 `;
 
 export const StyledDateTd = styled(StyledTd)`
-    display: none;
+    font-size: 16px;
+    line-height: 24px;
 
-    @media ${({ theme }) => theme.media.medium} {
-        display: block;
+    @media ${({ theme }) => theme.media.large} {        
         font-size: 12px;
         line-height: 16px;
         font-weight: 400;
     }
 
-    @media ${({ theme }) => theme.media.large} {
-        font-size: 16px;
-        line-height: 24px;
+    @media ${({ theme }) => theme.media.medium} {        
+        display: none;
     }
 `;
 
 export const StyledTotalSpan = styled.span`
     display: block;
     text-align: left;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+
+    @media ${({ theme }) => theme.media.large} {        
+        font-size: 14px;
+        line-height: 22px;        
+    }
 `;
 
 export const StyledOrderWrapper = styled.div`
@@ -139,28 +153,37 @@ export const StyledOrderWrapper = styled.div`
     justify-content: space-between;
     align-items: center;
 
+    & span:first-of-type {
+        display: none;
+    }
+
+    & span:last-of-type {
+        margin: auto;
+    }
+
     @media ${({ theme }) => theme.media.medium} {
         & span:first-of-type {
-            display: none;
+            display: unset;
         }
 
         & span:last-of-type {
-            margin: auto;
+            margin: unset;
         }
     }  
 `;
 
 export const StyledOrderSpan = styled(StyledSpan)`
-    text-transform: uppercase;
+    font-size: 16px;
+    line-height: 24px;    
 
-    @media ${({ theme }) => theme.media.medium} {
-        text-transform: unset;
+    @media ${({ theme }) => theme.media.large} {        
         font-size: 14px;
         line-height: 22px;
     }
 
-    @media ${({ theme }) => theme.media.large} {
-        font-size: 16px;
-        line-height: 24px;
+    @media ${({ theme }) => theme.media.medium} {
+        text-transform: uppercase;
+        font-size: 12px;
+        line-height: 16px;
     }
 `;

@@ -30,7 +30,7 @@ export const DropdownMenu = styled.div<MenuProps>`
     width: 100%;
     height: auto;
     max-height: ${({ isOpen }) => (isOpen ? '200px' : '0')};
-    overflow-y: auto;
+    overflow: hidden;
     background: ${({ theme }) => theme.colors.white};
     z-index: 1000;
     transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
@@ -47,9 +47,4 @@ export const MenuItem = styled.div`
     &:hover {
         background-color: ${({ theme }) => theme.background.secondary};
     }    
-`;
-
-export const StyledArrow = styled.svg<MenuProps>`
-    margin-left: auto;
-    transform: ${({ isOpen }) => (isOpen ? 'rotate(180deg)' : 'rotate(0deg)')};
 `;

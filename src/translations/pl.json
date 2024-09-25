@@ -3,7 +3,30 @@
         "title": "Ustawienia regionalne dostarczane po stronie serwera to \"{locale}\"",
         "link": "Wystarczy link do innej przetłumaczonej strony"
     },
-    "Header": {
-        "callButton": "Zadzwoń"
+    "MyAccount": {
+        "clientPersonalAccount": "Konto osobiste klienta",
+        "dashboard": "Kokpit",
+        "userInformation": "Dane użytkownika",
+        "shippingAddress": "Adres do wysyłki",
+        "orderHistory": "Historia zamówień",
+        "wishlist": "Obserwowane",
+        "subscription": "Subskrypcja",
+        "loyaltyProgram": "Program lojalnościowy",
+        "changePassword": "Zmiana hasła",
+        "logout": "Wyloguj",
+        "numberOfOrders": "Liczba zamówień",
+        "totalOrderAmount": "Całkowita kwota zamówień",
+        "myInformation": "Moje informacje",
+        "deliveryPaymentTotal": "Dostawa / Płatność / Suma",
+        "date": "Data",
+        "status": "Status",
+        "value": "Wartość",
+        "seeMore": "Zobacz więcej"
+    },
+    "TopBar": {
+        "CallUs": "Zadzwoń do nas"
+    },
+    "Search": {
+        "Search": "Wyszukiwanie"
     }
 }

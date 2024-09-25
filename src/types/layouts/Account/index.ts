@@ -4,7 +4,6 @@ const AccountInfoBlockSchema = z.object({
     icon: z.any(),
     title: z.string(),
     value: z.string(),
-    type: z.enum(["Silver", "Gold", "Platinum"]).optional(),
 });
 
 const AccountLinkBlockSchema = z.object({
@@ -20,3 +19,11 @@ const StyledInfoContainerPropsShema = z.object({
 export type AccountLinkBlockProps = z.infer<typeof AccountLinkBlockSchema>;
 export type AccountInfoBlockProps = z.infer<typeof AccountInfoBlockSchema>;
 export type StyledInfoContainerProps = z.infer<typeof StyledInfoContainerPropsShema>;
+
+export type AccountInfoBlockListProps = {
+    list: AccountInfoBlockProps[];
+};
+
+export type AccountInfoBlockLinkProps = {
+    list: AccountLinkBlockProps[];
+};

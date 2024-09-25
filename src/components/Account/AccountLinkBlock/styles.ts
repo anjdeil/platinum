@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 export const StyledInfoContainer = styled.a<StyledInfoContainerProps>`
     box-sizing: border-box;
     width: 100%;
-    padding: 20.5px 8px;
+    padding: 20.5px 23.5px;    
     border-radius: 8px;
     background: ${({ theme }) => theme.background.secondary};
     display: flex;
@@ -15,12 +15,13 @@ export const StyledInfoContainer = styled.a<StyledInfoContainerProps>`
     cursor: pointer;
     text-decoration: none;
 
-    @media ${({ theme }) => theme.media.medium} {
+    @media ${({ theme }) => theme.media.large} {
         padding: 20px 2px;
     }
-    @media ${({ theme }) => theme.media.large} {
-        padding: 20.5px 23.5px;
-    }
+
+    @media ${({ theme }) => theme.media.medium} {
+        padding: 20.5px 8px;        
+    }    
 `;
 
 export const StyledInfoWrapper = styled.div`
@@ -28,17 +29,9 @@ export const StyledInfoWrapper = styled.div`
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     color: ${({ theme }) => theme.colors.black};
-    text-transform: uppercase; 
-    
-    @media ${({ theme }) => theme.media.medium} {
-        gap: 8px;
-    }
-
-    @media ${({ theme }) => theme.media.large} {
-        gap: 10px;
-    }
+    text-transform: uppercase;    
 `;
 
 export const StyledTitle = styled.span`
