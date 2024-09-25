@@ -1,5 +1,6 @@
 import { ProductCardList } from "@/components/Shop/ProductCardsList";
 import { useGetProductsQuery } from "@/store/rtk-queries/wpCustomApi";
+import { TitleCatalog } from "@/styles/components";
 import { LangParamType } from "@/types/services/wpCustomApi";
 import { ProductType } from "@/types/shop";
 import { useRouter } from "next/router";
@@ -13,7 +14,7 @@ export default function ProductList() {
 
     return (
         <>
-            <h2>Product List</h2>
+            <TitleCatalog>Product List</TitleCatalog>
             <ProductCardList products={products} columns={{ desktop: 3 }} isLoading={isProductsLoading} />
         </>
     );
