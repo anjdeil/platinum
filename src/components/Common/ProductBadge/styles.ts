@@ -18,27 +18,27 @@ const getBackgroundColor = (type: ProductBadgeProps['type']) => {
 
 export const BadgeStyled = styled.span<BadgeStyledProps>`
     box-sizing: border-box;
-    min-width: ${({ minWidth = '39px' }) => minWidth};
+    min-width: 45px;
+    padding: 4px 6.5px;
     text-align: center;
-    padding: 4px;
-    border-radius: ${({ borderRadius = '8px' }) => borderRadius};
-    font-size: 10px;
+    border-radius: 10px;
+    font-size: 12px;      
     line-height: 16px;
     font-weight: 400;
     text-transform: uppercase;
     background-color: ${({ type }) => getBackgroundColor(type)};
     color: #fff;
 
-    @media ${({ theme }) => theme.media.medium} {
+    @media ${({ theme }) => theme.media.large} {
         font-size: 14px;
         text-transform: unset;
     }
 
-    @media ${({ theme }) => theme.media.large} {
-        min-width: 45px;
-        padding: 4px 6.5px;
-        border-radius: 10px;
-        font-size: 12px;
+    @media ${({ theme }) => theme.media.medium} {
+        min-width: ${({ minWidth = '39px' }) => minWidth};
+        padding: 4px;
+        border-radius: ${({ borderRadius = '8px' }) => borderRadius};
+        font-size: 10px;
         text-transform: uppercase;
     }
 `;

@@ -16,7 +16,5 @@ export const ProductCardListSkeleton: React.FC<ProductCardListSkeletonProps> = (
         </SkeletonItem>
     ));
 
-    console.log('skeleton');
-
     return <SkeletonWrapper column={column}>{skeletonItems}</SkeletonWrapper>;
 };

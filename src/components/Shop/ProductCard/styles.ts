@@ -2,48 +2,48 @@ import { CommonTextProps } from "@/types/layouts/Product";
 import styled from "@emotion/styled";
 
 export const ProductTitle = styled.p<CommonTextProps>`
-    color: ${({ theme }) => theme.colors.black};
-    font-size: ${({ mobFontSize = '14px' }) => mobFontSize};
-    line-height: ${({ lineHeight = '24px' }) => lineHeight};
-    font-weight: ${({ mobFontWeight = 400 }) => mobFontWeight};
+    color: ${({ theme }) => theme.colors.black};    
+    font-size: ${({ fontSize = '16px' }) => fontSize};
+    line-height: ${({ lineHeight = '24px' }) => lineHeight};    
+    font-weight: ${({ fontWeight = 500 }) => fontWeight};
     text-transform: uppercase;
     text-align: center;
 
     @media ${({ theme }) => theme.media.large} {
-        font-size: ${({ fontSize = '16px' }) => fontSize};
-        font-weight: ${({ fontWeight = 500 }) => fontWeight};
+        font-size: ${({ mobFontSize = '14px' }) => mobFontSize};
+        font-weight: ${({ mobFontWeight = 400 }) => mobFontWeight};
     }
 `;
 
 export const ProductPrice = styled.p<CommonTextProps>`
-    color: ${({ theme }) => theme.colors.black};
-    font-size: ${({ mobFontSize = '14px' }) => mobFontSize};
-    line-height: ${({ lineHeight = '22px' }) => lineHeight};
+    color: ${({ theme }) => theme.colors.black};    
+    font-size: ${({ fontSize = '16px' }) => fontSize};
+    line-height: ${({ lineHeight = '24px' }) => lineHeight};
     font-weight: ${({ fontWeight = 600 }) => fontWeight};
     text-align: center;
 
     @media ${({ theme }) => theme.media.large} {
-        font-size: ${({ fontSize = '16px' }) => fontSize};
-        line-height: ${({ lineHeight = '24px' }) => lineHeight};
+        font-size: ${({ mobFontSize = '14px' }) => mobFontSize};
+        line-height: ${({ lineHeight = '22px' }) => lineHeight};
     }
 `;
 
 export const StyledProductCard = styled.div`
     grid-column: span 1;
-    padding: 8px;
+    padding: 24px;
     display: flex;
-    flex-direction: column;
-    row-gap: 8px;
+    flex-direction: column;    
     align-items: center;
+    row-gap: 16px;
 
-        @media ${({ theme }) => theme.media.medium} {
-            padding: 16px 8px;
-            row-gap: 16px;
-        }
+    @media ${({ theme }) => theme.media.large} {
+        padding: 16px 8px;        
+    }
 
-        @media ${({ theme }) => theme.media.large} {
-            padding: 24px;
-        }
+    @media ${({ theme }) => theme.media.medium} {        
+        padding: 8px;
+        row-gap: 8px;
+    }
 `
 
 export const TitlePriceWrapper = styled.div`
@@ -76,16 +76,17 @@ export const ProductWrapper = styled.div`
 
 export const ProductImageWrapper = styled.div`
     position: relative;
-    width: 80px;
-    height: 80px;
+    width: 205px;
+    height: 205px;
+   
 
-    @media ${({ theme }) => theme.media.medium} {
+    @media ${({ theme }) => theme.media.large} {
         width: 100px;
         height: 100px;
     }
 
-    @media ${({ theme }) => theme.media.large} {
-        width: 205px;
-        height: 205px;
+    @media ${({ theme }) => theme.media.medium} {
+        width: 80px;
+        height: 80px;
     }
 `

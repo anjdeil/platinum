@@ -91,14 +91,14 @@ export const LogoLinkImage = styled(Image) <LogoLinkImageProps>`
 
 export const TitleCatalog = styled.h2<TitleCatalogProps>`
     color: ${({ theme }) => theme.colors.black};
-    font-size: ${({ mobFontSize = '16px' }) => mobFontSize};
-    line-height: ${({ mobLineHeight = '24px' }) => mobLineHeight};
+    font-size: ${({ fontSize = '24px' }) => fontSize};
+    line-height: ${({ lineHeight = '32px' }) => lineHeight};    
     font-weight: ${({ fontWeight = 600 }) => fontWeight};
     text-transform: uppercase;
     text-align: center;
 
     @media ${({ theme }) => theme.media.large} {
-        font-size: ${({ fontSize = '24px' }) => fontSize};
-        line-height: ${({ lineHeight = '32px' }) => lineHeight};
+        font-size: ${({ mobFontSize = '16px' }) => mobFontSize};
+        line-height: ${({ mobLineHeight = '24px' }) => mobLineHeight};
     }
 `;

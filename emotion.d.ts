@@ -14,6 +14,11 @@ declare module '@emotion/react' {
             white: string;
             black: string;
             active: string;
+            border: string;
+            new: string;
+            best: string;
+            hot: string;
+            sale: string;
         };
         background: {
             primaryGradient: string;

@@ -20,15 +20,16 @@ export const SkeletonWrapper = styled.div`
 
 export const SkeletonImage = styled(SkeletonWrapper)`
     position: relative;
-    width: 80px;
-    height: 80px;
-    @media ${({ theme }) => theme.media.medium} {
+    width: 205px;
+    height: 205px;
+    
+    @media ${({ theme }) => theme.media.large} {
         width: 100px;
         height: 100px;
     }
-    @media ${({ theme }) => theme.media.large} {
-        width: 205px;
-        height: 205px;
+    @media ${({ theme }) => theme.media.medium} {
+        width: 80px;
+        height: 80px;
     }
 `;
 

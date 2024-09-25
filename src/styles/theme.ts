@@ -19,6 +19,11 @@ const theme: Theme = {
         white: '#fff',
         black: '#000',
         active: '#1E71BE',
+        border: '#738EBC',
+        new: '#17AA40',
+        best: '#1E71BE',
+        hot: '#F2B517',
+        sale: '#D92D20',
     },
     background: {
         primaryGradient: 'radial-gradient(79.43% 79.43% at 49.95% 64.07%, #024584 0%, #0B233D 100%)',

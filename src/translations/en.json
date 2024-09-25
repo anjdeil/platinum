@@ -19,5 +19,9 @@
     },
     "Search": {
         "Search": "Search"
+    },
+    "Product": {
+        "addToBasket": "Add to basket",
+        "sortBy": "Sort by"
     }
 }
