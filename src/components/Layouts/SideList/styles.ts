@@ -21,12 +21,13 @@ export const Button = styled.button<ButtonProps>`
     color: ${({ theme }) => theme.colors.black};
     text-decoration: none;
     font-size: ${({ fontSize = '12px' }) => fontSize};
-    line-height: ${({ fontSize = '16px' }) => fontSize};
+    line-height: ${({ lineHeight = '16px' }) => lineHeight};
     font-weight: ${({ fontWeight = 400 }) => fontWeight};
     padding: 12px 16px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 8px;
     border-radius: ${({ borderRadius = '8px' }) => borderRadius};
     transition: all 0.2s ease;
     border: none;
