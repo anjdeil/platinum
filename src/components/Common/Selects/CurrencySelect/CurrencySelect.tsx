@@ -11,7 +11,7 @@ export default function CurrencySelect() {
   };
 
   return (
-    <CustomSelect 
+    <CustomSelect
       options={currencySymbols} 
       value={currency.symbol} 
       onChange={onCurrencyChange} 

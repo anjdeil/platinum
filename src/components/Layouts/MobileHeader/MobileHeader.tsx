@@ -1,16 +1,16 @@
-import { LogoLinkImage } from '@/styles/components';
+import { LogoLink, LogoLinkImage } from '@/styles/components';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FC } from 'react';
 import MobileSearchButton from '../MobileSearchButton/MobileSearchButton';
-import { IconButton, LogoLink, MobileHeaderContainer, MobileHeaderWrapper, SearchWrapper } from './styles';
+import { IconButton, MobileHeaderContainer, MobileHeaderWrapper, SearchWrapper } from './styles';
 
 const MobileHeader: FC = () => {
     return (
         <MobileHeaderWrapper>
             <MobileHeaderContainer>
-                <LogoLink href={'/'}>
-                    <LogoLinkImage src="/assets/images/logo_white.png" alt="Logo" width={54} height={48}/>
+                <LogoLink href={'/'} width={44} height={44}>
+                    <LogoLinkImage src="/assets/images/logo_white.png" alt="Logo" fill/>
                 </LogoLink>
                 <SearchWrapper>
                     <MobileSearchButton />

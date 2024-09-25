@@ -9,7 +9,7 @@ export const List = styled.ul<ListProps>`
     list-style: none;
     padding: 0;
     margin: 0;
-    margin-top: ${({ marginTop = '32px' }) => marginTop};
+    margin-top: ${({ marginTop = '15px' }) => marginTop};
     margin-bottom: ${({ marginBottom = '106px' }) => marginBottom};
     display: flex;
     flex-direction: column;

@@ -1,7 +1,7 @@
 import { Theme } from "@emotion/react";
 import { Montserrat } from "next/font/google";
 
-const montserrat = Montserrat({
+export const montserrat = Montserrat({
     subsets: ['latin', 'cyrillic'],
     weight: ['400', '500', '600', '700'],
 });
@@ -32,11 +32,11 @@ const theme: Theme = {
         large: '24px',
     },
     media: {
-        medium: '(min-width: 768px)',
-        large: '(min-width: 1024px)',
-        midle: '(min-width: 1100px)',
-        xl: '(min-width: 1200px)',
-        extraLarge: '(min-width: 1440px)',
+        medium: '(max-width: 768px)',
+        large: '(max-width: 1024px)',
+        middle: '(max-width: 1100px)',
+        xl: '(max-width: 1200px)',
+        extraLarge: '(max-width: 1440px)',
     },
 };
 

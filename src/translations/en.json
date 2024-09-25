@@ -13,5 +13,11 @@
         "loyaltyProgram": "Loyalty program",
         "changePassword": "Change password",
         "logout": "Logout"
+    },
+    "TopBar": {
+        "CallUs": "Call us"
+    },
+    "Search": {
+        "Search": "Search"
     }
 }

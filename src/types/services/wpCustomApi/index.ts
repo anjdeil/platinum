@@ -1,4 +1,4 @@
-import { WpMenuResponseSchema } from "@/types/layouts/Menus";
+import { WpMenuResponseSchema } from "@/types/layouts/menus/wpMenu";
 import { z } from "zod";
 import { CategorySchema, ProductDataResponseSchema } from "../../shop";
 

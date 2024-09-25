@@ -1,10 +1,9 @@
 import { Container } from "@/styles/components";
 import { HeaderWrapperProps } from "@/types/layouts/Header";
 import styled from "@emotion/styled";
-import Link from "next/link";
 
 export const MobileHeaderWrapper = styled.div<HeaderWrapperProps>`
-    padding-block: 6px;
+    padding-block: 8px;
     background: ${({ theme, backgroundColor = theme.background.primaryGradient }) => backgroundColor};
 `;
 
@@ -13,10 +12,6 @@ export const MobileHeaderContainer = styled(Container)`
     align-items: center;
     justify-content: space-between;
     gap: 24px;
-`;
-
-export const LogoLink = styled(Link)`
-    display: flex;
 `;
 
 export const SearchWrapper = styled.div`

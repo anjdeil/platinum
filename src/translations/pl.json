@@ -13,5 +13,11 @@
         "loyaltyProgram": "Program lojalnościowy",
         "changePassword": "Zmiana hasła",
         "logout": "Wyloguj"
+    },
+    "TopBar": {
+        "CallUs": "Zadzwoń do nas"
+    },
+    "Search": {
+        "Search": "Wyszukiwanie"
     }
 }

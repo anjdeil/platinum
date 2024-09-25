@@ -10,25 +10,26 @@ export const Overlay = styled.div`
 export const PopupContainer = styled.div<PopupContainerProps>`
     position: fixed;
     background-color: ${({ theme, backgroundColor = theme.background.secondary }) => backgroundColor};
-    width: ${({ width = '241px' }) => width};
+    width: ${({ width = '70%' }) => width};
     padding-top: ${({ paddingTop = '0' }) => paddingTop};
-    top: 60px;
+    top: 136px;
     left: 0;
     bottom: 0;
     display: grid;
-    grid-template-rows: ${({ title }) => title === '' ? '1fr' : '40px 1fr'};
     z-index: 1100;
 
     @media ${({ theme }) => theme.media.medium} {
-        top: 136px;
-        bottom: unset;
+        top: 60px;
+        bottom: 0;
+        grid-template-rows: ${({ title }) => title === '' ? '1fr' : '40px 1fr'};
     }
 `;
 
 export const Header = styled.div`
     display: none;
-
-    @media(max-width: 768px) {
+    
+    
+    @media ${({ theme }) => theme.media.medium} {
         display: flex;
         padding: 0 20px;
         align-items: center;
