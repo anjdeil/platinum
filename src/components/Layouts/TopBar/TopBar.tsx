@@ -22,7 +22,14 @@ const TopBar: React.FC = () =>
         <Container>
             <Stack>
                 <LogoLink href="/" width={44} height={44} desktopwidth={92} desktopheight={92} >
-                    <LogoLinkImage src="/assets/images/logo.png" alt="Logo" fill priority />
+                    <LogoLinkImage
+                        src="/assets/images/logo.png"
+                        alt="Logo"
+                        fill
+                        objectFit="cover"
+                        objectPosition="center"
+                        priority
+                    />
                 </LogoLink>
                 <NavWrapper>
                     <Nav

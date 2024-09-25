@@ -10,7 +10,14 @@ const MobileHeader: FC = () => {
         <MobileHeaderWrapper>
             <MobileHeaderContainer>
                 <LogoLink href={'/'} width={44} height={44}>
-                    <LogoLinkImage src="/assets/images/logo_white.png" alt="Logo" fill/>
+                    <LogoLinkImage
+                        src="/assets/images/logo_white.png"
+                        alt="Logo"
+                        fill
+                        objectFit="cover"
+                        objectPosition="center"
+                        priority
+                    />
                 </LogoLink>
                 <SearchWrapper>
                     <MobileSearchButton />

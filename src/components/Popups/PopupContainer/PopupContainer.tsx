@@ -62,7 +62,7 @@ const PopupContainer = () => {
             return (
                 <HamburgerMenu onClose={closePopup} />
             )
-        }
+        }        
     }
 }
 
