@@ -1,4 +1,4 @@
-import { ButtonProps, ListProps, SideListContainerProps } from "@/types/Layouts/SideList";
+import { ButtonProps, ListProps, SideListContainerProps } from "@/types/layouts/SideList";
 import styled from "@emotion/styled";
 
 export const SideListContainer = styled.nav<SideListContainerProps>`

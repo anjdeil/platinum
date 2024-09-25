@@ -1,4 +1,4 @@
-import { MobilePopupPropsType } from "@/types/Layouts/MobilePopup";
+import { MobilePopupPropsType } from "@/types/layouts/MobilePopup";
 import { FC } from "react";
 import { CloseButton, Content, Header, Overlay, PopupContainer, Title } from "./styles";
 

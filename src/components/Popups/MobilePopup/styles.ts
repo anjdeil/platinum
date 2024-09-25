@@ -1,4 +1,4 @@
-import { PopupContainerProps } from "@/types/Layouts/MobilePopup";
+import { PopupContainerProps } from "@/types/layouts/MobilePopup";
 import styled from "@emotion/styled";
 
 export const Overlay = styled.div`
