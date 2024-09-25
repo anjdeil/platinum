@@ -2,16 +2,13 @@ import { MenusContext } from "@/components/Layout";
 import { useAppSelector } from "@/store";
 import { Title } from "@/styles/components";
 import axios from "axios";
-import { Inter } from "next/font/google";
 import { useContext, useState } from "react";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export default function Home()
 {
   const [data, setData] = useState<null | any>(null);
   const currency = useAppSelector((state) => state.currentCurrency);
-  const menus = useContext(MenusContext);
+  const menus = useContext(MenusContext); 
 
   async function check()
   {
@@ -27,9 +24,9 @@ export default function Home()
 
   { data && <p>{data}</p> }
   return (
-    <main className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}>
+    <main>
       {/* <TestSelect /> */}
-      <Title fontSize={24}>Symbol of {currency.code} currency is {currency.symbol}</Title>
+      <Title as='h2' fontSize={20}>Symbol of {currency.code} currency isQQ {currency.symbol}</Title>
       <button onClick={() => check()}>Fetch</button>
     </main >
   )

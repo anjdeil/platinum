@@ -2,5 +2,22 @@
     "TestLanguages": {
         "title": "The locale provided via server side is \"{locale}\"",
         "link": "Just link to another page translated"
+    },
+    "MyAccount": {
+        "dashboard": "Dashboard",
+        "userInformation": "User information",
+        "shippingAddress": "Shipping address",
+        "orderHistory": "Order history",
+        "wishlist": "Wishlist",
+        "subscription": "Subscription",
+        "loyaltyProgram": "Loyalty program",
+        "changePassword": "Change password",
+        "logout": "Logout"
+    },
+    "TopBar": {
+        "CallUs": "Call us"
+    },
+    "Search": {
+        "Search": "Search"
     }
 }

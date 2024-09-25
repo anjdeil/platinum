@@ -1,24 +1,30 @@
 import { Theme } from "@emotion/react";
+import { Montserrat } from "next/font/google";
+
+export const montserrat = Montserrat({
+    subsets: ['latin', 'cyrillic'],
+    weight: ['400', '500', '600', '700'],
+});
 
 const theme: Theme = {
+    typography: {
+        fontFamily: `${montserrat.style.fontFamily}`,
+        fontSize: '16px',
+    },
     colors: {
         primary: '#113760',
         secondary: '#738ebc',
         tertiary: '#0000FF',
-        black: '#000',
+        grey: '#878787',
         white: '#fff',
-        border: '#738EBC',
-        new: '#17AA40',
-        best: '#1E71BE',
-        hot: '#F2B517',
-        sale: '#D92D20',
+        black: '#000',
+        active: '#1E71BE',
     },
     background: {
-        secondary: '#F2F8FE',
-    },
-    typography: {
-        fontFamily: 'Arial, sans-serif',
-        fontSize: '16px',
+        primaryGradient: 'radial-gradient(79.43% 79.43% at 49.95% 64.07%, #024584 0%, #0B233D 100%)',
+        secondary: '#f2f8fe',
+        hover: '#063e7b',
+        skeleton: 'linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%)',
     },
     spacing: {
         small: '8px',
@@ -26,9 +32,11 @@ const theme: Theme = {
         large: '24px',
     },
     media: {
-        medium: '(min-width: 768px)',
-        large: '(min-width: 1024px)',
-        extraLarge: '(min-width: 1440px)',
+        medium: '(max-width: 768px)',
+        large: '(max-width: 1024px)',
+        middle: '(max-width: 1100px)',
+        xl: '(max-width: 1200px)',
+        extraLarge: '(max-width: 1440px)',
     },
 };
 
