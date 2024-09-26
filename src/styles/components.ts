@@ -3,7 +3,8 @@ import styled from "@emotion/styled";
 import Image from 'next/image';
 import Link from 'next/link';
 
-interface TitleProps {
+interface TitleProps
+{
     as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
     fontWeight?: number;
     fontSize?: number;
@@ -75,8 +76,8 @@ export const StyledIconButton = styled.button`
 export const LogoLink = styled(Link) <LogoLinkProps>`
     display: flex;
     position: relative;
-    width: ${({ desktopWidth = 92 }) => `${desktopWidth}px`};
-    height: ${({ desktopHeight = 92 }) => `${desktopHeight}px`};
+    width: ${({ desktopwidth = 92 }) => `${desktopwidth}px`};
+    height: ${({ desktopheight = 92 }) => `${desktopheight}px`};
     
     @media ${({ theme }) => theme.media.large} {
         width: ${({ width = 44 }) => `${width}px`};
