@@ -7,7 +7,7 @@ export const BottomMenuWrapper = styled.div<BottomMenuWrapperProps>`
   left: 0;
   right: 0;
   bottom: 0;
-  padding-block: ${({ paddingBlock = "10px" }) => paddingBlock};
+  padding-block: ${({ paddingBlock = "18px" }) => paddingBlock};
   display: flex;
   align-items: center;
   background-color: ${({ theme }) => theme.background.secondary};
@@ -15,7 +15,7 @@ export const BottomMenuWrapper = styled.div<BottomMenuWrapperProps>`
 
 export const BottomMenuNav = styled.nav`
   width: 100%;
-  padding: 0 12px;
+  padding: 0 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;

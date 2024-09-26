@@ -5,9 +5,7 @@ interface MenuProps {
 }
 
 export const SortSelectStyled = styled.div<MenuProps>`
-    box-sizing: border-box;
-    width: 53px;
-    height: 32px;
+    box-sizing: border-box;   
     position: relative;
     background: transparent;
     display: flex;
