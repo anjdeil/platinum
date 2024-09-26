@@ -1,9 +1,38 @@
 import styled from "@emotion/styled";
+import { Accordion, AccordionSummary } from "@mui/material";
 
 
 export const AccordionTitle = styled.h3`
 `;
 //---------------ACCORDION------------- from footer
+
+export const CustomAccordionStyled = styled(Accordion)`
+    margin: 0;
+
+    &.Mui-expanded {
+    margin: 0px;
+    }
+    
+    .MuiAccordionSummary-expandIconWrapper.Mui-expanded {
+        color:  ${({ theme }) => theme.colors.white};
+        display: none;
+    }
+    @media ${({ theme }) => theme.media.medium}  {
+        .MuiAccordionSummary-expandIconWrapper.Mui-expanded {
+            display: flex;
+        }
+    }
+`
+
+export const CustomAccordionSummary = styled(AccordionSummary)`
+
+    @media ${({ theme }) => theme.media.medium}{
+        margin-bottom: 10px;
+        .MuiAccordionSummary-content {
+          margin: 0;
+        }
+    }
+`
 
 /* export const FooterAccordion = styled(Accordion)`
     color:  ${({ theme }) => theme.colors.white};

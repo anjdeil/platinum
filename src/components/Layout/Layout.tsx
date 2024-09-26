@@ -9,27 +9,27 @@ import MobileHeader from '../Layouts/MobileHeader/MobileHeader';
 import TopBar from '../Layouts/TopBar/TopBar';
 import PopupContainer from '../Popups/PopupContainer/PopupContainer';
 import { Footer } from '../Layouts/Footer';
+import { Benefits } from '../../pages/benefits/index'
 
 export const MenusContext = createContext<MenuItemsType[] | undefined>(undefined);
 
 const montserrat = Montserrat({
-    subsets: ['latin', 'cyrillic'], 
+    subsets: ['latin', 'cyrillic'],
     weight: ['400', '500', '600', '700'],
     display: 'swap',
 });
- 
-export default function Layout({ children }: { children: React.ReactNode })
-{
+
+export default function Layout({ children }: { children: React.ReactNode }) {
     const { isMobile } = useResponsive();
 
     const menuIds = [335, 344];
 
     const { data: menusData } = useGetMenusQuery({
-        include: menuIds.join(',')        
+        include: menuIds.join(',')
     });
 
     const menus = menusData?.data ? menusData.data.items as MenuItemsType[] : [];
-       
+
     return (
         <div className={montserrat.className}>
             <MenusContext.Provider value={menus}>
@@ -38,7 +38,8 @@ export default function Layout({ children }: { children: React.ReactNode })
                 <PopupContainer />
                 {isMobile && (<BottomMenu />)}
                 {children}
-                <Footer/>
+                <Benefits />
+                <Footer />
             </MenusContext.Provider>
         </div>
     );

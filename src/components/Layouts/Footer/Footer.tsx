@@ -1,9 +1,8 @@
-import styled from 'styled-components';
 import { useMediaQuery } from '@mui/material';
 
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { FC, useContext, useState } from 'react';
+import { FC, useState } from 'react';
 import { AccordionSummaryCustom, Contact, ContactLink, FooterAccordion, FooterColumn, FooterContainer, FooterGridContainer, FooterLogoImage, FooterLogoWrapper, FooterMainWrapper, FooterSecondTitle, FooterTitle, PaymentAndDeliveryMethods, PaymentAndDeliveryMethodsContainer, } from './styles';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -145,7 +144,7 @@ export const Footer: FC = () => {
                                     <p>Mon-Fri: from 9-00 to 18-00 <br />
                                         Sat-Sun day is a day off</p>
                                 </Contact>
-                                <Socials/>
+                                <Socials />
                             </AccordionDetails>
                         </FooterAccordion>
                     </FooterColumn>
