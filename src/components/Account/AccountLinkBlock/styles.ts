@@ -6,7 +6,7 @@ export const StyledInfoContainer = styled.a<StyledInfoContainerProps>`
     width: 100%;
     padding: 20.5px 23.5px;    
     border-radius: 8px;
-    background: ${({ theme }) => theme.background.secondary};
+    background-color: ${({ theme }) => theme.background.secondary};
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -25,18 +25,7 @@ export const StyledInfoContainer = styled.a<StyledInfoContainerProps>`
     }
 
     &:hover {
-        background: ${({ theme }) => theme.background.primaryGradient};
-
-        & span {
-            color: ${({ theme }) => theme.colors.white};
-        }
-
-        & path[stroke] {
-            stroke: ${({ theme }) => theme.colors.white};
-        }
-        & path[fill] {
-            fill: ${({ theme }) => theme.colors.white};
-        }
+        background-color: ${({ theme }) => theme.colors.silver};
     }
 `;
 
