@@ -54,7 +54,7 @@ const theme: Theme = {
         large: '(max-width: 1024px)',
         middle: '(max-width: 1100px)',
         xl: '(max-width: 1200px)',
-        extraLarge: '(max-width: 1440px)',
+        extraLarge: '(max-width: 40px)',
     },
 };
 

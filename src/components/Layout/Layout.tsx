@@ -9,7 +9,7 @@ import MobileHeader from '../Layouts/MobileHeader/MobileHeader';
 import TopBar from '../Layouts/TopBar/TopBar';
 import PopupContainer from '../Popups/PopupContainer/PopupContainer';
 import { Footer } from '../Layouts/Footer';
-import { Benefits } from '../../pages/benefits/index'
+import { BenefitsAccordion } from '../../pages/benefits/index'
 
 export const MenusContext = createContext<MenuItemsType[] | undefined>(undefined);
 
@@ -38,7 +38,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <PopupContainer />
                 {isMobile && (<BottomMenu />)}
                 {children}
-                <Benefits />
+                <BenefitsAccordion />
                 <Footer />
             </MenusContext.Provider>
         </div>

@@ -8,13 +8,13 @@ export const AccordionTitle = styled.h3`
 
 export const CustomAccordionStyled = styled(Accordion)`
     margin: 0;
+    width: 100%;
 
     &.Mui-expanded {
     margin: 0px;
     }
     
     .MuiAccordionSummary-expandIconWrapper.Mui-expanded {
-        color:  ${({ theme }) => theme.colors.white};
         display: none;
     }
     @media ${({ theme }) => theme.media.medium}  {

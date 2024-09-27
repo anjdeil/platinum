@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import { Accordion, AccordionDetails, AccordionSummary, useMediaQuery } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { AccordionTitle, CustomAccordionStyled } from './styles';
+import { AccordionTitle, CustomAccordionStyled, CustomAccordionSummary } from './styles';
 import { AccordionProps } from './types';
 
 const CustomAccordion: FC<AccordionProps> = ({
@@ -21,12 +21,12 @@ const CustomAccordion: FC<AccordionProps> = ({
 
     return (
         <CustomAccordionStyled expanded={!isMobile || expanded === panel} onChange={handleChange('panel1')}>
-            <AccordionSummary
+            <CustomAccordionSummary
                 /*  expandIcon={expanded ? <ExpandedIcon /> : <CollapsedIcon />} */
                 expandIcon={<ExpandMoreIcon />}
             >
                 <AccordionTitle style={titleStyles}>{title}</AccordionTitle>
-            </AccordionSummary>
+            </CustomAccordionSummary>
             <AccordionDetails>
                 {children}
             </AccordionDetails>

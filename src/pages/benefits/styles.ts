@@ -1,8 +1,177 @@
-import { Box } from "@mui/material";
+import { Accordion, AccordionSummary, Box } from "@mui/material";
 import styled from "@emotion/styled";
+import CustomAccordion from "@/components/shared/Accordion/Accordion";
 
-export const CustomBox = styled(Box)`
+export const BenefitsTitle = styled.h3`
+    font: ${({ theme }) => theme.fonts.titleH2SemiBold};
+    text-transform: uppercase;
+    font-size: 48px;
+
+    @media ${({ theme }) => theme.media.medium}  {
+        font: ${({ theme }) => theme.fonts.bodyMiddleSemiBold};
+    }
+`
+
+export const BenefitsPrice = styled.span`
+    font-size: 24px;
+    line-height: 133%;
+    text-transform: uppercase;
+    text-align: center;
+    white-space: nowrap;
+
+    @media ${({ theme }) => theme.media.medium}  {
+        font: ${({ theme }) => theme.fonts.bodyMiddleSemiBold};
+    }
+`
+
+export const AccordionHeader = styled(Box)` 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+
+    @media ${({ theme }) => theme.media.medium}  {
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 0;
+    }
+`
+
+export const BenefitsGrid = styled(Box)`
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 16px;
+    margin-bottom: 80px;
+
+    @media ${({ theme }) => theme.media.medium}  {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    @media ${({ theme }) => theme.media.small}  {
+        margin-bottom: 64px;
+    }
+`
+
+export const BenefitsGridColumn = styled(Box)`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 16px;
+
+    @media ${({ theme }) => theme.media.medium}  {
+        :nth-child(1) {
+            width: 50%;
+        }
+        :nth-child(2) {
+            width: 65%;
+        }
+        :nth-child(3) {
+            width: 80%;
+        }
+
+        gap: 8px;
+    }
+
+    @media ${({ theme }) => theme.media.small}  {
+        :nth-child(1) {
+            width: 100%;
+        }
+        :nth-child(2) {
+            width: 100%;
+        }
+        :nth-child(3) {
+            width: 100%;
+        }
+
+        gap: 8px;
+    }
+`
+
+export const BenefitsAccordionList = styled.ul`
+    list-style: none;
+    display: flex;
+    gap: 8px;
+    flex-direction: column;
+    margin-top: 16px;
+
+    li {
+        display: flex;
+    }
+`
+
+export const BenefitsAccordionStyled = styled(Accordion)`
+    box-sizing: border-box;
+    border-radius: 8px !important;
+    width: 100%;
+    margin: 0;
+    padding: 32px;
+    box-shadow: none;
+    border: none;
+
+    .MuiAccordionSummary-content.Mui-expanded {
+        margin: 0;
+        justify-content: center;
+    }
+    
+    .MuiAccordionSummary-expandIconWrapper.Mui-expanded {
+        display: none;
+    }
+
+    .MuiButtonBase-root {
+        min-height: 0 !important;
+        margin: 0;
+    }
+
+    .MuiAccordionDetails-root {
+        padding: 0;
+        list-style: none;
+    }
+
+    &.Mui-expanded {
+       margin: 0;
+    }
+
+    ::before {
+        opacity: 0;
+    }
+
+    @media ${({ theme }) => theme.media.medium}  {
+        .MuiAccordionSummary-expandIconWrapper {
+            display: none;
+        }
+
+        padding: 16px 32px;
+    }
+    
+`
+
+
+export const CustomAccordionSummary = styled(AccordionSummary)`
+    margin: 0;
+
+    @media ${({ theme }) => theme.media.medium}{
+        margin-bottom: 10px;
+        .MuiAccordionSummary-content {
+          margin: 0;
+          justify-content: center;
+        }
+    }
+    
+`
+
+
+export const AccordionTitle = styled.h3`
+    font: ${({ theme }) => theme.fonts.bodyMiddleReg};
+    text-transform: uppercase;
+    white-space: nowrap;
+`;
+
+
+
+export const BenefitsInfo = styled(Box)`
+    max-width: 600px;
 `
