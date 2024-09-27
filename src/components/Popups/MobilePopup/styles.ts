@@ -16,7 +16,7 @@ export const PopupContainer = styled.div<PopupContainerProps>`
     display: grid;
     z-index: 1100;
 
-    @media(max-width: 768px) {
+    @media ${({ theme }) => theme.media.medium} {
         top: 60px;
         bottom: 0;
         grid-template-rows: 60px 1fr;
@@ -29,7 +29,7 @@ export const Header = styled.div`
     justify-content: space-between;
     padding: 0 20px;
 
-    @media(max-width: 768px) {
+    @media ${({ theme }) => theme.media.medium} {
         display: flex;
     }
 `;

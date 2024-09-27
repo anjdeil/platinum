@@ -4,6 +4,7 @@
         "link": "Просто ссылка на другую переведенную страницу"
     },
     "MyAccount": {
+        "clientPersonalAccount": "Личный кабинет клиента",
         "dashboard": "Приборная панель",
         "userInformation": "Информация о пользователе",
         "shippingAddress": "Адрес доставки",
@@ -12,6 +13,21 @@
         "subscription": "Подписка на рассылку",
         "loyaltyProgram": "Программа лояльности",
         "changePassword": "Изменить пароль",
-        "logout": "Выход"
+        "logout": "Выход",
+        "numberOfOrders": "Число заказов",
+        "totalOrderAmount": "Общая сумма заказов",
+        "myInformation": "Моя информация",
+        "number": "Номер",
+        "deliveryPaymentTotal": "Доставка / Оплата / Итого",
+        "date": "Дата",
+        "status": "Статус",
+        "value": "Значение",
+        "seeMore": "Показать больше"
+    },
+    "TopBar": {
+        "CallUs": "Позвоните нам"
+    },
+    "Search": {
+        "Search": "Поиск"
     }
 }

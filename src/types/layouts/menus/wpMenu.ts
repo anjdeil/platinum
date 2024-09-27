@@ -19,7 +19,6 @@ export const wpMenuPropsSchema = z.object({
 
 export const VerticalWpMenuPropsSchema = z.object({
     menuId: z.number(),
-    className: z.string().optional(),
     height: z.number().optional()
 });
 
