@@ -4,6 +4,7 @@
         "link": "Wystarczy link do innej przetłumaczonej strony"
     },
     "MyAccount": {
+        "clientPersonalAccount": "Konto osobiste klienta",
         "dashboard": "Kokpit",
         "userInformation": "Dane użytkownika",
         "shippingAddress": "Adres do wysyłki",
@@ -12,6 +13,21 @@
         "subscription": "Subskrypcja",
         "loyaltyProgram": "Program lojalnościowy",
         "changePassword": "Zmiana hasła",
-        "logout": "Wyloguj"
+        "logout": "Wyloguj",
+        "numberOfOrders": "Liczba zamówień",
+        "totalOrderAmount": "Całkowita kwota zamówień",
+        "myInformation": "Moje informacje",
+        "number": "Numer",
+        "deliveryPaymentTotal": "Dostawa / Płatność / Suma",
+        "date": "Data",
+        "status": "Status",
+        "value": "Wartość",
+        "seeMore": "Zobacz więcej"
+    },
+    "TopBar": {
+        "CallUs": "Zadzwoń do nas"
+    },
+    "Search": {
+        "Search": "Wyszukiwanie"
     }
 }

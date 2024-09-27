@@ -4,6 +4,7 @@
         "link": "Просто посилання на ішну перекладену сторінку"
     },
     "MyAccount": {
+        "clientPersonalAccount": "Особистий кабінет клієнта",
         "dashboard": "Інформаційна панель",
         "userInformation": "Інформація користувача",
         "shippingAddress": "Адреса для доставки",
@@ -12,6 +13,21 @@
         "subscription": "Підписка на розсилку",
         "loyaltyProgram": "Програма лояльності",
         "changePassword": "Змінити пароль",
-        "logout": "Вихід"
+        "logout": "Вихід",
+        "numberOfOrders": "Кількість замовлень",
+        "totalOrderAmount": "Загальна сума замовлень",
+        "myInformation": "Моя інформація",
+        "number": "Номер",
+        "deliveryPaymentTotal": "Доставка / Оплата / Загалом",
+        "date": "Дата",
+        "status": "Статус",
+        "value": "Значення",
+        "seeMore": "Дивитись більше"
+    },
+    "TopBar": {
+        "CallUs": "Зателефонуйте нам"
+    },
+    "Search": {
+        "Search": "Пошук"
     }
 }

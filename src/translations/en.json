@@ -4,6 +4,7 @@
         "link": "Just link to another page translated"
     },
     "MyAccount": {
+        "clientPersonalAccount": "Client's personal account",
         "dashboard": "Dashboard",
         "userInformation": "User information",
         "shippingAddress": "Shipping address",
@@ -12,6 +13,21 @@
         "subscription": "Subscription",
         "loyaltyProgram": "Loyalty program",
         "changePassword": "Change password",
-        "logout": "Logout"
+        "logout": "Logout",
+        "numberOfOrders": "Number of orders",
+        "totalOrderAmount": "Total order amount",
+        "myInformation": "My information",
+        "number": "Number",
+        "deliveryPaymentTotal": "Delivery / Payment / Total",
+        "date": "Date",
+        "status": "Status",
+        "value": "Value",
+        "seeMore": "See more"
+    },
+    "TopBar": {
+        "CallUs": "Call us"
+    },
+    "Search": {
+        "Search": "Search"
     }
 }

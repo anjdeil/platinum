@@ -21,7 +21,7 @@ export default function LanguageSelect() {
   }
   
   return (  
-    <CustomSelect 
+    <CustomSelect
       options={languageSymbols} 
       value={currentSymbol}
       onChange={handleChange} 

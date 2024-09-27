@@ -4,6 +4,7 @@
         "link": "Verlinken Sie einfach auf eine andere Seite übersetzt"
     },
     "MyAccount": {
+        "clientPersonalAccount": "Kundenkonto",
         "dashboard": "Armaturenbrett",
         "userInformation": "Benutzerinformationen",
         "shippingAddress": "Lieferadresse",
@@ -12,6 +13,21 @@
         "subscription": "Anmeldung zum Newsletter",
         "loyaltyProgram": "Loyalitätsprogramm",
         "changePassword": "Passwort ändern",
-        "logout": "Abmeldung"
+        "logout": "Abmeldung",
+        "numberOfOrders": "Anzahl Der Bestellungen",
+        "totalOrderAmount": "Gesamtbetrag Der Aufträge",
+        "myInformation": "Meine Informationen",
+        "number": "Nummer",
+        "deliveryPaymentTotal": "Lieferung / Zahlung / Gesamt",
+        "date": "Datum",
+        "status": "Status",
+        "value": "Wert",
+        "seeMore": "Mehr sehen"
+    },
+    "TopBar": {
+        "CallUs": "Rufen Sie uns an"
+    },
+    "Search": {
+        "Search": "Suche"
     }
 }

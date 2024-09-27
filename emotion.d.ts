@@ -14,9 +14,14 @@ declare module '@emotion/react' {
             white: string;
             black: string;
             active: string;
+            silver: string;
+            platinum: string;
+            shadow: string;
+            error: string;
         };
         background: {
             primaryGradient: string;
+            infoGradient: string;
             secondary: string;
             hover: string;
             skeleton: string;
@@ -29,7 +34,7 @@ declare module '@emotion/react' {
         media: {
             medium: string;
             large: string;
-            midle: string;
+            middle: string;
             xl: string;
             extraLarge: string;
         };
