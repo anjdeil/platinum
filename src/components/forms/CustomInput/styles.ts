@@ -9,16 +9,7 @@ interface CustomInputStyleProps
 }
 
 export const CustomInputStyle = styled.label<CustomInputStyleProps>`
-    font-size: 14px;
-    font-family: ${({ theme }) => theme.typography.fontFamily};
-
-    input {
-        width: ${({ isCheckbox }) => isCheckbox ? '15px' : '100%'};
-        height:  ${({ isCheckbox }) => isCheckbox ? '15px' : '100%'};
-    }
-
-    @media ${({ theme }) => theme.media.medium} {
-        padding: 5px;
+     padding: 5px;
         display: flex;
         flex-direction: ${({ isCheckbox }) => isCheckbox ? 'row' : 'column'};
         align-items: ${({ isCheckbox }) => isCheckbox ? 'center' : 'flex-start'};
@@ -56,6 +47,15 @@ export const CustomInputStyle = styled.label<CustomInputStyleProps>`
                 outline: 1px solid green;
                 box-shadow:  ${({ theme }) => theme.shadows.primaryShadow};
             }
+        }
+
+    @media ${({ theme }) => theme.media.medium} {
+        font-size: 14px;
+        font-family: ${({ theme }) => theme.typography.fontFamily};
+
+        input {
+            width: ${({ isCheckbox }) => isCheckbox ? '15px' : '100%'};
+            height:  ${({ isCheckbox }) => isCheckbox ? '15px' : '100%'};
         }
     }
 `;
