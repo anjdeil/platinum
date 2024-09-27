@@ -55,7 +55,29 @@ export default function Account()
             title: t("logout"),
             href: "/logout"
         },
-    ]
+    ];
+
+    const orderList = [
+        {
+            id: "#273249",
+            details: "Shipping: GLS Courier to Portugal Payment: Bank transfer 81,11 EUR",
+            date: "05-08-2024 21:23:42",
+            status: "Order adopted"
+        },
+        {
+            id: "#273249",
+            details: "Shipping: GLS Courier to Portugal Payment: Bank transfer 81,11 EUR",
+            date: "05-08-2024 21:23:42",
+            status: "Order adopted"
+        },
+        {
+            id: "#273249",
+            details: "Shipping: GLS Courier to Portugal Payment: Bank transfer 81,11 EUR",
+            date: "05-08-2024 21:23:42",
+            status: "Order adopted"
+        },
+    ];
+
     return (
         <>
             <AccountTitle>{t("clientPersonalAccount")}</AccountTitle>
@@ -67,7 +89,7 @@ export default function Account()
                 <CustomInput type="password" required name="password" label="Password" placeholder="Enter password" />
                 <button type="submit">Ok</button>
             </form>
-            <Table />                
+            <Table orderList={orderList} />                
         </>
     );
 };

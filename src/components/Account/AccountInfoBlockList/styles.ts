@@ -6,7 +6,11 @@ export const StyledListContainer = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: stretch;
-    gap: 5px;
+    gap: 16px;
+
+    @media ${({ theme }) => theme.media.large} {
+        gap: 5px;
+    }
 
     @media ${({ theme }) => theme.media.medium} {
         flex-direction: column;

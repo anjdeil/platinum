@@ -5,9 +5,13 @@ export const StyledListContainer = styled.div`
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     align-items: center;
-    gap: 16px;
+    gap: 60px;
+
+    @media ${({ theme }) => theme.media.large} {
+        gap: 16px;
+    }
 
     @media ${({ theme }) => theme.media.medium} {
         grid-template-columns: repeat(2, 1fr);
-    }    
+    }
 `;

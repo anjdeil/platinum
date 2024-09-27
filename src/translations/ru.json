@@ -17,6 +17,7 @@
         "numberOfOrders": "Число заказов",
         "totalOrderAmount": "Общая сумма заказов",
         "myInformation": "Моя информация",
+        "number": "Номер",
         "deliveryPaymentTotal": "Доставка / Оплата / Итого",
         "date": "Дата",
         "status": "Статус",

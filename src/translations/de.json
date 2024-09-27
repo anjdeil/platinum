@@ -17,6 +17,7 @@
         "numberOfOrders": "Anzahl Der Bestellungen",
         "totalOrderAmount": "Gesamtbetrag Der Aufträge",
         "myInformation": "Meine Informationen",
+        "number": "Nummer",
         "deliveryPaymentTotal": "Lieferung / Zahlung / Gesamt",
         "date": "Datum",
         "status": "Status",

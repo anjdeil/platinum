@@ -1,38 +1,18 @@
 import { StyledButton } from "@/styles/components";
+import { TableProps } from "@/types/layouts/Account";
 import { useTheme } from "@emotion/react";
 import { useTranslations } from "next-intl";
 import { StyledBody, StyledBodyTr, StyledDateTd, StyledHead, StyledNoAndDate, StyledOrderSpan, StyledOrderWrapper, StyledSpan, StyledTable, StyledTd, StyledTh, StyledTotalSpan, StyledTr } from "./styles";
 
-const Table = () =>
+const Table: React.FC<TableProps> = ({orderList}) =>
 {
-    const orderList = [
-        {
-            id: "#273249",
-            details: "Shipping: GLS Courier to Portugal Payment: Bank transfer 81,11 EUR",
-            date: "05-08-2024 21:23:42",
-            status: "Order adopted"
-        },
-        {
-            id: "#273249",
-            details: "Shipping: GLS Courier to Portugal Payment: Bank transfer 81,11 EUR",
-            date: "05-08-2024 21:23:42",
-            status: "Order adopted"
-        },
-        {
-            id: "#273249",
-            details: "Shipping: GLS Courier to Portugal Payment: Bank transfer 81,11 EUR",
-            date: "05-08-2024 21:23:42",
-            status: "Order adopted"
-        },
-    ]
-
     const theme = useTheme();
     const t = useTranslations("MyAccount");
     return (
         <StyledTable>
             <StyledHead>
                 <StyledTr>
-                    <StyledTh>NO.</StyledTh>
+                    <StyledTh>{t("number")}</StyledTh>
                     <StyledTh>{t("deliveryPaymentTotal")}</StyledTh>
                     <StyledTh>{t("date")}</StyledTh>
                     <StyledTh>{t("status")}</StyledTh>
