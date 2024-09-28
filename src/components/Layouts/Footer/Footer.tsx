@@ -11,11 +11,7 @@ import VerticalSlider from '../VerticalSliderMenu/VerticalSliderMenu';
 import Nav from '../Nav/Nav';
 import { Socials } from './Socials';
 
-
-
-
 export const Footer: FC = () => {
-
     const isMobile = useMediaQuery('(max-width: 768px)');
 
     const [expanded, setExpanded] = useState<string | false>(!isMobile ? 'panel1' : false);
@@ -23,7 +19,6 @@ export const Footer: FC = () => {
     const handleChange = (panel: string) => (_: unknown, isExpanded: boolean) => {
         setExpanded(isExpanded ? panel : false);
     };
-
 
     return (
         <FooterContainer >
@@ -55,7 +50,7 @@ export const Footer: FC = () => {
                                         height: "24px",
                                         gap: '10px'
                                     }}
-                                    menuId={1}
+                                    menuId={335}
                                     direction='column'
                                     gap='16px'
                                     align='flex-start'></Nav>
@@ -98,7 +93,7 @@ export const Footer: FC = () => {
                             </AccordionSummaryCustom>
                             <AccordionDetails >
                                 <Nav
-                                    menuId={1}
+                                    menuId={335}
                                     skeleton={{
                                         direction: 'column',
                                         elements: 4,

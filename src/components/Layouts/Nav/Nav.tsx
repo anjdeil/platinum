@@ -21,7 +21,7 @@ const Nav: FC<wpMenuProps> = ({
     gap,
     mobGap,
 }) => {
-   /*  const menus: MenuItemsType[] | undefined = useContext(MenusContext); */
+    const menus: MenuItemsType[] | undefined = useContext(MenusContext); 
     const menuItems = menus?.find(({ id }) => id === menuId)?.items;
     
     if (!menuItems && skeleton) {
