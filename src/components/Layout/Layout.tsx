@@ -1,35 +1,30 @@
-import { useResponsive } from '@/hooks/useResponsive';
-import { useGetMenusQuery } from '@/store/rtk-queries/wpCustomApi';
-import { MenuItemsType } from '@/types/services/customApi/Menu/MenuItemsType';
-import { Montserrat } from 'next/font/google';
-import { createContext } from 'react';
-import BottomMenu from '../Layouts/BottomMenu';
-import Header from '../Layouts/Header/Header';
-import MobileHeader from '../Layouts/MobileHeader/MobileHeader';
-import TopBar from '../Layouts/TopBar/TopBar';
-import PopupContainer from '../Popups/PopupContainer/PopupContainer';
-import { Footer } from '../Layouts/Footer';
+import { useGetMenusQuery, useGetProductsQuery } from '@/store/rtk-queries/wpCustomApi';
+import { WpMenuResponseType } from '@/types/layouts/menus';
+import { LangParamType } from '@/types/services/wpCustomApi';
+import Box from '@mui/material/Box';
+import { useRouter } from 'next/router';
+import { createContext, useEffect, useState } from 'react';
 
-export const MenusContext = createContext<MenuItemsType[] | undefined>(undefined);
+export const MenusContext = createContext<WpMenuResponseType[] | []>([]);
+const currency = 'USD';
 
-const montserrat = Montserrat({
-    subsets: ['latin', 'cyrillic'], 
-    weight: ['400', '500', '600', '700'],
-    display: 'swap',
-});
- 
 export default function Layout({ children }: { children: React.ReactNode })
 {
-    const { isMobile } = useResponsive();
+    const { locale } = useRouter();
+    const langParam: LangParamType | object = locale ? { lang: locale } : {};
+    const [menus, setMenus] = useState<WpMenuResponseType[] | []>([]);
 
-    const menuIds = [335, 344];
+    const { data: menusResp, error, isLoading } = useGetMenusQuery(langParam);
+    const { data: products, error: productError, isError } = useGetProductsQuery(langParam);
 
-    const { data: menusData } = useGetMenusQuery({
-        include: menuIds.join(',')        
-    });
+    useEffect(() =>
+    {
+        if (menusResp && menusResp.data && menusResp.data.items)
+        {
+            setMenus(menusResp.data.items);
+        }
+    }, [menusResp])
 
-    const menus = menusData?.data ? menusData.data.items as MenuItemsType[] : [];
-       
     return (
         <div className={montserrat.className}>
             <MenusContext.Provider value={menus}>
