@@ -17,11 +17,16 @@ declare module '@emotion/react' {
             white: string;
             black: string;
             active: string;
+            error: string;
             backgroundGradient: string;
         };
+        shadows: {
+            primaryShadow: string;
+        },
         background: {
             secondary: string;
             hover: string;
+            formElements: string;
         };
         spacing: {
             small: string;

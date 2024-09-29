@@ -2,16 +2,12 @@
 import { FC } from "react";
 import { SocialItemLink, SocialsContainer } from "./styles";
 import Image from "next/image";
-
-interface SocialItem {
-    svg_name: string;
-    link: string;
-}
+import { useAppSelector } from "@/store";
 
 export const Socials: FC/* <> */ = ({ }) => {
 
-    //const SocialItems = запрос ? или из контекста;
-    const SocialItems: SocialItem[]  | undefined  = []
+    const themeOptions = useAppSelector(state => state.themeOptions);
+    const SocialItems = themeOptions.data.item.contacts.socials;
 
     /*  if (!SocialItems && skeleton) {
          return (
@@ -27,14 +23,23 @@ export const Socials: FC/* <> */ = ({ }) => {
     // нужен ли тут скелетон?
     return (
         <SocialsContainer>
-        {SocialItems && SocialItems.map(({ svg_name, link }) => (
-            <SocialItemLink href={link} key={svg_name}>
-                <Image src={`/assets/icons/${svg_name}.svg`} alt={svg_name} width={24} height={24} unoptimized={true} />
-            </SocialItemLink>
-        ))}
-    </SocialsContainer>
+            {SocialItems && SocialItems.map(({ social, link }) => (
+                <SocialItemLink href={link} key={social}>
+                    <Image
+                        src={`/assets/icons/${social}.svg`}
+                        alt={social}
+                        width={24}
+                        height={24}
+                        unoptimized={true}
+                        onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                        }}
+                    />
+                </SocialItemLink>
+            ))}
+        </SocialsContainer>
 
-    //пример с картинкой
+        //пример с картинкой
         /*   <SocialsContainer >
               <SocialItemLink  href="/" >
                       <Image src="/assets/icons/contact_place.svg" alt="Logo" width={24} height={24} unoptimized={true} />

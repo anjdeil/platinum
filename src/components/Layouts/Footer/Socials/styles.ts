@@ -7,4 +7,6 @@ display: flex;
 `;
 export const SocialItemLink = styled(Link)`
   margin-right: 16px;
+  color:  ${({ theme }) => theme.colors.white};
+  text-decoration: none;
 `;

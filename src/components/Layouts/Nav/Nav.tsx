@@ -1,5 +1,5 @@
 import { MenusContext } from '@/components/Layout/Layout';
-import { wpMenuProps } from '@/types/layouts/Menus/wp-menus';
+import { wpMenuProps } from '@/types/layouts/menus/wp-menus';
 import { MenuItemsType } from '@/types/services/customApi/Menu/MenuItemsType';
 import { FC, useContext } from 'react';
 import { MenuSkeleton } from '../MenuSkeleton';

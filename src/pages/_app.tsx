@@ -10,7 +10,7 @@ import App, { AppContext, AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import { Provider } from "react-redux";
 import { ThemeProvider } from '@emotion/react';
-import theme from '@/styles/theme';
+
 
 function MyApp({ Component, pageProps }: AppProps)
 {

@@ -1,7 +1,9 @@
 import { NavLinkPropsSchema, NavListPropsSchema } from "@/types/layouts/Nav";
 import { z } from "zod";
-import { MenuSkeletonPropsSchema } from "./Skeletons";
+
 import React, { ReactNode } from "react";
+import { MenuSkeletonPropsSchema } from "./Skeletons";
+
 
 const wpNavLinkSchema = z.object({
     title: z.string(),
@@ -18,8 +20,6 @@ export const wpMenuPropsSchema = z.object({
     ...NavListPropsSchema.shape,
     ...NavLinkPropsSchema.shape,
 });
-
-
 
 
 export type wpNavLink = z.infer<typeof wpNavLinkSchema>;

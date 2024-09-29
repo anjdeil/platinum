@@ -1,9 +1,10 @@
 import { useAppDispatch, useAppSelector } from '@/store';
-import { currencySymbols, setCurrentCurrency } from '@/store/slices/currencySlice';
 import CustomSelect from '../CustomSelect/CustomSelect';
+import { currencySymbols, setCurrentCurrency } from '@/store/slices/currencySlice';
+
 
 export default function CurrencySelect() {
-  const currency = useAppSelector((state) => state.currentCurrency);
+  const currency = useAppSelector((state) => state.currencySlice);
   const dispatch = useAppDispatch();
 
   const onCurrencyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {

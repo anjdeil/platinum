@@ -1,5 +1,7 @@
 import { z } from "zod";
-import { MenuSkeletonPropsSchema } from "./wpMenuSkeleton";
+import { MenuSkeletonPropsSchema } from "./Skeletons";
+
+
 
 const wpNavLinkSchema = z.object({
     title: z.string(),

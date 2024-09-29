@@ -1,6 +1,6 @@
 
 import { z } from "zod";
-import { MenuSkeletonPropsSchema } from "../../Menus";
+import { MenuSkeletonPropsSchema } from "../../menus";
 
 /* const NavButtonSchema = z.object({
     onClick: z.function(),
