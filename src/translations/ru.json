@@ -22,7 +22,19 @@
         "date": "Дата",
         "status": "Статус",
         "value": "Значение",
-        "seeMore": "Показать больше"
+        "seeMore": "Показать больше",
+        "recentOrders": "Недавние заказы",
+        "pending": "В ожидании",
+        "processing": "В обработке",
+        "on-hold": "На паузе",
+        "completed": "Завершено",
+        "cancelled": "Отменено",
+        "refunded": "Возвращено",
+        "failed": "Неудачно",
+        "trash": "Корзина",
+        "shipping": "Доставка",
+        "payment": "Оплата",
+        "missingToSilver": "До серебра не хватает"
     },
     "TopBar": {
         "CallUs": "Позвоните нам"

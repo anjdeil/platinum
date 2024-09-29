@@ -22,7 +22,19 @@
         "date": "Data",
         "status": "Status",
         "value": "Wartość",
-        "seeMore": "Zobacz więcej"
+        "seeMore": "Zobacz więcej",
+        "recentOrders": "Ostatnie zamówienia",
+        "pending": "Oczekujące",
+        "processing": "W trakcie realizacji",
+        "on-hold": "Wstrzymane",
+        "completed": "Zrealizowane",
+        "cancelled": "Anulowane",
+        "refunded": "Zwrócone",
+        "failed": "Nieudane",
+        "trash": "Kosz",
+        "shipping": "Wysyłka",
+        "payment": "Płatność",
+        "missingToSilver": "Brakuje do srebra"
     },
     "TopBar": {
         "CallUs": "Zadzwoń do nas"

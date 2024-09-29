@@ -1,10 +1,10 @@
-import Head from "next/head";
-import React, { ReactNode } from "react";
-import accountLinks from "./accountLinks";
+import SideList from "@/components/Layouts/SideList/SideList";
+import { AccountTitle } from "@/styles/components";
 import { useTranslations } from "next-intl";
-import { AccountContainer, AccountContent } from "./styles";
-import SideListTest from "@/components/Layouts/SideListTest";
-import { Title } from "@/styles/components";
+import Head from "next/head";
+import { ReactNode } from "react";
+import accountLinks from "./accountLinks";
+import { AccountContainer, AccountContent, SideListContainer } from "./styles";
 
 export default function AccountLayout({
     title,
@@ -26,10 +26,12 @@ export default function AccountLayout({
                 <title>{title}</title>
             </Head>
 
+            <AccountTitle as={"h1"} textAlign="center" uppercase>{title}</AccountTitle>
             <AccountContainer>
-                <SideListTest links={translatedAccountLinks} />
+                <SideListContainer>
+                    <SideList links={translatedAccountLinks} />
+                </SideListContainer>
                 <AccountContent>
-                    <Title as={"h1"} textAlign="center" uppercase fontSize={24}>{title}</Title>
                     {children}
                 </AccountContent>
             </AccountContainer>

@@ -22,7 +22,19 @@
         "date": "Datum",
         "status": "Status",
         "value": "Wert",
-        "seeMore": "Mehr sehen"
+        "seeMore": "Mehr sehen",
+        "recentOrders": "Kürzliche Bestellungen",
+        "pending": "Ausstehend",
+        "processing": "In Bearbeitung",
+        "on-hold": "Warten",
+        "completed": "Abgeschlossen",
+        "cancelled": "Storniert",
+        "refunded": "Erstattet",
+        "failed": "Fehlgeschlagen",
+        "trash": "Papierkorb",
+        "shipping": "Versand",
+        "payment": "Zahlung",
+        "missingToSilver": "Es fehlen bis zum Silber"
     },
     "TopBar": {
         "CallUs": "Rufen Sie uns an"

@@ -22,7 +22,19 @@
         "date": "Date",
         "status": "Status",
         "value": "Value",
-        "seeMore": "See more"
+        "seeMore": "See more",
+        "recentOrders": "Recent orders",
+        "pending": "Pending",
+        "processing": "Processing",
+        "on-hold": "On Hold",
+        "completed": "Completed",
+        "cancelled": "Cancelled",
+        "refunded": "Refunded",
+        "failed": "Failed",
+        "trash": "Trash",
+        "shipping": "Shipping",
+        "payment": "Payment",
+        "missingToSilver": "Missing to silver"
     },
     "TopBar": {
         "CallUs": "Call us"

@@ -13,7 +13,7 @@ export const StyledHead = styled.thead`
     width: 100%;
     min-height: 56px;
     background-color: ${({ theme }) => theme.colors.silver};
-    padding-block: 12px;
+    padding: 12px;
     display: flex;
     text-transform: uppercase;
     align-items: center;
@@ -45,17 +45,33 @@ export const StyledTr = styled.tr`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 12px;
+`;
+
+export const StyledBody = styled.tbody`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 0;
+
+    @media ${({ theme }) => theme.media.medium} {
+        row-gap: 16px;
+    }  
 `;
 
 export const StyledBodyTr = styled(StyledTr)`
     padding: 16px;
-    border-radius: 0;    
+    border-radius: 0;
     border: ${({ theme }) => `1px solid ${theme.colors.silver}`};
     border-top: none;
     display: flex;
-    gap: 12px;
+
+    @media ${({ theme }) => theme.media.large} {
+        padding: 8px;
+    }
 
     @media ${({ theme }) => theme.media.medium} {
+        padding: 16px;
         flex-direction: column;        
         row-gap: 16px;
         border-radius: 8px;
@@ -68,20 +84,21 @@ export const StyledTh = styled.th`
     text-align: center;
 `;
 
+export const StyledDetailesTh = styled(StyledTh)`
+    width: 200%;
+`;
+
 export const StyledTd = styled.td`
     width: 100%;
     text-align: center;
 `;
 
-export const StyledBody = styled.tbody`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    row-gap: 0;
+export const StyledDetailesTd = styled(StyledTd)`
+    width: 200%;
 
     @media ${({ theme }) => theme.media.medium} {
-        row-gap: 16px;
-    }  
+        width: 100%;
+    }
 `;
 
 export const StyledNoAndDate = styled.div`

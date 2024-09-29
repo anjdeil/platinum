@@ -19,16 +19,16 @@ export const StyledButtonPropsSchema = z.object({
 export const LogoLinkImagePropsSchema = z.object({
     width: z.number().optional(),
     height: z.number().optional(),
-    desktopWidth: z.number().optional(),
-    desktopHeight: z.number().optional(),
+    desktopwidth: z.number().optional(),
+    desktopheight: z.number().optional(),
     children: z.any().optional(),
 });
 
 export const LogoLinkPropsSchema = z.object({
     width: z.number().optional(),
     height: z.number().optional(),
-    desktopWidth: z.number().optional(),
-    desktopHeight: z.number().optional(),
+    desktopwidth: z.number().optional(),
+    desktopheight: z.number().optional(),
     children: z.any().optional(),
 });
 
