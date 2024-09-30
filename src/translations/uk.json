@@ -22,7 +22,19 @@
         "date": "Дата",
         "status": "Статус",
         "value": "Значення",
-        "seeMore": "Дивитись більше"
+        "seeMore": "Дивитись більше",
+        "recentOrders": "Недавні замовлення",
+        "pending": "В очікуванні",
+        "processing": "В обробці",
+        "on-hold": "На паузі",
+        "completed": "Завершено",
+        "cancelled": "Скасовано",
+        "refunded": "Повернуто",
+        "failed": "Не вдалося",
+        "trash": "Кошик",
+        "shipping": "Доставка",
+        "payment": "Оплата",
+        "missingToSilver": "До срібла не вистачає"
     },
     "TopBar": {
         "CallUs": "Зателефонуйте нам"

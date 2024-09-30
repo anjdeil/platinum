@@ -3,10 +3,10 @@ import { AccountInfoBlockProps } from "@/types/layouts/Account";
 import { useTheme } from "@emotion/react";
 import { StyledInfoContainer, StyledInfoWrapper, StyledTitle, StyledValue } from "./styles";
 
-const AccountInfoBlock: React.FC<AccountInfoBlockProps> = ({ icon: Icon, title, value }) =>
+const AccountInfoBlock: React.FC<AccountInfoBlockProps> = ({ icon: Icon, title, value, background }) =>
 {
     const theme = useTheme();
-    const background = (() => {
+    const backgroundColor = background ? background : (() => {
         switch (value.toUpperCase()) {
             case "SILVER":
                 return theme.colors.silver;
@@ -15,18 +15,20 @@ const AccountInfoBlock: React.FC<AccountInfoBlockProps> = ({ icon: Icon, title, 
             case "PLATINUM":
                 return theme.colors.platinum;
             default:
-                return theme.background.infoGradient;
+                return theme.background.grey;            
         }
     })();
 
+    const textColor = value.toUpperCase() === 'SILVER' ? theme.colors.black : theme.colors.white
+
     return (
-        <StyledInfoContainer background={background}>
+        <StyledInfoContainer background={backgroundColor} color={textColor}>
             <StyledIconWrapper>
                 <Icon />
             </StyledIconWrapper>
             <StyledInfoWrapper>
-                <StyledTitle>{title}</StyledTitle>
-                <StyledValue>{value}</StyledValue>
+                <StyledTitle color={textColor}>{title}</StyledTitle>
+                <StyledValue color={textColor}>{value}</StyledValue>
             </StyledInfoWrapper>
         </StyledInfoContainer>
     )

@@ -9,6 +9,9 @@ interface TitleProps {
     fontSize?: number;
     textAlign?: "center" | "left" | "right";
     uppercase?: boolean;
+    marginBottom?: number;
+    tabletMarginBottom?: number;
+    mobMarginBottom?: number;
 }
 
 export const Title = styled.h1<TitleProps>`
@@ -17,16 +20,24 @@ export const Title = styled.h1<TitleProps>`
     font-weight: ${({ fontWeight = 600 }) => fontWeight};
 `;
 
-export const AccountTitle = styled.h2`
+export const AccountTitle = styled.h2<TitleProps>`
     color: ${({ theme }) => theme.colors.black};
-    font-size: 16px;
-    line-height: 24px;
+    font-size: 24px;
+    line-height: 32px;
     font-weight: 600;
     text-align: center;
+    text-transform: ${({ uppercase }) => uppercase ? "uppercase" : 'none'};
+    margin-top: 24px;
+    margin-bottom: ${({ marginBottom = 48 }) => marginBottom}px;
 
     @media ${({ theme }) => theme.media.large} {
-        font-size: 24px;
-        line-height: 32px;     
+        font-size: 16px;
+        line-height: 24px;
+        margin-bottom: ${({ tabletMarginBottom = 24 }) => tabletMarginBottom}px;
+    }
+
+    @media ${({ theme }) => theme.media.medium} {
+        margin-bottom: ${({ mobMarginBottom = 24 }) => mobMarginBottom}px;
     }
 `;
 
@@ -86,8 +97,8 @@ export const StyledIconButton = styled.button`
 export const LogoLink = styled(Link) <LogoLinkProps>`
     display: flex;
     position: relative;
-    width: ${({ desktopWidth = 92 }) => `${desktopWidth}px`};
-    height: ${({ desktopHeight = 92 }) => `${desktopHeight}px`};
+    width: ${({ desktopwidth = 92 }) => `${desktopwidth}px`};
+    height: ${({ desktopheight = 92 }) => `${desktopheight}px`};
     
     @media ${({ theme }) => theme.media.large} {
         width: ${({ width = 44 }) => `${width}px`};
@@ -96,6 +107,7 @@ export const LogoLink = styled(Link) <LogoLinkProps>`
 `;
 
 export const StyledIconWrapper = styled.div`
+    flex-shrink: 0;
     width: 40px;
     height: 40px;
     display: flex;
@@ -118,4 +130,22 @@ export const StyledIconWrapper = styled.div`
 export const LogoLinkImage = styled(Image) <LogoLinkImageProps>`
     width: 100%;
     height: 100%;
+`;
+
+export const AccountInfoWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 80px;
+   
+    @media ${({ theme }) => theme.media.large} {
+        margin-bottom: 24px;
+    }
+
+    @media ${({ theme }) => theme.media.medium} {
+        flex-direction: column-reverse;
+        margin-bottom: 64px;
+    }
 `;

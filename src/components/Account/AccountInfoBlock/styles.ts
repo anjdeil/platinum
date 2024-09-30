@@ -1,12 +1,11 @@
-import { StyledInfoContainerProps } from "@/types/layouts/Account";
+import { StyledInfoContainerProps, StyledTextPropsProps } from "@/types/layouts/Account";
 import styled from "@emotion/styled";
 
 export const StyledInfoContainer = styled.div<StyledInfoContainerProps>`
     box-sizing: border-box;
     width: 100%;
     flex-grow: 1;
-    padding-block: 24px;
-    padding-inline: 18px;
+    padding: 24px;
     border-radius: 8px;
     background: ${({ theme, background = theme.background.infoGradient }) => background};
     display: flex;
@@ -15,15 +14,18 @@ export const StyledInfoContainer = styled.div<StyledInfoContainerProps>`
     gap: 24px;
 
     @media ${({ theme }) => theme.media.large} {
-        padding-block: 16px;
+        padding: 16px;
         gap: 0; 
     }
 
     @media ${({ theme }) => theme.media.medium} {
-        padding-block: 24px;
+        padding: 24px;
         gap: 24px;
     }
     
+    & path {
+        fill: ${({ color }) => color};
+    }
 `;
 
 export const StyledInfoWrapper = styled.div`
@@ -44,11 +46,13 @@ export const StyledInfoWrapper = styled.div`
     }
 `;
 
-export const StyledTitle = styled.span`
+export const StyledTitle = styled.span<StyledTextPropsProps>`
     font-size: 14px;
     line-height: 24px;
     font-weight: 400;
     text-align: center;
+    hyphens: auto;
+    color: ${({ color }) => color};
 
     @media ${({ theme }) => theme.media.large} {
         font-size: 12px;
@@ -58,12 +62,13 @@ export const StyledTitle = styled.span`
         font-size: 14px;
         line-height: 24px;
     }
-`
+`;
 
-export const StyledValue = styled.span`    
+export const StyledValue = styled.span<StyledTextPropsProps>`    
     font-size: 24px;
     line-height: 32px;
     font-weight: 500;
+    color: ${({ color }) => color};
 
     @media ${({ theme }) => theme.media.large} {
         font-size: 16px;
@@ -73,4 +78,4 @@ export const StyledValue = styled.span`
         font-size: 24px;
         line-height: 32px;
     }
-`
+`;
