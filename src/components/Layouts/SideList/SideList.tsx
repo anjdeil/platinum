@@ -6,6 +6,7 @@ import { List, SideListContainer, StyledListItem } from "./styles";
 
 const SideList: FC<SideListPropsType> = ({
     links,
+    activeLink,
     onClick,
     marginTop,
     marginBottom,
@@ -41,6 +42,7 @@ const SideList: FC<SideListPropsType> = ({
                         mobLineHeight={mobLineHeight}
                         hoverColor={hoverColor}
                         hoverBackground={hoverBackground}
+                        isActive={url === activeLink}
                     >                       
                         {onClick !== undefined ?
                             (

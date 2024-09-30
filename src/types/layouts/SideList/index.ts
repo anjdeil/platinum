@@ -22,6 +22,7 @@ export const StyledListItemSchema = z.object({
     width: z.string().optional(),
     hoverBackground: z.string().optional(),
     hoverColor: z.string().optional(),
+    isActive: z.boolean().optional()
 });
 
 export const StyledItemPropsSchema = z.object({
@@ -45,6 +46,7 @@ export const SideListPropsSchema = z.object({
     ...ListSchema.shape,
     ...StyledListItemSchema.shape,
     links: z.array(SideListLinkSchema),
+    activeLink: z.string().optional(),
     onClick: z.function().args(z.string()).returns(z.void()).optional(),
 });
 

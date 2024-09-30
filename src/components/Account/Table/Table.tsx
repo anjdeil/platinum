@@ -32,35 +32,46 @@ const Table: React.FC<TableProps> = ({orderList, title}) =>
                     </StyledTr>
                 </StyledHead>
                 <StyledBody>
-                    {orderList.map(item => (
-                        <StyledBodyTr key={item.id}>
-                            <StyledTd>
-                                <StyledNoAndDate>
-                                    <StyledSpan>{item.id}</StyledSpan> 
-                                    <StyledSpan>{item.date_created}</StyledSpan>
-                                </StyledNoAndDate>
-                            </StyledTd>
-                            <StyledDetailesTd>
-                                <StyledTotalSpan>{t("shipping")}: {item.shipping_lines[0].method_title}</StyledTotalSpan>
-                                <StyledTotalSpan>{t("payment")}: {item.payment_method_title}</StyledTotalSpan>
-                                <StyledTotalSpan>{item.total} {currency.symbol}</StyledTotalSpan>
-                            </StyledDetailesTd>
-                            <StyledDateTd>
-                                {item.date_created}
-                            </StyledDateTd>
-                            <StyledTd>
-                                <StyledOrderWrapper>
-                                    <StyledOrderSpan>{t("status")}</StyledOrderSpan> 
-                                    <StyledOrderSpan>{t(item.status)}</StyledOrderSpan>
-                                </StyledOrderWrapper>
-                            </StyledTd>
-                            <StyledTd>
-                                <Link href={`/my-account/orders/${item.id}`}>
-                                    <StyledButton color={theme.colors.white} backgroundColor={theme.colors.primary}>{t("seeMore")}</StyledButton>
-                                </Link>
-                            </StyledTd>
-                        </StyledBodyTr>
-                    ))}
+                    {orderList.map(item => {
+                        const dateCreated = item.date_created && new Date(item.date_created).toLocaleDateString("pl-PL", {
+                            year: 'numeric',
+                            month: '2-digit',
+                            day: '2-digit',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            second: '2-digit',
+                        }).replace(/\./g, "-").replace(/\,/g, " ");
+
+                        return (
+                            <StyledBodyTr key={item.id}>
+                                <StyledTd>
+                                    <StyledNoAndDate>
+                                        <StyledSpan>{item.id}</StyledSpan>
+                                        <StyledSpan>{dateCreated}</StyledSpan>
+                                    </StyledNoAndDate>
+                                </StyledTd>
+                                <StyledDetailesTd>
+                                    <StyledTotalSpan>{t("shipping")}: {item.shipping_lines[0].method_title}</StyledTotalSpan>
+                                    <StyledTotalSpan>{t("payment")}: {item.payment_method_title}</StyledTotalSpan>
+                                    <StyledTotalSpan>{item.total} {currency.symbol}</StyledTotalSpan>
+                                </StyledDetailesTd>
+                                <StyledDateTd>
+                                    {dateCreated}
+                                </StyledDateTd>
+                                <StyledTd>
+                                    <StyledOrderWrapper>
+                                        <StyledOrderSpan>{t("status")}</StyledOrderSpan>
+                                        <StyledOrderSpan>{t(item.status)}</StyledOrderSpan>
+                                    </StyledOrderWrapper>
+                                </StyledTd>
+                                <StyledTd>
+                                    <Link href={`/my-account/orders/${item.id}`}>
+                                        <StyledButton color={theme.colors.white} backgroundColor={theme.colors.primary}>{t("seeMore")}</StyledButton>
+                                    </Link>
+                                </StyledTd>
+                            </StyledBodyTr>
+                        )
+                    })}
                 </StyledBody>
             </StyledTable>
         </>
