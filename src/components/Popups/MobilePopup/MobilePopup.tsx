@@ -2,7 +2,7 @@ import { MobilePopupPropsType } from "@/types/layouts/MobilePopup";
 import { FC } from "react";
 import { CloseButton, Content, Header, Overlay, PopupContainer, Title } from "./styles";
 
-const MobilePopup: FC<MobilePopupPropsType> = ({ onClose, title = "", children, backgroundColor, width, paddingTop, closeButton = false }) => {
+const MobilePopup: FC<MobilePopupPropsType> = ({ onClose, title = "", children, backgroundColor, width, paddingTop, rowGap, closeButton = false }) => {
 
     const handleOverlayClick = (event: React.MouseEvent<HTMLDivElement>) => {
         if (event.target === event.currentTarget) {
@@ -12,7 +12,13 @@ const MobilePopup: FC<MobilePopupPropsType> = ({ onClose, title = "", children, 
 
     return (
         <Overlay onClick={handleOverlayClick}>
-            <PopupContainer backgroundColor={backgroundColor} width={width} paddingTop={paddingTop} title={title}>
+            <PopupContainer
+                backgroundColor={backgroundColor}
+                width={width}
+                paddingTop={paddingTop}
+                rowGap={rowGap}
+                title={title}
+            >
                 {title && (
                     <Header>
                         <Title>{title}</Title>

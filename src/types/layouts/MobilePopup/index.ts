@@ -4,6 +4,7 @@ export const PopupPropsSchema = z.object({
     width: z.string().optional(),
     backgroundColor: z.string().optional(),
     paddingTop: z.string().optional(),
+    rowGap: z.string().optional(),
     title: z.union([z.string(), z.any()]).optional(),
 });
 

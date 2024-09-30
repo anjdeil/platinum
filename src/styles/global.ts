@@ -220,6 +220,24 @@ template {
 [hidden] {
     display: none;
 }
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #113760;
+  border-radius: 6.5px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+}
+
 `;
 
 export default GlobalStyle;

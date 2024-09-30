@@ -71,8 +71,16 @@ const MobileCategoriesMenu: FC<MobileCategoriesMenuPropsType> = ({ onClose }) =>
             backgroundColor={theme.colors.white}
             width="100%"
             paddingTop="22px"
+            rowGap="18px"
         >
-            <SideList links={categoriesLinks || []} onClick={handleClick} />
+            <SideList
+                links={categoriesLinks || []}
+                onClick={handleClick}
+                marginTop="15px"
+                marginBottom="76px"
+                mobFontSize="12px"
+                mobLineHeight="16px"
+            />
         </MobilePopup>
     );
 }

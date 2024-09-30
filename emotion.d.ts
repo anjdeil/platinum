@@ -14,12 +14,18 @@ declare module '@emotion/react' {
             white: string;
             black: string;
             active: string;
+            silver: string;
+            platinum: string;
+            shadow: string;
+            error: string;
         };
         background: {
             primaryGradient: string;
+            infoGradient: string;
             secondary: string;
             hover: string;
             skeleton: string;
+            grey: string;
         };
         spacing: {
             small: string;

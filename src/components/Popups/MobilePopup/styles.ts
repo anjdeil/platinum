@@ -12,6 +12,7 @@ export const PopupContainer = styled.div<PopupContainerProps>`
     background-color: ${({ theme, backgroundColor = theme.background.secondary }) => backgroundColor};
     width: ${({ width = '70%' }) => width};
     padding-top: ${({ paddingTop = '0' }) => paddingTop};
+    row-gap: ${({ rowGap }) => rowGap};
     top: 136px;
     left: 0;
     bottom: 0;
