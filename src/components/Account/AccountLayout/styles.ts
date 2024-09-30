@@ -9,6 +9,7 @@ export const AccountContainer = styled(Container)`
 
     @media ${({ theme }) => theme.media.medium} {
         grid-template-columns: 1fr;
+        row-gap: 24px;
     }
 `;
 

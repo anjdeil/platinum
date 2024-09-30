@@ -1,7 +1,8 @@
 import { StyledInfoContainerProps } from "@/types/layouts/Account";
 import styled from "@emotion/styled";
+import Link from "next/link";
 
-export const StyledInfoContainer = styled.a<StyledInfoContainerProps>`
+export const StyledInfoContainer = styled(Link) <StyledInfoContainerProps>`
     box-sizing: border-box;
     width: 100%;
     padding: 20.5px 23.5px;    

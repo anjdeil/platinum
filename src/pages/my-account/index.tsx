@@ -3,11 +3,36 @@ import AccountLayout from "@/components/Account/AccountLayout";
 import AccountLinkBlockList from "@/components/Account/AccountLinkBlockList/AccountLinkBlockList";
 import Table from "@/components/Account/Table/Table";
 import { transformOrders } from "@/services/transformers/transformOrders";
+import { AccountInfoWrapper } from "@/styles/components";
+import { OrderType } from "@/types/services/woocommerce/OrderType";
+import { accountLinkList, orderList } from "@/utils/consts";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { useTranslations } from "next-intl";
-import { AccountInfoWrapper } from "./styles";
-import { accountLinkList, orderList } from "./testConsts";
+import { FC } from "react";
 
-export default function MyAccount() {
+const redirectToLogin = {
+    redirect: {
+        destination: '/my-account/login',
+        permanent: false,
+    }
+};
+
+export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
+    const cookies = context.req.headers.cookie;
+    if (!cookies) return redirectToLogin;
+
+    return {
+            props: {
+                orderList,
+            }
+        }    
+}
+
+interface MyAccountPropsType {
+    orderList: OrderType[]
+}
+
+const MyAccount: FC<MyAccountPropsType> = ({ orderList }) => {
     const t = useTranslations("MyAccount");
 
     const translatedAccountLinkList = accountLinkList.map(({ title, ...props }) => ({
@@ -17,7 +42,7 @@ export default function MyAccount() {
 
     const { orderCount, totalAmount } = transformOrders(orderList);
 
-    const loyaltyProgram = null;
+    const loyaltyProgram = 'Gold';
 
     return (
         <AccountLayout title={t("clientPersonalAccount")}>
@@ -29,3 +54,5 @@ export default function MyAccount() {
         </AccountLayout>
     );
 }
+
+export default MyAccount;

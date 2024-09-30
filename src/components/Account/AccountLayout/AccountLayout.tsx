@@ -29,7 +29,10 @@ export default function AccountLayout({
             <AccountTitle as={"h1"} textAlign="center" uppercase>{title}</AccountTitle>
             <AccountContainer>
                 <SideListContainer>
-                    <SideList links={translatedAccountLinks} />
+                    <SideList
+                        links={translatedAccountLinks}
+                        borderRadius="10px"
+                    />
                 </SideListContainer>
                 <AccountContent>
                     {children}

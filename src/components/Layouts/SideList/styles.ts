@@ -1,4 +1,4 @@
-import { ButtonProps, ListProps, SideListContainerProps } from "@/types/layouts/SideList";
+import { ListProps, SideListContainerProps, StyledListItemrops } from "@/types/layouts/SideList";
 import styled from "@emotion/styled";
 
 export const SideListContainer = styled.nav<SideListContainerProps>`
@@ -9,21 +9,20 @@ export const List = styled.ul<ListProps>`
     list-style: none;
     padding: 0;
     margin: 0;
-    margin-top: ${({ marginTop = '15px' }) => marginTop};
-    margin-bottom: ${({ marginBottom = '106px' }) => marginBottom};
+    margin-top: ${({ marginTop }) => marginTop};
+    margin-bottom: ${({ marginBottom }) => marginBottom};
     display: flex;
     flex-direction: column;
     row-gap: ${({ rowGap = '16px' }) => rowGap};
 `;
 
-export const Button = styled.button<ButtonProps>`
+export const StyledListItem = styled.li<StyledListItemrops>`
+    box-sizing: border-box;
     background-color: transparent;
-    color: ${({ theme }) => theme.colors.black};
-    text-decoration: none;
-    font-size: ${({ fontSize = '12px' }) => fontSize};
-    line-height: ${({ lineHeight = '16px' }) => lineHeight};
+    font-size: ${({ fontSize = '16px' }) => fontSize};
+    line-height: ${({ lineHeight = '24px' }) => lineHeight};
     font-weight: ${({ fontWeight = 400 }) => fontWeight};
-    padding: 12px 16px;
+    padding: 16px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -34,8 +33,30 @@ export const Button = styled.button<ButtonProps>`
     width: ${({ width = '100%' }) => width};
     cursor: pointer;
     text-transform: uppercase;
+
+    @media ${({ theme }) => theme.media.large} {
+        font-size: ${({ tabletFontSize = '14px' }) => tabletFontSize};
+        line-height: ${({ tabletLineHeight = '24px' }) => tabletLineHeight};
+        padding: 12px 16px;
+    }
+
+    @media ${({ theme }) => theme.media.medium} {
+        font-size: ${({ mobFontSize = '14px' }) => mobFontSize};
+        line-height: ${({ mobLineHeight = '24px' }) => mobLineHeight};
+    }
+
+    & a,
+    & button {
+        text-decoration: none;
+        color: ${({ theme }) => theme.colors.black};
+    }
+
     &:hover {
         background-color: ${({ theme, hoverBackground = theme.colors.primary }) => hoverBackground};
-        color: ${({ theme, hoverColor = theme.colors.white }) => hoverColor};
+        & a,
+        & button {
+            color: ${({ theme, hoverColor = theme.colors.white }) => hoverColor};
+        }
     }
+    
 `;

@@ -91,6 +91,10 @@ export const StyledDetailesTh = styled(StyledTh)`
 export const StyledTd = styled.td`
     width: 100%;
     text-align: center;
+
+    & a {
+        text-decoration: none;
+    }
 `;
 
 export const StyledDetailesTd = styled(StyledTd)`

@@ -3,6 +3,7 @@ import { AccountTitle, StyledButton } from "@/styles/components";
 import { TableProps } from "@/types/layouts/Account";
 import { useTheme } from "@emotion/react";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 import { StyledBody, StyledBodyTr, StyledDateTd, StyledDetailesTd, StyledDetailesTh, StyledHead, StyledNoAndDate, StyledOrderSpan, StyledOrderWrapper, StyledSpan, StyledTable, StyledTd, StyledTh, StyledTotalSpan, StyledTr } from "./styles";
 
 const Table: React.FC<TableProps> = ({orderList, title}) =>
@@ -32,7 +33,7 @@ const Table: React.FC<TableProps> = ({orderList, title}) =>
                 </StyledHead>
                 <StyledBody>
                     {orderList.map(item => (
-                        <StyledBodyTr>
+                        <StyledBodyTr key={item.id}>
                             <StyledTd>
                                 <StyledNoAndDate>
                                     <StyledSpan>{item.id}</StyledSpan> 
@@ -54,7 +55,9 @@ const Table: React.FC<TableProps> = ({orderList, title}) =>
                                 </StyledOrderWrapper>
                             </StyledTd>
                             <StyledTd>
-                                <StyledButton color={theme.colors.white} backgroundColor={theme.colors.primary}>{t("seeMore")}</StyledButton>
+                                <Link href={`/my-account/orders/${item.id}`}>
+                                    <StyledButton color={theme.colors.white} backgroundColor={theme.colors.primary}>{t("seeMore")}</StyledButton>
+                                </Link>
                             </StyledTd>
                         </StyledBodyTr>
                     ))}
