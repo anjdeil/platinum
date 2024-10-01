@@ -35,7 +35,11 @@
         "trash": "Papierkorb",
         "shipping": "Versand",
         "payment": "Zahlung",
-        "missingToSilver": "Es fehlen bis zum Silber"
+        "missingToSilver": "Es fehlen bis zum Silber",
+        "notification": "Ihre Bestellung #{orderId} wurde am {date} erfolgreich aufgegeben. Sie ist derzeit",
+        "productName": "Produktname",
+        "price": "Preis",
+        "quantity": "Menge"
     },
     "TopBar": {
         "CallUs": "Rufen Sie uns an"

@@ -31,6 +31,8 @@ const theme: Theme = {
         hover: '#063e7b',
         skeleton: 'linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%)',
         grey: '#BEBEBE',
+        success: '#17AA40',
+        warning: '#F2B517'
     },
     spacing: {
         small: '8px',

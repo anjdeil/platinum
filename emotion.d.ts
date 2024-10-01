@@ -26,6 +26,8 @@ declare module '@emotion/react' {
             hover: string;
             skeleton: string;
             grey: string;
+            success: string;
+            warning: string;
         };
         spacing: {
             small: string;

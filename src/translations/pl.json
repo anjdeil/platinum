@@ -35,7 +35,11 @@
         "trash": "Kosz",
         "shipping": "Wysyłka",
         "payment": "Płatność",
-        "missingToSilver": "Brakuje do srebra"
+        "missingToSilver": "Brakuje do srebra",
+        "notification": "Twoje zamówienie #{orderId} zostało pomyślnie złożone dnia {date}. Obecnie jest",
+        "productName": "Nazwa produktu",
+        "price": "Cena",
+        "quantity": "Ilość"
     },
     "TopBar": {
         "CallUs": "Zadzwoń do nas"

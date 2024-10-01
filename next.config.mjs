@@ -6,6 +6,9 @@ const nextConfig = {
         defaultLocale: 'en',
         localeDetection: false
     },
+    images: {
+        domains: ['platinum.digiway-dev.online'],
+    },
 };
 
 export default nextConfig;

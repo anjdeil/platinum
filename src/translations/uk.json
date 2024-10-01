@@ -35,7 +35,11 @@
         "trash": "Кошик",
         "shipping": "Доставка",
         "payment": "Оплата",
-        "missingToSilver": "До срібла не вистачає"
+        "missingToSilver": "До срібла не вистачає",
+        "notification": "Ваше замовлення №{orderId} було успішно оформлено {date}. Зараз воно",
+        "productName": "Назва продукту",
+        "price": "Ціна",
+        "quantity": "Кількість"
     },
     "TopBar": {
         "CallUs": "Зателефонуйте нам"

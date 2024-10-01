@@ -35,7 +35,11 @@
         "trash": "Корзина",
         "shipping": "Доставка",
         "payment": "Оплата",
-        "missingToSilver": "До серебра не хватает"
+        "missingToSilver": "До серебра не хватает",
+        "notification": "Ваш заказ №{orderId} был успешно размещён {date}. В настоящее время он",
+        "productName": "Название продукта",
+        "price": "Цена",
+        "quantity": "Количество"
     },
     "TopBar": {
         "CallUs": "Позвоните нам"

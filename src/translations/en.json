@@ -35,7 +35,11 @@
         "trash": "Trash",
         "shipping": "Shipping",
         "payment": "Payment",
-        "missingToSilver": "Missing to silver"
+        "missingToSilver": "Missing to silver",
+        "notification": "Your order #{orderId} was successfully placed on {date}. It is currently",
+        "productName": "Product Name",
+        "price": "Price",
+        "quantity": "Quantity"
     },
     "TopBar": {
         "CallUs": "Call us"
