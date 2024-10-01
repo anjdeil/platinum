@@ -1,12 +1,12 @@
-import { OrderType } from "@/types/services/woocommerce/OrderType";
+import { lineOrderItems } from "@/types/store/reducers/CartSlice";
 import { useTranslations } from "next-intl";
 import { BlockInfo, HeaderItem, HeaderItemName, InfoTitle, ListBody, ListHeader, ListItem, ProductImage, ProductListWrapper, StyledValue, WrapperBlock, WrapperBlockInfo, WrapperHeader } from "./styles";
 
 interface AccountOrderProductListProps {
-    order: OrderType;
+    lineItems: lineOrderItems[];
 }
 
-const AccountOrderProductList: React.FC<AccountOrderProductListProps> = ({order}) =>
+const AccountOrderProductList: React.FC<AccountOrderProductListProps> = ({lineItems}) =>
 {    
     const t = useTranslations('MyAccount');
 
@@ -21,7 +21,7 @@ const AccountOrderProductList: React.FC<AccountOrderProductListProps> = ({order}
                 </WrapperHeader>
             </ListHeader>
             <ListBody>
-                {order.line_items.map(product => (
+                {lineItems.map(product => (
                     <ListItem key={product.product_id}>
                         <WrapperBlock>
                             <ProductImage width={60} height={60} src={product.image?.src || ''} alt="product image" />

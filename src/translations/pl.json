@@ -39,7 +39,23 @@
         "notification": "Twoje zamówienie #{orderId} zostało pomyślnie złożone dnia {date}. Obecnie jest",
         "productName": "Nazwa produktu",
         "price": "Cena",
-        "quantity": "Ilość"
+        "quantity": "Ilość",
+        "summaryOrder": "Podsumowanie zamówienia",
+        "customerData": "Dane klienta",
+        "products": "Produkty",
+        "delivery": "Dostawa",
+        "totalToPay": "Całkowita do zapłaty",
+        "first_name": "Imię",
+        "last_name": "Nazwisko",
+        "company": "Firma",
+        "address_1": "Adres 1",
+        "address_2": "Adres 2",
+        "city": "Miasto",
+        "state": "Stan",
+        "postcode": "Kod pocztowy",
+        "country": "Kraj",
+        "email": "E-mail",
+        "phone": "Telefon"
     },
     "TopBar": {
         "CallUs": "Zadzwoń do nas"

@@ -1,3 +1,4 @@
+import { AccountInfoWrapperProps } from '@/types/layouts/Account';
 import { LogoLinkImageProps, LogoLinkProps, StyledButtonProps } from '@/types/styles/components';
 import styled from "@emotion/styled";
 import Image from 'next/image';
@@ -132,7 +133,7 @@ export const LogoLinkImage = styled(Image) <LogoLinkImageProps>`
     height: 100%;
 `;
 
-export const AccountInfoWrapper = styled.div`
+export const AccountInfoWrapper = styled.div<AccountInfoWrapperProps>`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -145,7 +146,44 @@ export const AccountInfoWrapper = styled.div`
     }
 
     @media ${({ theme }) => theme.media.medium} {
-        flex-direction: column-reverse;
+        flex-direction: ${({ mobileReverse = false }) => mobileReverse ? 'column-reverse' : 'column'};
         margin-bottom: 64px;
+    }
+`;
+
+export const InfoLine = styled.li`
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+    font-size: 16px;
+    line-height: 24px;
+
+    & span:first-of-type {
+        text-transform: uppercase;
+    }
+
+    & span:last-of-type {
+        min-width: 240px;
+    }
+
+    @media ${({ theme }) => theme.media.large} {
+        font-size: 14px;
+
+        & span:last-of-type {
+            min-width: 180px;
+        }
+    }
+
+    @media ${({ theme }) => theme.media.medium} {
+        line-height: 22px;
+
+        & span:first-of-type {
+            font-size: 12px;
+        }
+
+        & span:last-of-type {
+            text-align: right;   
+            min-width: unset;         
+        }
     }
 `;

@@ -39,7 +39,23 @@
         "notification": "Ihre Bestellung #{orderId} wurde am {date} erfolgreich aufgegeben. Sie ist derzeit",
         "productName": "Produktname",
         "price": "Preis",
-        "quantity": "Menge"
+        "quantity": "Menge",
+        "summaryOrder": "Bestellübersicht",
+        "customerData": "Kundendaten",
+        "products": "Produkte",
+        "delivery": "Lieferung",
+        "totalToPay": "Gesamt zu zahlen",
+        "first_name": "Vorname",
+        "last_name": "Nachname",
+        "company": "Firma",
+        "address_1": "Adresse 1",
+        "address_2": "Adresse 2",
+        "city": "Stadt",
+        "state": "Bundesland",
+        "postcode": "Postleitzahl",
+        "country": "Land",
+        "email": "E-Mail",
+        "phone": "Telefon"
     },
     "TopBar": {
         "CallUs": "Rufen Sie uns an"

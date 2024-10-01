@@ -28,6 +28,10 @@ const OrderSummarySchema = z.object({
     totalAmount: z.number(),
 });
 
+const AccountInfoWrapperSchema = z.object({
+    mobileReverse: z.boolean().optional(),
+});
+
 const AccountInfoBlockListSchema = z.object({
     ...OrderSummarySchema.shape,
     orderCount: z.number(),
@@ -41,6 +45,7 @@ export type StyledInfoContainerProps = z.infer<typeof StyledInfoContainerPropsSh
 export type StyledTextPropsProps = z.infer<typeof StyledTextPropsShema>;
 
 export type AccountInfoBlockListProps = z.infer<typeof AccountInfoBlockListSchema>;
+export type AccountInfoWrapperProps = z.infer<typeof AccountInfoWrapperSchema>;
 
 export type AccountInfoBlockLinkProps = {
     list: AccountLinkBlockProps[];

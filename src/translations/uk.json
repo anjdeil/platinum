@@ -39,7 +39,23 @@
         "notification": "Ваше замовлення №{orderId} було успішно оформлено {date}. Зараз воно",
         "productName": "Назва продукту",
         "price": "Ціна",
-        "quantity": "Кількість"
+        "quantity": "Кількість",
+        "summaryOrder": "Підсумок замовлення",
+        "customerData": "Дані клієнта",
+        "products": "Продукти",
+        "delivery": "Доставка",
+        "totalToPay": "Разом до сплати",
+        "first_name": "Ім'я",
+        "last_name": "Прізвище",
+        "company": "Компанія",
+        "address_1": "Адреса 1",
+        "address_2": "Адреса 2",
+        "city": "Місто",
+        "state": "Область",
+        "postcode": "Поштовий індекс",
+        "country": "Країна",
+        "email": "Електронна пошта",
+        "phone": "Телефон"
     },
     "TopBar": {
         "CallUs": "Зателефонуйте нам"

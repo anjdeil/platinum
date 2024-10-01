@@ -1,8 +1,12 @@
 import AccountLayout from "@/components/Account/AccountLayout";
 import AccountOrderProductList from "@/components/Account/AccountOrderProductList/AccountOrderProductList";
+import AccountOrderTable from "@/components/Account/AccountOrderTable/AccountOrderTable";
 import Notification from "@/components/Layouts/Notification/Notification";
 import wooCommerceRestApi from "@/services/wooCommerceRestApi";
+import { AccountInfoWrapper, InfoLine } from "@/styles/components";
 import { OrderType } from "@/types/services/woocommerce/OrderType";
+import areBillingAndShippingEqual from "@/utils/areBillingAndShippingEqual";
+import getSubtotalByLineItems from "@/utils/getSubtotalByLineItems";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { useTranslations } from "next-intl";
 import { FC } from "react";
@@ -31,8 +35,8 @@ interface OrderPropsType {
 
 const Order: FC<OrderPropsType> = ({ order }) => {
     const t = useTranslations("MyAccount");
-
-    console.log('order...', order);
+    
+    console.log(order);
 
     const date = new Date(order.date_created);
 
@@ -42,12 +46,58 @@ const Order: FC<OrderPropsType> = ({ order }) => {
         day: 'numeric',
     });
 
+    const billingAndShippingEqual = areBillingAndShippingEqual(order.billing, order.shipping);
+
+    const subtotal = order?.line_items ? getSubtotalByLineItems(order.line_items) : 0;
+
     return (
         <AccountLayout title={`${t('order')} #${order.id}`}>
             <Notification>
-                <span>{`${t("notification", { orderId: order.id, date: formattedDate })} ${t(order.status)}`}</span>
+                {`${t("notification", { orderId: order.id, date: formattedDate })} ${t(order.status)}`}
             </Notification>
-            <AccountOrderProductList order={order} />
+            <AccountInfoWrapper>
+                <AccountOrderProductList lineItems={order.line_items} />
+                <AccountOrderTable title="summaryOrder">
+                    <InfoLine>
+                        <span>{t("products")}</span>
+                        <span>{`${subtotal} ${order.currency_symbol}`}</span>
+                    </InfoLine>
+                    <InfoLine>
+                        <span>{t("delivery")}</span>
+                        <span>{`${Math.round(+order.shipping_total)} ${order.currency_symbol}`}</span>
+                    </InfoLine>
+                    <InfoLine>
+                        <span>{t("totalToPay")}</span>
+                        <span>{`${Math.round(+order.total)} ${order.currency_symbol}`}</span>
+                    </InfoLine>
+                </AccountOrderTable>
+                <AccountOrderTable title="customerData">
+                    {Object.entries(order.billing).map(([key, value]) => (
+                        <>
+                            {value !== '' && (
+                                <InfoLine key={key}>
+                                    <span>{t(key)}</span>
+                                    <span>{value}</span>
+                                </InfoLine>
+                            )}
+                        </>
+                   ))}
+                </AccountOrderTable>
+                {!billingAndShippingEqual && (
+                    <AccountOrderTable title="shippingAddress">
+                        {Object.entries(order.shipping).map(([key, value]) => (
+                            <>
+                                {value !== '' && (
+                                    <InfoLine key={key}>
+                                        <span>{t(key)}</span>
+                                        <span>{value}</span>
+                                    </InfoLine>
+                                )}
+                            </>
+                    ))}
+                    </AccountOrderTable>
+                )}
+            </AccountInfoWrapper>
         </AccountLayout>
     )
 }

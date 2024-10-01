@@ -6,7 +6,6 @@ export const ProductListWrapper = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
-    text-transform: uppercase;
     align-items: center;
     border-radius: 8px 8px 0 0;
     overflow: hidden;    
@@ -112,7 +111,6 @@ export const ProductImage = styled(Image)`
 export const StyledValue = styled.span`
     font-size: 16px;
     line-height: 24px;
-    text-transform: none;
 
     @media ${({ theme }) => theme.media.large} {
         font-size: 14px;
@@ -162,4 +160,5 @@ export const BlockInfo = styled.div`
 export const InfoTitle = styled.span`
     font-size: 12px;
     line-height: 16px;
+    text-transform: uppercase;
 `;

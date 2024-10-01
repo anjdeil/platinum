@@ -39,7 +39,23 @@
         "notification": "Your order #{orderId} was successfully placed on {date}. It is currently",
         "productName": "Product Name",
         "price": "Price",
-        "quantity": "Quantity"
+        "quantity": "Quantity",
+        "summaryOrder": "Summary Order",
+        "customerData": "Customer Data",
+        "products": "Products",
+        "delivery": "Delivery",
+        "totalToPay": "Total to pay",
+        "first_name": "Name",
+        "last_name": "Surname",
+        "company": "Company",
+        "address_1": "Address 1",
+        "address_2": "Address 2",
+        "city": "City",
+        "state": "State",
+        "postcode": "Postcode",
+        "country": "Country",
+        "email": "E-mail",
+        "phone": "Phone"
     },
     "TopBar": {
         "CallUs": "Call us"
