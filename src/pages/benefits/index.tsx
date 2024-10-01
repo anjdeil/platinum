@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import CustomAccordion from "@/components/shared/Accordion/Accordion";
-import { BenefitsGrid, BenefitsTitle, BenefitsPrice, BenefitsGridColumn, BenefitsAccordionStyled, CustomAccordionSummary, AccordionTitle, BenefitsAccordionList, AccordionHeader, BenefitsInfo } from './styles'
+import { BenefitsLayout, BenefitsTitle, BenefitsPrice, BenefitsItem, BenefitsAccordionStyled, CustomAccordionSummary, AccordionTitle, BenefitsAccordionList, AccordionHeader, BenefitsInfo } from './styles'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { AccordionDetails, useMediaQuery } from '@mui/material';
 import { CustomSvgMarker } from './CustomSvg'
@@ -15,8 +15,8 @@ export const BenefitsAccordion = () => {
     };
     return (<>
 
-        <BenefitsGrid>
-            <BenefitsGridColumn>
+        <BenefitsLayout>
+            <BenefitsItem>
                 <AccordionHeader>
                     <BenefitsPrice>
                         2500 - 5%
@@ -27,7 +27,7 @@ export const BenefitsAccordion = () => {
                     </BenefitsTitle>
                 </AccordionHeader>
 
-                <BenefitsAccordionStyled expanded={!isMobile || expanded === 'panel1'} onChange={handleChange('panel1')} sx={{ backgroundColor: "#e0effe" }}>
+                <BenefitsAccordionStyled expanded={!isMobile || expanded === 'panel1'} onChange={handleChange('panel1')} level="silver">
                     <CustomAccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                     >
@@ -41,9 +41,9 @@ export const BenefitsAccordion = () => {
                         </BenefitsAccordionList>
                     </AccordionDetails>
                 </BenefitsAccordionStyled>
-            </BenefitsGridColumn>
+            </BenefitsItem>
 
-            <BenefitsGridColumn>
+            <BenefitsItem>
                 <AccordionHeader>
                     <BenefitsPrice>
                         10 000 - 10%
@@ -54,11 +54,11 @@ export const BenefitsAccordion = () => {
                     </BenefitsTitle>
                 </AccordionHeader>
 
-                <BenefitsAccordionStyled expanded={!isMobile || expanded === 'panel2'} onChange={handleChange('panel2')} sx={{ backgroundColor: "#1e71be", color: 'white' }}>
+                <BenefitsAccordionStyled expanded={!isMobile || expanded === 'panel2'} onChange={handleChange('panel2')} level="gold">
                     <CustomAccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                     >
-                        <AccordionTitle>Silver Level Benefits</AccordionTitle>
+                        <AccordionTitle>Gold Level Benefits</AccordionTitle>
                     </CustomAccordionSummary>
                     <AccordionDetails style={{ marginTop: "16px" }}>
                         <BenefitsAccordionList>
@@ -69,9 +69,9 @@ export const BenefitsAccordion = () => {
                         </BenefitsAccordionList>
                     </AccordionDetails>
                 </BenefitsAccordionStyled>
-            </BenefitsGridColumn>
+            </BenefitsItem>
 
-            <BenefitsGridColumn>
+            <BenefitsItem>
                 <AccordionHeader>
                     <BenefitsPrice>
                         20 000 - 15%
@@ -82,11 +82,11 @@ export const BenefitsAccordion = () => {
                     </BenefitsTitle>
                 </AccordionHeader>
 
-                <BenefitsAccordionStyled expanded={!isMobile || expanded === 'panel3'} onChange={handleChange('panel3')} sx={{ backgroundColor: "#113760", color: 'white' }}>
+                <BenefitsAccordionStyled expanded={!isMobile || expanded === 'panel3'} onChange={handleChange('panel3')} level="platinum">
                     <CustomAccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                     >
-                        <AccordionTitle>Silver Level Benefits</AccordionTitle>
+                        <AccordionTitle>Platinum Level Benefits</AccordionTitle>
                     </CustomAccordionSummary>
                     <AccordionDetails style={{ marginTop: "16px" }}>
                         <BenefitsAccordionList>
@@ -100,8 +100,8 @@ export const BenefitsAccordion = () => {
                         </BenefitsAccordionList>
                     </AccordionDetails>
                 </BenefitsAccordionStyled>
-            </BenefitsGridColumn>
-        </BenefitsGrid>
+            </BenefitsItem>
+        </BenefitsLayout>
 
         <BenefitsInfo>
             <AccordionTitle>Delivery costs are not included in the purchase calculation.</AccordionTitle>

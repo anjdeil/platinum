@@ -38,10 +38,11 @@ export const AccordionHeader = styled(Box)`
     }
 `
 
-export const BenefitsGrid = styled(Box)`
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+export const BenefitsLayout = styled(Box)`
+    display: flex;
+    flex-direction: row;
     gap: 16px;
+    
     margin-bottom: 80px;
 
     @media ${({ theme }) => theme.media.medium}  {
@@ -55,7 +56,7 @@ export const BenefitsGrid = styled(Box)`
     }
 `
 
-export const BenefitsGridColumn = styled(Box)`
+export const BenefitsItem = styled(Box)`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -103,7 +104,7 @@ export const BenefitsAccordionList = styled.ul`
     }
 `
 
-export const BenefitsAccordionStyled = styled(Accordion)`
+export const BenefitsAccordionStyled = styled(Accordion) <{ level: string }>`
     box-sizing: border-box;
     border-radius: 8px !important;
     width: 100%;
@@ -111,6 +112,11 @@ export const BenefitsAccordionStyled = styled(Accordion)`
     padding: 32px;
     box-shadow: none;
     border: none;
+    
+    background-color: ${({ level }) =>
+        level === 'silver' ? '#e0effe' :
+            level === 'gold' ? '#1e71be' : '#113760'};
+    color: ${({ level }) => (level === 'silver' ? 'black' : 'white')};
 
     .MuiAccordionSummary-content.Mui-expanded {
         margin: 0;
