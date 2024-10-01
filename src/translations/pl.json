@@ -4,6 +4,7 @@
         "link": "Wystarczy link do innej przetłumaczonej strony"
     },
     "MyAccount": {
+        "order": "Zamówienie",
         "clientPersonalAccount": "Konto osobiste klienta",
         "dashboard": "Kokpit",
         "userInformation": "Dane użytkownika",

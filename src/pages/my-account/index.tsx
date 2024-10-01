@@ -22,10 +22,10 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
     if (!cookies) return redirectToLogin;
 
     return {
-            props: {
-                orderList,
-            }
-        }    
+        props: {
+            orderList,
+        }
+    }
 }
 
 interface MyAccountPropsType {
@@ -48,9 +48,9 @@ const MyAccount: FC<MyAccountPropsType> = ({ orderList }) => {
         <AccountLayout title={t("clientPersonalAccount")}>
             <AccountInfoWrapper>
                 <AccountInfoBlockList orderCount={orderCount} totalAmount={totalAmount} loyaltyProgram={loyaltyProgram} />
-                <AccountLinkBlockList list={translatedAccountLinkList} />  
-            </AccountInfoWrapper>    
-            <Table orderList={orderList} title="recentOrders"/>   
+                <AccountLinkBlockList list={translatedAccountLinkList} />
+            </AccountInfoWrapper>
+            <Table orderList={orderList} title={t("recentOrders")} />
         </AccountLayout>
     );
 }
