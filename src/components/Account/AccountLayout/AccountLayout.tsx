@@ -18,8 +18,6 @@ export default function AccountLayout({
     const router = useRouter();
     const activeLink = router.pathname;
 
-    console.log('activeLink...', activeLink);
-
     const translatedAccountLinks = accountLinks.map(({ name, ...props }) => ({
         name: t(name),
         ...props

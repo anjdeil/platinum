@@ -4,6 +4,7 @@
         "link": "Verlinken Sie einfach auf eine andere Seite übersetzt"
     },
     "MyAccount": {
+        "order": "Bestellung",
         "clientPersonalAccount": "Kundenkonto",
         "dashboard": "Armaturenbrett",
         "userInformation": "Benutzerinformationen",
