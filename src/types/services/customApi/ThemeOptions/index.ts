@@ -4,15 +4,22 @@ const ThemeOptionsSchema = z.object({
     success: z.boolean(),
     data: z.object({
         item: z.object({
-            loyalty_options: z.object({
+            loyalty_options: 
+            z.record(
+                z.object({
+                  silver: z.string(),
+                  gold: z.string(),
+                  platinum: z.string(),
+                })
+              ),
+              /* z.object({
                 lang: z.object({
                     silver: z.string(),
                     gold: z.string(),
                     platinum: z.string(),
                 })
             }
-
-            ),
+            ), */
             contacts: z.object({
                 schedule: z.array(
                     z.object({
@@ -35,15 +42,86 @@ const ThemeOptionsSchema = z.object({
                 email: z.string(),
                 address: z.string(),
             }),
-            about_platinum:  z.object({
+            about_platinum: z.record(
+                z.object({
+                    subtitle: z.string(),
+                    title: z.string(),
+                    text: z.string(),
+                })
+              ),/*  z.object({
                 lang:
                 z.object({
                     subtitle: z.string(),
                     title: z.string(),
                     text: z.string(),
-                })}),
+                })}), */
         }),
     }),
 });
 
+/* const ThemeOptionsSchema = z.object({
+    success: z.boolean(),
+    data: z.object({
+      item: z.object({
+        loyalty_options: z.object({
+          en: z.object({
+            silver: z.string(),
+            gold: z.string(),
+            platinum: z.string(),
+          }),
+          pl: z.object({
+            silver: z.string(),
+            gold: z.string(),
+            platinum: z.string(),
+          }),
+          de: z.object({
+            silver: z.string(),
+            gold: z.string(),
+            platinum: z.string(),
+          }),
+          ru: z.object({
+            silver: z.string(),
+            gold: z.string(),
+            platinum: z.string(),
+          }),
+          uk: z.object({
+            silver: z.string(),
+            gold: z.string(),
+            platinum: z.string(),
+          }),
+        }),
+        contacts: z.object({
+          // ...
+        }),
+        about_platinum: z.object({
+          en: z.object({
+            subtitle: z.string(),
+            title: z.string(),
+            text: z.string(),
+          }),
+          pl: z.object({
+            subtitle: z.string(),
+            title: z.string(),
+            text: z.string(),
+          }),
+          de: z.object({
+            subtitle: z.string(),
+            title: z.string(),
+            text: z.string(),
+          }),
+          ru: z.object({
+            subtitle: z.string(),
+            title: z.string(),
+            text: z.string(),
+          }),
+          uk: z.object({
+            subtitle: z.string(),
+            title: z.string(),
+            text: z.string(),
+          }),
+        }),
+      }),
+    }),
+  });
+   */
 export type ThemeOptionsType = z.infer<typeof ThemeOptionsSchema>;

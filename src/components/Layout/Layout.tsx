@@ -21,7 +21,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     const dispatch = useDispatch();
     const { isMobile } = useResponsive();
     const { locale } = useRouter();
-    const langParam: LangParamType | object = locale ? { lang: locale } : {};
+    const langParam: LangParamType  | object  = locale ? { lang: locale } : {};
+    /* const langParamStr: LangParamType = locale && ['en', 'pl', 'de', 'ru', 'uk'].includes(locale) ? locale : 'en' */
+    const langParamStr = locale ? locale : '';
     const [menus, setMenus] = useState<WpMenuResponseType[] | []>([]);
 
 
@@ -37,7 +39,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
     useEffect(() => {
         if (themeOptions && themeOptions.data) {
-          dispatch(setThemeOptions({ data: themeOptions, language: langParam }));
+          dispatch(setThemeOptions({ data: themeOptions, language: langParamStr }));
         }
       }, [themeOptions, locale, dispatch]);
 

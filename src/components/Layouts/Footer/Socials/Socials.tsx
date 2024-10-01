@@ -8,6 +8,8 @@ export const Socials: FC/* <> */ = ({ }) => {
 
     const themeOptions = useAppSelector(state => state.themeOptions);
     const SocialItems = themeOptions.data.item.contacts.socials;
+   
+    
 
     /*  if (!SocialItems && skeleton) {
          return (
@@ -23,7 +25,8 @@ export const Socials: FC/* <> */ = ({ }) => {
     // нужен ли тут скелетон?
     return (
         <SocialsContainer>
-            {SocialItems && SocialItems.map(({ social, link }) => (
+       
+          {SocialItems && SocialItems.map(({ social, link }) => (
                 <SocialItemLink href={link} key={social}>
                     <Image
                         src={`/assets/icons/${social}.svg`}
@@ -36,7 +39,7 @@ export const Socials: FC/* <> */ = ({ }) => {
                         }}
                     />
                 </SocialItemLink>
-            ))}
+            ))} 
         </SocialsContainer>
 
         //пример с картинкой

@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 export default function BurgerButton() {
   const dispatch = useAppDispatch();
-  const popup = useAppSelector(state => state.Popup);
+  const popup = useAppSelector(state => state.popup);
 
   return (
     <StyledIconButton
