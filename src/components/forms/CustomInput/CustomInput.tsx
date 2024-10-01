@@ -1,6 +1,7 @@
 import { CustomInputType } from "@/types/layouts/forms";
 import { FC, FormEvent, use, useCallback, useEffect, useMemo, useState } from "react";
-import { CustomInputWrapper, CustomRequired, CustomInputStyle, ShowPasswordImage, CustomError } from "./styles";
+import { CustomInputWrapper, CustomRequired, CustomInputStyle, ShowPasswordImage, CustomError, CountryPhoneInputStyle } from "./styles";
+import { PhoneInput } from "react-international-phone";
 
 function numericValidate(e: FormEvent<HTMLInputElement>, isPost: boolean)
 {
@@ -24,18 +25,19 @@ export const CustomInput: FC<CustomInputType> = ({
     isTextarea = false,
     setValue,
     initialValue,
-    checked
+    checked,
+    isPhone = false
 }) =>
 {
-    const [showPassword, setShowPassword] = useState(isPassword);
+    const [showPassword, setShowPassword] = useState(!isPassword);
+    const [inputType, setInputType] = useState('text');
     const toggleShowPassword = useCallback(() => { setShowPassword((prev) => !prev); }, []);
 
-    let type;
-
-    if (isPassword)
-        type = showPassword ? 'text' : 'password';
-    else if (isCheckbox)
-        type = 'checkbox';
+    useEffect(() =>
+    {
+        if (isPassword) setInputType(showPassword ? 'text' : 'password');
+        if (isCheckbox) setInputType('checkbox');
+    }, [isPassword, isCheckbox, showPassword])
 
     useEffect(() =>
     {
@@ -43,7 +45,7 @@ export const CustomInput: FC<CustomInputType> = ({
             setValue(name, initialValue, { shouldValidate: true });
     }, [initialValue, name, setValue]);
 
-    const showPassPath = useMemo(() => showPassword ? '/public/images/show-pass.svg' : '/public/images/hide-pass.svg', [showPassword]);
+    const showPassPath = useMemo(() => showPassword ? '/images/show-pass.svg' : '/images/hidden-pass.svg', [showPassword]);
     const registerProps = register ? register(name) : {};
     const isError = errors && name ? name in errors : false;
 
@@ -61,22 +63,36 @@ export const CustomInput: FC<CustomInputType> = ({
 
     return (
         <div>
-            <CustomInputStyle isError={isError} isTextArea={isTextarea} isCheckbox={isCheckbox}>
+            <CustomInputStyle
+                as={isPhone ? 'div' : 'label'}
+                isError={isError}
+                isTextArea={isTextarea}
+                isCheckbox={isCheckbox}
+                isPhone={isPhone}>
                 <span>
                     {fieldName}
                     {isRequire && <CustomRequired>*</CustomRequired>}
                 </span>
                 <CustomInputWrapper>
-                    {isTextarea ? <textarea {...commonProps} /> : <input type={type || 'text'} {...commonProps} />}
+                    {isPhone ? (
+                        <PhoneInput
+                            defaultCountry="pl"
+                            onChange={(value) => { if (setValue) setValue('phoneNumber', value, { shouldValidate: true }); }}
+                        />
+                    ) : isTextarea ? (
+                        <textarea {...commonProps} />
+                    ) : (
+                        <input type={inputType || 'text'} {...commonProps} />
+                    )}
+                    {isPassword &&
+                        <ShowPasswordImage
+                            src={showPassPath}
+                            alt={'show or hidden password button'}
+                            width={24}
+                            height={24}
+                            onClick={toggleShowPassword}
+                            unoptimized={true} />}
                 </CustomInputWrapper>
-                {isPassword &&
-                    <ShowPasswordImage
-                        src={showPassPath}
-                        alt={'show or hidden password button'}
-                        width={24}
-                        height={24}
-                        onClick={toggleShowPassword}
-                        unoptimized={true} />}
             </CustomInputStyle>
             {isError && name && <CustomError>{errors[name]?.message}</CustomError>}
         </div>

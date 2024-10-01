@@ -1,3 +1,4 @@
+import { parsePhoneNumber } from 'awesome-phonenumber';
 import { z } from "zod";
 
 const passwordSchema = z.string()
@@ -25,7 +26,7 @@ const termsSchema = z.boolean().refine(value => value === true, {
 const phoneSchema = z.string().min(9, 'Phone number must be at least 9 characters long')
     .max(15, 'Phone number cannot exceed 15 characters');
 
-export const RegistrationFormSchema = (isLoggedIn: boolean, isCheckout: boolean = false, isShipping: boolean = false) =>
+export const RegistrationFormSchema = (isLoggedIn: boolean, isCheckout: boolean = false, isShipping: boolean = false, phoneCode?: CountryCode) =>
 {
     const schema = z.object({
         name: z.string().min(3, 'Required field'),
@@ -38,7 +39,10 @@ export const RegistrationFormSchema = (isLoggedIn: boolean, isCheckout: boolean 
         country: z.string().min(1, 'Required field'),
         password: !isLoggedIn ? passwordSchema : z.string().optional(),
         confirmPassword: !isLoggedIn ? z.string() : z.string().optional(),
-        phoneNumber: phoneSchema,
+        phoneNumber: z.string().refine(value => parsePhoneNumber(value).valid, {
+            message: 'Invalid phone number',
+        }),
+        countryCode: z.string().min(1, 'Country code is required'),
         nip: nipSchema,
         terms: !isCheckout ? termsSchema : z.string().optional(),
         nameShipping: isShipping ? z.string().min(3, 'Required field') : z.string().optional(),

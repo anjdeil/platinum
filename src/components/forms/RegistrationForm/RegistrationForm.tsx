@@ -1,13 +1,15 @@
 import { RegistrationFormSchema } from "@/types/layouts/forms/registrationForm";
-import { FC, forwardRef, useCallback, useImperativeHandle, useState } from "react";
+import { FC, forwardRef, useCallback, useImperativeHandle, useMemo, useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { WooCustomerReqType } from "@/types/services";
 import { CustomInput } from "../CustomInput";
 import { CustomForm, FormWrapper } from "./styles";
-import { PhoneInput } from "react-international-phone";
+// import { PhoneInput } from "react-international-phone";
 import 'react-international-phone/style.css';
+import { PhoneInput } from "react-international-phone";
+import Image from "next/image";
 
 interface RegistrationFormProps
 {
@@ -23,6 +25,8 @@ interface FormHandle
 }
 
 const isLoggedIn = false;
+const isCheckout = false;
+const isShipping = false;
 
 // To do: userFields, lineItems, shippingLines
 export const RegistrationForm = forwardRef((props, ref) =>
@@ -35,7 +39,9 @@ export const RegistrationForm = forwardRef((props, ref) =>
 
     useImperativeHandle(ref, () => ({ submit: () => handleSubmit(onSubmit)() }));
 
-    const formSchema = RegistrationFormSchema(isLoggedIn, false, false);
+    const formSchema = useMemo(() => RegistrationFormSchema(isLoggedIn, isCheckout, isShipping),
+        [isLoggedIn, isCheckout, isShipping]);
+    // const formSchema = RegistrationFormSchema(isLoggedIn, isCheckout, isShipping);
     type RegistrationFormType = z.infer<typeof formSchema>;
 
     const { register, handleSubmit, formState: { errors, isSubmitting, isSubmitSuccessful }, setValue, reset } = useForm<RegistrationFormType>({
@@ -58,7 +64,6 @@ export const RegistrationForm = forwardRef((props, ref) =>
                     setValue={setValue}
                 // initialValue={userFields ? userFields.first_name : null}
                 />
-
                 <CustomInput
                     fieldName="Nazwisko"
                     name='lastName'
@@ -74,6 +79,66 @@ export const RegistrationForm = forwardRef((props, ref) =>
                     setValue={setValue}
                 // initialValue={userFields ? userFields.email : null}
                 />
+                <CustomInput
+                    fieldName="phone number"
+                    name='phoneNumber'
+                    register={register}
+                    errors={errors}
+                    setValue={setValue}
+                    isPhone={true}
+                />
+                <CustomInput
+                    fieldName="Kraj / region"
+                    name='country'
+                    register={register}
+                    errors={errors}
+                    setValue={setValue}
+                // initialValue={userFields ? userFields.billing.country : null}
+                />
+                <CustomInput
+                    fieldName="Miasto"
+                    name='city'
+                    register={register}
+                    errors={errors}
+                    setValue={setValue}
+                // initialValue={userFields ? userFields.billing.city : null}
+                />
+                <CustomInput
+                    fieldName="Ulica"
+                    name='address'
+                    register={register}
+                    errors={errors}
+                    setValue={setValue}
+                // initialValue={userFields ? userFields.billing.address_1 : null}
+                />
+                <CustomInput
+                    fieldName="buildingNumber"
+                    name='buildingNumber'
+                    register={register}
+                    errors={errors}
+                    isNumeric={true}
+                    setValue={setValue}
+                // initialValue={userFields ? userFields.billing.postcode : null}
+                />
+                <CustomInput
+                    fieldName="officeNumber"
+                    name='officeNumber'
+                    register={register}
+                    errors={errors}
+                    isNumeric={true}
+                    setValue={setValue}
+                // initialValue={userFields ? userFields.billing.postcode : null}
+                />
+                <CustomInput
+                    fieldName="Kod pocztowy"
+                    name='postCode'
+                    register={register}
+                    errors={errors}
+                    isNumeric={true}
+                    isPost={true}
+                    setValue={setValue}
+                // initialValue={userFields ? userFields.billing.postcode : null}
+                />
                 {!isLoggedIn && <CustomInput
                     fieldName="Hasło"
                     name='password'
@@ -88,20 +153,6 @@ export const RegistrationForm = forwardRef((props, ref) =>
                     errors={errors}
                     isPassword={true}
                 />}
-                <CustomInput
-                    fieldName="Numer telefonu"
-                    name='phoneNumber'
-                    register={register}
-                    errors={errors}
-                    isNumeric={true}
-                    setValue={setValue}
-                // initialValue={userFields ? userFields.billing.phone : null}
-                />
-                <PhoneInput
-                    defaultCountry="ua"
-                    value={phone}
-                    onChange={(phone) => setPhone(phone)}
-                />
             </FormWrapper>
             <button type="submit" disabled={isSubmitting}>{isSubmitting ? 'Submitting...' : 'Submit'}</button>
         </CustomForm>

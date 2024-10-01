@@ -14,6 +14,7 @@ export const CustomInputSchema = z.object({
     onChange: z.function().args(z.unknown() as z.ZodType<React.ChangeEvent<HTMLInputElement>>).returns(z.void()).optional(),
     value: z.string().optional(),
     isTextarea: z.boolean().optional(),
+    isPhone: z.boolean().optional(),
     setValue: z.function().args(
         z.any(),
         z.any(),
