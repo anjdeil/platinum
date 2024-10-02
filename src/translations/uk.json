@@ -4,6 +4,8 @@
         "link": "Просто посилання на ішну перекладену сторінку"
     },
     "MyAccount": {
+        "order": "Замовлення",
+        "clientPersonalAccount": "Особистий кабінет клієнта",
         "dashboard": "Інформаційна панель",
         "userInformation": "Інформація користувача",
         "shippingAddress": "Адреса для доставки",
@@ -12,7 +14,28 @@
         "subscription": "Підписка на розсилку",
         "loyaltyProgram": "Програма лояльності",
         "changePassword": "Змінити пароль",
-        "logout": "Вихід"
+        "logout": "Вихід",
+        "numberOfOrders": "Кількість замовлень",
+        "totalOrderAmount": "Загальна сума замовлень",
+        "myInformation": "Моя інформація",
+        "number": "Номер",
+        "deliveryPaymentTotal": "Доставка / Оплата / Загалом",
+        "date": "Дата",
+        "status": "Статус",
+        "value": "Значення",
+        "seeMore": "Дивитись більше",
+        "recentOrders": "Недавні замовлення",
+        "pending": "В очікуванні",
+        "processing": "В обробці",
+        "on-hold": "На паузі",
+        "completed": "Завершено",
+        "cancelled": "Скасовано",
+        "refunded": "Повернуто",
+        "failed": "Не вдалося",
+        "trash": "Кошик",
+        "shipping": "Доставка",
+        "payment": "Оплата",
+        "missingToSilver": "До срібла не вистачає"
     },
     "TopBar": {
         "CallUs": "Зателефонуйте нам"
