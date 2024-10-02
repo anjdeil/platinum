@@ -1,5 +1,5 @@
 import { AccountInfoWrapperProps } from '@/types/layouts/Account';
-import { LogoLinkImageProps, LogoLinkProps, StyledButtonProps } from '@/types/styles/components';
+import { InfoLineProps, LogoLinkImageProps, LogoLinkProps, StyledButtonProps } from '@/types/styles/components';
 import styled from "@emotion/styled";
 import Image from 'next/image';
 import Link from 'next/link';
@@ -110,27 +110,25 @@ export const LogoLink = styled(Link) <LogoLinkProps>`
 export const StyledIconWrapper = styled.div`
     flex-shrink: 0;
     width: 40px;
-    height: 40px;
+    aspect-ratio: 1;
     display: flex;
 
     & svg {
         width: 100%;
-        height: 100%;
+        object-fit: cover;
     }
 
     @media ${({ theme }) => theme.media.large} {
         width: 24px;
-        height: 24px;
     }
     @media ${({ theme }) => theme.media.medium} {
         width: 40px;
-        height: 40px;
     }
 `;
 
 export const LogoLinkImage = styled(Image) <LogoLinkImageProps>`
     width: 100%;
-    height: 100%;
+    aspect-ratio: 1;
 `;
 
 export const AccountInfoWrapper = styled.div<AccountInfoWrapperProps>`
@@ -151,12 +149,12 @@ export const AccountInfoWrapper = styled.div<AccountInfoWrapperProps>`
     }
 `;
 
-export const InfoLine = styled.li`
+export const InfoLine = styled.li<InfoLineProps>`
     display: flex;
     justify-content: space-between;
     text-align: left;
     font-size: 16px;
-    line-height: 24px;
+    line-height: 1.5rem;
 
     & span:first-of-type {
         text-transform: uppercase;
@@ -164,6 +162,10 @@ export const InfoLine = styled.li`
 
     & span:last-of-type {
         min-width: 240px;
+        text-align: ${({ textAllign }) => textAllign ? textAllign : ''};
+        font-size: ${({ fontSize = "16px" }) => fontSize};
+        line-height: ${({ lineHeight = "1.5rem" }) => lineHeight};
+        font-weight: ${({ fontWeight = 400 }) => fontWeight};
     }
 
     @media ${({ theme }) => theme.media.large} {
@@ -171,11 +173,13 @@ export const InfoLine = styled.li`
 
         & span:last-of-type {
             min-width: 180px;
+            font-size: ${({ tabletFontSize = "14px" }) => tabletFontSize};
+            line-height: ${({ tabletLineHeight = "1.375rem" }) => tabletLineHeight};
         }
     }
 
     @media ${({ theme }) => theme.media.medium} {
-        line-height: 22px;
+        line-height: 1.375rem;
 
         & span:first-of-type {
             font-size: 12px;

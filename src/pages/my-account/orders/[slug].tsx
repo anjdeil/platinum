@@ -58,15 +58,22 @@ const Order: FC<OrderPropsType> = ({ order }) => {
             <AccountInfoWrapper>
                 <AccountOrderProductList lineItems={order.line_items} />
                 <AccountOrderTable title="summaryOrder">
-                    <InfoLine>
+                    <InfoLine textAllign="right">
                         <span>{t("products")}</span>
                         <span>{`${subtotal} ${order.currency_symbol}`}</span>
                     </InfoLine>
-                    <InfoLine>
+                    <InfoLine textAllign="right">
                         <span>{t("delivery")}</span>
                         <span>{`${Math.round(+order.shipping_total)} ${order.currency_symbol}`}</span>
                     </InfoLine>
-                    <InfoLine>
+                    <InfoLine
+                        textAllign="right"
+                        fontSize="24px"
+                        lineHeight="32px"
+                        tabletFontSize="16px"
+                        tabletLineHeight="24px"
+                        fontWeight={500}
+                    >
                         <span>{t("totalToPay")}</span>
                         <span>{`${Math.round(+order.total)} ${order.currency_symbol}`}</span>
                     </InfoLine>

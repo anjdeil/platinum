@@ -32,7 +32,17 @@ export const LogoLinkPropsSchema = z.object({
     children: z.any().optional(),
 });
 
+export const InfoLinePropsSchema = z.object({
+    textAllign: z.string().optional(),
+    fontSize: z.string().optional(),
+    lineHeight: z.string().optional(),
+    tabletFontSize: z.string().optional(),
+    tabletLineHeight: z.string().optional(),
+    fontWeight: z.number().optional(),
+});
+
 export type LogoLinkProps = z.infer<typeof LogoLinkPropsSchema>;
 
 export type StyledButtonProps = z.infer<typeof StyledButtonPropsSchema>;
 export type LogoLinkImageProps = z.infer<typeof LogoLinkImagePropsSchema>;
+export type InfoLineProps = z.infer<typeof InfoLinePropsSchema>;
