@@ -2,9 +2,10 @@ import AddToBasketButton from "@/components/Common/Buttons/AddToBasketButton/Add
 import FavoriteButton from "@/components/Common/Buttons/FavoriteButton/FavoriteButton";
 import ProductBadge from "@/components/Common/ProductBadge/ProductBadge";
 import Rating from "@/components/Common/Rating/Rating";
+import { Title } from "@/styles/components";
 import { ProductCardPropsType } from "@/types/layouts/Product";
 import Image from "next/image";
-import { BadgeWrapper, ProductImageWrapper, ProductPrice, ProductTitle, ProductWrapper, StyledProductCard, TitlePriceWrapper } from "./styles";
+import { BadgeWrapper, ProductImageWrapper, ProductPrice, ProductWrapper, StyledProductCard, TitlePriceWrapper } from "./styles";
 
 const ProductCard: React.FC<ProductCardPropsType> = ({ product }) => {
     return (
@@ -21,7 +22,15 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product }) => {
                 </ProductImageWrapper>
                 <Rating rating={5} />
                 <TitlePriceWrapper>
-                    <ProductTitle>{ product.name }</ProductTitle>
+                    <Title
+                        as="h3"
+                        fontSize="16px"
+                        uppercase
+                        lineHeight="1.5rem"
+                        fontWeight={500}
+                        mobFontSize="14px"
+                        mobFontWeight={400}
+                    >{product.name}</Title>
                     <ProductPrice>{ product.min_price} zl</ProductPrice>
                 </TitlePriceWrapper>
                 <BadgeWrapper>

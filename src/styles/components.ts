@@ -6,24 +6,35 @@ import Link from 'next/link';
 interface TitleProps {
     as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
     fontWeight?: number;
-    fontSize?: number;
+    fontSize?: string;
+    lineHeight?: string;
     textAlign?: "center" | "left" | "right";
     uppercase?: boolean;
     marginBottom?: number;
     tabletMarginBottom?: number;
     mobMarginBottom?: number;
+    mobFontSize?: string;
+    mobFontWeight?: number;
 }
 
 export const Title = styled.h1<TitleProps>`
     color: black;
-    font-size: ${({ fontSize = 24 }) => fontSize}px;
+    font-size: ${({ fontSize = '24px' }) => fontSize};
+    line-height: ${({ lineHeight = '1.5rem' }) => lineHeight}; 
     font-weight: ${({ fontWeight = 600 }) => fontWeight};
+    text-transform: ${({ uppercase }) => uppercase ? "uppercase" : 'none'};
+    text-align: center;
+
+    @media ${({ theme }) => theme.media.large} {
+        font-size: ${({ mobFontSize = '18px' }) => mobFontSize};
+        font-weight: ${({ mobFontWeight = 600 }) => mobFontWeight};
+    }
 `;
 
 export const AccountTitle = styled.h2<TitleProps>`
     color: ${({ theme }) => theme.colors.black};
     font-size: 24px;
-    line-height: 32px;
+    line-height: 2rem;
     font-weight: 600;
     text-align: center;
     text-transform: ${({ uppercase }) => uppercase ? "uppercase" : 'none'};
@@ -32,7 +43,7 @@ export const AccountTitle = styled.h2<TitleProps>`
 
     @media ${({ theme }) => theme.media.large} {
         font-size: 16px;
-        line-height: 24px;
+        line-height: 1.5rem;
         margin-bottom: ${({ tabletMarginBottom = 24 }) => tabletMarginBottom}px;
     }
 
@@ -61,7 +72,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
     color: ${({ theme, color = theme.colors.black }) => color};
     background-color: ${({ backgroundColor = 'transparent' }) => backgroundColor};
     padding-block: 16px;
-    line-height: 24px;
+    line-height: 1.5rem;
     font-size: 16px;
     font-weight: 400;
     text-transform: none;
@@ -81,17 +92,8 @@ export const StyledButton = styled.button<StyledButtonProps>`
         padding-block: 11px;
         min-width: ${({ minWidthTablet = 'auto' }) => minWidthTablet};
         font-size: 14px;
-        line-height: 20px;        
+        line-height: 1.25rem;        
     }
-`;
-
-export const StyledIconButton = styled.button`
-  padding: 8px;
-  background-color: transparent;
-  border: none;
-  display: flex;
-  cursor: pointer;
-  position: relative;
 `;
 
 export const LogoLink = styled(Link) <LogoLinkProps>`
@@ -109,27 +111,25 @@ export const LogoLink = styled(Link) <LogoLinkProps>`
 export const StyledIconWrapper = styled.div`
     flex-shrink: 0;
     width: 40px;
-    height: 40px;
+    aspect-ratio: 1;
     display: flex;
 
     & svg {
         width: 100%;
-        height: 100%;
+        aspect-ratio: 1;
     }
 
     @media ${({ theme }) => theme.media.large} {
         width: 24px;
-        height: 24px;
     }
     @media ${({ theme }) => theme.media.medium} {
         width: 40px;
-        height: 40px;
     }
 `;
 
 export const LogoLinkImage = styled(Image) <LogoLinkImageProps>`
     width: 100%;
-    height: 100%;
+    aspect-ratio: 1;
 `;
 
 export const AccountInfoWrapper = styled.div`
@@ -153,13 +153,13 @@ export const AccountInfoWrapper = styled.div`
 export const TitleCatalog = styled.h2<TitleCatalogProps>`
     color: ${({ theme }) => theme.colors.black};
     font-size: ${({ fontSize = '24px' }) => fontSize};
-    line-height: ${({ lineHeight = '32px' }) => lineHeight};    
+    line-height: ${({ lineHeight = '1.3rem' }) => lineHeight};    
     font-weight: ${({ fontWeight = 600 }) => fontWeight};
     text-transform: uppercase;
     text-align: center;
 
     @media ${({ theme }) => theme.media.large} {
         font-size: ${({ mobFontSize = '16px' }) => mobFontSize};
-        line-height: ${({ mobLineHeight = '24px' }) => mobLineHeight};
+        line-height: ${({ mobLineHeight = '1.5rem' }) => mobLineHeight};
     }
 `;

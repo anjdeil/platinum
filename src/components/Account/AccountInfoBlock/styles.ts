@@ -48,7 +48,7 @@ export const StyledInfoWrapper = styled.div`
 
 export const StyledTitle = styled.span<StyledTextPropsProps>`
     font-size: 14px;
-    line-height: 24px;
+    line-height: 1.5rem;
     font-weight: 400;
     text-align: center;
     hyphens: auto;
@@ -56,26 +56,26 @@ export const StyledTitle = styled.span<StyledTextPropsProps>`
 
     @media ${({ theme }) => theme.media.large} {
         font-size: 12px;
-        line-height: 16px;
+        line-height: 1rem;
     }
     @media ${({ theme }) => theme.media.medium} {
         font-size: 14px;
-        line-height: 24px;
+        line-height: 1.5rem;
     }
 `;
 
 export const StyledValue = styled.span<StyledTextPropsProps>`    
     font-size: 24px;
-    line-height: 32px;
+    line-height: 2rem;
     font-weight: 500;
     color: ${({ color }) => color};
 
     @media ${({ theme }) => theme.media.large} {
         font-size: 16px;
-        line-height: 24px;
+        line-height: 1.5rem;
     }
     @media ${({ theme }) => theme.media.medium} {
         font-size: 24px;
-        line-height: 32px;
+        line-height: 2rem;
     }
 `;

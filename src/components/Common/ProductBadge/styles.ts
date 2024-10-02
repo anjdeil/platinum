@@ -23,7 +23,7 @@ export const BadgeStyled = styled.span<BadgeStyledProps>`
     text-align: center;
     border-radius: 10px;
     font-size: 12px;      
-    line-height: 16px;
+    line-height: 1rem;
     font-weight: 400;
     text-transform: uppercase;
     background-color: ${({ type }) => getBackgroundColor(type)};

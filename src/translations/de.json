@@ -45,6 +45,7 @@
     },
     "Product": {
         "addToBasket": "In den Warenkorb legen",
-        "sortBy": "Sortieren nach"
+        "sortBy": "Sortieren nach",
+        "productList": "Produktliste"
     }
 }

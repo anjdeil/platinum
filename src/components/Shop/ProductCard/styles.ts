@@ -1,30 +1,16 @@
 import { CommonTextProps } from "@/types/layouts/Product";
 import styled from "@emotion/styled";
 
-export const ProductTitle = styled.p<CommonTextProps>`
-    color: ${({ theme }) => theme.colors.black};    
-    font-size: ${({ fontSize = '16px' }) => fontSize};
-    line-height: ${({ lineHeight = '24px' }) => lineHeight};    
-    font-weight: ${({ fontWeight = 500 }) => fontWeight};
-    text-transform: uppercase;
-    text-align: center;
-
-    @media ${({ theme }) => theme.media.large} {
-        font-size: ${({ mobFontSize = '14px' }) => mobFontSize};
-        font-weight: ${({ mobFontWeight = 400 }) => mobFontWeight};
-    }
-`;
-
 export const ProductPrice = styled.p<CommonTextProps>`
     color: ${({ theme }) => theme.colors.black};    
     font-size: ${({ fontSize = '16px' }) => fontSize};
-    line-height: ${({ lineHeight = '24px' }) => lineHeight};
+    line-height: ${({ lineHeight = '1.5rem' }) => lineHeight};
     font-weight: ${({ fontWeight = 600 }) => fontWeight};
     text-align: center;
 
     @media ${({ theme }) => theme.media.large} {
         font-size: ${({ mobFontSize = '14px' }) => mobFontSize};
-        line-height: ${({ lineHeight = '22px' }) => lineHeight};
+        line-height: ${({ lineHeight = '1.375rem' }) => lineHeight};
     }
 `;
 
@@ -77,16 +63,13 @@ export const ProductWrapper = styled.div`
 export const ProductImageWrapper = styled.div`
     position: relative;
     width: 205px;
-    height: 205px;
-   
+    aspect-ratio: 1;
 
     @media ${({ theme }) => theme.media.large} {
         width: 100px;
-        height: 100px;
     }
 
     @media ${({ theme }) => theme.media.medium} {
         width: 80px;
-        height: 80px;
     }
 `
