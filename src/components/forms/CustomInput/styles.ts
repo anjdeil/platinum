@@ -57,14 +57,14 @@ export const CustomInputStyle = styled.div<CustomInputStyleProps>`
             background-color: black;
             transition: outline-width .2s ease-in-out;
             background-color: ${({ theme }) => theme.background.formElements};
-            outline-color: ${({ theme, isError }) => isError ? theme.colors.error : theme.background.formElements};
+            outline: 1px solid ${({ theme, isError }) => isError ? theme.colors.error : theme.background.formElements};
 
             &::placeholder {
                 text-align: ${({ isTextArea }) => isTextArea ? 'start' : 'initial'};
             }
 
             &:focus {
-                outline: 1px solid ${({ theme }) => theme.colors.primary};
+            outline: 1px solid ${({ theme, isError }) => isError ? theme.colors.error : theme.colors.primary};
                 box-shadow:  ${({ theme }) => theme.shadows.primaryShadow};
             }
         }

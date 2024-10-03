@@ -33,6 +33,7 @@ export const CustomInput: FC<CustomInputType> = ({
     const [showPassword, setShowPassword] = useState(!isPassword);
     const [inputType, setInputType] = useState('text');
     const toggleShowPassword = useCallback(() => { setShowPassword((prev) => !prev); }, []);
+    const [isError, setError] = useState(false);
 
     useEffect(() =>
     {
@@ -48,14 +49,23 @@ export const CustomInput: FC<CustomInputType> = ({
 
     const showPassPath = useMemo(() => showPassword ? '/images/show-pass.svg' : '/images/hidden-pass.svg', [showPassword]);
     const registerProps = register ? register(name) : {};
-    const isError = errors && name ? name in errors : false;
+    useEffect(() => { setError((errors && name) && name in errors); }, [errors, name]);
+
+    const onInputChange = (e: FormEvent<HTMLInputElement>) =>
+    {
+        if (isError)
+            setError(false);
+
+        if (isNumeric)
+            return numericValidate(e, isPost);
+    };
 
     const commonProps = {
         placeholder,
         ...registerProps,
         inputMode: isNumeric ? 'numeric' : undefined,
         patter: isNumeric ? '[0-9]*' : undefined,
-        onInput: isNumeric ? (e: FormEvent<HTMLInputElement>) => numericValidate(e, isPost) : undefined,
+        onInput: onInputChange,
         onChange,
         value,
         checked: isCheckbox ? checked : undefined,
