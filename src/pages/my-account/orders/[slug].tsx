@@ -1,7 +1,7 @@
 import AccountLayout from "@/components/Account/AccountLayout";
 import AccountOrderProductList from "@/components/Account/AccountOrderProductList/AccountOrderProductList";
 import AccountOrderTable from "@/components/Account/AccountOrderTable/AccountOrderTable";
-import BillingShippingAddress from "@/components/Account/BillingShippingAddress/BillingShippingAdress";
+import BillingShippingAddress from "@/components/Account/BillingShippingAddress/BillingShippingAddress";
 import OrderTotals from "@/components/Account/OrderTotals/OrderTotals";
 import Notification from "@/components/Layouts/Notification/Notification";
 import wooCommerceRestApi from "@/services/wooCommerceRestApi";
@@ -38,8 +38,6 @@ interface OrderPropsType {
 const Order: FC<OrderPropsType> = ({ order }) => {
     const t = useTranslations("MyAccount");
     
-    console.log(order);
-
     const date = new Date(order.date_created);
 
     const formattedDate = date.toLocaleDateString('en-US', {

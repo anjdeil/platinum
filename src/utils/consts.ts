@@ -5,6 +5,8 @@ import OrderHistoryIcon from "@/components/Common/Icons/OrderHistoryIcon/OrderHi
 
 export const MIN_TOTAL_TO_SILVER = 2500;
 
+export const DEFAULT_IMAGE = '/assets/images/product-placeholder.jpg';
+
 export const accountLinkList = [
     {
         icon: InformationIcon,

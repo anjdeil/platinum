@@ -1,4 +1,5 @@
 import { lineOrderItems } from "@/types/store/reducers/CartSlice";
+import { DEFAULT_IMAGE } from "@/utils/consts";
 import { useTranslations } from "next-intl";
 import { BlockInfo, HeaderItem, HeaderItemName, InfoTitle, ListBody, ListHeader, ListItem, ProductImage, ProductListWrapper, StyledValue, WrapperBlock, WrapperBlockInfo, WrapperHeader } from "./styles";
 
@@ -25,7 +26,7 @@ const AccountOrderProductList: React.FC<AccountOrderProductListProps> = ({lineIt
                 {lineItems.map(product => (
                     <ListItem key={product.product_id}>
                         <WrapperBlock>
-                            <ProductImage width={60} height={60} src={product.image?.src || ''} alt="product image" />
+                            <ProductImage width={60} height={60} src={product.image?.src || DEFAULT_IMAGE} alt="product image" />
                             <StyledValue>{product.name}</StyledValue>
                         </WrapperBlock>
                         <WrapperBlockInfo>
