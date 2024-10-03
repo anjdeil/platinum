@@ -15,10 +15,17 @@ export const FormWrapper = styled.div`
     grid-template-columns: repeat(auto-fill, minmax(49%, 1fr));
     column-gap: 1%;
     row-gap: 15px;
+    padding-bottom: 20px;
 
     @media ${({ theme }) => theme.media.medium} {
         display: flex;
         flex-direction: column;
         row-gap: 10px;
     }
+`;
+
+export const FormWrapperBottom = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 `;

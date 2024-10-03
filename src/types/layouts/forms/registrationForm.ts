@@ -23,8 +23,9 @@ const termsSchema = z.boolean().refine(value => value === true, {
     message: "You must agree to the terms",
 });
 
-const phoneSchema = z.string().min(9, 'Phone number must be at least 9 characters long')
-    .max(15, 'Phone number cannot exceed 15 characters');
+const phoneSchema = z.string().refine(value => parsePhoneNumber(value).valid, {
+    message: 'Invalid phone number',
+});
 
 export const RegistrationFormSchema = (isLoggedIn: boolean, isCheckout: boolean = false, isShipping: boolean = false, phoneCode?: CountryCode) =>
 {
@@ -32,16 +33,18 @@ export const RegistrationFormSchema = (isLoggedIn: boolean, isCheckout: boolean 
         name: z.string().min(3, 'Required field'),
         lastName: z.string().min(3, 'Required field'),
         email: z.string().email('Please, type valid email'),
-        companyName: z.string().min(1, 'Required field'),
-        address: z.string().min(4, 'Required field'),
-        postCode: z.string().min(5, 'The post code must contain 5 characters'),
-        city: z.string().min(1, 'Required field'),
+        phoneNumber: phoneSchema,
         country: z.string().min(1, 'Required field'),
+        city: z.string().min(1, 'Required field'),
+        companyName: z.string().min(1, 'Required field'),
+        address1: z.string().min(4, 'Required field'),
+        address2: z.string().min(4, 'Required field'),
+        apartmentNumber: z.string().min(1, 'Required field'),
+        postCode: z.string().min(5, 'The post code must contain 5 characters'),
+
         password: !isLoggedIn ? passwordSchema : z.string().optional(),
         confirmPassword: !isLoggedIn ? z.string() : z.string().optional(),
-        phoneNumber: z.string().refine(value => parsePhoneNumber(value).valid, {
-            message: 'Invalid phone number',
-        }),
+
         countryCode: z.string().min(1, 'Country code is required'),
         nip: nipSchema,
         terms: !isCheckout ? termsSchema : z.string().optional(),

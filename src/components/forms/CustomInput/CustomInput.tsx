@@ -1,7 +1,8 @@
 import { CustomInputType } from "@/types/layouts/forms";
 import { FC, FormEvent, use, useCallback, useEffect, useMemo, useState } from "react";
-import { CustomInputWrapper, CustomRequired, CustomInputStyle, ShowPasswordImage, CustomError, CountryPhoneInputStyle } from "./styles";
+import { CustomInputWrapper, CustomRequired, CustomInputStyle, ShowPasswordImage, CustomError } from "./styles";
 import { PhoneInput } from "react-international-phone";
+
 
 function numericValidate(e: FormEvent<HTMLInputElement>, isPost: boolean)
 {
@@ -41,7 +42,7 @@ export const CustomInput: FC<CustomInputType> = ({
 
     useEffect(() =>
     {
-        if (setValue && name && initialValue !== null && initialValue !== '')
+        if (setValue && name && initialValue && initialValue !== '')
             setValue(name, initialValue, { shouldValidate: true });
     }, [initialValue, name, setValue]);
 

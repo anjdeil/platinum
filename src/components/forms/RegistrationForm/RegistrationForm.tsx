@@ -5,11 +5,9 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { WooCustomerReqType } from "@/types/services";
 import { CustomInput } from "../CustomInput";
-import { CustomForm, FormWrapper } from "./styles";
-// import { PhoneInput } from "react-international-phone";
-import 'react-international-phone/style.css';
-import { PhoneInput } from "react-international-phone";
+import { CustomForm, FormWrapper, FormWrapperBottom } from "./styles";
 import Image from "next/image";
+import 'react-international-phone/style.css';
 
 interface RegistrationFormProps
 {
@@ -41,7 +39,6 @@ export const RegistrationForm = forwardRef((props, ref) =>
 
     const formSchema = useMemo(() => RegistrationFormSchema(isLoggedIn, isCheckout, isShipping),
         [isLoggedIn, isCheckout, isShipping]);
-    // const formSchema = RegistrationFormSchema(isLoggedIn, isCheckout, isShipping);
     type RegistrationFormType = z.infer<typeof formSchema>;
 
     const { register, handleSubmit, formState: { errors, isSubmitting, isSubmitSuccessful }, setValue, reset } = useForm<RegistrationFormType>({
@@ -105,15 +102,15 @@ export const RegistrationForm = forwardRef((props, ref) =>
                 />
                 <CustomInput
                     fieldName="Ulica"
-                    name='address'
+                    name='address1'
                     register={register}
                     errors={errors}
                     setValue={setValue}
                 // initialValue={userFields ? userFields.billing.address_1 : null}
                 />
                 <CustomInput
-                    fieldName="buildingNumber"
-                    name='buildingNumber'
+                    fieldName="Building number"
+                    name='address2'
                     register={register}
                     errors={errors}
                     isNumeric={true}
@@ -121,8 +118,8 @@ export const RegistrationForm = forwardRef((props, ref) =>
                 // initialValue={userFields ? userFields.billing.postcode : null}
                 />
                 <CustomInput
-                    fieldName="officeNumber"
-                    name='officeNumber'
+                    fieldName="№ apartment/office"
+                    name='apartmentNumber'
                     register={register}
                     errors={errors}
                     isNumeric={true}
@@ -153,8 +150,23 @@ export const RegistrationForm = forwardRef((props, ref) =>
                     errors={errors}
                     isPassword={true}
                 />}
+                <CustomInput
+                    fieldName="Wyrażam zgodę na przetwarzanie danych osobowych."
+                    name='terms'
+                    register={register}
+                    errors={errors}
+                    isCheckbox={true}
+                />
+                {/* <Box className={styles.form__bottom}>
+                   
+                    <button className="btn-primary btn" type="submit" disabled={isSubmitting}>{isSubmitting ? 'Submitting...' : 'Submit'}</button>
+                    {(isSubmitSuccessful && !isError) && <p style={{ color: variables.successfully }}>
+                        The account was created successfully
+                    </p>} */}
             </FormWrapper>
-            <button type="submit" disabled={isSubmitting}>{isSubmitting ? 'Submitting...' : 'Submit'}</button>
+            <FormWrapperBottom>
+                <button type="submit" disabled={isSubmitting}>{isSubmitting ? 'Submitting...' : 'Submit'}</button>
+            </FormWrapperBottom>
         </CustomForm>
     );
 });

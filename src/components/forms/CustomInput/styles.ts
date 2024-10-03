@@ -84,7 +84,7 @@ export const CustomInputWrapper = styled.div`
     position: relative;
     display: flex;
     align-items: center;
-    width: 100%;
+    width: inherit;
 `;
 
 export const CustomRequired = styled.span`
