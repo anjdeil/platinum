@@ -4,9 +4,10 @@ import { BlockInfo, HeaderItem, HeaderItemName, InfoTitle, ListBody, ListHeader,
 
 interface AccountOrderProductListProps {
     lineItems: lineOrderItems[];
+    currency: string | undefined;
 }
 
-const AccountOrderProductList: React.FC<AccountOrderProductListProps> = ({lineItems}) =>
+const AccountOrderProductList: React.FC<AccountOrderProductListProps> = ({lineItems, currency}) =>
 {    
     const t = useTranslations('MyAccount');
 
@@ -33,7 +34,7 @@ const AccountOrderProductList: React.FC<AccountOrderProductListProps> = ({lineIt
                                     {t("price")}
                                 </InfoTitle>
                                 <StyledValue>
-                                    {product.price}
+                                    {`${product.price} ${currency}`}
                                 </StyledValue>
                             </BlockInfo>
                             <BlockInfo>
@@ -49,7 +50,7 @@ const AccountOrderProductList: React.FC<AccountOrderProductListProps> = ({lineIt
                                     {t("value")}
                                 </InfoTitle>
                                 <StyledValue>
-                                    {product.total}
+                                    {`${product.total} ${currency}`}
                                 </StyledValue>
                             </BlockInfo>                           
                         </WrapperBlockInfo>

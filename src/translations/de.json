@@ -55,7 +55,10 @@
         "postcode": "Postleitzahl",
         "country": "Land",
         "email": "E-Mail",
-        "phone": "Telefon"
+        "phone": "Telefon",
+        "discountCode": "Rabattcode",
+        "amount": "Betrag",
+        "paymentMethod": "Zahlungsmethode"
     },
     "TopBar": {
         "CallUs": "Rufen Sie uns an"

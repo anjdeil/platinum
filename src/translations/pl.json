@@ -55,7 +55,10 @@
         "postcode": "Kod pocztowy",
         "country": "Kraj",
         "email": "E-mail",
-        "phone": "Telefon"
+        "phone": "Telefon",
+        "discountCode": "Kod rabatowy",
+        "amount": "Kwota",
+        "paymentMethod": "Metoda płatności"
     },
     "TopBar": {
         "CallUs": "Zadzwoń do nas"

@@ -4,7 +4,7 @@ export const BadgeWrapper = styled.span<{ count: number }>`
     display: ${({ count }) => (count > 0 ? 'flex' : 'none')};
     box-sizing: border-box;
     font-size: 12px;
-    line-height: 16px;
+    line-height: 1.33;
     font-weight: 400;
     width: 20px;
     height: 20px;

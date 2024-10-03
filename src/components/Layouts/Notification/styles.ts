@@ -17,11 +17,10 @@ export const NotificationWrapper = styled.div<{ type?: "success" | "warning" | "
         }
     }};
     font-size: 16px;
-    line-height: 24px;
+    line-height: 1.5;
     font-weight: 400;
 
     @media ${({ theme }) => theme.media.large} {
         font-size: 14px;
-        line-height: 22px;
     }
 `;

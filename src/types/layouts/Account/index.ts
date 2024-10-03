@@ -38,15 +38,23 @@ const AccountInfoBlockListSchema = z.object({
     loyaltyProgram: z.string().nullable()
 })
 
+export const InfoLinePropsSchema = z.object({
+    textAllign: z.string().optional(),
+    fontSize: z.string().optional(),
+    lineHeight: z.string().optional(),
+    tabletFontSize: z.string().optional(),
+    tabletLineHeight: z.string().optional(),
+    fontWeight: z.number().optional(),
+});
+
+export type InfoLineProps = z.infer<typeof InfoLinePropsSchema>;
 export type OrderSummaryType = z.infer<typeof OrderSummarySchema>;
 export type AccountLinkBlockProps = z.infer<typeof AccountLinkBlockSchema>;
 export type AccountInfoBlockProps = z.infer<typeof AccountInfoBlockSchema>;
 export type StyledInfoContainerProps = z.infer<typeof StyledInfoContainerPropsShema>;
 export type StyledTextPropsProps = z.infer<typeof StyledTextPropsShema>;
-
 export type AccountInfoBlockListProps = z.infer<typeof AccountInfoBlockListSchema>;
 export type AccountInfoWrapperProps = z.infer<typeof AccountInfoWrapperSchema>;
-
 export type AccountInfoBlockLinkProps = {
     list: AccountLinkBlockProps[];
 };

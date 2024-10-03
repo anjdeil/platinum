@@ -1,5 +1,5 @@
 import { AccountInfoWrapperProps } from '@/types/layouts/Account';
-import { InfoLineProps, LogoLinkImageProps, LogoLinkProps, StyledButtonProps } from '@/types/styles/components';
+import { LogoLinkImageProps, LogoLinkProps, StyledButtonProps } from '@/types/styles/components';
 import styled from "@emotion/styled";
 import Image from 'next/image';
 import Link from 'next/link';
@@ -146,48 +146,5 @@ export const AccountInfoWrapper = styled.div<AccountInfoWrapperProps>`
     @media ${({ theme }) => theme.media.medium} {
         flex-direction: ${({ mobileReverse = false }) => mobileReverse ? 'column-reverse' : 'column'};
         margin-bottom: 64px;
-    }
-`;
-
-export const InfoLine = styled.li<InfoLineProps>`
-    display: flex;
-    justify-content: space-between;
-    text-align: left;
-    font-size: 16px;
-    line-height: 1.5rem;
-
-    & span:first-of-type {
-        text-transform: uppercase;
-    }
-
-    & span:last-of-type {
-        min-width: 240px;
-        text-align: ${({ textAllign }) => textAllign ? textAllign : ''};
-        font-size: ${({ fontSize = "16px" }) => fontSize};
-        line-height: ${({ lineHeight = "1.5rem" }) => lineHeight};
-        font-weight: ${({ fontWeight = 400 }) => fontWeight};
-    }
-
-    @media ${({ theme }) => theme.media.large} {
-        font-size: 14px;
-
-        & span:last-of-type {
-            min-width: 180px;
-            font-size: ${({ tabletFontSize = "14px" }) => tabletFontSize};
-            line-height: ${({ tabletLineHeight = "1.375rem" }) => tabletLineHeight};
-        }
-    }
-
-    @media ${({ theme }) => theme.media.medium} {
-        line-height: 1.375rem;
-
-        & span:first-of-type {
-            font-size: 12px;
-        }
-
-        & span:last-of-type {
-            text-align: right;   
-            min-width: unset;         
-        }
     }
 `;

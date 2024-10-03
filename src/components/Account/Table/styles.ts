@@ -21,7 +21,7 @@ export const StyledHead = styled.thead`
     & tr, 
     & th {
         font-size: 16px;
-        line-height: 24px;
+        line-height: 1.5;
         font-weight: 400;       
     }
 
@@ -29,7 +29,7 @@ export const StyledHead = styled.thead`
         & tr, 
         & th {
             font-size: 12px;
-            line-height: 16px;
+            line-height: 1.33;
             font-weight: 400; 
         }         
     }
@@ -132,22 +132,22 @@ export const StyledNoAndDate = styled.div`
 
 export const StyledSpan = styled.span`
     font-size: 16px;
-    line-height: 24px;    
+    line-height: 1.5;    
     font-weight: 400;
 
     @media ${({ theme }) => theme.media.large} {
         font-size: 12px;
-        line-height: 16px;
+        line-height: 1.33;
     }
 `;
 
 export const StyledDateTd = styled(StyledTd)`
     font-size: 16px;
-    line-height: 24px;
+    line-height: 1.5;
 
     @media ${({ theme }) => theme.media.large} {        
         font-size: 12px;
-        line-height: 16px;
+        line-height: 1.33;
         font-weight: 400;
     }
 
@@ -160,12 +160,11 @@ export const StyledTotalSpan = styled.span`
     display: block;
     text-align: left;
     font-size: 16px;
-    line-height: 24px;
+    line-height: 1.5;
     font-weight: 400;
 
     @media ${({ theme }) => theme.media.large} {        
         font-size: 14px;
-        line-height: 22px;        
     }
 `;
 
@@ -195,16 +194,15 @@ export const StyledOrderWrapper = styled.div`
 
 export const StyledOrderSpan = styled(StyledSpan)`
     font-size: 16px;
-    line-height: 24px;    
+    line-height: 1.5;    
 
     @media ${({ theme }) => theme.media.large} {        
         font-size: 14px;
-        line-height: 22px;
     }
 
     @media ${({ theme }) => theme.media.medium} {
         text-transform: uppercase;
         font-size: 12px;
-        line-height: 16px;
+        line-height: 1.33;
     }
 `;

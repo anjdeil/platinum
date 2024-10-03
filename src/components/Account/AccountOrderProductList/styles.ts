@@ -19,11 +19,10 @@ export const ListHeader = styled.div`
     box-sizing: border-box;
     width: 100%;
     background-color: ${({ theme }) => theme.background.secondary};
-    padding-block: 16px;
-    display: flex;
+    padding: 16px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
     text-transform: uppercase;
-    justify-content: space-between;
-    align-items: center;
 
     @media ${({ theme }) => theme.media.medium} {
         display: none;
@@ -31,17 +30,17 @@ export const ListHeader = styled.div`
 `;
 
 export const WrapperHeader = styled.div`
-    flex-grow: 1;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+    grid-column: span 3;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
 `;
 
 export const HeaderItem = styled.span`
+    grid-column: span 1;
     text-align: center;
     text-transform: uppercase;
     font-size: 16px;
-    line-height: 24px;
+    line-height: 1.5;
     flex-grow: 1;
 
     @media ${({ theme }) => theme.media.large} {
@@ -50,8 +49,11 @@ export const HeaderItem = styled.span`
 `;
 
 export const HeaderItemName = styled(HeaderItem)`
-    width: 50%;
-    flex-grow: unset;
+    grid-column: span 2;
+
+    @media ${({ theme }) => theme.media.large} {
+        text-align: left;
+    }
 `;
 
 export const ListBody = styled.ul`
@@ -71,27 +73,25 @@ export const ListBody = styled.ul`
 
 export const ListItem = styled.li`
     padding: 16px;
-    padding-right: 0;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
 
     @media ${({ theme }) => theme.media.medium} {
-        flex-direction: column;
+        grid-template-columns: repeat(4, 1fr);
         row-gap: 8px;
-        padding-right: 16px;
     }
 `;
 
 export const WrapperBlock = styled.div`
     box-sizing: border-box;
-    width: 100%;
+    grid-column: span 2;
     display: flex;
     align-items: center;
     gap: 16px;
 
     @media ${({ theme }) => theme.media.medium} {
         gap: 8px;
+        grid-column: span 4;
     }
 `;
 
@@ -99,36 +99,33 @@ export const ProductImage = styled(Image)`
     object-fit: contain;
     @media ${({ theme }) => theme.media.large} {
         width: 42px;
-        height: 42px;
+        aspect-ratio: 1;
     }
 
     @media ${({ theme }) => theme.media.medium} {
         width: 60px;
-        height: 60px;
     }
 `;
 
 export const StyledValue = styled.span`
     font-size: 16px;
-    line-height: 24px;
+    line-height: 1.5;
 
     @media ${({ theme }) => theme.media.large} {
         font-size: 14px;
-        line-height: 22px;
     }
 `;
 
 export const WrapperBlockInfo = styled.div`
-    width: 100%;
+    grid-column: span 3;
     box-sizing: border-box;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
 
     @media ${({ theme }) => theme.media.medium} {
-        padding-left: 68px;
-        flex-direction: column;
         row-gap: 16px;
+        grid-column: 1 / -1;
+        margin-left: 68px;
     }
 `;
 
@@ -148,6 +145,8 @@ export const BlockInfo = styled.div`
     }
 
     @media ${({ theme }) => theme.media.medium} {
+        grid-column: 1 / -1;
+
         & span:first-of-type {
             display: block;
         }
@@ -159,6 +158,6 @@ export const BlockInfo = styled.div`
 
 export const InfoTitle = styled.span`
     font-size: 12px;
-    line-height: 16px;
+    line-height: 1.33;
     text-transform: uppercase;
 `;

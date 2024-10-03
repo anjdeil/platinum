@@ -11,7 +11,7 @@ const sharedStyles = (props: any) => `
     transition: all 0.2s ease;
     color: ${props.theme.colors.black};
     font-size: 16px;
-    line-height: 24px;
+    line-height: 1.5;
     font-weight: 400;
 
     &::placeholder {
@@ -56,7 +56,7 @@ export const StyledInputWrapper = styled.div`
 
 export const StyledErrorText = styled.p`
     font-size: 12px;
-    line-height: 16px;
+    line-height: 1.33;
     font-weight: 400;
     color: ${({ theme }) => theme.colors.error};
     text-transform: uppercase;
@@ -64,7 +64,7 @@ export const StyledErrorText = styled.p`
 
 export const StyledLabel = styled.label`
     font-size: 16px;
-    line-height: 24px;
+    line-height: 1.5;
     font-weight: 400;
     color: ${({ theme }) => theme.colors.black};
 `

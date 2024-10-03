@@ -55,7 +55,10 @@
         "postcode": "Поштовий індекс",
         "country": "Країна",
         "email": "Електронна пошта",
-        "phone": "Телефон"
+        "phone": "Телефон",
+        "discountCode": "Промокод",
+        "amount": "Сума",
+        "paymentMethod": "Спосіб оплати"
     },
     "TopBar": {
         "CallUs": "Зателефонуйте нам"

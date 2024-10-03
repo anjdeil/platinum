@@ -18,13 +18,13 @@ export const TableHeader = styled.div`
     text-align: center;
     text-transform: uppercase;
     font-size: 24px;
-    line-height: 32px;
-    font-weight: 600;
+    line-height: 1.33;
+    font-weight: 500;
 
     @media ${({ theme }) => theme.media.large} {
         padding: 16px;
         font-size: 16px;
-        line-height: 24px;
+        line-height: 1.5;
     }
 `;
 
@@ -42,11 +42,12 @@ export const TableBody = styled.ul`
 
     @media ${({ theme }) => theme.media.large} {
         gap: 8px;
-        padding-inline: 16px;
+        padding: 16px;
+        padding-top: 24px;
     }
 
     @media ${({ theme }) => theme.media.medium} {
-        padding-inline: 8px;
-        padding-bottom: 8px;
+        padding: 8px;
+        padding-top: 24px;   
     }
 `;

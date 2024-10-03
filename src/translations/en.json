@@ -55,7 +55,10 @@
         "postcode": "Postcode",
         "country": "Country",
         "email": "E-mail",
-        "phone": "Phone"
+        "phone": "Phone",
+        "discountCode": "Discount code",
+        "amount": "Amount",
+        "paymentMethod": "Payment method"
     },
     "TopBar": {
         "CallUs": "Call us"

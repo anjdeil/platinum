@@ -1,9 +1,11 @@
 import AccountLayout from "@/components/Account/AccountLayout";
 import AccountOrderProductList from "@/components/Account/AccountOrderProductList/AccountOrderProductList";
 import AccountOrderTable from "@/components/Account/AccountOrderTable/AccountOrderTable";
+import BillingShippingAddress from "@/components/Account/BillingShippingAddress/BillingShippingAdress";
+import OrderTotals from "@/components/Account/OrderTotals/OrderTotals";
 import Notification from "@/components/Layouts/Notification/Notification";
 import wooCommerceRestApi from "@/services/wooCommerceRestApi";
-import { AccountInfoWrapper, InfoLine } from "@/styles/components";
+import { AccountInfoWrapper } from "@/styles/components";
 import { OrderType } from "@/types/services/woocommerce/OrderType";
 import areBillingAndShippingEqual from "@/utils/areBillingAndShippingEqual";
 import getSubtotalByLineItems from "@/utils/getSubtotalByLineItems";
@@ -53,55 +55,19 @@ const Order: FC<OrderPropsType> = ({ order }) => {
     return (
         <AccountLayout title={`${t('order')} #${order.id}`}>
             <Notification>
-                {`${t("notification", { orderId: order.id, date: formattedDate })} ${t(order.status)}`}
+                {`${t("notification", { orderId: order.id, date: formattedDate })} ${t(order.status)}.`}
             </Notification>
             <AccountInfoWrapper>
-                <AccountOrderProductList lineItems={order.line_items} />
+                <AccountOrderProductList lineItems={order.line_items} currency={order.currency_symbol} />
                 <AccountOrderTable title="summaryOrder">
-                    <InfoLine textAllign="right">
-                        <span>{t("products")}</span>
-                        <span>{`${subtotal} ${order.currency_symbol}`}</span>
-                    </InfoLine>
-                    <InfoLine textAllign="right">
-                        <span>{t("delivery")}</span>
-                        <span>{`${Math.round(+order.shipping_total)} ${order.currency_symbol}`}</span>
-                    </InfoLine>
-                    <InfoLine
-                        textAllign="right"
-                        fontSize="24px"
-                        lineHeight="32px"
-                        tabletFontSize="16px"
-                        tabletLineHeight="24px"
-                        fontWeight={500}
-                    >
-                        <span>{t("totalToPay")}</span>
-                        <span>{`${Math.round(+order.total)} ${order.currency_symbol}`}</span>
-                    </InfoLine>
+                    <OrderTotals order={order} />                    
                 </AccountOrderTable>
                 <AccountOrderTable title="customerData">
-                    {Object.entries(order.billing).map(([key, value]) => (
-                        <>
-                            {value !== '' && (
-                                <InfoLine key={key}>
-                                    <span>{t(key)}</span>
-                                    <span>{value}</span>
-                                </InfoLine>
-                            )}
-                        </>
-                   ))}
+                    <BillingShippingAddress address={order.billing} />
                 </AccountOrderTable>
                 {!billingAndShippingEqual && (
                     <AccountOrderTable title="shippingAddress">
-                        {Object.entries(order.shipping).map(([key, value]) => (
-                            <>
-                                {value !== '' && (
-                                    <InfoLine key={key}>
-                                        <span>{t(key)}</span>
-                                        <span>{value}</span>
-                                    </InfoLine>
-                                )}
-                            </>
-                    ))}
+                        <BillingShippingAddress address={order.shipping} />
                     </AccountOrderTable>
                 )}
             </AccountInfoWrapper>
