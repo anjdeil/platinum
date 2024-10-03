@@ -4,6 +4,7 @@
         "link": "Just link to another page translated"
     },
     "MyAccount": {
+        "order": "Order",
         "clientPersonalAccount": "Client's personal account",
         "dashboard": "Dashboard",
         "userInformation": "User information",

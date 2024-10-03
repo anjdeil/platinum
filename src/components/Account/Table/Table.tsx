@@ -6,21 +6,24 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { StyledBody, StyledBodyTr, StyledDateTd, StyledDetailesTd, StyledDetailesTh, StyledHead, StyledNoAndDate, StyledOrderSpan, StyledOrderWrapper, StyledSpan, StyledTable, StyledTd, StyledTh, StyledTotalSpan, StyledTr } from "./styles";
 
-const Table: React.FC<TableProps> = ({orderList, title}) =>
-{
+const Table: React.FC<TableProps> = ({ orderList, title }) => {
     const currency = useAppSelector((state) => state.currentCurrency);
     const theme = useTheme();
     const t = useTranslations("MyAccount");
     return (
         <>
-            <AccountTitle
-                as={"h2"}
-                textAlign="center"
-                uppercase
-                marginBottom={24}
-                tabletMarginBottom={16}
-                mobMarginBottom={16}
-            >{t(title)}</AccountTitle>
+            {title &&
+                <AccountTitle
+                    as={"h2"}
+                    textAlign="center"
+                    uppercase
+                    marginBottom={24}
+                    tabletMarginBottom={16}
+                    mobMarginBottom={16}
+                >
+                    {title}
+                </AccountTitle>
+            }
             <StyledTable>
                 <StyledHead>
                     <StyledTr>

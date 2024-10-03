@@ -48,5 +48,5 @@ export type AccountInfoBlockLinkProps = {
 
 export type TableProps = {
     orderList: OrderType[];
-    title: string;
+    title?: string;
 };
