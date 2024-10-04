@@ -5,7 +5,8 @@ export const NavWrap = styled.div`
     max-width: 200px;
     display: flex;
     flex-direction: column;
-    gap: 24px;    
+    gap: 24px;
+    min-height: min-content;
 `;
 
 export const SelectWrapper = styled.div`

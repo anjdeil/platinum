@@ -45,7 +45,7 @@ export default function ProductList() {
                 mobPadding="8px 10px"
                 allignItem="flex-start"
              />
-            <ProductCardList products={products} columns={{ desktopColumns: 3 }} isLoading={isProductsLoading} />
+            <ProductCardList products={testProducts} columns={{ desktopColumns: 3 }} isLoading={false} />
         </>
     );
 }

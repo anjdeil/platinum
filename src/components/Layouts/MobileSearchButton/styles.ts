@@ -6,8 +6,8 @@ export const ButtonStyled = styled.button`
     background-color: ${({ theme }) => theme.background.secondary};
     width: 100%;
     text-transform: none;
-    font-size: 16px;
-    line-height: 1.5rem;
+    font-size: ${({ theme }) => theme.typography.fontSize};
+    line-height: 1.5em;
     font-weight: 400;
     justify-content: space-between;
     border-radius: 10px;

@@ -10,7 +10,7 @@ const sharedStyles = (props: any) => `
     border: 1px solid transparent;
     transition: all 0.2s ease;
     color: ${props.theme.colors.black};
-    font-size: 16px;
+    font-size: ${props.theme.typography.fontSize};
     line-height: 1.5rem;
     font-weight: 400;
 
@@ -55,7 +55,7 @@ export const StyledInputWrapper = styled.div`
 `;
 
 export const StyledErrorText = styled.p`
-    font-size: 12px;
+    font-size: ${({ theme }) => theme.typography.smallFontSize};
     line-height: 1rem;
     font-weight: 400;
     color: ${({ theme }) => theme.colors.error};
@@ -63,7 +63,7 @@ export const StyledErrorText = styled.p`
 `
 
 export const StyledLabel = styled.label`
-    font-size: 16px;
+    font-size: ${({ theme }) => theme.typography.fontSize};
     line-height: 1.5rem;
     font-weight: 400;
     color: ${({ theme }) => theme.colors.black};

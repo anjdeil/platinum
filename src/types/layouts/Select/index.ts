@@ -7,7 +7,9 @@ export const SelectOptionsPropsSchema = z.object({
 
 export const CustomSelectStyledPropsSchema = z.object({
     isOpen: z.boolean().optional(),
+    width: z.string().optional(),
     borderRadius: z.string().optional(),
+    color: z.string().optional(),
     background: z.string().optional(),
     padding: z.string().optional(),
     fontSize: z.string().optional(),

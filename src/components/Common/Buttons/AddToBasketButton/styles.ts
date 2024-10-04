@@ -4,8 +4,8 @@ import styled from "@emotion/styled";
 export const AddToBasketButtonStyled = styled.button<AddToBasketButtonProps>`
     width: 100%;
     background-color: transparent;
-    font-size: ${({ fontSize = '16px' }) => fontSize};
-    line-height: ${({ lineHeight = '1.5rem' }) => lineHeight};
+    font-size: ${({ theme, fontSize = theme.typography.fontSize }) => fontSize};
+    line-height: ${({ lineHeight = '1.5em' }) => lineHeight};
     font-weight: ${({ fontWeight = 400 }) => fontWeight};    
     color: ${({ theme, color = theme.colors.black }) => color};
     padding: 16px 25px;    
@@ -27,6 +27,6 @@ export const AddToBasketButtonStyled = styled.button<AddToBasketButtonProps>`
     @media ${({ theme }) => theme.media.medium} {
         padding: 10px 16px;
         font-size: ${({ mobFontSize = '14px' }) => mobFontSize};   
-        line-height: ${({ mobLineHeight = '1.25rem' }) => mobLineHeight};     
+        line-height: ${({ mobLineHeight = '1.5em' }) => mobLineHeight};     
     }
 `

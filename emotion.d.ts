@@ -5,6 +5,8 @@ declare module '@emotion/react' {
         typography: {
             fontFamily: string;
             fontSize: string;
+            bigFontSize: string;
+            smallFontSize: string;
         };
         colors: {
             primary: string;

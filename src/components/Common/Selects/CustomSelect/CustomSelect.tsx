@@ -1,10 +1,11 @@
 import { CustomSelectProps } from "@/types/layouts/Select";
 import { useCallback, useEffect, useRef, useState } from "react";
 import ArrowIcon from "../../Icons/ArrowIcon/ArrowIcon";
-import { CustomSelectStyled, DropdownMenu, MenuItem } from "./styles";
+import { CustomSelectStyled, MenuItem, StyledCollapse } from "./styles";
 
 export default function CustomSelect({
   options,
+  width,
   value,
   onChange,
   borderRadius,
@@ -42,6 +43,7 @@ export default function CustomSelect({
         ref={containerRef}
         onClick={handleToggle}
         isOpen={isOpen}
+        width={width}
         borderRadius={borderRadius}
         background={background}
         padding={padding}
@@ -51,11 +53,8 @@ export default function CustomSelect({
         tabletPadding={tabletPadding}
       >
         {value}        
-        <ArrowIcon isOpen={isOpen}/>
-        <DropdownMenu
-          isOpen={isOpen}          
-          borderRadius={borderRadius}          
-        >
+        <ArrowIcon isOpen={isOpen} />       
+        <StyledCollapse in={isOpen} timeout="auto">          
           {options.map(option => (
             <MenuItem
               key={option.code}
@@ -71,7 +70,7 @@ export default function CustomSelect({
               {option.symbol}
             </MenuItem>
           ))}
-        </DropdownMenu>
+        </StyledCollapse>
       </CustomSelectStyled>
     );
 }

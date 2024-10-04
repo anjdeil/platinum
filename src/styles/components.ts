@@ -19,8 +19,8 @@ interface TitleProps {
 
 export const Title = styled.h1<TitleProps>`
     color: black;
-    font-size: ${({ fontSize = '24px' }) => fontSize};
-    line-height: ${({ lineHeight = '1.5rem' }) => lineHeight}; 
+    font-size: ${({ theme, fontSize = theme.typography.bigFontSize }) => fontSize};
+    line-height: ${({ lineHeight = '1em' }) => lineHeight}; 
     font-weight: ${({ fontWeight = 600 }) => fontWeight};
     text-transform: ${({ uppercase }) => uppercase ? "uppercase" : 'none'};
     text-align: center;
@@ -33,8 +33,8 @@ export const Title = styled.h1<TitleProps>`
 
 export const AccountTitle = styled.h2<TitleProps>`
     color: ${({ theme }) => theme.colors.black};
-    font-size: 24px;
-    line-height: 2rem;
+    font-size: ${({ theme }) => theme.typography.bigFontSize};
+    line-height: 1.3em;
     font-weight: 600;
     text-align: center;
     text-transform: ${({ uppercase }) => uppercase ? "uppercase" : 'none'};
@@ -42,8 +42,8 @@ export const AccountTitle = styled.h2<TitleProps>`
     margin-bottom: ${({ marginBottom = 48 }) => marginBottom}px;
 
     @media ${({ theme }) => theme.media.large} {
-        font-size: 16px;
-        line-height: 1.5rem;
+        font-size: ${({ theme }) => theme.typography.fontSize};
+        line-height: 1.5em;
         margin-bottom: ${({ tabletMarginBottom = 24 }) => tabletMarginBottom}px;
     }
 
@@ -72,8 +72,8 @@ export const StyledButton = styled.button<StyledButtonProps>`
     color: ${({ theme, color = theme.colors.black }) => color};
     background-color: ${({ backgroundColor = 'transparent' }) => backgroundColor};
     padding-block: 16px;
-    line-height: 1.5rem;
-    font-size: 16px;
+    font-size: ${({ theme }) => theme.typography.fontSize};
+    line-height: 1.5em;
     font-weight: 400;
     text-transform: none;
     border: ${({ theme }) => `1px solid ${theme.colors.secondary}`};
@@ -92,7 +92,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
         padding-block: 11px;
         min-width: ${({ minWidthTablet = 'auto' }) => minWidthTablet};
         font-size: 14px;
-        line-height: 1.25rem;        
+        line-height: 1.5em;        
     }
 `;
 
@@ -152,14 +152,14 @@ export const AccountInfoWrapper = styled.div`
 
 export const TitleCatalog = styled.h2<TitleCatalogProps>`
     color: ${({ theme }) => theme.colors.black};
-    font-size: ${({ fontSize = '24px' }) => fontSize};
-    line-height: ${({ lineHeight = '1.3rem' }) => lineHeight};    
+    font-size: ${({ theme, fontSize = theme.typography.bigFontSize }) => fontSize};
+    line-height: ${({ lineHeight = '1em' }) => lineHeight};    
     font-weight: ${({ fontWeight = 600 }) => fontWeight};
     text-transform: uppercase;
     text-align: center;
 
     @media ${({ theme }) => theme.media.large} {
-        font-size: ${({ mobFontSize = '16px' }) => mobFontSize};
-        line-height: ${({ mobLineHeight = '1.5rem' }) => mobLineHeight};
+        font-size: ${({ theme, mobFontSize = theme.typography.fontSize }) => mobFontSize};
+        line-height: ${({ mobLineHeight = '1.5em' }) => mobLineHeight};
     }
 `;

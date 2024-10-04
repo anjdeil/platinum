@@ -3,14 +3,14 @@ import styled from "@emotion/styled";
 
 export const ProductPrice = styled.p<CommonTextProps>`
     color: ${({ theme }) => theme.colors.black};    
-    font-size: ${({ fontSize = '16px' }) => fontSize};
-    line-height: ${({ lineHeight = '1.5rem' }) => lineHeight};
+    font-size: ${({ theme, fontSize = theme.typography.fontSize }) => fontSize};
+    line-height: ${({ lineHeight = '1.5em' }) => lineHeight};
     font-weight: ${({ fontWeight = 600 }) => fontWeight};
     text-align: center;
 
     @media ${({ theme }) => theme.media.large} {
         font-size: ${({ mobFontSize = '14px' }) => mobFontSize};
-        line-height: ${({ lineHeight = '1.375rem' }) => lineHeight};
+        line-height: ${({ lineHeight = '1.5em' }) => lineHeight};
     }
 `;
 

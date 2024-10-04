@@ -43,6 +43,6 @@ export const StyledInfoWrapper = styled.div`
 export const StyledTitle = styled.span`
     text-align: center;
     font-size: 12px;
-    line-height: 1rem;
+    line-height: 1.3em;
     font-weight: 400;
 `

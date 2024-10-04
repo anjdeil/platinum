@@ -10,6 +10,8 @@ const theme: Theme = {
     typography: {
         fontFamily: `${montserrat.style.fontFamily}`,
         fontSize: '16px',
+        bigFontSize: '24px',
+        smallFontSize: '12px',
     },
     colors: {
         primary: '#113760',

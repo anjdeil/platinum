@@ -20,17 +20,16 @@ export const StyledHead = styled.thead`
 
     & tr, 
     & th {
-        font-size: 16px;
-        line-height: 1.5rem;
-        font-weight: 400;       
+        font-size: ${({ theme }) => theme.typography.fontSize};
+        line-height: 1.5em;
+        font-weight: 400;
     }
 
     @media ${({ theme }) => theme.media.large} {
         & tr, 
         & th {
-            font-size: 12px;
-            line-height: 1rem;
-            font-weight: 400; 
+            font-size: ${({ theme }) => theme.typography.smallFontSize};
+            line-height: 1.3em;
         }         
     }
 
@@ -131,23 +130,23 @@ export const StyledNoAndDate = styled.div`
 `;
 
 export const StyledSpan = styled.span`
-    font-size: 16px;
-    line-height: 1.5rem;    
+    font-size: ${({ theme }) => theme.typography.fontSize};
+    line-height: 1.5em;    
     font-weight: 400;
 
     @media ${({ theme }) => theme.media.large} {
-        font-size: 12px;
-        line-height: 1rem;
+        font-size: ${({ theme }) => theme.typography.smallFontSize};
+        line-height: 1.3em;
     }
 `;
 
 export const StyledDateTd = styled(StyledTd)`
-    font-size: 16px;
-    line-height: 1.5rem;
+    font-size: ${({ theme }) => theme.typography.fontSize};
+    line-height: 1.rem;
 
     @media ${({ theme }) => theme.media.large} {        
-        font-size: 12px;
-        line-height: 1rem;
+        font-size: ${({ theme }) => theme.typography.smallFontSize};
+        line-height: 1.3em;
         font-weight: 400;
     }
 
@@ -159,13 +158,12 @@ export const StyledDateTd = styled(StyledTd)`
 export const StyledTotalSpan = styled.span`
     display: block;
     text-align: left;
-    font-size: 16px;
-    line-height: 1.5rem;
+    font-size: ${({ theme }) => theme.typography.fontSize};
+    line-height: 1.5em;
     font-weight: 400;
 
     @media ${({ theme }) => theme.media.large} {        
         font-size: 14px;
-        line-height: 1.375rem;        
     }
 `;
 
@@ -194,17 +192,16 @@ export const StyledOrderWrapper = styled.div`
 `;
 
 export const StyledOrderSpan = styled(StyledSpan)`
-    font-size: 16px;
+    font-size: ${({ theme }) => theme.typography.fontSize};
     line-height: 1.5rem;    
 
     @media ${({ theme }) => theme.media.large} {        
         font-size: 14px;
-        line-height: 1.375rem;
     }
 
     @media ${({ theme }) => theme.media.medium} {
         text-transform: uppercase;
-        font-size: 12px;
-        line-height: 1rem;
+        font-size: ${({ theme }) => theme.typography.smallFontSize};
+        line-height: 1.3em;
     }
 `;
