@@ -4,12 +4,27 @@ import { TableProps } from "@/types/layouts/Account";
 import { useTheme } from "@emotion/react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { StyledBody, StyledBodyTr, StyledDateTd, StyledDetailesTd, StyledDetailesTh, StyledHead, StyledNoAndDate, StyledOrderSpan, StyledOrderWrapper, StyledSpan, StyledTable, StyledTd, StyledTh, StyledTotalSpan, StyledTr } from "./styles";
+import { StyledActionsTd, StyledBody, StyledBodyTr, StyledDateTd, StyledDetailesTd, StyledDetailesTh, StyledHead, StyledNoAndDate, StyledOrderSpan, StyledOrderWrapper, StyledPdfButton, StyledSpan, StyledTable, StyledTd, StyledTh, StyledTotalSpan, StyledTr } from "./styles";
+import Image from "next/image";
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import OrderPdf from "@/pdf/OrderPdf";
+import { useEffect, useState } from "react";
 
-const Table: React.FC<TableProps> = ({ orderList, title }) => {
+const Table: React.FC<TableProps> = ({ orderList, title, ...props }) => {
     const currency = useAppSelector((state) => state.currentCurrency);
     const theme = useTheme();
     const t = useTranslations("MyAccount");
+
+    const [isClient, setIsClient] = useState(false);
+
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
+
+    if (!isClient) {
+        return null;
+    }
+
     return (
         <>
             {title &&
@@ -67,11 +82,16 @@ const Table: React.FC<TableProps> = ({ orderList, title }) => {
                                         <StyledOrderSpan>{t(item.status)}</StyledOrderSpan>
                                     </StyledOrderWrapper>
                                 </StyledTd>
-                                <StyledTd>
+                                <StyledActionsTd>
                                     <Link href={`/my-account/orders/${item.id}`}>
                                         <StyledButton color={theme.colors.white} backgroundColor={theme.colors.primary}>{t("seeMore")}</StyledButton>
                                     </Link>
-                                </StyledTd>
+                                    <PDFDownloadLink document={<OrderPdf order={item} />} fileName={`order-${item.id}.pdf`}>
+                                        <StyledPdfButton aria-label={t("downloadPdf")} >
+                                            <Image width={28} height={28} src={`/assets/icons/pdf-icon.svg`} alt="pdf" />
+                                        </StyledPdfButton>
+                                    </PDFDownloadLink>
+                                </StyledActionsTd>
                             </StyledBodyTr>
                         )
                     })}
