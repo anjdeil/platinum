@@ -97,6 +97,12 @@ export const StyledTd = styled.td`
     }
 `;
 
+export const StyledActionsTd = styled(StyledTd)`
+    display: flex;
+    gap: 20px;
+    align-items: center;
+`;
+
 export const StyledDetailesTd = styled(StyledTd)`
     width: 200%;
 
@@ -207,4 +213,10 @@ export const StyledOrderSpan = styled(StyledSpan)`
         font-size: 12px;
         line-height: 16px;
     }
+`;
+
+export const StyledPdfButton = styled.button`
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
 `;
