@@ -10,7 +10,7 @@ import { PDFDownloadLink } from '@react-pdf/renderer';
 import OrderPdf from "@/pdf/OrderPdf";
 import { useEffect, useState } from "react";
 
-const Table: React.FC<TableProps> = ({ orderList, title, ...props }) => {
+const Table: React.FC<TableProps> = ({ orderList, title }) => {
     const currency = useAppSelector((state) => state.currentCurrency);
     const theme = useTheme();
     const t = useTranslations("MyAccount");
