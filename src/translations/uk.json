@@ -35,7 +35,8 @@
         "trash": "Кошик",
         "shipping": "Доставка",
         "payment": "Оплата",
-        "missingToSilver": "До срібла не вистачає"
+        "missingToSilver": "До срібла не вистачає",
+        "downloadPdf": "Завантажити PDF"
     },
     "TopBar": {
         "CallUs": "Зателефонуйте нам"
