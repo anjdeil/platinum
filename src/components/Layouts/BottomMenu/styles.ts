@@ -8,6 +8,7 @@ export const BottomMenuWrapper = styled.div<BottomMenuWrapperProps>`
   right: 0;
   bottom: 0;
   padding-block: ${({ paddingBlock = "10px" }) => paddingBlock};
+  padding-bottom: 30px;
   display: flex;
   align-items: center;
   background-color: ${({ theme }) => theme.background.secondary};
