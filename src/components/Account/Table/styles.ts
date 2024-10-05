@@ -41,10 +41,10 @@ export const StyledHead = styled.thead`
 
 export const StyledTr = styled.tr`
     box-sizing: border-box;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
+    width: 100%;   
     align-items: center;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
     gap: 12px;
 `;
 
@@ -64,7 +64,10 @@ export const StyledBodyTr = styled(StyledTr)`
     border-radius: 0;
     border: ${({ theme }) => `1px solid ${theme.colors.silver}`};
     border-top: none;
-    display: flex;
+    /* display: flex; */
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    align-items: center;
 
     @media ${({ theme }) => theme.media.large} {
         padding: 8px;
@@ -80,21 +83,36 @@ export const StyledBodyTr = styled(StyledTr)`
 `;
 
 export const StyledTh = styled.th`
-    width: 100%;
+    grid-column: span 2;
     text-align: center;
+
+    &:first-of-type {
+        grid-column: span 1;
+    }
 `;
 
 export const StyledDetailesTh = styled(StyledTh)`
-    width: 200%;
+    grid-column: span 3;
 `;
 
 export const StyledTd = styled.td`
-    width: 100%;
+    /* width: 100%; */
     text-align: center;
+    grid-column: span 2;
+
+    &:first-of-type {
+        grid-column: span 1;
+    }
 
     & a {
         text-decoration: none;
     }
+`;
+
+export const StyledActionsTd = styled(StyledTd)`
+    display: flex;
+    gap: 20px;
+    align-items: center;
 `;
 
 export const StyledDetailesTd = styled(StyledTd)`
@@ -205,4 +223,10 @@ export const StyledOrderSpan = styled(StyledSpan)`
         font-size: 12px;
         line-height: 1.33;
     }
+`;
+
+export const StyledPdfButton = styled.button`
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
 `;

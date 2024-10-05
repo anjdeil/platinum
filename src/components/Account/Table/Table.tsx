@@ -1,15 +1,30 @@
-import { useAppSelector } from "@/store";
+import OrderPdf from "@/pdf/OrderPdf";
 import { AccountTitle, StyledButton } from "@/styles/components";
 import { TableProps } from "@/types/layouts/Account";
 import { useTheme } from "@emotion/react";
+import { PDFDownloadLink } from '@react-pdf/renderer';
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 import Link from "next/link";
-import { StyledBody, StyledBodyTr, StyledDateTd, StyledDetailesTd, StyledDetailesTh, StyledHead, StyledNoAndDate, StyledOrderSpan, StyledOrderWrapper, StyledSpan, StyledTable, StyledTd, StyledTh, StyledTotalSpan, StyledTr } from "./styles";
+import { useEffect, useState } from "react";
+import { StyledActionsTd, StyledBody, StyledBodyTr, StyledDateTd, StyledDetailesTd, StyledDetailesTh, StyledHead, StyledNoAndDate, StyledOrderSpan, StyledOrderWrapper, StyledPdfButton, StyledSpan, StyledTable, StyledTd, StyledTh, StyledTotalSpan, StyledTr } from "./styles";
 
 const Table: React.FC<TableProps> = ({ orderList, title }) => {
-    const currency = useAppSelector((state) => state.currentCurrency);
     const theme = useTheme();
     const t = useTranslations("MyAccount");
+
+    const [isClient, setIsClient] = useState(false);
+
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
+
+    if (!isClient) {
+        return null;
+    }
+
+    console.log('orderList...', orderList);
+
     return (
         <>
             {title &&
@@ -56,7 +71,7 @@ const Table: React.FC<TableProps> = ({ orderList, title }) => {
                                 <StyledDetailesTd>
                                     <StyledTotalSpan>{t("shipping")}: {item.shipping_lines[0].method_title}</StyledTotalSpan>
                                     <StyledTotalSpan>{t("payment")}: {item.payment_method_title}</StyledTotalSpan>
-                                    <StyledTotalSpan>{item.total} {currency.symbol}</StyledTotalSpan>
+                                    <StyledTotalSpan>{item.total} {item.currency_symbol}</StyledTotalSpan>
                                 </StyledDetailesTd>
                                 <StyledDateTd>
                                     {dateCreated}
@@ -67,11 +82,16 @@ const Table: React.FC<TableProps> = ({ orderList, title }) => {
                                         <StyledOrderSpan>{t(item.status)}</StyledOrderSpan>
                                     </StyledOrderWrapper>
                                 </StyledTd>
-                                <StyledTd>
+                                <StyledActionsTd>
                                     <Link href={`/my-account/orders/${item.id}`}>
                                         <StyledButton color={theme.colors.white} backgroundColor={theme.colors.primary}>{t("seeMore")}</StyledButton>
                                     </Link>
-                                </StyledTd>
+                                    <PDFDownloadLink document={<OrderPdf order={item} />} fileName={`order-${item.id}.pdf`}>
+                                        <StyledPdfButton aria-label={t("downloadPdf")} >
+                                            <Image width={28} height={28} src={`/assets/icons/pdf-icon.svg`} alt="pdf" />
+                                        </StyledPdfButton>
+                                    </PDFDownloadLink>
+                                </StyledActionsTd>
                             </StyledBodyTr>
                         )
                     })}
