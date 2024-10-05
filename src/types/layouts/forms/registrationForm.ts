@@ -38,7 +38,7 @@ export const RegistrationFormSchema = (isLoggedIn: boolean, isCheckout: boolean 
         city: z.string().min(1, 'Required field'),
         companyName: z.string().min(1, 'Required field'),
         address1: z.string().min(4, 'Required field'),
-        address2: z.string().min(4, 'Required field'),
+        address2: z.string().min(1, 'Required field'),
         apartmentNumber: z.string().min(1, 'Required field'),
         postCode: z.string().min(5, 'The post code must contain 5 characters'),
 

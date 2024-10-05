@@ -1,5 +1,5 @@
 import { RegistrationFormSchema } from "@/types/layouts/forms/registrationForm";
-import { FC, forwardRef, useCallback, useImperativeHandle, useMemo, useState } from "react";
+import { FC, forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -8,6 +8,8 @@ import { CustomInput } from "../CustomInput";
 import { CustomForm, FormWrapper, FormWrapperBottom } from "./styles";
 import Image from "next/image";
 import 'react-international-phone/style.css';
+import { useRegisterCustomerMutation } from "@/store/rtk-queries/wooCustomApi";
+import { CustomInput2 } from "../CustomInput/CustomInput2";
 
 interface RegistrationFormProps
 {
@@ -29,45 +31,64 @@ const isShipping = false;
 // To do: userFields, lineItems, shippingLines
 export const RegistrationForm = forwardRef((props, ref) =>
 {
-    const [phone, setPhone] = useState('');
-
     useImperativeHandle(ref, () => ({
         submit: () => handleSubmit(onSubmit)(),
     }));
-
     useImperativeHandle(ref, () => ({ submit: () => handleSubmit(onSubmit)() }));
 
+    /** Dynamic types */
     const formSchema = useMemo(() => RegistrationFormSchema(isLoggedIn, isCheckout, isShipping),
         [isLoggedIn, isCheckout, isShipping]);
     type RegistrationFormType = z.infer<typeof formSchema>;
+
+    const [registerCustomerMutation, { data, isError, error, isLoading }] = useRegisterCustomerMutation();
 
     const { register, handleSubmit, formState: { errors, isSubmitting, isSubmitSuccessful }, setValue, reset } = useForm<RegistrationFormType>({
         resolver: zodResolver(formSchema)
     });
 
-    const onSubmit = (data) =>
+    function onSubmit(data)
     {
-        console.log(data);
-    };
+        console.log('data', data);
+        console.log('errors', errors);
+    }
 
     return (
         <CustomForm onSubmit={handleSubmit(onSubmit)}>
             <FormWrapper>
-                <CustomInput
+                {/* <CustomInput
                     fieldName="Imię"
                     name='name'
                     register={register}
                     errors={errors}
                     setValue={setValue}
                 // initialValue={userFields ? userFields.first_name : null}
+                /> */}
+                <CustomInput2
+                    fieldName="Imię"
+                    name='name'
+                    register={register}
+                    errors={errors}
+                    // setValue={setValue}
+                    inputType={"text"}
                 />
-                <CustomInput
+                {/* <CustomInput
                     fieldName="Nazwisko"
                     name='lastName'
                     register={register}
                     errors={errors}
                     setValue={setValue}
+                /> */}
+                <CustomInput2
+                    fieldName="Nazwisko"
+                    name='lastName'
+                    register={register}
+                    errors={errors}
+                    // setValue={setValue}
+                    inputType={"text"}
                 />
+                {/* <input {...register("lastName")} placeholder="Nazwisko" /> */}
+                {/* <input {...register("email")} placeholder="Nazwisko" /> */}
                 <CustomInput
                     fieldName="Adres e-mail"
                     name='email'
@@ -157,12 +178,6 @@ export const RegistrationForm = forwardRef((props, ref) =>
                     errors={errors}
                     isCheckbox={true}
                 />
-                {/* <Box className={styles.form__bottom}>
-                   
-                    <button className="btn-primary btn" type="submit" disabled={isSubmitting}>{isSubmitting ? 'Submitting...' : 'Submit'}</button>
-                    {(isSubmitSuccessful && !isError) && <p style={{ color: variables.successfully }}>
-                        The account was created successfully
-                    </p>} */}
             </FormWrapper>
             <FormWrapperBottom>
                 <button type="submit" disabled={isSubmitting}>{isSubmitting ? 'Submitting...' : 'Submit'}</button>
