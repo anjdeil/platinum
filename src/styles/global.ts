@@ -4,6 +4,7 @@ const GlobalStyle = createGlobalStyle`
  * {
     padding: 0;
     margin: 0;
+    box-sizing: border-box;
 }
 
 input[type=search]::-ms-clear {
@@ -44,7 +45,6 @@ h1 {
 }
 
 hr {
-    box-sizing: content-box;
     height: 0;
     overflow: visible;
 }
@@ -155,9 +155,6 @@ fieldset {
     padding: 0.35em 0.75em 0.625em;
 }
 
-legend {
-    box-sizing: border-box;
-}
 fieldset {
     padding: 0.35em 0.75em 0.625em;
 }
@@ -217,25 +214,6 @@ template {
 
 [hidden] {
     display: none;
-}
-
-.container {
-    box-sizing: content-box;
-    margin: 0 auto;
-    padding: 0 32px;
-    max-width: 1280px;
-
-    @media (max-width: 768px) {
-        padding: 0 20px;
-    }
-}
-
-.hideMobile {
-    display: none;
-
-    @media (min-width: 768px) {
-        display: block;
-    }
 }
 `;
 
