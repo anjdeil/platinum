@@ -1,6 +1,7 @@
-import { Accordion, AccordionSummary, Box } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Box } from "@mui/material";
 import styled from "@emotion/styled";
 import CustomAccordion from "@/components/shared/Accordion/Accordion";
+import { CustomList } from "@/components/shared/List/List";
 
 export const BenefitsTitle = styled.h3`
     font: ${({ theme }) => theme.fonts.titleH2SemiBold};
@@ -12,9 +13,12 @@ export const BenefitsTitle = styled.h3`
     }
 `
 
+export const BenefitsAccordionDetails = styled(AccordionDetails)`
+ margin-top: "16px";
+`
+
 export const BenefitsPrice = styled.span`
     font-size: 24px;
-    line-height: 133%;
     text-transform: uppercase;
     text-align: center;
     white-space: nowrap;
@@ -92,18 +96,6 @@ export const BenefitsItem = styled(Box)`
     }
 `
 
-export const BenefitsAccordionList = styled.ul`
-    list-style: none;
-    display: flex;
-    gap: 8px;
-    flex-direction: column;
-    margin-top: 16px;
-
-    li {
-        display: flex;
-    }
-`
-
 export const BenefitsAccordionStyled = styled(Accordion) <{ level: string }>`
     box-sizing: border-box;
     border-radius: 8px !important;
@@ -150,7 +142,7 @@ export const BenefitsAccordionStyled = styled(Accordion) <{ level: string }>`
             display: none;
         }
 
-        padding: 16px 32px;
+        padding: 16px 0px;
     }
     
 `
@@ -158,6 +150,7 @@ export const BenefitsAccordionStyled = styled(Accordion) <{ level: string }>`
 
 export const CustomAccordionSummary = styled(AccordionSummary)`
     margin: 0;
+    padding: 0;
 
     @media ${({ theme }) => theme.media.medium}{
         margin-bottom: 10px;
@@ -173,11 +166,15 @@ export const CustomAccordionSummary = styled(AccordionSummary)`
 export const AccordionTitle = styled.h3`
     font: ${({ theme }) => theme.fonts.bodyMiddleReg};
     text-transform: uppercase;
-    white-space: nowrap;
 `;
 
 
 
 export const BenefitsInfo = styled(Box)`
     max-width: 600px;
+`
+
+export const BenefitsCustomList = styled(CustomList)`
+    margin-top: 24px;
+    gap: 16px;
 `

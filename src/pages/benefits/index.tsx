@@ -1,11 +1,11 @@
 import React, { FC, useState } from 'react';
-import CustomAccordion from "@/components/shared/Accordion/Accordion";
-import { BenefitsLayout, BenefitsTitle, BenefitsPrice, BenefitsItem, BenefitsAccordionStyled, CustomAccordionSummary, AccordionTitle, BenefitsAccordionList, AccordionHeader, BenefitsInfo } from './styles'
+import { BenefitsLayout, BenefitsTitle, BenefitsPrice, BenefitsItem, BenefitsAccordionStyled, CustomAccordionSummary, AccordionTitle, AccordionHeader, BenefitsInfo, BenefitsAccordionDetails } from './styles'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { AccordionDetails, useMediaQuery } from '@mui/material';
-import { CustomSvgMarker } from './CustomSvg'
+import { useMediaQuery } from '@mui/material';
+import { CustomSvgMarker } from '@/components/shared/CustomSvgMarker/CustomSvgMarker';
+import { CustomList } from '@/components/shared/List/List';
 
-export const BenefitsAccordion = () => {
+export function BenefitsAccordion() {
     const isMobile = useMediaQuery('(max-width: 768px)');
 
     const [expanded, setExpanded] = useState<string | false>(!isMobile ? 'expanded' : false);
@@ -33,13 +33,13 @@ export const BenefitsAccordion = () => {
                     >
                         <AccordionTitle>Silver Level Benefits</AccordionTitle>
                     </CustomAccordionSummary>
-                    <AccordionDetails style={{ marginTop: "16px" }}>
-                        <BenefitsAccordionList>
+                    <BenefitsAccordionDetails>
+                        <CustomList>
                             <li><CustomSvgMarker /><span>Users who have purchased more than 2500 PLN within a year receive a 5% discount on their future purchases.</span></li>
                             <li><CustomSvgMarker />Enjoy a complimentary welcome gift upon registration.</li>
                             <li><CustomSvgMarker />Take advantage of ongoing discounts available exclusively to registered users.</li>
-                        </BenefitsAccordionList>
-                    </AccordionDetails>
+                        </CustomList>
+                    </BenefitsAccordionDetails>
                 </BenefitsAccordionStyled>
             </BenefitsItem>
 
@@ -60,14 +60,14 @@ export const BenefitsAccordion = () => {
                     >
                         <AccordionTitle>Gold Level Benefits</AccordionTitle>
                     </CustomAccordionSummary>
-                    <AccordionDetails style={{ marginTop: "16px" }}>
-                        <BenefitsAccordionList>
+                    <BenefitsAccordionDetails>
+                        <CustomList>
                             <li><CustomSvgMarker color='white' />Once users reach a total of 10,000 PLN in purchases within a year, they qualify for a 10% discount on all future purchases.</li>
                             <li><CustomSvgMarker color='white' />Enjoy complimentary samples of the latest products.</li>
                             <li><CustomSvgMarker color='white' />Receive prioritized assistance from our support team.</li>
                             <li><CustomSvgMarker color='white' />Benefit from an ongoing discount available to Gold level users.</li>
-                        </BenefitsAccordionList>
-                    </AccordionDetails>
+                        </CustomList>
+                    </BenefitsAccordionDetails>
                 </BenefitsAccordionStyled>
             </BenefitsItem>
 
@@ -88,8 +88,8 @@ export const BenefitsAccordion = () => {
                     >
                         <AccordionTitle>Platinum Level Benefits</AccordionTitle>
                     </CustomAccordionSummary>
-                    <AccordionDetails style={{ marginTop: "16px" }}>
-                        <BenefitsAccordionList>
+                    <BenefitsAccordionDetails>
+                        <CustomList>
                             <li><CustomSvgMarker color='white' />Achieve a total of 20,000 PLN in purchases within a year to enjoy a 15% discount on all future purchases.</li>
                             <li><CustomSvgMarker color='white' />Benefit from complimentary shipping for all orders within Poland.</li>
                             <li><CustomSvgMarker color='white' />Receive top-tier, prioritized assistance from our support team.</li>
@@ -97,8 +97,8 @@ export const BenefitsAccordion = () => {
                             <li><CustomSvgMarker color='white' />Enjoy ongoing discounts exclusively available to Platinum level users.</li>
                             <li><CustomSvgMarker color='white' />Enjoy complimentary entry to all our events and activities.</li>
                             <li><CustomSvgMarker color='white' />Access informative and engaging training videos every year.</li>
-                        </BenefitsAccordionList>
-                    </AccordionDetails>
+                        </CustomList>
+                    </BenefitsAccordionDetails>
                 </BenefitsAccordionStyled>
             </BenefitsItem>
         </BenefitsLayout>
@@ -106,10 +106,10 @@ export const BenefitsAccordion = () => {
         <BenefitsInfo>
             <AccordionTitle>Delivery costs are not included in the purchase calculation.</AccordionTitle>
 
-            <BenefitsAccordionList style={{ marginTop: "24px", gap: "16px" }}>
+            <CustomList>
                 <li><CustomSvgMarker />Free delivery within Poland for orders over 200 PLN.</li>
                 <li><CustomSvgMarker />Free delivery to Germany, Austria, Slovakia, Slovenia, Belgium, Hungary, Lithuania, Czech Republic, Denmark, Romania, and Estonia for orders over 150 EUR.</li>
-            </BenefitsAccordionList>
+            </CustomList>
 
         </BenefitsInfo>
     </>

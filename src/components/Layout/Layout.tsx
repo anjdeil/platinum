@@ -38,7 +38,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <PopupContainer />
                 {isMobile && (<BottomMenu />)}
                 {children}
-                <BenefitsAccordion />
+                <BenefitsAccordion /> {/**Added this in here cause i don't know how to add the page function correctly */}
                 <Footer />
             </MenusContext.Provider>
         </div>
