@@ -2,6 +2,7 @@ import { Accordion, AccordionDetails, AccordionSummary, Box } from "@mui/materia
 import styled from "@emotion/styled";
 import CustomAccordion from "@/components/shared/Accordion/Accordion";
 import { CustomList } from "@/components/shared/List/List";
+import { z } from "zod";
 
 export const BenefitsTitle = styled.h3`
     font: ${({ theme }) => theme.fonts.titleH2SemiBold};
@@ -96,8 +97,11 @@ export const BenefitsItem = styled(Box)`
     }
 `
 
-export const BenefitsAccordionStyled = styled(Accordion) <{ level: string }>`
-    box-sizing: border-box;
+const benefitsLevelProps = z.object({
+    level: 
+})
+
+export const BenefitsAccordionStyled = styled(Accordion) <{ level }>`
     border-radius: 8px !important;
     width: 100%;
     margin: 0;
