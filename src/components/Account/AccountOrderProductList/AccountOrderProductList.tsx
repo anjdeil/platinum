@@ -19,7 +19,7 @@ const AccountOrderProductList: React.FC<AccountOrderProductListProps> = ({lineIt
                 <WrapperHeader>
                     <HeaderItem>{t("price")}</HeaderItem>
                     <HeaderItem>{t("quantity")}</HeaderItem>
-                    <HeaderItem>{t("value")}</HeaderItem>
+                    <HeaderItem>{t("total")}</HeaderItem>
                 </WrapperHeader>
             </ListHeader>
             <ListBody>
@@ -48,7 +48,7 @@ const AccountOrderProductList: React.FC<AccountOrderProductListProps> = ({lineIt
                             </BlockInfo>
                             <BlockInfo>
                                 <InfoTitle>
-                                    {t("value")}
+                                    {t("total")}
                                 </InfoTitle>
                                 <StyledValue>
                                     {`${product.total} ${currency}`}
@@ -56,8 +56,7 @@ const AccountOrderProductList: React.FC<AccountOrderProductListProps> = ({lineIt
                             </BlockInfo>                           
                         </WrapperBlockInfo>
                     </ListItem>
-                ))}
-                
+                ))}                
             </ListBody>
         </ProductListWrapper>
     )

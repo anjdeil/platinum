@@ -50,7 +50,8 @@ export const StyledListItem = styled.li<StyledListItemrops>`
         padding: 16px;
         text-decoration: none;
         color: ${({ isActive, theme }) => isActive ? theme.colors.white : theme.colors.black};
-        
+        transition: all 0.2s ease;
+
         @media ${({ theme }) => theme.media.large} {
             padding: 12px 16px;
         }

@@ -57,11 +57,10 @@ export const StyledButton = styled.button<StyledButtonProps>`
     box-sizing: border-box;
     width: ${({ width = '100%' }) => width};
     min-width: ${({ minWidthDesktop = 'auto' }) => minWidthDesktop};    
-    padding-inline: 16px;
+    padding: 16px;
     border-radius: 10px;
     color: ${({ theme, color = theme.colors.black }) => color};
     background-color: ${({ backgroundColor = 'transparent' }) => backgroundColor};
-    padding-block: 16px;
     line-height: 24px;
     font-size: 16px;
     font-weight: 400;

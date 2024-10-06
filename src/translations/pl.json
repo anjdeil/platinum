@@ -59,7 +59,9 @@
         "phone": "Telefon",
         "discountCode": "Kod rabatowy",
         "amount": "Kwota",
-        "paymentMethod": "Metoda płatności"
+        "paymentMethod": "Metoda płatności",
+        "total": "Razem",
+        "action": "Działanie"
     },
     "TopBar": {
         "CallUs": "Zadzwoń do nas"

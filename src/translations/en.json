@@ -59,7 +59,9 @@
         "phone": "Phone",
         "discountCode": "Discount code",
         "amount": "Amount",
-        "paymentMethod": "Payment method"
+        "paymentMethod": "Payment method",
+        "total": "Total",
+        "action": "Action"
     },
     "TopBar": {
         "CallUs": "Call us"

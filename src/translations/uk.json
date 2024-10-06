@@ -59,7 +59,9 @@
         "phone": "Телефон",
         "discountCode": "Промокод",
         "amount": "Сума",
-        "paymentMethod": "Спосіб оплати"
+        "paymentMethod": "Спосіб оплати",
+        "total": "Всього",
+        "action": "Дія"
     },
     "TopBar": {
         "CallUs": "Зателефонуйте нам"

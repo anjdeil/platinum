@@ -1,4 +1,14 @@
+import { keyframes } from "@emotion/react";
 import styled from "@emotion/styled";
+
+const waveAnimation = keyframes`
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+`;
 
 export const StyledTable = styled.table`
     width: 100%;
@@ -64,7 +74,6 @@ export const StyledBodyTr = styled(StyledTr)`
     border-radius: 0;
     border: ${({ theme }) => `1px solid ${theme.colors.silver}`};
     border-top: none;
-    /* display: flex; */
     display: grid;
     grid-template-columns: repeat(10, 1fr);
     align-items: center;
@@ -96,7 +105,6 @@ export const StyledDetailesTh = styled(StyledTh)`
 `;
 
 export const StyledTd = styled.td`
-    /* width: 100%; */
     text-align: center;
     grid-column: span 2;
 
@@ -116,11 +124,7 @@ export const StyledActionsTd = styled(StyledTd)`
 `;
 
 export const StyledDetailesTd = styled(StyledTd)`
-    width: 200%;
-
-    @media ${({ theme }) => theme.media.medium} {
-        width: 100%;
-    }
+    grid-column: span 3;
 `;
 
 export const StyledNoAndDate = styled.div`
@@ -229,4 +233,14 @@ export const StyledPdfButton = styled.button`
     background-color: transparent;
     border: none;
     cursor: pointer;
+`;
+
+export const SkeletonSpan = styled(StyledSpan)`
+    display: inline-block;
+    width: 80%;
+    height: 1.2em;
+    border-radius: 4px;
+    background: ${({ theme }) => theme.background.skeleton};
+    background-size: 200% 100%;
+    animation: ${waveAnimation} 1.5s infinite ease-in-out;
 `;

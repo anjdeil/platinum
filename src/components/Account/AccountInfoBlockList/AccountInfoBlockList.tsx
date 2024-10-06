@@ -18,19 +18,19 @@ const AccountInfoBlockList: React.FC<AccountInfoBlockListProps> = ({ orderCount,
             <AccountInfoBlock
                 icon={OrderIcon}
                 title={t("numberOfOrders")}
-                value={orderCount.toString()}
+                value={orderCount?.toString() || "\u00A0"}
                 background={theme.background.infoGradient}
             />
             <AccountInfoBlock
                 icon={MoneyBagIcon}
                 title={t("totalOrderAmount")}
-                value={totalAmount.toString()}
+                value={totalAmount?.toString() || "\u00A0"}
                 background={theme.background.infoGradient}
             />
             <AccountInfoBlock
                 icon={LoyaltyIcon}
                 title={loyaltyProgram ? t("loyaltyProgram") : t("missingToSilver")}
-                value={loyaltyProgram ? loyaltyProgram : (MIN_TOTAL_TO_SILVER - Math.floor(totalAmount)).toString()}
+                value={loyaltyProgram ? loyaltyProgram : (MIN_TOTAL_TO_SILVER - Math.floor(totalAmount || 0)).toString()}
             />
         </StyledListContainer>
     )

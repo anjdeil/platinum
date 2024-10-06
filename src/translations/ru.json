@@ -41,7 +41,7 @@
         "productName": "Название продукта",
         "price": "Цена",
         "quantity": "Количество",
-        "summaryOrder": "Сводный заказ",
+        "summaryOrder": "Итоги заказа",
         "customerData": "Данные клиента",
         "products": "Продукты",
         "delivery": "Доставка",
@@ -59,7 +59,9 @@
         "phone": "Телефон",
         "discountCode": "Промокод",
         "amount": "Сумма",
-        "paymentMethod": "Способ оплаты"
+        "paymentMethod": "Способ оплаты",
+        "total": "Итого",
+        "action": "Действие"
     },
     "TopBar": {
         "CallUs": "Позвоните нам"

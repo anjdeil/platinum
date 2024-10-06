@@ -30,6 +30,13 @@ export const accountLinkList = [
     },
 ];
 
+export const redirectToLogin = {
+    redirect: {
+        destination: '/my-account/login',
+        permanent: false,
+    }
+};
+
 export const orderList = [
     {
         "id": 727,

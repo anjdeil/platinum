@@ -24,8 +24,8 @@ const StyledTextPropsShema = z.object({
 });
 
 const OrderSummarySchema = z.object({
-    orderCount: z.number(),
-    totalAmount: z.number(),
+    orderCount: z.number().optional(),
+    totalAmount: z.number().optional(),
 });
 
 const AccountInfoWrapperSchema = z.object({
@@ -34,7 +34,6 @@ const AccountInfoWrapperSchema = z.object({
 
 const AccountInfoBlockListSchema = z.object({
     ...OrderSummarySchema.shape,
-    orderCount: z.number(),
     loyaltyProgram: z.string().nullable()
 })
 

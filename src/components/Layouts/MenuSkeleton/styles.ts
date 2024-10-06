@@ -4,16 +4,16 @@ import styled from "@emotion/styled";
 
 const waveAnimation = keyframes`
   0% {
-    background-position: -200px 0;
+    background-position: 100% 0;
   }
   100% {
-    background-position: calc(200px + 100%) 0;
+    background-position: -100% 0;
   }
 `;
 
 export const SkeletonElement = styled.div<SkeletonElementProps>`
   background: ${({ theme }) => theme.background.skeleton};
-  background-size: 200px 100%;
+  background-size: 200% 100%;
   animation: ${waveAnimation} 1.5s infinite ease-in-out;
   width: ${({ width }) => width};
   height: ${({ height }) => height};
