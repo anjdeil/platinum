@@ -1,6 +1,5 @@
-import { Accordion,  AccordionSummary } from "@mui/material";
+import { Accordion,  AccordionDetails,  AccordionSummary } from "@mui/material";
 import styled from "@emotion/styled";
-
 import { FooterContainerProps } from "@/types/layouts/Footer";
 import Link from "next/link";
 import Image from "next/image";
@@ -21,10 +20,6 @@ export const FooterSecondTitle = styled.h3`
 `;
 //---------------LOGO-------------
 export const FooterLogoImage = styled(Image)`
-  @media ${({ theme }) => theme.media.xl} {
-    width: 100px;
-    height: 90px;
-  }
   @media ${({ theme }) => theme.media.medium} {
     width: 129px;
     height: 116px;
@@ -42,26 +37,34 @@ export const FooterGridContainer = styled.div`
     display: grid;
     grid-template-columns:  repeat(3, 1fr) 1.5fr;
     gap: 53px; 
-    @media ${({ theme }) => theme.media.middle} {
-        gap: 24px; //
+    @media ${({ theme }) => theme.media.largePlus} {
+        gap: 24px; 
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: repeat(2, 1fr);
     } 
      @media ${({ theme }) => theme.media.medium} {
-        display: flex;           // кривое решение но на гридах аккордион увеличивает высоту при открытии первых двух элементов
+        display: flex;         
         flex-direction: column;
     } 
 `;
 export const FooterContainer = styled.div<FooterContainerProps>`
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 50px 80px 24px 80px;
+    @media ${({ theme }) => theme.media.extraLarge} {
+        padding: 50px 32px 24px 32px; 
+    } 
+    @media ${({ theme }) => theme.media.medium} {
+        padding-bottom:  78px ; 
+    } 
+`;
+export const FooterWrapper = styled.div<FooterContainerProps>`
     background: ${({ backgroundColor }) =>
         backgroundColor || 'radial-gradient(79.43% 79.43% at 49.95% 64.07%, #024584 0%, #0B233D 100%)'};
     overflow: hidden;
-    padding: 50px 80px 24px 80px;
-    @media ${({ theme }) => theme.media.medium} {
-        padding: 50px 32px 24px 32px; 
-    } 
+    
 `;
-export const FooterMainWrapper = styled.div`
+export const FooterMainContentWrapper = styled.div`
     display: flex;
     @media ${({ theme }) => theme.media.medium} {
         flex-direction: column;
@@ -76,14 +79,15 @@ export const FooterColumn = styled.div`
 export const PaymentAndDeliveryMethods = styled.div`
     display: flex;
     align-items: center;
-        > *:not(:first-child) {
+    flex-wrap: wrap;
+    gap:5px;
+    > * {
     margin-right: 21px;
     }
      &:not(:last-of-type) {
-   
     margin-bottom: 20px;
     }
-    flex-wrap: wrap;
+    
 `;
 export const PaymentAndDeliveryMethodsContainer = styled.div`
     display: flex;
@@ -91,9 +95,7 @@ export const PaymentAndDeliveryMethodsContainer = styled.div`
     justify-content: center;
     align-items: start;
     padding: 0;
-    @media ${({ theme }) => theme.media.medium} {
-         padding-bottom: 50px;
-    } 
+    
 `;
 
 //---------------ACCORDION-------------
@@ -135,18 +137,25 @@ export const AccordionSummaryCustom = styled(AccordionSummary)`
         }
     }
 `;
+export const AccordionDetailsSlider = styled(AccordionDetails)`
+     @media ${({ theme }) => theme.media.medium} {
+         display: flex;
+         justify-content: center;
+    } 
+`;
 
 //---------------CONTACTS-------------
 
 export const Contact = styled.div`
 > *:first-child {
     margin-right: 20px;
-}
+    }
    display:flex;
    align-items:center;
    margin-bottom:16px;
 `;
 export const ContactLink = styled(Link)`
+  cursor: pointer;
   color:  ${({ theme }) => theme.colors.white} ;
   text-decoration: none;
 `;

@@ -39,6 +39,7 @@ declare module '@emotion/react' {
             large: string;
             middle: string;
             xl: string;
+            largePlus: string;
             extraLarge: string;
         };
     }

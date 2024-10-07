@@ -1,17 +1,16 @@
-import styled from 'styled-components';
 import { useMediaQuery } from '@mui/material';
-
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { FC, useContext, useState } from 'react';
-import { AccordionSummaryCustom, Contact, ContactLink, FooterAccordion, FooterColumn, FooterContainer, FooterGridContainer, FooterLogoImage, FooterLogoWrapper, FooterMainWrapper, FooterSecondTitle, FooterTitle, PaymentAndDeliveryMethods, PaymentAndDeliveryMethodsContainer, } from './styles';
+import { AccordionDetailsSlider, AccordionSummaryCustom, Contact, ContactLink, FooterAccordion, FooterColumn, FooterContainer, FooterGridContainer, FooterLogoImage, FooterLogoWrapper, FooterMainContentWrapper, FooterSecondTitle, FooterTitle, FooterWrapper, PaymentAndDeliveryMethods, PaymentAndDeliveryMethodsContainer, } from './styles';
 import Link from 'next/link';
 import Image from 'next/image';
 import VerticalSlider from '../VerticalSliderMenu/VerticalSliderMenu';
 import Nav from '../Nav/Nav';
-import { Socials } from './Socials';
+import { Socials } from '../../shared/Socials';
 
 export const Footer: FC = () => {
+
     const isMobile = useMediaQuery('(max-width: 768px)');
 
     const [expanded, setExpanded] = useState<string | false>(!isMobile ? 'panel1' : false);
@@ -21,8 +20,9 @@ export const Footer: FC = () => {
     };
 
     return (
+        <FooterWrapper>
         <FooterContainer >
-            <FooterMainWrapper>
+            <FooterMainContentWrapper>
                 <FooterLogoWrapper>
                     <Link href={'/'} passHref>
                         <FooterLogoImage
@@ -36,8 +36,8 @@ export const Footer: FC = () => {
                         <FooterAccordion expanded={!isMobile || expanded === 'panel1'} onChange={handleChange('panel1')}>
                             <AccordionSummaryCustom
                                 expandIcon={<ExpandMoreIcon />}
-                            /*  aria-controls="panel2a-content"
-                             id="panel2a-header" */
+                                aria-controls="panel1a-content"
+                                id="panel1a-header"
                             >
                                 <FooterTitle>My account</FooterTitle>
                             </AccordionSummaryCustom>
@@ -53,7 +53,8 @@ export const Footer: FC = () => {
                                     menuId={335}
                                     direction='column'
                                     gap='16px'
-                                    align='flex-start'></Nav>
+                                    align='flex-start'>
+                                </Nav>
                             </AccordionDetails>
                         </FooterAccordion>
                     </FooterColumn>
@@ -61,14 +62,14 @@ export const Footer: FC = () => {
                         <FooterAccordion expanded={!isMobile || expanded === 'panel2'} onChange={handleChange('panel2')}>
                             <AccordionSummaryCustom
                                 expandIcon={<ExpandMoreIcon />}
-                            /*   aria-controls="panel2a-content"
-                              id="panel2a-header" */
+                                aria-controls="panel2a-content"
+                                id="panel2a-header"
                             >
                                 <FooterTitle>Categories</FooterTitle>
                             </AccordionSummaryCustom>
-                            <AccordionDetails /* centered сделать */>
+                            <AccordionDetailsSlider>
                                 <VerticalSlider
-                                    menuId={3}
+                                    menuId={335}
                                     skeleton={{
                                         direction: 'column',
                                         elements: 4,
@@ -76,18 +77,16 @@ export const Footer: FC = () => {
                                         height: "24px",
                                         gap: '10px'
                                     }}
-                                    width='13vw'
-
                                 />
-                            </AccordionDetails>
+                            </AccordionDetailsSlider>
                         </FooterAccordion>
                     </FooterColumn>
                     <FooterColumn>
                         <FooterAccordion expanded={!isMobile || expanded === 'panel3'} onChange={handleChange('panel3')}>
                             <AccordionSummaryCustom
                                 expandIcon={<ExpandMoreIcon />}
-                            /*   aria-controls={`"panel3a-content"`}
-                              id="panel3a-header" */
+                                aria-controls={`"panel3a-content"`}
+                                id="panel3a-header"
                             >
                                 <FooterTitle>Information</FooterTitle>
                             </AccordionSummaryCustom>
@@ -111,8 +110,8 @@ export const Footer: FC = () => {
                         <FooterAccordion expanded={!isMobile || expanded === 'panel4'} onChange={handleChange('panel4')}>
                             <AccordionSummaryCustom
                                 expandIcon={<ExpandMoreIcon />}
-                            /*  aria-controls={`"panel4a-content"`}
-                             id="panel4a-header" */
+                                aria-controls={`"panel4a-content"`}
+                                id="panel4a-header"
                             >
                                 <FooterTitle>Contacts</FooterTitle>
                             </AccordionSummaryCustom>
@@ -140,12 +139,12 @@ export const Footer: FC = () => {
                                     <p>Mon-Fri: from 9-00 to 18-00 <br />
                                         Sat-Sun day is a day off</p>
                                 </Contact>
-                                <Socials/>
+                                <Socials iconscolor='white' margin='16px 0 0 0' text={false} itemMargin='16px'/>
                             </AccordionDetails>
                         </FooterAccordion>
                     </FooterColumn>
                 </FooterGridContainer>
-            </FooterMainWrapper>
+            </FooterMainContentWrapper>
             <PaymentAndDeliveryMethodsContainer>
                 <PaymentAndDeliveryMethods>
                     <FooterSecondTitle>DELIVERY</FooterSecondTitle>
@@ -165,5 +164,6 @@ export const Footer: FC = () => {
                 </PaymentAndDeliveryMethods>
             </PaymentAndDeliveryMethodsContainer>
         </FooterContainer>
+        </FooterWrapper>
     )
 }

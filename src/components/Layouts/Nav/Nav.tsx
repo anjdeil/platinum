@@ -1,14 +1,12 @@
 import { MenusContext } from '@/components/Layout/Layout';
-import { wpMenuProps } from '@/types/layouts/menus/wp-menus';
 import { MenuItemsType } from '@/types/services/customApi/Menu/MenuItemsType';
 import { FC, useContext } from 'react';
 import { MenuSkeleton } from '../MenuSkeleton';
 import { NavLink, NavList } from './styles';
-import { menus } from '@/components/mockmenus';
+import { wpMenuProps } from '@/types/layouts/menus';
 
 const Nav: FC<wpMenuProps> = ({
     menuId,
-    className='',
     skeleton,
     justify,
     color,
@@ -40,7 +38,6 @@ const Nav: FC<wpMenuProps> = ({
         <nav>
             <NavList
                 justify={justify}
-                className={className}
                 direction={direction}
                 align={align}
                 gap={gap}

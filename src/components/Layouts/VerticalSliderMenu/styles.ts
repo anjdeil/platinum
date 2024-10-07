@@ -1,38 +1,37 @@
-import { SlideProps, SliderWrapperProps } from "@/types/layouts/Sliders/VerticalSlider";
 import styled from "@emotion/styled";
 
-export const SliderWrapper = styled.div<SliderWrapperProps>`
+export const SliderWrapper = styled.div`
     position: relative;
     padding: 40px 0; 
-    width: ${({ width = "13vw" }) => width}; //T_T
-       @media (max-width: 1100px) {
-    width: 30vw;
+    width: 13vw; 
+    @media ${({ theme }) => theme.media.largePlus} {
+      width: 30vw;
     } 
-     @media (max-width: 768px) {
-      width: 60vw;
+    @media ${({ theme }) => theme.media.medium} {
+      width: 50vw;
     } 
-     @media (max-width: 340px) {
+    @media ${({ theme }) => theme.media.small} {
       width: 76vw;
-    }  
+    }   
 `;
-export const Slide = styled.li<SlideProps>`
-  @media (max-width: 768px) {
+export const Slide = styled.li`
+    @media ${({ theme }) => theme.media.medium} {
       text-align: center;
       height:22px;
     } 
-    white-space: ${({ wrap = "nowrap" }) => wrap}; //T_T
+    white-space: nowrap; 
 `;
 
 export const NavButton = styled.button`
       height:28px;
-      color: white;
+      color: ${({ theme }) => theme.colors.white};
       width: 100%;
-      border: 1px solid #738EBC;
+      border: 1px solid ${({ theme }) => theme.colors.secondary};
       border-radius: 20px;
       position: absolute;
       background: none;
-  cursor: pointer;
-  z-index: 1;
+      cursor: pointer;
+      z-index: 1;
 
   &.prev {
     top: 0;

@@ -22,10 +22,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     const { isMobile } = useResponsive();
     const { locale } = useRouter();
     const langParam: LangParamType  | object  = locale ? { lang: locale } : {};
-    /* const langParamStr: LangParamType = locale && ['en', 'pl', 'de', 'ru', 'uk'].includes(locale) ? locale : 'en' */
     const langParamStr = locale ? locale : '';
     const [menus, setMenus] = useState<WpMenuResponseType[] | []>([]);
-
 
     const { data: menusResp, error, isLoading } = useGetMenusQuery(langParam);
     const { data: themeOptions, error: themeOptionsError, } = useGetThemeOptionsQuery();
@@ -50,7 +48,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <MenusContext.Provider value={menus}>
                 {!isMobile && <TopBar />}
                 {!isMobile ? <Header /> : <MobileHeader />}
-                <PopupContainer />
+              {/*   <PopupContainer /> */} 
                 {isMobile && (<BottomMenu />)}
                 {children}
                 <Footer />

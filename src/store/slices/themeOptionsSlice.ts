@@ -31,13 +31,11 @@ const initialState: ThemeOptionsType = {
   },
 };
 
-  
   type ThemeOptionsPayload = {
     data: ThemeOptionsType;
     language: string;
   };
   
-
   const themeOptionsSlice = createSlice({
     name: 'themeOptions',
     initialState,
@@ -64,8 +62,6 @@ const initialState: ThemeOptionsType = {
           },
         };
 
-        console.log(filteredData);
-        
         state.success = true;
         state.data = filteredData;
       },

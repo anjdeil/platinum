@@ -11,3 +11,4 @@ export const FooterColumnPropsSchema = z.object({
 
 export type FooterContainerProps = z.infer<typeof FooterContainerPropsSchema>;
 export type FooterColumnProps = z.infer<typeof FooterColumnPropsSchema>;
+  

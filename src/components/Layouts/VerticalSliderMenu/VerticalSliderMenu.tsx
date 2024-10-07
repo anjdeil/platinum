@@ -1,23 +1,20 @@
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-
-import { menus } from '@/components/mockmenus';
-
 import { NavLink } from '../Nav/styles';
 import { NavButton, Slide, SliderWrapper } from './styles';
-import { VerticalWpMenuProps } from '@/types/layouts/Sliders/VerticalSlider';
 import { MenuSkeleton } from '../MenuSkeleton';
+import { wpMenuProps } from '@/types/layouts/menus';
+import { MenuItemsType } from '@/types/services/customApi/Menu/MenuItemsType';
+import { MenusContext } from '@/components/Layout/Layout';
 
 
-const VerticalSlider: FC<VerticalWpMenuProps> = ({ menuId, wrap, width, skeleton }) => {
-
+const VerticalSlider: FC<wpMenuProps> = ( {menuId, skeleton }) => {
+  
   const sliderRef = React.createRef<Slider>();
-
   const settings = {
     dots: false,
     infinite: true,
@@ -38,7 +35,8 @@ const VerticalSlider: FC<VerticalWpMenuProps> = ({ menuId, wrap, width, skeleton
   const goToNext = () => {
     sliderRef.current?.slickNext();
   };
- /*  const menus: MenuItemsType[] | undefined = useContext(MenusContext); */
+ 
+  const menus: MenuItemsType[] | undefined = useContext(MenusContext); 
   const menuItems = menus?.find(({ id }) => id === menuId)?.items;
 
   if (!menuItems && skeleton) {
