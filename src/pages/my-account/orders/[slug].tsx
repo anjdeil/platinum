@@ -1,8 +1,8 @@
 import AccountLayout from "@/components/Account/AccountLayout";
-import AccountOrderProductList from "@/components/Account/AccountOrderProductList/AccountOrderProductList";
-import AccountOrderTable from "@/components/Account/AccountOrderTable/AccountOrderTable";
 import BillingShippingAddress from "@/components/Account/BillingShippingAddress/BillingShippingAddress";
-import { StyledPdfButton } from "@/components/Account/OrderTable/styles";
+import OrderInfo from "@/components/Account/OrderInfo/OrderInfo";
+import OrderProductList from "@/components/Account/OrderProductList/OrderProductList";
+import { StyledOrderButton } from "@/components/Account/OrderTable/styles";
 import OrderTotals from "@/components/Account/OrderTotals/OrderTotals";
 import Notification from "@/components/Layouts/Notification/Notification";
 import OrderPdf from "@/pdf/OrderPdf";
@@ -56,23 +56,23 @@ const Order: FC<OrderPropsType> = ({ order }) => {
             <Notification>
                 {`${t("notification", { orderId: order.id, date: formattedDate })} ${t(order.status)}.`}
                 <PDFDownloadLink document={<OrderPdf order={order} />} fileName={`order-${order.id}.pdf`}>
-                    <StyledPdfButton aria-label={t("downloadPdf")} >
+                    <StyledOrderButton aria-label={t("downloadPdf")} >
                         <Image width={28} height={28} src={`/assets/icons/pdf-icon.svg`} alt="pdf" />
-                    </StyledPdfButton>
+                    </StyledOrderButton>
                 </PDFDownloadLink>
             </Notification>
             <AccountInfoWrapper>
-                <AccountOrderProductList lineItems={order.line_items} currency={order.currency_symbol} />
-                <AccountOrderTable title="summaryOrder">
+                <OrderProductList lineItems={order.line_items} currency={order.currency_symbol} />
+                <OrderInfo title="summaryOrder">
                     <OrderTotals order={order} />                    
-                </AccountOrderTable>
-                <AccountOrderTable title="customerData">
+                </OrderInfo>
+                <OrderInfo title="customerData">
                     <BillingShippingAddress address={order.billing} />
-                </AccountOrderTable>
+                </OrderInfo>
                 {!billingAndShippingEqual && (
-                    <AccountOrderTable title="shippingAddress">
+                    <OrderInfo title="shippingAddress">
                         <BillingShippingAddress address={order.shipping} />
-                    </AccountOrderTable>
+                    </OrderInfo>
                 )}
             </AccountInfoWrapper>
         </AccountLayout>

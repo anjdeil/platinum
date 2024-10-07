@@ -2,12 +2,12 @@ import { useTranslations } from "next-intl";
 import { ReactNode } from "react";
 import { OrderTableWrapper, TableBody, TableHeader } from "./styles";
 
-interface AccountOrderProductListProps {
+interface OrderInfoProps {
     title: string;
     children: ReactNode;
 }
 
-const AccountOrderTable: React.FC<AccountOrderProductListProps> = ({title, children}) =>
+const OrderInfo: React.FC<OrderInfoProps> = ({title, children}) =>
 {    
     const t = useTranslations('MyAccount');
 
@@ -19,4 +19,4 @@ const AccountOrderTable: React.FC<AccountOrderProductListProps> = ({title, child
     )
 }
 
-export default AccountOrderTable;
+export default OrderInfo;

@@ -1,4 +1,4 @@
-import { SkeletonSpan, StyledActionsTd, StyledBody, StyledBodyTr, StyledDateTd, StyledDetailesTd, StyledTd } from "./styles";
+import { SkeletonButton, SkeletonIcon, SkeletonSpan, StyledActionsTd, StyledBody, StyledBodyTr, StyledDateTd, StyledDetailesTd, StyledTd } from "./styles";
 
 export const SkeletonOrderTable = () => { 
   return (    
@@ -14,8 +14,8 @@ export const SkeletonOrderTable = () => {
           <StyledDateTd><SkeletonSpan /></StyledDateTd>
           <StyledTd><SkeletonSpan /></StyledTd>
           <StyledActionsTd>
-            <SkeletonSpan style={{ width: "80px", height: "32px" }} />
-            <SkeletonSpan style={{ width: "24px", height: "24px" }} />
+            <SkeletonButton />
+            <SkeletonIcon />
           </StyledActionsTd>
         </StyledBodyTr>
       ))}

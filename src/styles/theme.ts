@@ -41,6 +41,7 @@ const theme: Theme = {
     },
     media: {
         medium: '(max-width: 768px)',
+        mediumLarge: '(max-width: 900px)',
         large: '(max-width: 1024px)',
         middle: '(max-width: 1100px)',
         xl: '(max-width: 1200px)',

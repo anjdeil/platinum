@@ -5,10 +5,9 @@ import { useTheme } from "@emotion/react";
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { SkeletonOrderTable } from "./SkeletonOrderTable";
-import { StyledActionsTd, StyledBody, StyledBodyTr, StyledDateTd, StyledDetailesTd, StyledDetailesTh, StyledHead, StyledNoAndDate, StyledOrderSpan, StyledOrderWrapper, StyledPdfButton, StyledSpan, StyledTable, StyledTd, StyledTh, StyledTotalSpan, StyledTr } from "./styles";
+import { StyledActionsTd, StyledBody, StyledBodyTr, StyledDateTd, StyledDetailesTd, StyledDetailesTh, StyledHead, StyledLinkDesktopButton, StyledLinkMobileButton, StyledNoAndDate, StyledOrderButton, StyledOrderSpan, StyledOrderWrapper, StyledSpan, StyledTable, StyledTd, StyledTh, StyledTotalSpan, StyledTr } from "./styles";
 
 const OrderTable: React.FC<TableProps> = ({ orderList, title }) => {
     const theme = useTheme();
@@ -84,13 +83,18 @@ const OrderTable: React.FC<TableProps> = ({ orderList, title }) => {
                                         </StyledOrderWrapper>
                                     </StyledTd>
                                     <StyledActionsTd>
-                                        <Link href={`/my-account/orders/${item.id}`}>
+                                        <StyledLinkMobileButton href={`/my-account/orders/${item.id}`}>
                                             <StyledButton color={theme.colors.white} backgroundColor={theme.colors.primary}>{t("seeMore")}</StyledButton>
-                                        </Link>
+                                        </StyledLinkMobileButton>
+                                        <StyledLinkDesktopButton href={`/my-account/orders/${item.id}`}>
+                                            <StyledOrderButton aria-label={t("seeMore")} >
+                                                <Image width={28} height={28} src={`/assets/icons/view-icon.svg`} alt="view" />
+                                            </StyledOrderButton>
+                                        </StyledLinkDesktopButton>
                                         <PDFDownloadLink document={<OrderPdf order={item} />} fileName={`order-${item.id}.pdf`}>
-                                            <StyledPdfButton aria-label={t("downloadPdf")} >
+                                            <StyledOrderButton aria-label={t("downloadPdf")} >
                                                 <Image width={28} height={28} src={`/assets/icons/pdf-icon.svg`} alt="pdf" />
-                                            </StyledPdfButton>
+                                            </StyledOrderButton>
                                         </PDFDownloadLink>
                                     </StyledActionsTd>
                                 </StyledBodyTr>
