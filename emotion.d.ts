@@ -19,7 +19,7 @@ declare module '@emotion/react' {
             active: string;
             backgroundGradient: string;
             primaryBlue200: string;
-            primaryBlue600: string;
+            primaryBlue500: string;
             primaryBlue700: string;
         };
         background: {

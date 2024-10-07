@@ -68,7 +68,7 @@ export const BenefitsItem = styled(Box) <BenefitsGapProps>`
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
-    gap: ${({ gapMedium = "16px" }) => gapMedium};
+    gap: ${({ theme }) => theme.spacing.large};
 
     @media ${({ theme }) => theme.media.medium}  {
         :nth-child(1) {
@@ -109,7 +109,7 @@ export const BenefitsAccordionStyled = styled(Accordion) <{ level: Level }>`
     
     background-color: ${({ theme, level }) =>
         level === 'silver' ? theme.colors.primaryBlue200 :
-            level === 'gold' ? theme.colors.primaryBlue600 :
+            level === 'gold' ? theme.colors.primaryBlue500 :
                 theme.colors.primaryBlue700};
 
     color: ${({ level }) => (level === 'silver' ? 'black' : 'white')};
@@ -147,7 +147,7 @@ export const BenefitsAccordionStyled = styled(Accordion) <{ level: Level }>`
             display: none;
         }
 
-        padding: ${({ theme }) => theme.spacing.medium} 0px;
+        padding: ${({ theme }) => theme.spacing.small} 10px 0px;
     }
 `;
 

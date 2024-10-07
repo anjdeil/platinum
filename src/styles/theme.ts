@@ -39,7 +39,7 @@ const theme: Theme = {
         black: '#000',
         active: '#1E71BE',
         primaryBlue200: "#e0effe",
-        primaryBlue600: "#063e7b",
+        primaryBlue500: "#1e71be",
         primaryBlue700: "#113760",
     },
     background: {

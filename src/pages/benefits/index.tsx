@@ -15,13 +15,13 @@ export function BenefitsAccordion({ gapMedium, gapLg, gapSm }: BenefitsProps) {
         setExpanded(isExpanded ? panel : false);
     };
     return (<>
-        <head>
+        {/* <head>
             <title>LOYALTY PROGRAM</title>
             <meta charSet="utf-8" />
             <meta
                 name="description"
                 content="The description that i didn't uploaded from data" />
-        </head>
+        </head> */}
         <main>
             <BenefitsLayout gapLg={gapLg} gapMedium={gapLg}>
                 <BenefitsItem gapSm={gapSm} gapMedium={gapMedium}>
