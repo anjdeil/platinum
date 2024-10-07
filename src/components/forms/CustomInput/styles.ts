@@ -9,6 +9,12 @@ interface CustomInputStyleProps
     isPhone: boolean;
 }
 
+interface CustomInputProps
+{
+    isCheckbox: boolean;
+    isError: boolean;
+}
+
 // Styles with classes name are for international phone input from react-international-phone
 export const CustomInputStyle = styled.div<CustomInputStyleProps>`
         padding: 5px;
@@ -16,9 +22,8 @@ export const CustomInputStyle = styled.div<CustomInputStyleProps>`
         flex-direction: ${({ isCheckbox }) => isCheckbox ? 'row' : 'column'};
         align-items: ${({ isCheckbox }) => isCheckbox ? 'center' : 'flex-start'};
         width: ${({ isCheckbox }) => isCheckbox ? 'fit-content' : '100%'};
-        font-size: 16px;
         overflow: ${({ isPhone }) => isPhone ? 'inherit' : 'hidden'};
-
+        font-family: ${({ theme }) => theme.typography.fontFamily};
         div {
             order: ${({ isCheckbox }) => isCheckbox ? '-1' : '0'};
         }
@@ -46,38 +51,41 @@ export const CustomInputStyle = styled.div<CustomInputStyleProps>`
 
         input,
         input.react-international-phone-input {
-            margin-right: ${({ isCheckbox }) => isCheckbox ? '15px' : '0'}; 
-            padding: 15px;
-            padding-left: ${({ isPhone }) => isPhone ? '60px' : '15px'};
-            border: ${({ isCheckbox }) => isCheckbox ? '1px solid #ccc' : 'none'};
-            border-radius: 10px;
-            min-height: ${({ isTextArea }) => isTextArea ? '150px' : 'auto'};
-            width: ${({ isCheckbox }) => isCheckbox ? '24px' : '100%'};
-            height:  ${({ isCheckbox }) => isCheckbox ? '24px' : '100%'};
-            background-color: black;
-            transition: outline-width .2s ease-in-out;
-            background-color: ${({ theme }) => theme.background.formElements};
-            outline: 1px solid ${({ theme, isError }) => isError ? theme.colors.error : theme.background.formElements};
-
-            &::placeholder {
-                text-align: ${({ isTextArea }) => isTextArea ? 'start' : 'initial'};
-            }
-
-            &:focus {
-            outline: 1px solid ${({ theme, isError }) => isError ? theme.colors.error : theme.colors.primary};
-                box-shadow:  ${({ theme }) => theme.shadows.primaryShadow};
-            }
+           
         }
+
+   
+`;
+// padding-left: ${({ isPhone }) => isPhone ? '60px' : '15px'};
+export const Input = styled.input<CustomInputProps>`
+    ${(props) => (props.as === 'textarea' ? 'min-height: 150px;' : '')};
+    margin-right: ${({ isCheckbox }) => isCheckbox ? '15px' : '0'}; 
+    padding: 15px;
+    width: ${({ isCheckbox }) => isCheckbox ? '24px' : '100%'};
+    height:  ${({ isCheckbox }) => isCheckbox ? '24px' : '100%'};
+    border: ${({ isCheckbox }) => isCheckbox ? '1px solid #ccc' : 'none'};    
+    border-radius: 10px;
+    font-size: 16px;
+
+    outline: 1px solid ${({ theme, isError }) => isError ? theme.colors.error : theme.background.formElements};
+    background-color: ${({ theme }) => theme.background.formElements};
+    transition: outline-width .2s ease-in-out;
+    
+    &:focus {
+        outline: 1px solid ${({ theme, isError }) => isError ? theme.colors.error : theme.colors.primary};
+        box-shadow:  ${({ theme }) => theme.shadows.primaryShadow};
+    }
+
+    &::placeholder {
+        ${(props) => (props.as === 'textarea' ? 'text-align: start;' : '')};
+    }
 
     @media ${({ theme }) => theme.media.medium} {
+        width: ${({ isCheckbox }) => isCheckbox ? '15px' : '100%'};
+        height:  ${({ isCheckbox }) => isCheckbox ? '15px' : '100%'};
         font-size: 14px;
-        font-family: ${({ theme }) => theme.typography.fontFamily};
-
-        input {
-            width: ${({ isCheckbox }) => isCheckbox ? '15px' : '100%'};
-            height:  ${({ isCheckbox }) => isCheckbox ? '15px' : '100%'};
-        }
     }
+
 `;
 
 export const CustomInputWrapper = styled.div`

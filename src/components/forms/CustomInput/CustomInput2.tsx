@@ -1,11 +1,12 @@
 import { FC, useEffect, useState } from "react";
-import { CustomInputStyle, CustomInputWrapper, CustomRequired } from "./styles";
+import { CustomInputStyle, CustomInputWrapper, CustomRequired, Input } from "./styles";
 
 import { z } from "zod";
 
 export const CustomInput2Schema = z.object({
     fieldName: z.string().optional(),
-    inputType: z.union([z.literal('text'), z.literal('textarea')]),
+    inputTag: z.union([z.literal('input'), z.literal('textarea')]),
+    inputType: z.union([z.literal('text'), z.literal('checkbox')]),
     name: z.string().optional(),
     register: z.any().optional(),
     errors: z.any().optional(),
@@ -33,24 +34,19 @@ export const CustomInput2: FC<CustomInput2Type> = (
         fieldName,
         name,
         isRequire,
-        inputType: type,
+        inputTag,
+        inputType,
         placeholder,
         register,
         onChange,
         value,
-        // isText
     }) =>
 {
     const registerProps = register ? register(name) : {};
     const [isError, setError] = useState(false);
     useEffect(() =>
     {
-        if (!errors || !name)
-        {
-            setError(false);
-            return;
-        }
-
+        if (!errors || !name) { setError(false); return; }
         setError(name in errors);
     }, [errors, name]);
 
@@ -60,18 +56,19 @@ export const CustomInput2: FC<CustomInput2Type> = (
                 as={'label'}
                 isError={isError}
                 isTextArea={false}
-                isCheckbox={false}
+                isCheckbox={inputType === 'checkbox'}
                 isPhone={false}>
                 <span>
                     {fieldName}
                     {isRequire && <CustomRequired>*</CustomRequired>}
                 </span>
                 <CustomInputWrapper>
-                    <input
+                    <Input
+                        as={inputTag}
                         placeholder={placeholder ? placeholder : ''}
-                        type={type}
-                        // autoComplete="on"
                         {...registerProps}
+                        type={inputType}
+                        checked={inputType === 'checkbox' ? 'false' : undefined}
                     />
                 </CustomInputWrapper>
             </CustomInputStyle>

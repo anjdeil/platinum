@@ -23,7 +23,6 @@ export const CustomInput: FC<CustomInputType> = ({
     placeholder,
     onChange,
     value,
-    isTextarea = false,
     setValue,
     initialValue,
     checked,
@@ -77,7 +76,6 @@ export const CustomInput: FC<CustomInputType> = ({
             <CustomInputStyle
                 as={isPhone ? 'div' : 'label'}
                 isError={isError}
-                isTextArea={isTextarea}
                 isCheckbox={isCheckbox}
                 isPhone={isPhone}>
                 <span>
@@ -85,16 +83,14 @@ export const CustomInput: FC<CustomInputType> = ({
                     {isRequire && <CustomRequired>*</CustomRequired>}
                 </span>
                 <CustomInputWrapper>
-                    {isPhone ? (
+                    {isPhone ?
                         <PhoneInput
                             defaultCountry="pl"
                             onChange={(value) => { if (setValue) setValue('phoneNumber', value, { shouldValidate: true }); }}
                         />
-                    ) : isTextarea ? (
-                        <textarea {...commonProps} />
-                    ) : (
+                        :
                         <input type={inputType || 'text'} {...commonProps} />
-                    )}
+                    }
                     {isPassword &&
                         <ShowPasswordImage
                             src={showPassPath}

@@ -70,7 +70,7 @@ export const RegistrationForm = forwardRef((props, ref) =>
                     register={register}
                     errors={errors}
                     // setValue={setValue}
-                    inputType={"text"}
+                    inputTag={"input"}
                 />
                 {/* <CustomInput
                     fieldName="Nazwisko"
@@ -85,7 +85,7 @@ export const RegistrationForm = forwardRef((props, ref) =>
                     register={register}
                     errors={errors}
                     // setValue={setValue}
-                    inputType={"text"}
+                    inputTag={"input"}
                 />
                 {/* <input {...register("lastName")} placeholder="Nazwisko" /> */}
                 {/* <input {...register("email")} placeholder="Nazwisko" /> */}
