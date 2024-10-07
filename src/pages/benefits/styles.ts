@@ -1,8 +1,10 @@
 import { Accordion, AccordionDetails, AccordionSummary, Box } from "@mui/material";
 import styled from "@emotion/styled";
-import CustomAccordion from "@/components/shared/Accordion/Accordion";
-import { CustomList } from "@/components/shared/List/List";
-import { z } from "zod";
+import { BenefitsGapProps, Level } from "@/types/layouts/Benefits";
+
+export const PageTitle = styled.title`
+    text-transform: uppercase;
+`
 
 export const BenefitsTitle = styled.h3`
     font: ${({ theme }) => theme.fonts.titleH2SemiBold};
@@ -15,7 +17,7 @@ export const BenefitsTitle = styled.h3`
 `
 
 export const BenefitsAccordionDetails = styled(AccordionDetails)`
- margin-top: "16px";
+    margin-top: ${({ theme }) => theme.spacing.medium};
 `
 
 export const BenefitsPrice = styled.span`
@@ -29,11 +31,11 @@ export const BenefitsPrice = styled.span`
     }
 `
 
-export const AccordionHeader = styled(Box)` 
+export const AccordionHeader = styled(Box) <BenefitsGapProps>` 
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 16px;
+    gap: ${({ gapMedium = "16px" }) => gapMedium};
     width: 100%;
 
     @media ${({ theme }) => theme.media.medium}  {
@@ -43,17 +45,17 @@ export const AccordionHeader = styled(Box)`
     }
 `
 
-export const BenefitsLayout = styled(Box)`
+export const BenefitsLayout = styled(Box) <BenefitsGapProps>`
     display: flex;
     flex-direction: row;
-    gap: 16px;
+    gap: ${({ gapMedium = "16px" }) => gapMedium};
     
     margin-bottom: 80px;
 
     @media ${({ theme }) => theme.media.medium}  {
         display: flex;
         flex-direction: column;
-        gap: 24px;
+        gap: ${({ gapLg = "24px" }) => gapLg}
     }
 
     @media ${({ theme }) => theme.media.small}  {
@@ -61,12 +63,12 @@ export const BenefitsLayout = styled(Box)`
     }
 `
 
-export const BenefitsItem = styled(Box)`
+export const BenefitsItem = styled(Box) <BenefitsGapProps>`
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
-    gap: 16px;
+    gap: ${({ gapMedium = "16px" }) => gapMedium};
 
     @media ${({ theme }) => theme.media.medium}  {
         :nth-child(1) {
@@ -79,7 +81,7 @@ export const BenefitsItem = styled(Box)`
             width: 80%;
         }
 
-        gap: 8px;
+        gap: ${({ gapSm = "8px" }) => gapSm}
     }
 
     @media ${({ theme }) => theme.media.small}  {
@@ -93,15 +95,11 @@ export const BenefitsItem = styled(Box)`
             width: 100%;
         }
 
-        gap: 8px;
+        gap: ${({ gapSm = "8px" }) => gapSm}
     }
 `
 
-const benefitsLevelProps = z.object({
-    level: 
-})
-
-export const BenefitsAccordionStyled = styled(Accordion) <{ level }>`
+export const BenefitsAccordionStyled = styled(Accordion) <{ level: Level }>`
     border-radius: 8px !important;
     width: 100%;
     margin: 0;
@@ -109,16 +107,19 @@ export const BenefitsAccordionStyled = styled(Accordion) <{ level }>`
     box-shadow: none;
     border: none;
     
-    background-color: ${({ level }) =>
-        level === 'silver' ? '#e0effe' :
-            level === 'gold' ? '#1e71be' : '#113760'};
+    background-color: ${({ theme, level }) =>
+        level === 'silver' ? theme.colors.primaryBlue200 :
+            level === 'gold' ? theme.colors.primaryBlue600 :
+                theme.colors.primaryBlue700};
+
     color: ${({ level }) => (level === 'silver' ? 'black' : 'white')};
+
 
     .MuiAccordionSummary-content.Mui-expanded {
         margin: 0;
         justify-content: center;
     }
-    
+
     .MuiAccordionSummary-expandIconWrapper.Mui-expanded {
         display: none;
     }
@@ -134,23 +135,21 @@ export const BenefitsAccordionStyled = styled(Accordion) <{ level }>`
     }
 
     &.Mui-expanded {
-       margin: 0;
+        margin: 0;
     }
 
     ::before {
         opacity: 0;
     }
 
-    @media ${({ theme }) => theme.media.medium}  {
+    @media ${({ theme }) => theme.media.medium} {
         .MuiAccordionSummary-expandIconWrapper {
             display: none;
         }
 
-        padding: 16px 0px;
+        padding: ${({ theme }) => theme.spacing.medium} 0px;
     }
-    
-`
-
+`;
 
 export const CustomAccordionSummary = styled(AccordionSummary)`
     margin: 0;
@@ -166,19 +165,11 @@ export const CustomAccordionSummary = styled(AccordionSummary)`
     
 `
 
-
 export const AccordionTitle = styled.h3`
     font: ${({ theme }) => theme.fonts.bodyMiddleReg};
     text-transform: uppercase;
 `;
 
-
-
 export const BenefitsInfo = styled(Box)`
     max-width: 600px;
-`
-
-export const BenefitsCustomList = styled(CustomList)`
-    margin-top: 24px;
-    gap: 16px;
 `
