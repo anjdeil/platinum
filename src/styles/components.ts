@@ -1,4 +1,4 @@
-import { LogoLinkImageProps, LogoLinkProps, StyledButtonProps } from '@/types/styles/components';
+import { LogoLinkImageProps, LogoLinkProps, StyledButtonProps, TitleCatalogProps } from '@/types/styles/components';
 import styled from "@emotion/styled";
 import Image from 'next/image';
 import Link from 'next/link';
@@ -7,17 +7,50 @@ interface TitleProps
 {
     as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
     fontWeight?: number;
-    fontSize?: number;
+    fontSize?: string;
+    lineHeight?: string;
     textAlign?: "center" | "left" | "right";
     uppercase?: boolean;
+    marginBottom?: number;
+    tabletMarginBottom?: number;
+    mobMarginBottom?: number;
+    mobFontSize?: string;
+    mobFontWeight?: number;
 }
 
 export const Title = styled.h1<TitleProps>`
     color: black;
-    font-size: ${({ fontSize = 24 }) => fontSize}px;
+    font-size: ${({ theme, fontSize = theme.typography.bigFontSize }) => fontSize};
+    line-height: ${({ lineHeight = '1em' }) => lineHeight}; 
     font-weight: ${({ fontWeight = 600 }) => fontWeight};
-    text-transform: ${({ uppercase }) => uppercase ? "uppercase" : "none"};
-    text-align: ${({ textAlign = "left" }) => textAlign};
+    text-transform: ${({ uppercase }) => uppercase ? "uppercase" : 'none'};
+    text-align: center;
+
+    @media ${({ theme }) => theme.media.large} {
+        font-size: ${({ mobFontSize = '18px' }) => mobFontSize};
+        font-weight: ${({ mobFontWeight = 600 }) => mobFontWeight};
+    }
+`;
+
+export const AccountTitle = styled.h2<TitleProps>`
+    color: ${({ theme }) => theme.colors.black};
+    font-size: ${({ theme }) => theme.typography.bigFontSize};
+    line-height: 1.3em;
+    font-weight: 600;
+    text-align: center;
+    text-transform: ${({ uppercase }) => uppercase ? "uppercase" : 'none'};
+    margin-top: 24px;
+    margin-bottom: ${({ marginBottom = 48 }) => marginBottom}px;
+
+    @media ${({ theme }) => theme.media.large} {
+        font-size: ${({ theme }) => theme.typography.fontSize};
+        line-height: 1.5em;
+        margin-bottom: ${({ tabletMarginBottom = 24 }) => tabletMarginBottom}px;
+    }
+
+    @media ${({ theme }) => theme.media.medium} {
+        margin-bottom: ${({ mobMarginBottom = 24 }) => mobMarginBottom}px;
+    }
 `;
 
 export const Container = styled.div`
@@ -40,8 +73,8 @@ export const StyledButton = styled.button<StyledButtonProps>`
     color: ${({ theme, color = theme.colors.black }) => color};
     background-color: ${({ backgroundColor = 'transparent' }) => backgroundColor};
     padding-block: 16px;
-    line-height: 24px;
-    font-size: 16px;
+    font-size: ${({ theme }) => theme.typography.fontSize};
+    line-height: 1.5em;
     font-weight: 400;
     text-transform: none;
     border: ${({ theme }) => `1px solid ${theme.colors.secondary}`};
@@ -60,7 +93,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
         padding-block: 11px;
         min-width: ${({ minWidthTablet = 'auto' }) => minWidthTablet};
         font-size: 14px;
-        line-height: 20px;        
+        line-height: 1.5em;        
     }
 `;
 
@@ -85,7 +118,58 @@ export const LogoLink = styled(Link) <LogoLinkProps>`
     }
 `;
 
+export const StyledIconWrapper = styled.div`
+    flex-shrink: 0;
+    width: 40px;
+    aspect-ratio: 1;
+    display: flex;
+
+    & svg {
+        width: 100%;
+        aspect-ratio: 1;
+    }
+
+    @media ${({ theme }) => theme.media.large} {
+        width: 24px;
+    }
+    @media ${({ theme }) => theme.media.medium} {
+        width: 40px;
+    }
+`;
+
 export const LogoLinkImage = styled(Image) <LogoLinkImageProps>`
     width: 100%;
-    height: 100%;
+    aspect-ratio: 1;
+`;
+
+export const AccountInfoWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 80px;
+   
+    @media ${({ theme }) => theme.media.large} {
+        margin-bottom: 24px;
+    }
+
+    @media ${({ theme }) => theme.media.medium} {
+        flex-direction: column-reverse;
+        margin-bottom: 64px;
+    }
+`;
+
+export const TitleCatalog = styled.h2<TitleCatalogProps>`
+    color: ${({ theme }) => theme.colors.black};
+    font-size: ${({ theme, fontSize = theme.typography.bigFontSize }) => fontSize};
+    line-height: ${({ lineHeight = '1em' }) => lineHeight};    
+    font-weight: ${({ fontWeight = 600 }) => fontWeight};
+    text-transform: uppercase;
+    text-align: center;
+
+    @media ${({ theme }) => theme.media.large} {
+        font-size: ${({ theme, mobFontSize = theme.typography.fontSize }) => mobFontSize};
+        line-height: ${({ mobLineHeight = '1.5em' }) => mobLineHeight};
+    }
 `;

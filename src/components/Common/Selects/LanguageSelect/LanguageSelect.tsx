@@ -24,7 +24,8 @@ export default function LanguageSelect() {
     <CustomSelect
       options={languageSymbols} 
       value={currentSymbol}
-      onChange={handleChange} 
+      onChange={handleChange}
+      width="51px"
     />
   );
 }

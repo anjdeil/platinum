@@ -1,10 +1,16 @@
 import '@emotion/react';
 
 declare module '@emotion/react' {
-    export interface Theme {
+    export interface Theme
+    {
         typography: {
             fontFamily: string;
             fontSize: string;
+            bigFontSize: string;
+            smallFontSize: string;
+        };
+        fonts: {
+            [key: string]: string
         };
         colors: {
             primary: string;
@@ -14,12 +20,23 @@ declare module '@emotion/react' {
             white: string;
             black: string;
             active: string;
+            silver: string;
+            platinum: string;
+            shadow: string;
+            error: string;
+            border: string;
+            new: string;
+            best: string;
+            hot: string;
+            sale: string;
         };
         background: {
             primaryGradient: string;
+            infoGradient: string;
             secondary: string;
             hover: string;
             skeleton: string;
+            grey: string;
         };
         spacing: {
             small: string;

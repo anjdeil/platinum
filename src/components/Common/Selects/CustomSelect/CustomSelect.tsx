@@ -1,9 +1,23 @@
 import { CustomSelectProps } from "@/types/layouts/Select";
 import { useCallback, useEffect, useRef, useState } from "react";
 import ArrowIcon from "../../Icons/ArrowIcon/ArrowIcon";
-import { DropdownMenu, MenuItem, SortSelectStyled, StyledSelect } from "./styles";
+import { CustomSelectStyled, MenuItem, StyledCollapse } from "./styles";
 
-export default function CustomSelect({ options, value, onChange }: CustomSelectProps) {
+export default function CustomSelect({
+  options,
+  width,
+  value,
+  onChange,
+  borderRadius,
+  background,
+  padding,
+  fontSize,
+  mobFontSize,
+  mobPadding,
+  tabletPadding,
+  allignItem,
+  paddingOptions,
+}: CustomSelectProps) {
     const [isOpen, setIsOpen] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
 
@@ -25,27 +39,38 @@ export default function CustomSelect({ options, value, onChange }: CustomSelectP
     }, []);
 
     return (
-      <SortSelectStyled ref={containerRef} onClick={handleToggle} isOpen={isOpen}>
-        {value}
-        <StyledSelect
-          value={value}
-          onChange={onChange}
-          onClick={(e) => e.stopPropagation()}
-        >
+      <CustomSelectStyled
+        ref={containerRef}
+        onClick={handleToggle}
+        isOpen={isOpen}
+        width={width}
+        borderRadius={borderRadius}
+        background={background}
+        padding={padding}
+        fontSize={fontSize}
+        mobFontSize={mobFontSize}
+        mobPadding={mobPadding}
+        tabletPadding={tabletPadding}
+      >
+        {value}        
+        <ArrowIcon isOpen={isOpen} />       
+        <StyledCollapse in={isOpen} timeout="auto">          
           {options.map(option => (
-            <option key={option.code} value={option.code}>
-              {option.symbol}
-            </option>
-          ))}
-        </StyledSelect>
-        <ArrowIcon isOpen={isOpen} />
-        <DropdownMenu isOpen={isOpen}>
-          {options.map(option => (
-            <MenuItem key={option.code} onClick={() => onChange({ target: { value: option.code } } as React.ChangeEvent<HTMLSelectElement>)}>
+            <MenuItem
+              key={option.code}
+              onClick={() => onChange({ target: { value: option.code } } as React.ChangeEvent<HTMLSelectElement>)}
+              mobFontSize={mobFontSize}
+              background={background}
+              padding={padding}
+              mobPadding={mobPadding}
+              tabletPadding={tabletPadding}
+              allignItem={allignItem}
+              paddingOptions={paddingOptions}
+            >
               {option.symbol}
             </MenuItem>
           ))}
-        </DropdownMenu>
-      </SortSelectStyled>
+        </StyledCollapse>
+      </CustomSelectStyled>
     );
 }

@@ -11,15 +11,17 @@ export const PopupContainer = styled.div<PopupContainerProps>`
     position: fixed;
     background-color: ${({ theme }) => theme.background.secondary};
     width: ${({ width = '70%' }) => width};
-    top: 136px;
+    top: ${({ scroll = 0 }) => (scroll ? Math.max(0, 136 - scroll) : 136)}px;
     left: 0;
+    bottom: 0;
     display: grid;
     z-index: 1100;
 
     @media ${({ theme }) => theme.media.medium} {
-        top: 60px;
-        bottom: 0;
+        top: ${({ scroll = 0 }) => (scroll ? Math.max(0, 60 - scroll) : 60)}px;
+        bottom: 60px;
         grid-template-rows: 60px 1fr;
+        overflow: auto;
     }
 `;
 
@@ -35,11 +37,12 @@ export const Header = styled.div`
 `;
 
 export const Title = styled.div`
-    font-size: 1.5rem;
+    font-size: ${({ theme }) => theme.typography.bigFontSize};
 `;
 
 export const Content = styled.div`
     padding: 0 20px;
-    overflow: visible;
+    height: auto;
+    overflow: auto;
     position: relative;
 `;

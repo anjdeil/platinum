@@ -26,7 +26,7 @@ export const StyledItem = styled.li`
 
 export const NavLink = styled(Link) <NavLinkProps>`
     display: inline-block;
-    font-size: ${({ fontSize = '16px' }) => (fontSize)};    
+    font-size: ${({ theme, fontSize = theme.typography.fontSize }) => fontSize};
     font-weight: 400;
     line-height: 1.5em;
     text-decoration: none;
