@@ -13,6 +13,22 @@ const theme: Theme = {
         bigFontSize: '24px',
         smallFontSize: '12px',
     },
+    fonts: {
+        bodysmallReg:
+            '400 0.75rem/1rem ' + montserrat.style.fontFamily,
+        bodyMiddleReg:
+            '400 1rem/1.5rem ' + montserrat.style.fontFamily,
+        bodyMiddleSemiBold:
+            '600 1rem/1.5rem ' + montserrat.style.fontFamily,
+        bodyMiddleMedium:
+            '500 1rem/1.5rem ' + montserrat.style.fontFamily,
+        titleH1SemiBold:
+            '600 3rem/3.5rem ' + montserrat.style.fontFamily,
+        titleH2SemiBold:
+            '600 1.5rem/2rem ' + montserrat.style.fontFamily,
+        titleH2Medium:
+            '500 1.5rem/2rem ' + montserrat.style.fontFamily,
+    },
     colors: {
         primary: '#113760',
         secondary: '#738ebc',

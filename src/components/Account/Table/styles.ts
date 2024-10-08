@@ -142,7 +142,7 @@ export const StyledSpan = styled.span`
 
 export const StyledDateTd = styled(StyledTd)`
     font-size: ${({ theme }) => theme.typography.fontSize};
-    line-height: 1.rem;
+    line-height: 1em;
 
     @media ${({ theme }) => theme.media.large} {        
         font-size: ${({ theme }) => theme.typography.smallFontSize};
@@ -193,7 +193,7 @@ export const StyledOrderWrapper = styled.div`
 
 export const StyledOrderSpan = styled(StyledSpan)`
     font-size: ${({ theme }) => theme.typography.fontSize};
-    line-height: 1.5rem;    
+    line-height: 1.5em;    
 
     @media ${({ theme }) => theme.media.large} {        
         font-size: 14px;

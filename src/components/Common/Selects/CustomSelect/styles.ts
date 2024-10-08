@@ -34,6 +34,7 @@ export const StyledCollapse = styled(Collapse) <CustomSelectStyledProps>`
     top: 100%;
     left: 0;
     width: 100%;
+    min-width: fit-content;
     z-index: 1000;
     border-radius: ${({ isOpen, borderRadius = '0' }) => (isOpen ? `0 0 ${borderRadius} ${borderRadius}` : borderRadius)};
 `;

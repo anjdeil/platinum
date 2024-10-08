@@ -1,12 +1,16 @@
 import '@emotion/react';
 
 declare module '@emotion/react' {
-    export interface Theme {
+    export interface Theme
+    {
         typography: {
             fontFamily: string;
             fontSize: string;
             bigFontSize: string;
             smallFontSize: string;
+        };
+        fonts: {
+            [key: string]: string
         };
         colors: {
             primary: string;
