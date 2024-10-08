@@ -33,6 +33,7 @@ export const StyledListItem = styled.li<StyledListItemrops>`
     width: ${({ width = '100%' }) => width};
     cursor: pointer;
     text-transform: uppercase;
+    hyphens: auto;
 
     @media ${({ theme }) => theme.media.large} {
         font-size: ${({ tabletFontSize = '14px' }) => tabletFontSize};
