@@ -3,7 +3,7 @@ import { HeaderWrapperProps } from "@/types/layouts/Header";
 import styled from "@emotion/styled";
 
 export const MobileHeaderWrapper = styled.div<HeaderWrapperProps>`
-    padding-block: 8px;
+    padding-block: 6px;
     background: ${({ theme, backgroundColor = theme.background.primaryGradient }) => backgroundColor};
 `;
 

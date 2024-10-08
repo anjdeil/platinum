@@ -4,7 +4,7 @@ export const Stack = styled.div`
     margin: 10px auto;
     display: flex;
     justify-content: space-between;
-    gap: 16px;
+    gap: 24px;
     align-items: center;
 `;
 

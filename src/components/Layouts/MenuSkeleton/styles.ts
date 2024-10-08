@@ -24,4 +24,8 @@ export const SkeletonContainer = styled.div<SkeletonContainerProps>`
   display: flex;
   flex-direction: ${({ direction = 'row' }) => direction};
   gap: ${({ gap = "10px" }) => gap};
+
+  @media ${({ theme }) => theme.media.large} {
+      gap: 24px;
+  }
 `;
