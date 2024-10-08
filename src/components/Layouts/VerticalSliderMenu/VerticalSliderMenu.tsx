@@ -7,7 +7,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { NavLink } from '../Nav/styles';
 import { NavButton, Slide, SliderWrapper } from './styles';
 import { MenuSkeleton } from '../MenuSkeleton';
-import { wpMenuProps } from '@/types/layouts/menus';
+import { wpMenuProps } from '@/types/layouts/Menus';
 import { MenuItemsType } from '@/types/services/customApi/Menu/MenuItemsType';
 import { MenusContext } from '@/components/Layout/Layout';
 

@@ -5,7 +5,7 @@ import { StyledCatalogButton } from './styles';
 
 export default function CatalogButton() {
   const dispatch = useAppDispatch();
-  const popup = useAppSelector(state => state.Popup);
+  const popup = useAppSelector(state => state.popup);
   const theme = useTheme();
 
   const strokeColor = popup === 'mobile-categories' ? theme.colors.active : theme.colors.primary;

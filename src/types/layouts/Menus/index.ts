@@ -1,2 +1,1 @@
-/* export * from './wpMenuSkeleton';  */
-export * from './wpMenus';
+export * from './wpMenus'

@@ -1,6 +1,6 @@
 import { useResponsive } from '@/hooks/useResponsive';
 import { useGetMenusQuery, useGetProductsQuery, useGetThemeOptionsQuery } from '@/store/rtk-queries/wpCustomApi';
-import { WpMenuResponseType } from '@/types/layouts/menus';
+import { WpMenuResponseType } from '@/types/layouts/Menus';
 import { LangParamType } from '@/types/services/wpCustomApi';
 import Box from '@mui/material/Box';
 import { useRouter } from 'next/router';
@@ -48,7 +48,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <MenusContext.Provider value={menus}>
                 {!isMobile && <TopBar />}
                 {!isMobile ? <Header /> : <MobileHeader />}
-              {/*   <PopupContainer /> */} 
+                <PopupContainer /> 
                 {isMobile && (<BottomMenu />)}
                 {children}
                 <Footer />
