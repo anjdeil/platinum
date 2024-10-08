@@ -35,7 +35,8 @@
         "trash": "Papierkorb",
         "shipping": "Versand",
         "payment": "Zahlung",
-        "missingToSilver": "Es fehlen bis zum Silber"
+        "missingToSilver": "Es fehlen bis zum Silber",
+        "downloadPdf": "PDF herunterladen"
     },
     "TopBar": {
         "CallUs": "Rufen Sie uns an"

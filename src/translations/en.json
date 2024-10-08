@@ -35,7 +35,8 @@
         "trash": "Trash",
         "shipping": "Shipping",
         "payment": "Payment",
-        "missingToSilver": "Missing to silver"
+        "missingToSilver": "Missing to silver",
+        "downloadPdf": "Download PDF"
     },
     "TopBar": {
         "CallUs": "Call us"

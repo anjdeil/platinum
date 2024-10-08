@@ -35,7 +35,8 @@
         "trash": "Корзина",
         "shipping": "Доставка",
         "payment": "Оплата",
-        "missingToSilver": "До серебра не хватает"
+        "missingToSilver": "До серебра не хватает",
+        "downloadPdf": "Скачать PDF"
     },
     "TopBar": {
         "CallUs": "Позвоните нам"
