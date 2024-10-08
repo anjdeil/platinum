@@ -13,6 +13,7 @@ import BottomMenu from '../Layouts/BottomMenu';
 import { Footer } from '../Layouts/Footer';
 import { setThemeOptions } from '@/store/slices/themeOptionsSlice';
 import { useDispatch } from 'react-redux';
+import { BenefitsAccordion } from '@/pages/benefits';
 
 export const MenusContext = createContext<WpMenuResponseType[] | []>([]);
 const currency = 'USD';
@@ -51,6 +52,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 {/*   <PopupContainer /> */}
                 {isMobile && (<BottomMenu />)}
                 {children}
+
+                <BenefitsAccordion />
                 <Footer />
             </MenusContext.Provider>
         </Box>

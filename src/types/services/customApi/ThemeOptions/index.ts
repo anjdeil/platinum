@@ -7,9 +7,18 @@ const ThemeOptionsSchema = z.object({
       loyalty_options:
         z.record(
           z.object({
-            silver: z.string(),
-            gold: z.string(),
-            platinum: z.string(),
+            silver: z.object({
+              benefitsArr: z.array(z.string()),
+              id: z.string(),
+            }),
+            gold: z.object({
+              benefitsArr: z.array(z.string()),
+              id: z.string(),
+            }),
+            platinum: z.object({
+              benefitsArr: z.array(z.string()),
+              id: z.string(),
+            }),
           })
         ),
       contacts: z.object({

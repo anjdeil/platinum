@@ -13,6 +13,7 @@ export const Title = styled.h1<TitleProps>`
     font-weight: ${({ fontWeight = 600 }) => fontWeight};
 `;
 
+
 const Container = styled.div`
     margin: 0 auto;
 `;

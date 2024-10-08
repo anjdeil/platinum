@@ -23,7 +23,7 @@ export const Socials: FC<SocialsProps> = ({ iconscolor, text, margin, itemMargin
                             e.currentTarget.style.display = 'none';
                         }}
                     />
-                    {text &&  <SocialText>{social}</SocialText>}
+                    {text && <SocialText>{social}</SocialText>}
                 </SocialItemLink>
             ))}
         </SocialsContainer>

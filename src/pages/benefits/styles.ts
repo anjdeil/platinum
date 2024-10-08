@@ -1,12 +1,13 @@
 import { Accordion, AccordionDetails, AccordionSummary, Box } from "@mui/material";
 import styled from "@emotion/styled";
 import { BenefitsGapProps, Level } from "@/types/layouts/Benefits";
+import { Title } from "@/styles/components";
 
 export const PageTitle = styled.title`
     text-transform: uppercase;
 `
 
-export const BenefitsTitle = styled.h3`
+export const BenefitsTitle = styled(Title)`
     font: ${({ theme }) => theme.fonts.titleH2SemiBold};
     text-transform: uppercase;
     font-size: 48px;
@@ -68,9 +69,11 @@ export const BenefitsItem = styled(Box) <BenefitsGapProps>`
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
-    gap: ${({ theme }) => theme.spacing.large};
+    gap: ${({ gapMedium = "16px" }) => gapMedium};
+    min-width: 30%;
 
     @media ${({ theme }) => theme.media.medium}  {
+        min-width: 0%;
         :nth-child(1) {
             width: 50%;
         }
