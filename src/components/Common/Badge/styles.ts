@@ -10,8 +10,8 @@ export const BadgeWrapper = styled.span<{ count: number }>`
     border: ${({ theme }) => `2px solid ${theme.colors.white}`};
     border-radius: 50%;
     position: absolute;
-    top: 0;
-    right: 0;
+    top: -6px;
+    right: -8px;
     justify-content: center;
     align-items: center;
     color: ${({ theme }) => theme.colors.white};

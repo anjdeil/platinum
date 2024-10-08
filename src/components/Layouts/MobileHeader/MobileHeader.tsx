@@ -9,7 +9,7 @@ const MobileHeader: FC = () => {
     return (
         <MobileHeaderWrapper>
             <MobileHeaderContainer>
-                <LogoLink href={'/'} width={44} height={44}>
+                <LogoLink href={'/'} width={54} height={48}>
                     <LogoLinkImage src="/assets/images/logo_white.png" alt="Logo" fill/>
                 </LogoLink>
                 <SearchWrapper>

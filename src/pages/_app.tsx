@@ -11,13 +11,16 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from "react";
 import { Provider } from "react-redux";
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps }: AppProps)
+{
     const { locale } = useRouter();
     const store = setupStore();
     const [messages, setMessages] = useState(pageProps.messages);
 
-    useEffect(() => {
-        const loadMessages = async () => {
+    useEffect(() =>
+    {
+        const loadMessages = async () =>
+        {
             const messages = (await import(`../translations/${locale}.json`)).default;
             setMessages(messages);
         };
@@ -26,7 +29,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     }, [locale]);
 
     return (
-        <NextIntlClientProvider locale={locale} messages={messages}>
+        <NextIntlClientProvider locale={locale} messages={messages} timeZone="Europe/Berlin">
             <Provider store={store}>
                     <MuiThemeProvider theme={muiTheme}>
                 <ThemeProvider theme={theme}>
@@ -41,7 +44,8 @@ function MyApp({ Component, pageProps }: AppProps) {
     );
 }
 
-MyApp.getInitialProps = async (appContext: AppContext) => {
+MyApp.getInitialProps = async (appContext: AppContext) =>
+{
     const appProps = await App.getInitialProps(appContext);
     return {
         ...appProps,

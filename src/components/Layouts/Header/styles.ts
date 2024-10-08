@@ -24,9 +24,13 @@ export const HeaderNav = styled.div`
 
 export const HeaderContent = styled.div`
     display: flex;
-    gap: 24px;
+    gap: 50px;
     justify-content: space-between;
     align-items: center;
+
+    @media ${({ theme }) => theme.media.large} {
+        gap: 24px;
+    }
 `;
 
 export const HeaderSearch = styled.div`
@@ -35,12 +39,12 @@ export const HeaderSearch = styled.div`
 
 export const HeaderIcons = styled.div`
     max-width: fit-content;
-    min-width: 200px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 50px;
 
     @media ${({ theme }) => theme.media.large} {
-        min-width: 120px;
+        gap: 24px;
     }
 `;

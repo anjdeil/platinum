@@ -3,7 +3,8 @@ import styled from "@emotion/styled";
 import Image from 'next/image';
 import Link from 'next/link';
 
-interface TitleProps {
+interface TitleProps
+{
     as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
     fontWeight?: number;
     fontSize?: string;
@@ -85,6 +86,15 @@ export const StyledButton = styled.button<StyledButtonProps>`
         min-width: ${({ minWidthTablet = 'auto' }) => minWidthTablet};
         font-size: 14px;
     }
+`;
+
+export const StyledIconButton = styled.button`
+  /* padding: 8px; */
+  background-color: transparent;
+  border: none;
+  display: flex;
+  cursor: pointer;
+  position: relative;
 `;
 
 export const LogoLink = styled(Link) <LogoLinkProps>`

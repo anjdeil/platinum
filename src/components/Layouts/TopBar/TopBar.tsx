@@ -13,7 +13,8 @@ import Nav from "../Nav/Nav";
 import { BurgerButtonWrapper, ButtonWrapper, NavWrapper, SelectsWrapper, Stack } from './styles';
 
 const TopBar: React.FC = () =>
-{   const dispatch = useAppDispatch();
+{
+    const dispatch = useAppDispatch();
     const theme = useTheme();
     const popup = useAppSelector(state => state.Popup);
     const t = useTranslations('TopBar');
@@ -40,11 +41,11 @@ const TopBar: React.FC = () =>
                     />
                 </NavWrapper>
                 <SelectsWrapper>
-                     <LanguageSelect />
-                     <CurrencySelect />
+                    <LanguageSelect />
+                    <CurrencySelect />
                 </SelectsWrapper>
                 <BurgerButtonWrapper>
-                    <IconButton onClick={() => dispatch(popupToggle('hamburger-menu'))} color={ theme.colors.primary } IconComponent={popup === 'hamburger-menu' ? BurgerIconActive : BurgerIcon} />
+                    <IconButton onClick={() => dispatch(popupToggle('hamburger-menu'))} color={theme.colors.primary} IconComponent={popup === 'hamburger-menu' ? BurgerIconActive : BurgerIcon} />
                 </BurgerButtonWrapper>
                 <ButtonWrapper>
                     <StyledButton minWidthTablet="104px" minWidthDesktop="200px">{t("CallUs")}</StyledButton>
