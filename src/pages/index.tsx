@@ -6,7 +6,7 @@ import { MenusContext } from "@/components/Layout";
 import { useAppSelector } from "@/store";
 import { useRouter } from "next/router";
 import { useRegisterCustomerMutation } from "@/store/rtk-queries/wooCustomApi";
-import { RegistrationForm } from "@/components/forms/RegistrationForm";
+import { RegistrationForm } from "@/components/Global/forms/RegistrationForm";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,7 +32,7 @@ export default function Home()
 
   { data && <p>{data}</p> }
   return (
-    <main className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}>
+    <main>
       <Title fontSize={24}>Symbol of {currency.code} currency is {currency.symbol}</Title>
       <button onClick={() => console.log('')}>Fetch</button>
       <RegistrationForm />

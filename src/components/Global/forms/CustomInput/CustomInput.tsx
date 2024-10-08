@@ -1,12 +1,12 @@
-import { FC, useEffect, useState } from "react";
-import { CustomInputStyle, CustomInputWrapper, CustomRequired, Input } from "./styles";
+import { FC, useEffect, useMemo, useState } from "react";
+import { CustomError, CustomInputStyle, CustomInputWrapper, CustomRequired, Input, ShowPasswordImage } from "./styles";
 
 import { z } from "zod";
 
 export const CustomInput2Schema = z.object({
     fieldName: z.string().optional(),
     inputTag: z.union([z.literal('input'), z.literal('textarea')]),
-    inputType: z.union([z.literal('text'), z.literal('checkbox')]),
+    inputType: z.union([z.literal('text'), z.literal('checkbox'), z.literal('password'), z.literal('number')]),
     name: z.string().optional(),
     register: z.any().optional(),
     errors: z.any().optional(),
@@ -26,14 +26,28 @@ export const CustomInput2Schema = z.object({
     initialValue: z.string().nullable().optional(),
 })
 
-export type CustomInput2Type = z.infer<typeof CustomInput2Schema>;
+{/* <PhoneInput
+defaultCountry="pl"
+onChange={(value) => { if (setValue) setValue('phoneNumber', value, { shouldValidate: true }); }}
+/> */}
 
-export const CustomInput2: FC<CustomInput2Type> = (
+// const onInputChange = (e: FormEvent<HTMLInputElement>) =>
+//     {
+//         if (isError)
+//             setError(false);
+
+//         if (isNumeric)
+//             return numericValidate(e, isPost);
+//     };
+
+export type CustomInputType = z.infer<typeof CustomInput2Schema>;
+
+export const CustomInput: FC<CustomInputType> = (
     {
         errors,
         fieldName,
         name,
-        isRequire,
+        isRequire = true,
         inputTag,
         inputType,
         placeholder,
@@ -43,6 +57,11 @@ export const CustomInput2: FC<CustomInput2Type> = (
     }) =>
 {
     const registerProps = register ? register(name) : {};
+
+    const [isPasswordVisible, setPasswordVisible] = useState(false);
+    const togglePasswordVisibility = () => setPasswordVisible((prev) => !prev);
+    const passwordImagePath = useMemo(() => isPasswordVisible ? '/images/show-pass.svg' : '/images/hidden-pass.svg', [isPasswordVisible]);
+
     const [isError, setError] = useState(false);
     useEffect(() =>
     {
@@ -67,11 +86,20 @@ export const CustomInput2: FC<CustomInput2Type> = (
                         as={inputTag}
                         placeholder={placeholder ? placeholder : ''}
                         {...registerProps}
-                        type={inputType}
-                        checked={inputType === 'checkbox' ? 'false' : undefined}
+                        type={isPasswordVisible ? 'text' : inputType}
+                        checked={inputType === 'checkbox' ? false : undefined}
                     />
+                    {inputType === 'password' &&
+                        <ShowPasswordImage
+                            src={passwordImagePath}
+                            alt={'show or hidden password button'}
+                            width={24}
+                            height={24}
+                            onClick={togglePasswordVisibility}
+                            unoptimized={true} />}
                 </CustomInputWrapper>
             </CustomInputStyle>
+            {isError && name && <CustomError>{errors[name]?.message}</CustomError>}
         </div>
     )
 }

@@ -4,12 +4,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { WooCustomerReqType } from "@/types/services";
-import { CustomInput } from "../CustomInput";
 import { CustomForm, FormWrapper, FormWrapperBottom } from "./styles";
 import Image from "next/image";
 import 'react-international-phone/style.css';
 import { useRegisterCustomerMutation } from "@/store/rtk-queries/wooCustomApi";
-import { CustomInput2 } from "../CustomInput/CustomInput2";
+import { CustomInput } from "../CustomInput/CustomInput";
 
 interface RegistrationFormProps
 {
@@ -56,128 +55,110 @@ export const RegistrationForm = forwardRef((props, ref) =>
     return (
         <CustomForm onSubmit={handleSubmit(onSubmit)}>
             <FormWrapper>
-                {/* <CustomInput
-                    fieldName="Imię"
-                    name='name'
-                    register={register}
-                    errors={errors}
-                    setValue={setValue}
-                // initialValue={userFields ? userFields.first_name : null}
-                /> */}
-                <CustomInput2
+                <CustomInput
                     fieldName="Imię"
                     name='name'
                     register={register}
                     errors={errors}
                     // setValue={setValue}
                     inputTag={"input"}
-                />
-                {/* <CustomInput
-                    fieldName="Nazwisko"
-                    name='lastName'
-                    register={register}
-                    errors={errors}
-                    setValue={setValue}
-                /> */}
-                <CustomInput2
+                    inputType={"text"} />
+                <CustomInput
                     fieldName="Nazwisko"
                     name='lastName'
                     register={register}
                     errors={errors}
                     // setValue={setValue}
                     inputTag={"input"}
-                />
-                {/* <input {...register("lastName")} placeholder="Nazwisko" /> */}
-                {/* <input {...register("email")} placeholder="Nazwisko" /> */}
+                    inputType={"text"} />
                 <CustomInput
                     fieldName="Adres e-mail"
                     name='email'
                     register={register}
                     errors={errors}
-                    setValue={setValue}
-                // initialValue={userFields ? userFields.email : null}
-                />
-                <CustomInput
+                    // setValue={setValue}
+                    inputTag={"input"}
+                    inputType={"text"} />
+                {/* <CustomInput
                     fieldName="phone number"
                     name='phoneNumber'
                     register={register}
                     errors={errors}
                     setValue={setValue}
-                    isPhone={true}
-                />
+                // isPhone={true}
+                /> */}
                 <CustomInput
                     fieldName="Kraj / region"
                     name='country'
                     register={register}
                     errors={errors}
-                    setValue={setValue}
-                // initialValue={userFields ? userFields.billing.country : null}
-                />
+                    // setValue={setValue}
+                    inputTag={"input"}
+                    inputType={"text"} />
                 <CustomInput
                     fieldName="Miasto"
                     name='city'
                     register={register}
                     errors={errors}
-                    setValue={setValue}
-                // initialValue={userFields ? userFields.billing.city : null}
-                />
+                    // setValue={setValue}
+                    inputTag={"input"}
+                    inputType={"text"} />
                 <CustomInput
                     fieldName="Ulica"
                     name='address1'
                     register={register}
                     errors={errors}
-                    setValue={setValue}
-                // initialValue={userFields ? userFields.billing.address_1 : null}
-                />
+                    // setValue={setValue}
+                    inputTag={"input"}
+                    inputType={"text"} />
                 <CustomInput
                     fieldName="Building number"
                     name='address2'
                     register={register}
                     errors={errors}
-                    isNumeric={true}
-                    setValue={setValue}
-                // initialValue={userFields ? userFields.billing.postcode : null}
-                />
+                    // setValue={setValue}
+                    inputTag={"input"}
+                    inputType={"number"} />
                 <CustomInput
                     fieldName="№ apartment/office"
                     name='apartmentNumber'
                     register={register}
                     errors={errors}
-                    isNumeric={true}
-                    setValue={setValue}
-                // initialValue={userFields ? userFields.billing.postcode : null}
-                />
+                    // setValue={setValue}
+                    inputTag={"input"}
+                    inputType={"number"} />
                 <CustomInput
                     fieldName="Kod pocztowy"
                     name='postCode'
                     register={register}
                     errors={errors}
-                    isNumeric={true}
-                    isPost={true}
-                    setValue={setValue}
-                // initialValue={userFields ? userFields.billing.postcode : null}
-                />
+                    // setValue={setValue}
+                    inputTag={"input"}
+                    inputType={"number"} />
                 {!isLoggedIn && <CustomInput
                     fieldName="Hasło"
                     name='password'
                     register={register}
                     errors={errors}
-                    isPassword={true}
-                />}
+                    // setValue={setValue}
+                    inputTag={"input"}
+                    inputType={"password"} />}
                 {!isLoggedIn && <CustomInput
                     fieldName="Powtórz hasło"
                     name='confirmPassword'
                     register={register}
                     errors={errors}
-                    isPassword={true}
-                />}
+                    // setValue={setValue}
+                    inputTag={"input"}
+                    inputType={"password"} />}
                 <CustomInput
                     fieldName="Wyrażam zgodę na przetwarzanie danych osobowych."
                     name='terms'
                     register={register}
                     errors={errors}
-                    isCheckbox={true}
-                />
+                    // setValue={setValue}
+                    inputTag={"input"}
+                    inputType={"checkbox"} />
             </FormWrapper>
             <FormWrapperBottom>
                 <button type="submit" disabled={isSubmitting}>{isSubmitting ? 'Submitting...' : 'Submit'}</button>

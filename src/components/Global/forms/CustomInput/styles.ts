@@ -80,6 +80,14 @@ export const Input = styled.input<CustomInputProps>`
         ${(props) => (props.as === 'textarea' ? 'text-align: start;' : '')};
     }
 
+    &[type="number"]::-webkit-inner-spin-button,
+    &[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none; 
+        margin: 0; 
+    }
+    &[type="number"]appearance: none;
+    &[type="number"]-moz-appearance: textfield;
+
     @media ${({ theme }) => theme.media.medium} {
         width: ${({ isCheckbox }) => isCheckbox ? '15px' : '100%'};
         height:  ${({ isCheckbox }) => isCheckbox ? '15px' : '100%'};
