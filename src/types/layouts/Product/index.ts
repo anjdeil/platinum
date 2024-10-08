@@ -6,6 +6,7 @@ export const CommonTextPropsSchema = z.object({
     lineHeight: z.string().optional(),
     fontWeight: z.number().optional(),
     mobFontSize: z.string().optional(),
+    mobLineHeight: z.string().optional(),
     mobFontWeight: z.number().optional(),
 });
 

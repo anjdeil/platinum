@@ -1,7 +1,7 @@
 import CustomSelect from "@/components/Common/Selects/CustomSelect/CustomSelect";
 import { ProductCardList } from "@/components/Shop/ProductCardsList";
 import { useGetProductsQuery } from "@/store/rtk-queries/wpCustomApi";
-import { TitleCatalog } from "@/styles/components";
+import { Title } from "@/styles/components";
 import { LangParamType } from "@/types/services/wpCustomApi";
 import { ProductType } from "@/types/shop";
 import { useTheme } from "@emotion/react";
@@ -18,7 +18,7 @@ export default function ProductList() {
 
     const t = useTranslations("Product");
     const products: ProductType[] = productsData?.data?.items || [];
-
+  
     const sortList = [
         { code: 'Option 1', symbol: 'Option 1' },
         { code: 'Option 2', symbol: 'Option 2' },
@@ -32,7 +32,7 @@ export default function ProductList() {
     
     return (
         <>
-            <TitleCatalog>{t("productList")}</TitleCatalog>
+            <Title as="h2" uppercase>{t("productList")}</Title>
             <CustomSelect
                 value={sort ? sort : t("sortBy")}
                 options={sortList}

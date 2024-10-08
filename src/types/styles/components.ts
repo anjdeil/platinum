@@ -32,15 +32,6 @@ export const LogoLinkPropsSchema = z.object({
     children: z.any().optional(),
 });
 
-export const TitleCatalogPropsSchema = z.object({
-    fontSize: z.string().optional(),
-    mobFontSize: z.string().optional(),
-    lineHeight: z.string().optional(),
-    mobLineHeight: z.string().optional(),
-    fontWeight: z.number().optional(),
-});
-
 export type LogoLinkProps = z.infer<typeof LogoLinkPropsSchema>;
-export type TitleCatalogProps = z.infer<typeof TitleCatalogPropsSchema>;
 export type StyledButtonProps = z.infer<typeof StyledButtonPropsSchema>;
 export type LogoLinkImageProps = z.infer<typeof LogoLinkImagePropsSchema>;

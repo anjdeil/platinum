@@ -47,35 +47,29 @@ export const StyledInfoWrapper = styled.div`
 `;
 
 export const StyledTitle = styled.span<StyledTextPropsProps>`
+    font: ${({ theme }) => theme.fonts.bodyMiddleReg};
     font-size: 14px;
-    line-height: 1.5em;
-    font-weight: 400;
     text-align: center;
     hyphens: auto;
     color: ${({ color }) => color};
 
     @media ${({ theme }) => theme.media.large} {
-        font-size: ${({ theme }) => theme.typography.smallFontSize};
-        line-height: 1em;
+        font: ${({ theme }) => theme.fonts.bodysmallReg};
     }
     @media ${({ theme }) => theme.media.medium} {
+        font: ${({ theme }) => theme.fonts.bodyMiddleReg};
         font-size: 14px;
-        line-height: 1.5em;
     }
 `;
 
-export const StyledValue = styled.span<StyledTextPropsProps>`    
-    font-size: ${({ theme }) => theme.typography.bigFontSize};
-    line-height: 2em;
-    font-weight: 500;
+export const StyledValue = styled.span<StyledTextPropsProps>`
+    font: ${({ theme }) => theme.fonts.titleH2Medium};
     color: ${({ color }) => color};
 
     @media ${({ theme }) => theme.media.large} {
-        font-size: ${({ theme }) => theme.typography.fontSize};
-        line-height: 1.5em;
+        font: ${({ theme }) => theme.fonts.bodyMiddleMedium};
     }
     @media ${({ theme }) => theme.media.medium} {
-        font-size: ${({ theme }) => theme.typography.bigFontSize};
-        line-height: 2em;
+        font: ${({ theme }) => theme.fonts.titleH2Medium};
     }
 `;

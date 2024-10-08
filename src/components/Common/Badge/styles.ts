@@ -3,9 +3,7 @@ import styled from "@emotion/styled";
 export const BadgeWrapper = styled.span<{ count: number }>`
     display: ${({ count }) => (count > 0 ? 'flex' : 'none')};
     box-sizing: border-box;
-    font-size: ${({ theme }) => theme.typography.smallFontSize};
-    line-height: 1.3em;
-    font-weight: 400;
+    font: ${({ theme }) => theme.fonts.bodysmallReg}; 
     width: 20px;
     aspect-ratio: 1;
     background-color: ${({ theme }) => theme.colors.primary};

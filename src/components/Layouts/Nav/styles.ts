@@ -26,9 +26,8 @@ export const StyledItem = styled.li`
 
 export const NavLink = styled(Link) <NavLinkProps>`
     display: inline-block;
-    font-size: ${({ theme, fontSize = theme.typography.fontSize }) => fontSize};
-    font-weight: 400;
-    line-height: 1.5em;
+    font: ${({ theme }) => theme.fonts.bodyMiddleReg}; 
+    font-size: ${({ fontSize }) => fontSize};
     text-decoration: none;
     text-align: ${({ textAlign = "center" }) => textAlign};
     transition: all 0.2s ease;

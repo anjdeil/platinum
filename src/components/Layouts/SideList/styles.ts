@@ -19,9 +19,10 @@ export const List = styled.ul<ListProps>`
 export const StyledListItem = styled.li<StyledListItemrops>`
     box-sizing: border-box;
     background-color: ${({ isActive, theme, hoverBackground = theme.colors.primary }) => isActive ? hoverBackground : 'transparent'};
-    font-size: ${({ theme, fontSize = theme.typography.fontSize }) => fontSize};
-    line-height: ${({ lineHeight = '1.5em' }) => lineHeight};
-    font-weight: ${({ fontWeight = 400 }) => fontWeight};
+    font: ${({ theme }) => theme.fonts.bodyMiddleReg}; 
+    font-size: ${({ fontSize }) => fontSize};
+    line-height: ${({ lineHeight }) => lineHeight};
+    font-weight: ${({ fontWeight }) => fontWeight};
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -35,12 +36,11 @@ export const StyledListItem = styled.li<StyledListItemrops>`
 
     @media ${({ theme }) => theme.media.large} {
         font-size: ${({ tabletFontSize = '14px' }) => tabletFontSize};
-        line-height: ${({ tabletLineHeight = '1.5em' }) => tabletLineHeight};
     }
 
     @media ${({ theme }) => theme.media.medium} {
         font-size: ${({ mobFontSize = '14px' }) => mobFontSize};
-        line-height: ${({ mobLineHeight = '1.5em' }) => mobLineHeight};
+        line-height: ${({ mobLineHeight }) => mobLineHeight};
     }
 
     & a,

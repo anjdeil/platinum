@@ -13,9 +13,8 @@ export const CustomSelectStyled = styled.div<CustomSelectStyledProps>`
     display: flex;
     align-items: center;
     padding: ${({ padding = "4px" }) => padding};
-    font-size: ${({ theme, fontSize = theme.typography.fontSize }) => fontSize};
-    line-height: 1.5em;
-    font-weight: 400;
+    font: ${({ theme }) => theme.fonts.bodyMiddleReg};
+    font-size: ${({ fontSize }) => fontSize};
     cursor: pointer;
 
     @media ${({ theme }) => theme.media.large} {
@@ -44,7 +43,8 @@ export const MenuItem = styled.div<CustomSelectStyledProps>`
     justify-content: center;
     justify-content: ${({ allignItem = "center" }) => allignItem};
     align-items: center;
-    font-size: ${({ theme, fontSize = theme.typography.fontSize }) => fontSize};
+    font: ${({ theme }) => theme.fonts.bodyMiddleReg};
+    font-size: ${({ fontSize }) => fontSize};
     padding: ${({ padding = "4px" }) => padding};
     color: ${({ theme, color = theme.colors.black }) => color};
     padding-inline: ${({ paddingOptions = "4px" }) => paddingOptions};

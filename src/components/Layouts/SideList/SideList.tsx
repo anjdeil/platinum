@@ -16,7 +16,6 @@ const SideList: FC<SideListPropsType> = ({
     fontWeight,
     borderRadius,
     tabletFontSize,
-    tabletLineHeight,
     mobFontSize,
     mobLineHeight,
     hoverColor,
@@ -37,7 +36,6 @@ const SideList: FC<SideListPropsType> = ({
                         fontWeight={fontWeight}
                         borderRadius={borderRadius}
                         tabletFontSize={tabletFontSize}
-                        tabletLineHeight={tabletLineHeight}
                         mobFontSize={mobFontSize}
                         mobLineHeight={mobLineHeight}
                         hoverColor={hoverColor}

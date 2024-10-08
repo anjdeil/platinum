@@ -1,4 +1,4 @@
-import { LogoLinkImageProps, LogoLinkProps, StyledButtonProps, TitleCatalogProps } from '@/types/styles/components';
+import { LogoLinkImageProps, LogoLinkProps, StyledButtonProps } from '@/types/styles/components';
 import styled from "@emotion/styled";
 import Image from 'next/image';
 import Link from 'next/link';
@@ -18,32 +18,26 @@ interface TitleProps {
 }
 
 export const Title = styled.h1<TitleProps>`
-    color: black;
-    font-size: ${({ theme, fontSize = theme.typography.bigFontSize }) => fontSize};
-    line-height: ${({ lineHeight = '1em' }) => lineHeight}; 
-    font-weight: ${({ fontWeight = 600 }) => fontWeight};
+    color: ${({ theme }) => theme.colors.black};
+    font: ${({ theme }) => theme.fonts.titleH2SemiBold};
+    font-size: ${({ fontSize }) => fontSize};
+    line-height: ${({ lineHeight }) => lineHeight};
+    font-weight: ${({ fontWeight }) => fontWeight};
     text-transform: ${({ uppercase }) => uppercase ? "uppercase" : 'none'};
     text-align: center;
 
     @media ${({ theme }) => theme.media.large} {
-        font-size: ${({ mobFontSize = '18px' }) => mobFontSize};
-        font-weight: ${({ mobFontWeight = 600 }) => mobFontWeight};
+        font: ${({ theme }) => theme.fonts.bodyMiddleSemiBold};
+        font-size: ${({ mobFontSize }) => mobFontSize};
+        font-weight: ${({ mobFontWeight }) => mobFontWeight};
     }
 `;
 
-export const AccountTitle = styled.h2<TitleProps>`
-    color: ${({ theme }) => theme.colors.black};
-    font-size: ${({ theme }) => theme.typography.bigFontSize};
-    line-height: 1.3em;
-    font-weight: 600;
-    text-align: center;
-    text-transform: ${({ uppercase }) => uppercase ? "uppercase" : 'none'};
+export const AccountTitle = styled(Title) <TitleProps>`
     margin-top: 24px;
     margin-bottom: ${({ marginBottom = 48 }) => marginBottom}px;
 
     @media ${({ theme }) => theme.media.large} {
-        font-size: ${({ theme }) => theme.typography.fontSize};
-        line-height: 1.5em;
         margin-bottom: ${({ tabletMarginBottom = 24 }) => tabletMarginBottom}px;
     }
 
@@ -72,9 +66,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
     color: ${({ theme, color = theme.colors.black }) => color};
     background-color: ${({ backgroundColor = 'transparent' }) => backgroundColor};
     padding-block: 16px;
-    font-size: ${({ theme }) => theme.typography.fontSize};
-    line-height: 1.5em;
-    font-weight: 400;
+    font: ${({ theme }) => theme.fonts.bodyMiddleReg};
     text-transform: none;
     border: ${({ theme }) => `1px solid ${theme.colors.secondary}`};
     transition: all 0.3s ease;
@@ -92,7 +84,6 @@ export const StyledButton = styled.button<StyledButtonProps>`
         padding-block: 11px;
         min-width: ${({ minWidthTablet = 'auto' }) => minWidthTablet};
         font-size: 14px;
-        line-height: 1.5em;        
     }
 `;
 
@@ -147,19 +138,5 @@ export const AccountInfoWrapper = styled.div`
     @media ${({ theme }) => theme.media.medium} {
         flex-direction: column-reverse;
         margin-bottom: 64px;
-    }
-`;
-
-export const TitleCatalog = styled.h2<TitleCatalogProps>`
-    color: ${({ theme }) => theme.colors.black};
-    font-size: ${({ theme, fontSize = theme.typography.bigFontSize }) => fontSize};
-    line-height: ${({ lineHeight = '1em' }) => lineHeight};    
-    font-weight: ${({ fontWeight = 600 }) => fontWeight};
-    text-transform: uppercase;
-    text-align: center;
-
-    @media ${({ theme }) => theme.media.large} {
-        font-size: ${({ theme, mobFontSize = theme.typography.fontSize }) => mobFontSize};
-        line-height: ${({ mobLineHeight = '1.5em' }) => mobLineHeight};
     }
 `;

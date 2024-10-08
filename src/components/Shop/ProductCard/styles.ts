@@ -2,15 +2,16 @@ import { CommonTextProps } from "@/types/layouts/Product";
 import styled from "@emotion/styled";
 
 export const ProductPrice = styled.p<CommonTextProps>`
-    color: ${({ theme }) => theme.colors.black};    
-    font-size: ${({ theme, fontSize = theme.typography.fontSize }) => fontSize};
-    line-height: ${({ lineHeight = '1.5em' }) => lineHeight};
-    font-weight: ${({ fontWeight = 600 }) => fontWeight};
+    color: ${({ theme }) => theme.colors.black};
+    font: ${({ theme }) => theme.fonts.bodyMiddleSemiBold};
+    font-size: ${({ fontSize }) => fontSize};
+    line-height: ${({ lineHeight }) => lineHeight};
+    font-weight: ${({ fontWeight }) => fontWeight};    
     text-align: center;
 
     @media ${({ theme }) => theme.media.large} {
         font-size: ${({ mobFontSize = '14px' }) => mobFontSize};
-        line-height: ${({ lineHeight = '1.5em' }) => lineHeight};
+        line-height: ${({ mobLineHeight = '1.5em' }) => mobLineHeight};
     }
 `;
 

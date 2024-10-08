@@ -4,9 +4,10 @@ import styled from "@emotion/styled";
 export const AddToBasketButtonStyled = styled.button<AddToBasketButtonProps>`
     width: 100%;
     background-color: transparent;
-    font-size: ${({ theme, fontSize = theme.typography.fontSize }) => fontSize};
-    line-height: ${({ lineHeight = '1.5em' }) => lineHeight};
-    font-weight: ${({ fontWeight = 400 }) => fontWeight};    
+    font: ${({ theme }) => theme.fonts.bodyMiddleReg};
+    font-size: ${({ fontSize }) => fontSize};
+    line-height: ${({ lineHeight }) => lineHeight};
+    font-weight: ${({ fontWeight }) => fontWeight};    
     color: ${({ theme, color = theme.colors.black }) => color};
     padding: 16px 25px;    
     text-align: center;
