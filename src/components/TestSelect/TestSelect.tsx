@@ -8,7 +8,7 @@ import { setCurrentCurrency } from '@/store/slices/currencySlice';
 
 export default function TestSelect()
 {
-  const currency = useAppSelector((state) => state.currentCurrency);
+  const currency = useAppSelector((state) => state.currencySlice);
   const dispatch = useAppDispatch();
 
   const onCurrencyChange = (event: SelectChangeEvent) =>

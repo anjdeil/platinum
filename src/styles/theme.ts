@@ -1,12 +1,10 @@
-
-import { Theme } from '@emotion/react';
+import { Theme } from "@emotion/react";
 import { Montserrat } from "next/font/google";
 
-const montserrat = Montserrat({
+export const montserrat = Montserrat({
     subsets: ['latin', 'cyrillic'],
     weight: ['400', '500', '600', '700'],
 });
-
 
 const theme: Theme = {
     typography: {
@@ -41,10 +39,18 @@ const theme: Theme = {
         primaryBlue200: "#e0effe",
         primaryBlue500: "#1e71be",
         primaryBlue700: "#113760",
+        error: '#d92d20',
+    },
+    shadows: {
+        primaryShadow: '0 0 6px 0 rgba(17, 55, 96, 0.4)',
+        primaryBlue200: "#e0effe",
+        primaryBlue500: "#1e71be",
+        primaryBlue700: "#113760",
     },
     background: {
         secondary: '#f2f8fe',
-        hover: '#063e7b'
+        hover: '#063e7b',
+        formElements: '#f2f8fe',
     },
     spacing: {
         small: '8px',
@@ -57,7 +63,8 @@ const theme: Theme = {
         large: '(max-width: 1024px)',
         middle: '(max-width: 1100px)',
         xl: '(max-width: 1200px)',
-        extraLarge: '(max-width: 40px)',
+        largePlus: '(max-width: 1300px)',
+        extraLarge: '(max-width: 1440px)',
     },
 };
 

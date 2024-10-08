@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import { montserrat } from "./theme";
 
 const GlobalStyle = createGlobalStyle`
  * {
@@ -33,6 +34,7 @@ html {
 
 body {
     margin: 0;
+     font-family: ${montserrat.style.fontFamily}, sans-serif;
 }
 
 main {

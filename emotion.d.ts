@@ -17,14 +17,22 @@ declare module '@emotion/react' {
             white: string;
             black: string;
             active: string;
+            error: string;
             backgroundGradient: string;
             primaryBlue200: string;
             primaryBlue500: string;
             primaryBlue700: string;
         };
+        shadows: {
+            primaryShadow: string;
+            primaryBlue200: string;
+            primaryBlue500: string;
+            primaryBlue700: string;
+        },
         background: {
             secondary: string;
             hover: string;
+            formElements: string;
         };
         spacing: {
             small: string;
@@ -37,6 +45,7 @@ declare module '@emotion/react' {
             large: string;
             middle: string;
             xl: string;
+            largePlus: string;
             extraLarge: string;
         };
     }

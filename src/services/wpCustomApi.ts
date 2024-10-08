@@ -1,27 +1,21 @@
 import { ParamsType, Method } from "@/types/services";
 import axios from 'axios';
 
-class CustomRestApi
-{
+class CustomRestApi {
     private readonly _apiBase: string;
-    constructor()
-    {
-        if (!process.env.REST_API)
-        {
-            throw new Error("REST_API_URL environment variable is not defined");
+    constructor() {
+        if (!process.env.REST_API) {
+            throw new Error("REST_API environment variable is not defined");
         }
         this._apiBase = process.env.REST_API + "/";
     }
 
-    async getResource(url: string, method: Method, params?: ParamsType, body?: object)
-    {
+    async getResource(url: string, method: Method, params?: ParamsType, body?: object) {
         const maxRetries = 3;
         let attempt = 0;
 
-        while (attempt < maxRetries)
-        {
-            try
-            {
+        while (attempt < maxRetries) {
+            try {
                 const response = await axios({
                     method: method,
                     url: this._apiBase + url,
@@ -29,22 +23,17 @@ class CustomRestApi
                     data: body
                 });
 
-                if (response.status >= 200 && response.status < 300)
-                {
+                if (response.status >= 200 && response.status < 300) {
                     return response;
-                } else if (response.status === 400)
-                {
+                } else if (response.status === 400) {
                     throw new Error(`Bad request: ${response.statusText}`);
-                } else
-                {
+                } else {
                     attempt++;
                 }
 
-            } catch (error)
-            {
+            } catch (error) {
                 attempt++;
-                if (attempt >= maxRetries)
-                {
+                if (attempt >= maxRetries) {
                     console.error("Error during request:", error);
                     throw new Error(`Could not fetch ${this._apiBase + url}, received ${(error as Error).message}`);
                 }
@@ -54,13 +43,11 @@ class CustomRestApi
         throw new Error(`Failed to fetch ${url} after ${maxRetries} attempts`);
     }
 
-    async get(url: string, params?: ParamsType)
-    {
+    async get(url: string, params?: ParamsType) {
         return this.getResource(url, 'GET', params);
     }
 
-    async post(url: string, body: object)
-    {
+    async post(url: string, body: object) {
         return this.getResource(url, 'POST', undefined, body);
     }
 }
