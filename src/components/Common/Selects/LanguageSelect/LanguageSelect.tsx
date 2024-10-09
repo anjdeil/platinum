@@ -1,30 +1,20 @@
-import useLanguageSwitcher from "@/hooks/useLanguageSwitcher";
-import { SelectOptionsProps } from "@/types/layouts/Select";
-import { ChangeEvent } from "react";
+import { useAppDispatch, useAppSelector } from "@/store";
+import { languageSymbols, setCurrentLanguage } from "@/store/slices/languageSlice";
 import CustomSelect from "../CustomSelect/CustomSelect";
 
-export const languageSymbols: SelectOptionsProps[] = [
-    { code: 'en', symbol: 'En' },
-    { code: 'pl', symbol: 'PL' },
-    { code: 'de', symbol: 'De' },
-    { code: 'ru', symbol: 'Ru' },
-    { code: 'uk', symbol: 'Ua' },
-];
-
 export default function LanguageSelect() {
-  const { switchLanguage, locale } = useLanguageSwitcher();
+  const language = useAppSelector((state) => state.languageSlice);
+  const dispatch = useAppDispatch();
 
-  const currentSymbol = languageSymbols.find(lang => lang.code === locale)?.symbol || '';
+  const onLanguageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    dispatch(setCurrentLanguage({ code: event.target.value }));
+  };
 
-  function handleChange(evt: ChangeEvent<HTMLSelectElement>) {
-      switchLanguage(evt.target.value);
-  }
-  
-  return (  
+  return (
     <CustomSelect
-      options={languageSymbols} 
-      value={currentSymbol}
-      onChange={handleChange} 
+      options={languageSymbols}
+      value={language.symbol}
+      onChange={onLanguageChange}
     />
   );
 }

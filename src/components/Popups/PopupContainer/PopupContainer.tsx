@@ -11,7 +11,7 @@ const PopupContainer = () => {
     const dispatch = useDispatch();
     const pathname = usePathname();
 
-    const popup = useAppSelector(state => state.Popup);
+    const popup = useAppSelector(state => state.popup);
 
     useEffect(() => {
         dispatch(popupClosed());

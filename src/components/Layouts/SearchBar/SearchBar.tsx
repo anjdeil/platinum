@@ -1,15 +1,13 @@
 import { SearchBarProps } from '@/types/layouts/SearchBar';
-import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { FC } from 'react';
 import { SearchForm, SearchIcon, SearchInput } from './styles';
 
-const SearchBar: FC<SearchBarProps> = ({ width, backgroundColor }) => {
-    const t = useTranslations("Search");
+const SearchBar: FC<SearchBarProps> = ({ height, width, backgroundColor}) => {
     return (
-        <SearchForm>
+        <SearchForm height={height}>
             <SearchInput
-                placeholder={t("Search")}
+                placeholder="Search"
                 type="search"
                 width={width}
                 backgroundColor={backgroundColor}
