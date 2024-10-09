@@ -42,7 +42,7 @@ export const RegistrationForm = forwardRef((props, ref) =>
         resolver: zodResolver(formSchema)
     });
 
-    const onSubmit = (data) =>
+    const onSubmit = (data:  RegistrationFormType) =>
     {
         console.log(data);
     };
