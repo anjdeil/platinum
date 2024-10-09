@@ -1,9 +1,9 @@
 import { MenusContext } from '@/components/Layout/Layout';
-import { wpMenuProps } from '@/types/layouts/menus/wpMenu';
 import { MenuItemsType } from '@/types/services/customApi/Menu/MenuItemsType';
 import { FC, useContext } from 'react';
 import { MenuSkeleton } from '../MenuSkeleton';
-import { NavLink, NavList, StyledItem, StyledNav } from './styles';
+import { NavLink, NavList } from './styles';
+import { wpMenuProps } from '@/types/layouts/Menus';
 
 const Nav: FC<wpMenuProps> = ({
     menuId,
@@ -19,7 +19,7 @@ const Nav: FC<wpMenuProps> = ({
     gap,
     mobGap,
 }) => {
-    const menus: MenuItemsType[] | undefined = useContext(MenusContext);
+    const menus: MenuItemsType[] | undefined = useContext(MenusContext); 
     const menuItems = menus?.find(({ id }) => id === menuId)?.items;
     
     if (!menuItems && skeleton) {
@@ -35,7 +35,7 @@ const Nav: FC<wpMenuProps> = ({
     }    
 
     return (
-        <StyledNav>
+        <nav>
             <NavList
                 justify={justify}
                 direction={direction}
@@ -44,7 +44,7 @@ const Nav: FC<wpMenuProps> = ({
                 mobGap={mobGap}
             >
                 {menuItems && menuItems.map(({ title, url }) => (
-                    <StyledItem key={title}>
+                    <li key={title}>
                         <NavLink
                             href={url}
                             color={color}
@@ -55,10 +55,10 @@ const Nav: FC<wpMenuProps> = ({
                         >
                             {title}
                         </NavLink>
-                    </StyledItem>
+                    </li>
                 ))}
             </NavList>
-        </StyledNav>
+        </nav>
     );
 };
 

@@ -3,11 +3,11 @@ import styled from "@emotion/styled";
 
 export const BottomMenuWrapper = styled.div<BottomMenuWrapperProps>`
   z-index: 2000;
+  height: ${({ height = "60px" }) => height};
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
-  padding-block: ${({ paddingBlock = "10px" }) => paddingBlock};
   display: flex;
   align-items: center;
   background-color: ${({ theme }) => theme.background.secondary};

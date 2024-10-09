@@ -1,20 +1,28 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { wpCustomRtkApi } from "./rtk-queries/wpCustomApi";
+import { wooCustomRktApi } from "./rtk-queries/wooCustomApi";
+import languageSlice from "./slices/languageSlice";
 import currencySlice from "./slices/currencySlice";
+import themeOptionsSlice from "./slices/themeOptionsSlice";
 import PopupSlice from "./slices/PopupSlice";
 
 const rootReducer = combineReducers({
     [wpCustomRtkApi.reducerPath]: wpCustomRtkApi.reducer,
-    currentCurrency: currencySlice,
-    Popup: PopupSlice,
+    [wooCustomRktApi.reducerPath]: wooCustomRktApi.reducer,
+    languageSlice: languageSlice,
+    currencySlice: currencySlice,
+    themeOptions: themeOptionsSlice,
+    popup: PopupSlice,
 });
 
-export const setupStore = () => {
+export const setupStore = () =>
+{
     return configureStore({
         reducer: rootReducer,
         middleware: (getDefaultMiddleware) =>
             getDefaultMiddleware()
                 .concat(wpCustomRtkApi.middleware)
+                .concat(wooCustomRktApi.middleware)
     })
 }
 
