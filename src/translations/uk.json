@@ -2,51 +2,5 @@
     "TestLanguages": {
         "title": "Налаштування регіону для поточної сторінки це \"{locale}\"",
         "link": "Просто посилання на ішну перекладену сторінку"
-    },
-    "MyAccount": {
-        "order": "Замовлення",
-        "clientPersonalAccount": "Особистий кабінет клієнта",
-        "dashboard": "Інформаційна панель",
-        "userInformation": "Інформація користувача",
-        "shippingAddress": "Адреса для доставки",
-        "orderHistory": "Історія замовлень",
-        "wishlist": "Список бажань",
-        "subscription": "Підписка на розсилку",
-        "loyaltyProgram": "Програма лояльності",
-        "changePassword": "Змінити пароль",
-        "logout": "Вихід",
-        "numberOfOrders": "Кількість замовлень",
-        "totalOrderAmount": "Загальна сума замовлень",
-        "myInformation": "Моя інформація",
-        "number": "Номер",
-        "deliveryPaymentTotal": "Доставка / Оплата / Загалом",
-        "date": "Дата",
-        "status": "Статус",
-        "value": "Значення",
-        "seeMore": "Дивитись більше",
-        "recentOrders": "Недавні замовлення",
-        "pending": "В очікуванні",
-        "processing": "В обробці",
-        "on-hold": "На паузі",
-        "completed": "Завершено",
-        "cancelled": "Скасовано",
-        "refunded": "Повернуто",
-        "failed": "Не вдалося",
-        "trash": "Кошик",
-        "shipping": "Доставка",
-        "payment": "Оплата",
-        "missingToSilver": "До срібла не вистачає",
-        "downloadPdf": "Завантажити PDF"
-    },
-    "TopBar": {
-        "CallUs": "Зателефонуйте нам"
-    },
-    "Search": {
-        "Search": "Пошук"
-    },
-    "Product": {
-        "addToBasket": "Додати до кошика",
-        "sortBy": "Сортувати за",
-        "productList": "Список товарів"
     }
 }

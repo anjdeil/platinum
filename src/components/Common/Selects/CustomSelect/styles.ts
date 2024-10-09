@@ -1,67 +1,54 @@
-import { CustomSelectStyledProps } from "@/types/layouts/Select";
 import styled from "@emotion/styled";
-import { Collapse } from "@mui/material";
 
-export const CustomSelectStyled = styled.div<CustomSelectStyledProps>`
+interface MenuProps {
+    isOpen?: boolean;
+}
+
+export const SortSelectStyled = styled.div<MenuProps>`
     box-sizing: border-box;
+    width: 53px;
+    height: 32px;
     position: relative;
-    border-radius: ${({ isOpen, borderRadius = '0' }) => (isOpen ? `${borderRadius} ${borderRadius} 0 0` : borderRadius)};
-    color: ${({ theme, color = theme.colors.black }) => color};
-    background: ${({ background = 'transparent' }) => background};
-    width: ${({ width = '100%' }) => width};
-    min-width: fit-content;
+    background: transparent;
     display: flex;
     align-items: center;
-    padding: ${({ padding = "4px" }) => padding};
-    font-size: ${({ theme, fontSize = theme.typography.fontSize }) => fontSize};
-    line-height: 1.5em;
+    padding: 4px;
+    font-size: 16px;
+    line-height: 24px;
     font-weight: 400;
     cursor: pointer;
-
-    @media ${({ theme }) => theme.media.large} {
-        padding: ${({ tabletPadding = "4px" }) => tabletPadding};     
-        line-height: 1.375em;
-    }
-
-    @media ${({ theme }) => theme.media.medium} {
-        font-size: ${({ mobFontSize = '14px' }) => mobFontSize};
-        padding: ${({ mobPadding = "4px" }) => mobPadding};        
-    }
 `;
 
-export const StyledCollapse = styled(Collapse) <CustomSelectStyledProps>`
+export const StyledSelect = styled.select`
+  display: none;
+`;
+
+export const DropdownMenu = styled.div<MenuProps>`
     position: absolute;
     top: 100%;
     left: 0;
     width: 100%;
-    min-width: fit-content;
+    height: ${({ isOpen }) => (isOpen ? 'auto' : '0')};
+    overflow-y: auto;
+    background: ${({ theme }) => theme.colors.white};
     z-index: 1000;
-    border-radius: ${({ isOpen, borderRadius = '0' }) => (isOpen ? `0 0 ${borderRadius} ${borderRadius}` : borderRadius)};
+    transition: height 0.3s ease-out, opacity 0.3s ease-out;
+    opacity: ${({ isOpen }) => (isOpen ? '1' : '0')};
+    visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
 `;
 
-export const MenuItem = styled.div<CustomSelectStyledProps>`
+export const MenuItem = styled.div`
     display: flex;
     justify-content: center;
-    justify-content: ${({ allignItem = "center" }) => allignItem};
     align-items: center;
-    font-size: ${({ theme, fontSize = theme.typography.fontSize }) => fontSize};
-    padding: ${({ padding = "4px" }) => padding};
-    color: ${({ theme, color = theme.colors.black }) => color};
-    padding-inline: ${({ paddingOptions = "4px" }) => paddingOptions};
-    background: ${({ theme, background = theme.colors.white }) => background};
+    padding: 4px;
     cursor: pointer;
-
-    @media ${({ theme }) => theme.media.large} {
-        padding: ${({ tabletPadding = "4px" }) => tabletPadding};     
-        line-height: 1.375em;
-    }
-
-    @media ${({ theme }) => theme.media.medium} {
-        font-size: ${({ mobFontSize = '14px' }) => mobFontSize};
-        padding: ${({ mobPadding = "4px" }) => mobPadding};        
-    }
-
     &:hover {
-        background: ${({ theme, background }) => background ? theme.colors.white : theme.background.secondary};
+        background-color: ${({ theme }) => theme.background.secondary};
     }    
+`;
+
+export const Arrow = styled.svg<MenuProps>`
+    margin-left: auto;
+    transform: ${({ isOpen }) => (isOpen ? 'rotate(180deg)' : 'rotate(0deg)')};
 `;

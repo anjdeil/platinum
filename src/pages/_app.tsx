@@ -1,44 +1,33 @@
 import Layout from "@/components/Layout/Layout";
 import { setupStore } from "@/store";
 import GlobalStyle from '@/styles/global';
-import muiTheme from "@/styles/muiTheme";
 import theme from '@/styles/theme';
-import { ThemeProvider } from "@emotion/react";
+import { ThemeProvider as EmotionThemeProvider } from '@emotion/react';
 import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
+import muiTheme from "@/styles/muiTheme";
 import { NextIntlClientProvider } from 'next-intl';
 import App, { AppContext, AppProps } from 'next/app';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from "react";
 import { Provider } from "react-redux";
+import { ThemeProvider } from '@emotion/react';
+
 
 function MyApp({ Component, pageProps }: AppProps)
 {
     const { locale } = useRouter();
     const store = setupStore();
-    const [messages, setMessages] = useState(pageProps.messages);
-
-    useEffect(() =>
-    {
-        const loadMessages = async () =>
-        {
-            const messages = (await import(`../translations/${locale}.json`)).default;
-            setMessages(messages);
-        };
-
-        loadMessages();
-    }, [locale]);
 
     return (
-        <NextIntlClientProvider locale={locale} messages={messages} timeZone="Europe/Berlin">
+        <NextIntlClientProvider locale={locale} messages={pageProps.messages}>
             <Provider store={store}>
+                <EmotionThemeProvider theme={theme}>
                     <MuiThemeProvider theme={muiTheme}>
-                <ThemeProvider theme={theme}>
-                        <GlobalStyle />
                         <Layout>
+                            <GlobalStyle />
                             <Component {...pageProps} />
                         </Layout>
-                </ThemeProvider>
                     </MuiThemeProvider>
+                </EmotionThemeProvider>
             </Provider>
         </NextIntlClientProvider>
     );

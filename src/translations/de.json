@@ -2,51 +2,5 @@
     "TestLanguages": {
         "title": "Das serverseitig bereitgestellte Gebietsschema ist \"{locale}\"",
         "link": "Verlinken Sie einfach auf eine andere Seite übersetzt"
-    },
-    "MyAccount": {
-        "order": "Bestellung",
-        "clientPersonalAccount": "Kundenkonto",
-        "dashboard": "Armaturenbrett",
-        "userInformation": "Benutzerinformationen",
-        "shippingAddress": "Lieferadresse",
-        "orderHistory": "Geschichte der Bestellung",
-        "wishlist": "Wunschzettel",
-        "subscription": "Anmeldung zum Newsletter",
-        "loyaltyProgram": "Loyalitätsprogramm",
-        "changePassword": "Passwort ändern",
-        "logout": "Abmeldung",
-        "numberOfOrders": "Anzahl Der Bestellungen",
-        "totalOrderAmount": "Gesamtbetrag Der Aufträge",
-        "myInformation": "Meine Informationen",
-        "number": "Nummer",
-        "deliveryPaymentTotal": "Lieferung / Zahlung / Gesamt",
-        "date": "Datum",
-        "status": "Status",
-        "value": "Wert",
-        "seeMore": "Mehr sehen",
-        "recentOrders": "Kürzliche Bestellungen",
-        "pending": "Ausstehend",
-        "processing": "In Bearbeitung",
-        "on-hold": "Warten",
-        "completed": "Abgeschlossen",
-        "cancelled": "Storniert",
-        "refunded": "Erstattet",
-        "failed": "Fehlgeschlagen",
-        "trash": "Papierkorb",
-        "shipping": "Versand",
-        "payment": "Zahlung",
-        "missingToSilver": "Es fehlen bis zum Silber",
-        "downloadPdf": "PDF herunterladen"
-    },
-    "TopBar": {
-        "CallUs": "Rufen Sie uns an"
-    },
-    "Search": {
-        "Search": "Suche"
-    },
-    "Product": {
-        "addToBasket": "In den Warenkorb legen",
-        "sortBy": "Sortieren nach",
-        "productList": "Produktliste"
     }
 }
