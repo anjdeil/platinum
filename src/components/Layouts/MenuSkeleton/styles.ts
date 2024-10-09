@@ -1,4 +1,4 @@
-import { SkeletonContainerProps, SkeletonElementProps } from "@/types/layouts/menus/Skeleton";
+import { SkeletonContainerProps, SkeletonElementProps } from "@/types/layouts/Menus/wpMenu";
 import { keyframes } from "@emotion/react";
 import styled from "@emotion/styled";
 

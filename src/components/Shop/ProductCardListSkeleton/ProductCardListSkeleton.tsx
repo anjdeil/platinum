@@ -1,9 +1,10 @@
-import { ProductCardListSkeletonProps } from '@/types/layouts/Skeleton';
+import { ProductCardListSkeletonProps } from '@/types/layouts/Product';
 import { ProductCardSkeleton } from '../ProductCardSkeleton';
 import { StyledProductCardList } from '../ProductCardsList/styles';
 import { SkeletonItem } from './styles';
 
-export const ProductCardListSkeleton: React.FC<ProductCardListSkeletonProps> = ({ columns }) => {
+export const ProductCardListSkeleton: React.FC<ProductCardListSkeletonProps> = ({ columns }) =>
+{
     const skeletonItems = Array.from({ length: 4 }, (_, index) => (
         <SkeletonItem key={index}>
             <ProductCardSkeleton />

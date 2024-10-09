@@ -1,6 +1,6 @@
-import { WpMenuResponseSchema } from "@/types/layouts/menus/wpMenu";
 import { z } from "zod";
 import { CategorySchema, ProductDataResponseSchema, ProductSchema } from "../../shop";
+import { WpMenuResponseSchema } from "@/types/layouts/Menus/wpMenu";
 
 const LangParamSchema = z.enum(['en', 'pl', 'de', 'ru', 'uk']).optional();
 

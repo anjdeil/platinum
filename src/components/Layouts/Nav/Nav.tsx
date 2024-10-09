@@ -1,5 +1,5 @@
 import { MenusContext } from '@/components/Layout/Layout';
-import { wpMenuProps } from '@/types/layouts/menus/wpMenu';
+import { wpMenuProps } from '@/types/layouts/Menus/wpMenu';
 import { MenuItemsType } from '@/types/services/customApi/Menu/MenuItemsType';
 import { FC, useContext } from 'react';
 import { MenuSkeleton } from '../MenuSkeleton';
@@ -18,11 +18,13 @@ const Nav: FC<wpMenuProps> = ({
     align,
     gap,
     mobGap,
-}) => {
+}) =>
+{
     const menus: MenuItemsType[] | undefined = useContext(MenusContext);
     const menuItems = menus?.find(({ id }) => id === menuId)?.items;
-    
-    if (!menuItems && skeleton) {
+
+    if (!menuItems && skeleton)
+    {
         return (
             <MenuSkeleton
                 elements={skeleton.elements}
@@ -32,7 +34,7 @@ const Nav: FC<wpMenuProps> = ({
                 gap={skeleton.gap}
             />
         )
-    }    
+    }
 
     return (
         <StyledNav>
