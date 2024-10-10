@@ -52,8 +52,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 {/*   <PopupContainer /> */}
                 {isMobile && (<BottomMenu />)}
                 {children}
-
-                <BenefitsAccordion />
                 <Footer />
             </MenusContext.Provider>
         </Box>

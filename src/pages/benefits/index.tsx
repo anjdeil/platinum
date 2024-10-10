@@ -4,8 +4,9 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useMediaQuery } from '@mui/material';
 import { CustomSvgMarker } from '@/components/Common/Icons/CustomSvgMarker/CustomSvgMarker';
 import { CustomList } from '@/components/shared/List/List';
-import { BenefitsProps } from '@/types/layouts/Benefits';
+import { BenefitsProps, loyaltyDescriptionSchema } from '@/types/layouts/Benefits';
 import { useAppSelector } from "@/store";
+import { z } from 'zod';
 
 export function BenefitsAccordion({ gapMedium, gapLg, gapSm }: BenefitsProps) {
     const isMobile = useMediaQuery('(max-width: 768px)');
@@ -17,20 +18,45 @@ export function BenefitsAccordion({ gapMedium, gapLg, gapSm }: BenefitsProps) {
 
     const themeOptions = useAppSelector(state => state.themeOptions);
 
-    const data = themeOptions.data.item.loyalty_options.en;
-    console.log(data)
+    const data = themeOptions.data.item.loyalty_options;
+
+    if (data) {
+        console.log(data)
+    }
+
+    const validateLoyaltyData = (data: any) => {
+        try {
+            const parsedData = loyaltyDescriptionSchema.parse(data.lang);
+            return parsedData;
+        } catch (error) {
+            console.error("Validation Error:", error);
+            return null;
+        }
+    };
+
+    const validatedData = validateLoyaltyData(data);
+
+    const renderDescriptionList = (description: string | undefined, svgColor = "#1E71BE") => {
+        if (!description) return null;
+
+        return description.split('\r\n').map((item, index) => (
+            <li key={index}>
+                <CustomSvgMarker color={svgColor} /> {item}
+            </li>
+        ));
+    };
+
 
     return (<>
-        {/* <head>
+        <head>
             <title>LOYALTY PROGRAM</title>
             <meta charSet="utf-8" />
             <meta
                 name="description"
                 content="The description that i didn't uploaded from data" />
-        </head> */}
+        </head>
         <main>
             <BenefitsLayout gapLg={gapLg} gapMedium={gapLg}>
-                {/* Silver Level */}
                 <BenefitsItem gapSm={gapSm} gapMedium={gapMedium}>
                     <AccordionHeader gapMedium={gapMedium}>
                         <BenefitsPrice>2500 - 5%</BenefitsPrice>
@@ -54,14 +80,14 @@ export function BenefitsAccordion({ gapMedium, gapLg, gapSm }: BenefitsProps) {
                             aria-expanded={expanded === 'panel1'}
                             id="accordion1-content"
                         >
-                            {/* <CustomList>
-                                
-                            </CustomList> */}
+                            <CustomList>
+                                {validatedData && renderDescriptionList(validatedData.silver)}
+                            </CustomList>
+
                         </BenefitsAccordionDetails>
                     </BenefitsAccordionStyled>
                 </BenefitsItem>
 
-                {/* Gold Level */}
                 <BenefitsItem gapSm={gapSm} gapMedium={gapMedium}>
                     <AccordionHeader gapMedium={gapMedium}>
                         <BenefitsPrice>10 000 - 10%</BenefitsPrice>
@@ -85,14 +111,14 @@ export function BenefitsAccordion({ gapMedium, gapLg, gapSm }: BenefitsProps) {
                             aria-expanded={expanded === 'panel2'}
                             id="accordion2-content"
                         >
-                            {/* <CustomList>
-                                
-                            </CustomList> */}
+                            <CustomList>
+                                {validatedData && renderDescriptionList(validatedData.gold, "white")}
+                            </CustomList>
+
                         </BenefitsAccordionDetails>
                     </BenefitsAccordionStyled>
                 </BenefitsItem>
 
-                {/* Platinum Level */}
                 <BenefitsItem gapSm={gapSm} gapMedium={gapMedium}>
                     <AccordionHeader gapMedium={gapMedium}>
                         <BenefitsPrice>20 000 - 15%</BenefitsPrice>
@@ -116,9 +142,10 @@ export function BenefitsAccordion({ gapMedium, gapLg, gapSm }: BenefitsProps) {
                             aria-expanded={expanded === 'panel3'}
                             id="accordion3-content"
                         >
-                            {/* <CustomList>
-                                
-                            </CustomList> */}
+                            <CustomList>
+                                {validatedData && renderDescriptionList(validatedData.platinum, "white")}
+                            </CustomList>
+
                         </BenefitsAccordionDetails>
                     </BenefitsAccordionStyled>
                 </BenefitsItem>

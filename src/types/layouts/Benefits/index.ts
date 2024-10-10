@@ -13,5 +13,11 @@ export const BenefitsPropsSchema = z.object({
     ...BenefitsGapPropsSchema.shape,
 });
 
+export const loyaltyDescriptionSchema = z.object({
+    silver: z.string(),
+    gold: z.string(),
+    platinum: z.string(),
+});
+
 export type BenefitsGapProps = z.infer<typeof BenefitsGapPropsSchema>;
 export type BenefitsProps = z.infer<typeof BenefitsPropsSchema>;
