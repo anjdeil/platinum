@@ -1,8 +1,11 @@
 import { Accordion,  AccordionDetails,  AccordionSummary } from "@mui/material";
 import styled from "@emotion/styled";
 import { FooterContainerProps } from "@/types/layouts/Footer";
+
 import Link from "next/link";
 import Image from "next/image";
+import theme from "@/styles/theme";
+import { Container } from "@/styles/components";
 
 //---------------TITLES-------------
 export const FooterTitle = styled.h3`
@@ -47,9 +50,7 @@ export const FooterGridContainer = styled.div`
         flex-direction: column;
     } 
 `;
-export const FooterContainer = styled.div<FooterContainerProps>`
-    max-width: 1280px;
-    margin: 0 auto;
+export const FooterContainer = styled(Container)<FooterContainerProps>`
     padding: 50px 80px 24px 80px;
     @media ${({ theme }) => theme.media.extraLarge} {
         padding: 50px 32px 24px 32px; 
@@ -59,11 +60,10 @@ export const FooterContainer = styled.div<FooterContainerProps>`
     } 
 `;
 export const FooterWrapper = styled.div<FooterContainerProps>`
-    background: ${({ backgroundColor }) =>
-        backgroundColor || 'radial-gradient(79.43% 79.43% at 49.95% 64.07%, #024584 0%, #0B233D 100%)'};
+    background: ${({ backgroundColor }) => backgroundColor || theme.colors.backgroundGradient};
     overflow: hidden;
-    
 `;
+
 export const FooterMainContentWrapper = styled.div`
     display: flex;
     @media ${({ theme }) => theme.media.medium} {
@@ -80,14 +80,11 @@ export const PaymentAndDeliveryMethods = styled.div`
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap:5px;
-    > * {
-    margin-right: 21px;
-    }
-     &:not(:last-of-type) {
+    column-gap:20px;
+    row-gap:5px;
+    &:first-of-type {
     margin-bottom: 20px;
-    }
-    
+    } 
 `;
 export const PaymentAndDeliveryMethodsContainer = styled.div`
     display: flex;

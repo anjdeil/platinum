@@ -8,7 +8,7 @@ const Header: React.FC = () =>
 {
     return (
         <HeaderWrapper >
-            <HeaderContainer className='container'>
+            <HeaderContainer>
                 <HeaderNav>
                     <Nav
                         menuId={344}

@@ -1,6 +1,7 @@
+import { Container } from "@/styles/components";
 import styled from "@emotion/styled";
 
-export const MobileHeaderContainer = styled.div`
+export const MobileHeaderContainer = styled(Container)`
     display: flex;
     align-items: center;
     justify-content: space-between;

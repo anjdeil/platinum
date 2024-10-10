@@ -48,7 +48,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <MenusContext.Provider value={menus}>
                 {!isMobile && <TopBar />}
                 {!isMobile ? <Header /> : <MobileHeader />}
-                <PopupContainer /> 
+              {/*   <PopupContainer />  */}
                 {isMobile && (<BottomMenu />)}
                 {children}
                 <Footer />

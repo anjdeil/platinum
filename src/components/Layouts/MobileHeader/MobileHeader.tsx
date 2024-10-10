@@ -8,7 +8,7 @@ import { IconButton, LogoWrapper, MobileHeaderContainer, SearchWrapper } from '.
 const MobileHeader: FC = () => {
     return (
         <HeaderWrapper>
-            <MobileHeaderContainer className='container'>
+            <MobileHeaderContainer >
                 <LogoWrapper>
                     <Link href={'/'} passHref>
                         <Image src="/assets/icons/logo_white.svg" alt="Logo" width={54} height={48} unoptimized={true} />

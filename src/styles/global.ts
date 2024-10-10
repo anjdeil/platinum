@@ -221,7 +221,7 @@ template {
     display: none;
 }
 
-.container {
+/* .container {
     box-sizing: content-box;
     margin: 0 auto;
     padding: 0 32px;
@@ -230,7 +230,7 @@ template {
     @media (max-width: 768px) {
         padding: 0 20px;
     }
-}
+} */
 
 .hideMobile {
     display: none;

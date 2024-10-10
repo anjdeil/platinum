@@ -13,8 +13,14 @@ export const Title = styled.h1<TitleProps>`
     font-weight: ${({ fontWeight = 600 }) => fontWeight};
 `;
 
-const Container = styled.div`
+export const Container = styled.div`
+    box-sizing: content-box;
     margin: 0 auto;
+    padding: 0 32px;
+    max-width: 1280px;
+    @media ${({ theme }) => theme.media.medium} {
+        padding: 0 20px;
+    }
 `;
 
 export const StyledButton = styled.button<StyledButtonProps>`

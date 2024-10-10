@@ -1,12 +1,14 @@
+import { Container } from "@/styles/components";
+import theme from "@/styles/theme";
 import { HeaderContainerProps, HeaderWrapperProps } from "@/types/layouts/Header";
 import styled from "@emotion/styled";
 
 export const HeaderWrapper = styled.div<HeaderWrapperProps>`
     background: ${({ backgroundColor }) =>
-        backgroundColor || 'radial-gradient(79.43% 79.43% at 49.95% 64.07%, #024584 0%, #0B233D 100%)'};
+        backgroundColor ||  theme.colors.backgroundGradient};
 `
 
-export const HeaderContainer = styled.div<HeaderContainerProps>`
+export const HeaderContainer = styled(Container)<HeaderContainerProps>`
   height: ${({ height = '72px' }) => height};
   display: grid;
   grid-template-columns: repeat(12, 1fr);
