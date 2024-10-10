@@ -8,35 +8,9 @@ const initialState: ThemeOptionsType = {
     item: {
       loyalty_options: {
         en: {
-          silver: {
-            benefitsArr: [
-              'Users who have purchased more than 2500 PLN within a year receive a 5% discount on their future purchases.',
-              'Enjoy a complimentary welcome gift upon registration.',
-              'Take advantage of ongoing discounts available exclusively to registered users.',
-            ],
-            id: "silver"
-          },
-          gold: {
-            benefitsArr: [
-              'Once users reach a total of 10,000 PLN in purchases within a year, they qualify for a 10% discount on all future purchases.',
-              'Enjoy complimentary samples of the latest products.',
-              'Receive prioritized assistance from our support team.',
-              'Benefit from an ongoing discount available to Gold level users.',
-            ],
-            id: "gold"
-          },
-          platinum: {
-            benefitsArr: [
-              'Achieve a total of 20,000 PLN in purchases within a year to enjoy a 15% discount on all future purchases.',
-              'Benefit from complimentary shipping for all orders within Poland.',
-              'Receive top-tier, prioritized assistance from our support team.',
-              'Get exclusive access to free samples of the latest products.',
-              'Enjoy ongoing discounts exclusively available to Platinum level users.',
-              'Enjoy complimentary entry to all our events and activities.',
-              'Access informative and engaging training videos every year.',
-            ],
-            id: "platinum"
-          },
+          silver: '',
+          gold: '',
+          platinum: '',
         },
       },
       contacts: {
