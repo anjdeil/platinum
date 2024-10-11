@@ -27,15 +27,20 @@ const isLoggedIn = false;
 const isCheckout = false;
 const isShipping = false;
 
-// To do: userFields, lineItems, shippingLines
-export const RegistrationForm = forwardRef((props, ref) =>
+/**
+ * 
+ * @todo
+ * userFields, lineItems, shippingLines;
+ * forwardRef((props, ref);
+ * // useImperativeHandle(ref, () => ({
+    //     submit: () => handleSubmit(onSubmit)(),
+    // }));
+    // useImperativeHandle(ref, () => ({ submit: () => handleSubmit(onSubmit)() }));
+ */
+export const RegistrationForm = () =>
 {
-    useImperativeHandle(ref, () => ({
-        submit: () => handleSubmit(onSubmit)(),
-    }));
-    useImperativeHandle(ref, () => ({ submit: () => handleSubmit(onSubmit)() }));
 
-    /** Dynamic types */
+
     const formSchema = useMemo(() => RegistrationFormSchema(isLoggedIn, isCheckout, isShipping),
         [isLoggedIn, isCheckout, isShipping]);
     type RegistrationFormType = z.infer<typeof formSchema>;
@@ -46,10 +51,29 @@ export const RegistrationForm = forwardRef((props, ref) =>
         resolver: zodResolver(formSchema)
     });
 
-    function onSubmit(data)
+
+
+    function onSubmit(formData: RegistrationFormType)
     {
-        console.log('data', data);
-        console.log('errors', errors);
+        const data = {
+            email: formData.email,
+            first_name: formData.name,
+            last_name: formData.lastName,
+            role: 'customer',
+            username: formData.email,
+            billing: {
+                first_name: formData.name,
+                last_name: formData.lastName,
+                // apartmentNumber
+                address_1: formData.address1,
+                address_2: formData.address2,
+                city: formData.city,
+                postcode: formData.postCode,
+                country: formData.country,
+                email: formData.email,
+                phone: '+48 888 888 888',
+            }
+        }
     }
 
     return (
@@ -165,4 +189,4 @@ export const RegistrationForm = forwardRef((props, ref) =>
             </FormWrapperBottom>
         </CustomForm>
     );
-});
+}

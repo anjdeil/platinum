@@ -31,15 +31,6 @@ defaultCountry="pl"
 onChange={(value) => { if (setValue) setValue('phoneNumber', value, { shouldValidate: true }); }}
 /> */}
 
-// const onInputChange = (e: FormEvent<HTMLInputElement>) =>
-//     {
-//         if (isError)
-//             setError(false);
-
-//         if (isNumeric)
-//             return numericValidate(e, isPost);
-//     };
-
 export type CustomInputType = z.infer<typeof CustomInput2Schema>;
 
 export const CustomInput: FC<CustomInputType> = (
@@ -56,7 +47,7 @@ export const CustomInput: FC<CustomInputType> = (
         value,
     }) =>
 {
-    const registerProps = register ? register(name) : {};
+    const registerProps = register ? { ...register(name) } : {};
 
     const [isPasswordVisible, setPasswordVisible] = useState(false);
     const togglePasswordVisibility = () => setPasswordVisible((prev) => !prev);
@@ -85,9 +76,9 @@ export const CustomInput: FC<CustomInputType> = (
                     <Input
                         as={inputTag}
                         placeholder={placeholder ? placeholder : ''}
-                        {...registerProps}
+                        {...register(name)}
                         type={isPasswordVisible ? 'text' : inputType}
-                        checked={inputType === 'checkbox' ? false : undefined}
+                        {...registerProps}
                     />
                     {inputType === 'password' &&
                         <ShowPasswordImage
