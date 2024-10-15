@@ -15,7 +15,23 @@ const WpParamsSchema = z.object({
     slug: z.string().optional()
 });
 
+const AuthErrorResponseSchema = z.object({
+    error: z.object({
+        data: z.object({
+            details: z.object({
+                code: z.string(),
+                data: z.object({
+                    status: z.number(),
+                })
+            }),
+            message: z.string(),
+        }),
+        status: z.number(),
+    }),
+});
+
 export type ParamsType = Record<string, string[] | string | number | undefined>;
 export type Method = 'GET' | 'POST' | 'PUT' | 'DELETE';
 export type AuthConfigType = z.infer<typeof AuthConfigSchema>;
 export type WpParamsType = z.infer<typeof WpParamsSchema>;
+export type AuthErrorResponseType = z.infer<typeof AuthErrorResponseSchema>;

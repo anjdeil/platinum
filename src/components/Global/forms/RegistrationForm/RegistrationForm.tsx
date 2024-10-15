@@ -3,13 +3,21 @@ import { FC, forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, u
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { WooCustomerReqType } from "@/types/services";
+import { AuthErrorResponseType, WooCustomerReqType } from "@/types/services";
 import { CustomForm, FormWrapper, FormWrapperBottom } from "./styles";
 import Image from "next/image";
 import 'react-international-phone/style.css';
 import { useRegisterCustomerMutation } from "@/store/rtk-queries/wooCustomApi";
 import { CustomInput } from "../CustomInput/CustomInput";
+import { useRouter } from "next/router";
 
+function isAuthErrorResponseType(error: any): string
+{
+    if (error && error.data && typeof error.data.message === 'string')
+        return error.data.message;
+    else
+        return 'Error while sending form, please try again later.';
+}
 interface RegistrationFormProps
 {
     isCheckout?: boolean;
@@ -23,7 +31,6 @@ interface FormHandle
     submit: () => void;
 }
 
-const isLoggedIn = false;
 const isCheckout = false;
 const isShipping = false;
 
@@ -39,21 +46,25 @@ const isShipping = false;
  */
 export const RegistrationForm = () =>
 {
+    const router = useRouter();
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
+    useEffect(() =>
+    {
+        if (isLoggedIn) router.push('/account');
+    }, [router, isLoggedIn]);
 
     const formSchema = useMemo(() => RegistrationFormSchema(isLoggedIn, isCheckout, isShipping),
         [isLoggedIn, isCheckout, isShipping]);
     type RegistrationFormType = z.infer<typeof formSchema>;
 
-    const [registerCustomerMutation, { data, isError, error, isLoading }] = useRegisterCustomerMutation();
+    const [registerCustomerMutation, { data, error, isLoading }] = useRegisterCustomerMutation();
 
     const { register, handleSubmit, formState: { errors, isSubmitting, isSubmitSuccessful }, setValue, reset } = useForm<RegistrationFormType>({
         resolver: zodResolver(formSchema)
     });
 
-
-
-    function onSubmit(formData: RegistrationFormType)
+    async function onSubmit(formData: RegistrationFormType)
     {
         const data = {
             email: formData.email,
@@ -74,6 +85,17 @@ export const RegistrationForm = () =>
                 phone: '+48 888 888 888',
             }
         }
+
+        try
+        {
+            const response = await registerCustomerMutation(data);
+            if (response)
+                console.log(response);
+        } catch (error)
+        {
+            console.error(error);
+        }
+
     }
 
     return (
@@ -186,6 +208,7 @@ export const RegistrationForm = () =>
             </FormWrapper>
             <FormWrapperBottom>
                 <button type="submit" disabled={isSubmitting}>{isSubmitting ? 'Submitting...' : 'Submit'}</button>
+                {error && <p dangerouslySetInnerHTML={{ __html: isAuthErrorResponseType(error) }}></p>}
             </FormWrapperBottom>
         </CustomForm>
     );
