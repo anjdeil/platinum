@@ -4,6 +4,8 @@
         "link": "Just link to another page translated"
     },
     "MyAccount": {
+        "order": "Order",
+        "clientPersonalAccount": "Client's personal account",
         "dashboard": "Dashboard",
         "userInformation": "User information",
         "shippingAddress": "Shipping address",
@@ -12,7 +14,29 @@
         "subscription": "Subscription",
         "loyaltyProgram": "Loyalty program",
         "changePassword": "Change password",
-        "logout": "Logout"
+        "logout": "Logout",
+        "numberOfOrders": "Number of orders",
+        "totalOrderAmount": "Total order amount",
+        "myInformation": "My information",
+        "number": "Number",
+        "deliveryPaymentTotal": "Delivery / Payment / Total",
+        "date": "Date",
+        "status": "Status",
+        "value": "Value",
+        "seeMore": "See more",
+        "recentOrders": "Recent orders",
+        "pending": "Pending",
+        "processing": "Processing",
+        "on-hold": "On Hold",
+        "completed": "Completed",
+        "cancelled": "Cancelled",
+        "refunded": "Refunded",
+        "failed": "Failed",
+        "trash": "Trash",
+        "shipping": "Shipping",
+        "payment": "Payment",
+        "missingToSilver": "Missing to silver",
+        "downloadPdf": "Download PDF"
     },
     "TopBar": {
         "CallUs": "Call us"

@@ -4,6 +4,7 @@ import { popupClosed } from "@/store/slices/PopupSlice";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import MobileCategoriesMenu from "../MobileCategoriesMenu/MobileCategoriesMenu";
 
 const unscrollablePopups = ['mobile-search', 'hamburger-menu', 'swiper-popup', 'mobile-cart', 'mobile-categories'];
 
@@ -61,6 +62,11 @@ const PopupContainer = () => {
         case 'hamburger-menu': {
             return (
                 <HamburgerMenu onClose={closePopup} />
+            )
+        }
+        case 'mobile-categories': {
+            return (
+                <MobileCategoriesMenu onClose={closePopup} />
             )
         }
     }

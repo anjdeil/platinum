@@ -4,6 +4,8 @@
         "link": "Wystarczy link do innej przetłumaczonej strony"
     },
     "MyAccount": {
+        "order": "Zamówienie",
+        "clientPersonalAccount": "Konto osobiste klienta",
         "dashboard": "Kokpit",
         "userInformation": "Dane użytkownika",
         "shippingAddress": "Adres do wysyłki",
@@ -12,7 +14,29 @@
         "subscription": "Subskrypcja",
         "loyaltyProgram": "Program lojalnościowy",
         "changePassword": "Zmiana hasła",
-        "logout": "Wyloguj"
+        "logout": "Wyloguj",
+        "numberOfOrders": "Liczba zamówień",
+        "totalOrderAmount": "Całkowita kwota zamówień",
+        "myInformation": "Moje informacje",
+        "number": "Numer",
+        "deliveryPaymentTotal": "Dostawa / Płatność / Suma",
+        "date": "Data",
+        "status": "Status",
+        "value": "Wartość",
+        "seeMore": "Zobacz więcej",
+        "recentOrders": "Ostatnie zamówienia",
+        "pending": "Oczekujące",
+        "processing": "W trakcie realizacji",
+        "on-hold": "Wstrzymane",
+        "completed": "Zrealizowane",
+        "cancelled": "Anulowane",
+        "refunded": "Zwrócone",
+        "failed": "Nieudane",
+        "trash": "Kosz",
+        "shipping": "Wysyłka",
+        "payment": "Płatność",
+        "missingToSilver": "Brakuje do srebra",
+        "downloadPdf": "Pobierz PDF"
     },
     "TopBar": {
         "CallUs": "Zadzwoń do nas"
