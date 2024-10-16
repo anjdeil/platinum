@@ -37,6 +37,9 @@ const theme: Theme = {
         black: '#000',
         active: '#1E71BE',
         error: '#d92d20',
+        silver: "",
+        platinum: "",
+        shadow: ""
     },
     shadows: {
         primaryShadow: '0 0 6px 0 rgba(17, 55, 96, 0.4)',
@@ -47,7 +50,10 @@ const theme: Theme = {
         skeleton: 'linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%)',
         grey: '#BEBEBE',
         success: '#17AA40',
-        warning: '#F2B517'
+        warning: '#F2B517',
+        primaryGradient: "",
+        infoGradient: "",
+        formElements: ""
     },
     spacing: {
         small: '8px',

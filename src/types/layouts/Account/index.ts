@@ -1,4 +1,4 @@
-import { OrderType } from "@/types/services/woocommerce/OrderType";
+import { OrderType } from "@/types/services";
 import { z } from "zod";
 
 const AccountInfoBlockSchema = z.object({

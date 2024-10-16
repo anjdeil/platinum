@@ -1,12 +1,19 @@
 import { AccountInfoWrapperProps } from '@/types/layouts/Account';
 import { LogoLinkImageProps, LogoLinkProps, StyledButtonProps } from '@/types/styles/components';
 import styled from "@emotion/styled";
+import Link from 'next/link';
+import Image from 'next/image';
 
 interface TitleProps
 {
     as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
     fontWeight?: number;
-    fontSize: number;
+    fontSize?: number;
+    textAlign?: "center" | "left" | "right";
+    uppercase?: boolean;
+    marginBottom?: number;
+    tabletMarginBottom?: number;
+    mobMarginBottom?: number;
 }
 
 export const Title = styled.h1<TitleProps>`
@@ -15,8 +22,36 @@ export const Title = styled.h1<TitleProps>`
     font-weight: ${({ fontWeight = 600 }) => fontWeight};
 `;
 
-const Container = styled.div`
+export const AccountTitle = styled.h2<TitleProps>`
+    color: ${({ theme }) => theme.colors.black};
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 600;
+    text-align: center;
+    text-transform: ${({ uppercase }) => uppercase ? "uppercase" : 'none'};
+    margin-top: 24px;
+    margin-bottom: ${({ marginBottom = 48 }) => marginBottom}px;
+
+    @media ${({ theme }) => theme.media.large} {
+        font-size: 16px;
+        line-height: 24px;
+        margin-bottom: ${({ tabletMarginBottom = 24 }) => tabletMarginBottom}px;
+    }
+
+    @media ${({ theme }) => theme.media.medium} {
+        margin-bottom: ${({ mobMarginBottom = 24 }) => mobMarginBottom}px;
+    }
+`;
+
+export const Container = styled.div`
+    box-sizing: content-box;
     margin: 0 auto;
+    padding: 0 32px;
+    max-width: 1280px;
+
+    @media ${({ theme }) => theme.media.medium} {
+        padding: 0 20px;
+    }
 `;
 
 export const StyledButton = styled.button<StyledButtonProps>`

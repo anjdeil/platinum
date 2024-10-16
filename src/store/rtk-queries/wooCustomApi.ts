@@ -1,4 +1,4 @@
-import { WooCustomerReqType, WooCustomerType } from "@/types/services";
+import { OrderType, WooCustomerReqType, WooCustomerType } from "@/types/services";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const wooCustomRktApi = createApi({
@@ -14,8 +14,18 @@ export const wooCustomRktApi = createApi({
                     'Content-Type': 'application/json',
                 }
             })
+        }),
+        fetchOrders: builder.query({
+            query: (credentials: any) => ({
+                url: "/orders",
+                method: "POST",
+                body: credentials,
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
         })
     })
 })
 
-export const { useRegisterCustomerMutation } = wooCustomRktApi;
+export const { useRegisterCustomerMutation, useFetchOrdersQuery } = wooCustomRktApi;

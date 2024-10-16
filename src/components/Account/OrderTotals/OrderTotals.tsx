@@ -1,16 +1,18 @@
-import { OrderType } from "@/types/services/woocommerce/OrderType";
-import getSubtotalByLineItems from "@/utils/getSubtotalByLineItems";
 import { useTranslations } from "next-intl";
 import { FC } from "react";
 import OrderTotalsRowsSkeleton from "./OrderTotalsRowsSkeleton";
 import { Label, LabelCode, LastRow, Row, TotalsTable, Value } from "./styles";
+import { OrderType } from "@/types/services";
+import getSubtotalByLineItems from "@/utils/getSubtotalByLineItems";
 
-interface OrderTotalsPropsType {
+interface OrderTotalsPropsType
+{
     order: OrderType | undefined | null;
     isLoading?: boolean;
 }
 
-const OrderTotals: FC<OrderTotalsPropsType> = ({ order, isLoading = false }) => {
+const OrderTotals: FC<OrderTotalsPropsType> = ({ order, isLoading = false }) =>
+{
     const subtotal = order?.line_items ? getSubtotalByLineItems(order.line_items) : 0;
     const t = useTranslations("MyAccount");
 
@@ -30,7 +32,8 @@ const OrderTotals: FC<OrderTotalsPropsType> = ({ order, isLoading = false }) => 
                             <Value>{`${line.total} ${order?.currency_symbol}`}</Value>
                         </Row>
                     ))}
-                    {order?.coupon_lines?.map(line => {
+                    {order?.coupon_lines?.map(line =>
+                    {
                         const name = `${t("discountCode")} ${line.discount_type === "percent" ? `-${line.nominal_amount}% ` : ""}`;
                         return (
                             <Row key={line.id}>

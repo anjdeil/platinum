@@ -1,6 +1,7 @@
 import AccountLayout from "@/components/Account/AccountLayout";
 import BillingShippingAddress from "@/components/Account/BillingShippingAddress/BillingShippingAddress";
 import OrderInfo from "@/components/Account/OrderInfo/OrderInfo";
+// import OrderInfo from "@/components/Account/OrderInfo/OrderInfo";
 import OrderProductList from "@/components/Account/OrderProductList/OrderProductList";
 import { StyledOrderButton } from "@/components/Account/OrderTable/styles";
 import OrderTotals from "@/components/Account/OrderTotals/OrderTotals";
@@ -8,7 +9,7 @@ import Notification from "@/components/Layouts/Notification/Notification";
 import OrderPdf from "@/pdf/OrderPdf";
 import wooCommerceRestApi from "@/services/wooCommerceRestApi";
 import { AccountInfoWrapper } from "@/styles/components";
-import { OrderType } from "@/types/services/woocommerce/OrderType";
+import { OrderType } from "@/types/services";
 import areBillingAndShippingEqual from "@/utils/areBillingAndShippingEqual";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
@@ -16,10 +17,12 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { FC } from "react";
 
-export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
+export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) =>
+{
     const { slug } = context.query;
 
-    try {
+    try
+    {
         const orderResponse = await wooCommerceRestApi.get(`orders/${slug}`);
 
         return {
@@ -27,20 +30,23 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
                 order: orderResponse.data
             }
         }
-    } catch (error) {
+    } catch (error)
+    {
         return {
             notFound: true
         }
     }
 }
 
-interface OrderPropsType {
+interface OrderPropsType
+{
     order: OrderType
 }
 
-const Order: FC<OrderPropsType> = ({ order }) => {
+const Order: FC<OrderPropsType> = ({ order }) =>
+{
     const t = useTranslations("MyAccount");
-    
+
     const date = new Date(order.date_created);
 
     const formattedDate = date.toLocaleDateString('uk-UA', {
@@ -64,7 +70,7 @@ const Order: FC<OrderPropsType> = ({ order }) => {
             <AccountInfoWrapper>
                 <OrderProductList lineItems={order.line_items} currency={order.currency_symbol} />
                 <OrderInfo title="summaryOrder">
-                    <OrderTotals order={order} />                    
+                    <OrderTotals order={order} />
                 </OrderInfo>
                 <OrderInfo title="customerData">
                     <BillingShippingAddress address={order.billing} />

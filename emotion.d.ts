@@ -7,9 +7,13 @@ declare module '@emotion/react' {
             fontFamily: string;
             fontSize: string;
         };
+        fonts: {
+            [key: string]: string
+        };
         colors: {
             primary: string;
             secondary: string;
+            backgroundGradient: string;
             tertiary: string;
             grey: string;
             white: string;
@@ -20,6 +24,9 @@ declare module '@emotion/react' {
             shadow: string;
             error: string;
         };
+        shadows: {
+            primaryShadow: string;
+        };
         background: {
             primaryGradient: string;
             infoGradient: string;
@@ -29,6 +36,7 @@ declare module '@emotion/react' {
             grey: string;
             success: string;
             warning: string;
+            formElements: string;
         };
         spacing: {
             small: string;
@@ -36,11 +44,13 @@ declare module '@emotion/react' {
             large: string;
         };
         media: {
+            small: string;
             medium: string;
             mediumLarge: string;
             large: string;
             middle: string;
             xl: string;
+            largePlus: string;
             extraLarge: string;
         };
     }

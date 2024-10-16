@@ -10,6 +10,8 @@ export interface TitleProps
 export const StyledButtonPropsSchema = z.object({
     width: z.string().optional(),
     height: z.string().optional(),
+    minWidthTablet: z.string().optional(),
+    minWidthDesktop: z.string().optional(),
     color: z.string().optional(),
     backgroundColor: z.string().optional(),
     hoverColor: z.string().optional(),
