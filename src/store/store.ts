@@ -1,10 +1,12 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { wpCustomRtkApi } from "./rtk-queries/wpCustomApi";
 import currencySlice from "./slices/currencySlice";
+import MenuCategoriesSlice from "./slices/MenuCategoriesSlice";
 import PopupSlice from "./slices/PopupSlice";
 
 const rootReducer = combineReducers({
     [wpCustomRtkApi.reducerPath]: wpCustomRtkApi.reducer,
+    MenuCategoriesSlice: MenuCategoriesSlice.reducer,
     currentCurrency: currencySlice,
     Popup: PopupSlice,
 });

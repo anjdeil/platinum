@@ -6,6 +6,7 @@ import { Box } from '@mui/material';
 import { useRouter } from 'next/router';
 import { createContext } from 'react';
 import BottomMenu from '../Layouts/BottomMenu';
+import { CategoriesMenu } from '../Layouts/CategoriesMenu';
 import Header from '../Layouts/Header/Header';
 import MobileHeader from '../Layouts/MobileHeader/MobileHeader';
 import TopBar from '../Layouts/TopBar/TopBar';
@@ -22,7 +23,7 @@ export default function Layout({ children }: { children: React.ReactNode })
     const menuIds = [335, 344];
 
     const { data: menusData } = useGetMenusQuery({
-        include: menuIds        
+        include: menuIds
     });
 
     const menus = menusData?.data ? menusData.data.items as MenuItemsType[] : [];
@@ -32,9 +33,10 @@ export default function Layout({ children }: { children: React.ReactNode })
             <MenusContext.Provider value={menus}>
                 {!isMobile && <TopBar />}
                 {!isMobile ? <Header /> : <MobileHeader />}
-                <PopupContainer />
+                <PopupContainer />                
                 {isMobile && (<BottomMenu />)}
                 {children}
+                <CategoriesMenu />
             </MenusContext.Provider>
         </Box>
     );

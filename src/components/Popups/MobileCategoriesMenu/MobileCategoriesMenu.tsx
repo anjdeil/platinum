@@ -18,7 +18,7 @@ const MobileCategoriesMenu: FC<MobileCategoriesMenuPropsType> = ({ onClose }) =>
     const categories = categoriesData?.data && categoriesData.data.items as CategoryType[];
     const router = useRouter();
     const theme = useTheme();
-
+    
     const renderTitle = (title: string) => (
         <TitleWrapper onClick={() => setParent(undefined)}>
             <BackArrow />

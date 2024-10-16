@@ -1,10 +1,9 @@
-import { LogoLinkImageProps, LogoLinkProps, StyledButtonProps } from '@/types/styles/components';
+import { LogoLinkProps, StyledButtonProps } from '@/types/styles/components';
 import styled from "@emotion/styled";
 import Image from 'next/image';
 import Link from 'next/link';
 
-interface TitleProps
-{
+interface TitleProps {
     as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
     fontWeight?: number;
     fontSize?: number;
@@ -100,6 +99,8 @@ export const LogoLink = styled(Link) <LogoLinkProps>`
     position: relative;
     width: ${({ desktopwidth = 92 }) => `${desktopwidth}px`};
     height: ${({ desktopheight = 92 }) => `${desktopheight}px`};
+    width: ${({ desktopwidth = 92 }) => `${desktopwidth}px`};
+    height: ${({ desktopheight = 92 }) => `${desktopheight}px`};
     
     @media ${({ theme }) => theme.media.large} {
         width: ${({ width = 44 }) => `${width}px`};
@@ -128,7 +129,7 @@ export const StyledIconWrapper = styled.div`
     }
 `;
 
-export const LogoLinkImage = styled(Image) <LogoLinkImageProps>`
+export const LogoLinkImage = styled(Image) <LogoLinkProps>`
     width: 100%;
     height: 100%;
 `;
