@@ -3,10 +3,6 @@ import styled from "@emotion/styled";
 import { BenefitsGapProps, Level } from "@/types/layouts/Benefits";
 import { Title } from "@/styles/components";
 
-export const PageTitle = styled.title`
-    text-transform: uppercase;
-`
-
 export const BenefitsTitle = styled(Title)`
     font: ${({ theme }) => theme.fonts.titleH2SemiBold};
     text-transform: uppercase;
@@ -88,16 +84,9 @@ export const BenefitsItem = styled(Box) <BenefitsGapProps>`
     }
 
     @media ${({ theme }) => theme.media.small}  {
-        :nth-child(1) {
+        :nth-child(1), :nth-child(2), :nth-child(3) {
             width: 100%;
         }
-        :nth-child(2) {
-            width: 100%;
-        }
-        :nth-child(3) {
-            width: 100%;
-        }
-
         gap: ${({ gapSm = "8px" }) => gapSm}
     }
 `
@@ -150,7 +139,7 @@ export const BenefitsAccordionStyled = styled(Accordion) <{ level: Level }>`
             display: none;
         }
 
-        padding: ${({ theme }) => theme.spacing.small} 10px 0px;
+        padding: 8px 32px;
     }
 `;
 

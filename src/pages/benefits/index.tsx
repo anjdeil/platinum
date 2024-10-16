@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { BenefitsLayout, BenefitsTitle, BenefitsPrice, BenefitsItem, BenefitsAccordionStyled, CustomAccordionSummary, AccordionTitle, AccordionHeader, BenefitsInfo, BenefitsAccordionDetails } from './styles'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useMediaQuery } from '@mui/material';
@@ -6,9 +6,9 @@ import { CustomSvgMarker } from '@/components/Common/Icons/CustomSvgMarker/Custo
 import { CustomList } from '@/components/shared/List/List';
 import { BenefitsProps, loyaltyDescriptionSchema } from '@/types/layouts/Benefits';
 import { useAppSelector } from "@/store";
-import { z } from 'zod';
+import Head from "next/head";
 
-export function BenefitsAccordion({ gapMedium, gapLg, gapSm }: BenefitsProps) {
+export default function BenefitsAccordion({ gapSm, gapMedium, gapLg }: BenefitsProps) {
     const isMobile = useMediaQuery('(max-width: 768px)');
     const [expanded, setExpanded] = useState<string | false>(!isMobile ? 'expanded' : false);
 
@@ -19,10 +19,6 @@ export function BenefitsAccordion({ gapMedium, gapLg, gapSm }: BenefitsProps) {
     const themeOptions = useAppSelector(state => state.themeOptions);
 
     const data = themeOptions.data.item.loyalty_options;
-
-    if (data) {
-        console.log(data)
-    }
 
     const validateLoyaltyData = (data: any) => {
         try {
@@ -48,13 +44,13 @@ export function BenefitsAccordion({ gapMedium, gapLg, gapSm }: BenefitsProps) {
 
 
     return (<>
-        <head>
+        <Head>
             <title>LOYALTY PROGRAM</title>
             <meta charSet="utf-8" />
             <meta
                 name="description"
                 content="The description that i didn't uploaded from data" />
-        </head>
+        </Head>
         <main>
             <BenefitsLayout gapLg={gapLg} gapMedium={gapLg}>
                 <BenefitsItem gapSm={gapSm} gapMedium={gapMedium}>

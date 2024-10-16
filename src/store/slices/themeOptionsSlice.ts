@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ThemeOptionsType } from '@/types/services/customApi/ThemeOptions';
-import { LangParamType } from '@/types/services';
 
 const initialState: ThemeOptionsType = {
   success: false,

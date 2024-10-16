@@ -8,12 +8,10 @@ import { createContext, useEffect, useState } from 'react';
 import TopBar from '../Layouts/TopBar/TopBar';
 import Header from '../Layouts/Header/Header';
 import MobileHeader from '../Layouts/MobileHeader/MobileHeader';
-import { PopupContainer } from '../Popups/MobilePopup/styles';
 import BottomMenu from '../Layouts/BottomMenu';
 import { Footer } from '../Layouts/Footer';
 import { setThemeOptions } from '@/store/slices/themeOptionsSlice';
 import { useDispatch } from 'react-redux';
-import { BenefitsAccordion } from '@/pages/benefits';
 
 export const MenusContext = createContext<WpMenuResponseType[] | []>([]);
 const currency = 'USD';

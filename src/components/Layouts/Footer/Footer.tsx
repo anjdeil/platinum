@@ -1,7 +1,7 @@
 import { useMediaQuery } from '@mui/material';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { FC, useContext, useState } from 'react';
+import { FC, useState } from 'react';
 import { AccordionDetailsSlider, AccordionSummaryCustom, Contact, ContactLink, FooterAccordion, FooterColumn, FooterContainer, FooterGridContainer, FooterLogoImage, FooterLogoWrapper, FooterMainContentWrapper, FooterSecondTitle, FooterTitle, FooterWrapper, PaymentAndDeliveryMethods, PaymentAndDeliveryMethodsContainer, } from './styles';
 import Link from 'next/link';
 import Image from 'next/image';
