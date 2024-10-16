@@ -32,14 +32,14 @@ const TopBar: React.FC = () =>
                     />
                 </NavWrapper>
                 <SelectsWrapper>
-                     <LanguageSelect />
-                     <CurrencySelect />
+                    <LanguageSelect />
+                    <CurrencySelect />
                 </SelectsWrapper>
                 <BurgerButtonWrapper>
                     <BurgerButton />
                 </BurgerButtonWrapper>
                 <ButtonWrapper>
-                  <StyledButton height='42px'>Call us</StyledButton>
+                    <StyledButton height='42px'>Call us</StyledButton>
                 </ButtonWrapper>
             </Stack>
         </div>

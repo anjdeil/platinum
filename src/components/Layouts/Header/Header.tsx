@@ -7,8 +7,8 @@ import { HeaderContainer, HeaderContent, HeaderIcons, HeaderNav, HeaderSearch, H
 const Header: React.FC = () =>
 {
     return (
-        <HeaderWrapper >
-            <HeaderContainer className='container'>
+        <HeaderWrapper>
+            <HeaderContainer>
                 <HeaderNav>
                     <Nav
                         menuId={344}

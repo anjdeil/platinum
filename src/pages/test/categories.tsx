@@ -3,7 +3,7 @@ import { useGetCategoriesQuery } from "@/store/rtk-queries/wpCustomApi";
 import { LangParamType } from "@/types/services/wpCustomApi";
 import CategoryType from "@/types/shop/categories";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Categories()
 {
