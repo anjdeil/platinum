@@ -10,10 +10,20 @@ export interface TitleProps
 export const StyledButtonPropsSchema = z.object({
     width: z.string().optional(),
     height: z.string().optional(),
+    minWidthTablet: z.string().optional(),
+    minWidthDesktop: z.string().optional(),
     color: z.string().optional(),
     backgroundColor: z.string().optional(),
     hoverColor: z.string().optional(),
     hoverBackgroundColor: z.string().optional(),
+});
+
+export const LogoLinkImagePropsSchema = z.object({
+    width: z.number().optional(),
+    height: z.number().optional(),
+    desktopwidth: z.number().optional(),
+    desktopheight: z.number().optional(),
+    children: z.any().optional(),
 });
 
 export const LogoLinkPropsSchema = z.object({
@@ -26,3 +36,4 @@ export const LogoLinkPropsSchema = z.object({
 
 export type LogoLinkProps = z.infer<typeof LogoLinkPropsSchema>;
 export type StyledButtonProps = z.infer<typeof StyledButtonPropsSchema>;
+export type LogoLinkImageProps = z.infer<typeof LogoLinkImagePropsSchema>;

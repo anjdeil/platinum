@@ -3,17 +3,23 @@ import Link from 'next/link';
 import { FC } from 'react';
 import { HeaderWrapper } from '../Header/styles';
 import MobileSearchButton from '../MobileSearchButton/MobileSearchButton';
-import { IconButton, LogoWrapper, MobileHeaderContainer, SearchWrapper } from './styles';
+import { IconButton, MobileHeaderContainer, SearchWrapper } from './styles';
+import { LogoLink, LogoLinkImage } from '../TopBar/styles';
 
-const MobileHeader: FC = () => {
+const MobileHeader: FC = () =>
+{
     return (
         <HeaderWrapper>
-            <MobileHeaderContainer className='container'>
-                <LogoWrapper>
-                    <Link href={'/'} passHref>
-                        <Image src="/assets/icons/logo_white.svg" alt="Logo" width={54} height={48} unoptimized={true} />
-                    </Link>
-                </LogoWrapper>
+            <MobileHeaderContainer>
+                <LogoLink href={'/'}>
+                    <LogoLinkImage
+                        src="/assets/images/logo_white.png"
+                        alt="Logo"
+                        priority
+                        width={44}
+                        height={44}
+                    />
+                </LogoLink>
                 <SearchWrapper>
                     <MobileSearchButton />
                 </SearchWrapper>

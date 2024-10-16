@@ -1,13 +1,19 @@
-import { LogoLinkProps, StyledButtonProps } from '@/types/styles/components';
 import styled from "@emotion/styled";
 import Image from 'next/image';
 import Link from 'next/link';
+import { AccountInfoWrapperProps } from '@/types/layouts/Account';
+import { LogoLinkImageProps, LogoLinkProps, StyledButtonProps } from '@/types/styles/components';
 
 interface TitleProps
 {
     as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
     fontWeight?: number;
-    fontSize: number;
+    fontSize?: number;
+    textAlign?: "center" | "left" | "right";
+    uppercase?: boolean;
+    marginBottom?: number;
+    tabletMarginBottom?: number;
+    mobMarginBottom?: number;
 }
 
 export const Title = styled.h1<TitleProps>`
@@ -16,8 +22,36 @@ export const Title = styled.h1<TitleProps>`
     font-weight: ${({ fontWeight = 600 }) => fontWeight};
 `;
 
-const Container = styled.div`
+export const AccountTitle = styled.h2<TitleProps>`
+    color: ${({ theme }) => theme.colors.black};
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 600;
+    text-align: center;
+    text-transform: ${({ uppercase }) => uppercase ? "uppercase" : 'none'};
+    margin-top: 24px;
+    margin-bottom: ${({ marginBottom = 48 }) => marginBottom}px;
+
+    @media ${({ theme }) => theme.media.large} {
+        font-size: 16px;
+        line-height: 24px;
+        margin-bottom: ${({ tabletMarginBottom = 24 }) => tabletMarginBottom}px;
+    }
+
+    @media ${({ theme }) => theme.media.medium} {
+        margin-bottom: ${({ mobMarginBottom = 24 }) => mobMarginBottom}px;
+    }
+`;
+
+export const Container = styled.div`
+    box-sizing: content-box;
     margin: 0 auto;
+    padding: 0 32px;
+    max-width: 1280px;
+
+    @media ${({ theme }) => theme.media.medium} {
+        padding: 0 20px;
+    }
 `;
 
 export const StyledButton = styled.button<StyledButtonProps>`
@@ -29,6 +63,13 @@ export const StyledButton = styled.button<StyledButtonProps>`
     background-color: ${({ backgroundColor = 'transparent' }) => backgroundColor};
     font-size: 14px;
     line-height: 20px;
+    min-width: ${({ minWidthDesktop = 'auto' }) => minWidthDesktop};    
+    padding: 16px;
+    border-radius: 10px;
+    color: ${({ theme, color = theme.colors.black }) => color};
+    background-color: ${({ backgroundColor = 'transparent' }) => backgroundColor};
+    line-height: 24px;
+    font-size: 16px;
     font-weight: 400;
     text-transform: none;
     border: ${({ theme }) => `1px solid ${theme.colors.secondary}`};
@@ -64,8 +105,6 @@ export const LogoLink = styled(Link) <LogoLinkProps>`
     position: relative;
     width: ${({ desktopwidth = 92 }) => `${desktopwidth}px`};
     height: ${({ desktopheight = 92 }) => `${desktopheight}px`};
-    width: ${({ desktopwidth = 92 }) => `${desktopwidth}px`};
-    height: ${({ desktopheight = 92 }) => `${desktopheight}px`};
     
     @media ${({ theme }) => theme.media.large} {
         width: ${({ width = 44 }) => `${width}px`};
@@ -76,30 +115,28 @@ export const LogoLink = styled(Link) <LogoLinkProps>`
 export const StyledIconWrapper = styled.div`
     flex-shrink: 0;
     width: 40px;
-    height: 40px;
+    aspect-ratio: 1;
     display: flex;
 
     & svg {
         width: 100%;
-        height: 100%;
+        object-fit: cover;
     }
 
     @media ${({ theme }) => theme.media.large} {
         width: 24px;
-        height: 24px;
     }
     @media ${({ theme }) => theme.media.medium} {
         width: 40px;
-        height: 40px;
     }
 `;
 
-export const LogoLinkImage = styled(Image) <LogoLinkProps>`
+export const LogoLinkImage = styled(Image) <LogoLinkImageProps>`
     width: 100%;
-    height: 100%;
+    aspect-ratio: 1;
 `;
 
-export const AccountInfoWrapper = styled.div`
+export const AccountInfoWrapper = styled.div<AccountInfoWrapperProps>`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -112,7 +149,7 @@ export const AccountInfoWrapper = styled.div`
     }
 
     @media ${({ theme }) => theme.media.medium} {
-        flex-direction: column-reverse;
+        flex-direction: ${({ mobileReverse = false }) => mobileReverse ? 'column-reverse' : 'column'};
         margin-bottom: 64px;
     }
 `;

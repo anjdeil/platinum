@@ -14,7 +14,7 @@ export const SortSelectStyled = styled.div<MenuProps>`
     align-items: center;
     padding: 4px;
     font-size: 16px;
-    line-height: 24px;
+    line-height: 1.5;
     font-weight: 400;
     cursor: pointer;
 `;
