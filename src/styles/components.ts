@@ -1,7 +1,9 @@
-import { StyledButtonProps } from '@/types/styles/components';
+import { AccountInfoWrapperProps } from '@/types/layouts/Account';
+import { LogoLinkImageProps, LogoLinkProps, StyledButtonProps } from '@/types/styles/components';
 import styled from "@emotion/styled";
 
-interface TitleProps {
+interface TitleProps
+{
     as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
     fontWeight?: number;
     fontSize: number;
@@ -26,6 +28,13 @@ export const StyledButton = styled.button<StyledButtonProps>`
     background-color: ${({ backgroundColor = 'transparent' }) => backgroundColor};
     font-size: 14px;
     line-height: 20px;
+    min-width: ${({ minWidthDesktop = 'auto' }) => minWidthDesktop};    
+    padding: 16px;
+    border-radius: 10px;
+    color: ${({ theme, color = theme.colors.black }) => color};
+    background-color: ${({ backgroundColor = 'transparent' }) => backgroundColor};
+    line-height: 24px;
+    font-size: 16px;
     font-weight: 400;
     text-transform: none;
     border: ${({ theme }) => `1px solid ${theme.colors.secondary}`};
@@ -54,4 +63,58 @@ export const StyledIconButton = styled.button`
   display: flex;
   cursor: pointer;
   position: relative;
+`;
+
+export const LogoLink = styled(Link) <LogoLinkProps>`
+    display: flex;
+    position: relative;
+    width: ${({ desktopwidth = 92 }) => `${desktopwidth}px`};
+    height: ${({ desktopheight = 92 }) => `${desktopheight}px`};
+    
+    @media ${({ theme }) => theme.media.large} {
+        width: ${({ width = 44 }) => `${width}px`};
+        height: ${({ height = 44 }) => `${height}px`};
+    }
+`;
+
+export const StyledIconWrapper = styled.div`
+    flex-shrink: 0;
+    width: 40px;
+    aspect-ratio: 1;
+    display: flex;
+
+    & svg {
+        width: 100%;
+        object-fit: cover;
+    }
+
+    @media ${({ theme }) => theme.media.large} {
+        width: 24px;
+    }
+    @media ${({ theme }) => theme.media.medium} {
+        width: 40px;
+    }
+`;
+
+export const LogoLinkImage = styled(Image) <LogoLinkImageProps>`
+    width: 100%;
+    aspect-ratio: 1;
+`;
+
+export const AccountInfoWrapper = styled.div<AccountInfoWrapperProps>`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 80px;
+   
+    @media ${({ theme }) => theme.media.large} {
+        margin-bottom: 24px;
+    }
+
+    @media ${({ theme }) => theme.media.medium} {
+        flex-direction: ${({ mobileReverse = false }) => mobileReverse ? 'column-reverse' : 'column'};
+        margin-bottom: 64px;
+    }
 `;

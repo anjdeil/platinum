@@ -44,7 +44,10 @@ const theme: Theme = {
     background: {
         secondary: '#f2f8fe',
         hover: '#063e7b',
-        formElements: '#f2f8fe',
+        skeleton: 'linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%)',
+        grey: '#BEBEBE',
+        success: '#17AA40',
+        warning: '#F2B517'
     },
     spacing: {
         small: '8px',
@@ -54,6 +57,7 @@ const theme: Theme = {
     media: {
         small: '(max-width: 430px)',
         medium: '(max-width: 768px)',
+        mediumLarge: '(max-width: 900px)',
         large: '(max-width: 1024px)',
         middle: '(max-width: 1100px)',
         xl: '(max-width: 1200px)',

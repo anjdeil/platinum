@@ -13,6 +13,8 @@ const rootReducer = combineReducers({
     currencySlice: currencySlice,
     themeOptions: themeOptionsSlice,
     popup: PopupSlice,
+    currentCurrency: currencySlice,
+    Popup: PopupSlice,
 });
 
 export const setupStore = () =>

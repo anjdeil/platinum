@@ -1,10 +1,10 @@
 import Layout from "@/components/Layout/Layout";
 import { setupStore } from "@/store";
 import GlobalStyle from '@/styles/global';
+import muiTheme from "@/styles/muiTheme";
 import theme from '@/styles/theme';
 import { ThemeProvider as EmotionThemeProvider } from '@emotion/react';
 import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
-import muiTheme from "@/styles/muiTheme";
 import { NextIntlClientProvider } from 'next-intl';
 import App, { AppContext, AppProps } from 'next/app';
 import { useRouter } from 'next/router';
@@ -20,16 +20,16 @@ function MyApp({ Component, pageProps }: AppProps)
     return (
         <NextIntlClientProvider locale={locale} messages={pageProps.messages}>
             <Provider store={store}>
-                <EmotionThemeProvider theme={theme}>
+                <ThemeProvider theme={theme}>
                     <MuiThemeProvider theme={muiTheme}>
+                        <GlobalStyle />
                         <Layout>
-                            <GlobalStyle />
                             <Component {...pageProps} />
                         </Layout>
                     </MuiThemeProvider>
-                </EmotionThemeProvider>
-            </Provider>
-        </NextIntlClientProvider>
+                </ThemeProvider>
+            </Provider >
+        </NextIntlClientProvider >
     );
 }
 
