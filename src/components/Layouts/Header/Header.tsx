@@ -18,7 +18,7 @@ const Header: React.FC = () =>
                             height: "24px",
                             gap: '40px'
                         }}
-                        textTransform='uppercase'
+                        texttransform='uppercase'
                         justify='space-between'
                     />
                 </HeaderNav>

@@ -2,10 +2,11 @@ import styled from "@emotion/styled";
 
 export const NavWrap = styled.div`
     padding: 50px 0;
-    max-width: 200px;
+    max-width: fit-content;
     display: flex;
     flex-direction: column;
-    gap: 24px;    
+    gap: 24px;
+    min-height: min-content;
 `;
 
 export const SelectWrapper = styled.div`

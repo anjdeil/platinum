@@ -18,18 +18,22 @@ export const NavList = styled.ul<NavListProps>`
 
 export const NavLink = styled(Link) <NavLinkProps>`
     display: inline-block;
-    font-size: ${({ fontSizeMob = '14px' }) => fontSizeMob};    
+    font-size: ${({ fontsizemob = '14px' }) => fontsizemob};    
     font-weight: 400;
     line-height: 1.5em;
     text-decoration: none;
-    text-align: ${({ textAlign = "center" }) => textAlign};
+    text-align: ${({ textalign = "center" }) => textalign};
     transition: all 0.2s ease;
     color: ${({ theme, color = theme.colors.white }) => color};
-    text-transform: ${({ textTransform = 'none' }) => (textTransform)};
+    text-transform: ${({ texttransform = 'none' }) => (texttransform)};
+    transition: all 0.2s ease;
 
-    &:hover,
     &.active {
         font-weight: 600;
+    }
+
+    &:hover {
+        opacity: 0.7;
     }
 
     @media ${({ theme }) => theme.media.large} {

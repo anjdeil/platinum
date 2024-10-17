@@ -1,19 +1,22 @@
 import BurgerButton from '@/components/Common/Buttons/BurgerButton/BurgerButton';
 import CurrencySelect from '@/components/Common/Selects/CurrencySelect/CurrencySelect';
 import LanguageSelect from '@/components/Common/Selects/LanguageSelect/LanguageSelect';
-import { StyledButton } from '@/styles/components';
+import { Container, LogoLink, LogoLinkImage, StyledButton } from '@/styles/components';
 import { useTheme } from '@emotion/react';
+import { useTranslations } from 'next-intl';
 import React from 'react';
 import Nav from "../Nav/Nav";
-import { BurgerButtonWrapper, ButtonWrapper, LogoLink, LogoLinkImage, NavWrapper, SelectsWrapper, Stack } from './styles';
+import { BurgerButtonWrapper, ButtonWrapper, NavWrapper, SelectsWrapper, Stack } from './styles';
 
 const TopBar: React.FC = () =>
 {
     const theme = useTheme();
+    const t = useTranslations('TopBar');
+
     return (
-        <div className="container hideMobile">
+        <Container>
             <Stack>
-                <LogoLink href="/" passHref>
+                <LogoLink href="/" width={44} height={44} desktopwidth={92} desktopheight={92}>
                     <LogoLinkImage src="/assets/icons/logo.svg" alt="Logo" width={92} height={92} />
                 </LogoLink>
                 <NavWrapper>
@@ -39,10 +42,10 @@ const TopBar: React.FC = () =>
                     <BurgerButton />
                 </BurgerButtonWrapper>
                 <ButtonWrapper>
-                    <StyledButton height='42px'>Call us</StyledButton>
+                    <StyledButton minWidthTablet="104px" minWidthDesktop="200px">{t("CallUs")}</StyledButton>
                 </ButtonWrapper>
             </Stack>
-        </div>
+        </Container>
     )
 }
 

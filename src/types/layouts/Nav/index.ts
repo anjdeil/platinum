@@ -10,10 +10,10 @@ export const NavListPropsSchema = z.object({
 
 export const NavLinkPropsSchema = z.object({
     fontSize: z.string().optional(),
-    fontSizeMob: z.string().optional(),
+    fontsizemob: z.string().optional(),
     color: z.string().optional(),
-    textTransform: z.enum(['none', 'uppercase']).optional(),
-    textAlign: z.enum(['center', 'left']).optional(),
+    texttransform: z.enum(['none', 'uppercase']).optional(),
+    textalign: z.enum(['center', 'left']).optional(),
 });
 
 export type NavListProps = z.infer<typeof NavListPropsSchema>;

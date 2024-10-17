@@ -1,15 +1,14 @@
+import { AccountInfoWrapperProps } from '@/types/layouts/Account';
+import { LogoLinkImageProps, LogoLinkProps, StyledButtonProps } from '@/types/styles/components';
 import styled from "@emotion/styled";
 import Image from 'next/image';
 import Link from 'next/link';
-import { AccountInfoWrapperProps } from '@/types/layouts/Account';
-import { LogoLinkImageProps, LogoLinkProps, StyledButtonProps } from '@/types/styles/components';
 
-interface TitleProps
-{
+interface TitleProps {
     as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
     fontWeight?: number;
     fontSize?: number;
-    textAlign?: "center" | "left" | "right";
+    textalign?: "center" | "left" | "right";
     uppercase?: boolean;
     marginBottom?: number;
     tabletMarginBottom?: number;
@@ -57,19 +56,14 @@ export const Container = styled.div`
 export const StyledButton = styled.button<StyledButtonProps>`
     box-sizing: border-box;
     width: ${({ width = '100%' }) => width};
-    height: ${({ height = '48px' }) => height};
-    border-radius: 10px;
-    color: ${({ theme, color = theme.colors.black }) => color};
-    background-color: ${({ backgroundColor = 'transparent' }) => backgroundColor};
-    font-size: 14px;
-    line-height: 20px;
     min-width: ${({ minWidthDesktop = 'auto' }) => minWidthDesktop};    
-    padding: 16px;
+    padding-inline: 16px;
     border-radius: 10px;
     color: ${({ theme, color = theme.colors.black }) => color};
     background-color: ${({ backgroundColor = 'transparent' }) => backgroundColor};
-    line-height: 24px;
-    font-size: 16px;
+    padding-block: 16px;
+    font-size: ${({ theme }) => theme.typography.fontSize};
+    line-height: 1.5em;
     font-weight: 400;
     text-transform: none;
     border: ${({ theme }) => `1px solid ${theme.colors.secondary}`};
@@ -85,9 +79,10 @@ export const StyledButton = styled.button<StyledButtonProps>`
     }
 
     @media ${({ theme }) => theme.media.large} {
-        height: 56px;
-        line-height: 24px;
-        font-size: 16px;
+        padding-block: 11px;
+        min-width: ${({ minWidthTablet = 'auto' }) => minWidthTablet};
+        font-size: 14px;
+        line-height: 1.5em;        
     }
 `;
 
@@ -133,7 +128,7 @@ export const StyledIconWrapper = styled.div`
 
 export const LogoLinkImage = styled(Image) <LogoLinkImageProps>`
     width: 100%;
-    aspect-ratio: 1;
+    height: 100%;
 `;
 
 export const AccountInfoWrapper = styled.div<AccountInfoWrapperProps>`
