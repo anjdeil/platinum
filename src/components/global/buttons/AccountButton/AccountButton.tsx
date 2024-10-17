@@ -1,5 +1,5 @@
 import { StyledIconButton } from '@/styles/components';
-import { IconButtonProps } from '@/types/layouts/Buttons';
+import { IconButtonProps } from '@/types/global/buttons/IconButton';
 
 export default function AccountButton({ color = "#fff" }: IconButtonProps) {  
   return (

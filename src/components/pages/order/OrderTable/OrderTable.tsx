@@ -1,6 +1,6 @@
 import OrderPdf from "@/pdf/OrderPdf";
 import { AccountTitle, StyledButton } from "@/styles/components";
-import { TableProps } from "@/types/layouts/Account";
+import { TableProps } from "@/types/pages/account";
 import { useTheme } from "@emotion/react";
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { useTranslations } from "next-intl";

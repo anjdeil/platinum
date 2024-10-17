@@ -1,6 +1,6 @@
 import { useResponsive } from '@/hooks/useResponsive';
 import { useGetMenusQuery, useGetProductsQuery, useGetThemeOptionsQuery } from '@/store/rtk-queries/wpCustomApi';
-import { WpMenuResponseType } from '@/types/layouts/Menus';
+import { WpMenuResponseType } from '@/types/menus/WpMenus';
 import { LangParamType } from '@/types/services/wpCustomApi';
 import Box from '@mui/material/Box';
 import { useRouter } from 'next/router';

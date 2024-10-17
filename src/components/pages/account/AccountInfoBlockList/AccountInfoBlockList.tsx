@@ -1,7 +1,7 @@
 import LoyaltyIcon from "@/components/global/icons/LoyaltyIcon/LoyaltyIcon";
 import MoneyBagIcon from "@/components/global/icons/MoneyBagIcon/MoneyBagIcon";
 import OrderIcon from "@/components/global/icons/OrderIcon/OrderIcon";
-import { AccountInfoBlockListProps } from "@/types/layouts/Account";
+import { AccountInfoBlockListProps } from "@/types/pages/account";
 import { MIN_TOTAL_TO_SILVER } from "@/utils/consts";
 import { useTheme } from "@emotion/react";
 import { useTranslations } from "next-intl";

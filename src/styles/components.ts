@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import Image from 'next/image';
 import Link from 'next/link';
-import { AccountInfoWrapperProps } from '@/types/layouts/Account';
+import { AccountInfoWrapperProps } from '@/types/pages/account';
 import { LogoLinkImageProps, LogoLinkProps, StyledButtonProps } from '@/types/styles/components';
 
 interface TitleProps

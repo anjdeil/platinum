@@ -1,4 +1,4 @@
-import { RegistrationFormSchema } from "@/types/layouts/forms/registrationForm";
+import { RegistrationFormSchema } from "@/types/pages/account/RegistrationForm/registrationForm";
 import { FC, forwardRef, useCallback, useImperativeHandle, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -7,7 +7,7 @@ import { WooCustomerReqType } from "@/types/services";
 import { CustomForm, FormWrapper } from "./styles";
 import { PhoneInput } from "react-international-phone";
 import 'react-international-phone/style.css';
-import { CustomInput } from "../../../global/inputs/CustomInput";
+import { CustomInput } from "../../../global/forms/CustomInput";
 
 interface RegistrationFormProps
 {

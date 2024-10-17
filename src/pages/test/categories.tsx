@@ -1,7 +1,7 @@
 import LanguageSwitcher from "@/components/lang/LanguageSwitcher";
 import { useGetCategoriesQuery } from "@/store/rtk-queries/wpCustomApi";
 import { LangParamType } from "@/types/services/wpCustomApi";
-import CategoryType from "@/types/shop/categories";
+import CategoryType from "@/types/pages/shop/categories";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 

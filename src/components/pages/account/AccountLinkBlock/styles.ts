@@ -1,4 +1,4 @@
-import { StyledInfoContainerProps } from "@/types/layouts/Account";
+import { StyledInfoContainerProps } from "@/types/pages/account";
 import styled from "@emotion/styled";
 import Link from "next/link";
 

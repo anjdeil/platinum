@@ -1,6 +1,6 @@
 import CurrencySelect from "@/components/global/selects/CurrencySelect/CurrencySelect";
 import Nav from "@/components/menus/Nav/Nav";
-import { PopupType } from "@/types/Popups/PopupType";
+import { PopupType } from "@/types/global/popups/PopupType";
 import { useTheme } from "@emotion/react";
 import { FC } from "react";
 import MobilePopup from "../MobilePopup/MobilePopup";

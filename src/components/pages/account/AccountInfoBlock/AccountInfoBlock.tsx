@@ -1,5 +1,5 @@
 import { StyledIconWrapper } from "@/styles/components";
-import { AccountInfoBlockProps } from "@/types/layouts/Account";
+import { AccountInfoBlockProps } from "@/types/pages/account";
 import { useTheme } from "@emotion/react";
 import { StyledInfoContainer, StyledInfoWrapper, StyledTitle, StyledValue } from "./styles";
 

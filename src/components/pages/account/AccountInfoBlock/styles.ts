@@ -1,4 +1,4 @@
-import { StyledInfoContainerProps, StyledTextPropsProps } from "@/types/layouts/Account";
+import { StyledInfoContainerProps, StyledTextPropsProps } from "@/types/pages/account";
 import styled from "@emotion/styled";
 
 export const StyledInfoContainer = styled.div<StyledInfoContainerProps>`

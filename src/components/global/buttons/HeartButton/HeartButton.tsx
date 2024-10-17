@@ -1,6 +1,6 @@
 import { StyledIconButton } from '@/styles/components';
-import { IconButtonProps } from '@/types/layouts/Buttons';
-import Badge from '../../Badge/Badge';
+import { IconButtonProps } from '@/types/global/buttons/IconButton';
+import Badge from '../Badge/Badge';
 
 export default function HeartButton({ count = 0, color = "#fff" }: IconButtonProps) {
   return (

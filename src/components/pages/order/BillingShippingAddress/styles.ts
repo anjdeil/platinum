@@ -1,4 +1,4 @@
-import { InfoLineProps } from "@/types/layouts/Account";
+import { InfoLineProps } from "@/types/pages/account";
 import styled from "@emotion/styled";
 
 export const InfoLine = styled.li<InfoLineProps>`

@@ -1,4 +1,4 @@
-import { ListWrapperProps } from "@/types/layouts/CategoriesMenu";
+import { ListWrapperProps } from "@/types/widgets/CategoriesMenu";
 import styled from "@emotion/styled";
 import Link from "next/link";
 

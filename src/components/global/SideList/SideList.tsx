@@ -1,5 +1,5 @@
 import ForwardArrow from "@/components/global/icons/ForwardArrow/ForwardArrow";
-import { SideListPropsType } from "@/types/layouts/SideList";
+import { SideListPropsType } from "@/types/global/SideList";
 import Link from "next/link";
 import { FC } from "react";
 import { List, SideListContainer, StyledListItem } from "./styles";

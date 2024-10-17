@@ -1,4 +1,4 @@
-import { IconButtonProps } from '@/types/layouts/Buttons';
+import { IconButtonProps } from '@/types/global/buttons/IconButton';
 
 const OrderHistoryIcon: React.FC<IconButtonProps> = () => {  
   return (

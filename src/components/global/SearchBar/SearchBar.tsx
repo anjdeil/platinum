@@ -1,4 +1,4 @@
-import { SearchBarProps } from '@/types/layouts/SearchBar';
+import { SearchBarProps } from '@/types/global/SearchBar';
 import Image from 'next/image';
 import { FC } from 'react';
 import { SearchForm, SearchIcon, SearchInput } from './styles';

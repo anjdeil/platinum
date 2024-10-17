@@ -1,4 +1,4 @@
-import { HeaderContainerProps, HeaderWrapperProps } from "@/types/layouts/Header";
+import { HeaderContainerProps, HeaderWrapperProps } from "@/types/widgets/Header";
 import styled from "@emotion/styled";
 
 export const HeaderWrapper = styled.div<HeaderWrapperProps>`

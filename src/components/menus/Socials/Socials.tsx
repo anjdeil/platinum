@@ -2,7 +2,7 @@ import { FC } from "react";
 import { SocialItemLink, SocialsContainer, SocialText } from "./styles";
 import Image from "next/image";
 import { useAppSelector } from "@/store";
-import { SocialsProps } from "@/types/layouts/Socials";
+import { SocialsProps } from "@/types/menus/Socials";
 
 export const Socials: FC<SocialsProps> = ({ iconscolor, text, margin, itemMargin }) => {
 

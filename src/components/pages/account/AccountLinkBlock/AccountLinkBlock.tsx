@@ -1,5 +1,5 @@
 import { StyledIconWrapper } from "@/styles/components";
-import { AccountLinkBlockProps } from "@/types/layouts/Account";
+import { AccountLinkBlockProps } from "@/types/pages/account";
 import { StyledInfoContainer, StyledInfoWrapper, StyledTitle } from "./styles";
 
 const AccountLinkBlock: React.FC<AccountLinkBlockProps> = ({ icon: Icon, title, href }) =>

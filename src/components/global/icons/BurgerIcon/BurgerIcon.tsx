@@ -1,4 +1,4 @@
-import { IconComponentProps } from '@/types/layouts/Buttons';
+import { IconComponentProps } from '@/types/global/buttons/IconButton';
 
 const BurgerIcon: React.FC<IconComponentProps> = ({ color = "#fff" }) =>
 {

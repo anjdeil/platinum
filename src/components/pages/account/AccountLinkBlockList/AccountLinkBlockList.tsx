@@ -1,4 +1,4 @@
-import { AccountInfoBlockLinkProps } from "@/types/layouts/Account";
+import { AccountInfoBlockLinkProps } from "@/types/pages/account";
 import React from "react";
 import AccountLinkBlock from "../AccountLinkBlock/AccountLinkBlock";
 import { StyledListContainer } from "./styles";

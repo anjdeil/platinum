@@ -1,7 +1,7 @@
 import BackArrow from "@/components/global/icons/BackArrow/BackArrow";
 import SideList from "@/components/global/SideList/SideList";
 import { useGetCategoriesQuery } from "@/store/rtk-queries/wpCustomApi";
-import CategoryType from "@/types/shop/categories";
+import CategoryType from "@/types/pages/shop/categories";
 import { useTheme } from "@emotion/react";
 import { useRouter } from "next/router";
 import { FC, useState } from "react";

@@ -1,6 +1,6 @@
 import { Accordion,  AccordionDetails,  AccordionSummary } from "@mui/material";
 import styled from "@emotion/styled";
-import { FooterContainerProps } from "@/types/layouts/Footer";
+import { FooterContainerProps } from "@/types/widgets/Footer";
 import Link from "next/link";
 import Image from "next/image";
 

@@ -1,4 +1,4 @@
-import { SearchFormProps, SearchInputProps } from "@/types/layouts/SearchBar";
+import { SearchFormProps, SearchInputProps } from "@/types/global/SearchBar";
 import styled from "@emotion/styled";
 
 export const SearchForm = styled.form<SearchFormProps>`

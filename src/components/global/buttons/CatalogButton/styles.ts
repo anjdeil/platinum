@@ -1,5 +1,5 @@
 import { StyledIconButton } from "@/styles/components";
-import { StyledCatalogButtonProps } from "@/types/layouts/Buttons/CatalogButton";
+import { StyledCatalogButtonProps } from "@/types/global/buttons/CatalogButton";
 import styled from "@emotion/styled";
 
 export const StyledCatalogButton = styled(StyledIconButton) <StyledCatalogButtonProps>`

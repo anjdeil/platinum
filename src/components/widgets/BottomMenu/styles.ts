@@ -1,4 +1,4 @@
-import { BottomMenuWrapperProps } from "@/types/layouts/BottomMenu";
+import { BottomMenuWrapperProps } from "@/types/widgets/BottomMenu";
 import styled from "@emotion/styled";
 
 export const BottomMenuWrapper = styled.div<BottomMenuWrapperProps>`
