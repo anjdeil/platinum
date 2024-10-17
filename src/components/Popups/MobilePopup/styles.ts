@@ -12,7 +12,7 @@ export const PopupContainer = styled.div<PopupContainerProps>`
     background-color: ${({ theme, backgroundColor = theme.background.secondary }) => backgroundColor};
     width: ${({ width = '70%' }) => width};
     padding-top: ${({ paddingTop = '0' }) => paddingTop};
-    top: ${({ scroll = 0 }) => (scroll ? Math.max(0, 137 - scroll) : 137)}px;
+    top: ${({ scroll = 0 }) => (scroll ? Math.max(0, 140 - scroll) : 140)}px;
     left: 0;
     bottom: 0;
     display: grid;

@@ -17,21 +17,17 @@ const IconButton: React.FC<IconButtonProps> = ({
     </>
   );
 
-  if (href) {
-    return (
-      <Link href={href} passHref>
-        <StyledIconButton>
-          {ButtonContent}
-        </StyledIconButton>
-      </Link>
-    );
-  }
-
-  return (
+  const IconButtonWrapper = href ? (
+    <Link href={href} passHref>
+      <StyledIconButton>{ButtonContent}</StyledIconButton>
+    </Link>
+  ) : (
     <StyledIconButton onClick={onClick}>
       {ButtonContent}
     </StyledIconButton>
   );
+
+  return IconButtonWrapper;
 }
 
 
