@@ -4,7 +4,7 @@ export const SocialsContainerPropsSchema = z.object({
     margin: z.string().optional(),
 });
 export const SocialItemLinkPropsSchema = z.object({
-    itemMargin: z.string().optional(),
+    itemmargin: z.string().optional(),
 });
 
 const SocialsPropsSchema = z.object({

@@ -31,17 +31,13 @@ export const StyledHead = styled.thead`
 
     & tr, 
     & th {
-        font-size: 16px;
-        line-height: 1.5;
-        font-weight: 400;       
+       font: ${({ theme }) => theme.fonts.bodyMiddleReg};
     }
 
     @media ${({ theme }) => theme.media.large} {
         & tr, 
         & th {
-            font-size: 12px;
-            line-height: 1.33;
-            font-weight: 400; 
+            font: ${({ theme }) => theme.fonts.bodysmallReg};
         }         
     }
 
@@ -166,24 +162,18 @@ export const StyledNoAndDate = styled.div`
 `;
 
 export const StyledSpan = styled.span`
-    font-size: 16px;
-    line-height: 1.5;    
-    font-weight: 400;
+    font: ${({ theme }) => theme.fonts.bodyMiddleReg}; 
 
     @media ${({ theme }) => theme.media.large} {
-        font-size: 12px;
-        line-height: 1.33;
+        font: ${({ theme }) => theme.fonts.bodysmallReg}; 
     }
 `;
 
 export const StyledDateTd = styled(StyledTd)`
-    font-size: 16px;
-    line-height: 1.5;
+    font: ${({ theme }) => theme.fonts.bodyMiddleReg};
 
     @media ${({ theme }) => theme.media.large} {        
-        font-size: 12px;
-        line-height: 1.33;
-        font-weight: 400;
+        font: ${({ theme }) => theme.fonts.bodysmallReg};
     }
 
     @media ${({ theme }) => theme.media.mediumLarge} {        
@@ -194,9 +184,7 @@ export const StyledDateTd = styled(StyledTd)`
 export const StyledTotalSpan = styled.span`
     display: block;
     text-align: left;
-    font-size: 16px;
-    line-height: 1.5;
-    font-weight: 400;
+    font: ${({ theme }) => theme.fonts.bodyMiddleReg}; 
 
     @media ${({ theme }) => theme.media.large} {        
         font-size: 14px;
@@ -228,8 +216,7 @@ export const StyledOrderWrapper = styled.div`
 `;
 
 export const StyledOrderSpan = styled(StyledSpan)`
-    font-size: 16px;
-    line-height: 1.5;    
+    font: ${({ theme }) => theme.fonts.bodyMiddleReg};   
 
     @media ${({ theme }) => theme.media.large} {        
         font-size: 14px;
@@ -237,8 +224,7 @@ export const StyledOrderSpan = styled(StyledSpan)`
 
     @media ${({ theme }) => theme.media.mediumLarge} {
         text-transform: uppercase;
-        font-size: 12px;
-        line-height: 1.33;
+        font: ${({ theme }) => theme.fonts.bodysmallReg}; 
     }
 `;
 

@@ -1,18 +1,19 @@
 import { useResponsive } from '@/hooks/useResponsive';
 import { useGetMenusQuery, useGetProductsQuery, useGetThemeOptionsQuery } from '@/store/rtk-queries/wpCustomApi';
+import { setThemeOptions } from '@/store/slices/themeOptionsSlice';
 import { WpMenuResponseType } from '@/types/layouts/Menus';
 import { LangParamType } from '@/types/services/wpCustomApi';
 import Box from '@mui/material/Box';
 import { useRouter } from 'next/router';
 import { createContext, useEffect, useState } from 'react';
-import TopBar from '../Layouts/TopBar/TopBar';
-import { CategoriesMenu } from '../Layouts/CategoriesMenu';
-import MobileHeader from '../Layouts/MobileHeader/MobileHeader';
-import { Header, PopupContainer } from '../Popups/MobilePopup/styles';
-import BottomMenu from '../Layouts/BottomMenu';
-import { Footer } from '../Layouts/Footer';
-import { setThemeOptions } from '@/store/slices/themeOptionsSlice';
 import { useDispatch } from 'react-redux';
+import BottomMenu from '../Layouts/BottomMenu';
+import { CategoriesMenu } from '../Layouts/CategoriesMenu';
+import { Footer } from '../Layouts/Footer';
+import Header from '../Layouts/Header/Header';
+import MobileHeader from '../Layouts/MobileHeader/MobileHeader';
+import TopBar from '../Layouts/TopBar/TopBar';
+import PopupContainer from '../Popups/PopupContainer/PopupContainer';
 
 export const MenusContext = createContext<WpMenuResponseType[] | []>([]);
 const currency = 'USD';
@@ -51,6 +52,7 @@ export default function Layout({ children }: { children: React.ReactNode })
             <MenusContext.Provider value={menus}>
                 {!isMobile && <TopBar />}
                 {!isMobile ? <Header /> : <MobileHeader />}
+                <PopupContainer />  
                 {isMobile && (<BottomMenu />)}
                 {children}
                 <Footer />

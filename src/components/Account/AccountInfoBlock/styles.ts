@@ -47,35 +47,29 @@ export const StyledInfoWrapper = styled.div`
 `;
 
 export const StyledTitle = styled.span<StyledTextPropsProps>`
+    font: ${({ theme }) => theme.fonts.bodyMiddleReg};
     font-size: 14px;
-    line-height: 1.5;
-    font-weight: 400;
     text-align: center;
     hyphens: auto;
     color: ${({ color }) => color};
 
     @media ${({ theme }) => theme.media.large} {
-        font-size: 12px;
-        line-height: 1.33;
+        font: ${({ theme }) => theme.fonts.bodysmallReg};
     }
     @media ${({ theme }) => theme.media.medium} {
+        font: ${({ theme }) => theme.fonts.bodyMiddleReg};
         font-size: 14px;
-        line-height: 1.7;
     }
 `;
 
-export const StyledValue = styled.span<StyledTextPropsProps>`    
-    font-size: 24px;
-    line-height: 1.33;
-    font-weight: 500;
+export const StyledValue = styled.span<StyledTextPropsProps>`
+    font: ${({ theme }) => theme.fonts.titleH2Medium};
     color: ${({ color }) => color};
 
     @media ${({ theme }) => theme.media.large} {
-        font-size: 16px;
-        line-height: 1.5;
+        font: ${({ theme }) => theme.fonts.bodyMiddleMedium};
     }
     @media ${({ theme }) => theme.media.medium} {
-        font-size: 24px;
-        line-height: 1.33;
+        font: ${({ theme }) => theme.fonts.titleH2Medium};
     }
 `;

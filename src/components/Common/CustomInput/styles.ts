@@ -10,9 +10,7 @@ const sharedStyles = (props: any) => `
     border: 1px solid transparent;
     transition: all 0.2s ease;
     color: ${props.theme.colors.black};
-    font-size: 16px;
-    line-height: 1.5;
-    font-weight: 400;
+    font: ${props.theme.fonts.bodyMiddleReg}; 
 
     &::placeholder {
         color: ${props.theme.colors.grey};
@@ -55,17 +53,13 @@ export const StyledInputWrapper = styled.div`
 `;
 
 export const StyledErrorText = styled.p`
-    font-size: 12px;
-    line-height: 1.33;
-    font-weight: 400;
+    font: ${({ theme }) => theme.fonts.bodysmallReg}; 
     color: ${({ theme }) => theme.colors.error};
     text-transform: uppercase;
 `
 
 export const StyledLabel = styled.label`
-    font-size: 16px;
-    line-height: 1.5;
-    font-weight: 400;
+    font: ${({ theme }) => theme.fonts.bodyMiddleReg}; 
     color: ${({ theme }) => theme.colors.black};
 `
 

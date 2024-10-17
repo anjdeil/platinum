@@ -14,7 +14,6 @@ export const StyledListItemSchema = z.object({
     fontSize: z.string().optional(),
     lineHeight: z.string().optional(),
     tabletFontSize: z.string().optional(),
-    tabletLineHeight: z.string().optional(),
     mobFontSize: z.string().optional(),
     mobLineHeight: z.string().optional(),
     fontWeight: z.number().optional(),

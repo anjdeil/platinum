@@ -1,7 +1,6 @@
-import React from 'react';
-import { Page, Text, View, Document, StyleSheet, Image, Link } from '@react-pdf/renderer';
-import getSubtotalByLineItems from '@/utils/getSubtotalByLineItems';
 import { OrderType } from '@/types/services';
+import getSubtotalByLineItems from '@/utils/getSubtotalByLineItems';
+import { Document, Link, Page, StyleSheet, Text, View } from '@react-pdf/renderer';
 
 const styles = StyleSheet.create({
     page: {
@@ -31,7 +30,7 @@ const styles = StyleSheet.create({
     },
     productTableColumn: {
         width: "20%",
-        textAlign: "right"
+        textalign: "right"
     },
     productImage: {
         width: 50,
@@ -60,7 +59,7 @@ const styles = StyleSheet.create({
     },
     splitLast: {
         width: "50%",
-        textAlign: "right"
+        textalign: "right"
     }
 });
 

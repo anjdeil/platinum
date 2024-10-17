@@ -1,13 +1,13 @@
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useMediaQuery } from '@mui/material';
 import AccordionDetails from '@mui/material/AccordionDetails';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { FC, useContext, useState } from 'react';
-import { AccordionDetailsSlider, AccordionSummaryCustom, Contact, ContactLink, FooterAccordion, FooterColumn, FooterContainer, FooterGridContainer, FooterLogoImage, FooterLogoWrapper, FooterMainContentWrapper, FooterSecondTitle, FooterTitle, FooterWrapper, PaymentAndDeliveryMethods, PaymentAndDeliveryMethodsContainer, } from './styles';
-import Link from 'next/link';
 import Image from 'next/image';
-import VerticalSlider from '../VerticalSliderMenu/VerticalSliderMenu';
-import Nav from '../Nav/Nav';
+import Link from 'next/link';
+import { FC, useState } from 'react';
 import { Socials } from '../../shared/Socials';
+import Nav from '../Nav/Nav';
+import VerticalSlider from '../VerticalSliderMenu/VerticalSliderMenu';
+import { AccordionDetailsSlider, AccordionSummaryCustom, Contact, ContactLink, FooterAccordion, FooterColumn, FooterContainer, FooterGridContainer, FooterLogoImage, FooterLogoWrapper, FooterMainContentWrapper, FooterSecondTitle, FooterTitle, FooterWrapper, PaymentAndDeliveryMethods, PaymentAndDeliveryMethodsContainer, } from './styles';
 
 export const Footer: FC = () => {
 
@@ -139,7 +139,7 @@ export const Footer: FC = () => {
                                     <p>Mon-Fri: from 9-00 to 18-00 <br />
                                         Sat-Sun day is a day off</p>
                                 </Contact>
-                                <Socials iconscolor='white' margin='16px 0 0 0' text={false} itemMargin='16px'/>
+                                <Socials iconscolor='white' margin='16px 0 0 0' text={false} itemmargin='16px'/>
                             </AccordionDetails>
                         </FooterAccordion>
                     </FooterColumn>

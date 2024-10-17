@@ -1,24 +1,17 @@
+import { Container } from "@/styles/components";
+import { HeaderWrapperProps } from "@/types/layouts/Header";
 import styled from "@emotion/styled";
 
-export const MobileHeaderContainer = styled.div`
+export const MobileHeaderWrapper = styled.div<HeaderWrapperProps>`
+    padding-block: 6px;
+    background: ${({ theme, backgroundColor = theme.background.primaryGradient }) => backgroundColor};
+`;
+
+export const MobileHeaderContainer = styled(Container)`
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 24px;
-    height: 60px;
-`;
-
-export const LogoWrapper = styled.div`
-    width: 54px;
-    height: 54px;
-    display: flex;
-    align-items: center;
-
-    & a {
-        width: 100%;
-        display: flex;
-        align-items: center;
-    }
 `;
 
 export const SearchWrapper = styled.div`

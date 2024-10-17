@@ -1,10 +1,10 @@
-import { FC } from "react";
-import { SocialItemLink, SocialsContainer, SocialText } from "./styles";
-import Image from "next/image";
 import { useAppSelector } from "@/store";
 import { SocialsProps } from "@/types/layouts/Socials";
+import Image from "next/image";
+import { FC } from "react";
+import { SocialItemLink, SocialsContainer, SocialText } from "./styles";
 
-export const Socials: FC<SocialsProps> = ({ iconscolor, text, margin, itemMargin }) => {
+export const Socials: FC<SocialsProps> = ({ iconscolor, text, margin, itemmargin }) => {
 
     const themeOptions = useAppSelector(state => state.themeOptions);
     const SocialItems = themeOptions.data.item.contacts.socials;
@@ -12,7 +12,7 @@ export const Socials: FC<SocialsProps> = ({ iconscolor, text, margin, itemMargin
     return (
         <SocialsContainer margin={margin}>
             {SocialItems && SocialItems.map(({ social, link }) => (
-                <SocialItemLink href={link} key={social} itemMargin={itemMargin}>
+                <SocialItemLink href={link} key={social} itemmargin={itemmargin}>
                     <Image
                         src={`/assets/icons/${iconscolor === 'dark' ? 'dark-' : ''}${social}.svg`}
                         alt={social}

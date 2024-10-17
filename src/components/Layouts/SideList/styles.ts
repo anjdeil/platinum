@@ -18,11 +18,11 @@ export const List = styled.ul<ListProps>`
 
 export const StyledListItem = styled.li<StyledListItemrops>`
     box-sizing: border-box;
-    /* background-color: transparent; */
     background-color: ${({ isActive, theme, hoverBackground = theme.colors.primary }) => isActive ? hoverBackground : 'transparent'};
-    font-size: ${({ fontSize = '16px' }) => fontSize};
-    line-height: ${({ lineHeight = '24px' }) => lineHeight};
-    font-weight: ${({ fontWeight = 400 }) => fontWeight};
+    font: ${({ theme }) => theme.fonts.bodyMiddleReg}; 
+    font-size: ${({ fontSize }) => fontSize};
+    line-height: ${({ lineHeight }) => lineHeight};
+    font-weight: ${({ fontWeight }) => fontWeight};
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -36,7 +36,7 @@ export const StyledListItem = styled.li<StyledListItemrops>`
 
     @media ${({ theme }) => theme.media.large} {
         font-size: ${({ tabletFontSize = '14px' }) => tabletFontSize};
-        line-height: ${({ tabletLineHeight = '24px' }) => tabletLineHeight};
+        line-height: ${({ tabletLineHeight }) => tabletLineHeight};
     }
 
     @media ${({ theme }) => theme.media.medium} {
@@ -50,11 +50,31 @@ export const StyledListItem = styled.li<StyledListItemrops>`
         padding: 16px;
         text-decoration: none;
         color: ${({ isActive, theme }) => isActive ? theme.colors.white : theme.colors.black};
-        transition: all 0.2s ease;
+        text-transform: uppercase;
+        font-size: ${({ fontSize = '16px' }) => fontSize};
+        line-height: ${({ lineHeight = '24px' }) => lineHeight};
+        font-weight: ${({ fontWeight = 400 }) => fontWeight};    
 
         @media ${({ theme }) => theme.media.large} {
             padding: 12px 16px;
+            font-size: ${({ tabletFontSize = '14px' }) => tabletFontSize};
+            line-height: ${({ tabletLineHeight = '24px' }) => tabletLineHeight};
         }
+
+        @media ${({ theme }) => theme.media.medium} {
+            font-size: ${({ mobFontSize = '14px' }) => mobFontSize};
+            line-height: ${({ mobLineHeight = '24px' }) => mobLineHeight};
+        }
+    }
+
+    & button {
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 8px;
     }
 
     &:hover {
@@ -62,6 +82,10 @@ export const StyledListItem = styled.li<StyledListItemrops>`
         & a,
         & button {
             color: ${({ theme, hoverColor = theme.colors.white }) => hoverColor};
+
+            & path {
+                fill: ${({ theme, hoverColor = theme.colors.white }) => hoverColor};
+            }
         }
     }
     

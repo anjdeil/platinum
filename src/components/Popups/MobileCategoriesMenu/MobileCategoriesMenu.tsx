@@ -18,6 +18,7 @@ const MobileCategoriesMenu: FC<MobileCategoriesMenuPropsType> = ({ onClose }) =>
     const categories = categoriesData?.data && categoriesData.data.items as CategoryType[];
     const router = useRouter();
     const theme = useTheme();
+    const scrollTop = window.scrollY;
     
     const renderTitle = (title: string) => (
         <TitleWrapper onClick={() => setParent(undefined)}>
@@ -66,6 +67,7 @@ const MobileCategoriesMenu: FC<MobileCategoriesMenuPropsType> = ({ onClose }) =>
 
     return (
         <MobilePopup
+            scroll={scrollTop}
             onClose={onClose}
             title={parent && renderTitle(parent.name)}
             backgroundColor={theme.colors.white}

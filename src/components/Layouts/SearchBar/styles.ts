@@ -16,7 +16,7 @@ export const SearchInput = styled.input<SearchInputProps>`
     background-color: ${({ theme, backgroundColor = theme.background.secondary }) => backgroundColor};
     border: none;
     outline: none;
-    line-height: 1.5em;
+    font: ${({ theme }) => theme.fonts.bodyMiddleReg}; 
     box-shadow: none;
     flex: 1;
 
