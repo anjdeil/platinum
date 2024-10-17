@@ -12,7 +12,7 @@ export const NavList = styled.ul<NavListProps>`
     align-items: ${({ align = "center" }) => align};
 
     @media (max-width: 1200px) {
-        gap: ${({ mobGap = "20px" }) => mobGap};
+        gap: ${({ mobGap = "24px" }) => mobGap};
     }
 `;
 

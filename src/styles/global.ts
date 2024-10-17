@@ -6,7 +6,6 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     margin: 0;
     scrollbar-width: 4px;    
-    scrollbar-gutter: stable; 
 
     @media (min-width: 1024px) {
         scrollbar-width: 8px;
@@ -35,6 +34,7 @@ input[type="search"]::-webkit-search-results-decoration {
 html {
     line-height: 1.15;
     -webkit-text-size-adjust: 100%;
+    scrollbar-gutter: stable; 
 }
 
 body {

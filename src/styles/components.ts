@@ -82,14 +82,6 @@ export const StyledButton = styled.button<StyledButtonProps>`
     }
 `;
 
-export const StyledIconButton = styled.button`
-  background-color: transparent;
-  border: none;
-  display: flex;
-  cursor: pointer;
-  position: relative;
-`;
-
 export const LogoLink = styled(Link) <LogoLinkProps>`
     display: flex;
     position: relative;
