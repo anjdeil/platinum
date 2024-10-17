@@ -87,7 +87,6 @@ export const StyledButton = styled.button<StyledButtonProps>`
 `;
 
 export const StyledIconButton = styled.button`
-  padding: 8px;
   background-color: transparent;
   border: none;
   display: flex;

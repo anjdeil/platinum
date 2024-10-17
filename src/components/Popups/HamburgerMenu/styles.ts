@@ -12,5 +12,6 @@ export const NavWrap = styled.div`
 export const SelectWrapper = styled.div`
     display: flex;
     justify-content: space-between;
+    gap: 24px;
     align-items: center;
 `;

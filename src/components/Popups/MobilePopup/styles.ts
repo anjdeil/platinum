@@ -9,18 +9,19 @@ export const Overlay = styled.div`
 
 export const PopupContainer = styled.div<PopupContainerProps>`
     position: fixed;
-    background-color: ${({ theme }) => theme.background.secondary};
+    background-color: ${({ theme, backgroundColor = theme.background.secondary }) => backgroundColor};
     width: ${({ width = '70%' }) => width};
-    top: ${({ scroll = 0 }) => (scroll ? Math.max(0, 136 - scroll) : 136)}px;
+    padding-top: ${({ paddingTop = '0' }) => paddingTop};
+    top: ${({ scroll = 0 }) => (scroll ? Math.max(0, 137 - scroll) : 137)}px;
     left: 0;
     bottom: 0;
     display: grid;
-    z-index: 1100;
+    z-index: 100;
 
     @media ${({ theme }) => theme.media.medium} {
         top: ${({ scroll = 0 }) => (scroll ? Math.max(0, 60 - scroll) : 60)}px;
         bottom: 60px;
-        grid-template-rows: 60px 1fr;
+        grid-template-rows: ${({ title }) => title === '' ? '1fr' : '40px 1fr'};
         overflow: auto;
     }
 `;
@@ -37,7 +38,7 @@ export const Header = styled.div`
 `;
 
 export const Title = styled.div`
-    font: ${({ theme }) => theme.fonts.titleH2Medium};
+    font-size: 1.5rem;
 `;
 
 export const Content = styled.div`

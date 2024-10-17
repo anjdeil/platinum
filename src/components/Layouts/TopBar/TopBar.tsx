@@ -1,6 +1,10 @@
-import BurgerButton from '@/components/Common/Buttons/BurgerButton/BurgerButton';
+import IconButton from '@/components/Common/Buttons/IconButton/IconButton';
+import BurgerIcon from '@/components/Common/Icons/BurgerIcon/BurgerIcon';
+import BurgerIconActive from '@/components/Common/Icons/BurgerIconActive/BurgerIconActive';
 import CurrencySelect from '@/components/Common/Selects/CurrencySelect/CurrencySelect';
 import LanguageSelect from '@/components/Common/Selects/LanguageSelect/LanguageSelect';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { popupToggle } from '@/store/slices/PopupSlice';
 import { Container, LogoLink, LogoLinkImage, StyledButton } from '@/styles/components';
 import { useTheme } from '@emotion/react';
 import { useTranslations } from 'next-intl';
@@ -10,7 +14,9 @@ import { BurgerButtonWrapper, ButtonWrapper, NavWrapper, SelectsWrapper, Stack }
 
 const TopBar: React.FC = () =>
 {
+    const dispatch = useAppDispatch();
     const theme = useTheme();
+    const popup = useAppSelector(state => state.Popup);
     const t = useTranslations('TopBar');
 
     return (
@@ -39,7 +45,7 @@ const TopBar: React.FC = () =>
                     <CurrencySelect />
                 </SelectsWrapper>
                 <BurgerButtonWrapper>
-                    <BurgerButton />
+                    <IconButton onClick={() => dispatch(popupToggle('hamburger-menu'))} color={theme.colors.primary} IconComponent={popup === 'hamburger-menu' ? BurgerIconActive : BurgerIcon} />
                 </BurgerButtonWrapper>
                 <ButtonWrapper>
                     <StyledButton minWidthTablet="104px" minWidthDesktop="200px">{t("CallUs")}</StyledButton>

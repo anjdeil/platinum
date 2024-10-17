@@ -51,8 +51,8 @@ const theme: Theme = {
         grey: '#BEBEBE',
         success: '#17AA40',
         warning: '#F2B517',
-        primaryGradient: "",
-        infoGradient: "",
+        primaryGradient: "radial-gradient(79.43% 79.43% at 49.95% 64.07%, #024584 0%, #0B233D 100%)",
+        infoGradient: "radial-gradient(66.14% 66.14% at 49.95% 64.07%, #024584 0%, #0B233D 100%)",
         formElements: ""
     },
     spacing: {

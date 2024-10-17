@@ -1,4 +1,7 @@
-import HeaderIconButtons from '@/components/Common/Buttons/HeaderIconButtons/HeaderIconButtons';
+import IconButton from '@/components/Common/Buttons/IconButton/IconButton';
+import AccountIcon from '@/components/Common/Icons/AccountIcon/AccountIcon';
+import CartIcon from '@/components/Common/Icons/CartIcon/CartIcon';
+import HeartIcon from '@/components/Common/Icons/HeartIcon/HeartIcon';
 import React from 'react';
 import Nav from '../Nav/Nav';
 import SearchBar from '../SearchBar/SearchBar';
@@ -14,12 +17,12 @@ const Header: React.FC = () =>
                         menuId={344}
                         skeleton={{
                             elements: 4,
-                            width: "90px",
+                            width: "80px",
                             height: "24px",
-                            gap: '40px'
+                            gap: '24px'
                         }}
                         texttransform='uppercase'
-                        justify='space-between'
+                        justify='space-evenly'
                     />
                 </HeaderNav>
                 <HeaderContent>
@@ -27,7 +30,9 @@ const Header: React.FC = () =>
                         <SearchBar />
                     </HeaderSearch>
                     <HeaderIcons>
-                        <HeaderIconButtons />
+                        <IconButton href='/my-account' IconComponent={AccountIcon} />
+                        <IconButton count={3} IconComponent={CartIcon} />
+                        <IconButton count={2} IconComponent={HeartIcon} />
                     </HeaderIcons>
                 </HeaderContent>
             </HeaderContainer>

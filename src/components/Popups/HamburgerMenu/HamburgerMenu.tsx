@@ -9,8 +9,9 @@ import { NavWrap, SelectWrapper } from "./styles";
 
 const HamburgerMenu: FC<PopupType> = ({ onClose }) => {
     const theme = useTheme();
+    const scrollTop = window.scrollY;
     return (
-        <MobilePopup onClose={onClose}>
+        <MobilePopup onClose={onClose}  scroll={scrollTop}>
             <NavWrap>
                 <Nav
                     menuId={335}

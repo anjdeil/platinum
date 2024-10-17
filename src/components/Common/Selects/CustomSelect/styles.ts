@@ -8,9 +8,10 @@ export const CustomSelectStyled = styled.div<CustomSelectStyledProps>`
     border-radius: ${({ isOpen, borderRadius = '0' }) => (isOpen ? `${borderRadius} ${borderRadius} 0 0` : borderRadius)};
     color: ${({ theme, color = theme.colors.black }) => color};
     background: ${({ background = 'transparent' }) => background};
-    width: ${({ width = '100%' }) => width};
+    width: ${({ width = 'auto' }) => width};
     min-width: fit-content;
     display: flex;
+    gap: 8px;
     align-items: center;
     padding: ${({ padding = "4px" }) => padding};
     font: ${({ theme }) => theme.fonts.bodyMiddleReg};
@@ -43,6 +44,7 @@ export const MenuItem = styled.div<CustomSelectStyledProps>`
     justify-content: center;
     justify-content: ${({ allignItem = "center" }) => allignItem};
     align-items: center;
+    text-align: center;
     font: ${({ theme }) => theme.fonts.bodyMiddleReg};
     font-size: ${({ fontSize }) => fontSize};
     padding: ${({ padding = "4px" }) => padding};
