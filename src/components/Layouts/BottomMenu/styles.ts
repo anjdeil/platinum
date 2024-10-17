@@ -2,7 +2,7 @@ import { BottomMenuWrapperProps } from "@/types/layouts/BottomMenu";
 import styled from "@emotion/styled";
 
 export const BottomMenuWrapper = styled.div<BottomMenuWrapperProps>`
-  z-index: 2000;
+  z-index: 200;
   position: fixed;
   left: 0;
   right: 0;

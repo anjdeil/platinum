@@ -20,7 +20,7 @@ export const PopupContainer = styled.div<PopupContainerProps>`
 
     @media ${({ theme }) => theme.media.medium} {
         top: ${({ scroll = 0 }) => (scroll ? Math.max(0, 60 - scroll) : 60)}px;
-        bottom: 60px;
+        bottom: 80px;
         grid-template-rows: ${({ title }) => title === '' ? '1fr' : '40px 1fr'};
         overflow: auto;
     }
