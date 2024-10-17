@@ -16,24 +16,23 @@ interface TitleProps {
 }
 
 export const Title = styled.h1<TitleProps>`
-    color: black;
-    font-size: ${({ fontSize = 24 }) => fontSize}px;
-    font-weight: ${({ fontWeight = 600 }) => fontWeight};
+    color: ${({ theme }) => theme.colors.black};
+    font: ${({ theme }) => theme.fonts.titleH2SemiBold};
+    font-size: ${({ fontSize }) => fontSize};
+    font-weight: ${({ fontWeight }) => fontWeight};
+    text-transform: ${({ uppercase }) => uppercase ? "uppercase" : 'none'};
+    text-align: center;
+
+    @media ${({ theme }) => theme.media.large} {
+        font: ${({ theme }) => theme.fonts.bodyMiddleSemiBold};
+    }
 `;
 
-export const AccountTitle = styled.h2<TitleProps>`
-    color: ${({ theme }) => theme.colors.black};
-    font-size: 24px;
-    line-height: 32px;
-    font-weight: 600;
-    text-align: center;
-    text-transform: ${({ uppercase }) => uppercase ? "uppercase" : 'none'};
+export const AccountTitle = styled(Title) <TitleProps>`
     margin-top: 24px;
     margin-bottom: ${({ marginBottom = 48 }) => marginBottom}px;
 
     @media ${({ theme }) => theme.media.large} {
-        font-size: 16px;
-        line-height: 24px;
         margin-bottom: ${({ tabletMarginBottom = 24 }) => tabletMarginBottom}px;
     }
 
@@ -62,9 +61,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
     color: ${({ theme, color = theme.colors.black }) => color};
     background-color: ${({ backgroundColor = 'transparent' }) => backgroundColor};
     padding-block: 16px;
-    font-size: ${({ theme }) => theme.typography.fontSize};
-    line-height: 1.5em;
-    font-weight: 400;
+    font: ${({ theme }) => theme.fonts.bodyMiddleReg};
     text-transform: none;
     border: ${({ theme }) => `1px solid ${theme.colors.secondary}`};
     transition: all 0.3s ease;
@@ -82,7 +79,6 @@ export const StyledButton = styled.button<StyledButtonProps>`
         padding-block: 11px;
         min-width: ${({ minWidthTablet = 'auto' }) => minWidthTablet};
         font-size: 14px;
-        line-height: 1.5em;        
     }
 `;
 

@@ -18,9 +18,8 @@ export const NavList = styled.ul<NavListProps>`
 
 export const NavLink = styled(Link) <NavLinkProps>`
     display: inline-block;
-    font-size: ${({ fontsizemob = '14px' }) => fontsizemob};    
-    font-weight: 400;
-    line-height: 1.5em;
+    font: ${({ theme }) => theme.fonts.bodyMiddleReg}; 
+    font-size: ${({ fontSize }) => fontSize};
     text-decoration: none;
     text-align: ${({ textalign = "center" }) => textalign};
     transition: all 0.2s ease;

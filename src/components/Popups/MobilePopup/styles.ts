@@ -38,7 +38,7 @@ export const Header = styled.div`
 `;
 
 export const Title = styled.div`
-    font-size: 1.5rem;
+    font: ${({ theme }) => theme.fonts.bodyMiddleSemiBold}; 
 `;
 
 export const Content = styled.div`

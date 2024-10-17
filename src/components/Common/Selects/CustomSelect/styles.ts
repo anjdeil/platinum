@@ -16,6 +16,8 @@ export const CustomSelectStyled = styled.div<CustomSelectStyledProps>`
     padding: ${({ padding = "4px" }) => padding};
     font: ${({ theme }) => theme.fonts.bodyMiddleReg};
     font-size: ${({ fontSize }) => fontSize};
+    font: ${({ theme }) => theme.fonts.bodyMiddleReg};
+    font-size: ${({ fontSize }) => fontSize};
     cursor: pointer;
 
     @media ${({ theme }) => theme.media.large} {
