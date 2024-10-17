@@ -1,7 +1,7 @@
-import ChangePasswordIcon from "@/components/Common/Icons/ChangePasswordIcon/ChangePasswordIcon";
-import InformationIcon from "@/components/Common/Icons/InformationIcon/InformationIcon";
-import LogOutIcon from "@/components/Common/Icons/LogOutIcon/LogOutIcon";
-import OrderHistoryIcon from "@/components/Common/Icons/OrderHistoryIcon/OrderHistoryIcon";
+import ChangePasswordIcon from "@/components/global/icons/ChangePasswordIcon/ChangePasswordIcon";
+import InformationIcon from "@/components/global/icons/InformationIcon/InformationIcon";
+import LogOutIcon from "@/components/global/icons/LogOutIcon/LogOutIcon";
+import OrderHistoryIcon from "@/components/global/icons/OrderHistoryIcon/OrderHistoryIcon";
 
 export const MIN_TOTAL_TO_SILVER = 2500;
 

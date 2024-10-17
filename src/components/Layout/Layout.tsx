@@ -5,14 +5,15 @@ import { LangParamType } from '@/types/services/wpCustomApi';
 import Box from '@mui/material/Box';
 import { useRouter } from 'next/router';
 import { createContext, useEffect, useState } from 'react';
-import TopBar from '../Layouts/TopBar/TopBar';
-import { CategoriesMenu } from '../Layouts/CategoriesMenu';
-import MobileHeader from '../Layouts/MobileHeader/MobileHeader';
-import { Header, PopupContainer } from '../Popups/MobilePopup/styles';
-import BottomMenu from '../Layouts/BottomMenu';
-import { Footer } from '../Layouts/Footer';
+import { CategoriesMenu } from '../widgets/CategoriesMenu';
+import MobileHeader from '../widgets/MobileHeader/MobileHeader';
+import { Header, PopupContainer } from '../global/popups/MobilePopup/styles';
+import BottomMenu from '../widgets/BottomMenu';
+import { Footer } from '../widgets/Footer';
 import { setThemeOptions } from '@/store/slices/themeOptionsSlice';
 import { useDispatch } from 'react-redux';
+import TopBar from '../widgets/TopBar/TopBar';
+
 
 export const MenusContext = createContext<WpMenuResponseType[] | []>([]);
 const currency = 'USD';
@@ -28,7 +29,7 @@ export default function Layout({ children }: { children: React.ReactNode })
 
     const { data: menusResp, error, isLoading } = useGetMenusQuery(langParam);
     const { data: themeOptions, error: themeOptionsError, } = useGetThemeOptionsQuery();
-    const { data: products, error: productError, isError } = useGetProductsQuery(langParam);
+/*     const { data: products, error: productError, isError } = useGetProductsQuery(langParam); */
 
     useEffect(() =>
     {

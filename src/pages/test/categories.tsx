@@ -1,4 +1,4 @@
-import LanguageSwitcher from "@/components/Global/LanguageSwitcher";
+import LanguageSwitcher from "@/components/lang/LanguageSwitcher";
 import { useGetCategoriesQuery } from "@/store/rtk-queries/wpCustomApi";
 import { LangParamType } from "@/types/services/wpCustomApi";
 import CategoryType from "@/types/shop/categories";

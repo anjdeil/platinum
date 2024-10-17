@@ -1,4 +1,4 @@
-import LanguageSwitcher from '@/components/Global/LanguageSwitcher';
+import LanguageSwitcher from '@/components/lang/LanguageSwitcher';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
