@@ -16,10 +16,29 @@ interface ArchiveProps
 
 const pagesCount = 5;
 
-function changePagePagination(currentPage, maxPages)
+function switchPage(currentPage, maxPages)
 {
+    if (currentPage > maxPages);
 
 }
+
+// const switchPage = (page: number) =>
+//     {
+//         const { slugs, ...params } = router.query;
+//         if (!Array.isArray(slugs)) return;
+
+//         const newSlugs = slugs.filter(slug => slug !== 'page' && Number.isNaN(+slug));
+
+//         if (page !== 1) newSlugs.push('page', String(page));
+
+//         router.push({
+//             pathname: router.pathname,
+//             query: {
+//                 slugs: newSlugs,
+//                 ...params
+//             }
+//         })
+//     }
 
 export const Archive: FC<ArchiveProps> = ({ products, params }) =>
 {

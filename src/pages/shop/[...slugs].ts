@@ -1,12 +1,8 @@
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { Archive } from "@/components/shop/Archive";
-import axios from "axios";
-import wpRestApi from "@/services/wpRestApi";
 import wooCommerceRestApi from "@/services/wooCommerceRestApi";
 import { ProductParamsType } from "@/types/services";
-import { isNumber } from "util";
-import { ParsedUrlQuery } from "querystring";
-import { getCurrentPageNumber } from "@/utils/getCurrentPageNumber";
+import { findPageParam } from "@/utils/getCurrentPageNumber";
 
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) =>
 {
@@ -14,14 +10,19 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
     if (!slugs || !Array.isArray(slugs)) return { notFound: true };
 
     /**  Find pagination params **/
-    const pageParam = getCurrentPageNumber(params).toString();
+    // const pageParam = getCurrentPageNumber(params).toString();
+
+    /** Find pagination param: */
+    const page = findPageParam(slugs);
+    console.log('custom page', slugs);
+    if (page) return { notFound: true };
 
     /** Indicate the products number*/
     const productsPerPage = 11;
 
     /** Generate product product params */
     const productsParams: ProductParamsType = {
-        page: pageParam || undefined,
+        page: page || undefined,
         per_page: productsPerPage,
     }
 
