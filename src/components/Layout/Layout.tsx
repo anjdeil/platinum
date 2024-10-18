@@ -1,5 +1,5 @@
 import { useResponsive } from '@/hooks/useResponsive';
-import { useGetMenusQuery, useGetProductsQuery, useGetThemeOptionsQuery } from '@/store/rtk-queries/wpCustomApi';
+import { useGetMenusQuery, useGetThemeOptionsQuery } from '@/store/rtk-queries/wpCustomApi';
 import { setThemeOptions } from '@/store/slices/themeOptionsSlice';
 import { WpMenuResponseType } from '@/types/menus/WpMenus';
 import { LangParamType } from '@/types/services/wpCustomApi';
@@ -7,13 +7,13 @@ import Box from '@mui/material/Box';
 import { useRouter } from 'next/router';
 import { createContext, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import TopBar from '../widgets/TopBar/TopBar';
+import PopupContainer from '../global/popups/PopupContainer/PopupContainer';
+import BottomMenu from '../widgets/BottomMenu';
+import { CategoriesMenu } from '../widgets/CategoriesMenu';
+import { Footer } from '../widgets/Footer';
 import Header from '../widgets/Header/Header';
 import MobileHeader from '../widgets/MobileHeader/MobileHeader';
-import { CategoriesMenu } from '../widgets/CategoriesMenu';
-import BottomMenu from '../widgets/BottomMenu';
-import { Footer } from '../widgets/Footer';
-import { PopupContainer } from '../global/popups/MobilePopup/styles';
+import TopBar from '../widgets/TopBar/TopBar';
 
 export const MenusContext = createContext<WpMenuResponseType[] | []>([]);
 const currency = 'USD';
