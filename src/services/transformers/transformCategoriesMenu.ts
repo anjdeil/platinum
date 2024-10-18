@@ -1,5 +1,5 @@
-import { Category, Subcategory } from "@/types/layouts/CategoriesMenu";
-import CategoryType from "@/types/shop/categories";
+import { Category, Subcategory } from "@/types/widgets/CategoriesMenu";
+import CategoryType from "@/types/pages/shop/categories";
 
 const transformCategoriesMenu = (response: CategoryType[]): Category[] => {
     const categories: Category[] = [];

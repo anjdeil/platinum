@@ -1,7 +1,7 @@
-import AccountInfoBlockList from "@/components/Account/AccountInfoBlockList/AccountInfoBlockList";
-import AccountLayout from "@/components/Account/AccountLayout";
-import AccountLinkBlockList from "@/components/Account/AccountLinkBlockList/AccountLinkBlockList";
-import OrderTable from "@/components/Account/OrderTable/OrderTable";
+import AccountInfoBlockList from "@/components/pages/account/AccountInfoBlockList/AccountInfoBlockList";
+import AccountLayout from "@/components/pages/account/AccountLayout";
+import AccountLinkBlockList from "@/components/pages/account/AccountLinkBlockList/AccountLinkBlockList";
+import OrderTable from "@/components/pages/order/OrderTable/OrderTable";
 import { transformOrders } from "@/services/transformers/transformOrders";
 import { useFetchOrdersQuery } from "@/store/rtk-queries/wooCustomApi";
 import { AccountInfoWrapper } from "@/styles/components";

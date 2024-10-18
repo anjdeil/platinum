@@ -1,19 +1,19 @@
 import { useResponsive } from '@/hooks/useResponsive';
-import { useGetMenusQuery, useGetProductsQuery, useGetThemeOptionsQuery } from '@/store/rtk-queries/wpCustomApi';
+import { useGetMenusQuery, useGetThemeOptionsQuery } from '@/store/rtk-queries/wpCustomApi';
 import { setThemeOptions } from '@/store/slices/themeOptionsSlice';
-import { WpMenuResponseType } from '@/types/layouts/Menus';
+import { WpMenuResponseType } from '@/types/menus/WpMenus';
 import { LangParamType } from '@/types/services/wpCustomApi';
 import Box from '@mui/material/Box';
 import { useRouter } from 'next/router';
 import { createContext, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import BottomMenu from '../Layouts/BottomMenu';
-import { CategoriesMenu } from '../Layouts/CategoriesMenu';
-import { Footer } from '../Layouts/Footer';
-import Header from '../Layouts/Header/Header';
-import MobileHeader from '../Layouts/MobileHeader/MobileHeader';
-import TopBar from '../Layouts/TopBar/TopBar';
-import PopupContainer from '../Popups/PopupContainer/PopupContainer';
+import PopupContainer from '../global/popups/PopupContainer/PopupContainer';
+import BottomMenu from '../widgets/BottomMenu';
+import { CategoriesMenu } from '../widgets/CategoriesMenu';
+import { Footer } from '../widgets/Footer';
+import Header from '../widgets/Header/Header';
+import MobileHeader from '../widgets/MobileHeader/MobileHeader';
+import TopBar from '../widgets/TopBar/TopBar';
 
 export const MenusContext = createContext<WpMenuResponseType[] | []>([]);
 const currency = 'USD';
@@ -29,7 +29,7 @@ export default function Layout({ children }: { children: React.ReactNode })
 
     const { data: menusResp, error, isLoading } = useGetMenusQuery(langParam);
     const { data: themeOptions, error: themeOptionsError, } = useGetThemeOptionsQuery();
-    const { data: products, error: productError, isError } = useGetProductsQuery(langParam);
+    /*     const { data: products, error: productError, isError } = useGetProductsQuery(langParam); */
 
     useEffect(() =>
     {
@@ -52,7 +52,7 @@ export default function Layout({ children }: { children: React.ReactNode })
             <MenusContext.Provider value={menus}>
                 {!isMobile && <TopBar />}
                 {!isMobile ? <Header /> : <MobileHeader />}
-                <PopupContainer />  
+                <PopupContainer />
                 {isMobile && (<BottomMenu />)}
                 {children}
                 <Footer />

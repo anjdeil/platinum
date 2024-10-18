@@ -1,10 +1,11 @@
-import { AccountInfoWrapperProps } from '@/types/layouts/Account';
+import { AccountInfoWrapperProps } from '@/types/pages/account';
 import { LogoLinkImageProps, LogoLinkProps, StyledButtonProps } from '@/types/styles/components';
 import styled from "@emotion/styled";
 import Image from 'next/image';
 import Link from 'next/link';
 
-interface TitleProps {
+interface TitleProps
+{
     as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
     fontWeight?: number;
     fontSize?: number;
