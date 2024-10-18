@@ -1,4 +1,3 @@
-import IconButton from "@/components/Common/Buttons/IconButton/IconButton";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { popupToggle } from "@/store/slices/PopupSlice";
 import { useTheme } from "@emotion/react";
@@ -9,6 +8,7 @@ import AccountIcon from "@/components/global/icons/AccountIcon/AccountIcon";
 import BurgerIconActive from "@/components/global/icons/BurgerIconActive/BurgerIconActive";
 import CatalogIcon from "@/components/global/icons/CatalogIcon/CatalogIcon";
 import BurgerIcon from "@/components/global/icons/BurgerIcon/BurgerIcon";
+import IconButton from "@/components/global/buttons/IconButton/IconButton";
 
 
 const BottomMenu = () =>

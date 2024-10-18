@@ -1,4 +1,3 @@
-import IconButton from '@/components/Common/Buttons/IconButton/IconButton';
 import React from 'react';
 import Nav from '../../menus/Nav/Nav';
 import SearchBar from '../../global/SearchBar/SearchBar';
@@ -6,6 +5,7 @@ import { HeaderContainer, HeaderContent, HeaderIcons, HeaderNav, HeaderSearch, H
 import AccountIcon from '@/components/global/icons/AccountIcon/AccountIcon';
 import CartIcon from '@/components/global/icons/CartIcon/CartIcon';
 import HeartIcon from '@/components/global/icons/HeartIcon/HeartIcon';
+import IconButton from '@/components/global/buttons/IconButton/IconButton';
 
 const Header: React.FC = () =>
 {
