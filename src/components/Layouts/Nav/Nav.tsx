@@ -1,20 +1,20 @@
 import { MenusContext } from '@/components/Layout/Layout';
+import { wpMenuProps } from '@/types/layouts/Menus';
 import { MenuItemsType } from '@/types/services/customApi/Menu/MenuItemsType';
 import { FC, useContext } from 'react';
 import { MenuSkeleton } from '../MenuSkeleton';
 import { NavLink, NavList } from './styles';
-import { wpMenuProps } from '@/types/layouts/Menus';
 
 const Nav: FC<wpMenuProps> = ({
     menuId,
     skeleton,
     justify,
     color,
-    textTransform,
+    texttransform,
     fontSize,
-    fontSizeMob,
+    fontsizemob,
     direction,
-    textAlign,
+    textalign,
     align,
     gap,
     mobGap,
@@ -48,9 +48,9 @@ const Nav: FC<wpMenuProps> = ({
                         <NavLink
                             href={url}
                             color={color}
-                            textTransform={textTransform}
-                            textAlign={textAlign}
-                            fontSizeMob={fontSizeMob}
+                            texttransform={texttransform}
+                            textalign={textalign}
+                            fontsizemob={fontsizemob}
                             fontSize={fontSize}
                         >
                             {title}

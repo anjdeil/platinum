@@ -9,17 +9,20 @@ export const Overlay = styled.div`
 
 export const PopupContainer = styled.div<PopupContainerProps>`
     position: fixed;
-    background-color: ${({ theme }) => theme.background.secondary};
-    width: ${({ width = '241px' }) => width};
-    top: 136px;
+    background-color: ${({ theme, backgroundColor = theme.background.secondary }) => backgroundColor};
+    width: ${({ width = '70%' }) => width};
+    padding-top: ${({ paddingTop = '0' }) => paddingTop};
+    top: ${({ scroll = 0 }) => (scroll ? Math.max(0, 140 - scroll) : 140)}px;
     left: 0;
+    bottom: 0;
     display: grid;
-    z-index: 1100;
+    z-index: 100;
 
-    @media(max-width: 768px) {
-        top: 60px;
-        bottom: 0;
-        grid-template-rows: 60px 1fr;
+    @media ${({ theme }) => theme.media.medium} {
+        top: ${({ scroll = 0 }) => (scroll ? Math.max(0, 60 - scroll) : 60)}px;
+        bottom: 80px;
+        grid-template-rows: ${({ title }) => title === '' ? '1fr' : '40px 1fr'};
+        overflow: auto;
     }
 `;
 
@@ -29,25 +32,18 @@ export const Header = styled.div`
     justify-content: space-between;
     padding: 0 20px;
 
-    @media(max-width: 768px) {
+    @media ${({ theme }) => theme.media.medium} {
         display: flex;
     }
 `;
 
 export const Title = styled.div`
-    font-size: 1.5rem;
-`;
-
-export const CloseButton = styled.button`
-    display: block;
-    padding: 10px;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
+    font: ${({ theme }) => theme.fonts.bodyMiddleSemiBold}; 
 `;
 
 export const Content = styled.div`
     padding: 0 20px;
-    overflow: visible;
+    height: auto;
+    overflow: auto;
     position: relative;
 `;

@@ -1,47 +1,56 @@
+import { Container } from "@/styles/components";
 import { HeaderContainerProps, HeaderWrapperProps } from "@/types/layouts/Header";
 import styled from "@emotion/styled";
 
 export const HeaderWrapper = styled.div<HeaderWrapperProps>`
-    background: ${({ backgroundColor }) =>
-        backgroundColor || 'radial-gradient(79.43% 79.43% at 49.95% 64.07%, #024584 0%, #0B233D 100%)'};
-`
+    padding-block: 18.5px;    
+    background: ${({ theme, backgroundColor = theme.background.primaryGradient }) => backgroundColor};
+    position: relative;
+    z-index: 101;
 
-export const HeaderContainer = styled.div<HeaderContainerProps>`
-  height: ${({ height = '72px' }) => height};
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: ${({ gap = '16px' }) => gap};
-  align-items: center;
-
-  @media ${({ theme }) => theme.media.large} {
-    height: ${({ desktopHeight = '77px' }) => desktopHeight};
-  }
+    @media ${({ theme }) => theme.media.large} {
+        padding-block: 16px;
+    }
 `;
 
-export const HeaderNav = styled.div`
-    grid-column: span 6;
-`;
-
-export const HeaderContent = styled.div`
-    grid-column: 8 / 13;
+export const HeaderContainer = styled(Container) <HeaderContainerProps>`
     display: flex;
-    gap: 24px;
     justify-content: space-between;
+    gap: ${({ gap = '16px' }) => gap};
     align-items: center;
 `;
 
-export const HeaderSearch = styled.div`
-    width: 133px;
+export const HeaderNav = styled.div`
+    flex-grow: 1;
+`;
+
+export const HeaderContent = styled.div`
+    display: flex;
+    gap: 50px;
+    justify-content: space-between;
+    align-items: center;
 
     @media ${({ theme }) => theme.media.large} {
-        width: 195px;
+        gap: 24px;
+    }
+`;
+
+export const HeaderSearch = styled.div`
+    max-width: 195px;
+
+    @media ${({ theme }) => theme.media.large} {
+        max-width: 160px;
     }
 `;
 
 export const HeaderIcons = styled.div`
-    width: 124px;
+    max-width: fit-content;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 50px;
 
     @media ${({ theme }) => theme.media.large} {
-        width: 210px;
+        gap: 24px;
     }
 `;

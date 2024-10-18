@@ -5,6 +5,11 @@ const GlobalStyle = createGlobalStyle`
  * {
     padding: 0;
     margin: 0;
+    scrollbar-width: 4px;    
+
+    @media (min-width: 1024px) {
+        scrollbar-width: 8px;
+    }
 }
 
 input[type=search]::-ms-clear {
@@ -29,6 +34,7 @@ input[type="search"]::-webkit-search-results-decoration {
 html {
     line-height: 1.15;
     -webkit-text-size-adjust: 100%;
+    scrollbar-gutter: stable; 
 }
 
 body {
@@ -221,24 +227,23 @@ template {
     display: none;
 }
 
-.container {
-    box-sizing: content-box;
-    margin: 0 auto;
-    padding: 0 32px;
-    max-width: 1280px;
-
-    @media (max-width: 768px) {
-        padding: 0 20px;
-    }
+::-webkit-scrollbar {
+  width: 5px;
 }
 
-.hideMobile {
-    display: none;
-
-    @media (min-width: 768px) {
-        display: block;
-    }
+::-webkit-scrollbar-thumb {
+  background-color: #113760;
+  border-radius: 6.5px;
 }
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+}
+
 `;
 
 export default GlobalStyle;
