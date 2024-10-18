@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 
-interface MenuProps {
+interface MenuProps
+{
     isOpen?: boolean;
 }
 

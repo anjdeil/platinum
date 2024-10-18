@@ -21,7 +21,8 @@ export const StyledListItemSchema = z.object({
     width: z.string().optional(),
     hoverBackground: z.string().optional(),
     hoverColor: z.string().optional(),
-    isActive: z.boolean().optional()
+    isActive: z.boolean().optional(),
+    tabletLineHeight: z.string().optional(),
 });
 
 export const StyledItemPropsSchema = z.object({

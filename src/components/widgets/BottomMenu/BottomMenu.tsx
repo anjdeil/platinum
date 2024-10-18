@@ -6,6 +6,9 @@ import { BottomMenuNav, BottomMenuWrapper } from "./styles";
 import HeartIcon from "@/components/global/icons/HeartIcon/HeartIcon";
 import CartIcon from "@/components/global/icons/CartIcon/CartIcon";
 import AccountIcon from "@/components/global/icons/AccountIcon/AccountIcon";
+import BurgerIconActive from "@/components/global/icons/BurgerIconActive/BurgerIconActive";
+import CatalogIcon from "@/components/global/icons/CatalogIcon/CatalogIcon";
+import BurgerIcon from "@/components/global/icons/BurgerIcon/BurgerIcon";
 
 
 const BottomMenu = () =>

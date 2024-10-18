@@ -7,7 +7,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { SkeletonOrderTable } from "./SkeletonOrderTable";
 import { StyledActionsTd, StyledBody, StyledBodyTr, StyledDateTd, StyledDetailesTd, StyledDetailesTh, StyledHead, StyledLinkDesktopButton, StyledLinkMobileButton, StyledNoAndDate, StyledOrderButton, StyledOrderSpan, StyledOrderWrapper, StyledSpan, StyledTable, StyledTd, StyledTh, StyledTotalSpan, StyledTr } from "./styles";
-import { TableProps } from "@mui/material";
+import { TableProps } from "@/types/pages/account";
 
 const OrderTable: React.FC<TableProps> = ({ orderList, title }) =>
 {
