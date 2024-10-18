@@ -1,7 +1,7 @@
-import { StyledIconButton } from '@/components/Common/Buttons/IconButton/styles';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { popupToggle } from '@/store/slices/PopupSlice';
 import Image from 'next/image';
+import { StyledIconButton } from '../IconButton/styles';
 
 export default function BurgerButton()
 {

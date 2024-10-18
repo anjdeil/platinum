@@ -1,4 +1,3 @@
-import IconButton from '@/components/Common/Buttons/IconButton/IconButton';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { popupToggle } from '@/store/slices/PopupSlice';
 import { Container, LogoLink, LogoLinkImage, StyledButton } from '@/styles/components';
@@ -11,6 +10,7 @@ import CurrencySelect from '@/components/global/selects/CurrencySelect/CurrencyS
 import LanguageSelect from '@/components/global/selects/LanguageSelect/LanguageSelect';
 import BurgerIconActive from '@/components/global/icons/BurgerIconActive/BurgerIconActive';
 import BurgerIcon from '@/components/global/icons/BurgerIcon/BurgerIcon';
+import IconButton from '@/components/global/buttons/IconButton/IconButton';
 
 const TopBar: React.FC = () =>
 {
