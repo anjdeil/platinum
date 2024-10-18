@@ -55,7 +55,7 @@ const testProducts = [
     id: 1,
     sku: "SKU001",
     slug: "product-1",
-    name: "Product 1",
+    name: "Product 1 gdfgdgf dgfd gf dgf dgfd",
     description: "Description of Product 1",
     type: "simple",
     created: "2023-01-01T00:00:00Z",
