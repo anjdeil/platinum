@@ -1,4 +1,4 @@
-import { NavLinkProps, NavListProps } from "@/types/menus/Nav";
+import { NavLinkProps, NavListProps } from "@/types/menus/nav";
 import styled from "@emotion/styled";
 import Link from "next/link";
 

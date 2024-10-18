@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Content, Header, Overlay, PopupContainer, Title } from "./styles";
-import { MobilePopupPropsType } from "@/types/global/popups/MobilePopup";
+import { MobilePopupPropsType } from "@/types/components/global/popups/mobilePopup";
 import CloseIcon from "../../icons/CloseIcon/CloseIcon";
 
 const MobilePopup: FC<MobilePopupPropsType> = ({ onClose, title = "", scroll, children, backgroundColor, width, paddingTop, rowGap, closeButton = false }) =>

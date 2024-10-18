@@ -1,4 +1,4 @@
-import { IconButtonProps } from '@/types/global/buttons/IconButton';
+import { IconButtonProps } from '@/types/components/global/buttons/iconButton';
 import Badge from '../Badge/Badge';
 import { StyledIconButton } from '../IconButton/styles';
 

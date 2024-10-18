@@ -1,4 +1,4 @@
-import { ListProps, SideListContainerProps, StyledListItemrops } from "@/types/global/SideList";
+import { ListProps, SideListContainerProps, StyledListItemrops } from "@/types/components/global/sideList";
 import styled from "@emotion/styled";
 
 export const SideListContainer = styled.nav<SideListContainerProps>`

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useMemo } from "react";
 import { StyledIconButton } from "./styles";
-import { IconButtonProps } from "@/types/global/buttons/IconButton";
+import { IconButtonProps } from "@/types/components/global/buttons/iconButton";
 import Badge from "@/components/global/buttons/Badge/Badge";
 
 const IconButton: React.FC<IconButtonProps> = ({

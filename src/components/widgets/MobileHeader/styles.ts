@@ -1,5 +1,5 @@
 import { Container } from "@/styles/components";
-import { HeaderWrapperProps } from "@/types/widgets/Header";
+import { HeaderWrapperProps } from "@/types/components/widgets/header";
 import styled from "@emotion/styled";
 
 export const MobileHeaderWrapper = styled.div<HeaderWrapperProps>`
