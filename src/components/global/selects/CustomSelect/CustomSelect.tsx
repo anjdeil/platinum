@@ -1,4 +1,4 @@
-import { CustomSelectProps } from "@/types/layouts/Select";
+import { CustomSelectProps } from "@/types/components/global/selects";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { CustomSelectStyled, MenuItem, StyledCollapse } from "./styles";
 import ArrowIcon from "../../icons/ArrowIcon/ArrowIcon";

@@ -8,7 +8,8 @@ interface TitleProps
 {
     as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
     fontWeight?: number;
-    fontSize?: number;
+    fontSize?: string;
+    mobFontSize?: string;
     textalign?: "center" | "left" | "right";
     uppercase?: boolean;
     marginBottom?: number;
@@ -26,6 +27,10 @@ export const Title = styled.h1<TitleProps>`
 
     @media ${({ theme }) => theme.media.large} {
         font: ${({ theme }) => theme.fonts.bodyMiddleSemiBold};
+    }
+
+    @media ${({ theme }) => theme.media.small} {
+        font-size: ${({ mobFontSize }) => mobFontSize};
     }
 `;
 

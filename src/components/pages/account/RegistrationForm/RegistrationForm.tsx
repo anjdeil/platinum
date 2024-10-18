@@ -1,4 +1,4 @@
-import { RegistrationFormSchema } from "@/types/pages/account/RegistrationForm/registrationForm";
+import { RegistrationFormSchema } from "@/types/pages/account/registrationForm/registrationForm";
 import { FC, forwardRef, useCallback, useImperativeHandle, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -42,7 +42,7 @@ export const RegistrationForm = forwardRef((props, ref) =>
         resolver: zodResolver(formSchema)
     });
 
-    const onSubmit = (data:  RegistrationFormType) =>
+    const onSubmit = (data: RegistrationFormType) =>
     {
         console.log(data);
     };

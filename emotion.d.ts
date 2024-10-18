@@ -23,6 +23,11 @@ declare module '@emotion/react' {
             platinum: string;
             shadow: string;
             error: string;
+            border: string;
+            new: string,
+            best: string,
+            hot: string,
+            sale: string,
         };
         shadows: {
             primaryShadow: string;

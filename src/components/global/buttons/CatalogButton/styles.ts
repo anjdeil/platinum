@@ -1,4 +1,4 @@
-import { StyledCatalogButtonProps } from "@/types/global/buttons/CatalogButton";
+import { StyledCatalogButtonProps } from "@/types/components/global/buttons/catalogButton";
 import styled from "@emotion/styled";
 import { StyledIconButton } from "../IconButton/styles";
 

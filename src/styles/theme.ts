@@ -39,7 +39,12 @@ const theme: Theme = {
         error: '#d92d20',
         silver: "",
         platinum: "",
-        shadow: ""
+        shadow: "",
+        border: '#738EBC',
+        new: '#17AA40',
+        best: '#1E71BE',
+        hot: '#F2B517',
+        sale: '#D92D20',
     },
     shadows: {
         primaryShadow: '0 0 6px 0 rgba(17, 55, 96, 0.4)',

@@ -1,15 +1,16 @@
-import { lineOrderItems } from "@/types/store/reducers/CartSlice";
+import { lineOrderItems } from "@/types/store/reducers/cartSlice";
 import { DEFAULT_IMAGE } from "@/utils/consts";
 import { useTranslations } from "next-intl";
 import { BlockInfo, HeaderItem, HeaderItemName, InfoTitle, ListBody, ListHeader, ListItem, ProductImage, ProductListWrapper, StyledValue, WrapperBlock, WrapperBlockInfo, WrapperHeader } from "./styles";
 
-interface OrderProductListProps {
+interface OrderProductListProps
+{
     lineItems: lineOrderItems[];
     currency: string | undefined;
 }
 
-const OrderProductList: React.FC<OrderProductListProps> = ({lineItems, currency}) =>
-{    
+const OrderProductList: React.FC<OrderProductListProps> = ({ lineItems, currency }) =>
+{
     const t = useTranslations('MyAccount');
 
     return (
@@ -53,10 +54,10 @@ const OrderProductList: React.FC<OrderProductListProps> = ({lineItems, currency}
                                 <StyledValue>
                                     {`${product.total} ${currency}`}
                                 </StyledValue>
-                            </BlockInfo>                           
+                            </BlockInfo>
                         </WrapperBlockInfo>
                     </ListItem>
-                ))}                
+                ))}
             </ListBody>
         </ProductListWrapper>
     )

@@ -1,6 +1,12 @@
 import { FC } from "react";
 
-export const Archive: FC = ({ slugs, params }) =>
+interface ArchiveProps
+{
+    slugs: string[];
+    params: any;
+}
+
+export const Archive: FC<ArchiveProps> = ({ slugs, params }) =>
 {
     return (
         <div>

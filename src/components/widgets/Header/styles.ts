@@ -1,5 +1,5 @@
 import { Container } from "@/styles/components";
-import { HeaderContainerProps, HeaderWrapperProps } from "@/types/widgets/Header";
+import { HeaderContainerProps, HeaderWrapperProps } from "@/types/components/widgets/header";
 import styled from "@emotion/styled";
 
 export const HeaderWrapper = styled.div<HeaderWrapperProps>`

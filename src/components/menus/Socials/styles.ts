@@ -1,4 +1,4 @@
-import { SocialItemLinkProps, SocialsContainerProps } from "@/types/menus/Socials";
+import { SocialItemLinkProps, SocialsContainerProps } from "@/types/menus/socials";
 import styled from "@emotion/styled";
 import Link from "next/link";
 
