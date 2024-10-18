@@ -1,8 +1,8 @@
-import { IconButtonProps } from "@/types/layouts/Buttons";
 import Link from "next/link";
 import { useMemo } from "react";
-import Badge from "../../Badge/Badge";
 import { StyledIconButton } from "./styles";
+import { IconButtonProps } from "@/types/global/buttons/IconButton";
+import Badge from "@/components/global/buttons/Badge/Badge";
 
 const IconButton: React.FC<IconButtonProps> = ({
   count = 0,
@@ -10,8 +10,10 @@ const IconButton: React.FC<IconButtonProps> = ({
   IconComponent,
   href,
   onClick,
-}) => {
-  const ButtonContent = useMemo(() => {
+}) =>
+{
+  const ButtonContent = useMemo(() =>
+  {
     return (
       <>
         <Badge count={count} />

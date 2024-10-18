@@ -9,6 +9,8 @@ import { BurgerButtonWrapper, ButtonWrapper, NavWrapper, SelectsWrapper, Stack }
 import Nav from '@/components/menus/Nav/Nav';
 import CurrencySelect from '@/components/global/selects/CurrencySelect/CurrencySelect';
 import LanguageSelect from '@/components/global/selects/LanguageSelect/LanguageSelect';
+import BurgerIconActive from '@/components/global/icons/BurgerIconActive/BurgerIconActive';
+import BurgerIcon from '@/components/global/icons/BurgerIcon/BurgerIcon';
 
 const TopBar: React.FC = () =>
 {
