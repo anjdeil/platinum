@@ -1,11 +1,11 @@
-import AccountLayout from "@/components/Account/AccountLayout";
-import BillingShippingAddress from "@/components/Account/BillingShippingAddress/BillingShippingAddress";
-import OrderInfo from "@/components/Account/OrderInfo/OrderInfo";
+import AccountLayout from "@/components/pages/account/AccountLayout";
+import BillingShippingAddress from "@/components/pages/order/BillingShippingAddress/BillingShippingAddress";
+import OrderInfo from "@/components/pages/order/OrderInfo/OrderInfo";
 // import OrderInfo from "@/components/Account/OrderInfo/OrderInfo";
-import OrderProductList from "@/components/Account/OrderProductList/OrderProductList";
-import { StyledOrderButton } from "@/components/Account/OrderTable/styles";
-import OrderTotals from "@/components/Account/OrderTotals/OrderTotals";
-import Notification from "@/components/Layouts/Notification/Notification";
+import OrderProductList from "@/components/pages/order/OrderProductList/OrderProductList";
+import { StyledOrderButton } from "@/components/pages/order/OrderTable/styles";
+import OrderTotals from "@/components/pages/order/OrderTotals/OrderTotals";
+import Notification from "@/components/global/Notification/Notification";
 import OrderPdf from "@/pdf/OrderPdf";
 import wooCommerceRestApi from "@/services/wooCommerceRestApi";
 import { AccountInfoWrapper } from "@/styles/components";

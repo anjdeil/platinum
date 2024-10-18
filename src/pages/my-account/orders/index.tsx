@@ -1,5 +1,5 @@
-import AccountLayout from "@/components/Account/AccountLayout";
-import OrderTable from "@/components/Account/OrderTable/OrderTable";
+import AccountLayout from "@/components/pages/account/AccountLayout";
+import OrderTable from "@/components/pages/order/OrderTable/OrderTable";
 import { useFetchOrdersQuery } from "@/store/rtk-queries/wooCustomApi";
 import { redirectToLogin } from "@/utils/consts";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";

@@ -1,4 +1,4 @@
-import { OrderSummaryType } from "@/types/layouts/Account";
+import { OrderSummaryType } from "@/types/pages/account";
 import { OrderType } from "@/types/services";
 
 export function transformOrders(orders: OrderType[]): OrderSummaryType | []
