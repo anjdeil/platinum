@@ -29,7 +29,7 @@ export default function AccountLayout({
                 <title>{title}</title>
             </Head>
 
-            <AccountTitle as={"h1"} textAlign="center" uppercase>{title}</AccountTitle>
+            <AccountTitle as={"h1"} textalign="center" uppercase>{title}</AccountTitle>
             <AccountContainer>
                 <SideListContainer>
                     <SideList

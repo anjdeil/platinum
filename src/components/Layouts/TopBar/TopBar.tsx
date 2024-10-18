@@ -1,19 +1,28 @@
-import BurgerButton from '@/components/Common/Buttons/BurgerButton/BurgerButton';
+import IconButton from '@/components/Common/Buttons/IconButton/IconButton';
+import BurgerIcon from '@/components/Common/Icons/BurgerIcon/BurgerIcon';
+import BurgerIconActive from '@/components/Common/Icons/BurgerIconActive/BurgerIconActive';
 import CurrencySelect from '@/components/Common/Selects/CurrencySelect/CurrencySelect';
 import LanguageSelect from '@/components/Common/Selects/LanguageSelect/LanguageSelect';
-import { StyledButton } from '@/styles/components';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { popupToggle } from '@/store/slices/PopupSlice';
+import { Container, LogoLink, LogoLinkImage, StyledButton } from '@/styles/components';
 import { useTheme } from '@emotion/react';
+import { useTranslations } from 'next-intl';
 import React from 'react';
 import Nav from "../Nav/Nav";
-import { BurgerButtonWrapper, ButtonWrapper, LogoLink, LogoLinkImage, NavWrapper, SelectsWrapper, Stack } from './styles';
+import { BurgerButtonWrapper, ButtonWrapper, NavWrapper, SelectsWrapper, Stack } from './styles';
 
 const TopBar: React.FC = () =>
 {
+    const dispatch = useAppDispatch();
     const theme = useTheme();
+    const popup = useAppSelector(state => state.Popup);
+    const t = useTranslations('TopBar');
+
     return (
-        <div className="container hideMobile">
+        <Container>
             <Stack>
-                <LogoLink href="/" passHref>
+                <LogoLink href="/" width={44} height={44} desktopwidth={92} desktopheight={92}>
                     <LogoLinkImage src="/assets/icons/logo.svg" alt="Logo" width={92} height={92} />
                 </LogoLink>
                 <NavWrapper>
@@ -36,13 +45,13 @@ const TopBar: React.FC = () =>
                     <CurrencySelect />
                 </SelectsWrapper>
                 <BurgerButtonWrapper>
-                    <BurgerButton />
+                    <IconButton onClick={() => dispatch(popupToggle('hamburger-menu'))} color={theme.colors.primary} IconComponent={popup === 'hamburger-menu' ? BurgerIconActive : BurgerIcon} />
                 </BurgerButtonWrapper>
                 <ButtonWrapper>
-                    <StyledButton height='42px'>Call us</StyledButton>
+                    <StyledButton minWidthTablet="104px" minWidthDesktop="200px">{t("CallUs")}</StyledButton>
                 </ButtonWrapper>
             </Stack>
-        </div>
+        </Container>
     )
 }
 
