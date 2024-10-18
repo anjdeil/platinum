@@ -1,4 +1,4 @@
-import { CustomSelectStyledProps } from "@/types/layouts/Select";
+import { CustomSelectStyledProps } from "@/types/components/global/selects";
 import styled from "@emotion/styled";
 import { Collapse } from "@mui/material";
 

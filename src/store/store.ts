@@ -10,6 +10,7 @@ import PopupSlice from "./slices/PopupSlice";
 const rootReducer = combineReducers({
     [wpCustomRtkApi.reducerPath]: wpCustomRtkApi.reducer,
     [wooCustomRktApi.reducerPath]: wooCustomRktApi.reducer,
+    // [wp.reducerPath]: wooCustomRktApi.reducer,
     languageSlice: languageSlice,
     currencySlice: currencySlice,
     themeOptions: themeOptionsSlice,

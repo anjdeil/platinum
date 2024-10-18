@@ -1,4 +1,4 @@
-import { IconComponentProps } from "@/types/global/buttons/IconButton";
+import { IconComponentProps } from "@/types/components/global/buttons/iconButton";
 
 const CatalogIcon: React.FC<IconComponentProps> = ({ color = "#fff" }) =>
 {

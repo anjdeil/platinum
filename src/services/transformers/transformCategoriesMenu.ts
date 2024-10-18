@@ -1,15 +1,18 @@
-import { Category, Subcategory } from "@/types/widgets/CategoriesMenu";
+import { Category, Subcategory } from "@/types/components/widgets/categoriesMenu";
 import CategoryType from "@/types/pages/shop/categories";
 
-const transformCategoriesMenu = (response: CategoryType[]): Category[] => {
+const transformCategoriesMenu = (response: CategoryType[]): Category[] =>
+{
     const categories: Category[] = [];
 
-    response.forEach(parentRow => {
+    response.forEach(parentRow =>
+    {
         if (parentRow.parent_id) return;
         if (parentRow.slug === 'uncategorized') return;
 
         const subcategories: Subcategory[] = [];
-        response.forEach(childRow => {
+        response.forEach(childRow =>
+        {
             if (childRow.parent_id !== parentRow.id) return;
 
             subcategories.push({

@@ -1,6 +1,6 @@
 import { FC, FormEvent, use, useCallback, useEffect, useMemo, useState } from "react";
 import { CustomInputWrapper, CustomRequired, CustomInputStyle, ShowPasswordImage, CustomError } from "./styles";
-import { CustomInputType } from "@/types/global/forms/CustomInput/customInput";
+import { CustomInputType } from "@/types/components/global/forms/customInput/customInput";
 
 function numericValidate(e: FormEvent<HTMLInputElement>, isPost: boolean)
 {

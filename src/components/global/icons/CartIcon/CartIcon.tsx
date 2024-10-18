@@ -1,4 +1,4 @@
-import { IconButtonProps } from '@/types/global/buttons/IconButton';
+import { IconButtonProps } from '@/types/components/global/buttons/iconButton';
 
 const CartIcon: React.FC<IconButtonProps> = ({ color = "#fff" }) =>
 {

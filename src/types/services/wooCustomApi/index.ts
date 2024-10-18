@@ -1,4 +1,4 @@
-import { lineOrderItemsSchema } from "@/types/store/reducers/CartSlice";
+import { lineOrderItemsSchema } from "@/types/store/reducers/cartSlice";
 import { z } from "zod";
 
 export const WooCustomerSchema = z.object({

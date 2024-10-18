@@ -1,5 +1,5 @@
 import ForwardArrow from "@/components/global/icons/ForwardArrow/ForwardArrow";
-import { SideListPropsType } from "@/types/global/SideList";
+import { SideListPropsType } from "@/types/components/global/sideList";
 import Link from "next/link";
 import { FC } from "react";
 import { List, SideListContainer, StyledListItem } from "./styles";
@@ -20,7 +20,8 @@ const SideList: FC<SideListPropsType> = ({
     mobLineHeight,
     hoverColor,
     hoverBackground,
-}) => {
+}) =>
+{
     return (
         <SideListContainer>
             <List
@@ -41,7 +42,7 @@ const SideList: FC<SideListPropsType> = ({
                         hoverColor={hoverColor}
                         hoverBackground={hoverBackground}
                         isActive={url === activeLink}
-                    >                       
+                    >
                         {onClick !== undefined ?
                             (
                                 <button
@@ -53,7 +54,7 @@ const SideList: FC<SideListPropsType> = ({
                                     <span>{name}</span>
                                 </button>
                             )
-                             :
+                            :
                             <Link
                                 href={url}
                             >
