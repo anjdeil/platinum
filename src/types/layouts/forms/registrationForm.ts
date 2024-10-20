@@ -27,7 +27,7 @@ const phoneSchema = z.string().refine(value => parsePhoneNumber(value).valid, {
     message: 'Invalid phone number',
 });
 
-export const RegistrationFormSchema = (isLoggedIn: boolean, isCheckout: boolean = false, isShipping: boolean = false, phoneCode?: CountryCode) =>
+export const RegistrationFormSchema = (isLoggedIn: boolean, isCheckout: boolean = false, isShipping: boolean = false) =>
 {
     const schema = z.object({
         name: z.string().min(3, 'Required field'),
