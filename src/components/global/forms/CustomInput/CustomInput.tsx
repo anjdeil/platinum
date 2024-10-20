@@ -1,84 +1,96 @@
-import { FC, FormEvent, use, useCallback, useEffect, useMemo, useState } from "react";
-import { CustomInputWrapper, CustomRequired, CustomInputStyle, ShowPasswordImage, CustomError } from "./styles";
-import { CustomInputType } from "@/types/components/global/forms/customInput/customInput";
+import { FC, useEffect, useMemo, useState } from "react";
+import { CustomError, CustomInputStyle, CustomInputWrapper, CustomRequired, Input, ShowPasswordImage } from "./styles";
 
-function numericValidate(e: FormEvent<HTMLInputElement>, isPost: boolean)
-{
-    const regex = isPost ? /[^0-9-]/g : /[^0-9]/g;
-    e.currentTarget.value = e.currentTarget.value.replace(regex, '');
-}
+import { z } from "zod";
 
-export const CustomInput: FC<CustomInputType> = ({
-    fieldName,
-    name,
-    register,
-    errors,
-    isRequire = true,
-    isPassword = false,
-    isCheckbox = false,
-    isNumeric = false,
-    isPost = false,
-    placeholder,
-    onChange,
-    value,
-    isTextarea = false,
-    setValue,
-    initialValue,
-    checked
-}) =>
-{
-    const [showPassword, setShowPassword] = useState(isPassword);
-    const toggleShowPassword = useCallback(() => { setShowPassword((prev) => !prev); }, []);
+export const CustomInput2Schema = z.object({
+    fieldName: z.string().optional(),
+    inputTag: z.union([z.literal('input'), z.literal('textarea')]),
+    inputType: z.union([z.literal('text'), z.literal('checkbox'), z.literal('password'), z.literal('number')]),
+    name: z.string().optional(),
+    register: z.any().optional(),
+    errors: z.any().optional(),
+    isRequire: z.boolean().optional(),
+    placeholder: z.string().optional(),
+    onChange: z.function().args(z.unknown() as z.ZodType<React.ChangeEvent<HTMLInputElement>>).returns(z.void()).optional(),
+    value: z.string().optional(),
+    setValue: z.function().args(
+        z.any(),
+        z.any(),
+        z.object({
+            shouldValidate: z.boolean().optional(),
+            shouldDirty: z.boolean().optional(),
+            shouldTouch: z.boolean().optional(),
+        }).optional()
+    ).returns(z.void()).optional(),
+    initialValue: z.string().nullable().optional(),
+})
 
-    let type;
+{/* <PhoneInput
+defaultCountry="pl"
+onChange={(value) => { if (setValue) setValue('phoneNumber', value, { shouldValidate: true }); }}
+/> */}
 
-    if (isPassword)
-        type = showPassword ? 'text' : 'password';
-    else if (isCheckbox)
-        type = 'checkbox';
+export type CustomInputType = z.infer<typeof CustomInput2Schema>;
 
-    useEffect(() =>
+export const CustomInput: FC<CustomInputType> = (
     {
-        if (setValue && name && initialValue !== null && initialValue !== '')
-            setValue(name, initialValue, { shouldValidate: true });
-    }, [initialValue, name, setValue]);
-
-    const showPassPath = useMemo(() => showPassword ? '/public/images/show-pass.svg' : '/public/images/hide-pass.svg', [showPassword]);
-    const registerProps = register ? register(name) : {};
-    const isError = errors && name ? name in errors : false;
-
-    const commonProps = {
+        errors,
+        fieldName,
+        name,
+        isRequire = true,
+        inputTag,
+        inputType,
         placeholder,
-        ...registerProps,
-        inputMode: isNumeric ? 'numeric' : undefined,
-        patter: isNumeric ? '[0-9]*' : undefined,
-        onInput: isNumeric ? (e: FormEvent<HTMLInputElement>) => numericValidate(e, isPost) : undefined,
+        register,
         onChange,
         value,
-        checked: isCheckbox ? checked : undefined,
-        name
-    }
+    }) =>
+{
+    const registerProps = register ? { ...register(name) } : {};
+
+    const [isPasswordVisible, setPasswordVisible] = useState(false);
+    const togglePasswordVisibility = () => setPasswordVisible((prev) => !prev);
+    const passwordImagePath = useMemo(() => isPasswordVisible ? '/images/show-pass.svg' : '/images/hidden-pass.svg', [isPasswordVisible]);
+
+    const [isError, setError] = useState(false);
+    useEffect(() =>
+    {
+        if (!errors || !name) { setError(false); return; }
+        setError(name in errors);
+    }, [errors, name]);
 
     return (
         <div>
-            <CustomInputStyle isError={isError} isTextArea={isTextarea} isCheckbox={isCheckbox}>
+            <CustomInputStyle
+                as={'label'}
+                isError={isError}
+                isTextArea={false}
+                isCheckbox={inputType === 'checkbox'}
+                isPhone={false}>
                 <span>
                     {fieldName}
                     {isRequire && <CustomRequired>*</CustomRequired>}
                 </span>
                 <CustomInputWrapper>
-                    {isTextarea ? <textarea {...commonProps} /> : <input type={type || 'text'} {...commonProps} />}
+                    <Input
+                        as={inputTag}
+                        placeholder={placeholder ? placeholder : ''}
+                        {...register(name)}
+                        type={isPasswordVisible ? 'text' : inputType}
+                        {...registerProps}
+                    />
+                    {inputType === 'password' &&
+                        <ShowPasswordImage
+                            src={passwordImagePath}
+                            alt={'show or hidden password button'}
+                            width={24}
+                            height={24}
+                            onClick={togglePasswordVisibility}
+                            unoptimized={true} />}
                 </CustomInputWrapper>
-                {isPassword &&
-                    <ShowPasswordImage
-                        src={showPassPath}
-                        alt={'show or hidden password button'}
-                        width={24}
-                        height={24}
-                        onClick={toggleShowPassword}
-                        unoptimized={true} />}
             </CustomInputStyle>
             {isError && name && <CustomError>{errors[name]?.message}</CustomError>}
         </div>
     )
-};
+}
