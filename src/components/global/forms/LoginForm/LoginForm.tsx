@@ -8,6 +8,8 @@ import { useGetTokenMutation } from "@/store/rtk-queries/wpApi";
 import { isAuthErrorResponseType } from "@/utils/isAuthErrorResponseType";
 import { CustomError } from "../CustomInput/styles";
 import { PrimaryButton } from "../../buttons/PrimaryButton/PrimaryButton";
+import { SecondaryButton } from "../../buttons/SecondaryButton";
+import { useRouter } from "next/router";
 
 export const LoginForm: FC = () => {
     const [getToken, { data, isLoading, error }] = useGetTokenMutation({});
@@ -30,6 +32,12 @@ export const LoginForm: FC = () => {
             console.error(error);
         }
     }
+
+    const router = useRouter();
+
+    const handleRegistrationRedirect = () => {
+        router.push('/register');
+    };
 
     return (
         <CustomForm onSubmit={handleSubmit(onSubmit)}>
@@ -58,6 +66,12 @@ export const LoginForm: FC = () => {
                     children={isSubmitting ? 'Submitting...' : 'Submit'}
                     buttonType="submit"
                     isDisabled={isSubmitting}
+                />
+                <SecondaryButton
+                    children={'Register'}
+                    buttonType="submit"
+                    isDisabled={isSubmitting}
+                    onClick={handleRegistrationRedirect}
                 />
                 {error && <CustomError dangerouslySetInnerHTML={{ __html: isAuthErrorResponseType(error) }}></CustomError>}
             </FormWrapperBottom>

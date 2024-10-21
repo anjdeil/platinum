@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { z } from "zod";
-import { StyledPrimaryButton } from './styles';
+import { StyledSecondaryButton } from './styles';
 
 const PrimaryButtonPropsSchema = z.object({
     children: z.string().optional(),
@@ -14,15 +14,15 @@ const PrimaryButtonPropsSchema = z.object({
 
 type PrimaryButtonProps = z.infer<typeof PrimaryButtonPropsSchema>;
 
-export const PrimaryButton: FC<PrimaryButtonProps> = ({ children, buttonType, isDisabled, onClick }) => {
+export const SecondaryButton: FC<PrimaryButtonProps> = ({ children, buttonType, isDisabled, onClick }) => {
 
     return (
-        <StyledPrimaryButton
+        <StyledSecondaryButton
             type={buttonType}
             disabled={isDisabled}
             onClick={onClick}
         >
             {children}
-        </StyledPrimaryButton>
+        </StyledSecondaryButton>
     );
 };

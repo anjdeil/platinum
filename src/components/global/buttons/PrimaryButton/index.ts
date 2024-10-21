@@ -1,1 +1,1 @@
-import * from './PrimaryButton'
+export * from './PrimaryButton'
