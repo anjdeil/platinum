@@ -129,11 +129,12 @@ export const LogoLink = styled(Link) <LogoLinkProps>`
 export const PagesNavigation = styled(Pagination)(({ theme }) => ({
     ".MuiPaginationItem-root": {
         borderRadius: '10px',
-        padding: '6px 8px',
-        width: 'fit-content',
+        padding: '6px 10px',
+        minWidth: 'fit-content',
         height: 'fit-content',
         font: theme.fonts.bodyMiddleReg,
         fontWeight: 500,
+        lineHeight: '1em',
 
         "&.Mui-selected": {
             backgroundColor: theme.background.secondary,

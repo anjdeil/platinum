@@ -1,63 +1,52 @@
 import { PagesNavigation } from "@/styles/components";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { ProductCardList } from "../ProductCardsList";
+import { CustomDataProductsType } from "@/types/services";
+import { ProductType } from "@/types/pages/shop";
+import router, { NextRouter, useRouter } from "next/router";
+import { Pagination } from "@mui/material";
 
 interface ArchiveProps
 {
-    products: any;
+    products: ProductType[];
+    pagesCount: number;
+    page: number;
 }
 
-/**
- * 
- * Get pag from url
- * If pag bigger than real count of pages
- * If pag smaller than real count of pages
- */
-
-const pagesCount = 5;
-
-function switchPage(currentPage, maxPages)
+const switchPage = (page: number, maxPage: number) =>
 {
-    if (currentPage > maxPages);
+    if (maxPage < page) return;
+    const { slugs, ...params } = router.query;
+    if (!Array.isArray(slugs)) return;
 
+    const newSlugs = slugs.filter(slug => slug !== 'page' && Number.isNaN(+slug));
+    newSlugs.push('page', String(page));
+
+    router.push({
+        pathname: router.pathname,
+        query: {
+            slugs: newSlugs,
+            ...params
+        }
+    })
 }
 
-// const switchPage = (page: number) =>
-//     {
-//         const { slugs, ...params } = router.query;
-//         if (!Array.isArray(slugs)) return;
-
-//         const newSlugs = slugs.filter(slug => slug !== 'page' && Number.isNaN(+slug));
-
-//         if (page !== 1) newSlugs.push('page', String(page));
-
-//         router.push({
-//             pathname: router.pathname,
-//             query: {
-//                 slugs: newSlugs,
-//                 ...params
-//             }
-//         })
-//     }
-
-export const Archive: FC<ArchiveProps> = ({ products, params }) =>
+export const Archive: FC<ArchiveProps> = ({ products, pagesCount, page }) =>
 {
+    const router = useRouter();
+
     return (
         <div>
             <PagesNavigation
-                //  page={+page}
+                page={+page}
                 count={pagesCount}
-                siblingCount={-1}
+                siblingCount={1}
                 shape="rounded"
                 hidePrevButton
                 hideNextButton
-                onChange={(_, page) => { console.log(page) }}
-            //  onChange={(_, page) => { switchPage(page) }}
+                onChange={(_, newPage) => { switchPage(newPage, pagesCount); }}
             />
-            {/* {slugs.length > 0 && <div>{slugs}</div>} */}
-            {/* {params && <div>params</div>} */}
-
-            {products && <ProductCardList products={products} />}
+            {products.length && <ProductCardList products={products} />}
         </div>
     )
 }
