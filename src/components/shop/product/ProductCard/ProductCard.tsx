@@ -14,7 +14,7 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product }) =>
             <ProductWrapper>
                 <ProductImageWrapper>
                     <Image
-                        src={product.images[0].src || ''}
+                        src={product.images[0]?.src || ''}
                         fill
                         style={{ objectFit: 'cover' }}
                         alt="image"

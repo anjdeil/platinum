@@ -68,5 +68,8 @@
     },
     "Search": {
         "Search": "Search"
+    },
+    "Product": {
+        "addToBasket": "sss"
     }
 }
