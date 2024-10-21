@@ -37,7 +37,7 @@ const isShipping = false;
     // }));
     // useImperativeHandle(ref, () => ({ submit: () => handleSubmit(onSubmit)() }));
  */
-export const RegistrationForm = () =>
+export const RegistrationForm: FC = () =>
 {
     const router = useRouter();
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);

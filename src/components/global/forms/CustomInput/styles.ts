@@ -73,7 +73,7 @@ export const Input = styled.input<CustomInputProps>`
     
     &:focus {
         outline: 1px solid ${({ theme, isError }) => isError ? theme.colors.error : theme.colors.primary};
-        box-shadow:  ${({ theme }) => theme.shadows.primaryShadow};
+        box-shadow: ${({ theme }) => theme.customShadows.primaryShadow};
     }
 
     &::placeholder {
