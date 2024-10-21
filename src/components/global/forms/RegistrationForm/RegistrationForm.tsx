@@ -8,14 +8,9 @@ import { CustomInput } from "../CustomInput/CustomInput";
 import { useRouter } from "next/router";
 import { RegistrationFormSchema } from "@/types/components/global/forms/registrationForm";
 import { CustomForm, FormWrapper, FormWrapperBottom } from "./styles";
+import { isAuthErrorResponseType } from "@/utils/isAuthErrorResponseType";
+import { CustomError } from "../CustomInput/styles";
 
-function isAuthErrorResponseType(error: any): string
-{
-    if (error && error.data && typeof error.data.message === 'string')
-        return error.data.message;
-    else
-        return 'Error while sending form, please try again later.';
-}
 interface RegistrationFormProps
 {
     isCheckout?: boolean;
@@ -206,7 +201,7 @@ export const RegistrationForm = () =>
             </FormWrapper>
             <FormWrapperBottom>
                 <button type="submit" disabled={isSubmitting}>{isSubmitting ? 'Submitting...' : 'Submit'}</button>
-                {error && <p dangerouslySetInnerHTML={{ __html: isAuthErrorResponseType(error) }}></p>}
+                {error && <CustomError dangerouslySetInnerHTML={{ __html: isAuthErrorResponseType(error) }}></CustomError>}
             </FormWrapperBottom>
         </CustomForm>
     );
