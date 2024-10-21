@@ -6,12 +6,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 {
     const { ...params } = req.query;
     let slug = req.query.path;
+    let v2: boolean = true;
 
     if (!slug || slug.length === 0)
         return res.status(400).json({ error: 'Slug parameter is missing' });
 
     if (Array.isArray(slug))
         slug = slug.join('/');
+
+    if (slug.includes('jwt-auth'))
+        v2 = false;
+
 
     const { method, body, headers } = req;
     const authorization = "authorization" in headers ? headers.authorization : null;
@@ -25,7 +30,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 response = await wpRestApi.get(slug, params, authorization);
                 break;
             case 'POST':
-                response = await wpRestApi.get(slug, params, body);
+                response = await wpRestApi.post(slug, body, (!v2 && v2));
                 break;
             default:
                 res.setHeader('Allow', ['POST', 'GET']);
