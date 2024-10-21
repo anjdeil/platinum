@@ -1,6 +1,6 @@
 import { FC, useEffect, useMemo, useState } from "react";
 import { CustomError, CustomInputStyle, CustomInputWrapper, CustomRequired, Input, ShowPasswordImage } from "./styles";
-
+import Image from 'next/image';
 import { z } from "zod";
 
 export const CustomInput2Schema = z.object({
@@ -26,11 +26,6 @@ export const CustomInput2Schema = z.object({
     initialValue: z.string().nullable().optional(),
 })
 
-{/* <PhoneInput
-defaultCountry="pl"
-onChange={(value) => { if (setValue) setValue('phoneNumber', value, { shouldValidate: true }); }}
-/> */}
-
 export type CustomInputType = z.infer<typeof CustomInput2Schema>;
 
 export const CustomInput: FC<CustomInputType> = (
@@ -45,8 +40,7 @@ export const CustomInput: FC<CustomInputType> = (
         register,
         onChange,
         value,
-    }) =>
-{
+    }) => {
     const registerProps = register ? { ...register(name) } : {};
 
     const [isPasswordVisible, setPasswordVisible] = useState(false);
@@ -54,8 +48,7 @@ export const CustomInput: FC<CustomInputType> = (
     const passwordImagePath = useMemo(() => isPasswordVisible ? '/images/show-pass.svg' : '/images/hidden-pass.svg', [isPasswordVisible]);
 
     const [isError, setError] = useState(false);
-    useEffect(() =>
-    {
+    useEffect(() => {
         if (!errors || !name) { setError(false); return; }
         setError(name in errors);
     }, [errors, name]);
@@ -69,8 +62,12 @@ export const CustomInput: FC<CustomInputType> = (
                 isCheckbox={inputType === 'checkbox'}
                 isPhone={false}>
                 <span>
-                    {fieldName}
-                    {isRequire && <CustomRequired>*</CustomRequired>}
+                    <span>{fieldName}</span>
+                    {isRequire && (
+                        <CustomRequired>
+                            <Image src="/images/asterisk.svg" alt="required" width={8} height={8} />
+                        </CustomRequired>
+                    )}
                 </span>
                 <CustomInputWrapper>
                     <Input
@@ -79,6 +76,7 @@ export const CustomInput: FC<CustomInputType> = (
                         {...register(name)}
                         type={isPasswordVisible ? 'text' : inputType}
                         {...registerProps}
+                        className={isError && name && errors[name] && 'error'}
                     />
                     {inputType === 'password' &&
                         <ShowPasswordImage
@@ -92,5 +90,6 @@ export const CustomInput: FC<CustomInputType> = (
             </CustomInputStyle>
             {isError && name && <CustomError>{errors[name]?.message}</CustomError>}
         </div>
-    )
+    );
+
 }

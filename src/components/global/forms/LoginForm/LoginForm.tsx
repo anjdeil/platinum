@@ -7,30 +7,26 @@ import { CustomInput } from "../CustomInput";
 import { useGetTokenMutation } from "@/store/rtk-queries/wpApi";
 import { isAuthErrorResponseType } from "@/utils/isAuthErrorResponseType";
 import { CustomError } from "../CustomInput/styles";
+import { PrimaryButton } from "../../buttons/PrimaryButton/PrimaryButton";
 
-
-export const LoginForm: FC = () =>
-{
+export const LoginForm: FC = () => {
     const [getToken, { data, isLoading, error }] = useGetTokenMutation({});
 
     const { register, handleSubmit, formState: { errors, isSubmitting, isSubmitSuccessful }, setValue, reset } = useForm<LoginFormType>({
         resolver: zodResolver(LoginFormSchema)
     });
 
-    async function onSubmit(formData: LoginFormType)
-    {
+    async function onSubmit(formData: LoginFormType) {
         const data = {
             username: formData.username,
             password: formData.password,
         }
 
-        try
-        {
+        try {
             const response = await getToken(data);
             if (response)
                 console.log(response);
-        } catch (error)
-        {
+        } catch (error) {
             console.error(error);
         }
     }
@@ -40,6 +36,7 @@ export const LoginForm: FC = () =>
             <FormWrapper>
                 <CustomInput
                     fieldName="Adres e-mail"
+                    placeholder="E-mail"
                     name='username'
                     register={register}
                     errors={errors}
@@ -48,6 +45,7 @@ export const LoginForm: FC = () =>
                     inputType={"text"} />
                 <CustomInput
                     fieldName="Hasło"
+                    placeholder="Hasło"
                     name='password'
                     register={register}
                     errors={errors}
@@ -56,7 +54,11 @@ export const LoginForm: FC = () =>
                     inputType={"password"} />
             </FormWrapper>
             <FormWrapperBottom>
-                <button type="submit" disabled={isSubmitting}>{isSubmitting ? 'Submitting...' : 'Submit'}</button>
+                <PrimaryButton
+                    children={isSubmitting ? 'Submitting...' : 'Submit'}
+                    buttonType="submit"
+                    isDisabled={isSubmitting}
+                />
                 {error && <CustomError dangerouslySetInnerHTML={{ __html: isAuthErrorResponseType(error) }}></CustomError>}
             </FormWrapperBottom>
         </CustomForm>
