@@ -12,20 +12,13 @@ const theme: Theme = {
         fontSize: '16px',
     },
     fonts: {
-        bodysmallReg:
-            '400 0.75rem/1rem ' + montserrat.style.fontFamily,
-        bodyMiddleReg:
-            '400 1rem/1.5rem ' + montserrat.style.fontFamily,
-        bodyMiddleSemiBold:
-            '600 1rem/1.5rem ' + montserrat.style.fontFamily,
-        bodyMiddleMedium:
-            '500 1rem/1.5rem ' + montserrat.style.fontFamily,
-        titleH1SemiBold:
-            '600 3rem/3.5rem ' + montserrat.style.fontFamily,
-        titleH2SemiBold:
-            '600 1.5rem/2rem ' + montserrat.style.fontFamily,
-        titleH2Medium:
-            '500 1.5rem/2rem ' + montserrat.style.fontFamily,
+        bodysmallReg: '400 0.75rem/1rem ' + montserrat.style.fontFamily,
+        bodyMiddleReg: '400 1rem/1.5rem ' + montserrat.style.fontFamily,
+        bodyMiddleSemiBold: '600 1rem/1.5rem ' + montserrat.style.fontFamily,
+        bodyMiddleMedium: '500 1rem/1.5rem ' + montserrat.style.fontFamily,
+        titleH1SemiBold: '600 3rem/3.5rem ' + montserrat.style.fontFamily,
+        titleH2SemiBold: '600 1.5rem/2rem ' + montserrat.style.fontFamily,
+        titleH2Medium: '500 1.5rem/2rem ' + montserrat.style.fontFamily,
     },
     colors: {
         primary: '#113760',
@@ -46,9 +39,6 @@ const theme: Theme = {
         hot: '#F2B517',
         sale: '#D92D20',
     },
-    shadows: {
-        primaryShadow: '0 0 6px 0 rgba(17, 55, 96, 0.4)',
-    },
     background: {
         secondary: '#f2f8fe',
         hover: '#063e7b',
@@ -58,7 +48,7 @@ const theme: Theme = {
         warning: '#F2B517',
         primaryGradient: "radial-gradient(79.43% 79.43% at 49.95% 64.07%, #024584 0%, #0B233D 100%)",
         infoGradient: "radial-gradient(66.14% 66.14% at 49.95% 64.07%, #024584 0%, #0B233D 100%)",
-        formElements: ""
+        formElements: "#F2F8FE"
     },
     spacing: {
         small: '8px',
@@ -75,6 +65,9 @@ const theme: Theme = {
         largePlus: '(max-width: 1300px)',
         extraLarge: '(max-width: 1440px)',
     },
+    customShadows: {
+        primaryShadow: "0 0 6px 0 rgba(17, 55, 96, .4)"
+    }
 };
 
 export default theme;

@@ -29,7 +29,7 @@ declare module '@emotion/react' {
             hot: string,
             sale: string,
         };
-        shadows: {
+        customShadows: {
             primaryShadow: string;
         };
         background: {
