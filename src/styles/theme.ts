@@ -13,7 +13,7 @@ const theme: Theme = {
     },
     fonts: {
         bodysmallReg:
-            '400 0.75rem/1rem ' + montserrat.style.fontFamily,
+            '400 0.75 rem/1rem ' + montserrat.style.fontFamily,
         bodyMiddleReg:
             '400 1rem/1.5rem ' + montserrat.style.fontFamily,
         bodyMiddleSemiBold:

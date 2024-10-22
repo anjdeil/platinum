@@ -68,5 +68,11 @@
     },
     "Search": {
         "Search": "Пошук"
+    },
+    "Product": {
+        "addToBasket": "Додати до кошика",
+        "sortBy": "Сортувати за",
+        "productList": "Список товарів",
+        "notifyWhenAvailable": "Повідомити, коли буде доступний"
     }
 }

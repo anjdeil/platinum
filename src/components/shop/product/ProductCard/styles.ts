@@ -42,15 +42,6 @@ export const TitlePriceWrapper = styled.div`
     align-items: center;
 `
 
-export const BadgeWrapper = styled.div`
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: absolute;
-    top: 0;
-`
-
 export const ProductWrapper = styled.div`
     width: 100%;
     display: flex;

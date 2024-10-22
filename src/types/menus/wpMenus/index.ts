@@ -1,1 +1,1 @@
-export * from './wpMenus'
+export * from './wpMenus';

@@ -68,5 +68,11 @@
     },
     "Search": {
         "Search": "Wyszukiwanie"
+    },
+    "Product": {
+        "addToBasket": "Dodaj do koszyka",
+        "sortBy": "Sortuj według",
+        "productList": "Lista produktów",
+        "notifyWhenAvailable": "Powiadom, gdy będzie dostępne"
     }
 }

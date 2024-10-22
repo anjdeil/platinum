@@ -68,5 +68,11 @@
     },
     "Search": {
         "Search": "Поиск"
+    },
+    "Product": {
+        "addToBasket": "Добавить в корзину",
+        "sortBy": "Сортировать по",
+        "productList": "Список товаров",
+        "notifyWhenAvailable": "Уведомить, когда будет доступен"
     }
 }

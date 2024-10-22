@@ -68,5 +68,11 @@
     },
     "Search": {
         "Search": "Search"
+    },
+    "Product": {
+        "addToBasket": "Add to basket",
+        "sortBy": "Sort by",
+        "productList": "Product List",
+        "notifyWhenAvailable": "Notify when available"
     }
 }
