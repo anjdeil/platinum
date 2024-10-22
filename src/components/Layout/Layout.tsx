@@ -19,8 +19,7 @@ import { useFetchCustomerQuery } from '@/store/rtk-queries/wooCustomApi';
 export const MenusContext = createContext<WpMenuResponseType[] | []>([]);
 const currency = 'USD';
 
-export default function Layout({ children }: { children: React.ReactNode })
-{
+export default function Layout({ children }: { children: React.ReactNode }) {
     const dispatch = useDispatch();
     const { isMobile } = useResponsive();
     const { locale } = useRouter();
@@ -30,29 +29,21 @@ export default function Layout({ children }: { children: React.ReactNode })
 
     const { data: menusResp, error, isLoading } = useGetMenusQuery(langParam);
     const { data: themeOptions, error: themeOptionsError, } = useGetThemeOptionsQuery();
-    const { data: customer, error: customerError, } = useFetchCustomerQuery({customerId: '14408'});
+
     /*     const { data: products, error: productError, isError } = useGetProductsQuery(langParam); */
 
-    useEffect(() =>
-    {
-        if (menusResp && menusResp.data && menusResp.data.items)
-        {
+    useEffect(() => {
+        if (menusResp && menusResp.data && menusResp.data.items) {
             setMenus(menusResp.data.items);
         }
     }, [menusResp])
 
-    useEffect(() =>
-    {
-        if (themeOptions && themeOptions.data)
-        {
+    useEffect(() => {
+        if (themeOptions && themeOptions.data) {
             dispatch(setThemeOptions({ data: themeOptions, language: langParamStr }));
         }
     }, [themeOptions, locale, dispatch]);
-    useEffect(() =>
-    {
-        console.log(customer);
-        
-    }, []);
+
 
 
     return (

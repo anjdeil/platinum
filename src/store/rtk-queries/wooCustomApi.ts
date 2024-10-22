@@ -34,7 +34,7 @@ export const wooCustomRktApi = createApi({
                 }
             })
         }),
-        updateCustomer: builder.query<WooCustomerType, WooCustomerUpdateReqType>({
+        updateCustomer: builder.mutation<WooCustomerType, WooCustomerUpdateReqType>({
             query: (credentials: WooCustomerUpdateReqType) => ({
                 url: `/customers/${credentials.id}`,
                 method: "PUT",
@@ -47,4 +47,4 @@ export const wooCustomRktApi = createApi({
     })
 })
 
-export const { useRegisterCustomerMutation, useFetchOrdersQuery, useFetchCustomerQuery, useUpdateCustomerQuery} = wooCustomRktApi;
+export const { useRegisterCustomerMutation, useFetchOrdersQuery, useFetchCustomerQuery, useUpdateCustomerMutation} = wooCustomRktApi;

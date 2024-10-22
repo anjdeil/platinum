@@ -12,7 +12,7 @@ interface TitleProps
     mobFontSize?: string;
     textalign?: "center" | "left" | "right";
     uppercase?: boolean;
-    marginBottom?: number;
+    marginBottom?: string;
     tabletMarginBottom?: number;
     mobMarginBottom?: number;
 }
@@ -23,6 +23,7 @@ export const Title = styled.h1<TitleProps>`
     font-size: ${({ fontSize }) => fontSize};
     font-weight: ${({ fontWeight }) => fontWeight};
     text-transform: ${({ uppercase }) => uppercase ? "uppercase" : 'none'};
+    margin-bottom: ${({ marginBottom }) => marginBottom };
     text-align: center;
 
     @media ${({ theme }) => theme.media.large} {
