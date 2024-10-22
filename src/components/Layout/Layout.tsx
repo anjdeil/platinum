@@ -14,6 +14,7 @@ import { Footer } from '../widgets/Footer';
 import Header from '../widgets/Header/Header';
 import MobileHeader from '../widgets/MobileHeader/MobileHeader';
 import TopBar from '../widgets/TopBar/TopBar';
+import { useFetchCustomerQuery } from '@/store/rtk-queries/wooCustomApi';
 
 export const MenusContext = createContext<WpMenuResponseType[] | []>([]);
 const currency = 'USD';
@@ -29,6 +30,7 @@ export default function Layout({ children }: { children: React.ReactNode })
 
     const { data: menusResp, error, isLoading } = useGetMenusQuery(langParam);
     const { data: themeOptions, error: themeOptionsError, } = useGetThemeOptionsQuery();
+    const { data: customer, error: customerError, } = useFetchCustomerQuery({customerId: '14408'});
     /*     const { data: products, error: productError, isError } = useGetProductsQuery(langParam); */
 
     useEffect(() =>
@@ -46,6 +48,12 @@ export default function Layout({ children }: { children: React.ReactNode })
             dispatch(setThemeOptions({ data: themeOptions, language: langParamStr }));
         }
     }, [themeOptions, locale, dispatch]);
+    useEffect(() =>
+    {
+        console.log(customer);
+        
+    }, []);
+
 
     return (
         <Box>

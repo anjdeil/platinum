@@ -1,4 +1,4 @@
-import { OrderType, WooCustomerReqType, WooCustomerType } from "@/types/services";
+import { OrderType, WooCustomerReqType, WooCustomerType, WooCustomerUpdateReqType } from "@/types/services";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const wooCustomRktApi = createApi({
@@ -24,8 +24,27 @@ export const wooCustomRktApi = createApi({
                     'Content-Type': 'application/json',
                 }
             })
-        })
+        }),
+        fetchCustomer: builder.query<WooCustomerType, { customerId: string }>({
+            query: ({ customerId }) => ({
+                url: `/customers/${customerId}`,
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+        }),
+        updateCustomer: builder.query<WooCustomerType, WooCustomerUpdateReqType>({
+            query: (credentials: WooCustomerUpdateReqType) => ({
+                url: `/customers/${credentials.id}`,
+                method: "PUT",
+                body: credentials,
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+        }),
     })
 })
 
-export const { useRegisterCustomerMutation, useFetchOrdersQuery } = wooCustomRktApi;
+export const { useRegisterCustomerMutation, useFetchOrdersQuery, useFetchCustomerQuery, useUpdateCustomerQuery} = wooCustomRktApi;
