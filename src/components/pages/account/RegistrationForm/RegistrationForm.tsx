@@ -1,4 +1,3 @@
-import { RegistrationFormSchema } from "@/types/pages/account/registrationForm/registrationForm";
 import { FC, forwardRef, useCallback, useImperativeHandle, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -8,6 +7,7 @@ import { CustomForm, FormWrapper } from "./styles";
 import { PhoneInput } from "react-international-phone";
 import 'react-international-phone/style.css';
 import { CustomInput } from "../../../global/forms/CustomInput";
+import { RegistrationFormSchema } from "@/types/pages/account/RegistrationForm/registrationForm";
 
 interface RegistrationFormProps
 {

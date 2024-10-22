@@ -41,11 +41,11 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) =>
                 <ProductTitleWrapper>
                     <Title as="h1" uppercase>{name}</Title>
                     <ProductFlexWrapper>
-                        <ProductAvailable count={stock_quantity} />
-                        <ProductViewing count={stock_quantity} />
+                        <ProductAvailable count={stock_quantity || 0} />
+                        <ProductViewing count={stock_quantity || 0} />
                     </ProductFlexWrapper>
                     <ProductFlexWrapper>
-                        <ProductSku sku={sku} />
+                        <ProductSku sku={sku || ""} />
                         <Rating rating={4} />
                     </ProductFlexWrapper>
                     <ProductPrice minPrice={min_price} maxPrice={max_price} />
@@ -59,11 +59,11 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) =>
                     <ProductTitleWrapper>
                         <Title as="h1" uppercase>{name}</Title>
                         <ProductFlexWrapper>
-                            <ProductAvailable count={stock_quantity} />
-                            <ProductViewing count={stock_quantity} />
+                            <ProductAvailable count={stock_quantity || 0} />
+                            <ProductViewing count={stock_quantity || 0} />
                         </ProductFlexWrapper>
                         <ProductFlexWrapper>
-                            <ProductSku sku={sku} />
+                            <ProductSku sku={sku || ""} />
                             <Rating rating={4} />
                         </ProductFlexWrapper>
                         <ProductPrice minPrice={min_price} maxPrice={max_price} />
@@ -89,7 +89,7 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) =>
                 <ProductPromotion time={new Date("2024-10-30T00:00:00")} />
                 <AddToBasketWrapper>
                     <ProductQuantity quantity={quantity} onChange={setQuantity} />
-                    {stock_quantity > 0
+                    {(stock_quantity !== null && stock_quantity > 0)
                         ? <AddToBasketButton maxWidth="309px"/>
                         : <StyledButton notify={true}>{t('notifyWhenAvailable')}</StyledButton>
                     }

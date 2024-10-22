@@ -1,6 +1,6 @@
 import { WpMenuResponseSchema } from "@/types/menus/wpMenus";
 import { z } from "zod";
-import { CategorySchema, ProductDataResponseSchema, ProductSchema } from "../../pages/shop";
+import { CategorySchema, ProductSchema } from "../../pages/shop";
 
 const LangParamSchema = z.enum(['en', 'pl', 'de', 'ru', 'uk']).optional();
 
@@ -25,8 +25,11 @@ export const CustomDataMenuResponseSchema = z.object({
 
 export const CustomDataProductsSchema = z.object({
     success: z.boolean(),
-    data: CustomDataSchema.extend({
-        items: z.array(ProductDataResponseSchema),
+    data: z.object({
+        statistic: z.object({
+            products_count: z.number(),
+        }),
+        items: z.array(ProductSchema),
     })
 })
 
