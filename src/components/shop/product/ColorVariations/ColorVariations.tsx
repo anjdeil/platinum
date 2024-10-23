@@ -1,14 +1,17 @@
 import { VariationTitle } from "@/styles/components";
 import { ColorVariationsProps } from "@/types/components/shop/product/productVariations";
+import { useTranslations } from "next-intl";
 import React from "react";
 import { ColorVariationsContainer, VariationListBlock, VariationsColorButton } from "./styles";
 
 const ColorVariations: React.FC<ColorVariationsProps> = ({ list, currentVariation, onChange }) =>
 {
+    const t = useTranslations("Product");
+
     return (
         <ColorVariationsContainer>
             <VariationTitle>
-                Color
+                {t('color')}
             </VariationTitle>
             <VariationListBlock>
                 {list.map((item) => (

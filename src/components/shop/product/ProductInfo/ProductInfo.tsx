@@ -39,7 +39,7 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) =>
         <ProductWrapper>
             {isMobile && (
                 <ProductTitleWrapper>
-                    <Title as="h1" uppercase>{name}</Title>
+                    <Title as="h1" uppercase textalign="left">{name}</Title>
                     <ProductFlexWrapper>
                         <ProductAvailable count={stock_quantity || 0} />
                         <ProductViewing count={stock_quantity || 0} />
@@ -57,7 +57,7 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) =>
             <ProductInfoWrapper>
                 {!isMobile && (
                     <ProductTitleWrapper>
-                        <Title as="h1" uppercase>{name}</Title>
+                        <Title as="h1" uppercase textalign="left">{name}</Title>
                         <ProductFlexWrapper>
                             <ProductAvailable count={stock_quantity || 0} />
                             <ProductViewing count={stock_quantity || 0} />

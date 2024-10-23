@@ -73,6 +73,13 @@
         "addToBasket": "Add to basket",
         "sortBy": "Sort by",
         "productList": "Product List",
-        "notifyWhenAvailable": "Notify when available"
+        "notifyWhenAvailable": "Notify when available",
+        "theEndOfThePromotion": "The end of the promotion",
+        "available": "Available: {count} pcs",
+        "notAvailable": "Not available",
+        "viewingThisProduct": "Viewing this product: {count}",
+        "fastShipping": "Fast shipping",
+        "freeDeliveryOver": "Free delivery over {price}",
+        "color": "Color"
     }
 }

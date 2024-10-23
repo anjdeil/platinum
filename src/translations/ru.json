@@ -73,6 +73,13 @@
         "addToBasket": "Добавить в корзину",
         "sortBy": "Сортировать по",
         "productList": "Список товаров",
-        "notifyWhenAvailable": "Уведомить, когда будет доступен"
+        "notifyWhenAvailable": "Уведомить, когда будет доступен",
+        "theEndOfThePromotion": "Конец акции",
+        "available": "Доступно: {count} шт",
+        "notAvailable": "Недоступно",
+        "viewingThisProduct": "Сейчас просматривают: {count}",
+        "fastShipping": "Быстрая доставка",
+        "freeDeliveryOver": "Бесплатная доставка от {price}",
+        "color": "Цвет"
     }
 }

@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { ItemBlock, ItemCount, ItemText, PromotionContainer, PromotionTitle, TimerContainer } from "./styles";
 
@@ -8,6 +9,7 @@ interface ProductPromotion {
 const ProductPromotion: React.FC<ProductPromotion> = ({ time }) =>
 {
     const [timeLeft, setTimeLeft] = useState<number>(time.getTime() - Date.now());
+    const t = useTranslations("Product");
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -25,7 +27,7 @@ const ProductPromotion: React.FC<ProductPromotion> = ({ time }) =>
     return (
         <PromotionContainer>
             <PromotionTitle>
-                The end of the promotion
+                {t('theEndOfThePromotion')}
             </PromotionTitle>
             <TimerContainer>
                 <ItemBlock>
