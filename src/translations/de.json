@@ -79,6 +79,7 @@
         "notAvailable": "Nicht verfügbar",
         "viewingThisProduct": "Derzeit wird angesehen: {count}",
         "fastShipping": "Schneller Versand",
-        "freeDeliveryOver": "Kostenloser Versand ab {price}"
+        "freeDeliveryOver": "Kostenloser Versand ab {price}",
+        "color": "Farbe"
     }
 }
