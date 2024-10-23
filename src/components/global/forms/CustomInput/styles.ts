@@ -85,6 +85,7 @@ export const Input = styled.input<CustomInputProps>`
         -webkit-appearance: none; 
         margin: 0; 
     }
+    
     &[type="number"]appearance: none;
     &[type="number"]-moz-appearance: textfield;
 

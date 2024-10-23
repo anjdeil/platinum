@@ -27,38 +27,27 @@ const phoneSchema = z.string().refine(value => parsePhoneNumber(value).valid, {
     message: 'Invalid phone number',
 });
 
-export const UserInfoFormSchema = (isLoggedIn: boolean, isUpdate: boolean, isCheckout: boolean = false, isShipping: boolean = false) => {
+export const UserInfoFormSchema = (
+    isLoggedIn: boolean, 
+    isUpdate: boolean, 
+    isCheckout: boolean = false, 
+    isShipping: boolean = false) => {
     const schema = z.object({
         name: z.string().min(3, 'Required field'),
         lastName: z.string().min(3, 'Required field'),
         email: z.string().email('Please, type valid email'),
-        phoneNumber:  z.string().optional(),
+        phoneNumber:  phoneSchema,
         country: z.string().min(1, 'Required field'),
         city: z.string().min(1, 'Required field'),
         address1: z.string().min(4, 'Required field'),
         address2: z.string().min(1, 'Required field'),
         apartmentNumber: z.string().min(1, 'Required field'),
         postCode: z.string().min(5, 'The post code must contain 5 characters'),
-        password: !isLoggedIn ? passwordSchema : z.string().optional(),
-        confirmPassword: !isLoggedIn ? z.string() : z.string().optional(),
+        password: isUpdate ? z.string().optional() : (!isLoggedIn ? passwordSchema : z.string().optional()),
+        confirmPassword: isUpdate ? z.string().optional() : (!isLoggedIn ? z.string() : z.string().optional()),
         terms: termsSchema,
 
-        /*  // temporarily the fields are optional when updating
-         // 
-         name: isUpdate ? z.string().optional() : z.string().min(3, 'Required field'),
-         lastName: isUpdate ? z.string().optional() : z.string().min(3, 'Required field'),
-         email: isUpdate ? z.string().optional() : z.string().email('Please, type valid email'),
-         phoneNumber: isUpdate ? z.string().optional() : phoneSchema,
-         country: isUpdate ? z.string().optional() : z.string().min(1, 'Required field'),
-         city: isUpdate ? z.string().optional() : z.string().min(1, 'Required field'),
-         address1: isUpdate ? z.string().optional() : z.string().min(4, 'Required field'),
-         address2: isUpdate ? z.string().optional() : z.string().min(1, 'Required field'),
-         apartmentNumber: isUpdate ? z.string().optional() : z.string().min(1, 'Required field'),
-         postCode: isUpdate ? z.string().optional() : z.string().min(5, 'The post code must contain 5 characters'),
-         password: !isLoggedIn ? passwordSchema : z.string().optional(),
-         confirmPassword: !isLoggedIn ? z.string() : z.string().optional(),
-         terms: termsSchema,
-     */
+ 
 
         /*    countryCode: z.string().min(1, 'Country code is required'),
            nip: nipSchema,

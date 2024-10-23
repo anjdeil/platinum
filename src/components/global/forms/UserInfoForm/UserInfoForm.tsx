@@ -20,12 +20,20 @@ const isCheckout = false;
 const isShipping = false;
 
 export const UserInfoForm: FC = () => {
-    const router = useRouter();
+
+    // auth route
+  /*   const router = useRouter();
+    useEffect(() =>
+        {
+            if (isLoggedIn) router.push('/account');
+        }, [router, isLoggedIn]); */
+
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
     const [isUpdate, setIsUpdate] = useState<boolean>(true);
     const [hasChanges, setHasChanges] = useState<boolean>(false);
 
     // hard fetch user
+    // todo write some fetch with authorized user data
     const { data: customer, error: customerError } = useFetchCustomerQuery({ customerId: '14408' });
 
     const [UpdateCustomerMutation, { data, error, isLoading }] = useUpdateCustomerMutation();
@@ -41,23 +49,8 @@ export const UserInfoForm: FC = () => {
         setValue,
         reset,
         watch } = useForm<UserInfoFormType>({
-           /*  resolver: zodResolver(formSchema) */
+            resolver: zodResolver(formSchema)
         });
-
-    // initial value of form
-    useEffect(() => {
-        if (customer) {
-            setValue('name', customer.first_name);
-            setValue('lastName', customer.last_name);
-            setValue('email', customer.email);
-            setValue('country', customer.billing.country);
-            setValue('city', customer.billing.city);
-            setValue('address1', customer.billing.address_1);
-            setValue('address2', customer.billing.address_2);
-            setValue('postCode', customer.billing.postcode);
-            setValue('phoneNumber', customer.billing.phone);
-        }
-    }, [customer, setValue]);
 
     // Track changes in the form
     useEffect(() => {
@@ -70,7 +63,6 @@ export const UserInfoForm: FC = () => {
     }, [watch]);
 
     async function onSubmit(formData: UserInfoFormType) {
-        console.log('submit');
 
         if (!customer) {
             console.error("Customer data is not available");
@@ -81,7 +73,6 @@ export const UserInfoForm: FC = () => {
             email: formData.email,
             first_name: formData.name,
             last_name: formData.lastName,
-            role: 'customer',
             username: formData.email,
             billing: {
                 first_name: formData.name,
@@ -116,74 +107,95 @@ export const UserInfoForm: FC = () => {
                     <CustomInput
                         fieldName="Imię"
                         name='name'
+                        inputTag={"input"}
+                        inputType={"text"}
                         register={register}
                         errors={errors}
-                        inputTag={"input"}
-                        inputType={"text"} />
+                        defaultValue={customer?.first_name}
+                        setValue={setValue}
+                        />
                     <CustomInput
                         fieldName="Nazwisko"
                         name='lastName'
                         register={register}
                         errors={errors}
                         inputTag={"input"}
-                        inputType={"text"} />
+                        inputType={"text"}
+                        defaultValue={customer?.last_name}
+                        setValue={setValue} />
                     <CustomInput
                         fieldName="Adres e-mail"
                         name='email'
                         register={register}
                         errors={errors}
                         inputTag={"input"}
-                        inputType={"text"} />
+                        inputType={"email"} 
+                        defaultValue={customer?.email}
+                        setValue={setValue}/>
                     <CustomInput
                         fieldName="phone number"
                         name='phoneNumber'
                         register={register}
                         errors={errors}
-                        setValue={setValue}
                         inputTag={"input"}
-                        inputType={"text"} />
+                        inputType={"tel"} 
+                        defaultValue={customer?.billing.phone}
+                        setValue={setValue}/>
                     <CustomInput
                         fieldName="Kraj / region"
                         name='country'
                         register={register}
                         errors={errors}
                         inputTag={"input"}
-                        inputType={"text"} />
+                        inputType={"text"} 
+                        defaultValue={customer?.billing.country}
+                        setValue={setValue}/>
                     <CustomInput
                         fieldName="Miasto"
                         name='city'
                         register={register}
                         errors={errors}
                         inputTag={"input"}
-                        inputType={"text"} />
+                        inputType={"text"} 
+                        defaultValue={customer?.billing.city}
+                        setValue={setValue}/>
                     <CustomInput
                         fieldName="Ulica"
                         name='address1'
                         register={register}
                         errors={errors}
                         inputTag={"input"}
-                        inputType={"text"} />
+                        inputType={"text"} 
+                        defaultValue={customer?.billing.address_1}
+                        setValue={setValue}/>
                     <CustomInput
                         fieldName="Building number"
                         name='address2'
                         register={register}
                         errors={errors}
                         inputTag={"input"}
-                        inputType={"number"} />
+                        inputType={"number"} 
+                        defaultValue={customer?.billing.address_2}
+                        setValue={setValue}/>
                     <CustomInput
                         fieldName="№ apartment/office"
                         name='apartmentNumber'
                         register={register}
                         errors={errors}
                         inputTag={"input"}
-                        inputType={"number"} />
+                        inputType={"number"} 
+                        /* defaultValue={'not exist in data'}
+                        setValue={setValue} */
+                        />
                     <CustomInput
                         fieldName="Kod pocztowy"
                         name='postCode'
                         register={register}
                         errors={errors}
                         inputTag={"input"}
-                        inputType={"number"} />
+                        inputType={"number"} 
+                        defaultValue={customer?.billing.postcode}
+                        setValue={setValue}/>
                 </FormWrapper>
                 <CustomInput
                     fieldName="I agree to receiving information regarding news and changes to the stores offer"
@@ -194,10 +206,10 @@ export const UserInfoForm: FC = () => {
                     inputType={"checkbox"} />
             </InfoCard>
             <FormWrapperBottom>
-            <button type="submit" disabled={isSubmitting || !hasChanges}>{isSubmitting ? 'Saving...' : 'Save changes'}</button>
+                <button type="submit" disabled={isSubmitting || !hasChanges}>{isSubmitting ? 'Saving...' : 'Save changes'}</button>
                 {error && <CustomError dangerouslySetInnerHTML={{ __html: isAuthErrorResponseType(error) }}></CustomError>}
             </FormWrapperBottom>
-         
+
         </CustomForm>
     );
 }
