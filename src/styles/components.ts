@@ -4,10 +4,8 @@ import styled from "@emotion/styled";
 import { Pagination } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
-import theme from './theme';
 
-interface TitleProps
-{
+interface TitleProps {
     as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
     fontWeight?: number;
     fontSize?: string;
@@ -168,4 +166,8 @@ export const StyledIconWrapper = styled.div`
 export const LogoLinkImage = styled(Image) <LogoLinkImageProps>`
     width: 100%;
     height: 100%;
+`;
+
+export const TinyText = styled.p`
+    font: ${({ theme }) => theme.fonts.bodysmallReg};
 `;

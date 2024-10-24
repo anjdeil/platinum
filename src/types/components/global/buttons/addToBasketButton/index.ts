@@ -11,6 +11,7 @@ export const AddToBasketButtonPropsSchema = z.object({
     hoverColor: z.string().optional(),
     lineHeight: z.string().optional(),
     fontSize: z.string().optional(),
+    maxWidth: z.string().optional(),
 });
 
 export type AddToBasketButtonProps = z.infer<typeof AddToBasketButtonPropsSchema>;

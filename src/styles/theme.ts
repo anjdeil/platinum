@@ -58,7 +58,8 @@ const theme: Theme = {
         warning: '#F2B517',
         primaryGradient: "radial-gradient(79.43% 79.43% at 49.95% 64.07%, #024584 0%, #0B233D 100%)",
         infoGradient: "radial-gradient(66.14% 66.14% at 49.95% 64.07%, #024584 0%, #0B233D 100%)",
-        formElements: ""
+        formElements: "",
+        banner: '#71BFE6'
     },
     spacing: {
         small: '8px',

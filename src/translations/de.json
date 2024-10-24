@@ -71,5 +71,10 @@
     },
     "Product": {
         "addToBasket": "sss"
+    },
+    "Cart": {
+        "welcomeToPlatinumShop": "Willkommen im Platinum Schop",
+        "theBest": "Das beste",
+        "productForYou": "Produkt für Sie"
     }
 }
