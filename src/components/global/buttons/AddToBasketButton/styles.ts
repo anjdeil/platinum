@@ -3,12 +3,13 @@ import styled from "@emotion/styled";
 
 export const AddToBasketButtonStyled = styled.button<AddToBasketButtonProps>`
     width: 100%;
-    background-color: transparent;
+    max-width: ${({ maxWidth = "auto" }) => maxWidth};
+    background-color: ${({ theme }) => theme.colors.primary};
     font: ${({ theme }) => theme.fonts.bodyMiddleReg};
     font-size: ${({ fontSize }) => fontSize};
     line-height: ${({ lineHeight }) => lineHeight};
     font-weight: ${({ fontWeight }) => fontWeight};    
-    color: ${({ theme, color = theme.colors.black }) => color};
+    color: ${({ theme, color = theme.colors.white }) => color};
     padding: 16px 25px;    
     text-align: center;
     transition: all 0.2s ease;
@@ -17,7 +18,7 @@ export const AddToBasketButtonStyled = styled.button<AddToBasketButtonProps>`
     border: ${({ theme, borderColor = theme.colors.border }) => `1px solid  ${borderColor}`};
     
     &:hover {
-        background-color: ${({ theme, hoverBackground = theme.colors.primary }) => hoverBackground};
+        background-color: ${({ theme, hoverBackground = theme.background.hover }) => hoverBackground};
         color: ${({ theme, hoverColor = theme.colors.white }) => hoverColor};
     }
 
