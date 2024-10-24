@@ -28,6 +28,7 @@ declare module '@emotion/react' {
             best: string,
             hot: string,
             sale: string,
+            borderSecodrary: string,
         };
         customShadows: {
             primaryShadow: string;

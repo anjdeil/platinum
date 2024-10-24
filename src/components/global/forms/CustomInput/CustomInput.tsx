@@ -86,6 +86,7 @@ export const CustomInput: FC<CustomInputType> = (
                         {...register(name)}
                         type={isPasswordVisible ? 'text' : inputType}
                         {...registerProps}
+                        onChange={onChange} 
                     />
                     {inputType === 'password' &&
                         <ShowPasswordImage

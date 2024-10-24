@@ -7,7 +7,7 @@ import { useRegisterCustomerMutation } from "@/store/rtk-queries/wooCustomApi";
 import { CustomInput } from "../CustomInput/CustomInput";
 import { useRouter } from "next/router";
 import { RegistrationFormSchema } from "@/types/components/global/forms/registrationForm";
-import { CustomForm, FormWrapper, FormWrapperBottom } from "./styles";
+import { CustomForm, FormWrapper, FormWrapperBottom } from "@/styles/components";
 import { isAuthErrorResponseType } from "@/utils/isAuthErrorResponseType";
 import { CustomError } from "../CustomInput/styles";
 

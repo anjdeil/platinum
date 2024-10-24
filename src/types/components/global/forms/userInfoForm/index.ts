@@ -28,15 +28,15 @@ const phoneSchema = z.string().refine(value => parsePhoneNumber(value).valid, {
 });
 
 export const UserInfoFormSchema = (
-    isLoggedIn: boolean, 
-    isUpdate: boolean, 
-    isCheckout: boolean = false, 
-    isShipping: boolean = false) => {
+    isLoggedIn: boolean,
+    isUpdate: boolean,
+    isCheckout: boolean = false,
+    isShipping: boolean) => {
     const schema = z.object({
         name: z.string().min(3, 'Required field'),
         lastName: z.string().min(3, 'Required field'),
         email: z.string().email('Please, type valid email'),
-        phoneNumber:  phoneSchema,
+        phoneNumber: phoneSchema,
         country: z.string().min(1, 'Required field'),
         city: z.string().min(1, 'Required field'),
         address1: z.string().min(4, 'Required field'),
@@ -47,18 +47,18 @@ export const UserInfoFormSchema = (
         confirmPassword: isUpdate ? z.string().optional() : (!isLoggedIn ? z.string() : z.string().optional()),
         terms: termsSchema,
 
- 
-
-        /*    countryCode: z.string().min(1, 'Country code is required'),
-           nip: nipSchema,
-           nameShipping: isShipping ? z.string().min(3, 'Required field') : z.string().optional(),
-           lastNameShipping: isShipping ? z.string().min(3, 'Required field') : z.string().optional(),
-           companyNameShipping: isShipping ? z.string().min(1, 'Required field') : z.string().optional(),
-           addressShipping: isShipping ? z.string().min(4, 'Required field') : z.string().optional(),
-           postCodeShipping: isShipping ? z.string().min(5, 'The post code must contain 5 characters') : z.string().optional(),
-           cityShipping: isShipping ? z.string().min(1, 'Required field') : z.string().optional(),
-           countryShipping: isShipping ? z.string().min(1, 'Required field') : z.string().optional(),
-           phoneNumberShipping: isShipping ? phoneSchema : z.string().optional(), */
+        /*   countryCode: z.string().min(1, 'Country code is required'),
+              nip: nipSchema, 
+              nameShipping: isShipping ? z.string().min(3, 'Required field') : z.string().optional(),
+              lastNameShipping: isShipping ? z.string().min(3, 'Required field') : z.string().optional(),
+             companyNameShipping: isShipping ? z.string().min(1, 'Required field') : z.string().optional(), 
+                phoneNumberShipping: isShipping ? phoneSchema : z.string().optional(), */
+        address1Shipping: isShipping ? z.string().min(4, 'Required field') : z.string().optional(),
+        address2Shipping: isShipping ? z.string().min(1, 'Required field') : z.string().optional(),
+        postCodeShipping: isShipping ? z.string().min(5, 'The post code must contain 5 characters') : z.string().optional(),
+        cityShipping: isShipping ? z.string().min(1, 'Required field') : z.string().optional(),
+        countryShipping: isShipping ? z.string().min(1, 'Required field') : z.string().optional(),
+        apartmentNumberShipping: isShipping ? z.string().min(1, 'Required field') : z.string().optional(),
     });
 
     return schema.refine((data) => {
