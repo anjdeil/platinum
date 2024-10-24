@@ -71,5 +71,10 @@
     },
     "Product": {
         "addToBasket": "sss"
+    },
+    "Cart": {
+        "welcomeToPlatinumShop": "Добро пожаловать в Platinum Shop",
+        "theBest": "Лучший",
+        "productForYou": "Продукт для вас"
     }
 }
