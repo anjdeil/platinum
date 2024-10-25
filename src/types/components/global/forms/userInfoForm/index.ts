@@ -46,7 +46,7 @@ export const UserInfoFormSchema = (
         password: isUpdate ? z.string().optional() : (!isLoggedIn ? passwordSchema : z.string().optional()),
         confirmPassword: isUpdate ? z.string().optional() : (!isLoggedIn ? z.string() : z.string().optional()),
         terms: termsSchema,
-
+        proofOfPurchase: z.string().min(1, "Proof of purchase is required"),
         /*   countryCode: z.string().min(1, 'Country code is required'),
               nip: nipSchema, 
               nameShipping: isShipping ? z.string().min(3, 'Required field') : z.string().optional(),

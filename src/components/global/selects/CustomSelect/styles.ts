@@ -16,8 +16,6 @@ export const CustomSelectStyled = styled.div<CustomSelectStyledProps>`
     padding: ${({ padding = "4px" }) => padding};
     font: ${({ theme }) => theme.fonts.bodyMiddleReg};
     font-size: ${({ fontSize }) => fontSize};
-    font: ${({ theme }) => theme.fonts.bodyMiddleReg};
-    font-size: ${({ fontSize }) => fontSize};
     cursor: pointer;
 
     @media ${({ theme }) => theme.media.large} {
@@ -40,6 +38,7 @@ export const StyledCollapse = styled(Collapse) <CustomSelectStyledProps>`
     z-index: 1000;
     border-radius: ${({ isOpen, borderRadius = '0' }) => (isOpen ? `0 0 ${borderRadius} ${borderRadius}` : borderRadius)};
 `;
+
 
 export const MenuItem = styled.div<CustomSelectStyledProps>`
     display: flex;
@@ -68,4 +67,9 @@ export const MenuItem = styled.div<CustomSelectStyledProps>`
     &:hover {
         background: ${({ theme, background }) => background ? theme.colors.white : theme.background.secondary};
     }    
+`;
+
+export const CustomLabel = styled.label`
+   padding-bottom: 4px;
+   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
 `;
