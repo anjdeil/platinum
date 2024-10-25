@@ -1,80 +1,40 @@
 import styled from "@emotion/styled";
+import Link from "next/link";
 
-export const BannerContainer = styled.div`
-    box-sizing: border-box;
-    min-height: 272px;    
+export const BannerWrapper = styled(Link)`
+    position: relative;
+    width: 100%;
+    aspect-ratio: 5.3;
+    max-width: 1440px;
+    margin: auto;
     overflow: hidden;
-    background: ${({ theme }) => theme.background.banner};
-
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    column-gap: 16px;
+    text-decoration: none;
+    
     @media ${({ theme }) => theme.media.large} {
         width: auto;
-        min-height: 140px;
         margin-inline: 32px;
-        aspect-ratio: 5;
     }
 
     @media ${({ theme }) => theme.media.medium} {
         max-width: 390px;
-        margin-inline: auto;
+        margin: auto;
         aspect-ratio: 0.7;
-    }
-
-    @media ${({ theme }) => theme.media.small} {
-        margin-inline: 20px;
-    }
-`;
-
-export const BannerWrapper = styled.div`
-    position: relative;
-    width: 100%;
-    height: 100%;
-    max-width: 1280px;
-    margin: auto;
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    column-gap: 16px;
-    
-    @media ${({ theme }) => theme.media.medium} {
         padding-top: 20px;
     }
 
-    &::before {
-        content: '';
+    @media ${({ theme }) => theme.media.small} {
+        margin-inline: 20px
+    }
+
+    & img {
         position: absolute;
-        width: 20%;
-        aspect-ratio: 2;
-        top: 4%;
-        right: 2%;
-        background-image: url('/images/cloud.png');
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: cover;
-        z-index: 1;
-
-        @media ${({ theme }) => theme.media.medium} {
-            width: 47%;
-            top: 34%;
-        }
-    } 
-
-    &::after {
-        content: '';
-        position: absolute;
-        width: 35%;
-        aspect-ratio: 2;
-        top: 44%;
-        left: 33%;
-        background-image: url('/images/cloud.png');
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: cover;
-        z-index: 1;
-
-        @media ${({ theme }) => theme.media.medium} {
-            width: 77%;
-            top: 82%;
-            left: -40%;
-        }
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
     }
 `;
 
@@ -96,34 +56,21 @@ export const ContentWrapper = styled.div`
 
     @media ${({ theme }) => theme.media.medium} {
         grid-column: 1 / -1;
+        align-self: flex-start;
     }
 `;
 
 export const StyledText = styled.p`
     font: ${({ theme }) => theme.fonts.bodysmallReg};
+    color: ${({ theme }) => theme.colors.black};
     text-transform: uppercase;
 `;
 
-export const ImageWrapper = styled.div`
-    grid-column: 8 / span 4;
-    margin-bottom: -44px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 
-    @media ${({ theme }) => theme.media.medium} {
-        grid-column: 1 / -1;
-        margin-bottom: 0;
-    }
-
-    & img {
-        @media ${({ theme }) => theme.media.large} {
-            width: 70%;
-            height: auto;
-        }
-
-        @media ${({ theme }) => theme.media.medium} {
-            width: 100%;
-        }
+export const StyledLink = styled(Link)`
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
     }
 `;
