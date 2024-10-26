@@ -1,8 +1,10 @@
 import { AccountInfoWrapperProps } from '@/types/pages/account';
 import { LogoLinkImageProps, LogoLinkProps, StyledButtonProps } from '@/types/styles/components';
 import styled from "@emotion/styled";
+import { Pagination } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
+import theme from './theme';
 
 interface TitleProps
 {
@@ -17,6 +19,7 @@ interface TitleProps
     mobMarginBottom?: number;
 }
 
+/** Titles components */
 export const Title = styled.h1<TitleProps>`
     color: ${({ theme }) => theme.colors.black};
     font: ${({ theme }) => theme.fonts.titleH2SemiBold};
@@ -48,6 +51,7 @@ export const AccountTitle = styled(Title) <TitleProps>`
     }
 `;
 
+/** Containers */
 export const Container = styled.div`
     box-sizing: content-box;
     margin: 0 auto;
@@ -59,6 +63,28 @@ export const Container = styled.div`
     }
 `;
 
+export const AccountInfoWrapper = styled.div<AccountInfoWrapperProps>`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 80px;
+   
+    @media ${({ theme }) => theme.media.large} {
+        margin-bottom: 24px;
+    }
+
+    @media ${({ theme }) => theme.media.medium} {
+        flex-direction: ${({ mobileReverse = false }) => mobileReverse ? 'column-reverse' : 'column'};
+        margin-bottom: 64px;
+    }
+`;
+
+/** 
+ * Buttons
+ * Links
+ */
 export const StyledButton = styled.button<StyledButtonProps>`
     box-sizing: border-box;
     width: ${({ width = '100%' }) => width};
@@ -101,6 +127,26 @@ export const LogoLink = styled(Link) <LogoLinkProps>`
     }
 `;
 
+export const PagesNavigation = styled(Pagination)(({ theme }) => ({
+    ".MuiPaginationItem-root": {
+        borderRadius: '10px',
+        padding: '6px 10px',
+        minWidth: 'fit-content',
+        height: 'fit-content',
+        font: theme.fonts.bodyMiddleReg,
+        fontWeight: 500,
+        lineHeight: '1em',
+
+        "&.Mui-selected": {
+            backgroundColor: theme.background.secondary,
+        }
+    }
+}));
+
+/** 
+ * icons
+ * Images
+ **/
 export const StyledIconWrapper = styled.div`
     flex-shrink: 0;
     width: 40px;
@@ -125,23 +171,7 @@ export const LogoLinkImage = styled(Image) <LogoLinkImageProps>`
     height: 100%;
 `;
 
-export const AccountInfoWrapper = styled.div<AccountInfoWrapperProps>`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    gap: 24px;
-    margin-bottom: 80px;
-   
-    @media ${({ theme }) => theme.media.large} {
-        margin-bottom: 24px;
-    }
 
-    @media ${({ theme }) => theme.media.medium} {
-        flex-direction: ${({ mobileReverse = false }) => mobileReverse ? 'column-reverse' : 'column'};
-        margin-bottom: 64px;
-    }
-`;
 
 //----------------------FORM
 
