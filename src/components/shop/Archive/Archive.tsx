@@ -1,26 +1,28 @@
 import { PagesNavigation } from "@/styles/components";
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { ProductCardList } from "../ProductCardsList";
-import { CustomDataProductsType } from "@/types/services";
 import { ProductType } from "@/types/pages/shop";
-import router, { NextRouter, useRouter } from "next/router";
+import router, { useRouter } from "next/router";
 import { Pagination } from "@mui/material";
+import CategoryType from "@/types/pages/shop/categories";
+import { LangParamType } from "@/types/services";
+import { useGetCategoriesQuery } from "@/store/rtk-queries/wpCustomApi";
+import CategoriesMenu from "../CategoriesMenu/CategoriesMenu";
 
-interface ArchiveProps
-{
+interface ArchiveProps {
     products: ProductType[];
     pagesCount: number;
     page: number;
+    categories: CategoryType[];
 }
 
-const switchPage = (page: number, maxPage: number) =>
-{
+const switchPage = (page: number, maxPage: number) => {
     if (maxPage < page) return;
     const { slugs, ...params } = router.query;
     if (!Array.isArray(slugs)) return;
 
     const newSlugs = slugs.filter(slug => slug !== 'page' && Number.isNaN(+slug));
-    newSlugs.push('page', String(page));
+    if (page !== 1) newSlugs.push('page', String(page));
 
     router.push({
         pathname: router.pathname,
@@ -31,9 +33,26 @@ const switchPage = (page: number, maxPage: number) =>
     })
 }
 
-export const Archive: FC<ArchiveProps> = ({ products, pagesCount, page }) =>
-{
+const switchCategory = (categorySlug: string) => {
+    const { slugs, ...params } = router.query;
+    if (!Array.isArray(slugs)) return;
+
+    const newSlugs = slugs.filter(slug => slug !== 'category');
+    newSlugs.push('category', categorySlug);
+
+    router.push({
+        pathname: router.pathname,
+        query: {
+            slugs: newSlugs,
+            ...params
+        }
+    })
+}
+
+export const Archive: FC<ArchiveProps> = ({ products, pagesCount, page, categories }) => {
     const router = useRouter();
+
+    const currentCategory = categories[0];
 
     return (
         <div>
@@ -46,6 +65,7 @@ export const Archive: FC<ArchiveProps> = ({ products, pagesCount, page }) =>
                 hideNextButton
                 onChange={(_, newPage) => { switchPage(newPage, pagesCount); }}
             />
+            <CategoriesMenu onClick={switchCategory} onClose={() => {}} />
             {products.length && <ProductCardList products={products} />}
         </div>
     )
