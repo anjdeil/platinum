@@ -64,7 +64,6 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
             products = validatedData.data.items;
             const productsCount = validatedData.data.statistic?.products_count;
             pagesCount = Math.ceil(productsCount / productsPerPage);
-
         }
 
         /* Do not open if pagination page number is more than pages count */

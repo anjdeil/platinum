@@ -5,6 +5,7 @@ import { CustomDataProductsType } from "@/types/services";
 import { ProductType } from "@/types/pages/shop";
 import router, { NextRouter, useRouter } from "next/router";
 import { Pagination } from "@mui/material";
+import CustomSelect from "@/components/global/selects/CustomSelect/CustomSelect";
 
 interface ArchiveProps
 {
@@ -33,20 +34,20 @@ const switchPage = (page: number, maxPage: number) =>
 
 export const Archive: FC<ArchiveProps> = ({ products, pagesCount, page }) =>
 {
-    const router = useRouter();
-
     return (
-        <div>
-            <PagesNavigation
-                page={+page}
-                count={pagesCount}
-                siblingCount={1}
-                shape="rounded"
-                hidePrevButton
-                hideNextButton
-                onChange={(_, newPage) => { switchPage(newPage, pagesCount); }}
-            />
-            {products.length && <ProductCardList products={products} />}
-        </div>
+        <>
+            <div>
+                <PagesNavigation
+                    page={+page}
+                    count={pagesCount}
+                    siblingCount={1}
+                    shape="rounded"
+                    hidePrevButton
+                    hideNextButton
+                    onChange={(_, newPage) => { switchPage(newPage, pagesCount); }}
+                />
+                {products.length && <ProductCardList products={products} />}
+            </div>
+        </>
     )
 }
