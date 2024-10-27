@@ -75,3 +75,4 @@ export const ProductDataResponseSchema = z.object({
 export type ProductType = z.infer<typeof ProductSchema>;
 export type ProductDataResponseType = z.infer<typeof ProductDataResponseSchema>;
 export type defaultAttributesType = z.infer<typeof ProductDefaultAttributesSchema>;
+export type ProductImageType = z.infer<typeof ProductImageSchema>;

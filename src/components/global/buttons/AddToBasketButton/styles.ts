@@ -12,14 +12,27 @@ export const AddToBasketButtonStyled = styled.button<AddToBasketButtonProps>`
     color: ${({ theme, color = theme.colors.white }) => color};
     padding: 16px 25px;    
     text-align: center;
-    transition: all 0.2s ease;
     border-radius: ${({ borderRadius = '10px' }) => borderRadius};
     cursor: pointer;
     border: ${({ theme, borderColor = theme.colors.border }) => `1px solid  ${borderColor}`};
+    transition: all 0.2s ease;
     
-    &:hover {
-        background-color: ${({ theme, hoverBackground = theme.background.hover }) => hoverBackground};
-        color: ${({ theme, hoverColor = theme.colors.white }) => hoverColor};
+    @media (hover: hover) {
+        &:hover {
+            background-color: ${({ theme, hoverBackground = theme.background.hover }) => hoverBackground};
+            color: ${({ theme, hoverColor = theme.colors.white }) => hoverColor};
+        }
+
+        &:active {
+            background-color: ${({ theme }) => theme.colors.primary};
+        }
+    }
+
+    @media (hover: none) {
+        &:active {
+            background-color: ${({ theme, hoverBackground = theme.background.hover }) => hoverBackground};
+            color: ${({ theme, hoverColor = theme.colors.white }) => hoverColor};
+        }
     }
 
     @media ${({ theme }) => theme.media.large} {        

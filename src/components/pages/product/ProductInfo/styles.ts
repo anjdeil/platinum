@@ -9,14 +9,20 @@ export const ProductWrapper = styled.div`
 `;
 
 export const ProductTitleWrapper = styled.div`
-    grid-column: 1 / -1;
+    grid-column: 7 / span 6;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     row-gap: 24px;
 
     @media ${({ theme }) => theme.media.large} {
+        grid-column: 6 / span 7;
         row-gap: 16px;
+    }
+
+    @media ${({ theme }) => theme.media.medium} {
+        grid-column: 1 / -1;  
+        grid-row: 1 / 2;
     }
 `;
 
@@ -26,17 +32,9 @@ export const ProductFlexWrapper = styled.div`
     justify-content: space-between;
 `;
 
-export const BadgeWrapper = styled.div`
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: absolute;
-    top: 0;
-`;
-
 export const ProductImageWrapper = styled.div`
     grid-column: span 5;
+    grid-row: 1 / 3;
     margin-top: 57px;
 
     @media ${({ theme }) => theme.media.large} {        
@@ -45,6 +43,7 @@ export const ProductImageWrapper = styled.div`
 
     @media ${({ theme }) => theme.media.medium} {        
         grid-column: 1 / -1;
+        grid-row: 2 / 3;
     } 
 `;
 

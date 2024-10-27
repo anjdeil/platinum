@@ -1,5 +1,5 @@
 import Breadcrumbs from "@/components/global/Breadcrumbs/Breadcrumbs";
-import ProductInfo from "@/components/shop/product/ProductInfo/ProductInfo";
+import ProductInfo from "@/components/pages/product/ProductInfo/ProductInfo";
 import { useGetProductQuery } from "@/store/rtk-queries/wpCustomApi";
 import { Container } from "@/styles/components";
 import { ProductType } from "@/types/components/shop/product/products";

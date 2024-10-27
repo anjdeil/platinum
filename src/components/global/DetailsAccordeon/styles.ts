@@ -5,20 +5,16 @@ export const DetailsWrapper = styled.div`
     width: 100%;
     font: ${({ theme }) => theme.fonts.bodyMiddleReg};
 
+    & .MuiCollapse-wrapper {
+        padding-top: 24px;
+    }
+
     @media ${({ theme }) => theme.media.large} {
         font-size: 14px;
     }
 `;
 
-export const DetailsStyled = styled.details`
-    font: inherit;
-
-    & > div {
-        margin-top: 24px;
-    }
-`;
-
-export const SummaryStyled = styled.summary`
+export const SummaryStyled = styled.div`
     width: 100%;
     box-sizing: border-box;
     border-radius: 10px;

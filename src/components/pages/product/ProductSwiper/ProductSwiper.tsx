@@ -1,75 +1,30 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
-import { SwiperRef, SwiperSlide } from 'swiper/react';
+import { SwiperSlide } from 'swiper/react';
 
 import FavoriteButton from '@/components/global/buttons/FavoriteButton/FavoriteButton';
 import BackArrow from '@/components/global/icons/BackArrow/BackArrow';
 import ForwardArrow from '@/components/global/icons/ForwardArrow/ForwardArrow';
+import useProductSwiper from '@/hooks/useProductSwiper';
 import { SwiperProps } from '@/types/components/global/sliders/productSwiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
-import ProductBadge from '../ProductBadge/ProductBadge';
-import ProductBadgeWrapper from '../ProductBadgeWrapper/ProductBadgeWrapper';
+import ProductBadge from '../../../shop/product/ProductBadge/ProductBadge';
+import ProductBadgeWrapper from '../../../shop/product/ProductBadgeWrapper/ProductBadgeWrapper';
 import { CustomWrapper, ImageStyled, ImageWrapper, MainSwiper, NavButton, SwiperContainer, SwiperSlideStyled, Thumbnail, ThumbnailWrapper, ThumbsSwiper } from './styles';
 
 
 const ProductSwiper: React.FC<SwiperProps> = ({ data }) => {
-	const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
-
-	const swiperRef = useRef<SwiperRef>(null);
-	const heightRef = useRef<number | null>(null);
-	
-	useEffect(() => {
-        const updateHeight = () => {
-            if (swiperRef.current) {
-                const currentHeight = swiperRef.current?.swiper.el.offsetHeight;
-
-                if (heightRef.current === null) {
-                    heightRef.current = currentHeight;
-                }
-            }
-        };
-
-        const handleImagesLoad = () => {
-            updateHeight();
-        };
-
-        const images = swiperRef.current?.swiper.el.querySelectorAll('img');
-        if (heightRef.current === null && images) {
-            images.forEach((img) => {
-                if (img.complete) {
-                    handleImagesLoad();
-                } else {
-                    img.addEventListener('load', handleImagesLoad);
-                    img.addEventListener('error', handleImagesLoad);
-                }
-            });
-        }
-
-        updateHeight();
-
-        const handleResize = () => {
-            heightRef.current = null;
-            if (swiperRef.current) {
-                swiperRef.current.swiper.el.style.minHeight = 'unset';
-            }
-            updateHeight();
-        };
-        
-        window.addEventListener('resize', handleResize);
-
-        return () => {
-            if (images) {
-                images.forEach((img) => {
-                    img.removeEventListener('load', handleImagesLoad);
-                    img.removeEventListener('error', handleImagesLoad);
-                });
-            }
-            window.removeEventListener('resize', handleResize);
-        };
-    }, [data]);
-		
+	const {
+		thumbsSwiper,
+		setThumbsSwiper,
+		handlerOpen,
+		handleSlideChange,
+		swiperRef,
+		heightRef,
+	} = useProductSwiper({ data });
+			
 	const navPrevElId = `swiper-navPrev`;
 	const navNextElId = `swiper-navNext`;
 	
@@ -86,10 +41,11 @@ const ProductSwiper: React.FC<SwiperProps> = ({ data }) => {
 				modules={[FreeMode, Thumbs]}
 				style={{ minHeight: heightRef.current ? heightRef.current : 'auto'}}
 				thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null }}
+				onSlideChange={handleSlideChange}
 			>
 				
 				{data.map((item, index) => (
-					<SwiperSlide key={index}>
+					<SwiperSlide key={index} onClick={handlerOpen}>
 						<ImageWrapper>
 							<ImageStyled
 								unoptimized={true}
@@ -110,7 +66,15 @@ const ProductSwiper: React.FC<SwiperProps> = ({ data }) => {
                 </NavButton>
 				<ThumbsSwiper
 					onSwiper={setThumbsSwiper}
-					spaceBetween={10}
+					spaceBetween={8}
+					breakpoints={{
+						768: {
+							spaceBetween: 14, 
+						},						
+						1024: {
+							spaceBetween: 40,
+						},
+					}}
 					slidesPerView={3}
 					navigation={{
 						nextEl: `#${navNextElId}`,
@@ -122,6 +86,7 @@ const ProductSwiper: React.FC<SwiperProps> = ({ data }) => {
 						<SwiperSlideStyled key={index}>
 							<ThumbnailWrapper>
 								<Thumbnail
+									unoptimized={true}
 									src={item.src}
 									alt={`Thumbnail ${index + 1}`}
 									width={92}

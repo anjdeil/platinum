@@ -1,7 +1,6 @@
 import AddToBasketButton from "@/components/global/buttons/AddToBasketButton/AddToBasketButton";
 import DetailsAccordeon from "@/components/global/DetailsAccordeon/DetailsAccordeon";
 import Rating from "@/components/global/Rating/Rating";
-import { useResponsive } from "@/hooks/useResponsive";
 import { StyledButton, Title } from "@/styles/components";
 import { ProductCardPropsType } from "@/types/components/shop";
 import { useTranslations } from "next-intl";
@@ -22,7 +21,6 @@ import { AddToBasketWrapper, ProductFlexWrapper, ProductImageWrapper, ProductInf
 const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) =>
 {
     const {name, stock_quantity, sku, min_price, max_price, images} = product;
-    const { isMobile } = useResponsive();
     const t = useTranslations("Product");
     const [quantity, setQuantity] = useState<number>(1);
 
@@ -34,41 +32,25 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) =>
     const [currentColor, setCurrentColor] = useState<string>(colorList[0]);
 
     const testimages = Array.from({ length: 4 }).map((_, index) => images[0]);
-
+    
     return (
         <ProductWrapper>
-            {isMobile && (
-                <ProductTitleWrapper>
-                    <Title as="h1" uppercase textalign="left">{name}</Title>
-                    <ProductFlexWrapper>
-                        <ProductAvailable count={stock_quantity || 0} />
-                        <ProductViewing count={stock_quantity || 0} />
-                    </ProductFlexWrapper>
-                    <ProductFlexWrapper>
-                        <ProductSku sku={sku || ""} />
-                        <Rating rating={4} />
-                    </ProductFlexWrapper>
-                    <ProductPrice minPrice={min_price} maxPrice={max_price} />
-                </ProductTitleWrapper>
-            )}
             <ProductImageWrapper>
                 <ProductSwiper data={testimages || []} />
             </ProductImageWrapper>
-            <ProductInfoWrapper>
-                {!isMobile && (
-                    <ProductTitleWrapper>
-                        <Title as="h1" uppercase textalign="left">{name}</Title>
-                        <ProductFlexWrapper>
-                            <ProductAvailable count={stock_quantity || 0} />
-                            <ProductViewing count={stock_quantity || 0} />
-                        </ProductFlexWrapper>
-                        <ProductFlexWrapper>
-                            <ProductSku sku={sku || ""} />
-                            <Rating rating={4} />
-                        </ProductFlexWrapper>
-                        <ProductPrice minPrice={min_price} maxPrice={max_price} />
-                    </ProductTitleWrapper>
-                )}
+            <ProductTitleWrapper>
+                <Title as="h1" uppercase textalign="left">{name}</Title>
+                <ProductFlexWrapper>
+                    <ProductAvailable count={stock_quantity || 0} />
+                    <ProductViewing count={stock_quantity || 0} />
+                </ProductFlexWrapper>
+                <ProductFlexWrapper>
+                    <ProductSku sku={sku || ""} />
+                    <Rating rating={4} />
+                </ProductFlexWrapper>
+                <ProductPrice minPrice={min_price} maxPrice={max_price} />
+            </ProductTitleWrapper>
+            <ProductInfoWrapper>               
                 <ProductVariations
                     title="Curl"
                     list={sizeList}

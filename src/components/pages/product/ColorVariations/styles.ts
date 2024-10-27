@@ -29,24 +29,10 @@ export const VariationsColorButton = styled.button<VariationsButtonProps>`
     border: 1px solid;    
     width: 60px;
     height: 46px;
-    border-color: ${({ theme }) => theme.colors.grey};
+    border-color: ${({ theme }) => theme.colors.lightBorder};
     cursor: pointer;
-    transition: all 0.2s ease;
     position: relative;
-
-    &::after {
-        content: '';
-        position: absolute;
-        z-index: 10;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 24px;
-        height: 18px;
-        border-radius: 4px;
-        background-color: ${({ theme }) => theme.colors.white};
-        display: ${({ active }) => active ? 'block' : 'none'};
-    }
+    outline: ${({ active, theme }) => active ? `2px solid ${theme.colors.primary}` : 'none'};
 
     &:hover {
         

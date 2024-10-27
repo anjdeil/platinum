@@ -27,8 +27,7 @@ export const VariationsButton = styled.button<VariationsButtonProps>`
     border-radius: 8px;
     background-color: transparent;
     border: 1px solid;
-    padding: 11px;
-    min-width: 60px;
+    padding: 11px 24px;
     width: auto;
     border-color: ${({ active, theme }) => active ? theme.colors.active : theme.colors.black};
     cursor: pointer;
@@ -44,6 +43,6 @@ export const VariationsButton = styled.button<VariationsButtonProps>`
     }
 
     @media ${({ theme }) => theme.media.medium} {
-       min-width: 142px;
+       flex: 1;
     }
 `;

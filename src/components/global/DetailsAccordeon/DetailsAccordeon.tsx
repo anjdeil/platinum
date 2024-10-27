@@ -1,7 +1,7 @@
 import Collapse from '@mui/material/Collapse';
 import { FC, ReactNode, useState } from "react";
 import ArrowIcon from "../icons/ArrowIcon/ArrowIcon";
-import { DetailsStyled, DetailsWrapper, SummaryStyled } from "./styles";
+import { DetailsWrapper, SummaryStyled } from "./styles";
 
 interface NotificationPropsType {
     children: ReactNode,
@@ -11,21 +11,23 @@ interface NotificationPropsType {
 const DetailsAccordeon: FC<NotificationPropsType> = ({ summary, children }) => {
     const [isOpen, setIsOpen] = useState(false);
 
-    const handleToggle = (e: React.SyntheticEvent<HTMLDetailsElement>) => {
-        setIsOpen(e.currentTarget.open);
+    console.log('render...');
+
+    const handleToggle = () => {
+        setIsOpen(prevState => !prevState);
     };
 
-    return <DetailsWrapper>
-        <DetailsStyled onToggle={handleToggle}>
-            <SummaryStyled>
+    return (
+        <DetailsWrapper>
+            <SummaryStyled onClick={handleToggle}>
                 {summary}
                 <ArrowIcon isOpen={isOpen}/>
             </SummaryStyled>
-            <Collapse in={isOpen} timeout="auto">
+            <Collapse in={isOpen} timeout={300}>
                 {children}
             </Collapse>
-        </DetailsStyled>
-    </DetailsWrapper>;
+        </DetailsWrapper>
+    );
 };
 
 export default DetailsAccordeon;
