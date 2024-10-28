@@ -2,11 +2,13 @@ import { FC, useCallback, useMemo } from "react";
 import React, { useState } from 'react';
 import { BenefitsLayout, BenefitsTitle, BenefitsPrice, BenefitsItem, BenefitsAccordionStyled, CustomAccordionSummary, AccordionTitle, AccordionHeader, BenefitsAccordionDetails } from './styles';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { useMediaQuery } from '@mui/material';
+import { Skeleton, useMediaQuery } from '@mui/material';
 import { CustomSvgMarker } from '@/components/Common/Icons/CustomSvgMarker/CustomSvgMarker';
 import { CustomList } from '@/components/shared/List/List';
 import { BenefitsProps, loyaltyDescriptionSchema } from '@/types/layouts/Benefits';
 import { useAppSelector } from "@/store";
+import { MenuSkeleton } from "../MenuSkeleton";
+import { CustomListSkeleton } from "../CustomListSkeleton";
 
 const renderDescriptionList = (description: string | undefined, svgColor?: string) => {
     if (!description) return null;
@@ -68,7 +70,17 @@ export const BenefitsAccordion: FC = ({ gapSm, gapMedium, gapLg }: BenefitsProps
                         id="accordion1-content"
                     >
                         <CustomList>
-                            {validatedData && renderDescriptionList(validatedData.silver)}
+                            {
+                                validatedData ?
+                                    renderDescriptionList(validatedData.silver) :
+                                    <li>
+                                        <CustomListSkeleton
+                                            width={"100%"}
+                                            height={"50px"}
+                                            elements={3}
+                                        />
+                                    </li>
+                            }
                         </CustomList>
                     </BenefitsAccordionDetails>
                 </BenefitsAccordionStyled>
@@ -98,7 +110,17 @@ export const BenefitsAccordion: FC = ({ gapSm, gapMedium, gapLg }: BenefitsProps
                         id="accordion2-content"
                     >
                         <CustomList>
-                            {validatedData && renderDescriptionList(validatedData.gold, "white")}
+                            {
+                                validatedData ?
+                                    renderDescriptionList(validatedData.gold, "white") :
+                                    <li>
+                                        <CustomListSkeleton
+                                            width={"100%"}
+                                            height={"50px"}
+                                            elements={4}
+                                        />
+                                    </li>
+                            }
                         </CustomList>
                     </BenefitsAccordionDetails>
                 </BenefitsAccordionStyled>
@@ -128,7 +150,17 @@ export const BenefitsAccordion: FC = ({ gapSm, gapMedium, gapLg }: BenefitsProps
                         id="accordion3-content"
                     >
                         <CustomList>
-                            {validatedData && renderDescriptionList(validatedData.platinum, "white")}
+                            {
+                                validatedData ?
+                                    renderDescriptionList(validatedData.platinum, "white") :
+                                    <li>
+                                        <CustomListSkeleton
+                                            width={"100%"}
+                                            height={"50px"}
+                                            elements={7}
+                                        />
+                                    </li>
+                            }
                         </CustomList>
                     </BenefitsAccordionDetails>
                 </BenefitsAccordionStyled>
