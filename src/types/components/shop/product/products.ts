@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const ProductCategorySchema = z.object({
     id: z.number(),
-    parent_id: z.string(),
+    parent_id: z.number(),
     name: z.string(),
     slug: z.string(),
     description: z.string(),
@@ -49,7 +49,7 @@ export const ProductVariationSchema = z.object({
 
 export const ProductSchema = z.object({
     id: z.number(),
-    sku: z.string(),
+    sku: z.string().nullable(),
     slug: z.string(),
     name: z.string(),
     description: z.string(),
@@ -57,7 +57,7 @@ export const ProductSchema = z.object({
     created: z.string(),
     modified: z.string(),
     language_code: z.string(),
-    stock_quantity: z.number(),
+    stock_quantity: z.number().nullable(),
     min_price: z.number(),
     max_price: z.number(),
     categories: z.array(ProductCategorySchema),
@@ -74,3 +74,5 @@ export const ProductDataResponseSchema = z.object({
 
 export type ProductType = z.infer<typeof ProductSchema>;
 export type ProductDataResponseType = z.infer<typeof ProductDataResponseSchema>;
+export type defaultAttributesType = z.infer<typeof ProductDefaultAttributesSchema>;
+export type ProductImageType = z.infer<typeof ProductImageSchema>;

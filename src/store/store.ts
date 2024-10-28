@@ -1,11 +1,12 @@
+import SwiperModal from "@/store/slices/SwiperModal";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { wpCustomRtkApi } from "./rtk-queries/wpCustomApi";
 import { wooCustomRktApi } from "./rtk-queries/wooCustomApi";
-import languageSlice from "./slices/languageSlice";
+import { wpCustomRtkApi } from "./rtk-queries/wpCustomApi";
 import currencySlice from "./slices/currencySlice";
-import themeOptionsSlice from "./slices/themeOptionsSlice";
+import languageSlice from "./slices/languageSlice";
 import MenuCategoriesSlice from "./slices/MenuCategoriesSlice";
 import PopupSlice from "./slices/PopupSlice";
+import themeOptionsSlice from "./slices/themeOptionsSlice";
 
 const rootReducer = combineReducers({
     [wpCustomRtkApi.reducerPath]: wpCustomRtkApi.reducer,
@@ -18,10 +19,10 @@ const rootReducer = combineReducers({
     MenuCategoriesSlice: MenuCategoriesSlice.reducer,
     currentCurrency: currencySlice,
     Popup: PopupSlice,
+    swiperModal: SwiperModal
 });
 
-export const setupStore = () =>
-{
+export const setupStore = () => {
     return configureStore({
         reducer: rootReducer,
         middleware: (getDefaultMiddleware) =>

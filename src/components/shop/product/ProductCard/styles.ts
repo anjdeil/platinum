@@ -36,24 +36,17 @@ export const StyledProductCard = styled.div`
 export const TitlePriceWrapper = styled.div`
     width: 100%;
     display: flex;
+    flex-grow: 1;
     flex-direction: column;
     row-gap: 8px;
     justify-content: space-between;
     align-items: center;
 `
 
-export const BadgeWrapper = styled.div`
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: absolute;
-    top: 0;
-`
-
 export const ProductWrapper = styled.div`
     width: 100%;
     display: flex;
+    flex-grow: 1;
     flex-direction: column;
     row-gap: 16px;
     justify-content: space-between;

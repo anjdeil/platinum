@@ -68,5 +68,18 @@
     },
     "Search": {
         "Search": "Пошук"
+    },
+    "Product": {
+        "addToBasket": "Додати до кошика",
+        "sortBy": "Сортувати за",
+        "productList": "Список товарів",
+        "notifyWhenAvailable": "Повідомити, коли буде доступний",
+        "theEndOfThePromotion": "Кінець акції",
+        "available": "Доступно: {count} шт",
+        "notAvailable": "Недоступно",
+        "viewingThisProduct": "Зараз переглядають: {count}",
+        "fastShipping": "Швидка доставка",
+        "freeDeliveryOver": "Безкоштовна доставка від {price}",
+        "color": "Колір"
     }
 }
