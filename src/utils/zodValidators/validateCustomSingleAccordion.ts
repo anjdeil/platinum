@@ -1,7 +1,7 @@
 import { CustomSingleAccordionSchema } from "@/types/components/global/accordions/customSingleAccordion";
 import { ZodError } from "zod";
 
-export async function validateCustomSingleAccordion(title: string, children: any)
+export async function validateCustomSingleAccordion(title: string, children: any): Promise<boolean>
 {
     try
     {
