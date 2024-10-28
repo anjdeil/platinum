@@ -3,17 +3,20 @@ import { FC, ReactNode, useState } from "react";
 import ArrowIcon from "../icons/ArrowIcon/ArrowIcon";
 import { DetailsWrapper, SummaryStyled } from "./styles";
 
-interface NotificationPropsType {
+interface NotificationPropsType
+{
     children: ReactNode,
     summary: string,
 }
 
-const DetailsAccordeon: FC<NotificationPropsType> = ({ summary, children }) => {
+const DetailsAccordion: FC<NotificationPropsType> = ({ summary, children }) =>
+{
     const [isOpen, setIsOpen] = useState(false);
 
     console.log('render...');
 
-    const handleToggle = () => {
+    const handleToggle = () =>
+    {
         setIsOpen(prevState => !prevState);
     };
 
@@ -21,7 +24,7 @@ const DetailsAccordeon: FC<NotificationPropsType> = ({ summary, children }) => {
         <DetailsWrapper>
             <SummaryStyled onClick={handleToggle}>
                 {summary}
-                <ArrowIcon isOpen={isOpen}/>
+                <ArrowIcon isOpen={isOpen} />
             </SummaryStyled>
             <Collapse in={isOpen} timeout={300}>
                 {children}
@@ -30,4 +33,4 @@ const DetailsAccordeon: FC<NotificationPropsType> = ({ summary, children }) => {
     );
 };
 
-export default DetailsAccordeon;
+export default DetailsAccordion;

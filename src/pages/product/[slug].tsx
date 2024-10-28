@@ -8,15 +8,16 @@ import { useEffect } from "react";
 
 export default function ProductPage()
 {
-    const { data } = useGetProductQuery({ slug: 'stove' });
+    const { data } = useGetProductQuery({ slug: 'premium-memory-foam-cosmetic-mattress-for-tm-platinum-eyelash-extensions-3' });
 
     const product: ProductType | undefined = data?.data?.item;
 
     useEffect(() =>
     {
-        if (data) {
+        if (data)
+        {
             console.log(data);
-            
+
         }
     }, [data])
 
@@ -28,7 +29,7 @@ export default function ProductPage()
                         { name: 'ALL SHOP', url: '/' },
                         { name: 'EYELASH', url: '/' },
                         { name: 'NEW System UV', url: '/' }
-                    ]} 
+                    ]}
                 />
             </Box>
             {product && <ProductInfo product={product} />}

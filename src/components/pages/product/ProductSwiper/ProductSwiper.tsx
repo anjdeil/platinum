@@ -10,12 +10,13 @@ import { SwiperProps } from '@/types/components/global/sliders/productSwiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
-import ProductBadge from '../../../shop/product/ProductBadge/ProductBadge';
-import ProductBadgeWrapper from '../../../shop/product/ProductBadgeWrapper/ProductBadgeWrapper';
 import { CustomWrapper, ImageStyled, ImageWrapper, MainSwiper, NavButton, SwiperContainer, SwiperSlideStyled, Thumbnail, ThumbnailWrapper, ThumbsSwiper } from './styles';
+import ProductBadgeWrapper from '@/components/shop/product/ProductBadgeWrapper/ProductBadgeWrapper';
+import ProductBadge from '@/components/shop/product/ProductBadge/ProductBadge';
 
 
-const ProductSwiper: React.FC<SwiperProps> = ({ data }) => {
+const ProductSwiper: React.FC<SwiperProps> = ({ data }) =>
+{
 	const {
 		thumbsSwiper,
 		setThumbsSwiper,
@@ -24,10 +25,10 @@ const ProductSwiper: React.FC<SwiperProps> = ({ data }) => {
 		swiperRef,
 		heightRef,
 	} = useProductSwiper({ data });
-			
+
 	const navPrevElId = `swiper-navPrev`;
 	const navNextElId = `swiper-navNext`;
-	
+
 	return (
 		<SwiperContainer>
 			<ProductBadgeWrapper>
@@ -39,18 +40,18 @@ const ProductSwiper: React.FC<SwiperProps> = ({ data }) => {
 				spaceBetween={10}
 				centeredSlides={true}
 				modules={[FreeMode, Thumbs]}
-				style={{ minHeight: heightRef.current ? heightRef.current : 'auto'}}
+				style={{ minHeight: heightRef.current ? heightRef.current : 'auto' }}
 				thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null }}
 				onSlideChange={handleSlideChange}
 			>
-				
+
 				{data.map((item, index) => (
 					<SwiperSlide key={index} onClick={handlerOpen}>
 						<ImageWrapper>
 							<ImageStyled
 								unoptimized={true}
 								priority
-								src={item.src}
+								src={item?.src || ""}
 								alt={`Product ${index + 1}`}
 								width={452}
 								height={452}
@@ -62,15 +63,15 @@ const ProductSwiper: React.FC<SwiperProps> = ({ data }) => {
 
 			<CustomWrapper>
 				<NavButton id={navPrevElId}>
-                    <BackArrow />
-                </NavButton>
+					<BackArrow />
+				</NavButton>
 				<ThumbsSwiper
 					onSwiper={setThumbsSwiper}
 					spaceBetween={8}
 					breakpoints={{
 						768: {
-							spaceBetween: 14, 
-						},						
+							spaceBetween: 14,
+						},
 						1024: {
 							spaceBetween: 40,
 						},
@@ -78,8 +79,8 @@ const ProductSwiper: React.FC<SwiperProps> = ({ data }) => {
 					slidesPerView={3}
 					navigation={{
 						nextEl: `#${navNextElId}`,
-                        prevEl: `#${navPrevElId}`,
-                    }}
+						prevEl: `#${navPrevElId}`,
+					}}
 					modules={[Navigation, Thumbs]}
 				>
 					{data.map((item, index) => (
@@ -87,7 +88,7 @@ const ProductSwiper: React.FC<SwiperProps> = ({ data }) => {
 							<ThumbnailWrapper>
 								<Thumbnail
 									unoptimized={true}
-									src={item.src}
+									src={item?.src || ""}
 									alt={`Thumbnail ${index + 1}`}
 									width={92}
 									height={92}
@@ -97,8 +98,8 @@ const ProductSwiper: React.FC<SwiperProps> = ({ data }) => {
 					))}
 				</ThumbsSwiper>
 				<NavButton id={navNextElId}>
-                    <ForwardArrow />
-                </NavButton>                
+					<ForwardArrow />
+				</NavButton>
 			</CustomWrapper>
 		</SwiperContainer>
 	);

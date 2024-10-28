@@ -18,7 +18,6 @@ export const VariationListBlock = styled.div`
     gap: 16px;
 
     @media ${({ theme }) => theme.media.medium} {
-       justify-content: space-between;
        flex-wrap: wrap;
     }
 `;
@@ -33,8 +32,4 @@ export const VariationsColorButton = styled.button<VariationsButtonProps>`
     cursor: pointer;
     position: relative;
     outline: ${({ active, theme }) => active ? `2px solid ${theme.colors.primary}` : 'none'};
-
-    &:hover {
-        
-    }
 `;
