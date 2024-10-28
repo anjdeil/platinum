@@ -19,24 +19,16 @@ interface RegistrationFormProps
     // shippingLines?: ShippingLine[]
 }
 
+const isCheckout = false;
+const isShipping = false;
+
 interface FormHandle
 {
     submit: () => void;
 }
 
-const isCheckout = false;
-const isShipping = false;
-
-/**
- * 
- * @todo
- * userFields, lineItems, shippingLines;
- * forwardRef((props, ref);
- * // useImperativeHandle(ref, () => ({
-    //     submit: () => handleSubmit(onSubmit)(),
-    // }));
-    // useImperativeHandle(ref, () => ({ submit: () => handleSubmit(onSubmit)() }));
- */
+// Next
+// useImperativeHandle(ref, () => ({ submit: () => handleSubmit(onSubmit)() }));
 export const RegistrationForm: FC = () =>
 {
     const router = useRouter();
@@ -118,14 +110,16 @@ export const RegistrationForm: FC = () =>
                     // setValue={setValue}
                     inputTag={"input"}
                     inputType={"text"} />
-                {/* <CustomInput
+                <CustomInput
                     fieldName="phone number"
                     name='phoneNumber'
                     register={register}
                     errors={errors}
                     setValue={setValue}
+                    inputTag={"input"}
+                    inputType={"phone"}
                 // isPhone={true}
-                /> */}
+                />
                 <CustomInput
                     fieldName="Kraj / region"
                     name='country'

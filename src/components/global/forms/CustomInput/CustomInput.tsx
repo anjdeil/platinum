@@ -1,37 +1,9 @@
 import { FC, useEffect, useMemo, useState } from "react";
 import { CustomError, CustomInputStyle, CustomInputWrapper, CustomRequired, Input, ShowPasswordImage } from "./styles";
+import { CustomInputType } from "@/types/components/global/forms/customInput";
+import { PhoneInput } from 'react-international-phone';
+import 'react-international-phone/style.css';
 
-import { z } from "zod";
-
-export const CustomInput2Schema = z.object({
-    fieldName: z.string().optional(),
-    inputTag: z.union([z.literal('input'), z.literal('textarea')]),
-    inputType: z.union([z.literal('text'), z.literal('checkbox'), z.literal('password'), z.literal('number')]),
-    name: z.string().optional(),
-    register: z.any().optional(),
-    errors: z.any().optional(),
-    isRequire: z.boolean().optional(),
-    placeholder: z.string().optional(),
-    onChange: z.function().args(z.unknown() as z.ZodType<React.ChangeEvent<HTMLInputElement>>).returns(z.void()).optional(),
-    value: z.string().optional(),
-    setValue: z.function().args(
-        z.any(),
-        z.any(),
-        z.object({
-            shouldValidate: z.boolean().optional(),
-            shouldDirty: z.boolean().optional(),
-            shouldTouch: z.boolean().optional(),
-        }).optional()
-    ).returns(z.void()).optional(),
-    initialValue: z.string().nullable().optional(),
-})
-
-{/* <PhoneInput
-defaultCountry="pl"
-onChange={(value) => { if (setValue) setValue('phoneNumber', value, { shouldValidate: true }); }}
-/> */}
-
-export type CustomInputType = z.infer<typeof CustomInput2Schema>;
 
 export const CustomInput: FC<CustomInputType> = (
     {
@@ -67,19 +39,25 @@ export const CustomInput: FC<CustomInputType> = (
                 isError={isError}
                 isTextArea={false}
                 isCheckbox={inputType === 'checkbox'}
-                isPhone={false}>
+                isPhone={inputType === 'phone'}>
                 <span>
                     {fieldName}
                     {isRequire && <CustomRequired>*</CustomRequired>}
                 </span>
                 <CustomInputWrapper>
-                    <Input
-                        as={inputTag}
-                        placeholder={placeholder ? placeholder : ''}
-                        {...register(name)}
-                        type={isPasswordVisible ? 'text' : inputType}
-                        {...registerProps}
-                    />
+                    {inputType === 'phone' ?
+                        <PhoneInput
+                            defaultCountry="pl"
+                            {...register(name)}
+                        // onChange={(value) => { if (setValue) setValue('phoneNumber', value, { shouldValidate: true }); }}
+                        />
+                        : <Input
+                            as={inputTag}
+                            placeholder={placeholder ? placeholder : ''}
+                            {...register(name)}
+                            type={isPasswordVisible ? 'text' : inputType}
+                            {...registerProps}
+                        />}
                     {inputType === 'password' &&
                         <ShowPasswordImage
                             src={passwordImagePath}

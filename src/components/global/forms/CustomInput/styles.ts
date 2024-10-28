@@ -51,12 +51,11 @@ export const CustomInputStyle = styled.div<CustomInputStyleProps>`
 
         input,
         input.react-international-phone-input {
-           
+            padding-left: ${({ isPhone }) => isPhone ? '60px' : '15px'};
         }
 
    
 `;
-// padding-left: ${({ isPhone }) => isPhone ? '60px' : '15px'};
 export const Input = styled.input<CustomInputProps>`
     ${(props) => (props.as === 'textarea' ? 'min-height: 150px;' : '')};
     margin-right: ${({ isCheckbox }) => isCheckbox ? '15px' : '0'}; 
