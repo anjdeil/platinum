@@ -7,6 +7,7 @@ import router, { NextRouter, useRouter } from "next/router";
 import { Pagination } from "@mui/material";
 import { CustomSingleAccordion } from "@/components/global/accordions/CustomSingleAccordion/CustomSingleAccordion";
 import { CustomCheckbox } from "@/components/global/forms/CustomCheckbox";
+import { PriceFilter } from "../filtration/PriceFilter/PriceFilter";
 
 interface ArchiveProps
 {
@@ -50,11 +51,12 @@ export const Archive: FC<ArchiveProps> = ({ products, pagesCount, page }) =>
                 /> */}
                 {/* {products.length && <ProductCardList products={products} />} */}
                 <div style={{ maxWidth: '500px', margin: '50px auto' }}>
-                    <CustomSingleAccordion title={"test"} children={'sd'} />
-                    {/* <CustomCheckbox checked={false} /> */}
-                    {/* </CustomSingleAccordion> */}
+                    <CustomSingleAccordion title={"test"}>
+                        <PriceFilter maxPrice={300} minPrice={20} />
+                        <CustomCheckbox checked={false} />
+                    </CustomSingleAccordion>
                 </div>
-            </div>
+            </div >
         </>
     )
 }

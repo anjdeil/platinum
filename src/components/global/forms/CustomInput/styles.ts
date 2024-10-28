@@ -9,7 +9,7 @@ interface CustomInputStyleProps
 }
 
 export const CustomInputStyle = styled.label<CustomInputStyleProps>`
-     padding: 5px;
+        padding: 5px;
         display: flex;
         flex-direction: ${({ isCheckbox }) => isCheckbox ? 'row' : 'column'};
         align-items: ${({ isCheckbox }) => isCheckbox ? 'center' : 'flex-start'};
