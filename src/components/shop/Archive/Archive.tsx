@@ -5,7 +5,8 @@ import { CustomDataProductsType } from "@/types/services";
 import { ProductType } from "@/types/pages/shop";
 import router, { NextRouter, useRouter } from "next/router";
 import { Pagination } from "@mui/material";
-import CustomSelect from "@/components/global/selects/CustomSelect/CustomSelect";
+import { CustomSingleAccordion } from "@/components/global/accordions/CustomSingleAccordion/CustomSingleAccordion";
+import { CustomCheckbox } from "@/components/global/forms/CustomCheckbox";
 
 interface ArchiveProps
 {
@@ -34,10 +35,11 @@ const switchPage = (page: number, maxPage: number) =>
 
 export const Archive: FC<ArchiveProps> = ({ products, pagesCount, page }) =>
 {
+
     return (
         <>
             <div>
-                <PagesNavigation
+                {/* <PagesNavigation
                     page={+page}
                     count={pagesCount}
                     siblingCount={1}
@@ -45,8 +47,13 @@ export const Archive: FC<ArchiveProps> = ({ products, pagesCount, page }) =>
                     hidePrevButton
                     hideNextButton
                     onChange={(_, newPage) => { switchPage(newPage, pagesCount); }}
-                />
-                {products.length && <ProductCardList products={products} />}
+                /> */}
+                {/* {products.length && <ProductCardList products={products} />} */}
+                <div style={{ maxWidth: '500px', margin: '50px auto' }}>
+                    <CustomSingleAccordion title={"test"} children={'sd'} />
+                    {/* <CustomCheckbox checked={false} /> */}
+                    {/* </CustomSingleAccordion> */}
+                </div>
             </div>
         </>
     )
