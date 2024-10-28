@@ -70,6 +70,16 @@
         "Search": "Suche"
     },
     "Product": {
-        "addToBasket": "sss"
+        "addToBasket": "In den Warenkorb legen",
+        "sortBy": "Sortieren nach",
+        "productList": "Produktliste",
+        "notifyWhenAvailable": "Benachrichtigen, wenn verfügbar",
+        "theEndOfThePromotion": "Das Ende der Aktion",
+        "available": "Verfügbar: {count} Stk",
+        "notAvailable": "Nicht verfügbar",
+        "viewingThisProduct": "Derzeit wird angesehen: {count}",
+        "fastShipping": "Schneller Versand",
+        "freeDeliveryOver": "Kostenloser Versand ab {price}",
+        "color": "Farbe"
     }
 }
