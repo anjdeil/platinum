@@ -13,8 +13,7 @@ interface ReviewItemPropsType {
 }
 
 const ReviewItem: FC<ReviewItemPropsType> = ({ review, isOpen, setOpened }) => {
-    const { data } = useGetProductQuery({ slug: 'premium-memory-foam-cosmetic-mattress-for-tm-platinum-eyelash-extensions-3' });
-
+    const { data } = useGetProductQuery({ slug: 'silicone-patches-black' });
     const product: ProductType | undefined = data?.data?.item;
 
     const reviewTextRef = useRef<HTMLParagraphElement | null>(null);
