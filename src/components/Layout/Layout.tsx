@@ -1,7 +1,7 @@
 import { useResponsive } from '@/hooks/useResponsive';
-import { useGetMenusQuery, useGetThemeOptionsQuery } from '@/store/rtk-queries/wpCustomApi';
+import { useGetCategoriesQuery, useGetMenusQuery, useGetThemeOptionsQuery } from '@/store/rtk-queries/wpCustomApi';
 import { setThemeOptions } from '@/store/slices/themeOptionsSlice';
-import { WpMenuResponseType } from '@/types/menus/wpMenus';
+import { WpMenuResponseType } from '@/types/menus/WpMenus';
 import { LangParamType } from '@/types/services/wpCustomApi';
 import Box from '@mui/material/Box';
 import { useRouter } from 'next/router';
@@ -15,6 +15,7 @@ import Header from '../widgets/Header/Header';
 import MobileHeader from '../widgets/MobileHeader/MobileHeader';
 import TopBar from '../widgets/TopBar/TopBar';
 import { useFetchCustomerQuery } from '@/store/rtk-queries/wooCustomApi';
+import { setCategories, setLoading } from '@/store/slices/categoriesSlice';
 
 export const MenusContext = createContext<WpMenuResponseType[] | []>([]);
 const currency = 'USD';
@@ -29,8 +30,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
     const { data: menusResp, error, isLoading } = useGetMenusQuery(langParam);
     const { data: themeOptions, error: themeOptionsError, } = useGetThemeOptionsQuery();
-
-    /*     const { data: products, error: productError, isError } = useGetProductsQuery(langParam); */
+    const { data: categoriesResp, isLoading: isCategoriesLoading } = useGetCategoriesQuery(langParam);
 
     useEffect(() => {
         if (menusResp && menusResp.data && menusResp.data.items) {
@@ -43,6 +43,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             dispatch(setThemeOptions({ data: themeOptions, language: langParamStr }));
         }
     }, [themeOptions, locale, dispatch]);
+
+    useEffect(() => {
+        if (categoriesResp && categoriesResp.data) {
+          dispatch(setCategories(categoriesResp.data.items));
+        }
+        dispatch(setLoading(isCategoriesLoading));
+      }, [categoriesResp, isCategoriesLoading, dispatch]);;
 
 
 

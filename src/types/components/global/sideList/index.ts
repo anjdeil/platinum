@@ -40,6 +40,7 @@ export const SideListLinkSchema = z.object({
     url: z.string(),
     isActive: z.boolean(),
     isNested: z.boolean().optional(),
+    children: z.any().optional(),
 });
 
 export const SideListPropsSchema = z.object({
@@ -47,7 +48,7 @@ export const SideListPropsSchema = z.object({
     ...StyledListItemSchema.shape,
     links: z.array(SideListLinkSchema),
     activeLink: z.string().optional(),
-    onClick: z.function().args(z.string()).returns(z.void()).optional(),
+    onClick: z.function().args(z.string(), z.string().optional()).returns(z.void()).optional(),
 });
 
 export type SideListLinkType = z.infer<typeof SideListLinkSchema>;

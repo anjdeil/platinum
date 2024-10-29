@@ -47,9 +47,17 @@ export const CustomDataCategoriesSchema = z.object({
     })
 });
 
+export const CustomDataCategorySchema = z.object({
+    success: z.boolean(),
+    data: CustomDataSchema.extend({
+        item: CategorySchema,
+    })
+});
+
 export type QueryParamsType = z.infer<typeof QueryParamsSchema>;
 export type LangParamType = z.infer<typeof LangParamSchema>;
 export type CustomDataCategoriesType = z.infer<typeof CustomDataCategoriesSchema>;
+export type CustomDataCategoryType = z.infer<typeof CustomDataCategorySchema>;
 export type CustomDataProductsType = z.infer<typeof CustomDataProductsSchema>;
 export type CustomDataProductType = z.infer<typeof CustomDataProductSchema>;
 export type CustomDataMenuResponseType = z.infer<typeof CustomDataMenuResponseSchema>;

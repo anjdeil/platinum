@@ -214,6 +214,7 @@ const ProductParamsSchema = z.object({
     ids: z.string().optional(),
     slugs: z.string().optional(),
     category: z.string().optional(),
+    subCategory: z.string().optional(),
     min_price: z.string().optional(),
     max_price: z.string().optional(),
     search: z.string().optional(),

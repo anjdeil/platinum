@@ -11,4 +11,10 @@ export const CategorySchema = z.object({
 });
 
 type CategoryType = z.infer<typeof CategorySchema>;
+
+type CategoryChildType = CategoryType & {
+    isActive: boolean;
+};
+
 export default CategoryType;
+export type { CategoryChildType };

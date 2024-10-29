@@ -1,99 +1,75 @@
-import BackArrow from "@/components/global/icons/BackArrow/BackArrow";
-import SideList from "@/components/global/SideList/SideList";
-import { useGetCategoriesQuery } from "@/store/rtk-queries/wpCustomApi";
-import CategoryType from "@/types/pages/shop/categories";
-import { useTheme } from "@emotion/react";
-import { useRouter } from "next/router";
-import { FC, useEffect, useState } from "react";
-import { List, SideListContainer, StyledListItem, Title, TitleWrapper } from "./styles";
-import ForwardArrow from "@/components/global/icons/ForwardArrow/ForwardArrow";
-import { LangParamType } from "@/types/services";
+import React, { useEffect, useState } from 'react';
+import { FC } from 'react';
+import CategoryType from '@/types/pages/shop/categories';
+import SideCategoryList from '@/components/pages/shop/SideList/SideCategoryList';
+import { MenuSkeleton } from '@/components/menus/MenuSkeleton';
+import { useAppSelector } from '@/store';
 
 interface CategoriesMenuPropsType {
-    categories?: CategoryType[];
-    onClick?: (slug: string) => void;
-    onClose: () => void;
+    selectedCategories?: CategoryType[];
+    onClick?: (parentSlug: string, childSlug: string) => void;
 }
 
-const CategoriesMenu: FC<CategoriesMenuPropsType> = ({ onClose, onClick }) => {
-    const { locale } = useRouter();
-    const langParam: LangParamType | object = locale ? { lang: locale } : {};
-    const { data: categoriesData, isLoading: isCategoriesLoading } = useGetCategoriesQuery(langParam);
+const CategoriesMenu: FC<CategoriesMenuPropsType> = ({ onClick, selectedCategories }) => {
 
-    const [categories, setCategories] = useState<CategoryType[] | null>(null);
+    const [parentCategories, setParentCategories] = useState<CategoryType[] | null>(null);
+    const categories: CategoryType[] | undefined = useAppSelector((state) => state.categoriesSlice.categories);
+    const isCategoriesLoading: boolean = useAppSelector((state) => state.categoriesSlice.loading);
 
     useEffect(() => {
-        if (categoriesData) {
-            setCategories(categoriesData.data.items);
+        if (categories) {
+            const parentCategories = categories.filter((category: CategoryType) => {
+                return category.slug !== "uncategorized" && category.parent_id === 0;
+            });
+            setParentCategories(parentCategories);
         }
-    }, [categoriesData]);
+    }, [categories]);
 
-    const [openCategories, setOpenCategories] = useState<number[]>([]);
-    const theme = useTheme();
-
-    const toggleCategory = (id: number) => {
-        setOpenCategories(prev =>
-            prev.includes(id) ? prev.filter(categoryId => categoryId !== id) : [...prev, id]
-        );
-    };
-
-    const handleClick = (slug: string) => {
-        const selectedCategory = categories?.find((category: CategoryType) => category.slug === slug);
-        const hasSubcategories = categories?.some((category: CategoryType) => category.parent_id === selectedCategory?.id);
-
-        if (hasSubcategories) {
-            toggleCategory(selectedCategory!.id);
-        } else {
-            if (onClick) {
-                onClick(slug);
-            }
-            onClose();
+    const handleClick = (parentSlug: string, childSlug?: string) => {
+        if (onClick) {
+            onClick(parentSlug, childSlug || '');
         }
     };
 
-    const renderCategories = (categories: CategoryType[]) => {
-        return categories.map((category) => {
-            const hasSubcategories = categories.some((subCategory) => subCategory.parent_id === category.id);
-            const subCategories = categories.filter((subCategory) => subCategory.parent_id === category.id);
+    const categoriesLinks = parentCategories?.map(({ id, name, slug }: CategoryType) => {
+        const hasSubcategories = categories?.some((category: CategoryType) => category.parent_id === id);
+        const childrenCategories = categories?.filter((category: CategoryType) => category.parent_id === id);
 
-            return (
-                <div key={category.id}>
-                    <StyledListItem
-                        key={category.name}
-                        fontSize="14px"
-                        lineHeight="18px"
-                        fontWeight={500}
-                        borderRadius="4px"
-                        hoverColor={theme.colors.white}
-                        hoverBackground={theme.colors.primary}
-                        isActive={false}
-                    >
-                        <button onClick={() => handleClick(category.slug)}>
-                            {hasSubcategories && (
-                                <ForwardArrow />
-                            )}
-                            <span>{category.name}</span>
-                        </button>
-                    </StyledListItem>
-                    {openCategories.includes(category.id) && subCategories.length > 0 && (
-                        <div style={{ marginLeft: '20px' }}>
-                            {renderCategories(subCategories)}
-                        </div>
-                    )}
-                </div>
-            );
-        });
-    };
+        const isActive = selectedCategories?.some((selectedCategory) => selectedCategory.slug === slug) || false;
+        const activeChildren = childrenCategories?.map((child: CategoryType) => ({
+            ...child,
+            isActive: selectedCategories?.some((selectedCategory) => selectedCategory.slug === child.slug) || false,
+        }));
+
+        return {
+            name,
+            url: slug,
+            isActive,
+            isNested: hasSubcategories,
+            children: activeChildren,
+        };
+    });
+
+    if (!categories || categories.length === 0) {
+        return <MenuSkeleton
+            elements={10}
+            direction='column'
+            width='100%'
+            height='40px'
+            gap='20px'
+        />
+    }
 
     return (
-        <div>
-            <SideListContainer>
-                <List>
-                    {renderCategories(categories?.filter((category) => category.parent_id === 0) || [])}
-                </List>
-            </SideListContainer>
-        </div>
+        <SideCategoryList
+            links={categoriesLinks || []}
+            onClick={handleClick}
+            marginTop="15px"
+            marginBottom="76px"
+            mobFontSize="12px"
+            mobLineHeight="16px"
+        />
     );
-};
+}
 
 export default CategoriesMenu;

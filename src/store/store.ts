@@ -7,6 +7,7 @@ import themeOptionsSlice from "./slices/themeOptionsSlice";
 import MenuCategoriesSlice from "./slices/MenuCategoriesSlice";
 import PopupSlice from "./slices/PopupSlice";
 import { wpRtkApi } from "./rtk-queries/wpApi";
+import categoriesSlice from "./slices/categoriesSlice";
 
 const rootReducer = combineReducers({
     [wpCustomRtkApi.reducerPath]: wpCustomRtkApi.reducer,
@@ -17,7 +18,7 @@ const rootReducer = combineReducers({
     themeOptions: themeOptionsSlice,
     popup: PopupSlice,
     MenuCategoriesSlice: MenuCategoriesSlice.reducer,
-    currentCurrency: currencySlice,
+    categoriesSlice: categoriesSlice.reducer,
     Popup: PopupSlice,
 });
 
