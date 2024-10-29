@@ -6,6 +6,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     margin: 0;
     scrollbar-width: 4px;    
+    box-sizing: border-box;
 
     @media (min-width: 1024px) {
         scrollbar-width: 8px;
