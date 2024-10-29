@@ -1,4 +1,5 @@
 import { WpMenuResponseSchema } from "@/types/menus/wpMenus";
+import { ProductReviewSchema } from "@/types/pages/shop/reviews";
 import { z } from "zod";
 import { CategorySchema, ProductSchema } from "../../pages/shop";
 
@@ -40,6 +41,13 @@ export const CustomDataProductSchema = z.object({
     })
 })
 
+export const CustomDataProductReviewsSchema = z.object({
+    success: z.boolean(),
+    data: CustomDataSchema.extend({
+        items: z.array(ProductReviewSchema),
+    })
+})
+
 export const CustomDataCategoriesSchema = z.object({
     success: z.boolean(),
     data: CustomDataSchema.extend({
@@ -52,4 +60,5 @@ export type LangParamType = z.infer<typeof LangParamSchema>;
 export type CustomDataCategoriesType = z.infer<typeof CustomDataCategoriesSchema>;
 export type CustomDataProductsType = z.infer<typeof CustomDataProductsSchema>;
 export type CustomDataProductType = z.infer<typeof CustomDataProductSchema>;
+export type CustomDataProductReviewsType = z.infer<typeof CustomDataProductReviewsSchema>;
 export type CustomDataMenuResponseType = z.infer<typeof CustomDataMenuResponseSchema>;

@@ -1,4 +1,5 @@
 import AddToBasketButton from "@/components/global/buttons/AddToBasketButton/AddToBasketButton";
+import DetailsAccordion from "@/components/global/DetailsAccordeon/DetailsAccordion";
 import Rating from "@/components/global/Rating/Rating";
 import { StyledButton, Title } from "@/styles/components";
 import { ProductCardPropsType } from "@/types/components/shop";
@@ -16,11 +17,10 @@ import ProductVariations from "../ProductVariations/ProductVariations";
 import ProductViewing from "../ProductViewing/ProductViewing";
 import ShippingList from "../ShippingList/ShippingList";
 import { AddToBasketWrapper, ProductFlexWrapper, ProductImageWrapper, ProductInfoWrapper, ProductTitleWrapper, ProductWrapper } from "./styles";
-import DetailsAccordion from "@/components/global/DetailsAccordeon/DetailsAccordion";
 
 const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) =>
 {
-    const { name, stock_quantity, sku, min_price, max_price, images } = product;
+    const { name, stock_quantity, sku, min_price, max_price, images, average_rating } = product;
     const t = useTranslations("Product");
     const [quantity, setQuantity] = useState<number>(1);
 
@@ -46,7 +46,7 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) =>
                 </ProductFlexWrapper>
                 <ProductFlexWrapper>
                     <ProductSku sku={sku || ""} />
-                    <Rating rating={4} />
+                    <Rating rating={average_rating} />
                 </ProductFlexWrapper>
                 <ProductPrice minPrice={min_price} maxPrice={max_price} />
             </ProductTitleWrapper>

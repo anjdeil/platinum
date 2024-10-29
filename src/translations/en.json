@@ -80,6 +80,8 @@
         "viewingThisProduct": "Viewing this product: {count}",
         "fastShipping": "Fast shipping",
         "freeDeliveryOver": "Free delivery over {price}",
-        "color": "Color"
+        "color": "Color",
+        "yourFeedback": "Your feedback",
+        "reviews": "Reviews"
     }
 }

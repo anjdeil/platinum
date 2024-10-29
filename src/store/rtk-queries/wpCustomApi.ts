@@ -1,9 +1,10 @@
 import {
-CustomDataCategoriesType,
-CustomDataMenuResponseType,
-CustomDataProductsType,
-CustomDataProductType,
-QueryParamsType
+    CustomDataCategoriesType,
+    CustomDataMenuResponseType,
+    CustomDataProductReviewsType,
+    CustomDataProductsType,
+    CustomDataProductType,
+    QueryParamsType
 } from '@/types/services';
 import { ThemeOptionsType } from '@/types/services/customApi/ThemeOptions';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
@@ -36,6 +37,12 @@ export const wpCustomRtkApi = createApi({
                 params,
             }),
         }),
+        getProductReviews: builder.query<CustomDataProductReviewsType, QueryParamsType>({
+            query: (params: QueryParamsType) => ({
+                url: `/products/reviews/${params.slug}`,
+                params,
+            }),
+        }),
         getThemeOptions: builder.query<ThemeOptionsType, void>({
             query: () => ({
                 url: `/theme-options`,
@@ -49,5 +56,6 @@ export const {
     useGetCategoriesQuery,
     useGetProductsQuery,
     useGetProductQuery,
+    useGetProductReviewsQuery,
     useGetThemeOptionsQuery,
 } = wpCustomRtkApi;

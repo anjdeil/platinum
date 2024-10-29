@@ -60,6 +60,7 @@ export const ProductSchema = z.object({
     stock_quantity: z.number().nullable(),
     min_price: z.number(),
     max_price: z.number(),
+    average_rating: z.number(),
     categories: z.array(ProductCategorySchema),
     images: z.array(ProductImageSchema),
     attributes: z.array(ProductAttributesSchema),
@@ -75,3 +76,4 @@ export const ProductDataResponseSchema = z.object({
 export type ProductType = z.infer<typeof ProductSchema>;
 export type ProductDataResponseType = z.infer<typeof ProductDataResponseSchema>;
 export type ProductAttributesType = z.infer<typeof ProductAttributesSchema>;
+export type ProductImageType = z.infer<typeof ProductImageSchema>;

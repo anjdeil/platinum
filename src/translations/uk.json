@@ -80,6 +80,8 @@
         "viewingThisProduct": "Зараз переглядають: {count}",
         "fastShipping": "Швидка доставка",
         "freeDeliveryOver": "Безкоштовна доставка від {price}",
-        "color": "Колір"
+        "color": "Колір",
+        "yourFeedback": "Ваш відгук",
+        "reviews": "Відгуки"
     }
 }
