@@ -35,6 +35,8 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
         }
     }
 
+    console.log('GetServerSideProps has been called!', params.min_price);
+
     /** Indicate the products number*/
     const productsPerPage = 11;
 
@@ -48,7 +50,7 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
         // ids array[string]
         // slugs array[string]
         // category string
-        // min_price number
+        // min_price:  
         // max_price number
         // search  string
     }
@@ -75,7 +77,8 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
             props: {
                 products,
                 pagesCount,
-                page
+                page,
+                data: validatedData,
             },
         }
 

@@ -1,37 +1,32 @@
-import { FC } from "react";
-import { StyledInput } from "./styles";
+import { FC, useCallback, useState } from "react";
 import { CustomInput } from "@/components/global/forms/CustomInput";
-import { CustomInputStyle, CustomInputWrapper, Input } from "@/components/global/forms/CustomInput/styles";
+import { Slider } from "@mui/material";
+import { Divider, PriceFilterContainer } from "./styles";
 
 interface PriceFilter
 {
-    maxPrice: number;
     minPrice: number;
+    maxPrice: number;
+    onInputChange: (_: Event, newValue: number | number[]) => void;
 }
 
-
-
-export const PriceFilter: FC<PriceFilter> = ({ maxPrice, minPrice }) =>
+export const PriceFilter: FC<PriceFilter> = ({ minPrice, maxPrice, onInputChange }) =>
 {
     return (
-        <div>
-            <div>
-                <CustomInputStyle
-                    as={'label'}
-                    isError={false}
-                    isTextArea={false}
-                    isCheckbox={false}
-                    isPhone={false}>
-                    <CustomInputWrapper>
-                        <Input
-                            as={'input'}
-                            type={'number'}
-                            isCheckbox={false}
-                            isError={false} />
-                    </CustomInputWrapper>
-                </CustomInputStyle>
-            </div>
-            <p>zł</p>
-        </div>
+        <>
+            <Slider
+                getAriaLabel={() => 'Price filter range'}
+                value={[minPrice, maxPrice]}
+                min={20}
+                max={1000}
+                onChange={onInputChange}
+            />
+            <PriceFilterContainer>
+                <CustomInput value={minPrice} />
+                <Divider />
+                <CustomInput value={maxPrice} />
+                <p>zł</p>
+            </PriceFilterContainer>
+        </>
     )
 }  

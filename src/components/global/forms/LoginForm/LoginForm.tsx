@@ -3,10 +3,10 @@ import { CustomForm, FormWrapper, FormWrapperBottom } from "../RegistrationForm/
 import { LoginFormSchema, LoginFormType } from "@/types/components/global/forms/LoginForm";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CustomInput } from "../CustomInput";
+import { CustomInput } from "../CustomFormInput";
 import { useGetTokenMutation } from "@/store/rtk-queries/wpApi";
 import { isAuthErrorResponseType } from "@/utils/isAuthErrorResponseType";
-import { CustomError } from "../CustomInput/styles";
+import { CustomError } from "../CustomFormInput/styles";
 
 
 export const LoginForm: FC = () =>

@@ -4,6 +4,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { StyledAccordion, StyledAccordionSummary } from './styles';
 import { CustomSingleAccordionType } from '@/types/components/global/accordions/customSingleAccordion';
 import { validateCustomSingleAccordion } from '@/utils/zodValidators/validateCustomSingleAccordion';
+import { Title } from '@/styles/components';
 
 export const CustomSingleAccordion: FC<CustomSingleAccordionType> = ({ title, children }) =>
 {
@@ -24,7 +25,7 @@ export const CustomSingleAccordion: FC<CustomSingleAccordionType> = ({ title, ch
     return (
         <StyledAccordion>
             <StyledAccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography>{title}</Typography>
+                <Title as={'h3'} uppercase fontSize='16px' fontWeight={400}>{title}</Title>
             </StyledAccordionSummary>
             <AccordionDetails>
                 {children}

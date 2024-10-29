@@ -8,6 +8,7 @@ import { Pagination } from "@mui/material";
 import { CustomSingleAccordion } from "@/components/global/accordions/CustomSingleAccordion/CustomSingleAccordion";
 import { CustomCheckbox } from "@/components/global/forms/CustomCheckbox";
 import { PriceFilter } from "../filtration/PriceFilter/PriceFilter";
+import { FilterPanel } from "../filtration/FilterPanel";
 
 interface ArchiveProps
 {
@@ -34,9 +35,9 @@ const switchPage = (page: number, maxPage: number) =>
     })
 }
 
-export const Archive: FC<ArchiveProps> = ({ products, pagesCount, page }) =>
+export const Archive: FC<ArchiveProps> = ({ products, pagesCount, page, data }) =>
 {
-
+    console.log(data);
     return (
         <>
             <div>
@@ -50,11 +51,8 @@ export const Archive: FC<ArchiveProps> = ({ products, pagesCount, page }) =>
                     onChange={(_, newPage) => { switchPage(newPage, pagesCount); }}
                 /> */}
                 {/* {products.length && <ProductCardList products={products} />} */}
-                <div style={{ maxWidth: '500px', margin: '50px auto' }}>
-                    <CustomSingleAccordion title={"test"}>
-                        <PriceFilter maxPrice={300} minPrice={20} />
-                        <CustomCheckbox checked={false} />
-                    </CustomSingleAccordion>
+                <div style={{ width: '500px', margin: '50px auto' }}>
+                    <FilterPanel />
                 </div>
             </div >
         </>

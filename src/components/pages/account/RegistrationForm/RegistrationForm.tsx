@@ -6,7 +6,7 @@ import { WooCustomerReqType } from "@/types/services";
 import { CustomForm, FormWrapper } from "./styles";
 import { PhoneInput } from "react-international-phone";
 import 'react-international-phone/style.css';
-import { CustomInput } from "../../../global/forms/CustomInput";
+import { CustomInput } from "../../../global/forms/CustomFormInput";
 import { RegistrationFormSchema } from "@/types/pages/account/RegistrationForm/registrationForm";
 
 interface RegistrationFormProps

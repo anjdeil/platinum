@@ -1,74 +1,33 @@
-import { FC, useEffect, useMemo, useState } from "react";
-import { CustomError, CustomInputStyle, CustomInputWrapper, CustomRequired, Input, ShowPasswordImage } from "./styles";
-import { CustomInputType } from "@/types/components/global/forms/customInput";
-import { PhoneInput } from 'react-international-phone';
-import 'react-international-phone/style.css';
+import { FC } from "react";
+import { CustomInputStyle, CustomInputWrapper, Input } from "../CustomFormInput/styles";
 
-
-export const CustomInput: FC<CustomInputType> = (
-    {
-        errors,
-        fieldName,
-        name,
-        isRequire = true,
-        inputTag,
-        inputType,
-        placeholder,
-        register,
-        onChange,
-        value,
-    }) =>
+interface CustomInputType
 {
-    const registerProps = register ? { ...register(name) } : {};
+    defaultValue?: string | number;
+    value: string | number;
+}
 
-    const [isPasswordVisible, setPasswordVisible] = useState(false);
-    const togglePasswordVisibility = () => setPasswordVisible((prev) => !prev);
-    const passwordImagePath = useMemo(() => isPasswordVisible ? '/images/show-pass.svg' : '/images/hidden-pass.svg', [isPasswordVisible]);
-
-    const [isError, setError] = useState(false);
-    useEffect(() =>
-    {
-        if (!errors || !name) { setError(false); return; }
-        setError(name in errors);
-    }, [errors, name]);
-
+export const CustomInput: FC<CustomInputType> = ({ defaultValue, value }) =>
+{
     return (
         <div>
             <CustomInputStyle
                 as={'label'}
-                isError={isError}
+                isError={false}
                 isTextArea={false}
-                isCheckbox={inputType === 'checkbox'}
-                isPhone={inputType === 'phone'}>
-                <span>
-                    {fieldName}
-                    {isRequire && <CustomRequired>*</CustomRequired>}
-                </span>
+                isCheckbox={false}
+                isPhone={false}>
                 <CustomInputWrapper>
-                    {inputType === 'phone' ?
-                        <PhoneInput
-                            defaultCountry="pl"
-                            {...register(name)}
-                        // onChange={(value) => { if (setValue) setValue('phoneNumber', value, { shouldValidate: true }); }}
-                        />
-                        : <Input
-                            as={inputTag}
-                            placeholder={placeholder ? placeholder : ''}
-                            {...register(name)}
-                            type={isPasswordVisible ? 'text' : inputType}
-                            {...registerProps}
-                        />}
-                    {inputType === 'password' &&
-                        <ShowPasswordImage
-                            src={passwordImagePath}
-                            alt={'show or hidden password button'}
-                            width={24}
-                            height={24}
-                            onClick={togglePasswordVisibility}
-                            unoptimized={true} />}
+                    <Input
+                        as={'input'}
+                        type={'number'}
+                        isCheckbox={false}
+                        isError={false}
+                        value={value}
+                        defaultValue={defaultValue || ""}
+                    />
                 </CustomInputWrapper>
             </CustomInputStyle>
-            {isError && name && <CustomError>{errors[name]?.message}</CustomError>}
         </div>
     )
-}
+} 
