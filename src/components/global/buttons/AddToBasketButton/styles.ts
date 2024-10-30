@@ -3,13 +3,13 @@ import styled from "@emotion/styled";
 
 export const AddToBasketButtonStyled = styled.button<AddToBasketButtonProps>`
     width: 100%;
-    max-width: ${({ maxWidth = "auto" }) => maxWidth};
-    background-color: ${({ theme }) => theme.colors.primary};
+    max-width: ${({ maxWidth = "" }) => maxWidth};
+    background-color: transparent;
     font: ${({ theme }) => theme.fonts.bodyMiddleReg};
     font-size: ${({ fontSize }) => fontSize};
     line-height: ${({ lineHeight }) => lineHeight};
     font-weight: ${({ fontWeight }) => fontWeight};    
-    color: ${({ theme, color = theme.colors.white }) => color};
+    color: ${({ theme, color = theme.colors.black }) => color};
     padding: 16px 25px;    
     text-align: center;
     border-radius: ${({ borderRadius = '10px' }) => borderRadius};
