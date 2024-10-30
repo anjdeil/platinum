@@ -1,7 +1,7 @@
 import Breadcrumbs from "@/components/global/Breadcrumbs/Breadcrumbs";
 import ProductInfo from "@/components/pages/product/ProductInfo/ProductInfo";
 import { useGetProductQuery } from "@/store/rtk-queries/wpCustomApi";
-import { Container } from "@/styles/components";
+import { Container, Title } from "@/styles/components";
 import { ProductType } from "@/types/components/shop/product/products";
 import { Box } from "@mui/material";
 import { useEffect } from "react";
@@ -33,6 +33,7 @@ export default function ProductPage()
                 />
             </Box>
             {product && <ProductInfo product={product} />}
+            <Title as='h2' fontSize={"20px"}>best  for you</Title>
         </Container>
     );
 }
