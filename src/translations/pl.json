@@ -82,6 +82,7 @@
         "freeDeliveryOver": "Darmowa dostawa od {price}",
         "color": "Kolor",
         "yourFeedback": "Twoja opinia",
-        "reviews": "Opinie"
+        "reviews": "Opinie",
+        "readMore": "Czytaj więcej"
     }
 }

@@ -2,7 +2,7 @@ import { Text } from "@/styles/components";
 import styled from "@emotion/styled";
 import { Collapse } from "@mui/material";
 
-export const ReviewContainer = styled.div`
+export const ReviewContainer = styled.div<{ isOpen: boolean }>`
     padding: 16px;
     display: flex;
     flex-direction: column;
@@ -11,6 +11,7 @@ export const ReviewContainer = styled.div`
     row-gap: 16px;
     border-radius: 8px;
     background-color: ${({ theme }) => theme.background.secondary};
+    padding-bottom: ${({ isOpen }) => isOpen ? '' : '40px'};
 
     &:hover > span {
         -webkit-line-clamp: unset;
@@ -53,7 +54,7 @@ export const ReviewName = styled(Text)`
 `;
 
 export const ReviewText = styled(Collapse)`
-    font: ${({ theme }) => theme.fonts.bodyMiddleReg};
+    font: ${({ theme }) => theme.fonts.bodyMiddleReg};    
 
     @media ${({ theme }) => theme.media.large} {
        font-size: 14px;
@@ -61,15 +62,19 @@ export const ReviewText = styled(Collapse)`
 `;
 
 export const MoreButton = styled.button`
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
     border: none;
     background-color: transparent;
-    align-self: flex-end;
     cursor: pointer;
+    text-decoration: underline;
+    color: ${({ theme }) => theme.colors.grey};
     font: ${({ theme }) => theme.fonts.bodyMiddleReg};
-    transition: opacity 0.2s ease;
+    transition: color 0.2s ease;
 
     &:hover {
-        opacity: 0.7;
+        color: ${({ theme }) => theme.colors.black};
     }
 
     @media ${({ theme }) => theme.media.large} {

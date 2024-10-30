@@ -82,6 +82,7 @@
         "freeDeliveryOver": "Безкоштовна доставка від {price}",
         "color": "Колір",
         "yourFeedback": "Ваш відгук",
-        "reviews": "Відгуки"
+        "reviews": "Відгуки",
+        "readMore": "Читати далі"
     }
 }

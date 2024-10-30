@@ -82,6 +82,7 @@
         "freeDeliveryOver": "Free delivery over {price}",
         "color": "Color",
         "yourFeedback": "Your feedback",
-        "reviews": "Reviews"
+        "reviews": "Reviews",
+        "readMore": "Read more"
     }
 }

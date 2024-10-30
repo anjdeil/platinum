@@ -35,7 +35,8 @@ export default function ProductPage()
                 />
             </Box>
             {product && <ProductInfo product={product} />}
-            {product && <Reviews product={product} />}
+            {/* {product && <Reviews product={product} />} */}
+            <Reviews product={product} />
         </Container>
     );
 }

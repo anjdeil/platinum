@@ -1,6 +1,7 @@
 import { useGetProductQuery } from "@/store/rtk-queries/wpCustomApi";
 import { ProductType } from "@/types/pages/shop";
 import { ProductReviewType } from "@/types/pages/shop/reviews";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { FC, useEffect, useRef, useState } from "react";
 import Rating from "../../Rating/Rating";
@@ -13,6 +14,7 @@ interface ReviewItemPropsType {
 }
 
 const ReviewItem: FC<ReviewItemPropsType> = ({ review, isOpen, setOpened }) => {
+    const t = useTranslations("Product");
     const { data } = useGetProductQuery({ slug: 'silicone-patches-black' });
     const product: ProductType | undefined = data?.data?.item;
 
@@ -47,7 +49,7 @@ const ReviewItem: FC<ReviewItemPropsType> = ({ review, isOpen, setOpened }) => {
     }, [ review, isOpen, setOpened]);
 
     return ( 
-        <ReviewContainer ref={reviewRef}>
+        <ReviewContainer ref={reviewRef} isOpen={isOpen || !showReadMore}>
             <FlexWrapper>
                 <ImageWrapper>
                     <Image
@@ -64,10 +66,10 @@ const ReviewItem: FC<ReviewItemPropsType> = ({ review, isOpen, setOpened }) => {
                 ref={reviewTextRef}
                 collapsedSize="3rem"
                 in={isOpen}
-                timeout="auto"
+                timeout="auto"                
             >{review.review}</ReviewText>
             {showReadMore && !isOpen &&
-                <MoreButton onClick={() => setOpened(review.id)}>read more</MoreButton>
+                <MoreButton onClick={() => setOpened(review.id)}>{t('readMore')}</MoreButton>
             }
         </ReviewContainer>
     );

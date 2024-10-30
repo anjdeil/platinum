@@ -82,6 +82,7 @@
         "freeDeliveryOver": "Kostenloser Versand ab {price}",
         "color": "Farbe",
         "yourFeedback": "Ihr Feedback",
-        "reviews": "Bewertungen"
+        "reviews": "Bewertungen",
+        "readMore": "Mehr erfahren"
     }
 }

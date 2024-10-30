@@ -82,6 +82,7 @@
         "freeDeliveryOver": "Бесплатная доставка от {price}",
         "color": "Цвет",
         "yourFeedback": "Ваш отзыв",
-        "reviews": "Отзывы"
+        "reviews": "Отзывы",
+        "readMore": "Читать далее"
     }
 }
