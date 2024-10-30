@@ -1,3 +1,4 @@
+import { ProductCardList } from "@/components/shop/ProductCardsList";
 import { Title } from "@/styles/components";
 import { ProductType } from "@/types/pages/shop";
 import { useTranslations } from "next-intl";
@@ -14,9 +15,10 @@ const RecommendProducts: React.FC<RecommendProductsProps> = ({ products }) =>
     return (
         <RecommendContainer>
             <TitleBlock>
-                <StyledText>{t('yourFeedback')}</StyledText>
-                <Title as="h4" uppercase>{t('reviews')}</Title>
-            </TitleBlock>            
+                <StyledText>{t('bestForYou')}</StyledText>
+                <Title as="h4" uppercase>{t('recommendProduct')}</Title>
+            </TitleBlock>
+            <ProductCardList products={products}/>
         </RecommendContainer>
     );
 };
