@@ -4,16 +4,15 @@ import styled from "@emotion/styled";
 import { Pagination } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
-import theme from './theme';
 
-interface TitleProps
-{
+interface TitleProps {
     as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
     fontWeight?: number;
     fontSize?: string;
     mobFontSize?: string;
     textalign?: "center" | "left" | "right";
     uppercase?: boolean;
+    marginTop?: number;
     marginBottom?: number;
     tabletMarginBottom?: number;
     mobMarginBottom?: number;
@@ -26,7 +25,9 @@ export const Title = styled.h1<TitleProps>`
     font-size: ${({ fontSize }) => fontSize};
     font-weight: ${({ fontWeight }) => fontWeight};
     text-transform: ${({ uppercase }) => uppercase ? "uppercase" : 'none'};
-    text-align: center;
+    text-align: ${({ textalign = 'center' }) => textalign};
+    margin-top: ${({ marginTop = '0' }) => marginTop};
+    margin-bottom: ${({ marginBottom = '0' }) => marginBottom};
 
     @media ${({ theme }) => theme.media.large} {
         font: ${({ theme }) => theme.fonts.bodyMiddleSemiBold};
@@ -56,6 +57,7 @@ export const Container = styled.div`
     margin: 0 auto;
     padding: 0 32px;
     max-width: 1280px;
+    overflow: hidden;
 
     @media ${({ theme }) => theme.media.medium} {
         padding: 0 20px;
@@ -91,7 +93,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
     padding-inline: 16px;
     border-radius: 10px;
     color: ${({ theme, color = theme.colors.black }) => color};
-    background-color: ${({ backgroundColor = 'transparent' }) => backgroundColor};
+    background-color: ${({ notify = false, theme, backgroundColor = 'transparent' }) => notify ? theme.colors.secondary : backgroundColor};
     padding-block: 16px;
     font: ${({ theme }) => theme.fonts.bodyMiddleReg};
     text-transform: none;
@@ -168,4 +170,16 @@ export const StyledIconWrapper = styled.div`
 export const LogoLinkImage = styled(Image) <LogoLinkImageProps>`
     width: 100%;
     height: 100%;
+`;
+
+export const Text = styled.span`
+    font: ${({ theme }) => theme.fonts.bodyMiddleReg};
+`;
+
+export const VariationTitle = styled(Text)`
+    text-transform: uppercase;
+    
+    @media ${({ theme }) => theme.media.large} {
+       font-size: 14px;
+    }
 `;

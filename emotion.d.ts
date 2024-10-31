@@ -1,8 +1,7 @@
 import '@emotion/react';
 
 declare module '@emotion/react' {
-    export interface Theme
-    {
+    export interface Theme {
         typography: {
             fontFamily: string;
             fontSize: string;
@@ -24,6 +23,7 @@ declare module '@emotion/react' {
             shadow: string;
             error: string;
             border: string;
+            lightBorder: string;
             new: string,
             best: string,
             hot: string,
