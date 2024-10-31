@@ -1,4 +1,4 @@
-import { lineOrderItems } from "@/types/store/reducers/cartSlice";
+import { lineOrderItems } from "@/types/store/reducers/сartSlice";
 import { DEFAULT_IMAGE } from "@/utils/consts";
 import { useTranslations } from "next-intl";
 import { BlockInfo, HeaderItem, HeaderItemName, InfoTitle, ListBody, ListHeader, ListItem, ProductImage, ProductListWrapper, StyledValue, WrapperBlock, WrapperBlockInfo, WrapperHeader } from "./styles";

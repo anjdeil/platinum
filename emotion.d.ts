@@ -23,6 +23,7 @@ declare module '@emotion/react' {
             shadow: string;
             error: string;
             border: string;
+            lightBorder: string;
             new: string,
             best: string,
             hot: string,

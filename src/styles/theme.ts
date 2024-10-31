@@ -41,6 +41,7 @@ const theme: Theme = {
         platinum: "",
         shadow: "",
         border: '#738EBC',
+        lightBorder: "#E0EFFE",
         new: '#17AA40',
         best: '#1E71BE',
         hot: '#F2B517',
