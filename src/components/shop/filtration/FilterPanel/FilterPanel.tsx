@@ -4,6 +4,7 @@ import { PriceFilter } from "../PriceFilter"
 import { useRouter } from "next/router";
 import { FilterPanelPropsType } from "@/types/components/shop/filters";
 import { FilterAttributes } from "../FilterAttributes/FilterAttributes";
+import { FilterPanelWrap } from "./styles";
 
 export const FilterPanel: FC<FilterPanelPropsType> = ({ attributes, maxPrice, minPrice }) =>
 {
@@ -42,9 +43,16 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({ attributes, maxPrice, mi
         }
     }, [priceRange])
 
+    const updateCurrentParams = useCallback((paramName: string, paramValue: string) =>
+    {
+        if (!paramName && !paramValue) return;
+        console.log(`${paramName}: ${paramValue}`)
+        updateUrlParams({ [`pa_` + paramName]: paramValue })
+    }, [])
+
 
     return (
-        <>
+        <FilterPanelWrap>
             <CustomSingleAccordion title={"Price"}>
                 <PriceFilter
                     currentMin={priceRange.min}
@@ -60,10 +68,10 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({ attributes, maxPrice, mi
             {
                 return (
                     <CustomSingleAccordion title={attribute.name} key={attribute.id}>
-                        <FilterAttributes attribute={attribute} />
+                        <FilterAttributes attribute={attribute} onParamsChange={updateCurrentParams} />
                     </CustomSingleAccordion>
                 )
             })}
-        </>
+        </FilterPanelWrap>
     )
 }

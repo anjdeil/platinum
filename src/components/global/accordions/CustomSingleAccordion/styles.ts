@@ -9,10 +9,13 @@ export const StyledAccordion = styled(Accordion)`
     border-radius: 10px !important;
     background-color: #f0f7ff;
   }
-  
 
   .MuiCollapse-root.MuiCollapse-vertical {
     background-color: white;
+  }
+
+  &::before {
+      display: none;
   }
 `;
 
