@@ -3,11 +3,14 @@ import { FC, useCallback, useEffect, useState } from "react"
 import { PriceFilter } from "../PriceFilter"
 import { useRouter } from "next/router";
 import { FilterPanelPropsType } from "@/types/components/shop/filters";
+import { FilterAttributes } from "../FilterAttributes/FilterAttributes";
 
 export const FilterPanel: FC<FilterPanelPropsType> = ({ attributes, maxPrice, minPrice }) =>
 {
     const [priceRange, setPriceRange] = useState({ min: minPrice, max: maxPrice });
     const router = useRouter();
+
+    console.log(attributes);
 
     const updateUrlParams = (newParam: { [key: string]: string | number }) =>
     {
@@ -41,16 +44,26 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({ attributes, maxPrice, mi
 
 
     return (
-        <CustomSingleAccordion title={"Price"}>
-            <PriceFilter
-                currentMin={priceRange.min}
-                currentMax={priceRange.max}
-                minPrice={minPrice}
-                maxPrice={maxPrice}
-                updateMaxPrice={updateMaxPrice}
-                updateMinPrice={updateMinPrice}
+        <>
+            <CustomSingleAccordion title={"Price"}>
+                <PriceFilter
+                    currentMin={priceRange.min}
+                    currentMax={priceRange.max}
+                    minPrice={minPrice}
+                    maxPrice={maxPrice}
+                    updateMaxPrice={updateMaxPrice}
+                    updateMinPrice={updateMinPrice}
 
-            />
-        </CustomSingleAccordion>
+                />
+            </CustomSingleAccordion>
+            {attributes.map((attribute) =>
+            {
+                return (
+                    <CustomSingleAccordion title={attribute.name} key={attribute.id}>
+                        <FilterAttributes attribute={attribute} />
+                    </CustomSingleAccordion>
+                )
+            })}
+        </>
     )
 }

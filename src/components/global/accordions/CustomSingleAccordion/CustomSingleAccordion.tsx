@@ -23,7 +23,7 @@ export const CustomSingleAccordion: FC<CustomSingleAccordionType> = ({ title, ch
     if (!isPropsValidated) return null;
 
     return (
-        <StyledAccordion>
+        <StyledAccordion disableGutters>
             <StyledAccordionSummary expandIcon={<ExpandMoreIcon />}>
                 <Title as={'h3'} uppercase fontSize='16px' fontWeight={400}>{title}</Title>
             </StyledAccordionSummary>
