@@ -8,7 +8,8 @@ import { useEffect } from "react";
 
 export default function ProductPage()
 {
-    const { data } = useGetProductQuery({ slug: 'premium-memory-foam-cosmetic-mattress-for-tm-platinum-eyelash-extensions-3' });
+    // const { data } = useGetProductQuery({ slug: 'premium-memory-foam-cosmetic-mattress-for-tm-platinum-eyelash-extensions-3' });
+    const { data } = useGetProductQuery({ slug: 'professional-black-eye-pads-for-salon-and-individuals-from-platinum' });
 
     const product: ProductType | undefined = data?.data?.item;
 

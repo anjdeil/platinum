@@ -1,9 +1,14 @@
 import AddToBasketButton from "@/components/global/buttons/AddToBasketButton/AddToBasketButton";
+import DetailsAccordion from "@/components/global/DetailsAccordeon/DetailsAccordion";
 import Rating from "@/components/global/Rating/Rating";
+import { useAppDispatch } from "@/store";
+import { popupSet } from "@/store/slices/PopupSlice";
+import { setData } from "@/store/slices/ProductSlice";
 import { StyledButton, Title } from "@/styles/components";
 import { ProductCardPropsType } from "@/types/components/shop";
+import { ProductType } from "@/types/pages/shop";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import ColorVariations from "../ColorVariations/ColorVariations";
 import PaymentList from "../PaymentList/PaymentList";
 import ProductAvailable from "../ProductAvailable/ProductAvailable";
@@ -16,12 +21,12 @@ import ProductVariations from "../ProductVariations/ProductVariations";
 import ProductViewing from "../ProductViewing/ProductViewing";
 import ShippingList from "../ShippingList/ShippingList";
 import { AddToBasketWrapper, ProductFlexWrapper, ProductImageWrapper, ProductInfoWrapper, ProductTitleWrapper, ProductWrapper } from "./styles";
-import DetailsAccordion from "@/components/global/DetailsAccordeon/DetailsAccordion";
 
 const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) =>
 {
     const { name, stock_quantity, sku, min_price, max_price, images } = product;
     const t = useTranslations("Product");
+    const dispatch = useAppDispatch();
     const [quantity, setQuantity] = useState<number>(1);
 
     const sizeList = ['M', 'L', 'XL'];
@@ -32,6 +37,15 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) =>
     const [currentColor, setCurrentColor] = useState<string>(colorList[0]);
 
     const testimages = Array.from({ length: 4 }).map((_, index) => images[0]);
+
+    const updateProductState = useCallback((data: ProductType) => {
+        dispatch(setData(data));
+    }, [dispatch]);
+
+    const addComment = () => {
+        updateProductState(product);
+        dispatch(popupSet('add-comment'));
+    };
 
     return (
         <ProductWrapper>
@@ -78,6 +92,7 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) =>
                 </AddToBasketWrapper>
                 <PaymentList />
                 <ShippingList />
+                <StyledButton onClick={addComment} secondary={true}>Leave a review about product</StyledButton>
                 <DetailsAccordion summary="Descriptions">
                     <p>PLATINUM Black eyelashes by Chetvertinovskaya Liubov:</p>
                     <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Repellendus voluptas explicabo aut provident, ipsum quam quia ullam reiciendis molestias beatae id illo tempora, eos harum officia doloremque amet! Nam rerum exercitationem, adipisci veniam provident unde aliquam molestiae necessitatibus dolores in ratione, autem error tempora. Quisquam, iure? Corporis tenetur ad provident veritatis repellendus blanditiis, assumenda officia nam! Enim laboriosam beatae error veritatis praesentium culpa doloribus unde id magnam cum autem ipsam debitis maiores aliquid corporis expedita, hic dicta repellendus dolore fuga odit nihil aliquam maxime? Ipsam quasi ratione odio a minus, vitae voluptates iusto modi accusantium, quaerat, adipisci aut dolor asperiores?</p>

@@ -49,7 +49,7 @@ const SwiperPopup: React.FC<SwiperPopupProps> = ({ onClose }) => {
                                 <StyledSwiperSlide key={item.id}>
                                     <SlideImage
                                         unoptimized
-                                        src={item.src}
+                                        src={item?.src || ""}
                                         alt={`Product image ${index + 1}`}
                                         width={600}
                                         height={600}

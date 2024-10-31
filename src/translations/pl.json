@@ -80,6 +80,10 @@
         "viewingThisProduct": "Jest obecnie oglądany: {count}",
         "fastShipping": "Szybka wysyłka",
         "freeDeliveryOver": "Darmowa dostawa od {price}",
-        "color": "Kolor"
+        "color": "Kolor",
+        "addComment": "Dodaj komentarz",
+        "submitting": "Wysyłanie",
+        "commentText1": "Czy przetestowałeś nasz produkt? Podziel się swoją opinią;",
+        "commentText2": "- Staramy się być najlepsi dla Ciebie, a Twoja opinia bardzo nam pomoże!"
     }
 }

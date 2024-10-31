@@ -1,3 +1,4 @@
+import ProductSlice from "@/store/slices/ProductSlice";
 import SwiperModal from "@/store/slices/SwiperModal";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { wooCustomRktApi } from "./rtk-queries/wooCustomApi";
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
     MenuCategoriesSlice: MenuCategoriesSlice.reducer,
     currentCurrency: currencySlice,
     Popup: PopupSlice,
-    swiperModal: SwiperModal
+    swiperModal: SwiperModal,
+    productSlice: ProductSlice
 });
 
 export const setupStore = () => {
