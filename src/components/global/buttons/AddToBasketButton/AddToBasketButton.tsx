@@ -14,6 +14,7 @@ const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({
     lineHeight,
     fontSize,
     maxWidth,
+    mobileMaxWidth,
 }) => {
     const t = useTranslations("Product");
 
@@ -30,6 +31,7 @@ const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({
             lineHeight={lineHeight}
             fontSize={fontSize}
             maxWidth={maxWidth}
+            mobileMaxWidth={mobileMaxWidth}
         >
             {t("addToBasket")}
         </AddToBasketButtonStyled>

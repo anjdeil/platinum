@@ -12,6 +12,7 @@ export const AddToBasketButtonPropsSchema = z.object({
     lineHeight: z.string().optional(),
     fontSize: z.string().optional(),
     maxWidth: z.string().optional(),
+    mobileMaxWidth: z.string().optional(),
 });
 
 export type AddToBasketButtonProps = z.infer<typeof AddToBasketButtonPropsSchema>;

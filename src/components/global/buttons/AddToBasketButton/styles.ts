@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 
 export const AddToBasketButtonStyled = styled.button<AddToBasketButtonProps>`
     width: 100%;
-    max-width: ${({ maxWidth = "auto" }) => maxWidth};
+    max-width: ${({ maxWidth = "" }) => maxWidth};
     background-color: ${({ theme }) => theme.colors.primary};
     font: ${({ theme }) => theme.fonts.bodyMiddleReg};
     font-size: ${({ fontSize }) => fontSize};
@@ -40,6 +40,7 @@ export const AddToBasketButtonStyled = styled.button<AddToBasketButtonProps>`
     }
 
     @media ${({ theme }) => theme.media.medium} {
+        max-width: ${({ mobileMaxWidth = "" }) => mobileMaxWidth};
         padding: 10px 16px;
         font-size: ${({ mobFontSize = '14px' }) => mobFontSize};   
         line-height: ${({ mobLineHeight = '1.5em' }) => mobLineHeight};     
