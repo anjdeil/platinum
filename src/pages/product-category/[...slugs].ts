@@ -44,8 +44,9 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
     const productsParams: ProductParamsType = {
         page: page || "1",
         per_page: productsPerPage,
-        ...(minPrice && { min_price: minPrice }),
-        ...(maxPrice && { max_price: maxPrice }),
+        ...params
+        // ...(minPrice && { min_price: minPrice }),
+        // ...(maxPrice && { max_price: maxPrice }),
         // order_by string
         // order_by string
         // lang string
@@ -55,7 +56,7 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
         // search  string
     }
 
-    // console.log('productsParams', productsParams);
+    console.log('currentParams', productsParams)
 
     try
     {

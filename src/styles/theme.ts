@@ -49,7 +49,8 @@ const theme: Theme = {
         warning: '#F2B517',
         primaryGradient: "radial-gradient(79.43% 79.43% at 49.95% 64.07%, #024584 0%, #0B233D 100%)",
         infoGradient: "radial-gradient(66.14% 66.14% at 49.95% 64.07%, #024584 0%, #0B233D 100%)",
-        formElements: "#F2F8FE"
+        formElements: "#F2F8FE",
+        resetButton: "#e8e8f0",
     },
     spacing: {
         small: '8px',

@@ -45,13 +45,15 @@ export const Archive: FC<ArchivePropsType> = (props) =>
                     hideNextButton
                     onChange={(_, newPage) => { switchPage(newPage, pagesCount); }}
                 />
-                <div style={{ width: '500px', margin: '50px auto' }}>
-                    <FilterPanel
-                        attributes={statistic.attributes}
-                        maxPrice={statistic.max_price}
-                        minPrice={statistic.min_price} />
+                <div style={{ display: 'flex', gap: '100px' }}>
+                    <div style={{ width: '1000px', margin: '50px auto' }}>
+                        <FilterPanel
+                            attributes={statistic.attributes}
+                            maxPrice={statistic.max_price}
+                            minPrice={statistic.min_price} />
+                    </div>
+                    {products.length && <ProductCardList products={products} />}
                 </div>
-                {products.length && <ProductCardList products={products} />}
             </div >
         </>
     )

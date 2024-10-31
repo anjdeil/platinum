@@ -4,14 +4,14 @@ import { PriceFilter } from "../PriceFilter"
 import { useRouter } from "next/router";
 import { FilterPanelPropsType } from "@/types/components/shop/filters";
 import { FilterAttributes } from "../FilterAttributes/FilterAttributes";
-import { FilterPanelWrap } from "./styles";
+import { ApplyButton, ButtonWrap, FilterPanelWrap, ResetButton } from "./styles";
 
 export const FilterPanel: FC<FilterPanelPropsType> = ({ attributes, maxPrice, minPrice }) =>
 {
     const [priceRange, setPriceRange] = useState({ min: minPrice, max: maxPrice });
     const router = useRouter();
 
-    console.log(attributes);
+    console.log('router', router.query);
 
     const updateUrlParams = (newParam: { [key: string]: string | number }) =>
     {
@@ -66,12 +66,27 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({ attributes, maxPrice, mi
             </CustomSingleAccordion>
             {attributes.map((attribute) =>
             {
+                const attrName = `pa_${attribute.slug}`;
+                const currentParam = router.query?.[attrName]?.toString();
+
                 return (
                     <CustomSingleAccordion title={attribute.name} key={attribute.id}>
-                        <FilterAttributes attribute={attribute} onParamsChange={updateCurrentParams} />
+                        <FilterAttributes
+                            attribute={attribute}
+                            onParamsChange={updateCurrentParams}
+                            currentAttribute={currentParam || ""}
+                        />
                     </CustomSingleAccordion>
                 )
             })}
+            <ButtonWrap>
+                <ApplyButton >
+                    Apply
+                </ApplyButton>
+                <ResetButton>
+                    Clear
+                </ResetButton>
+            </ButtonWrap>
         </FilterPanelWrap>
     )
 }

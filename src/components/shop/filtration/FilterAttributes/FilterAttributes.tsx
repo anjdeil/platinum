@@ -1,16 +1,18 @@
-import { FC, useCallback } from "react";
+import { FC } from "react";
 import { FilterAttributesWrap, FilterButton } from "./styles";
 import { FilterAttributesPropsType } from "@/types/components/shop/filters";
 
-export const FilterAttributes: FC<FilterAttributesPropsType> = ({ attribute, onParamsChange }) =>
+export const FilterAttributes: FC<FilterAttributesPropsType> = ({ attribute, onParamsChange, currentAttribute }) =>
 {
     return (
         <FilterAttributesWrap >
-            {attribute.options.map(option =>
+            {attribute.options.map((option, i) =>
             {
                 return (
-                    <FilterButton key={option.id}
-                        onClick={() => onParamsChange(attribute.slug, option.slug)}>
+                    <FilterButton
+                        key={option.id + i}
+                        onClick={() => onParamsChange(attribute.slug, option.slug)}
+                        active={currentAttribute === option.slug}>
                         {option.name}
                     </FilterButton>
                 )

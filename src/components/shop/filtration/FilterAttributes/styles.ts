@@ -9,4 +9,7 @@ export const FilterAttributesWrap = styled.div`
 
 export const FilterButton = styled(VariationsButton)`
     padding: 5px 10px;
+    background-color: ${({ active, theme }) => active ? theme.colors.primary : 'transparent'};
+    border-color: ${({ active, theme }) => active ? theme.colors.primary : theme.colors.black};
+    color: ${({ active, theme }) => active ? theme.colors.white : 'inherit'};
 `;
