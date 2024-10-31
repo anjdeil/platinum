@@ -1,14 +1,22 @@
-import { FC } from "react";
+import { ChangeEvent, FC, useCallback } from "react";
 import { CustomInputStyle, CustomInputWrapper, Input } from "../CustomFormInput/styles";
 
 interface CustomInputType
 {
     defaultValue?: string | number;
     value: string | number;
+    onChange: (newValue: number) => void;
 }
 
-export const CustomInput: FC<CustomInputType> = ({ defaultValue, value }) =>
+export const CustomInput: FC<CustomInputType> = ({ defaultValue, value, onChange }) =>
 {
+    const onInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) =>
+    {
+        if (!event.target.value) return false;
+        const newValue = Number(event.target.value);
+        onChange(newValue);
+    }, [])
+
     return (
         <div>
             <CustomInputStyle
@@ -25,9 +33,10 @@ export const CustomInput: FC<CustomInputType> = ({ defaultValue, value }) =>
                         isError={false}
                         value={value}
                         defaultValue={defaultValue || ""}
+                        onChange={onInputChange}
                     />
                 </CustomInputWrapper>
             </CustomInputStyle>
         </div>
     )
-} 
+}

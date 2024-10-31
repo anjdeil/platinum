@@ -28,32 +28,34 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
             const newPath = slugs.slice(0, pageIndex).join('/');
             return {
                 redirect: {
-                    destination: `/shop/${newPath}`,
+                    destination: `/product-category/${newPath}`,
                     permanent: false,
                 },
             };
         }
     }
 
-    console.log('GetServerSideProps has been called!', params.min_price);
-
     /** Indicate the products number*/
     const productsPerPage = 11;
+    const minPrice = params.min_price ? Number(params.min_price) : null;
+    const maxPrice = params.max_price ? Number(params.max_price) : null;
 
     /** Generate product product params */
     const productsParams: ProductParamsType = {
         page: page || "1",
         per_page: productsPerPage,
+        ...(minPrice && { min_price: minPrice }),
+        ...(maxPrice && { max_price: maxPrice }),
         // order_by string
         // order_by string
         // lang string
         // ids array[string]
         // slugs array[string]
         // category string
-        // min_price:  
-        // max_price number
         // search  string
     }
+
+    // console.log('productsParams', productsParams);
 
     try
     {
@@ -73,12 +75,15 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
             notFound: true
         }
 
+        // console.log('statistic:', response.data)
+
+
         return {
             props: {
                 products,
                 pagesCount,
                 page,
-                data: validatedData,
+                statistic: validatedData?.data.statistic
             },
         }
 

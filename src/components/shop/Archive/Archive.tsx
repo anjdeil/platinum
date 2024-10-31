@@ -1,7 +1,7 @@
 import { PagesNavigation } from "@/styles/components";
 import { FC, useEffect } from "react";
 import { ProductCardList } from "../ProductCardsList";
-import { CustomDataProductsType } from "@/types/services";
+import { CustomDataProductsStatisticType, CustomDataProductsType } from "@/types/services";
 import { ProductType } from "@/types/pages/shop";
 import router, { NextRouter, useRouter } from "next/router";
 import { Pagination } from "@mui/material";
@@ -9,13 +9,7 @@ import { CustomSingleAccordion } from "@/components/global/accordions/CustomSing
 import { CustomCheckbox } from "@/components/global/forms/CustomCheckbox";
 import { PriceFilter } from "../filtration/PriceFilter/PriceFilter";
 import { FilterPanel } from "../filtration/FilterPanel";
-
-interface ArchiveProps
-{
-    products: ProductType[];
-    pagesCount: number;
-    page: number;
-}
+import { ArchivePropsType } from "@/types/components/shop/archive";
 
 const switchPage = (page: number, maxPage: number) =>
 {
@@ -35,13 +29,14 @@ const switchPage = (page: number, maxPage: number) =>
     })
 }
 
-export const Archive: FC<ArchiveProps> = ({ products, pagesCount, page, data }) =>
+export const Archive: FC<ArchivePropsType> = (props) =>
 {
-    console.log(data);
+    const { products, pagesCount, page, statistic } = props;
+
     return (
         <>
             <div>
-                {/* <PagesNavigation
+                <PagesNavigation
                     page={+page}
                     count={pagesCount}
                     siblingCount={1}
@@ -49,11 +44,14 @@ export const Archive: FC<ArchiveProps> = ({ products, pagesCount, page, data }) 
                     hidePrevButton
                     hideNextButton
                     onChange={(_, newPage) => { switchPage(newPage, pagesCount); }}
-                /> */}
-                {/* {products.length && <ProductCardList products={products} />} */}
+                />
                 <div style={{ width: '500px', margin: '50px auto' }}>
-                    <FilterPanel />
+                    <FilterPanel
+                        attributes={statistic.attributes}
+                        maxPrice={statistic.max_price}
+                        minPrice={statistic.min_price} />
                 </div>
+                {products.length && <ProductCardList products={products} />}
             </div >
         </>
     )

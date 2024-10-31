@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const MenuItemSchema = z.object({
+export const menuItemSchema = z.object({
     title: z.string(),
     type: z.string(),
     menu_order: z.number(),
@@ -10,9 +10,9 @@ export const MenuItemSchema = z.object({
     fa_icon_code: z.string()
 });
 
-export const MenuItemsSchema = z.object({
+export const menuItemsSchema = z.object({
     id: z.number(),
-    items: z.array(MenuItemSchema)
+    items: z.array(menuItemSchema)
 });
 
-export type MenuItemsType = z.infer<typeof MenuItemsSchema>;
+export type menuItemsType = z.infer<typeof menuItemsSchema>;
