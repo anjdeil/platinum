@@ -13,17 +13,24 @@ export const ApplyButton = styled(AddToBasketButtonStyled)`
 
 export const ResetButton = styled(AddToBasketButtonStyled)`
     padding: 5px 10px;
-    background-color: transparent;
+    background-color: ${({ theme }) => theme.background.resetButton};
+    border-color: ${({ theme }) => theme.background.resetButton};
     color: ${({ theme }) => theme.colors.black};
 
     &:hover {
-        background-color: ${({ theme }) => theme.background.resetButton};
         color: ${({ theme }) => theme.colors.black};
-        // border-color: ${({ theme }) => theme.background.resetButton}
+        background-color: ${({ theme }) => theme.background.resetButtonHover};
+        border-color: ${({ theme }) => theme.background.resetButtonHover}
+    }
+
+    &:active {
+        background-color: ${({ theme }) => theme.background.resetButtonActive};
+        border-color: ${({ theme }) => theme.background.resetButtonActive}
     }
 `;
 
 export const ButtonWrap = styled.div`
+    margin-top: 15px;
     display: flex;
     gap: 20px;
 `;

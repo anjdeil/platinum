@@ -23,7 +23,7 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({ attributes, maxPrice, mi
 
     useEffect(() =>
     {
-        updateUrlParams({ min_price: priceRange.min, max_price: priceRange.max });
+        // updateUrlParams({ min_price: priceRange.min, max_price: priceRange.max });
     }, [priceRange])
 
     const updateMinPrice = useCallback((newValue: number) =>
@@ -46,8 +46,6 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({ attributes, maxPrice, mi
     const updateCurrentParams = useCallback((paramName: string, paramValue: string) =>
     {
         if (!paramName && !paramValue) return;
-        console.log(`${paramName}: ${paramValue}`)
-        updateUrlParams({ [`pa_` + paramName]: paramValue })
     }, [])
 
 
@@ -63,6 +61,14 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({ attributes, maxPrice, mi
                     updateMinPrice={updateMinPrice}
 
                 />
+                <ButtonWrap>
+                    <ResetButton>
+                        Clear
+                    </ResetButton>
+                    <ApplyButton >
+                        Apply
+                    </ApplyButton>
+                </ButtonWrap>
             </CustomSingleAccordion>
             {attributes.map((attribute) =>
             {
@@ -76,17 +82,17 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({ attributes, maxPrice, mi
                             onParamsChange={updateCurrentParams}
                             currentAttribute={currentParam || ""}
                         />
+                        <ButtonWrap>
+                            <ResetButton>
+                                Clear
+                            </ResetButton>
+                            <ApplyButton >
+                                Apply
+                            </ApplyButton>
+                        </ButtonWrap>
                     </CustomSingleAccordion>
                 )
             })}
-            <ButtonWrap>
-                <ApplyButton >
-                    Apply
-                </ApplyButton>
-                <ResetButton>
-                    Clear
-                </ResetButton>
-            </ButtonWrap>
         </FilterPanelWrap>
     )
 }
