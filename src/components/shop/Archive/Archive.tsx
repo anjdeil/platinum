@@ -1,22 +1,23 @@
-import { Container, PagesNavigation } from "@/styles/components";
-import { FC } from "react";
+import { Container, FlexBox, PagesNavigation, Title } from "@/styles/components";
+import { FC, useState } from "react";
 import { ProductCardList } from "../ProductCardsList";
 import { ProductType } from "@/types/pages/shop";
 import router, { useRouter } from "next/router";
-import { Pagination } from "@mui/material";
 import CategoryType from "@/types/pages/shop/categories";
-import { LangParamType } from "@/types/services";
-import { useGetCategoriesQuery } from "@/store/rtk-queries/wpCustomApi";
 import CategoriesMenu from "../CategoriesMenu/CategoriesMenu";
-import { GridBox } from "./styles";
+import { FilterNCategoriesHead, FilterNCategoriesMenu, GridBox, SortPanel } from "./styles";
+import FilterIconButton from "@/components/global/buttons/FilterIconButton/FilterIconButton";
+import theme from "@/styles/theme";
+import MobileCategoriesMenu from "@/components/global/popups/MobileCategoriesMenu/MobileCategoriesMenu";
+import { useDispatch } from "react-redux";
+import { popupClosed } from "@/store/slices/PopupSlice";
+import { useResponsive } from "@/hooks/useResponsive";
 
 interface ArchiveProps {
     products: ProductType[];
     pagesCount: number;
     page: number;
     categories: CategoryType[];
-
-
 }
 
 const switchPage = (page: number, maxPage: number) => {
@@ -38,11 +39,7 @@ const switchPage = (page: number, maxPage: number) => {
 
 const switchCategory = (parentSlug: string, childSlug?: string) => {
     const { slugs, ...params } = router.query;
-
-    // Create a new array of slugs containing both parent and child slugs
     const newSlugs = childSlug ? [parentSlug, childSlug] : [parentSlug];
-
-    console.log(newSlugs);
 
     router.push({
         pathname: router.pathname,
@@ -53,26 +50,59 @@ const switchCategory = (parentSlug: string, childSlug?: string) => {
     });
 }
 
-
-
-
 export const Archive: FC<ArchiveProps> = ({ products, pagesCount, page, categories }) => {
-    const router = useRouter();
+    const [isMenuVisible, setMenuVisible] = useState(false);
+
+    /* const { isMobile } = useResponsive(); */
+
+    const dispatch = useDispatch();
+
+    const toggleMenu = () => {
+        setMenuVisible(!isMenuVisible);
+    };
+
+    const closePopup = () => {
+        dispatch(popupClosed());
+    }
 
     return (
         <Container>
+            <Title as="h2" fontWeight={600} fontSize="24px" uppercase={true} marginBottom='24px'>
+                {categories[0].name}
+            </Title>
             <GridBox>
-                <CategoriesMenu onClick={switchCategory} selectedCategories={categories}/* onClose={() => { }}  *//>
+                <FilterNCategoriesMenu visible={isMenuVisible}>
+                    {isMenuVisible ?
+                        <>  
+                        <FilterNCategoriesHead>
+                        <h4>FILTER</h4>
+                        <button onClick={toggleMenu} >close</button>
+                        </FilterNCategoriesHead>
+                        <MobileCategoriesMenu disableOverlay={true} width="300px" height="506px" onClose={closePopup} />
+                        </>
+                        :
+                        <CategoriesMenu onClick={switchCategory} selectedCategories={categories} />
+                    }
+                    <h3>FILTERS</h3>
+                </FilterNCategoriesMenu>
                 <div>
-                    <PagesNavigation
-                        page={+page}
-                        count={pagesCount}
-                        siblingCount={1}
-                        shape="rounded"
-                        hidePrevButton
-                        hideNextButton
-                        onChange={(_, newPage) => { switchPage(newPage, pagesCount); }}
-                    />
+                    <SortPanel>
+                        <FlexBox>
+                            <FilterIconButton onClick={toggleMenu} width="48px" height="48px" padding='12px' backgroundColor={theme.colors.primary} />
+                            <span>sort</span>
+                        </FlexBox>
+                        <span>12</span>
+                        <PagesNavigation
+                            page={+page}
+                            count={pagesCount}
+                            siblingCount={1}
+                            shape="rounded"
+                            hidePrevButton
+                            hideNextButton
+                            onChange={(_, newPage) => { switchPage(newPage, pagesCount); }}
+                        />
+
+                    </SortPanel>
                     {products.length && <ProductCardList products={products} />}
                 </div>
             </GridBox>

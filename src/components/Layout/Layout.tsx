@@ -52,7 +52,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       }, [categoriesResp, isCategoriesLoading, dispatch]);;
 
 
-
     return (
         <Box>
             <MenusContext.Provider value={menus}>

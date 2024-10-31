@@ -21,6 +21,8 @@ const SideCategoryList: FC<SideListPropsType> = ({
     hoverBackground,
 }) => {
 
+    
+
     if (!onClick) {
         return <>Error: onClick is not defined</>;
     }
@@ -55,7 +57,7 @@ const SideCategoryList: FC<SideListPropsType> = ({
                                 </button>
                                 <CategoryChildList className="child-list">
                                     {children?.map((child: CategoryChildType) => (
-                                        <StyledListItem
+                                        <StyledListItem 
                                             key={child.name}
                                             fontSize={fontSize}
                                             lineHeight={lineHeight}

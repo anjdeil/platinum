@@ -8,9 +8,11 @@ export const Overlay = styled.div`
 `;
 
 export const PopupContainer = styled.div<PopupContainerProps>`
-    position: fixed;
+  
+    position: ${({ disableOverlay }) => (disableOverlay ? 'static' : 'fixed')}; 
     background-color: ${({ theme, backgroundColor = theme.background.secondary }) => backgroundColor};
     width: ${({ width = '70%' }) => width};
+    height: ${({ height = '506px' }) => height};
     padding-top: ${({ paddingTop = '0' }) => paddingTop};
     top: ${({ scroll = 0 }) => (scroll ? Math.max(0, 140 - scroll) : 140)}px;
     left: 0;

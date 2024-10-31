@@ -55,5 +55,5 @@ export type SideListLinkType = z.infer<typeof SideListLinkSchema>;
 export type SideListPropsType = z.infer<typeof SideListPropsSchema>;
 export type SideListContainerProps = z.infer<typeof SideListContainerSchema>;
 export type ListProps = z.infer<typeof ListSchema>;
-export type StyledListItemrops = z.infer<typeof StyledListItemSchema>;
+export type StyledListItemProps = z.infer<typeof StyledListItemSchema>;
 export type StyledItemProps = z.infer<typeof StyledItemPropsSchema>;

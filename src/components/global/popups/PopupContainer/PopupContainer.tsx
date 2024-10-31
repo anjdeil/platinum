@@ -66,7 +66,7 @@ const PopupContainer = () => {
         }
         case 'mobile-categories': {
             return (
-                <MobileCategoriesMenu onClose={closePopup} />
+                <MobileCategoriesMenu width="100%" onClose={closePopup} />
             )
         }
     }

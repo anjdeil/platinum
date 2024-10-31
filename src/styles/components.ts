@@ -88,12 +88,14 @@ export const AccountInfoWrapper = styled.div<AccountInfoWrapperProps>`
 export const StyledButton = styled.button<StyledButtonProps>`
     box-sizing: border-box;
     width: ${({ width = '100%' }) => width};
+    height: ${({ height = 'auto' }) => height};
     min-width: ${({ minWidthDesktop = 'auto' }) => minWidthDesktop};    
-    padding-inline: 16px;
+    padding-inline:  16px;
+    padding-block: 16px;
+    padding:  ${({ padding = '16px' }) => padding};
     border-radius: 10px;
     color: ${({ theme, color = theme.colors.black }) => color};
     background-color: ${({ backgroundColor = 'transparent' }) => backgroundColor};
-    padding-block: 16px;
     font: ${({ theme }) => theme.fonts.bodyMiddleReg};
     text-transform: none;
     border: ${({ theme }) => `1px solid ${theme.colors.secondary}`};
@@ -203,4 +205,8 @@ export const FormWrapperBottom = styled.div`
     display: flex;
     flex-direction: column;
     gap: 20px;
+`;
+export const FlexBox = styled.div`
+    display: flex;
+    align-items: center;
 `;

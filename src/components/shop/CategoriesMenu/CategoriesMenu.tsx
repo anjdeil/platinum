@@ -4,6 +4,9 @@ import CategoryType from '@/types/pages/shop/categories';
 import SideCategoryList from '@/components/pages/shop/SideList/SideCategoryList';
 import { MenuSkeleton } from '@/components/menus/MenuSkeleton';
 import { useAppSelector } from '@/store';
+import { Title } from '@/styles/components';
+import { CategoriesMenuWrapper } from './styles';
+
 
 interface CategoriesMenuPropsType {
     selectedCategories?: CategoryType[];
@@ -11,10 +14,8 @@ interface CategoriesMenuPropsType {
 }
 
 const CategoriesMenu: FC<CategoriesMenuPropsType> = ({ onClick, selectedCategories }) => {
-
     const [parentCategories, setParentCategories] = useState<CategoryType[] | null>(null);
     const categories: CategoryType[] | undefined = useAppSelector((state) => state.categoriesSlice.categories);
-    const isCategoriesLoading: boolean = useAppSelector((state) => state.categoriesSlice.loading);
 
     useEffect(() => {
         if (categories) {
@@ -56,19 +57,26 @@ const CategoriesMenu: FC<CategoriesMenuPropsType> = ({ onClick, selectedCategori
             direction='column'
             width='100%'
             height='40px'
-            gap='20px'
+            gap='30px'
         />
     }
 
     return (
-        <SideCategoryList
-            links={categoriesLinks || []}
-            onClick={handleClick}
-            marginTop="15px"
-            marginBottom="76px"
-            mobFontSize="12px"
-            mobLineHeight="16px"
-        />
+        <CategoriesMenuWrapper>
+            <Title as="h2" fontWeight={600} fontSize="24px" uppercase={true} marginBottom='16px'>
+                all shop
+            </Title>
+            <SideCategoryList
+                links={categoriesLinks || []}
+                onClick={handleClick}
+                marginTop="0"
+                marginBottom="0"
+                mobFontSize="12px"
+                mobLineHeight="16px"
+            />
+        </CategoriesMenuWrapper>
+
+
     );
 }
 

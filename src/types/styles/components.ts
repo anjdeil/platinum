@@ -16,6 +16,9 @@ export const StyledButtonPropsSchema = z.object({
     backgroundColor: z.string().optional(),
     hoverColor: z.string().optional(),
     hoverBackgroundColor: z.string().optional(),
+    padding: z.string().optional(),
+    onClick: z.function().optional(),
+
 });
 
 export const LogoLinkImagePropsSchema = z.object({

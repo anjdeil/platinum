@@ -1,8 +1,9 @@
-import { ListProps, SideListContainerProps, StyledListItemrops } from "@/types/components/global/sideList";
+import { ListProps, SideListContainerProps, StyledListItemProps } from "@/types/components/global/sideList";
 import styled from "@emotion/styled";
 
 export const SideListContainer = styled.nav<SideListContainerProps>`
     width: ${({ width = '100%' }) => width};
+    
 `;
 
 export const List = styled.ul<ListProps>`
@@ -16,8 +17,8 @@ export const List = styled.ul<ListProps>`
     row-gap: ${({ rowGap = '16px' }) => rowGap};
 `;
 
-export const CategoryChildList = styled(List)<SideListContainerProps>`
-    position: absolute;
+export const CategoryChildList = styled(List) <SideListContainerProps>`
+   position: absolute;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 140%;
     background-color: ${({ theme }) => theme.colors.white};
@@ -25,18 +26,18 @@ export const CategoryChildList = styled(List)<SideListContainerProps>`
     display: none;
     top: 0px;
     left: 100%;
-
-    & button {
-        &:hover {
-            color: ${({ theme }) => theme.colors.white};
-        }
-    }
+  
+  /*   left: 26%;
+    width: 40%; */
+   /*  max-height: calc(100vh - 20px); 
+    overflow-y: auto; */
+    
 `;
 
-export const StyledListItem = styled.li<StyledListItemrops>`
-    position: relative;
+export const StyledListItem = styled.li<StyledListItemProps>`
+ position: relative; 
     box-sizing: border-box;
-    background-color: ${({ isActive, theme, hoverBackground = theme.colors.primary }) => isActive ? hoverBackground : 'transparent'};
+    background-color: ${({ isActive, theme, hoverBackground = theme.colors.primary }) => (isActive ? hoverBackground : 'transparent')};
     font: ${({ theme }) => theme.fonts.bodyMiddleReg};
     font-size: ${({ fontSize }) => fontSize};
     line-height: ${({ lineHeight }) => lineHeight};
@@ -74,7 +75,7 @@ export const StyledListItem = styled.li<StyledListItemrops>`
         width: 100%;
         padding: 16px;
         text-decoration: none;
-        color: ${({ isActive, theme }) => isActive ? theme.colors.white : theme.colors.black};
+        color: ${({ isActive, theme }) => (isActive ? theme.colors.white : theme.colors.black)};
         text-transform: uppercase;
         font-size: ${({ fontSize = '16px' }) => fontSize};
         line-height: ${({ lineHeight = '24px' }) => lineHeight};
@@ -90,13 +91,15 @@ export const StyledListItem = styled.li<StyledListItemrops>`
             font-size: ${({ mobFontSize = '14px' }) => mobFontSize};
             line-height: ${({ mobLineHeight = '24px' }) => mobLineHeight};
         }
+
         & path {
-                fill: ${({ theme, hoverColor = theme.colors.white, isActive }) => isActive && hoverColor  };
-            }
+            fill: ${({ theme, hoverColor = theme.colors.white, isActive }) => (isActive ? hoverColor : theme.colors.black)};
+        }
     }
 
     &:hover {
         background-color: ${({ theme, hoverBackground = theme.colors.primary }) => hoverBackground};
+
         & a,
         & button {
             color: ${({ theme, hoverColor = theme.colors.white }) => hoverColor};
@@ -108,10 +111,12 @@ export const StyledListItem = styled.li<StyledListItemrops>`
 
         & .child-list {
             display: block;
-        }
-        & .child-list a,
-        & .child-list button {
+            & button {
             color: ${({ theme }) => theme.colors.black};
+            &:hover{
+                color: ${({ theme }) => theme.colors.white};
+            }
+        }
         }
     }
 `;
