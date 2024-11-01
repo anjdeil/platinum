@@ -6,7 +6,7 @@ export const HeaderWrapper = styled.div<HeaderWrapperProps>`
     padding-block: 18.5px;    
     background: ${({ theme, backgroundColor = theme.background.primaryGradient }) => backgroundColor};
     position: relative;
-    z-index: 101;
+    z-index: 5;
 
     @media ${({ theme }) => theme.media.large} {
         padding-block: 16px;

@@ -210,3 +210,9 @@ export const FlexBox = styled.div`
     display: flex;
     align-items: center;
 `;
+
+export const Overlay = styled.div`
+    position: fixed;
+    z-index: 90;
+    inset: 0;
+`;

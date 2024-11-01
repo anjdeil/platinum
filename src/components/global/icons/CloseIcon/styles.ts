@@ -1,8 +1,11 @@
 import styled from "@emotion/styled";
 
 export const CloseButton = styled.button`
-    display: block;
-    padding: 10px;
+    height: 24px;
+    width: 24px;
+    display: flex;
+    align-items: center;
+    justify-content:center;
     background-color: transparent;
     border: none;
     cursor: pointer;

@@ -95,6 +95,9 @@ export const StyledListItem = styled.li<StyledListItemProps>`
         & path {
             fill: ${({ theme, hoverColor = theme.colors.white, isActive }) => (isActive ? hoverColor : theme.colors.black)};
         }
+        & span{
+            text-align: start;
+        }
     }
 
     &:hover {

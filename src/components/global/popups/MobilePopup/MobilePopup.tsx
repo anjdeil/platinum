@@ -1,7 +1,8 @@
 import { FC } from "react";
-import { Content, Header, Overlay, PopupContainer, Title } from "./styles";
+import { Content, Header, PopupContainer } from "./styles";
 import { MobilePopupPropsType } from "@/types/components/global/popups/mobilePopup";
 import CloseIcon from "../../icons/CloseIcon/CloseIcon";
+import { Overlay } from "@/styles/components";
 
 const MobilePopup: FC<MobilePopupPropsType> = (
     { onClose,
@@ -14,14 +15,15 @@ const MobilePopup: FC<MobilePopupPropsType> = (
         paddingTop,
         rowGap,
         closeButton = false,
-        disableOverlay }) => {
+        disableOverlay,
+        padding }) => {
 
     const handleOverlayClick = (event: React.MouseEvent<HTMLDivElement>) => {
         if (event.target === event.currentTarget) {
             onClose();
         }
     };
-
+    console.log('MobilePopup title:', title);
     return (
         <>{!disableOverlay ? (
             <Overlay onClick={handleOverlayClick}>
@@ -33,16 +35,16 @@ const MobilePopup: FC<MobilePopupPropsType> = (
                     paddingTop={paddingTop}
                     rowGap={rowGap}
                     title={title}
-                    disableOverlay={false}                >
+                    disableOverlay={false} >
                     {title && (
-                        <Header>
-                            <Title>{title}</Title>
+                        <Header padding={padding}    >
+                            <>{title}</>
                             {closeButton && (
                                 <CloseIcon onClick={onClose} />
                             )}
                         </Header>
                     )}
-                    <Content>
+                    <Content padding={padding}    >
                         {children}
                     </Content>
                 </PopupContainer>
@@ -57,11 +59,11 @@ const MobilePopup: FC<MobilePopupPropsType> = (
                     paddingTop={paddingTop}
                     rowGap={rowGap}
                     title={title}
-                    disableOverlay={true}  
+                    disableOverlay={true}
                 >
                     {title && (
                         <Header>
-                            <Title>{title}</Title>
+                            <>{title}</>
                             {closeButton && (
                                 <CloseIcon onClick={onClose} />
                             )}

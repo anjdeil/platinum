@@ -5,13 +5,14 @@ import { ProductType } from "@/types/pages/shop";
 import router, { useRouter } from "next/router";
 import CategoryType from "@/types/pages/shop/categories";
 import CategoriesMenu from "../CategoriesMenu/CategoriesMenu";
-import { FilterNCategoriesHead, FilterNCategoriesMenu, GridBox, SortPanel } from "./styles";
+import { FilterNCategoriesHead, FilterNCategoriesMenu, FilterOverlay, GridBox, SortPanel } from "./styles";
 import FilterIconButton from "@/components/global/buttons/FilterIconButton/FilterIconButton";
 import theme from "@/styles/theme";
 import MobileCategoriesMenu from "@/components/global/popups/MobileCategoriesMenu/MobileCategoriesMenu";
 import { useDispatch } from "react-redux";
 import { popupClosed } from "@/store/slices/PopupSlice";
 import { useResponsive } from "@/hooks/useResponsive";
+import CloseIcon from "@/components/global/icons/CloseIcon/CloseIcon";
 
 interface ArchiveProps {
     products: ProductType[];
@@ -37,7 +38,7 @@ const switchPage = (page: number, maxPage: number) => {
     })
 }
 
-const switchCategory = (parentSlug: string, childSlug?: string) => {
+export const switchCategory = (parentSlug: string, childSlug?: string) => {
     const { slugs, ...params } = router.query;
     const newSlugs = childSlug ? [parentSlug, childSlug] : [parentSlug];
 
@@ -53,17 +54,9 @@ const switchCategory = (parentSlug: string, childSlug?: string) => {
 export const Archive: FC<ArchiveProps> = ({ products, pagesCount, page, categories }) => {
     const [isMenuVisible, setMenuVisible] = useState(false);
 
-    /* const { isMobile } = useResponsive(); */
-
-    const dispatch = useDispatch();
-
     const toggleMenu = () => {
         setMenuVisible(!isMenuVisible);
     };
-
-    const closePopup = () => {
-        dispatch(popupClosed());
-    }
 
     return (
         <Container>
@@ -76,15 +69,16 @@ export const Archive: FC<ArchiveProps> = ({ products, pagesCount, page, categori
                         <>  
                         <FilterNCategoriesHead>
                         <h4>FILTER</h4>
-                        <button onClick={toggleMenu} >close</button>
+                        <CloseIcon onClick={toggleMenu} />
                         </FilterNCategoriesHead>
-                        <MobileCategoriesMenu disableOverlay={true} width="300px" height="506px" onClose={closePopup} />
+                        <MobileCategoriesMenu padding="right" disableOverlay={true} width="300px" onClose={toggleMenu} switchCategory={switchCategory} />
                         </>
                         :
-                        <CategoriesMenu onClick={switchCategory} selectedCategories={categories} />
+                        <CategoriesMenu switchCategory={switchCategory} selectedCategories={categories} />
                     }
                     <h3>FILTERS</h3>
                 </FilterNCategoriesMenu>
+                <FilterOverlay visible={isMenuVisible} onClick={toggleMenu} />
                 <div>
                     <SortPanel>
                         <FlexBox>

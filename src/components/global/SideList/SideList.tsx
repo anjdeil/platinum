@@ -46,7 +46,7 @@ const SideList: FC<SideListPropsType> = ({
                         {onClick !== undefined ?
                             (
                                 <button
-                                    onClick={() => onClick( url)}
+                                onClick={() => onClick(url, undefined)}
                                 >
                                     {isNested && (
                                         <ForwardArrow />

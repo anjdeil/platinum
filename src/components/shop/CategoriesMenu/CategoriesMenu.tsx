@@ -10,10 +10,10 @@ import { CategoriesMenuWrapper } from './styles';
 
 interface CategoriesMenuPropsType {
     selectedCategories?: CategoryType[];
-    onClick?: (parentSlug: string, childSlug: string) => void;
+    switchCategory: (parentSlug: string, childSlug?: string) => void;
 }
 
-const CategoriesMenu: FC<CategoriesMenuPropsType> = ({ onClick, selectedCategories }) => {
+const CategoriesMenu: FC<CategoriesMenuPropsType> = ({ switchCategory, selectedCategories }) => {
     const [parentCategories, setParentCategories] = useState<CategoryType[] | null>(null);
     const categories: CategoryType[] | undefined = useAppSelector((state) => state.categoriesSlice.categories);
 
@@ -27,9 +27,7 @@ const CategoriesMenu: FC<CategoriesMenuPropsType> = ({ onClick, selectedCategori
     }, [categories]);
 
     const handleClick = (parentSlug: string, childSlug?: string) => {
-        if (onClick) {
-            onClick(parentSlug, childSlug || '');
-        }
+            switchCategory(parentSlug, childSlug || '');
     };
 
     const categoriesLinks = parentCategories?.map(({ id, name, slug }: CategoryType) => {
