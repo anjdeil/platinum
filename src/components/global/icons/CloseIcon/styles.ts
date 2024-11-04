@@ -9,4 +9,9 @@ export const CloseButton = styled.button`
     background-color: transparent;
     border: none;
     cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+        scale: 1.2;
+    }
 `;

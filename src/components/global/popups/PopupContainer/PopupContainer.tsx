@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import MobileCategoriesMenu from "../MobileCategoriesMenu/MobileCategoriesMenu";
 import { switchCategory } from "@/components/shop/Archive";
+import SwiperPopup from "../SwiperPopup/SwiperPopup";
 
 const unscrollablePopups = ['mobile-search', 'hamburger-menu', 'swiper-popup', 'mobile-cart', 'mobile-categories'];
 
@@ -68,6 +69,11 @@ const PopupContainer = () => {
         case 'mobile-categories': {
             return (
                 <MobileCategoriesMenu padding="all" switchCategory={switchCategory} width="100%" height="90%" onClose={closePopup} />
+            )
+        }
+        case 'swiper-popup': {
+            return (
+                <SwiperPopup onClose={closePopup} />
             )
         }
     }

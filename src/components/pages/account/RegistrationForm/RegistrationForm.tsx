@@ -2,12 +2,11 @@ import { FC, forwardRef, useCallback, useImperativeHandle, useState } from "reac
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { WooCustomerReqType } from "@/types/services";
-import { CustomForm, FormWrapper } from "./styles";
 import { PhoneInput } from "react-international-phone";
 import 'react-international-phone/style.css';
-import { CustomInput } from "../../../global/forms/CustomInput";
 import { RegistrationFormSchema } from "@/types/pages/account/RegistrationForm/registrationForm";
+import { CustomForm, FormWrapper } from "@/styles/components";
+import { CustomInput } from "@/components/global/forms/CustomInput";
 
 interface RegistrationFormProps
 {

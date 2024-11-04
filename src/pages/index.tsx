@@ -34,7 +34,6 @@ export default function Home()
   { data && <p>{data}</p> }
   return (
     <main>
-      {/* <TestSelect /> */}
       <Title as='h2' fontSize={"20px"}>Symbol of {currency.code} currency isQQ {currency.symbol}</Title>
       <Title as='h2' fontSize={"20px"}>Symbol of {language.code} language isQQ {language.symbol}</Title>
       <button onClick={() => dispatch(popupToggle('categories-menu'))}>Categories</button>

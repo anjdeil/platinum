@@ -37,7 +37,7 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
             const newPath = slugs.slice(0, pageIndex).join('/');
             return {
                 redirect: {
-                    destination: `/shop/${newPath}`,
+                    destination: `/product-category/${newPath}`,
                     permanent: false,
                 },
             };
@@ -85,7 +85,10 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
         console.log('No category slugs found.');
     }
 
+    /** Indicate the products number*/
     const productsPerPage = 11;
+    const minPrice = params.min_price ? Number(params.min_price) : null;
+    const maxPrice = params.max_price ? Number(params.max_price) : null;
 
     const productsParams: ProductParamsType = {
         page: page || "1",
@@ -116,7 +119,13 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
             pagesCount = Math.ceil(productsCount / productsPerPage);
         }
 
-        if (pagesCount !== 0 && +page > pagesCount) return { notFound: true };
+        /* Do not open if pagination page number is more than pages count */
+        if (pagesCount !== 0 && +page > pagesCount) return {
+            notFound: true
+        }
+
+        // console.log('statistic:', response.data)
+
 
         return {
             props: {
@@ -124,6 +133,7 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
                 pagesCount,
                 page,
                 categories: selectedCategories,
+                statistic: validatedData?.data.statistic
             },
         }
 

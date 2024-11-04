@@ -1,5 +1,5 @@
-import { FC, useEffect, useMemo, useState } from "react";
-import { CustomError, CustomInputStyle, CustomInputWrapper, CustomRequired, Input, ShowPasswordImage } from "./styles";
+import { ChangeEvent, FC, useCallback, useEffect, useMemo, useState } from "react";
+import { CustomInputStyle, CustomInputWrapper, Input } from "../CustomFormInput/styles";
 
 import { z } from "zod";
 
@@ -71,14 +71,10 @@ export const CustomInput: FC<CustomInputType> = (
         <div>
             <CustomInputStyle
                 as={'label'}
-                isError={isError}
+                isError={false}
                 isTextArea={false}
-                isCheckbox={inputType === 'checkbox'}
+                isCheckbox={false}
                 isPhone={false}>
-                <span>
-                    {fieldName}
-                    {isRequire && <CustomRequired>*</CustomRequired>}
-                </span>
                 <CustomInputWrapper>
                     <Input
                         as={inputTag}
@@ -88,17 +84,8 @@ export const CustomInput: FC<CustomInputType> = (
                         {...registerProps}
                         onChange={onChange} 
                     />
-                    {inputType === 'password' &&
-                        <ShowPasswordImage
-                            src={passwordImagePath}
-                            alt={'show or hidden password button'}
-                            width={24}
-                            height={24}
-                            onClick={togglePasswordVisibility}
-                            unoptimized={true} />}
                 </CustomInputWrapper>
             </CustomInputStyle>
-            {isError && name && <CustomError>{errors[name]?.message}</CustomError>}
         </div>
     )
 }

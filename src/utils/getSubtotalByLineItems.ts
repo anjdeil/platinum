@@ -1,4 +1,4 @@
-import { lineOrderItems } from "@/types/store/reducers/cartSlice";
+import { lineOrderItems } from "@/types/store/reducers/сartSlice";
 
 const getSubtotalByLineItems = (lineItems: lineOrderItems[]): number =>
 {

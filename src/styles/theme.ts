@@ -34,6 +34,7 @@ const theme: Theme = {
         platinum: "",
         shadow: "",
         border: '#738EBC',
+        lightBorder: "#E0EFFE",
         new: '#17AA40',
         best: '#1E71BE',
         hot: '#F2B517',
@@ -49,7 +50,10 @@ const theme: Theme = {
         warning: '#F2B517',
         primaryGradient: "radial-gradient(79.43% 79.43% at 49.95% 64.07%, #024584 0%, #0B233D 100%)",
         infoGradient: "radial-gradient(66.14% 66.14% at 49.95% 64.07%, #024584 0%, #0B233D 100%)",
-        formElements: "#F2F8FE"
+        formElements: "#F2F8FE",
+        resetButton: "#f1f1f5",
+        resetButtonHover: "#e8e8f0",
+        resetButtonActive: "#d9d9e6",
     },
     spacing: {
         small: '8px',

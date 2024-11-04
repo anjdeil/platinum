@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 import { popupClosed } from "@/store/slices/PopupSlice";
 import { useResponsive } from "@/hooks/useResponsive";
 import CloseIcon from "@/components/global/icons/CloseIcon/CloseIcon";
+import { FilterPanel } from "../filtration/FilterPanel";
 
 interface ArchiveProps {
     products: ProductType[];
@@ -51,9 +52,8 @@ export const switchCategory = (parentSlug: string, childSlug?: string) => {
     });
 }
 
-export const Archive: FC<ArchiveProps> = ({ products, pagesCount, page, categories }) => {
+export const Archive: FC<ArchiveProps> = ({ products, pagesCount, page, categories, statistic  }) => {
     const [isMenuVisible, setMenuVisible] = useState(false);
-
     const toggleMenu = () => {
         setMenuVisible(!isMenuVisible);
     };
@@ -77,6 +77,12 @@ export const Archive: FC<ArchiveProps> = ({ products, pagesCount, page, categori
                         <CategoriesMenu switchCategory={switchCategory} selectedCategories={categories} />
                     }
                     <h3>FILTERS</h3>
+                    <div style={{ width: '1000px', margin: '50px auto' }}>
+                        <FilterPanel
+                            attributes={statistic.attributes}
+                            maxPrice={statistic.max_price}
+                            minPrice={statistic.min_price} />
+                    </div>
                 </FilterNCategoriesMenu>
                 <FilterOverlay visible={isMenuVisible} onClick={toggleMenu} />
                 <div>
