@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { FilterPanelPropsType } from "@/types/components/shop/filters";
 import { FilterAttributes } from "../FilterAttributes/FilterAttributes";
 import { ApplyButton, ButtonWrap, FilterPanelWrap, ResetButton } from "./styles";
+import { object } from "zod";
 
 export const FilterPanel: FC<FilterPanelPropsType> = ({ attributes, maxPrice, minPrice }) =>
 {
@@ -26,6 +27,7 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({ attributes, maxPrice, mi
         }
     }, [])
 
+    /** Updates prams collection */
     const updateCurrentParams = useCallback((paramName: string, paramValue: string | number) =>
     {
         if (!paramName && !paramValue) return;
@@ -38,29 +40,67 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({ attributes, maxPrice, mi
             {
                 chosenAttributes.set(attr, new Set([paramValue]));
             }
-        console.log(chosenAttributes);
+        // console.log(chosenAttributes);
     }, [])
 
+    /** Apply params */
     const onApplyClick = useCallback(() =>
     {
-        updateUrlParams({ min_price: priceRange.min, max_price: priceRange.max });
-    }, [priceRange]);
+        updateUrlParams();
+    }, [chosenAttributes]);
 
+    // Get current url params
+    // Get chosen params
+    // If current url params include chosen params
+    // Include: get param value and check for difference and update if it needs
+    // Not: Add a new param with values
 
-    const updateUrlParams = (newParam: { [key: string]: string | number }) =>
+    const updateUrlParams = useCallback(() =>
     {
-        router.push({
-            pathname: router.pathname,
-            query: { ...router.query, ...newParam }
-        });
-    };
+        const currentUrlParams = router.query;
+
+        for (let key of chosenAttributes)
+        {
+            const paramName = key[0];
+            const chosenValues = chosenAttributes.get(paramName);
+
+            if (currentUrlParams[paramName])
+            {
+                const currentUrlParam = currentUrlParams[paramName];
+                if (typeof (currentUrlParam) !== 'string') return;
+                const paramValues = currentUrlParam.split(",");
+                // console.log('urlValues', paramValues);
+                // console.log('currentValues', chosenValues);
+                const matchingValues = paramValues.filter(value => chosenValues.has(value));
+                console.log(matchingValues);
+            } else
+            {
+                console.log('no Params')
+            }
+
+
+            // for (let i of paramValues)
+            // {
+            //     console.log(i);
+            // }
+        }
+    }, [chosenAttributes])
+
+    /** Updated url params */
+    // const updateUrlParams = (newParam: { [key: string]: string | number }) =>
+    // {
+    //     router.push({
+    //         pathname: router.pathname,
+    //         query: { ...router.query, ...newParam }
+    //     });
+    // };
 
     const updateMinPrice = useCallback((newValue: number) =>
     {
-        if (newValue !== priceRange.min && newValue >= 0 && newValue <= maxPrice)
+        if (newValue !== priceRange.min && newValue >= 0 && newValue <= maxPrice && newValue > minPrice)
         {
-            // setPriceRange((prev) => ({ ...prev, min: newValue }));
-            updateCurrentParams('min_price ', newValue);
+            setPriceRange((prev) => ({ ...prev, min: newValue }));
+            // updateCurrentParams('min_price ', newValue);
         }
 
     }, [priceRange])
@@ -69,8 +109,8 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({ attributes, maxPrice, mi
     {
         if (newValue !== priceRange.min && newValue >= 0 && newValue <= maxPrice)
         {
-            // setPriceRange((prev) => ({ ...prev, max: newValue }));
-            updateCurrentParams('max_price ', newValue);
+            setPriceRange((prev) => ({ ...prev, max: newValue }));
+            // updateCurrentParams('max_price ', newValue);
         }
     }, [priceRange])
 
@@ -78,13 +118,12 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({ attributes, maxPrice, mi
         <FilterPanelWrap>
             <CustomSingleAccordion title={"Price"}>
                 <PriceFilter
-                    currentMin={minPrice}
-                    currentMax={maxPrice}
+                    currentMin={priceRange.min}
+                    currentMax={priceRange.max}
                     minPrice={minPrice}
                     maxPrice={maxPrice}
                     updateMaxPrice={updateMaxPrice}
                     updateMinPrice={updateMinPrice}
-
                 />
                 <ButtonWrap>
                     <ResetButton>
@@ -111,7 +150,7 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({ attributes, maxPrice, mi
                             <ResetButton>
                                 Clear
                             </ResetButton>
-                            <ApplyButton >
+                            <ApplyButton onClick={onApplyClick} >
                                 Apply
                             </ApplyButton>
                         </ButtonWrap>
