@@ -82,6 +82,8 @@
         "freeDeliveryOver": "Free delivery over {price}",
         "color": "Color",
         "bestForYou": "Best for you",
-        "recommendProduct": "Recommend Product"
+        "recommendProduct": "Recommend Product",
+        "bestSeller": "Bestsellers",
+        "newProduct": "New Products"
     }
 }

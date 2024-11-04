@@ -1,8 +1,9 @@
 
 import { MenusContext } from "@/components/Layout";
+import CustomProductList from "@/components/pages/product/CustomProductList/CustomProductList";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { popupToggle } from "@/store/slices/PopupSlice";
-import { Title } from "@/styles/components";
+import { Container, Title } from "@/styles/components";
 import axios from "axios";
 import { Inter } from "next/font/google";
 import { useContext, useState } from "react";
@@ -35,9 +36,20 @@ export default function Home()
   return (
     <main>
       {/* <TestSelect /> */}
-      <Title as='h2' fontSize={"20px"}>Symbol of {currency.code} currency isQQ {currency.symbol}</Title>
-      <Title as='h2' fontSize={"20px"}>Symbol of {language.code} language isQQ {language.symbol}</Title>
-      <button onClick={() => dispatch(popupToggle('categories-menu'))}>Categories</button>
+      <Container>
+        <Title as='h2' fontSize={"20px"}>Symbol of {currency.code} currency isQQ {currency.symbol}</Title>
+        <Title as='h2' fontSize={"20px"}>Symbol of {language.code} language isQQ {language.symbol}</Title>
+        <button onClick={() => dispatch(popupToggle('categories-menu'))}>Categories</button>
+        <CustomProductList title="bestSeller" productIds={Bestsellers} />
+        <CustomProductList title="newProduct" productIds={Bestsellers} />
+      </Container>
     </main >
   )
 }
+
+const Bestsellers = [
+  24707,
+  24777,
+  24737,
+  24717,
+];

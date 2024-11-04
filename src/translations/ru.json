@@ -82,6 +82,8 @@
         "freeDeliveryOver": "Бесплатная доставка от {price}",
         "color": "Цвет",
         "bestForYou": "Лучшее для вас",
-        "recommendProduct": "Рекомендуємые товары"
+        "recommendProduct": "Рекомендуємые товары",
+        "bestSeller": "Бестселлеры",
+        "newProduct": "Новинки"
     }
 }

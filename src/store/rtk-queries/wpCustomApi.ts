@@ -1,9 +1,9 @@
 import {
-CustomDataCategoriesType,
-CustomDataMenuResponseType,
-CustomDataProductsType,
-CustomDataProductType,
-QueryParamsType
+    CustomDataCategoriesType,
+    CustomDataMenuResponseType,
+    CustomDataProductsType,
+    CustomDataProductType,
+    QueryParamsType
 } from '@/types/services';
 import { ThemeOptionsType } from '@/types/services/customApi/ThemeOptions';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';

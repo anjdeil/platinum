@@ -82,6 +82,8 @@
         "freeDeliveryOver": "Darmowa dostawa od {price}",
         "color": "Kolor",
         "bestForYou": "Najlepsze dla ciebie",
-        "recommendProduct": "Polecane towary"
+        "recommendProduct": "Polecane towary",
+        "bestSeller": "Bestsellery",
+        "newProduct": "Nowe Produkty"
     }
 }

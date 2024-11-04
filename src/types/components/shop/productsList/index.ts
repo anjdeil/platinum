@@ -24,7 +24,13 @@ const ProductCardListSkeletonPropsSchema = z.object({
     columns: ColumnsPropsSchema.optional(),
 });
 
+const CustomProductListPropsSchema = z.object({
+    title: z.string(),
+    productIds: z.array(z.number()),
+});
+
 export type ProductCardListSkeletonProps = z.infer<typeof ProductCardListSkeletonPropsSchema>;
 export type ColumnsProps = z.infer<typeof ColumnsPropsSchema>;
 export type StyledProductCardListProps = z.infer<typeof StyledProductCardListPropsSchema>;
 export type ProductCardListProps = z.infer<typeof ProductCardListPropsSchema>;
+export type CustomProductListProps = z.infer<typeof CustomProductListPropsSchema>;

@@ -82,6 +82,8 @@
         "freeDeliveryOver": "Kostenloser Versand ab {price}",
         "color": "Farbe",
         "bestForYou": "Das Beste für dich",
-        "recommendProduct": "Empfohlene Waren"
+        "recommendProduct": "Empfohlene Waren",
+        "bestSeller": "Bestseller",
+        "newProduct": "Neue Produkte"
     }
 }

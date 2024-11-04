@@ -82,6 +82,8 @@
         "freeDeliveryOver": "Безкоштовна доставка від {price}",
         "color": "Колір",
         "bestForYou": "Найкраще для вас",
-        "recommendProduct": "Рекомендовані товари"
+        "recommendProduct": "Рекомендовані товари",
+        "bestSeller": "Бестселери",
+        "newProduct": "Новинки"
     }
 }
