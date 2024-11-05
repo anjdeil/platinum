@@ -57,22 +57,29 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({ attributes, maxPrice, mi
 
     const updateUrlParams = useCallback(() =>
     {
+        // Get params from url
         const currentUrlParams = router.query;
 
+        // Check params from chosen collection 
         for (let key of chosenAttributes)
         {
             const paramName = key[0];
             const chosenValues = chosenAttributes.get(paramName);
 
+            // Check if the param with this name exists
             if (currentUrlParams[paramName])
             {
                 const currentUrlParam = currentUrlParams[paramName];
                 if (typeof (currentUrlParam) !== 'string') return;
                 const paramValues = currentUrlParam.split(",");
                 // console.log('urlValues', paramValues);
-                // console.log('currentValues', chosenValues);
-                const matchingValues = paramValues.filter(value => chosenValues.has(value));
-                console.log(matchingValues);
+                // console.log('currentValues', chosenAttributes);
+                // const matchingValues = paramValues.filter(value => !chosenValues.has(value));
+                const matchingValues = paramValues.filter(value =>
+                {
+                    console.log(value);
+                });
+                // console.log(matchingValues);
             } else
             {
                 console.log('no Params')
