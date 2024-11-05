@@ -20,8 +20,7 @@ const SideList: FC<SideListPropsType> = ({
     mobLineHeight,
     hoverColor,
     hoverBackground,
-}) =>
-{
+}) => {
     return (
         <SideListContainer>
             <List
@@ -46,10 +45,14 @@ const SideList: FC<SideListPropsType> = ({
                         {onClick !== undefined ?
                             (
                                 <button
-                                onClick={() => onClick(url, undefined)}
+                                    onClick={() => onClick(url, undefined)}
                                 >
                                     {isNested && (
+                                        <>  
                                         <ForwardArrow />
+                                          
+                                        </>
+
                                     )}
                                     <span>{name}</span>
                                 </button>

@@ -9,6 +9,7 @@ import { isAuthErrorResponseType } from "@/utils/isAuthErrorResponseType";
 import { CustomForm, FormWrapper, FormWrapperBottom } from "@/styles/components";
 import { CustomInput } from "../CustomInput";
 import { CustomError } from "../CustomFormInput/styles";
+import { CustomFormInput } from "../CustomFormInput";
 
 
 export const LoginForm: FC = () =>
@@ -40,7 +41,7 @@ export const LoginForm: FC = () =>
     return (
         <CustomForm onSubmit={handleSubmit(onSubmit)}>
             <FormWrapper>
-                <CustomInput
+                <CustomFormInput
                     fieldName="Adres e-mail"
                     name='username'
                     register={register}
@@ -48,7 +49,7 @@ export const LoginForm: FC = () =>
                     // setValue={setValue}
                     inputTag={"input"}
                     inputType={"text"} />
-                <CustomInput
+                <CustomFormInput
                     fieldName="Hasło"
                     name='password'
                     register={register}

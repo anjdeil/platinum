@@ -2,7 +2,7 @@ import ForwardArrow from "@/components/global/icons/ForwardArrow/ForwardArrow";
 import { SideListPropsType } from "@/types/components/global/sideList";
 import { FC } from "react";
 import { CategoryChildList, List, SideListContainer, StyledListItem } from "./styles";
-import { CategoryChildType } from "@/types/components/shop/categories";
+import { CategoryChildType } from "@/types/components/shop/categories/categories";
 
 const SideCategoryList: FC<SideListPropsType> = ({
     links,

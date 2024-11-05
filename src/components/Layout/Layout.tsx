@@ -9,13 +9,13 @@ import { createContext, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import PopupContainer from '../global/popups/PopupContainer/PopupContainer';
 import BottomMenu from '../widgets/BottomMenu';
-import { CategoriesMenu } from '../widgets/CategoriesMenu';
 import { Footer } from '../widgets/Footer';
 import Header from '../widgets/Header/Header';
 import MobileHeader from '../widgets/MobileHeader/MobileHeader';
 import TopBar from '../widgets/TopBar/TopBar';
 import { useFetchCustomerQuery } from '@/store/rtk-queries/wooCustomApi';
 import { setCategories, setLoading } from '@/store/slices/categoriesSlice';
+import CategoriesMenuDen from '../shop/categories/CategoriesMenu/CategoriesMenu';
 
 export const MenusContext = createContext<WpMenuResponseType[] | []>([]);
 const currency = 'USD';
@@ -61,7 +61,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 {isMobile && (<BottomMenu />)}
                 {children}
                 <Footer />
-                <CategoriesMenu />
+                <CategoriesMenuDen isMenuVisible={true}  shop={false} />
             </MenusContext.Provider >
         </Box >
     );

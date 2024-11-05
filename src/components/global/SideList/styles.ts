@@ -18,7 +18,6 @@ export const List = styled.ul<ListProps>`
 
 export const StyledListItem = styled.li<StyledListItemProps>`
     box-sizing: border-box;
-    background-color: ${({ isActive, theme, hoverBackground = theme.colors.primary }) => isActive ? hoverBackground : 'transparent'};
     font: ${({ theme }) => theme.fonts.bodyMiddleReg}; 
     font-size: ${({ fontSize }) => fontSize};
     line-height: ${({ lineHeight }) => lineHeight};
@@ -34,6 +33,9 @@ export const StyledListItem = styled.li<StyledListItemProps>`
     cursor: pointer;
     text-transform: uppercase;
     text-align: left;
+    padding:  ${({ padding = '0' }) => padding};
+    background-color: ${({ isActive, theme, hoverBackground = theme.colors.primary }) => isActive ? hoverBackground : 'transparent'};
+    
 
     @media ${({ theme }) => theme.media.large} {
         font-size: ${({ tabletFontSize = '14px' }) => tabletFontSize};

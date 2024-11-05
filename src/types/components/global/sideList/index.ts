@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const SideListContainerSchema = z.object({
     width: z.string().optional(),
+    scroll: z.number().optional(),
 });
 
 export const ListSchema = z.object({
@@ -23,6 +24,8 @@ export const StyledListItemSchema = z.object({
     hoverColor: z.string().optional(),
     isActive: z.boolean().optional(),
     tabletLineHeight: z.string().optional(),
+    padding: z.string().optional(),
+   
 });
 
 export const StyledItemPropsSchema = z.object({

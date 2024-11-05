@@ -1,71 +1,21 @@
-import { ChangeEvent, FC, useCallback, useEffect, useMemo, useState } from "react";
+import { ChangeEvent, FC, useCallback } from "react";
 import { CustomInputStyle, CustomInputWrapper, Input } from "../CustomFormInput/styles";
 
-import { z } from "zod";
+interface CustomInputType
+{
+    defaultValue?: string | number;
+    value: string | number;
+    onChange: (newValue: number) => void;
+}
 
-export const CustomInput2Schema = z.object({
-    fieldName: z.string().optional(),
-    inputTag: z.union([z.literal('input'), z.literal('textarea')]),
-    inputType: z.union([z.literal('email'), z.literal('tel'), z.literal('text'), z.literal('checkbox'), z.literal('password'), z.literal('number')]),
-    name: z.string().optional(),
-    register: z.any().optional(),
-    errors: z.any().optional(),
-    isRequire: z.boolean().optional(),
-    placeholder: z.string().optional(),
-    onChange: z.function().args(z.unknown() as z.ZodType<React.ChangeEvent<HTMLInputElement>>).returns(z.void()).optional(),
-    value: z.string().optional(),
-    setValue: z.function().args(
-        z.any(),
-        z.any(),
-        z.object({
-            shouldValidate: z.boolean().optional(),
-            shouldDirty: z.boolean().optional(),
-            shouldTouch: z.boolean().optional(),
-        }).optional()
-    ).returns(z.void()).optional(),
-    defaultValue: z.string().nullable().optional(),
-})
-
-{/* <PhoneInput
-defaultCountry="pl"
-onChange={(value) => { if (setValue) setValue('phoneNumber', value, { shouldValidate: true }); }}
-/> */}
-
-export type CustomInputType = z.infer<typeof CustomInput2Schema>;
-
-export const CustomInput: FC<CustomInputType> = (
+export const CustomInput: FC<CustomInputType> = ({ defaultValue, value, onChange }) =>
+{
+    const onInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) =>
     {
-        errors,
-        fieldName,
-        name,
-        isRequire = true,
-        inputTag,
-        inputType,
-        placeholder,
-        register,
-        onChange,
-        value,
-        setValue,
-        defaultValue,
-    }) => {
-    const registerProps = register ? { ...register(name) } : {};
-
-    const [isPasswordVisible, setPasswordVisible] = useState(false);
-    const togglePasswordVisibility = () => setPasswordVisible((prev) => !prev);
-    const passwordImagePath = useMemo(() => isPasswordVisible ? '/images/show-pass.svg' : '/images/hidden-pass.svg', [isPasswordVisible]);
-
-    const [isError, setError] = useState(false);
-
-    useEffect(() => {
-        if (!errors || !name) { setError(false); return; }
-        setError(name in errors);
-    }, [errors, name]);
-
-    useEffect(() => {
-        if (defaultValue && defaultValue !== "" && setValue) {
-            setValue(name, defaultValue, { shouldValidate: true });
-        }
-    }, [defaultValue, setValue, name]);
+        if (!event.target.value) return false;
+        const newValue = Number(event.target.value);
+        onChange(newValue);
+    }, [])
 
     return (
         <div>
@@ -77,12 +27,13 @@ export const CustomInput: FC<CustomInputType> = (
                 isPhone={false}>
                 <CustomInputWrapper>
                     <Input
-                        as={inputTag}
-                        placeholder={placeholder ? placeholder : ''}
-                        {...register(name)}
-                        type={isPasswordVisible ? 'text' : inputType}
-                        {...registerProps}
-                        onChange={onChange} 
+                        as={'input'}
+                        type={'number'}
+                        isCheckbox={false}
+                        isError={false}
+                        value={value}
+                        defaultValue={defaultValue || ""}
+                        onChange={onInputChange}
                     />
                 </CustomInputWrapper>
             </CustomInputStyle>

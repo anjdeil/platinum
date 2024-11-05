@@ -7,9 +7,9 @@ export const TitleWrapper = styled.div`
     font-weight: 400;
     cursor: pointer;
     transition: all 0.2s ease;
-    padding-inline: 16px;
     margin-bottom: 15px;  
 `;
+
 
 export const BackButton = styled.button`
     display: flex;

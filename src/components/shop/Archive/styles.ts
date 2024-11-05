@@ -2,7 +2,7 @@ import { Overlay } from "@/styles/components";
 import styled from "@emotion/styled";
 
 export const GridBox = styled.div`
-   
+ 
     display: grid;
     grid-template-columns: 3fr 9fr;
 
@@ -20,6 +20,7 @@ export const FilterNCategoriesHead = styled.div`
     display: grid;
     grid-template-columns: 1fr auto 1fr auto;
     align-items: center;
+    margin-bottom: 20px;
     & h4 {
         grid-column: 2 / 3;
         margin: 0; 
@@ -49,21 +50,29 @@ export const FilterOverlay = styled.div<{ visible: boolean }>`
     }
 `;
 export const FilterNCategoriesMenu = styled.div<{ visible: boolean }>`
+box-sizing: border-box;
+
     display: block;
-   @media ${({ theme }) => theme.media.middle} {
-    max-width: 367px;
+    @media ${({ theme }) => theme.media.middle} {
+    width: 350px;
     position: absolute;
     left: 0%;
-    top: 35vh;
+    top: 139.8px;
     z-index: 10;
     padding: 24px 32px;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
-    display: ${({ visible, theme }) => (visible ? 'block' : 'none')};
-    background-color: ${({ theme  }) => theme.colors.white};
+    display: ${({ visible }) => (visible ? 'block' : 'none')};
+    background-color: ${({ theme }) => theme.colors.white};
     }
-   @media ${({ theme }) => theme.media.medium} {
-    display: none;
+     @media ${({ theme }) => theme.media.medium} {
+   
+    width: 100%; 
+    left: 0;
+    right: 0;
+    height: 100%;
+    top: 60px;
+
     }
 `;
 

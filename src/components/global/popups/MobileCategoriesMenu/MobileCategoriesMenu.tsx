@@ -4,34 +4,42 @@ import SideList from "@/components/global/SideList/SideList";
 import { useGetCategoriesQuery } from "@/store/rtk-queries/wpCustomApi";
 import CategoryType from "@/types/pages/shop/categories";
 import { useTheme } from "@emotion/react";
-import { useRouter } from "next/router";
 import { FC } from "react";
 import MobilePopup from "../MobilePopup/MobilePopup";
 import { MobileCategoriesSkeletonWrapper, TabletCategoriesSkeletonWrapper, Title, TitleWrapper } from "./styles";
-import { useAppSelector } from "@/store";
 import { MenuSkeleton } from "@/components/menus/MenuSkeleton";
+import { mockCategories } from '@/components/shop/categories/mock';
+import { StyledButton } from '@/styles/components';
+import { mobileCategoriesMenuProps } from '@/types/components/global/popups/mobilePopup';
 
-interface MobileCategoriesMenuPropsType {
-    disableOverlay?: boolean,
-    padding: string,
-    width: string,
-    height?: string,
-    onClose: () => void,
-    switchCategory: (parentSlug: string, childSlug?: string) => void;
-}
 
-const MobileCategoriesMenu: FC<MobileCategoriesMenuPropsType> = ({ padding, switchCategory, onClose, width, height, disableOverlay }) => {
+const MobileCategoriesMenu: FC<mobileCategoriesMenuProps> = ({ padding, switchCategory, onClose, width, height, disableOverlay }) => {
     const [parent, setParent] = useState<CategoryType | undefined>();
-    const categories: CategoryType[] | undefined = useAppSelector((state) => state.categoriesSlice.categories);
+
+    /*    const categories: CategoryType[] | undefined = useAppSelector((state) => state.categoriesSlice.categories); */
+
+    const jsonObj = JSON.parse(mockCategories)
+    const categoriesItems = {
+        items: jsonObj.data.items.map((item: CategoryType) => ({ id: item.id, parent_id: item.parent_id, name: item.name, slug: item.slug, description: item.description, count: item.count, language_code: item.language_code }))
+    };
+    const categories: CategoryType[] = categoriesItems.items
+    //-----------------------------------------------------------------------
+
     const theme = useTheme();
     const scrollTop = window.scrollY;
 
-
     const renderTitle = (title: string) => {
-        return <TitleWrapper onClick={() => setParent(undefined)}>
-            <BackArrow />
-            <Title>{title}</Title>
-        </TitleWrapper>
+        return (
+            <div>
+                <TitleWrapper onClick={() => setParent(undefined)}>
+                    <BackArrow />
+                    <Title>{title}</Title>
+                </TitleWrapper>
+                <StyledButton hoverBackgroundColor={theme.colors.primary} height='40px' onClick={() => switchCategory(parent?.slug || '', undefined)}>
+                    Show All
+                </StyledButton>
+            </ div>
+        )
     }
 
     const handleClick = (slug: string, child: string | undefined) => {
@@ -63,7 +71,6 @@ const MobileCategoriesMenu: FC<MobileCategoriesMenuPropsType> = ({ padding, swit
 
     const categoriesLinks = filteredCategories?.map(({ id, name, slug }: CategoryType) => {
         const hasSubcategories = categories?.some((category: CategoryType) => category.parent_id === id);
-
         return {
             name,
             url: slug,
@@ -75,18 +82,18 @@ const MobileCategoriesMenu: FC<MobileCategoriesMenuPropsType> = ({ padding, swit
     if (!categories || categories.length === 0) {
         if (disableOverlay) {
             return <TabletCategoriesSkeletonWrapper>
-            <MenuSkeleton
-                elements={6}
-                direction='column'
-                width='280px'
-                height='40px'
-                gap='30px'
-            />
+                <MenuSkeleton
+                    elements={6}
+                    direction='column'
+                    width='280px'
+                    height='40px'
+                    gap='30px'
+                />
             </TabletCategoriesSkeletonWrapper>
         }
         else {
-            return   <MobileCategoriesSkeletonWrapper>
-              <MenuSkeleton
+            return <MobileCategoriesSkeletonWrapper>
+                <MenuSkeleton
                     elements={9}
                     direction='column'
                     width='90vw'
@@ -94,7 +101,8 @@ const MobileCategoriesMenu: FC<MobileCategoriesMenuPropsType> = ({ padding, swit
                     gap='30px'
                 />
             </MobileCategoriesSkeletonWrapper>
-        }}
+        }
+    }
 
     return (
         <MobilePopup

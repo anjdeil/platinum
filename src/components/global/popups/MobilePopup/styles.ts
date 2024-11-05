@@ -3,6 +3,8 @@ import styled from "@emotion/styled";
 
 
 export const PopupContainer = styled.div<PopupContainerProps>`
+border:2px solid ${({ theme   }) => theme.background.secondary};
+border-radius: 8px;
     position: ${({ disableOverlay }) => (disableOverlay ? 'static' : 'fixed')}; 
     background-color: ${({ theme, backgroundColor = theme.background.secondary }) => backgroundColor};
     width: ${({ width = '70%' }) => width};
@@ -17,19 +19,18 @@ export const PopupContainer = styled.div<PopupContainerProps>`
     @media ${({ theme }) => theme.media.middle} {
         top: ${({ scroll = 0 }) => (scroll ? Math.max(0, 60 - scroll) : 60)}px;
         bottom: 80px;
-        grid-template-rows: ${({ title }) => title === '' ? '1fr' : '40px 1fr'};
+        grid-template-rows: ${({ title }) => title === '' ? '1fr' : '90px 1fr'};
         overflow: auto;
     }
 `;
 
 export const Header = styled.div<PopupContainerProps>`
     display: none;
-    align-items: center;
-    justify-content: space-between;
-    padding: ${({ padding }) => (padding ==='all' ? '0 20px' : '0')}; 
+    padding: ${({ padding }) => (padding ==='all' ? '0 37px' : ' 0 17px')}; 
+
 
     @media ${({ theme }) => theme.media.middle} {
-        display: flex;
+        display: block;
     }
 `;
 

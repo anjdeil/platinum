@@ -8,9 +8,14 @@ const isValidReactElement = (value: any) =>
 
 export const CustomSingleAccordionSchema = z.object({
     title: z.string(),
+    detailsPadding: z.string().optional(),
     children: z.custom(isValidReactElement, {
         message: "Children must be valid React components.",
     })
 });
+export const StyledAccordionDetailsSchema = z.object({
+    padding: z.string().optional(),
+});
 
 export type CustomSingleAccordionType = z.infer<typeof CustomSingleAccordionSchema>;
+export type StyledAccordionDetailsProps = z.infer<typeof StyledAccordionDetailsSchema>;

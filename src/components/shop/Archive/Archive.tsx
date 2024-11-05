@@ -1,26 +1,17 @@
 import { Container, FlexBox, PagesNavigation, Title } from "@/styles/components";
 import { FC, useState } from "react";
-import { ProductCardList } from "../ProductCardsList";
-import { ProductType } from "@/types/pages/shop";
 import router, { useRouter } from "next/router";
-import CategoryType from "@/types/pages/shop/categories";
-import CategoriesMenu from "../CategoriesMenu/CategoriesMenu";
+import { ArchivePropsType } from "@/types/components/shop/archive";
 import { FilterNCategoriesHead, FilterNCategoriesMenu, FilterOverlay, GridBox, SortPanel } from "./styles";
-import FilterIconButton from "@/components/global/buttons/FilterIconButton/FilterIconButton";
-import theme from "@/styles/theme";
-import MobileCategoriesMenu from "@/components/global/popups/MobileCategoriesMenu/MobileCategoriesMenu";
-import { useDispatch } from "react-redux";
-import { popupClosed } from "@/store/slices/PopupSlice";
-import { useResponsive } from "@/hooks/useResponsive";
 import CloseIcon from "@/components/global/icons/CloseIcon/CloseIcon";
 import { FilterPanel } from "../filtration/FilterPanel";
-
-interface ArchiveProps {
-    products: ProductType[];
-    pagesCount: number;
-    page: number;
-    categories: CategoryType[];
-}
+import FilterIconButton from "@/components/global/buttons/FilterIconButton/FilterIconButton";
+import { ProductCardList } from "../ProductCardsList";
+import theme from "@/styles/theme";
+import { useResponsive } from "@/hooks/useResponsive";
+import MobileCategoriesMenu from "@/components/global/popups/MobileCategoriesMenu/MobileCategoriesMenu";
+import SelectParentCategoryMobile from "../categories/SelectParentCategoryMobile/SelectParentCategoryMobile";
+import CategoriesMenu from "@/components/shop/categories/CategoriesMenu/CategoriesMenu";
 
 const switchPage = (page: number, maxPage: number) => {
     if (maxPage < page) return;
@@ -52,8 +43,9 @@ export const switchCategory = (parentSlug: string, childSlug?: string) => {
     });
 }
 
-export const Archive: FC<ArchiveProps> = ({ products, pagesCount, page, categories, statistic  }) => {
+export const Archive: FC<ArchivePropsType> = ({ products, pagesCount, page, categories, statistic }) => {
     const [isMenuVisible, setMenuVisible] = useState(false);
+    const { isMobile, } = useResponsive();
     const toggleMenu = () => {
         setMenuVisible(!isMenuVisible);
     };
@@ -66,23 +58,31 @@ export const Archive: FC<ArchiveProps> = ({ products, pagesCount, page, categori
             <GridBox>
                 <FilterNCategoriesMenu visible={isMenuVisible}>
                     {isMenuVisible ?
-                        <>  
-                        <FilterNCategoriesHead>
-                        <h4>FILTER</h4>
-                        <CloseIcon onClick={toggleMenu} />
-                        </FilterNCategoriesHead>
-                        <MobileCategoriesMenu padding="right" disableOverlay={true} width="300px" onClose={toggleMenu} switchCategory={switchCategory} />
-                        </>
+                        <><FilterNCategoriesHead>
+                                <h4>FILTER</h4>
+                                <CloseIcon onClick={toggleMenu} />
+                            </FilterNCategoriesHead>
+                            {!isMobile ?
+                                <CategoriesMenu switchCategory={switchCategory} selectedCategories={categories} shop={true} isMenuVisible={isMenuVisible} />
+                                :
+                                <>
+                                    {categories.length !== 0 ?
+                                        <SelectParentCategoryMobile
+                                        selectedCategories={categories}
+                                        switchCategory={switchCategory}
+                                        />
+                                        :
+                                        <MobileCategoriesMenu padding="all" disableOverlay={true} width="100%" onClose={toggleMenu} switchCategory={switchCategory} />
+                                   }    
+                                </>
+                            }</>
                         :
-                        <CategoriesMenu switchCategory={switchCategory} selectedCategories={categories} />
-                    }
-                    <h3>FILTERS</h3>
-                    <div style={{ width: '1000px', margin: '50px auto' }}>
-                        <FilterPanel
-                            attributes={statistic.attributes}
-                            maxPrice={statistic.max_price}
-                            minPrice={statistic.min_price} />
-                    </div>
+                        <CategoriesMenu isMenuVisible={isMenuVisible} switchCategory={switchCategory} selectedCategories={categories} shop={true} />}
+                    {/* <h3>FILTERS</h3> */}
+                    <FilterPanel
+                        attributes={statistic.attributes}
+                        maxPrice={statistic.max_price}
+                        minPrice={statistic.min_price} />
                 </FilterNCategoriesMenu>
                 <FilterOverlay visible={isMenuVisible} onClick={toggleMenu} />
                 <div>
@@ -101,14 +101,10 @@ export const Archive: FC<ArchiveProps> = ({ products, pagesCount, page, categori
                             hideNextButton
                             onChange={(_, newPage) => { switchPage(newPage, pagesCount); }}
                         />
-
                     </SortPanel>
                     {products.length && <ProductCardList products={products} />}
                 </div>
             </GridBox>
-
-
-
         </Container>
     )
 }

@@ -12,8 +12,8 @@ interface TitleProps {
     mobFontSize?: string;
     textalign?: "center" | "left" | "right";
     uppercase?: boolean;
-    marginTop?: number;
-    marginBottom?: number;
+    marginTop?: string;
+    marginBottom?: string;
     tabletMarginBottom?: number;
     mobMarginBottom?: number;
 }

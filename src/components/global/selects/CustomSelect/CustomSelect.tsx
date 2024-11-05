@@ -2,7 +2,8 @@ import { CustomSelectProps } from "@/types/components/global/selects";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { CustomLabel, CustomSelectStyled, MenuItem, StyledCollapse } from "./styles";
 import ArrowIcon from "../../icons/ArrowIcon/ArrowIcon";
-import { CustomError } from "../../forms/CustomInput/styles";
+import { CustomError } from "../../forms/CustomFormInput/styles";
+
 
 export default function CustomSelect({
   options,

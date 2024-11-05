@@ -48,7 +48,7 @@ export const RegistrationForm = forwardRef((props, ref) =>
 
     return (
         <CustomForm onSubmit={handleSubmit(onSubmit)}>
-            <FormWrapper>
+      {/*       <FormWrapper>
                 <CustomInput
                     fieldName="Imię"
                     name='name'
@@ -101,7 +101,7 @@ export const RegistrationForm = forwardRef((props, ref) =>
                     value={phone}
                     onChange={(phone) => setPhone(phone)}
                 />
-            </FormWrapper>
+            </FormWrapper> */}
             <button type="submit" disabled={isSubmitting}>{isSubmitting ? 'Submitting...' : 'Submit'}</button>
         </CustomForm>
     );

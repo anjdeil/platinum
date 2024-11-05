@@ -18,8 +18,17 @@ export const mobilePopupPropsSchema = z.object({
     ...PopupPropsSchema.shape,
     closeButton: z.boolean().optional(),
    
+});
 
+export const mobileCategoriesMenuPropsSchema = z.object({
+    disableOverlay: z.boolean().optional(),
+    padding: z.string(),
+    width: z.string(),
+    height: z.string().optional(),
+    onClose: z.function().args().returns(z.void()),
+    switchCategory: z.function().args(z.string(), z.string().optional()).returns(z.void()),
 });
 
 export type PopupContainerProps = z.infer<typeof PopupPropsSchema>;
 export type MobilePopupPropsType = z.infer<typeof mobilePopupPropsSchema>;
+export type mobileCategoriesMenuProps = z.infer<typeof mobileCategoriesMenuPropsSchema>;
