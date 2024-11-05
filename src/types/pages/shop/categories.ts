@@ -7,8 +7,24 @@ export const CategorySchema = z.object({
     slug: z.string(),
     description: z.string(),
     count: z.number(),
-    language_code: z.string()
+    language_code: z.string(),
+    image: z.string().optional(),
 });
 
-type CategoryType = z.infer<typeof CategorySchema>;
-export default CategoryType;
+export const CategoryItemContainerPropsSchema = z.object({
+    double: z.boolean(),
+});
+
+export const CategoriesBlockPropsSchema = z.object({
+    categories: z.array(CategorySchema),
+});
+
+export const CategoryItemPropsSchema = z.object({
+    category: CategorySchema,
+    ...CategoryItemContainerPropsSchema.shape,
+});
+
+export type CategoryType = z.infer<typeof CategorySchema>;
+export type CategoryItemContainerProps = z.infer<typeof CategoryItemContainerPropsSchema>;
+export type CategoriesBlockProps = z.infer<typeof CategoriesBlockPropsSchema>;
+export type CategoryItemProps = z.infer<typeof CategoryItemPropsSchema>;
