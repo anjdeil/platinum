@@ -11,7 +11,7 @@ export const FilterAttributes: FC<FilterAttributesPropsType> = ({ attribute, onP
                 return (
                     <FilterButton
                         key={option.id + i}
-                        onClick={() => onParamsChange(attribute.slug, option.slug)}
+                        onClick={() => onParamsChange(attribute.slug, option.slug, true)}
                         active={currentAttribute === option.slug}>
                         {option.name}
                     </FilterButton>
