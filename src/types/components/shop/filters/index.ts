@@ -10,7 +10,7 @@ export const FilterPanelPropsSchema = z.object({
 export const FilterAttributesPropsSchema = z.object({
     attribute: AttributeSchema,
     onParamsChange: z.function().args(z.string(), z.string(), z.boolean()).returns(z.void()),
-    currentAttribute: z.string()
+    currentAttribute: z.array(z.union([z.string(), z.number()]))
 })
 
 export type FilterPanelPropsType = z.infer<typeof FilterPanelPropsSchema>;

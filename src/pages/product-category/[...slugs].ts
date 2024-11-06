@@ -44,9 +44,9 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
     const productsParams: ProductParamsType = {
         page: page || "1",
         per_page: productsPerPage,
-        ...params
-        // ...(minPrice && { min_price: minPrice }),
-        // ...(maxPrice && { max_price: maxPrice }),
+        ...params,
+        ...(minPrice && { min_price: minPrice }),
+        ...(maxPrice && { max_price: maxPrice }),
         // order_by string
         // order_by string
         // lang string
@@ -56,6 +56,7 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
         // search  string
     }
 
+    console.log('params before server', params)
     console.log('currentParams', productsParams)
 
     try
@@ -76,9 +77,6 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
             notFound: true
         }
 
-        // console.log('statistic:', response.data)
-
-
         return {
             props: {
                 products,
@@ -94,8 +92,7 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
         return {
             props: {
                 error: {
-                    message: error,
-                    // status: error.response ? error.response.status : 500,
+                    message: 'Server Error',
                 },
             },
         }

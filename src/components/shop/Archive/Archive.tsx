@@ -1,4 +1,4 @@
-import { PagesNavigation } from "@/styles/components";
+import { Container, PagesNavigation } from "@/styles/components";
 import { FC, useEffect } from "react";
 import { ProductCardList } from "../ProductCardsList";
 import { CustomDataProductsStatisticType, CustomDataProductsType } from "@/types/services";
@@ -34,7 +34,7 @@ export const Archive: FC<ArchivePropsType> = (props) =>
     const { products, pagesCount, page, statistic } = props;
 
     return (
-        <>
+        <Container>
             <div>
                 <PagesNavigation
                     page={+page}
@@ -45,16 +45,24 @@ export const Archive: FC<ArchivePropsType> = (props) =>
                     hideNextButton
                     onChange={(_, newPage) => { switchPage(newPage, pagesCount); }}
                 />
-                <div style={{ display: 'flex', gap: '100px' }}>
-                    <div style={{ width: '1000px', margin: '50px auto' }}>
+                <div style={{ display: 'flex', gap: '50px' }}>
+                    <div style={{ margin: '50px auto' }}>
                         <FilterPanel
                             attributes={statistic.attributes}
                             maxPrice={statistic.max_price}
                             minPrice={statistic.min_price} />
                     </div>
-                    {products.length && <ProductCardList products={products} />}
+                    {products.length && <ProductCardList products={products}
+                        columns={
+                            {
+                                mobileColumns: 2,
+                                tabletColumns: 4,
+                                desktopColumns: 3
+                            }
+                        }
+                    />}
                 </div>
             </div >
-        </>
+        </Container>
     )
 }

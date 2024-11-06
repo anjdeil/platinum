@@ -7,17 +7,41 @@ import { FilterAttributes } from "../FilterAttributes/FilterAttributes";
 import { ApplyButton, ButtonWrap, FilterPanelWrap, ResetButton } from "./styles";
 
 /**
- * Price filtration
+ * Reset when you click again on param
  * Reset params
- * Fix button
- * Get data from the server
+ * Fix button 
+ * Layout
  *  */
+
+type ChosenAttributesType = Map<string, Set<string | number>>;
 
 export const FilterPanel: FC<FilterPanelPropsType> = ({ attributes, maxPrice, minPrice }) =>
 {
     const [priceRange, setPriceRange] = useState({ min: minPrice, max: maxPrice });
+    const [chosenAttributes, setChosenAttributes] = useState<ChosenAttributesType>(new Map());
     const router = useRouter();
-    const chosenAttributes = useMemo(() => new Map(), []);
+
+    /** Updates chosen attributes state */
+    const updateChosenAttributes = (key: string, paramValue: (string | number)[], isPrefix: boolean) =>
+    {
+        setChosenAttributes(prev =>
+        {
+            const newMap = new Map(prev);
+
+            if (isPrefix)
+            {
+                const existingSet = newMap.get(key) || new Set<string | number>();
+                paramValue.forEach(value => existingSet.add(value));
+                newMap.set(key, existingSet);
+            } else
+            {
+                const existingSet = new Set<string | number>();
+                newMap.set(key, existingSet.add(paramValue[0]));
+            }
+
+            return newMap;
+        });
+    };
 
     /** Updates chosen with url params */
     useEffect(() =>
@@ -29,7 +53,7 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({ attributes, maxPrice, mi
         {
             const value = params.get(param);
             const valuesArray = value ? value.split(',').map(item => item.trim()) : [];
-            chosenAttributes.set(param, new Set(valuesArray));
+            updateChosenAttributes(param, valuesArray, false);
         }
     }, [])
 
@@ -44,16 +68,15 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({ attributes, maxPrice, mi
             if (chosenAttributes.has(attr))
             {
                 if (isPrefix)
-                    chosenAttributes.get(attr).add(paramValue);
-                else
                 {
-                    chosenAttributes.set(attr, new Set([paramValue]));
-                    console.log(chosenAttributes);
-
+                    updateChosenAttributes(attr, [paramValue], true);
+                } else
+                {
+                    updateChosenAttributes(attr, [paramValue], false);
                 }
             } else
             {
-                chosenAttributes.set(attr, new Set([paramValue]));
+                updateChosenAttributes(attr, [paramValue], false);
             }
     }, [chosenAttributes])
 
@@ -68,7 +91,7 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({ attributes, maxPrice, mi
         router.push({
             pathname: router.pathname,
             query: { ...router.query, ...params }
-        }, undefined, { shallow: true });
+        });
     }, [chosenAttributes])
 
     /** Apply params */
@@ -112,14 +135,15 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({ attributes, maxPrice, mi
                 {attributes.map((attribute) =>
                 {
                     const attrName = `pa_${attribute.slug}`;
-                    const currentParam = router.query?.[attrName]?.toString();
+                    const existingSet = chosenAttributes.get(attrName);
+                    const currentAttr = existingSet ? [...existingSet] : [];
 
                     return (
                         <CustomSingleAccordion title={attribute.name} key={attribute.id}>
                             <FilterAttributes
                                 attribute={attribute}
                                 onParamsChange={updateCurrentParams}
-                                currentAttribute={currentParam || ""}
+                                currentAttribute={currentAttr}
                             />
                         </CustomSingleAccordion>
                     )
