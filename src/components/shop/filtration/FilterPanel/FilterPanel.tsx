@@ -15,6 +15,11 @@ import { ApplyButton, ButtonWrap, FilterPanelWrap, ResetButton } from "./styles"
 
 type ChosenAttributesType = Map<string, Set<string | number>>;
 
+type UpdateAttributesParams = {
+    key: string;
+    paramValue: (string | number)[] | string | number;
+    isPrefix: boolean;
+};
 export const FilterPanel: FC<FilterPanelPropsType> = ({ attributes, maxPrice, minPrice }) =>
 {
     const [priceRange, setPriceRange] = useState({ min: minPrice, max: maxPrice });
@@ -22,8 +27,11 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({ attributes, maxPrice, mi
     const router = useRouter();
 
     /** Updates chosen attributes state */
-    const updateChosenAttributes = (key: string, paramValue: (string | number)[], isPrefix: boolean) =>
+
+    const updateChosenAttributes = useCallback(({ key, paramValue, isPrefix }: UpdateAttributesParams) =>
     {
+        console.log('call');
+
         setChosenAttributes(prev =>
         {
             const newMap = new Map(prev);
@@ -31,17 +39,71 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({ attributes, maxPrice, mi
             if (isPrefix)
             {
                 const existingSet = newMap.get(key) || new Set<string | number>();
-                paramValue.forEach(value => existingSet.add(value));
+
+                if (Array.isArray(paramValue))
+                {
+                    console.log('array');
+                    paramValue.forEach(value => existingSet.add(value));
+                } else
+                {
+                    if (!existingSet.has(paramValue))
+                    {
+                        console.log('no');
+                        existingSet.add(paramValue)
+                    } else
+                    {
+                        console.log('with');
+                        existingSet.delete(paramValue)
+                    }
+                }
                 newMap.set(key, existingSet);
             } else
             {
                 const existingSet = new Set<string | number>();
-                newMap.set(key, existingSet.add(paramValue[0]));
+                newMap.set(key, existingSet.add(Array.isArray(paramValue) ? paramValue.toString() : paramValue));
             }
 
             return newMap;
         });
-    };
+    }, [])
+
+    // const updateChosenAttributes = ({ key, paramValue, isPrefix }: UpdateAttributesParams) =>
+    // {
+    //     console.log('calls')
+    //     setChosenAttributes(prev =>
+    //     {
+    //         const newMap = new Map(prev);
+
+    //         if (isPrefix)
+    //         {
+    //             const existingSet = newMap.get(key) || new Set<string | number>();
+
+    //             if (Array.isArray(paramValue))
+    //             {
+    //                 console.log('array');
+    //                 paramValue.forEach(value => existingSet.add(value));
+    //             } else
+    //             {
+    //                 if (!existingSet.has(paramValue))
+    //                 {
+    //                     console.log('no');
+    //                     existingSet.add(paramValue)
+    //                 } else
+    //                 {
+    //                     console.log('with');
+    //                     existingSet.delete(paramValue)
+    //                 }
+    //             }
+    //             newMap.set(key, existingSet);
+    //         } else
+    //         {
+    //             const existingSet = new Set<string | number>();
+    //             newMap.set(key, existingSet.add(Array.isArray(paramValue) ? paramValue.toString() : paramValue));
+    //         }
+
+    //         return newMap;
+    //     });
+    // };
 
     /** Updates chosen with url params */
     useEffect(() =>
@@ -53,7 +115,9 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({ attributes, maxPrice, mi
         {
             const value = params.get(param);
             const valuesArray = value ? value.split(',').map(item => item.trim()) : [];
-            updateChosenAttributes(param, valuesArray, false);
+            updateChosenAttributes({
+                key: param, paramValue: valuesArray, isPrefix: false
+            });
         }
     }, [])
 
@@ -64,20 +128,7 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({ attributes, maxPrice, mi
 
         const attr = isPrefix ? 'pa_' + paramName : paramName;
 
-        if (paramName)
-            if (chosenAttributes.has(attr))
-            {
-                if (isPrefix)
-                {
-                    updateChosenAttributes(attr, [paramValue], true);
-                } else
-                {
-                    updateChosenAttributes(attr, [paramValue], false);
-                }
-            } else
-            {
-                updateChosenAttributes(attr, [paramValue], false);
-            }
+        updateChosenAttributes({ key: attr, paramValue: paramValue, isPrefix });
     }, [chosenAttributes])
 
     /** Updates url params by chosen */
