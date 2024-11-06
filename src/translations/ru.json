@@ -80,6 +80,14 @@
         "viewingThisProduct": "Сейчас просматривают: {count}",
         "fastShipping": "Быстрая доставка",
         "freeDeliveryOver": "Бесплатная доставка от {price}",
-        "color": "Цвет"
+        "color": "Цвет",
+        "bestForYou": "Лучшее для вас",
+        "recommendProduct": "Рекомендуємые товары",
+        "bestSeller": "Бестселлеры",
+        "newProduct": "Новинки",
+        "ourCategories": "Наши категории",
+        "moreProduct": "Больше товара",
+        "lastedArticles": "Последние статьи",
+        "readMore": "Читать далее"
     }
 }

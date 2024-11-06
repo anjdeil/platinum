@@ -80,6 +80,14 @@
         "viewingThisProduct": "Зараз переглядають: {count}",
         "fastShipping": "Швидка доставка",
         "freeDeliveryOver": "Безкоштовна доставка від {price}",
-        "color": "Колір"
+        "color": "Колір",
+        "bestForYou": "Найкраще для вас",
+        "recommendProduct": "Рекомендовані товари",
+        "bestSeller": "Бестселери",
+        "newProduct": "Новинки",
+        "ourCategories": "Наші категорії",
+        "moreProduct": "Більше товару",
+        "lastedArticles": "Останні статті",
+        "readMore": "Читати далі"
     }
 }
