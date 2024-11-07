@@ -11,6 +11,8 @@ const QueryParamsSchema = z.object({
     LangParamSchema,
     include: z.array(z.number()).optional(),
     slug: z.string().optional(),
+    search: z.string().optional(),
+    lang: z.string().optional()
 }).partial();
 
 export const CustomDataSchema = z.object({
