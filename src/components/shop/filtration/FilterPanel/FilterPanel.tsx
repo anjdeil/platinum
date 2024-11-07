@@ -7,10 +7,10 @@ import { FilterAttributes } from "../FilterAttributes/FilterAttributes";
 import { ApplyButton, ButtonWrap, FilterPanelWrap, ResetButton } from "./styles";
 
 /**
- * Reset when you click again on param
- * Reset params
- * Fix button 
- * Layout
+ * @todo
+ * Fix slider (juniors)
+ * Fix button layout (after review)
+ * Layout (after review)
  *  */
 
 type ChosenAttributesType = Map<string, Set<string | number>>;
@@ -20,6 +20,7 @@ type UpdateAttributesParams = {
     paramValue: (string | number)[] | string | number;
     isPrefix: boolean;
 };
+
 export const FilterPanel: FC<FilterPanelPropsType> = ({ attributes, maxPrice, minPrice }) =>
 {
     const [priceRange, setPriceRange] = useState({ min: minPrice, max: maxPrice });
@@ -27,83 +28,37 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({ attributes, maxPrice, mi
     const router = useRouter();
 
     /** Updates chosen attributes state */
-
     const updateChosenAttributes = useCallback(({ key, paramValue, isPrefix }: UpdateAttributesParams) =>
     {
-        console.log('call');
+        const newMap = new Map(chosenAttributes);
+        console.log(chosenAttributes);
 
-        setChosenAttributes(prev =>
+        if (isPrefix)
         {
-            const newMap = new Map(prev);
+            const existingSet = newMap.get(key) || new Set<string | number>();
 
-            if (isPrefix)
+            if (Array.isArray(paramValue))
             {
-                const existingSet = newMap.get(key) || new Set<string | number>();
-
-                if (Array.isArray(paramValue))
-                {
-                    console.log('array');
-                    paramValue.forEach(value => existingSet.add(value));
-                } else
-                {
-                    if (!existingSet.has(paramValue))
-                    {
-                        console.log('no');
-                        existingSet.add(paramValue)
-                    } else
-                    {
-                        console.log('with');
-                        existingSet.delete(paramValue)
-                    }
-                }
-                newMap.set(key, existingSet);
+                paramValue.forEach(value => existingSet.add(value));
             } else
             {
-                const existingSet = new Set<string | number>();
-                newMap.set(key, existingSet.add(Array.isArray(paramValue) ? paramValue.toString() : paramValue));
+                if (existingSet.has(paramValue))
+                {
+                    existingSet.delete(paramValue);
+                } else
+                {
+                    existingSet.add(paramValue);
+                }
             }
-
-            return newMap;
-        });
-    }, [])
-
-    // const updateChosenAttributes = ({ key, paramValue, isPrefix }: UpdateAttributesParams) =>
-    // {
-    //     console.log('calls')
-    //     setChosenAttributes(prev =>
-    //     {
-    //         const newMap = new Map(prev);
-
-    //         if (isPrefix)
-    //         {
-    //             const existingSet = newMap.get(key) || new Set<string | number>();
-
-    //             if (Array.isArray(paramValue))
-    //             {
-    //                 console.log('array');
-    //                 paramValue.forEach(value => existingSet.add(value));
-    //             } else
-    //             {
-    //                 if (!existingSet.has(paramValue))
-    //                 {
-    //                     console.log('no');
-    //                     existingSet.add(paramValue)
-    //                 } else
-    //                 {
-    //                     console.log('with');
-    //                     existingSet.delete(paramValue)
-    //                 }
-    //             }
-    //             newMap.set(key, existingSet);
-    //         } else
-    //         {
-    //             const existingSet = new Set<string | number>();
-    //             newMap.set(key, existingSet.add(Array.isArray(paramValue) ? paramValue.toString() : paramValue));
-    //         }
-
-    //         return newMap;
-    //     });
-    // };
+            newMap.set(key, existingSet);
+        } else
+        {
+            const existingSet = new Set<string | number>();
+            newMap.set(key, existingSet.add(Array.isArray(paramValue) ? paramValue.toString() : paramValue));
+        }
+        // console.log(newMap);
+        setChosenAttributes(newMap);
+    }, [chosenAttributes, setChosenAttributes]);
 
     /** Updates chosen with url params */
     useEffect(() =>
@@ -148,11 +103,25 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({ attributes, maxPrice, mi
     /** Apply params */
     const onApplyClick = useCallback(() =>
     {
+        // console.log(chosenAttributes);
+
         updateUrlParams();
+    }, [chosenAttributes]);
+
+    /** Reset params */
+    const onResetClick = useCallback(() =>
+    {
+        const { slugs } = router.query;
+        router.replace({
+            pathname: router.pathname,
+            query: { slugs }
+        });
+        setChosenAttributes(new Map());
     }, [chosenAttributes]);
 
     const updateMinPrice = useCallback((newValue: number) =>
     {
+
         if (newValue !== priceRange.min && newValue >= 0 && newValue <= maxPrice && newValue > minPrice)
         {
             setPriceRange((prev) => ({ ...prev, min: newValue }));
@@ -201,7 +170,7 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({ attributes, maxPrice, mi
                 })}
             </FilterPanelWrap>
             <ButtonWrap>
-                <ResetButton>
+                <ResetButton onClick={onResetClick}>
                     Clear
                 </ResetButton>
                 <ApplyButton onClick={onApplyClick} >
