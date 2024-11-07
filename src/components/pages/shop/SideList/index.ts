@@ -1,1 +1,1 @@
-export * from './SideList';
+export * from './SideCategoryList';

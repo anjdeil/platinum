@@ -9,7 +9,7 @@ import { NavButton, Slide, SliderWrapper } from './styles';
 import { MenuSkeleton } from '../../../menus/MenuSkeleton';
 import { MenusContext } from '@/components/Layout/Layout';
 import { menuItemsType } from '@/types/services/wpCustomApi/menus';
-import { wpMenuProps } from '@/types/menus/WpMenus';
+import { wpMenuProps } from '@/types/menus/wpMenus';
 
 
 const VerticalSlider: FC<wpMenuProps> = ({ menuId, skeleton }) =>

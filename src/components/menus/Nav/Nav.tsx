@@ -3,7 +3,7 @@ import { FC, useContext } from 'react';
 import { MenuSkeleton } from '../MenuSkeleton';
 import { NavLink, NavList } from './styles';
 import { menuItemsType } from '@/types/services/wpCustomApi/menus';
-import { wpMenuProps } from '@/types/menus/WpMenus';
+import { wpMenuProps } from '@/types/menus/wpMenus';
 
 const Nav: FC<wpMenuProps> = ({
     menuId,
