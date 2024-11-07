@@ -6,6 +6,8 @@ const authConfig: AuthConfigType = {
     password: process.env.WP_PASSWORD || ''
 };
 
+const wpV2 = "wp/v2/";
+
 export class WpRestApi
 {
     private readonly _apiBase: string;
@@ -13,7 +15,7 @@ export class WpRestApi
 
     constructor(authConfig: AuthConfigType)
     {
-        this._apiBase = `${process.env.WP_URL}/wp-json/wp/v2/`;
+        this._apiBase = `${process.env.WP_URL}/wp-json/`;
         this._authConfig = authConfig;
     }
 
@@ -24,7 +26,7 @@ export class WpRestApi
         return `Basic ${encodedAuth}`;
     }
 
-    async getResource(url: string, method: Method, params?: ParamsType, authorization?: string | null, body?: object)
+    async getResource(url: string, method: Method, params?: ParamsType, authorization?: string | null, body?: object, v2: boolean = true)
     {
         const maxRetries = 3;
         let attempt = 0;
@@ -35,7 +37,7 @@ export class WpRestApi
             {
                 const response = await axios({
                     method: method,
-                    url: this._apiBase + url,
+                    url: this._apiBase + (v2 !== false ? wpV2 : '') + url,
                     params: params,
                     headers: {
                         Authorization: authorization ? authorization : this.getBasicAuth(),
@@ -72,9 +74,9 @@ export class WpRestApi
         return result;
     }
 
-    async put(url: string, body: object, authorization?: string | null,)
+    async post(url: string, body: object, v2?: boolean, authorization?: string | null)
     {
-        const result = await this.getResource(url, 'PUT', {}, authorization, body);
+        const result = await this.getResource(url, 'POST', {}, authorization, body, v2);
         return result;
     }
 }

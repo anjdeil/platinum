@@ -6,12 +6,13 @@ import currencySlice from "./slices/currencySlice";
 import languageSlice from "./slices/languageSlice";
 import MenuCategoriesSlice from "./slices/MenuCategoriesSlice";
 import PopupSlice from "./slices/PopupSlice";
+import { wpRtkApi } from "./rtk-queries/wpApi";
 import themeOptionsSlice from "./slices/themeOptionsSlice";
 
 const rootReducer = combineReducers({
     [wpCustomRtkApi.reducerPath]: wpCustomRtkApi.reducer,
     [wooCustomRktApi.reducerPath]: wooCustomRktApi.reducer,
-    // [wp.reducerPath]: wooCustomRktApi.reducer,
+    [wpRtkApi.reducerPath]: wpRtkApi.reducer,
     languageSlice: languageSlice,
     currencySlice: currencySlice,
     themeOptions: themeOptionsSlice,
@@ -22,13 +23,15 @@ const rootReducer = combineReducers({
     swiperModal: SwiperModal
 });
 
-export const setupStore = () => {
+export const setupStore = () =>
+{
     return configureStore({
         reducer: rootReducer,
         middleware: (getDefaultMiddleware) =>
             getDefaultMiddleware()
                 .concat(wpCustomRtkApi.middleware)
                 .concat(wooCustomRktApi.middleware)
+                .concat(wpRtkApi.middleware)
     })
 }
 

@@ -1,84 +1,42 @@
-import { FC, FormEvent, use, useCallback, useEffect, useMemo, useState } from "react";
-import { CustomInputWrapper, CustomRequired, CustomInputStyle, ShowPasswordImage, CustomError } from "./styles";
-import { CustomInputType } from "@/types/components/global/forms/customInput/customInput";
+import { ChangeEvent, FC, useCallback } from "react";
+import { CustomInputStyle, CustomInputWrapper, Input } from "../CustomFormInput/styles";
 
-function numericValidate(e: FormEvent<HTMLInputElement>, isPost: boolean)
+interface CustomInputType
 {
-    const regex = isPost ? /[^0-9-]/g : /[^0-9]/g;
-    e.currentTarget.value = e.currentTarget.value.replace(regex, '');
+    defaultValue?: string | number;
+    value: string | number;
+    onChange: (newValue: number) => void;
 }
 
-export const CustomInput: FC<CustomInputType> = ({
-    fieldName,
-    name,
-    register,
-    errors,
-    isRequire = true,
-    isPassword = false,
-    isCheckbox = false,
-    isNumeric = false,
-    isPost = false,
-    placeholder,
-    onChange,
-    value,
-    isTextarea = false,
-    setValue,
-    initialValue,
-    checked
-}) =>
+export const CustomInput: FC<CustomInputType> = ({ defaultValue, value, onChange }) =>
 {
-    const [showPassword, setShowPassword] = useState(isPassword);
-    const toggleShowPassword = useCallback(() => { setShowPassword((prev) => !prev); }, []);
-
-    let type;
-
-    if (isPassword)
-        type = showPassword ? 'text' : 'password';
-    else if (isCheckbox)
-        type = 'checkbox';
-
-    useEffect(() =>
+    const onInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) =>
     {
-        if (setValue && name && initialValue !== null && initialValue !== '')
-            setValue(name, initialValue, { shouldValidate: true });
-    }, [initialValue, name, setValue]);
-
-    const showPassPath = useMemo(() => showPassword ? '/public/images/show-pass.svg' : '/public/images/hide-pass.svg', [showPassword]);
-    const registerProps = register ? register(name) : {};
-    const isError = errors && name ? name in errors : false;
-
-    const commonProps = {
-        placeholder,
-        ...registerProps,
-        inputMode: isNumeric ? 'numeric' : undefined,
-        patter: isNumeric ? '[0-9]*' : undefined,
-        onInput: isNumeric ? (e: FormEvent<HTMLInputElement>) => numericValidate(e, isPost) : undefined,
-        onChange,
-        value,
-        checked: isCheckbox ? checked : undefined,
-        name
-    }
+        if (!event.target.value) return false;
+        const newValue = Number(event.target.value);
+        onChange(newValue);
+    }, [])
 
     return (
         <div>
-            <CustomInputStyle isError={isError} isTextArea={isTextarea} isCheckbox={isCheckbox}>
-                <span>
-                    {fieldName}
-                    {isRequire && <CustomRequired>*</CustomRequired>}
-                </span>
+            <CustomInputStyle
+                as={'label'}
+                isError={false}
+                isTextArea={false}
+                isCheckbox={false}
+                isPhone={false}>
                 <CustomInputWrapper>
-                    {isTextarea ? <textarea {...commonProps} /> : <input type={type || 'text'} {...commonProps} />}
+                    <Input
+                        as={'input'}
+                        type={'number'}
+                        isCheckbox={false}
+                        isError={false}
+                        value={value}
+                        defaultValue={defaultValue || ""}
+                        onChange={onInputChange}
+                    />
                 </CustomInputWrapper>
-                {isPassword &&
-                    <ShowPasswordImage
-                        src={showPassPath}
-                        alt={'show or hidden password button'}
-                        width={24}
-                        height={24}
-                        onClick={toggleShowPassword}
-                        unoptimized={true} />}
             </CustomInputStyle>
-            {isError && name && <CustomError>{errors[name]?.message}</CustomError>}
         </div>
     )
-};
+}
