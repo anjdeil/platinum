@@ -13,8 +13,6 @@ const CategoryItem: FC<CategoryItemProps> = ({ category, double }) =>
             <BackGroundImage
                 src={category.image || ''}
                 alt={category.name}
-                width={650}
-                height={390}
             />
             <ContentWrapper>
                 <Title as="h3" uppercase>

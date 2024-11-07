@@ -5,12 +5,12 @@ import CategoryItem from "../CategoryItem/CategoryItem";
 import { CategoriesBlockContainer, CategoriesList } from "./styles";
 
 const CategoriesBlock: FC<CategoriesBlockProps> = ({ categories }) =>
-{   
+{
     return (
         <CategoriesBlockContainer>
             <TitleBlock title="ourCategories" />
             <CategoriesList>
-                {categories.map((category, index) => (
+                {categories.length && categories.map((category, index) => (
                     <CategoryItem
                         key={category.id}
                         category={category}
