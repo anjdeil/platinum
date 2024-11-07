@@ -28,7 +28,7 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
             const newPath = slugs.slice(0, pageIndex).join('/');
             return {
                 redirect: {
-                    destination: `/shop/${newPath}`,
+                    destination: `/product-category/${newPath}`,
                     permanent: false,
                 },
             };
@@ -37,21 +37,27 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
 
     /** Indicate the products number*/
     const productsPerPage = 11;
+    const minPrice = params.min_price ? Number(params.min_price) : null;
+    const maxPrice = params.max_price ? Number(params.max_price) : null;
 
     /** Generate product product params */
     const productsParams: ProductParamsType = {
         page: page || "1",
         per_page: productsPerPage,
+        ...params,
+        ...(minPrice && { min_price: minPrice }),
+        ...(maxPrice && { max_price: maxPrice }),
         // order_by string
         // order_by string
         // lang string
         // ids array[string]
         // slugs array[string]
         // category string
-        // min_price number
-        // max_price number
         // search  string
     }
+
+    console.log('params before server', params)
+    console.log('currentParams', productsParams)
 
     try
     {
@@ -64,7 +70,6 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
             products = validatedData.data.items;
             const productsCount = validatedData.data.statistic?.products_count;
             pagesCount = Math.ceil(productsCount / productsPerPage);
-
         }
 
         /* Do not open if pagination page number is more than pages count */
@@ -76,7 +81,8 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
             props: {
                 products,
                 pagesCount,
-                page
+                page,
+                statistic: validatedData?.data.statistic
             },
         }
 
@@ -86,8 +92,7 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
         return {
             props: {
                 error: {
-                    message: error,
-                    // status: error.response ? error.response.status : 500,
+                    message: 'Server Error',
                 },
             },
         }

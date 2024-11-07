@@ -1,41 +1,136 @@
-import { SearchFormProps, SearchInputProps } from "@/types/components/global/searchBar";
 import styled from "@emotion/styled";
+import { CircularProgress } from "@mui/material";
+import Image from "next/image";
+
+export const SearchFormWrap = styled.form`
+    flex-grow: 1;
+    height: 50px;
+`;
+
+interface SearchFormProps {
+    searchListOpen?: boolean;
+}
 
 export const SearchForm = styled.form<SearchFormProps>`
-    position: relative;
-    display: flex;
-    align-items: center;
-    height: ${({ height = '40px' }) => height};
+    flex-grow: 1;
+    border-radius: 15px;
+    ${({ searchListOpen }) =>
+        searchListOpen &&
+        `box-shadow: rgba(0, 0, 0, 0.15) 0px 20px 20px 10px;`
+    }
+    overflow: hidden;
 `;
 
-export const SearchInput = styled.input<SearchInputProps>`
+export const SearchInputWrap = styled.div`
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    height: 50px; 
+    padding: 10px 15px;
     box-sizing: border-box;
-    width: ${({ width = '100%' }) => width};
-    border-radius: 8px;
-    padding: 8px 16px 8px 11px;
-    background-color: ${({ theme, backgroundColor = theme.background.secondary }) => backgroundColor};
+    gap: 10px;
+`;
+
+export const SearchInput = styled.input`
     border: none;
-    outline: none;
-    font: ${({ theme }) => theme.fonts.bodyMiddleReg}; 
-    box-shadow: none;
-    flex: 1;
-
-    &::placeholder {
-        color: #999;
-    }
-
-    &:hover {
-        box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
-    }
-
+    flex-grow: 1;
     &:focus {
-        box-shadow: none;
+        border: none;
+        box-shaddow: none;
+        outline: none;
     }
 `;
 
-export const SearchIcon = styled.div`
-    position: absolute;
-    right: 16px;
+export const SearchInputIcons = styled.div`
     display: flex;
+    gap: 10px;
+    padding: 0 3px
+`;
+
+export const SearchInputLoadingIcon = styled(CircularProgress)`
+    color: rgba(0,0,0,.15);
+`;
+
+
+export const SearchResults = styled.div`
+    background-color: rgba(242, 248, 254, .9);
+    backdrop-filter: blur(15px);
+    max-height: 400px;
+    overflow: auto;
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: rgba(0,0,0,.1);
+        border-radius: 5px;
+    }
+`;
+
+export const SearchResultsGroup = styled.div`
+    padding-bottom: 7px;
+`;
+
+export const SearchResultsTitle = styled.div`
+    padding-top: 10px;
+    margin-left: 14px;
+    margin-right: 14px;
+    margin-bottom: 8px;
+    font-size: 0.75em;
+    font-weight: 600;
+    opacity: 0.4;
+    border-bottom: 1px solid rgba(0,0,0,.2);
+    line-height: 2;
+`;
+
+export const SearchResultsRows = styled.div`
+    margin-left: 7px;
+    margin-right: 7px;
+`;
+
+export const SearchResultsRowIcon = styled.div`
+    margin-right: 10px;
+    padding-top: 2px;
+`;
+
+export const SearchResultsRowImage = styled(Image)`
+    margin-right: 10px;
+    border-radius: 4px;
+`;
+
+export const SearchResultsRowCaption = styled.div`
+
+`;
+
+
+export const SearchResultsRowCaptionWrap = styled.div`
+
+`;
+
+export const SearchResultsRowCat = styled.div`
+    font-size: 0.75em;
+    font-weight: 600;
+    opacity: 0.4;
+    margin-top: .4em;
+`;
+
+
+export const SearchResultsRow = styled.button`
+    display: flex;
+    padding: 7px;
+    border-radius: 6px;
+    transition: .2s ease;
+    cursor: pointer;
+    tab-index: 1;
+    color: ${({ theme }) => theme.colors.black}; 
+    text-decoration: none;
+    font-size: 0.9em;
     align-items: center;
+    background-color: transparent;
+    border: none;
+    text-align: left;
+    width: 100%;
+    &:hover, &:focus, &:focus-visible {
+        background-color: rgba(0,0,0,.05)
+    }
 `;

@@ -5,7 +5,6 @@ export function transformOrders(orders: OrderType[]): OrderSummaryType | []
 {
   if (!Array.isArray(orders))
   {
-    console.log(orders);
     // throw new Error("orders must be an array");
     return [];
   }

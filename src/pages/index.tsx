@@ -40,9 +40,9 @@ export default function Home()
   const { isMobile } = useResponsive();
 
   const categories = categoriesData?.data
-      ? categoriesData?.data?.items.filter(category => category.parent_id === 0)
-      : [];
-  
+    ? categoriesData?.data?.items.filter(category => category.parent_id === 0)
+    : [];
+
   const visibleCategoriesCount = isMobile ? 2 : 6;
   const displayedCategories = categories.slice(0, visibleCategoriesCount);
 
@@ -55,6 +55,9 @@ export default function Home()
         <button onClick={() => dispatch(popupToggle('categories-menu'))}>Categories</button>
         <CategoriesBlock categories={displayedCategories} />
       </Container>
+      <Title as='h2' fontSize={"20px"}>Symbol of {currency.code} currency isQQ {currency.symbol}</Title>
+      <Title as='h2' fontSize={"20px"}>Symbol of {language.code} language isQQ {language.symbol}</Title>
+      <button onClick={() => dispatch(popupToggle('categories-menu'))}>Categories</button>
     </main >
   )
 }
