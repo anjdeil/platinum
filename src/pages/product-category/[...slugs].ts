@@ -8,11 +8,13 @@ import { validateWpCustomCategoriesData, validateWpCustomCategoryData } from "@/
 import CategoryType, { CategorySchema } from "@/types/pages/shop/categories";
 import { validateWpCustomProductsData } from "@/utils/zodValidators/validateWpCustomProductsData";
 
-function findCategoryParam(slugs: string[]): string[] | null {
+function findCategoryParam(slugs: string[]): string[] | null
+{
     return slugs.filter(slug => slug !== 'page' && !/^\d+$/.test(slug));
 }
 
-export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
+export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) =>
+{
     const { slugs, ...params } = context.query;
 
     console.log('Slugs:', slugs);
@@ -31,9 +33,11 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
 
     if (!page) return { notFound: true };
 
-    if (page === '1' || page === '0') {
+    if (page === '1' || page === '0')
+    {
         const pageIndex = slugs.indexOf('page');
-        if (pageIndex !== -1) {
+        if (pageIndex !== -1)
+        {
             const newPath = slugs.slice(0, pageIndex).join('/');
             return {
                 redirect: {
@@ -48,17 +52,21 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
     let selectedCategories: CategoryType[] = [];
 
 
-    if (categorySlugs) {
-        const categoryPromises = categorySlugs.map(async (category) => {
+    if (categorySlugs)
+    {
+        const categoryPromises = categorySlugs.map(async (category) =>
+        {
             const categoryResponse = await customRestApi.get(`categories/${category}`, {
                 lang: 'en'
             });
 
             const validatedCategoryData = validateWpCustomCategoryData(categoryResponse.data);
 
-            if (validatedCategoryData) {
+            if (validatedCategoryData)
+            {
                 selectedCategories.push(validatedCategoryData.data.item);
-            } else {
+            } else
+            {
                 console.error('Validation failed for category data:', categoryResponse);
             }
         });
@@ -67,21 +75,25 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
 
         console.log('selectedCategories:', JSON.stringify(selectedCategories, null, 2));
 
-        if (selectedCategories.length < categorySlugs.length) {
+        if (selectedCategories.length < categorySlugs.length)
+        {
             console.error('Not all categories found:', selectedCategories);
             return { notFound: true };
         }
 
         selectedCategories.sort((a, b) => a.parent_id - b.parent_id);
-        if (selectedCategories[0].parent_id !== 0) {
+        if (selectedCategories[0].parent_id !== 0)
+        {
             console.error('First category is not a root category:', selectedCategories[0]);
             return { notFound: true };
         }
-        if (selectedCategories[1] && selectedCategories[1].parent_id !== selectedCategories[0].id) {
+        if (selectedCategories[1] && selectedCategories[1].parent_id !== selectedCategories[0].id)
+        {
             console.error('Second category does not belong to the first category:', selectedCategories[1]);
             return { notFound: true };
         }
-    } else {
+    } else
+    {
         console.log('No category slugs found.');
     }
 
@@ -95,6 +107,9 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
         per_page: productsPerPage,
         category: selectedCategories.length ? selectedCategories[selectedCategories.length - 1].slug : '',
         subCategory: selectedCategories.length > 1 ? selectedCategories[selectedCategories.length - 2].slug : '',
+        ...params,
+        ...(minPrice && { min_price: minPrice }),
+        ...(maxPrice && { max_price: maxPrice }),
         // order_by string
         // order_by string
         // lang string
@@ -106,14 +121,18 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
         // search  string
     }
 
-    try {
+    try
+    {
         console.log(productsParams);
+        console.log('params before server', params)
+        console.log('currentParams', productsParams)
 
         const response = await customRestApi.get('products', productsParams);
         const validatedData = validateWpCustomProductsData(response.data);
         let products: ProductType[] = [];
         let pagesCount = 0;
-        if (validatedData) {
+        if (validatedData)
+        {
             products = validatedData.data.items;
             const productsCount = validatedData.data.statistic?.products_count;
             pagesCount = Math.ceil(productsCount / productsPerPage);
@@ -123,9 +142,6 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
         if (pagesCount !== 0 && +page > pagesCount) return {
             notFound: true
         }
-
-        // console.log('statistic:', response.data)
-
 
         return {
             props: {
@@ -137,13 +153,13 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
             },
         }
 
-    } catch (error) {
+    } catch (error)
+    {
         console.error(error);
         return {
             props: {
                 error: {
-                    message: error,
-                    // status: error.response ? error.response.status : 500,
+                    message: 'Server Error',
                 },
             },
         }

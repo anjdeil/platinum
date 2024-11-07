@@ -2,11 +2,14 @@ import { FC, forwardRef, useCallback, useImperativeHandle, useState } from "reac
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { PhoneInput } from "react-international-phone";
 import 'react-international-phone/style.css';
 import { RegistrationFormSchema } from "@/types/pages/account/RegistrationForm/registrationForm";
 import { CustomForm, FormWrapper } from "@/styles/components";
 import { CustomInput } from "@/components/global/forms/CustomInput";
+import { WooCustomerReqType } from "@/types/services";
+import { PhoneInput } from "react-international-phone";
+import 'react-international-phone/style.css';
+import { CustomFormInput } from "@/components/global/forms/CustomFormInput";
 
 interface RegistrationFormProps
 {
@@ -48,53 +51,48 @@ export const RegistrationForm = forwardRef((props, ref) =>
 
     return (
         <CustomForm onSubmit={handleSubmit(onSubmit)}>
-      {/*       <FormWrapper>
+            {/*       <FormWrapper>
                 <CustomInput
+            <FormWrapper>
+                <CustomFormInput
                     fieldName="Imię"
                     name='name'
                     register={register}
                     errors={errors}
-                    setValue={setValue}
-                // initialValue={userFields ? userFields.first_name : null}
+                    setValue={setValue} inputTag={"input"} inputType={"number"}
                 />
 
-                <CustomInput
+                <CustomFormInput
                     fieldName="Nazwisko"
                     name='lastName'
                     register={register}
                     errors={errors}
-                    setValue={setValue}
-                />
-                <CustomInput
+                    setValue={setValue} inputTag={"input"} inputType={"number"} />
+                <CustomFormInput
                     fieldName="Adres e-mail"
                     name='email'
                     register={register}
                     errors={errors}
-                    setValue={setValue}
-                // initialValue={userFields ? userFields.email : null}
+                    setValue={setValue} inputTag={"input"} inputType={"number"}
                 />
-                {!isLoggedIn && <CustomInput
+                {!isLoggedIn && <CustomFormInput
                     fieldName="Hasło"
                     name='password'
                     register={register}
-                    errors={errors}
-                    isPassword={true}
+                    errors={errors} inputTag={"input"} inputType={"password"}
                 />}
-                {!isLoggedIn && <CustomInput
+                {!isLoggedIn && <CustomFormInput
                     fieldName="Powtórz hasło"
                     name='confirmPassword'
                     register={register}
-                    errors={errors}
-                    isPassword={true}
+                    errors={errors} inputTag={"input"} inputType={"password"}
                 />}
-                <CustomInput
+                <CustomFormInput
                     fieldName="Numer telefonu"
                     name='phoneNumber'
                     register={register}
                     errors={errors}
-                    isNumeric={true}
-                    setValue={setValue}
-                // initialValue={userFields ? userFields.billing.phone : null}
+                    setValue={setValue} inputTag={"input"} inputType={"number"}                // initialValue={userFields ? userFields.billing.phone : null}
                 />
                 <PhoneInput
                     defaultCountry="ua"
@@ -103,6 +101,6 @@ export const RegistrationForm = forwardRef((props, ref) =>
                 />
             </FormWrapper> */}
             <button type="submit" disabled={isSubmitting}>{isSubmitting ? 'Submitting...' : 'Submit'}</button>
-        </CustomForm>
+        </CustomForm >
     );
 });

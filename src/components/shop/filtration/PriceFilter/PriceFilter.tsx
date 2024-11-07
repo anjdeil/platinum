@@ -44,6 +44,7 @@ export const PriceFilter: FC<PriceFilter> = (props) =>
                 min={minPrice}
                 max={maxPrice}
                 onChange={handleSliderChange}
+                step={1}
             />
             <PriceFilterContainer>
                 <CustomInput value={currentMin} onChange={updateMinPrice} />

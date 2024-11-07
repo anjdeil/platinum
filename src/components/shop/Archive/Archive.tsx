@@ -1,10 +1,16 @@
 import { Container, FlexBox, PagesNavigation, Title } from "@/styles/components";
-import { FC, useState } from "react";
-import router, { useRouter } from "next/router";
+import { FC, useEffect, useState } from "react";
+import { CustomDataProductsStatisticType, CustomDataProductsType } from "@/types/services";
+import { ProductType } from "@/types/pages/shop";
+import router, { NextRouter, useRouter } from "next/router";
+import { Pagination } from "@mui/material";
+import { CustomSingleAccordion } from "@/components/global/accordions/CustomSingleAccordion/CustomSingleAccordion";
+import { CustomCheckbox } from "@/components/global/forms/CustomCheckbox";
+import { PriceFilter } from "../filtration/PriceFilter/PriceFilter";
+import { FilterPanel } from "../filtration/FilterPanel";
 import { ArchivePropsType } from "@/types/components/shop/archive";
 import { FilterNCategoriesHead, FilterNCategoriesMenu, FilterOverlay, GridBox, SortPanel } from "./styles";
 import CloseIcon from "@/components/global/icons/CloseIcon/CloseIcon";
-import { FilterPanel } from "../filtration/FilterPanel";
 import FilterIconButton from "@/components/global/buttons/FilterIconButton/FilterIconButton";
 import { ProductCardList } from "../ProductCardsList";
 import theme from "@/styles/theme";
@@ -13,7 +19,8 @@ import MobileCategoriesMenu from "@/components/global/popups/MobileCategoriesMen
 import SelectParentCategoryMobile from "../categories/SelectParentCategoryMobile/SelectParentCategoryMobile";
 import CategoriesMenu from "@/components/shop/categories/CategoriesMenu/CategoriesMenu";
 
-const switchPage = (page: number, maxPage: number) => {
+const switchPage = (page: number, maxPage: number) =>
+{
     if (maxPage < page) return;
     const { slugs, ...params } = router.query;
     if (!Array.isArray(slugs)) return;
@@ -30,7 +37,8 @@ const switchPage = (page: number, maxPage: number) => {
     })
 }
 
-export const switchCategory = (parentSlug: string, childSlug?: string) => {
+export const switchCategory = (parentSlug: string, childSlug?: string) =>
+{
     const { slugs, ...params } = router.query;
     const newSlugs = childSlug ? [parentSlug, childSlug] : [parentSlug];
 
@@ -43,10 +51,12 @@ export const switchCategory = (parentSlug: string, childSlug?: string) => {
     });
 }
 
-export const Archive: FC<ArchivePropsType> = ({ products, pagesCount, page, categories, statistic }) => {
+export const Archive: FC<ArchivePropsType> = ({ products, pagesCount, page, categories, statistic }) =>
+{
     const [isMenuVisible, setMenuVisible] = useState(false);
     const { isMobile, } = useResponsive();
-    const toggleMenu = () => {
+    const toggleMenu = () =>
+    {
         setMenuVisible(!isMenuVisible);
     };
 
@@ -59,21 +69,21 @@ export const Archive: FC<ArchivePropsType> = ({ products, pagesCount, page, cate
                 <FilterNCategoriesMenu visible={isMenuVisible}>
                     {isMenuVisible ?
                         <><FilterNCategoriesHead>
-                                <h4>FILTER</h4>
-                                <CloseIcon onClick={toggleMenu} />
-                            </FilterNCategoriesHead>
+                            <h4>FILTER</h4>
+                            <CloseIcon onClick={toggleMenu} />
+                        </FilterNCategoriesHead>
                             {!isMobile ?
                                 <CategoriesMenu switchCategory={switchCategory} selectedCategories={categories} shop={true} isMenuVisible={isMenuVisible} />
                                 :
                                 <>
                                     {categories.length !== 0 ?
                                         <SelectParentCategoryMobile
-                                        selectedCategories={categories}
-                                        switchCategory={switchCategory}
+                                            selectedCategories={categories}
+                                            switchCategory={switchCategory}
                                         />
                                         :
                                         <MobileCategoriesMenu padding="all" disableOverlay={true} width="100%" onClose={toggleMenu} switchCategory={switchCategory} />
-                                   }    
+                                    }
                                 </>
                             }</>
                         :
@@ -105,7 +115,7 @@ export const Archive: FC<ArchivePropsType> = ({ products, pagesCount, page, cate
                     {products.length && <ProductCardList products={products} />}
                 </div>
             </GridBox>
-        </Container>
+        </Container >
     )
 }
 

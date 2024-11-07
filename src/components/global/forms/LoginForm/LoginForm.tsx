@@ -7,7 +7,6 @@ import { useGetTokenMutation } from "@/store/rtk-queries/wpApi";
 import { isAuthErrorResponseType } from "@/utils/isAuthErrorResponseType";
 
 import { CustomForm, FormWrapper, FormWrapperBottom } from "@/styles/components";
-import { CustomInput } from "../CustomInput";
 import { CustomError } from "../CustomFormInput/styles";
 import { CustomFormInput } from "../CustomFormInput";
 

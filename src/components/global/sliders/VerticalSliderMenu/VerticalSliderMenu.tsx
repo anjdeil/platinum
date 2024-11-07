@@ -7,9 +7,9 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { NavLink } from '../../../menus/Nav/styles';
 import { NavButton, Slide, SliderWrapper } from './styles';
 import { MenuSkeleton } from '../../../menus/MenuSkeleton';
-import { wpMenuProps } from '@/types/menus/WpMenus';
-import { MenuItemsType } from '@/types/services/customApi/Menu/MenuItemsType';
 import { MenusContext } from '@/components/Layout/Layout';
+import { menuItemsType } from '@/types/services/wpCustomApi/menus';
+import { wpMenuProps } from '@/types/menus/WpMenus';
 
 
 const VerticalSlider: FC<wpMenuProps> = ({ menuId, skeleton }) =>
@@ -39,7 +39,7 @@ const VerticalSlider: FC<wpMenuProps> = ({ menuId, skeleton }) =>
     sliderRef.current?.slickNext();
   };
 
-  const menus: MenuItemsType[] | undefined = useContext(MenusContext);
+  const menus: menuItemsType[] | undefined = useContext(MenusContext);
   const menuItems = menus?.find(({ id }) => id === menuId)?.items;
 
   if (!menuItems && skeleton)

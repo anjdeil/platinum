@@ -3,7 +3,9 @@ import { HeaderContainerProps, HeaderWrapperProps } from "@/types/components/wid
 import styled from "@emotion/styled";
 
 export const HeaderWrapper = styled.div<HeaderWrapperProps>`
-    padding-block: 18.5px;    
+    height: 78px;
+    display: grid;
+    align-items: center;
     background: ${({ theme, backgroundColor = theme.background.primaryGradient }) => backgroundColor};
     position: relative;
     z-index: 5;
@@ -16,8 +18,10 @@ export const HeaderWrapper = styled.div<HeaderWrapperProps>`
 export const HeaderContainer = styled(Container) <HeaderContainerProps>`
     display: flex;
     justify-content: space-between;
-    gap: ${({ gap = '16px' }) => gap};
+    gap: ${({ gap = '30px' }) => gap};
     align-items: center;
+    overflow: visible;
+    width: 100%;
 `;
 
 export const HeaderNav = styled.div`

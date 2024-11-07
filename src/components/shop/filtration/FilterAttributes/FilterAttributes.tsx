@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { FilterAttributesWrap, FilterButton } from "./styles";
 import { FilterAttributesPropsType } from "@/types/components/shop/filters";
 
@@ -11,8 +11,9 @@ export const FilterAttributes: FC<FilterAttributesPropsType> = ({ attribute, onP
                 return (
                     <FilterButton
                         key={option.id + i}
-                        onClick={() => onParamsChange(attribute.slug, option.slug)}
-                        active={currentAttribute === option.slug}>
+                        onClick={() => onParamsChange(attribute.slug, option.slug, true)}
+                        active={currentAttribute.includes(option.slug)}
+                    >
                         {option.name}
                     </FilterButton>
                 )
