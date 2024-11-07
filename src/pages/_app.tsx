@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }: AppProps)
     const store = setupStore();
 
     return (
-        <NextIntlClientProvider locale={locale} messages={pageProps.messages}>
+        <NextIntlClientProvider locale={locale} messages={pageProps.messages} timeZone="America/New_York">
             <Provider store={store}>
                 <ThemeProvider theme={theme}>
                     <MuiThemeProvider theme={muiTheme}>
