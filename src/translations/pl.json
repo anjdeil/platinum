@@ -80,6 +80,12 @@
         "viewingThisProduct": "Jest obecnie oglądany: {count}",
         "fastShipping": "Szybka wysyłka",
         "freeDeliveryOver": "Darmowa dostawa od {price}",
-        "color": "Kolor"
+        "color": "Kolor",
+        "bestForYou": "Najlepsze dla ciebie",
+        "recommendProduct": "Polecane towary",
+        "bestSeller": "Bestsellery",
+        "newProduct": "Nowe Produkty",
+        "ourCategories": "Nasze kategorie",
+        "moreProduct": "Więcej produktu"
     }
 }
