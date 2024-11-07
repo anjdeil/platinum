@@ -17,17 +17,11 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
 {
     const { slugs, ...params } = context.query;
 
-    console.log('Slugs:', slugs);
-
     if (!slugs || !Array.isArray(slugs)) return { notFound: true };
 
     const page = findPageParam(slugs);
 
-    console.log('Page:', page);
-
     const categorySlugs = findCategoryParam(slugs);
-
-    console.log('Category Slugs:', categorySlugs);
 
     if (categorySlugs && categorySlugs.length > 2) return { notFound: true };
 
@@ -48,9 +42,7 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
         }
     }
 
-
     let selectedCategories: CategoryType[] = [];
-
 
     if (categorySlugs)
     {
@@ -72,8 +64,6 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
         });
 
         await Promise.all(categoryPromises);
-
-        console.log('selectedCategories:', JSON.stringify(selectedCategories, null, 2));
 
         if (selectedCategories.length < categorySlugs.length)
         {
@@ -102,6 +92,8 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
     const minPrice = params.min_price ? Number(params.min_price) : null;
     const maxPrice = params.max_price ? Number(params.max_price) : null;
 
+    console.log('sss', selectedCategories[selectedCategories.length - 1].slug);
+
     const productsParams: ProductParamsType = {
         page: page || "1",
         per_page: productsPerPage,
@@ -123,10 +115,6 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
 
     try
     {
-        console.log(productsParams);
-        console.log('params before server', params)
-        console.log('currentParams', productsParams)
-
         const response = await customRestApi.get('products', productsParams);
         const validatedData = validateWpCustomProductsData(response.data);
         let products: ProductType[] = [];

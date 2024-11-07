@@ -88,11 +88,13 @@ export const Archive: FC<ArchivePropsType> = ({ products, pagesCount, page, cate
                             }</>
                         :
                         <CategoriesMenu isMenuVisible={isMenuVisible} switchCategory={switchCategory} selectedCategories={categories} shop={true} />}
-                    {/* <h3>FILTERS</h3> */}
-                    <FilterPanel
-                        attributes={statistic.attributes}
-                        maxPrice={statistic.max_price}
-                        minPrice={statistic.min_price} />
+                    <h3>FILTERS</h3>
+                    <div style={{ margin: '50px auto' }}>
+                        <FilterPanel
+                            attributes={statistic.attributes}
+                            maxPrice={statistic.max_price}
+                            minPrice={statistic.min_price} />
+                    </div>
                 </FilterNCategoriesMenu>
                 <FilterOverlay visible={isMenuVisible} onClick={toggleMenu} />
                 <div>
@@ -101,7 +103,6 @@ export const Archive: FC<ArchivePropsType> = ({ products, pagesCount, page, cate
                             <FilterIconButton onClick={toggleMenu} width="48px" height="48px" padding='12px' backgroundColor={theme.colors.primary} />
                             <span>sort</span>
                         </FlexBox>
-                        <span>12</span>
                         <PagesNavigation
                             page={+page}
                             count={pagesCount}
