@@ -3,7 +3,7 @@ import Rating from "@/components/global/Rating/Rating";
 import { StyledButton, Title } from "@/styles/components";
 import { ProductCardPropsType } from "@/types/components/shop";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { FC, useState } from "react";
 import ColorVariations from "../ColorVariations/ColorVariations";
 import PaymentList from "../PaymentList/PaymentList";
 import ProductAvailable from "../ProductAvailable/ProductAvailable";
@@ -18,11 +18,36 @@ import ShippingList from "../ShippingList/ShippingList";
 import { AddToBasketWrapper, ProductFlexWrapper, ProductImageWrapper, ProductInfoWrapper, ProductTitleWrapper, ProductWrapper } from "./styles";
 import DetailsAccordion from "@/components/global/DetailsAccordeon/DetailsAccordion";
 
-const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) =>
+// Check default attributes
+// Check url params
+// Get attributes and use it for options
+// Check variations attributes by chosen option
+// Add lang option
+
+function getAttributesOptions(attr, attrName)
 {
-    const { name, stock_quantity, sku, min_price, max_price, images } = product;
+    if (!attr.length) return false;
+
+    const attribute = attr.filter(attr => attr.slug === attrName);
+    console.log('attribute[0]', attribute);
+    if (attribute[0].length && attribute[0]?.options.length)
+    {
+        console.log('attribute[0]', attribute[0]);
+
+        return attribute[0].options;
+    }
+}
+
+const ProductInfo: FC<ProductCardPropsType> = ({ product }) =>
+{
+    console.log(product);
+    const { name, stock_quantity, sku, min_price, max_price, images, attributes } = product;
+    console.log(getAttributesOptions(attributes, 'colour'));
+
     const t = useTranslations("Product");
     const [quantity, setQuantity] = useState<number>(1);
+    const colors = getAttributesOptions(attributes, "colour");
+    console.log('colors', colors);
 
     const sizeList = ['M', 'L', 'XL'];
     const [currentSize, setCurrentSize] = useState<string>(sizeList[0]);
