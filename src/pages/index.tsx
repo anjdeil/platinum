@@ -1,7 +1,9 @@
 
 import { MenusContext } from "@/components/Layout";
 import CustomProductList from "@/components/pages/product/CustomProductList/CustomProductList";
+import { useResponsive } from "@/hooks/useResponsive";
 import { useAppDispatch, useAppSelector } from "@/store";
+import { useGetCategoriesQuery } from "@/store/rtk-queries/wpCustomApi";
 import { popupToggle } from "@/store/slices/PopupSlice";
 import { Container, Title } from "@/styles/components";
 import axios from "axios";
@@ -33,6 +35,17 @@ export default function Home()
   const popup = useAppSelector(state => state.popup);
 
   { data && <p>{data}</p> }
+
+  const { data: categoriesData } = useGetCategoriesQuery({});
+  const { isMobile } = useResponsive();
+
+  const categories = categoriesData?.data
+    ? categoriesData?.data?.items.filter(category => category.parent_id === 0)
+    : [];
+
+  const visibleCategoriesCount = isMobile ? 2 : 6;
+  const displayedCategories = categories.slice(0, visibleCategoriesCount);
+
   return (
     <main>
       {/* <TestSelect /> */}

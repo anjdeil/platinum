@@ -84,6 +84,8 @@
         "bestForYou": "Best for you",
         "recommendProduct": "Recommend Product",
         "bestSeller": "Bestsellers",
-        "newProduct": "New Products"
+        "newProduct": "New Products",
+        "ourCategories": "Our categories",
+        "moreProduct": "More product"
     }
 }
