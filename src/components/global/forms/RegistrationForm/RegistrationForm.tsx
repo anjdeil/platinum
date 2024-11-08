@@ -28,6 +28,7 @@ interface FormHandle
 }
 
 // Next
+// Try to get token from SSR
 // useImperativeHandle(ref, () => ({ submit: () => handleSubmit(onSubmit)() }));
 export const RegistrationForm: FC = () =>
 {
