@@ -15,7 +15,8 @@ import MobileHeader from '../widgets/MobileHeader/MobileHeader';
 import TopBar from '../widgets/TopBar/TopBar';
 import { useFetchCustomerQuery } from '@/store/rtk-queries/wooCustomApi';
 import { setCategories, setLoading } from '@/store/slices/categoriesSlice';
-import CategoriesMenuDen from '../shop/categories/CategoriesMenu/CategoriesMenu';
+import CategoriesMenu from '../shop/categories/CategoriesMenu/CategoriesMenu';
+
 
 export const MenusContext = createContext<WpMenuResponseType[] | []>([]);
 const currency = 'USD';
@@ -68,7 +69,7 @@ export default function Layout({ children }: { children: React.ReactNode })
                 {isMobile && (<BottomMenu />)}
                 {children}
                 <Footer />
-                <CategoriesMenuDen isMenuVisible={true} shop={false} />
+                <CategoriesMenu isMenuVisible={true} shop={false} />
             </MenusContext.Provider >
         </Box >
     );

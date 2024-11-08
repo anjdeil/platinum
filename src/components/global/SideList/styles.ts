@@ -56,7 +56,8 @@ export const StyledListItem = styled.li<StyledListItemProps>`
         text-transform: uppercase;
         font-size: ${({ fontSize = '16px' }) => fontSize};
         line-height: ${({ lineHeight = '24px' }) => lineHeight};
-        font-weight: ${({ fontWeight = 400 }) => fontWeight};    
+        font-weight: ${({ fontWeight = 400 }) => fontWeight};  
+        text-align: left;  
 
         @media ${({ theme }) => theme.media.large} {
             padding: 12px 16px;

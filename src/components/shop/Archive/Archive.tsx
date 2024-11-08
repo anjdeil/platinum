@@ -18,9 +18,10 @@ import { useResponsive } from "@/hooks/useResponsive";
 import MobileCategoriesMenu from "@/components/global/popups/MobileCategoriesMenu/MobileCategoriesMenu";
 import SelectParentCategoryMobile from "../categories/SelectParentCategoryMobile/SelectParentCategoryMobile";
 import CategoriesMenu from "@/components/shop/categories/CategoriesMenu/CategoriesMenu";
+import { mockCategories } from "../categories/mock";
+import CategoryType from "@/types/pages/shop/categories";
 
-const switchPage = (page: number, maxPage: number) =>
-{
+const switchPage = (page: number, maxPage: number) => {
     if (maxPage < page) return;
     const { slugs, ...params } = router.query;
     if (!Array.isArray(slugs)) return;
@@ -37,8 +38,7 @@ const switchPage = (page: number, maxPage: number) =>
     })
 }
 
-export const switchCategory = (parentSlug: string, childSlug?: string) =>
-{
+export const switchCategory = (parentSlug: string, childSlug?: string) => {
     const { slugs, ...params } = router.query;
     const newSlugs = childSlug ? [parentSlug, childSlug] : [parentSlug];
 
@@ -51,14 +51,32 @@ export const switchCategory = (parentSlug: string, childSlug?: string) =>
     });
 }
 
-export const Archive: FC<ArchivePropsType> = ({ products, pagesCount, page, categories, statistic }) =>
-{
+export const Archive: FC<ArchivePropsType> = ({ products, pagesCount, page, categoriesSlugs, statistic }) => {
     const [isMenuVisible, setMenuVisible] = useState(false);
     const { isMobile, } = useResponsive();
-    const toggleMenu = () =>
-    {
+    const toggleMenu = () => {
         setMenuVisible(!isMenuVisible);
     };
+
+     /*    const categories: CategoryType[] | undefined = useAppSelector((state) => state.categoriesSlice.categories); */
+
+     const jsonObj = JSON.parse(mockCategories)
+     const categoriesItems = {
+         items: jsonObj.data.items.map((item: CategoryType) => ({
+             id: item.id,
+             parent_id: item.parent_id,
+             name: item.name,
+             slug: item.slug,
+             description: item.description,
+             count: item.count,
+             language_code: item.language_code
+         }))
+     };
+    const AllCategories: CategoryType[] = categoriesItems.items
+
+    const categories: CategoryType[]   = AllCategories.filter((category: CategoryType) =>
+        categoriesSlugs.includes(category.slug)
+      );
 
     return (
         <Container>
@@ -87,7 +105,11 @@ export const Archive: FC<ArchivePropsType> = ({ products, pagesCount, page, cate
                                 </>
                             }</>
                         :
-                        <CategoriesMenu isMenuVisible={isMenuVisible} switchCategory={switchCategory} selectedCategories={categories} shop={true} />}
+                        <SelectParentCategoryMobile
+                            selectedCategories={categories}
+                            switchCategory={switchCategory}
+                        />
+                       /*  <CategoriesMenu isMenuVisible={isMenuVisible} switchCategory={switchCategory} selectedCategories={categories} shop={true} /> */}
                     <h3>FILTERS</h3>
                     <div style={{ margin: '50px auto' }}>
                         <FilterPanel

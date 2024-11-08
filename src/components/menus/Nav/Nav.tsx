@@ -23,6 +23,8 @@ const Nav: FC<wpMenuProps> = ({
     const menus: menuItemsType[] | undefined = useContext(MenusContext);
     const menuItems = menus?.find(({ id }) => id === menuId)?.items;
 
+    console.log(menuItems);
+    
     if (!menuItems && skeleton)
     {
         return (

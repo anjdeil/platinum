@@ -29,6 +29,7 @@ const SelectParentCategoryMobile: FC<SelectParentCategoryMobileProps> = ({ selec
     const categories: CategoryType[] = categoriesItems.items
 
     //-----------------------------------
+    selectedCategories
 
     const parent = selectedCategories[0]
     const children = categories.filter((category: CategoryType) => {

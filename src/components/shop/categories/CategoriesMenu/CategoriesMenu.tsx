@@ -14,7 +14,7 @@ import { CategoriesMenuPropsType } from "@/types/components/shop/categories/cate
 
 
 const CategoriesMenu: FC<CategoriesMenuPropsType> = ({ switchCategory, selectedCategories, shop, isMenuVisible }) => {
-       /*    const categories: CategoryType[] | undefined = useAppSelector((state) => state.categoriesSlice.categories); */
+    /*    const categories: CategoryType[] | undefined = useAppSelector((state) => state.categoriesSlice.categories); */
     //mockdata
     const jsonObj = JSON.parse(mockCategories)
     const categoriesItems = {
@@ -65,14 +65,15 @@ const CategoriesMenu: FC<CategoriesMenuPropsType> = ({ switchCategory, selectedC
                     <List>
                         {categories.map((category) => (
                             <li key={category.id}>
-                                <LinkWrapper href={category.url}
+                                <LinkWrapper
+                                    href={category.url}
                                     onMouseEnter={() => dispatch(setCategory(category.id))}
                                     onClick={onLinkClick}
-                                    isActive={selectedCategories?.some(selected => selected.id === category.id) || false}
-                                    isActiveHover={activeCategoryHover?.id === category.id || false}
+                                    isactive={selectedCategories?.some(selected => selected.id === category.id) ? true : undefined}
+                                    isactivehover={activeCategoryHover?.id === category.id ? true : undefined}
                                 >
                                     <span>
-                                          {category.subcategories && category.subcategories.length > 0 && <ForwardArrow />}
+                                        {category.subcategories && category.subcategories.length > 0 && <ForwardArrow />}
                                         {category.categoryName}
                                     </span>
                                 </LinkWrapper>
@@ -85,10 +86,10 @@ const CategoriesMenu: FC<CategoriesMenuPropsType> = ({ switchCategory, selectedC
                         <List>
                             {activeCategoryHover?.subcategories.map((subItem) => (
                                 <li key={subItem.id}>
-                                    <LinkWrapper 
-                                    href={subItem.url} 
-                                    onClick={onLinkClick}
-                                    isActive={selectedCategories?.some(selected => selected.id === subItem.id) || false}>
+                                    <LinkWrapper
+                                        href={subItem.url}
+                                        onClick={onLinkClick}
+                                        isactive={selectedCategories?.some(selected => selected.id === subItem.id) || false}>
                                         <span>{subItem.categoryName}</span>
                                     </LinkWrapper>
                                 </li>

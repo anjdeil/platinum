@@ -8,7 +8,7 @@ import { validateWpCustomCategoriesData, validateWpCustomCategoryData } from "@/
 import CategoryType, { CategorySchema } from "@/types/pages/shop/categories";
 import { validateWpCustomProductsData } from "@/utils/zodValidators/validateWpCustomProductsData";
 
-function findCategoryParam(slugs: string[]): string[] | null
+function findCategoryParam(slugs: string[]): string[] 
 {
     return slugs.filter(slug => slug !== 'page' && !/^\d+$/.test(slug));
 }
@@ -17,22 +17,35 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
 {
     const { slugs, ...params } = context.query;
 
-    if (!slugs || !Array.isArray(slugs)) return { notFound: true };
+    console.log('Initial slugs:', slugs);
 
-    const page = findPageParam(slugs);
+    if (!slugs || !Array.isArray(slugs)) {
+        console.log('slugs is not an array or does not exist');
+        return { notFound: true };
+    }
 
-    const categorySlugs = findCategoryParam(slugs);
-
-    if (categorySlugs && categorySlugs.length > 2) return { notFound: true };
-
+    const page =  findPageParam(slugs);
+  
     if (!page) return { notFound: true };
 
-    if (page === '1' || page === '0')
-    {
+    const categorySlugs = findCategoryParam(slugs);
+    console.log('Category Slugs:', categorySlugs);
+
+    if (categorySlugs && categorySlugs.length > 2) {
+        console.log('Too many category slugs');
+        return { notFound: true };
+    }
+
+    if (categorySlugs && categorySlugs.length === 0) {
+        console.log('No category slugs found');
+        return { notFound: true };
+    }
+
+    if (page === '1' || page === '0') {
         const pageIndex = slugs.indexOf('page');
-        if (pageIndex !== -1)
-        {
+        if (pageIndex !== -1) {
             const newPath = slugs.slice(0, pageIndex).join('/');
+            console.log('Redirecting to:', `/product-category/${newPath}`);
             return {
                 redirect: {
                     destination: `/product-category/${newPath}`,
@@ -42,7 +55,7 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
         }
     }
 
-    let selectedCategories: CategoryType[] = [];
+   /*  let selectedCategories: CategoryType[] = [];
 
     if (categorySlugs)
     {
@@ -85,20 +98,20 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
     } else
     {
         console.log('No category slugs found.');
-    }
+    } */
 
     /** Indicate the products number*/
     const productsPerPage = 11;
     const minPrice = params.min_price ? Number(params.min_price) : null;
     const maxPrice = params.max_price ? Number(params.max_price) : null;
 
-    console.log('sss', selectedCategories[selectedCategories.length - 1].slug);
+    
 
     const productsParams: ProductParamsType = {
         page: page || "1",
         per_page: productsPerPage,
-        category: selectedCategories.length ? selectedCategories[selectedCategories.length - 1].slug : '',
-        subCategory: selectedCategories.length > 1 ? selectedCategories[selectedCategories.length - 2].slug : '',
+        category: categorySlugs[categorySlugs?.length - 1],
+       /*  subCategory: selectedCategories.length > 1 ? selectedCategories[selectedCategories.length - 2].slug : '', */
         ...params,
         ...(minPrice && { min_price: minPrice }),
         ...(maxPrice && { max_price: maxPrice }),
@@ -112,6 +125,8 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
         max_price: '200'
         // search  string
     }
+
+    console.log('Products Params:', productsParams);
 
     try
     {
@@ -136,7 +151,7 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
                 products,
                 pagesCount,
                 page,
-                categories: selectedCategories,
+                categoriesSlugs: categorySlugs,
                 statistic: validatedData?.data.statistic
             },
         }

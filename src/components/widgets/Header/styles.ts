@@ -1,5 +1,6 @@
 import { Container } from "@/styles/components";
 import { HeaderContainerProps, HeaderWrapperProps } from "@/types/components/widgets/header";
+import { NavLinkProps } from "@/types/menus/nav";
 import styled from "@emotion/styled";
 
 export const HeaderWrapper = styled.div<HeaderWrapperProps>`
@@ -10,9 +11,31 @@ export const HeaderWrapper = styled.div<HeaderWrapperProps>`
     position: relative;
     z-index: 5;
 
-    @media ${({ theme }) => theme.media.large} {
-        padding-block: 16px;
+   
+`;
+export const HeaderCatalog = styled.div<NavLinkProps>`
+
+    display: inline-block;
+    font: ${({ theme }) => theme.fonts.bodyMiddleReg}; 
+    font-size: ${({ fontSize }) => fontSize};
+    text-decoration: none;
+    text-align: ${({ textalign = "center" }) => textalign};
+    transition: all 0.2s ease;
+    color: ${({ theme, color = theme.colors.white }) => color};
+    text-transform: uppercase;
+    transition: all 0.2s ease;
+    cursor: pointer;
+
+   
+
+    &:hover {
+        opacity: 0.7;
     }
+
+    @media ${({ theme }) => theme.media.large} {
+        font-size: ${({ fontSize = '16px' }) => (fontSize)};
+    }
+    margin-right: 20px;
 `;
 
 export const HeaderContainer = styled(Container) <HeaderContainerProps>`
@@ -25,6 +48,8 @@ export const HeaderContainer = styled(Container) <HeaderContainerProps>`
 `;
 
 export const HeaderNav = styled.div`
+display: flex;
+align-items: center;
     flex-grow: 1;
 `;
 

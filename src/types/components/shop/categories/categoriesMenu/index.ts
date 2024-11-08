@@ -26,10 +26,10 @@ export const ListWrapperPropsSchema = z.object({
     isVisible: z.boolean().optional(),
     isSubcategories: z.boolean().optional(),
 });
+
 export const LinkWrapperPropsSchema = z.object({
-    isActive: z.boolean(),
-    isActiveHover: z.boolean().optional(),
-   
+    isactive: z.boolean().optional(),
+    isactivehover: z.boolean().optional(),
 });
 
 export const CategoriesMenuPropsSchema = z.object({
