@@ -1,6 +1,6 @@
 
 import { MenusContext } from "@/components/Layout";
-import CategoriesBlock from "@/components/pages/main/CategoriesBlock/CategoriesBlock";
+import CustomProductList from "@/components/pages/product/CustomProductList/CustomProductList";
 import { useResponsive } from "@/hooks/useResponsive";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { useGetCategoriesQuery } from "@/store/rtk-queries/wpCustomApi";
@@ -53,11 +53,16 @@ export default function Home()
         <Title as='h2' fontSize={"20px"}>Symbol of {currency.code} currency isQQ {currency.symbol}</Title>
         <Title as='h2' fontSize={"20px"}>Symbol of {language.code} language isQQ {language.symbol}</Title>
         <button onClick={() => dispatch(popupToggle('categories-menu'))}>Categories</button>
-        <CategoriesBlock categories={displayedCategories} />
+        <CustomProductList title="bestSeller" productIds={Bestsellers} />
+        <CustomProductList title="newProduct" productIds={Bestsellers} />
       </Container>
-      <Title as='h2' fontSize={"20px"}>Symbol of {currency.code} currency isQQ {currency.symbol}</Title>
-      <Title as='h2' fontSize={"20px"}>Symbol of {language.code} language isQQ {language.symbol}</Title>
-      <button onClick={() => dispatch(popupToggle('categories-menu'))}>Categories</button>
     </main >
   )
 }
+
+const Bestsellers = [
+  24707,
+  24777,
+  24737,
+  24717,
+];

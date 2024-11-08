@@ -13,8 +13,6 @@ const DetailsAccordion: FC<NotificationPropsType> = ({ summary, children }) =>
 {
     const [isOpen, setIsOpen] = useState(false);
 
-    console.log('render...');
-
     const handleToggle = () =>
     {
         setIsOpen(prevState => !prevState);

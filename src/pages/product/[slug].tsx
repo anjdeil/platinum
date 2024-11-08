@@ -1,4 +1,5 @@
 import Breadcrumbs from "@/components/global/Breadcrumbs/Breadcrumbs";
+import CustomProductList from "@/components/pages/product/CustomProductList/CustomProductList";
 import ProductInfo from "@/components/pages/product/ProductInfo/ProductInfo";
 import { useGetProductQuery } from "@/store/rtk-queries/wpCustomApi";
 import { Container } from "@/styles/components";
@@ -20,7 +21,7 @@ export default function ProductPage()
 
         }
     }, [data])
-
+  
     return (
         <Container>
             <Box sx={{ display: 'flex', justifyContent: 'flex-start', marginTop: '24px' }}>
@@ -33,6 +34,14 @@ export default function ProductPage()
                 />
             </Box>
             {product && <ProductInfo product={product} />}
+            <CustomProductList title="recommendProduct" productIds={recommendProducts} />
         </Container>
     );
 }
+
+const recommendProducts = [
+  24707,
+  24777,
+  24737,
+  24717,
+];

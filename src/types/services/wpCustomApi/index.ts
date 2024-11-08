@@ -11,6 +11,7 @@ const QueryParamsSchema = z.object({
     LangParamSchema,
     include: z.array(z.number()).optional(),
     slug: z.string().optional(),
+    ids: z.array(z.number()).optional(),
     search: z.string().optional(),
     lang: z.string().optional()
 }).partial();

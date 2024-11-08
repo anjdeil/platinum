@@ -1,12 +1,12 @@
 import
-    {
-        CustomDataCategoriesType,
-        CustomDataMenuResponseType,
-        CustomDataProductsType,
-        CustomDataProductType,
-        CustomDataThemeOptionsType,
-        QueryParamsType
-    } from '@/types/services';
+{
+    CustomDataCategoriesType,
+    CustomDataMenuResponseType,
+    CustomDataProductsType,
+    CustomDataProductType,
+    CustomDataThemeOptionsType,
+    QueryParamsType
+} from '@/types/services';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const wpCustomRtkApi = createApi({
