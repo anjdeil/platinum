@@ -1,14 +1,14 @@
-import { FC, forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useState } from "react";
+import { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import 'react-international-phone/style.css';
 import { useRegisterCustomerMutation } from "@/store/rtk-queries/wooCustomApi";
-import { CustomFormInput } from "../CustomFormInput/CustomFormInput";
 import { useRouter } from "next/router";
 import { RegistrationFormSchema } from "@/types/components/global/forms/registrationForm";
 import { CustomForm, FormWrapper, FormWrapperBottom } from "./styles";
 import { isAuthErrorResponseType } from "@/utils/isAuthErrorResponseType";
+import { CustomFormInput } from "../CustomFormInput";
 import { CustomError } from "../CustomFormInput/styles";
 
 interface RegistrationFormProps
@@ -87,7 +87,6 @@ export const RegistrationForm: FC = () =>
     return (
         <CustomForm onSubmit={handleSubmit(onSubmit)}>
             <FormWrapper>
-                {/* comment */}
                 <CustomFormInput
                     fieldName="Imię"
                     name='name'

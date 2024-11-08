@@ -51,11 +51,21 @@ export const CustomInputStyle = styled.div<CustomInputStyleProps>`
 
         input,
         input.react-international-phone-input {
+            height: 100%;
+            width: 100%;
             padding-left: ${({ isPhone }) => isPhone ? '60px' : '15px'};
-        }
+            background-color: ${({ theme }) => theme.background.formElements};
+            border: none;
+            border-radius: 10px;
 
-   
+             &:focus {
+                outline: 1px solid ${({ theme, isError }) => isError ? theme.colors.error : theme.colors.primary};
+                box-shadow: ${({ theme }) => theme.customShadows.primaryShadow};
+            }
+
+        }
 `;
+
 export const Input = styled.input<CustomInputProps>`
     ${(props) => (props.as === 'textarea' ? 'min-height: 150px;' : '')};
     margin-right: ${({ isCheckbox }) => isCheckbox ? '15px' : '0'}; 

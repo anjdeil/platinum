@@ -48,7 +48,7 @@ export const CustomFormInput: FC<CustomFormInputType> = (
                     {inputType === 'phone' ?
                         <PhoneInput
                             defaultCountry="pl"
-                            {...register(name)}
+                        // {...register(name)}
                         // onChange={(value) => { if (setValue) setValue('phoneNumber', value, { shouldValidate: true }); }}
                         />
                         : <Input
