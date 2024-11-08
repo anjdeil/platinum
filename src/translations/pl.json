@@ -68,5 +68,24 @@
     },
     "Search": {
         "Search": "Wyszukiwanie"
+    },
+    "Product": {
+        "addToBasket": "Dodaj do koszyka",
+        "sortBy": "Sortuj według",
+        "productList": "Lista produktów",
+        "notifyWhenAvailable": "Powiadom, gdy będzie dostępne",
+        "theEndOfThePromotion": "Koniec promocji",
+        "available": "Dostępny: {count} szt",
+        "notAvailable": "Nie dostępny",
+        "viewingThisProduct": "Jest obecnie oglądany: {count}",
+        "fastShipping": "Szybka wysyłka",
+        "freeDeliveryOver": "Darmowa dostawa od {price}",
+        "color": "Kolor",
+        "bestForYou": "Najlepsze dla ciebie",
+        "recommendProduct": "Polecane towary",
+        "bestSeller": "Bestsellery",
+        "newProduct": "Nowe Produkty",
+        "ourCategories": "Nasze kategorie",
+        "moreProduct": "Więcej produktu"
     }
 }

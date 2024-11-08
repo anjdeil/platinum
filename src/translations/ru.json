@@ -68,5 +68,24 @@
     },
     "Search": {
         "Search": "Поиск"
+    },
+    "Product": {
+        "addToBasket": "Добавить в корзину",
+        "sortBy": "Сортировать по",
+        "productList": "Список товаров",
+        "notifyWhenAvailable": "Уведомить, когда будет доступен",
+        "theEndOfThePromotion": "Конец акции",
+        "available": "Доступно: {count} шт",
+        "notAvailable": "Недоступно",
+        "viewingThisProduct": "Сейчас просматривают: {count}",
+        "fastShipping": "Быстрая доставка",
+        "freeDeliveryOver": "Бесплатная доставка от {price}",
+        "color": "Цвет",
+        "bestForYou": "Лучшее для вас",
+        "recommendProduct": "Рекомендуємые товары",
+        "bestSeller": "Бестселлеры",
+        "newProduct": "Новинки",
+        "ourCategories": "Наши категории",
+        "moreProduct": "Больше товара"
     }
 }

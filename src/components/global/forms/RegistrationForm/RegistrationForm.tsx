@@ -4,12 +4,12 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import 'react-international-phone/style.css';
 import { useRegisterCustomerMutation } from "@/store/rtk-queries/wooCustomApi";
-import { CustomInput } from "../CustomInput/CustomInput";
+import { CustomFormInput } from "../CustomFormInput/CustomFormInput";
 import { useRouter } from "next/router";
 import { RegistrationFormSchema } from "@/types/components/global/forms/registrationForm";
 import { CustomForm, FormWrapper, FormWrapperBottom } from "./styles";
 import { isAuthErrorResponseType } from "@/utils/isAuthErrorResponseType";
-import { CustomError } from "../CustomInput/styles";
+import { CustomError } from "../CustomFormInput/styles";
 
 interface RegistrationFormProps
 {
@@ -87,7 +87,8 @@ export const RegistrationForm: FC = () =>
     return (
         <CustomForm onSubmit={handleSubmit(onSubmit)}>
             <FormWrapper>
-                <CustomInput
+                {/* comment */}
+                <CustomFormInput
                     fieldName="Imię"
                     name='name'
                     register={register}
@@ -95,7 +96,7 @@ export const RegistrationForm: FC = () =>
                     // setValue={setValue}
                     inputTag={"input"}
                     inputType={"text"} />
-                <CustomInput
+                <CustomFormInput
                     fieldName="Nazwisko"
                     name='lastName'
                     register={register}
@@ -103,7 +104,7 @@ export const RegistrationForm: FC = () =>
                     // setValue={setValue}
                     inputTag={"input"}
                     inputType={"text"} />
-                <CustomInput
+                <CustomFormInput
                     fieldName="Adres e-mail"
                     name='email'
                     register={register}
@@ -111,7 +112,7 @@ export const RegistrationForm: FC = () =>
                     // setValue={setValue}
                     inputTag={"input"}
                     inputType={"text"} />
-                <CustomInput
+                <CustomFormInput
                     fieldName="phone number"
                     name='phoneNumber'
                     register={register}
@@ -121,7 +122,7 @@ export const RegistrationForm: FC = () =>
                     inputType={"phone"}
                 // isPhone={true}
                 />
-                <CustomInput
+                <CustomFormInput
                     fieldName="Kraj / region"
                     name='country'
                     register={register}
@@ -129,7 +130,7 @@ export const RegistrationForm: FC = () =>
                     // setValue={setValue}
                     inputTag={"input"}
                     inputType={"text"} />
-                <CustomInput
+                <CustomFormInput
                     fieldName="Miasto"
                     name='city'
                     register={register}
@@ -137,7 +138,7 @@ export const RegistrationForm: FC = () =>
                     // setValue={setValue}
                     inputTag={"input"}
                     inputType={"text"} />
-                <CustomInput
+                <CustomFormInput
                     fieldName="Ulica"
                     name='address1'
                     register={register}
@@ -145,7 +146,7 @@ export const RegistrationForm: FC = () =>
                     // setValue={setValue}
                     inputTag={"input"}
                     inputType={"text"} />
-                <CustomInput
+                <CustomFormInput
                     fieldName="Building number"
                     name='address2'
                     register={register}
@@ -153,7 +154,7 @@ export const RegistrationForm: FC = () =>
                     // setValue={setValue}
                     inputTag={"input"}
                     inputType={"number"} />
-                <CustomInput
+                <CustomFormInput
                     fieldName="№ apartment/office"
                     name='apartmentNumber'
                     register={register}
@@ -161,7 +162,7 @@ export const RegistrationForm: FC = () =>
                     // setValue={setValue}
                     inputTag={"input"}
                     inputType={"number"} />
-                <CustomInput
+                <CustomFormInput
                     fieldName="Kod pocztowy"
                     name='postCode'
                     register={register}
@@ -169,7 +170,7 @@ export const RegistrationForm: FC = () =>
                     // setValue={setValue}
                     inputTag={"input"}
                     inputType={"number"} />
-                {!isLoggedIn && <CustomInput
+                {!isLoggedIn && <CustomFormInput
                     fieldName="Hasło"
                     name='password'
                     register={register}
@@ -177,7 +178,7 @@ export const RegistrationForm: FC = () =>
                     // setValue={setValue}
                     inputTag={"input"}
                     inputType={"password"} />}
-                {!isLoggedIn && <CustomInput
+                {!isLoggedIn && <CustomFormInput
                     fieldName="Powtórz hasło"
                     name='confirmPassword'
                     register={register}
@@ -185,7 +186,7 @@ export const RegistrationForm: FC = () =>
                     // setValue={setValue}
                     inputTag={"input"}
                     inputType={"password"} />}
-                <CustomInput
+                <CustomFormInput
                     fieldName="Wyrażam zgodę na przetwarzanie danych osobowych."
                     name='terms'
                     register={register}

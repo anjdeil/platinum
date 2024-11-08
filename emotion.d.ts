@@ -24,6 +24,7 @@ declare module '@emotion/react' {
             shadow: string;
             error: string;
             border: string;
+            lightBorder: string;
             new: string,
             best: string,
             hot: string,
@@ -42,6 +43,9 @@ declare module '@emotion/react' {
             success: string;
             warning: string;
             formElements: string;
+            resetButton: string;
+            resetButtonHover: string;
+            resetButtonActive: string;
         };
         spacing: {
             small: string;

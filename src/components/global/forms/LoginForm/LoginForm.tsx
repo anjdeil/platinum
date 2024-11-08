@@ -3,10 +3,10 @@ import { CustomForm, FormWrapper, FormWrapperBottom } from "../RegistrationForm/
 import { LoginFormSchema, LoginFormType } from "@/types/components/global/forms/LoginForm";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CustomInput } from "../CustomInput";
 import { useGetTokenMutation } from "@/store/rtk-queries/wpApi";
 import { isAuthErrorResponseType } from "@/utils/isAuthErrorResponseType";
-import { CustomError } from "../CustomInput/styles";
+import { CustomError } from "../CustomFormInput/styles";
+import { CustomFormInput } from "../CustomFormInput";
 
 
 export const LoginForm: FC = () =>
@@ -38,7 +38,7 @@ export const LoginForm: FC = () =>
     return (
         <CustomForm onSubmit={handleSubmit(onSubmit)}>
             <FormWrapper>
-                <CustomInput
+                <CustomFormInput
                     fieldName="Adres e-mail"
                     name='username'
                     register={register}
@@ -46,7 +46,7 @@ export const LoginForm: FC = () =>
                     // setValue={setValue}
                     inputTag={"input"}
                     inputType={"text"} />
-                <CustomInput
+                <CustomFormInput
                     fieldName="Hasło"
                     name='password'
                     register={register}

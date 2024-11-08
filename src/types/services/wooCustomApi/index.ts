@@ -1,4 +1,4 @@
-import { lineOrderItemsSchema } from "@/types/store/reducers/cartSlice";
+import { lineOrderItemsSchema } from "@/types/store/reducers/сartSlice";
 import { z } from "zod";
 
 export const WooCustomerSchema = z.object({
@@ -199,7 +199,22 @@ export const OrderTypeSchema = z.object({
     _links: z.any().optional(),
 });
 
+const ProductParamsSchema = z.object({
+    page: z.string().optional(),
+    per_page: z.number().optional(),
+    order_by: z.string().optional(),
+    order: z.string().optional(),
+    lang: z.string().optional(),
+    ids: z.string().optional(),
+    slugs: z.string().optional(),
+    category: z.string().optional(),
+    min_price: z.number().optional(),
+    max_price: z.number().optional(),
+    search: z.string().optional(),
+})
+
 export type OrderType = z.infer<typeof OrderTypeSchema>;
 export type AddressType = z.infer<typeof AddressTypeSchema>;
 export type WooCustomerType = z.infer<typeof WooCustomerSchema>;
 export type WooCustomerReqType = z.infer<typeof WooCustomerReqSchema>;
+export type ProductParamsType = z.infer<typeof ProductParamsSchema>;

@@ -33,7 +33,6 @@ export class WpRestApi
 
         while (attempt < maxRetries)
         {
-            console.log(`Attempt to fetch ${this._apiBase + (v2 !== false ? wpV2 : '') + url}`);
             try
             {
                 const response = await axios({
