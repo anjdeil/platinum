@@ -177,3 +177,7 @@ export const CustomError = styled.p`
         margin-top: 10px;
     }
 `;
+
+export const CustomSuccess = styled(CustomError)`
+    color: ${({ theme }) => theme.colors.success};
+`;

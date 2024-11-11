@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useMemo, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -9,9 +9,21 @@ import { RegistrationFormSchema } from "@/types/components/global/forms/registra
 import { CustomForm, FormWrapper, FormWrapperBottom } from "./styles";
 import { isAuthErrorResponseType } from "@/utils/isAuthErrorResponseType";
 import { CustomFormInput } from "../CustomFormInput";
-import { CustomError } from "../CustomFormInput/styles";
+import { CustomError, CustomSuccess } from "../CustomFormInput/styles";
 import { StyledButton } from "@/styles/components";
 import theme from "@/styles/theme";
+import { validateWooCustomer } from "@/utils/zodValidators/validateWooCustomer";
+import { useCookies } from 'react-cookie';
+import { useGetTokenMutation } from "@/store/rtk-queries/wpApi";
+import { decodeJwt } from 'jose';
+
+/**
+ * @todo
+ * Add cookie with right date
+ * Check if the cookie is redirect page
+ * Phone input validation
+ * Other styles
+ */
 
 interface RegistrationFormProps
 {
@@ -24,18 +36,13 @@ interface RegistrationFormProps
 const isCheckout = false;
 const isShipping = false;
 
-interface FormHandle
-{
-    submit: () => void;
-}
-
-// Next
-// Try to get token from SSR
 // useImperativeHandle(ref, () => ({ submit: () => handleSubmit(onSubmit)() }));
 export const RegistrationForm: FC = () =>
 {
     const router = useRouter();
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+    const [customError, setCustomError] = useState<string>('');
+    const [cookies, setCookie, removeCookie] = useCookies(['authToken']);
 
     useEffect(() =>
     {
@@ -46,18 +53,21 @@ export const RegistrationForm: FC = () =>
         [isLoggedIn, isCheckout, isShipping]);
     type RegistrationFormType = z.infer<typeof formSchema>;
 
-    const [registerCustomerMutation, { data, error, isLoading }] = useRegisterCustomerMutation();
-
     const { register, handleSubmit, formState: { errors, isSubmitting, isSubmitSuccessful }, setValue, reset } = useForm<RegistrationFormType>({
         resolver: zodResolver(formSchema)
     });
 
+    const [registerCustomerMutation, { error }] = useRegisterCustomerMutation();
+    const [fetchToken, { error: tokenError }] = useGetTokenMutation();
+
     async function onSubmit(formData: RegistrationFormType)
     {
-        const data = {
+        setCustomError('');
+        const reqBody = {
             email: formData.email,
             first_name: formData.name,
             last_name: formData.lastName,
+            password: formData.password,
             role: 'customer',
             username: formData.email,
             billing: {
@@ -70,20 +80,54 @@ export const RegistrationForm: FC = () =>
                 postcode: formData.postCode,
                 country: formData.country,
                 email: formData.email,
-                phone: '+48 888 888 888',
+                phone: formData.phoneNumber
             }
         }
 
         try
         {
-            const response = await registerCustomerMutation(data);
-            if (response)
-                console.log(response);
-        } catch (error)
-        {
-            console.error(error);
-        }
+            /** Register a new customer */
+            const resp = await registerCustomerMutation(reqBody);
+            if (!resp.data) throw new Error('Invalid customer response');
 
+            /** Check type of the response */
+            const isResponseValid = await validateWooCustomer(resp.data);
+            if (!isResponseValid) throw new Error('Invalid customer response');
+
+            /** Fetching customer token */
+            const tokenResp = await fetchToken({
+                password: formData.password || "",
+                username: formData.email
+            });
+
+            /** Validate customer token */
+            if (!tokenResp.data) throw new Error('Invalid customer response');
+            const authToken = tokenResp.data.token;
+
+            /** Decoded customer token */
+            const decodedToken = decodeJwt(tokenResp.data.token);
+            if (!decodedToken.exp) throw new Error('Error while decoding jwt token');
+
+            /**Set authToken cookie*/
+            const expiresDate = new Date(decodedToken.exp * 1000);
+            console.log(expiresDate);
+
+            setCookie('authToken', authToken,
+                {
+                    expires: expiresDate,
+                    // httpOnly: true,
+                    // secure: true,
+                    // sameSite: 'strict',
+                    path: '/'
+                });
+        } catch (err)
+        {
+            setCustomError('Oops! Something went wrong with the server. Please try again or contact support.');
+        }
+        // finally
+        // {
+        //     reset();
+        // }
     }
 
     return (
@@ -160,7 +204,7 @@ export const RegistrationForm: FC = () =>
                     register={register}
                     errors={errors}
                     inputTag={"input"}
-                    inputType={"number"} />
+                    inputType={"text"} />
                 {!isLoggedIn && <CustomFormInput
                     fieldName="Hasło"
                     name='password'
@@ -188,8 +232,16 @@ export const RegistrationForm: FC = () =>
                     backgroundColor={theme.background.hover}
                     color={theme.colors.white}
                     type="submit"
-                    disabled={isSubmitting}>{isSubmitting ? 'Submitting...' : 'Submit'}</StyledButton>
-                {error && <CustomError dangerouslySetInnerHTML={{ __html: isAuthErrorResponseType(error) }}></CustomError>}
+                    disabled={isSubmitting}>{isSubmitting ? 'Submitting...' : 'Submit'}
+                </StyledButton>
+                {(error && customError) &&
+                    <CustomError
+                        dangerouslySetInnerHTML={{ __html: isAuthErrorResponseType(error || customError) }}>
+                    </CustomError>}
+                {(isSubmitSuccessful && !error && customError) &&
+                    <CustomSuccess>
+                        Your account has been created successfully!
+                    </CustomSuccess>}
             </FormWrapperBottom>
         </CustomForm>
     );

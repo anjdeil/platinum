@@ -30,6 +30,7 @@ const theme: Theme = {
         black: '#000',
         active: '#1E71BE',
         error: '#d92d20',
+        success: '#28a745',
         silver: "",
         platinum: "",
         shadow: "",

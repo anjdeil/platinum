@@ -27,6 +27,10 @@ const phoneSchema = z.string().refine(value => parsePhoneNumber(value).valid, {
     message: 'Invalid phone number',
 });
 
+const postSchema = z.string()
+    .min(5, 'The post code must contain at least 5 characters')
+    .regex(/^[0-9-]+$/, 'The post code can only contain numbers and hyphens');
+
 export const RegistrationFormSchema = (isLoggedIn: boolean, isCheckout: boolean = false, isShipping: boolean = false) =>
 {
     const schema = z.object({
@@ -39,7 +43,7 @@ export const RegistrationFormSchema = (isLoggedIn: boolean, isCheckout: boolean 
         address1: z.string().min(4, 'Required field'),
         address2: z.string().min(1, 'Required field'),
         apartmentNumber: z.string().min(1, 'Required field'),
-        postCode: z.string().min(5, 'The post code must contain 5 characters'),
+        postCode: postSchema,
         password: !isLoggedIn ? passwordSchema : z.string().optional(),
         confirmPassword: !isLoggedIn ? z.string() : z.string().optional(),
         terms: termsSchema,
