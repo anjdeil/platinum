@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import Image from "next/image";
+import { PhoneInput } from 'react-international-phone';
 
 interface CustomInputStyleProps
 {
@@ -53,16 +54,54 @@ export const CustomInputStyle = styled.div<CustomInputStyleProps>`
         input.react-international-phone-input {
             height: 100%;
             width: 100%;
+            padding: 15px;
             padding-left: ${({ isPhone }) => isPhone ? '60px' : '15px'};
             background-color: ${({ theme }) => theme.background.formElements};
             border: none;
             border-radius: 10px;
+            font-size: 16px;
 
              &:focus {
                 outline: 1px solid ${({ theme, isError }) => isError ? theme.colors.error : theme.colors.primary};
                 box-shadow: ${({ theme }) => theme.customShadows.primaryShadow};
             }
+        }
+`;
 
+export const CustomPhoneInput = styled(PhoneInput)`
+ div.react-international-phone-country-selector {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+        }
+
+        div.react-international-phone-input-container {
+          width: 100%;
+          position: relative;
+        }
+
+        button.react-international-phone-country-selector-button {
+            border: none;
+            background-color: transparent;
+        }
+
+        input,
+        input.react-international-phone-input {
+            height: 100%;
+            width: 100%;
+            padding: 15px;
+            padding-left: 60px;
+            background-color: ${({ theme }) => theme.background.formElements};
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+
+             &:focus {
+                outline: 1px solid ${({ theme, isError }) => isError ? theme.colors.error : theme.colors.primary};
+                box-shadow: ${({ theme }) => theme.customShadows.primaryShadow};
+            }
         }
 `;
 
@@ -102,7 +141,6 @@ export const Input = styled.input<CustomInputProps>`
         height:  ${({ isCheckbox }) => isCheckbox ? '15px' : '100%'};
         font-size: 14px;
     }
-
 `;
 
 export const CustomInputWrapper = styled.div`

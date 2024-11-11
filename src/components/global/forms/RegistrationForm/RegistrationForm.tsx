@@ -10,6 +10,8 @@ import { CustomForm, FormWrapper, FormWrapperBottom } from "./styles";
 import { isAuthErrorResponseType } from "@/utils/isAuthErrorResponseType";
 import { CustomFormInput } from "../CustomFormInput";
 import { CustomError } from "../CustomFormInput/styles";
+import { StyledButton } from "@/styles/components";
+import theme from "@/styles/theme";
 
 interface RegistrationFormProps
 {
@@ -92,7 +94,6 @@ export const RegistrationForm: FC = () =>
                     name='name'
                     register={register}
                     errors={errors}
-                    // setValue={setValue}
                     inputTag={"input"}
                     inputType={"text"} />
                 <CustomFormInput
@@ -100,7 +101,6 @@ export const RegistrationForm: FC = () =>
                     name='lastName'
                     register={register}
                     errors={errors}
-                    // setValue={setValue}
                     inputTag={"input"}
                     inputType={"text"} />
                 <CustomFormInput
@@ -108,7 +108,6 @@ export const RegistrationForm: FC = () =>
                     name='email'
                     register={register}
                     errors={errors}
-                    // setValue={setValue}
                     inputTag={"input"}
                     inputType={"text"} />
                 <CustomFormInput
@@ -119,14 +118,12 @@ export const RegistrationForm: FC = () =>
                     setValue={setValue}
                     inputTag={"input"}
                     inputType={"phone"}
-                // isPhone={true}
                 />
                 <CustomFormInput
                     fieldName="Kraj / region"
                     name='country'
                     register={register}
                     errors={errors}
-                    // setValue={setValue}
                     inputTag={"input"}
                     inputType={"text"} />
                 <CustomFormInput
@@ -134,7 +131,6 @@ export const RegistrationForm: FC = () =>
                     name='city'
                     register={register}
                     errors={errors}
-                    // setValue={setValue}
                     inputTag={"input"}
                     inputType={"text"} />
                 <CustomFormInput
@@ -142,7 +138,6 @@ export const RegistrationForm: FC = () =>
                     name='address1'
                     register={register}
                     errors={errors}
-                    // setValue={setValue}
                     inputTag={"input"}
                     inputType={"text"} />
                 <CustomFormInput
@@ -150,7 +145,6 @@ export const RegistrationForm: FC = () =>
                     name='address2'
                     register={register}
                     errors={errors}
-                    // setValue={setValue}
                     inputTag={"input"}
                     inputType={"number"} />
                 <CustomFormInput
@@ -158,7 +152,6 @@ export const RegistrationForm: FC = () =>
                     name='apartmentNumber'
                     register={register}
                     errors={errors}
-                    // setValue={setValue}
                     inputTag={"input"}
                     inputType={"number"} />
                 <CustomFormInput
@@ -166,7 +159,6 @@ export const RegistrationForm: FC = () =>
                     name='postCode'
                     register={register}
                     errors={errors}
-                    // setValue={setValue}
                     inputTag={"input"}
                     inputType={"number"} />
                 {!isLoggedIn && <CustomFormInput
@@ -174,7 +166,6 @@ export const RegistrationForm: FC = () =>
                     name='password'
                     register={register}
                     errors={errors}
-                    // setValue={setValue}
                     inputTag={"input"}
                     inputType={"password"} />}
                 {!isLoggedIn && <CustomFormInput
@@ -182,7 +173,6 @@ export const RegistrationForm: FC = () =>
                     name='confirmPassword'
                     register={register}
                     errors={errors}
-                    // setValue={setValue}
                     inputTag={"input"}
                     inputType={"password"} />}
                 <CustomFormInput
@@ -190,12 +180,15 @@ export const RegistrationForm: FC = () =>
                     name='terms'
                     register={register}
                     errors={errors}
-                    // setValue={setValue}
                     inputTag={"input"}
                     inputType={"checkbox"} />
             </FormWrapper>
             <FormWrapperBottom>
-                <button type="submit" disabled={isSubmitting}>{isSubmitting ? 'Submitting...' : 'Submit'}</button>
+                <StyledButton
+                    backgroundColor={theme.background.hover}
+                    color={theme.colors.white}
+                    type="submit"
+                    disabled={isSubmitting}>{isSubmitting ? 'Submitting...' : 'Submit'}</StyledButton>
                 {error && <CustomError dangerouslySetInnerHTML={{ __html: isAuthErrorResponseType(error) }}></CustomError>}
             </FormWrapperBottom>
         </CustomForm>

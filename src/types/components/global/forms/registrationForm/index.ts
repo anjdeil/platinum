@@ -33,7 +33,7 @@ export const RegistrationFormSchema = (isLoggedIn: boolean, isCheckout: boolean 
         name: z.string().min(3, 'Required field'),
         lastName: z.string().min(3, 'Required field'),
         email: z.string().email('Please, type valid email'),
-        // phoneNumber: phoneSchema,
+        phoneNumber: phoneSchema,
         country: z.string().min(1, 'Required field'),
         city: z.string().min(1, 'Required field'),
         address1: z.string().min(4, 'Required field'),
