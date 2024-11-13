@@ -110,7 +110,7 @@ export const RegistrationForm: FC = () =>
 
             /**Set authToken cookie*/
             const expiresDate = new Date(decodedToken.exp * 1000);
-            console.log(expiresDate);
+            console.log(tokenResp.data);
 
             setCookie('authToken', authToken,
                 {

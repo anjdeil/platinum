@@ -1,6 +1,7 @@
 import wpRestApi from "@/services/wpRestApi";
 import { validateApiError } from "@/utils/validateApiError";
 import { NextApiRequest, NextApiResponse } from 'next';
+import cookie from 'cookie';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse)
 {
@@ -38,7 +39,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
 
         if (response && response.data)
+        {
+            if ('token' in response.data)
+            {
+                res.cookie('authToken', response.data.token, {
+                    httpOnly: true,
+                    secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
+                    sameSite: 'strict', // Adjust as needed
+                    maxAge: 24 * 60 * 60 * 1000 // Cookie expiration time (e.g., 1 day)
+                });
+            }
+
             return res.status(200).json(response?.data);
+        }
+
 
     } catch (error)
     {
