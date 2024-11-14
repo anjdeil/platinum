@@ -8,11 +8,13 @@ import MenuCategoriesSlice from "./slices/MenuCategoriesSlice";
 import PopupSlice from "./slices/PopupSlice";
 import { wpRtkApi } from "./rtk-queries/wpApi";
 import themeOptionsSlice from "./slices/themeOptionsSlice";
+import { instCustomRtkApi } from "./rtk-queries/InstCustomApi";
 
 const rootReducer = combineReducers({
     [wpCustomRtkApi.reducerPath]: wpCustomRtkApi.reducer,
     [wooCustomRktApi.reducerPath]: wooCustomRktApi.reducer,
     [wpRtkApi.reducerPath]: wpRtkApi.reducer,
+    [instCustomRtkApi.reducerPath]: instCustomRtkApi.reducer,
     languageSlice: languageSlice,
     currencySlice: currencySlice,
     themeOptions: themeOptionsSlice,
@@ -32,6 +34,7 @@ export const setupStore = () =>
                 .concat(wpCustomRtkApi.middleware)
                 .concat(wooCustomRktApi.middleware)
                 .concat(wpRtkApi.middleware)
+                .concat(instCustomRtkApi.middleware)
     })
 }
 
