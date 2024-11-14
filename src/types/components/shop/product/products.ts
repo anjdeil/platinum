@@ -15,15 +15,17 @@ export const ProductImageSchema = z.object({
     src: z.string(),
 })
 
+export const ProductAttrOptionSchema = z.object({
+    id: z.number(),
+    slug: z.string(),
+    name: z.string()
+})
+
 export const ProductAttributesSchema = z.object({
     id: z.number(),
     slug: z.string(),
     name: z.string(),
-    options: z.array(z.object({
-        id: z.number(),
-        slug: z.string(),
-        name: z.string(),
-    }))
+    options: z.array(ProductAttrOptionSchema)
 })
 
 export const ProductDefaultAttributesSchema = z.object({

@@ -3,7 +3,7 @@ import Rating from "@/components/global/Rating/Rating";
 import { StyledButton, Title } from "@/styles/components";
 import { ProductCardPropsType } from "@/types/components/shop";
 import { useTranslations } from "next-intl";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import ColorVariations from "../ColorVariations/ColorVariations";
 import PaymentList from "../PaymentList/PaymentList";
 import ProductAvailable from "../ProductAvailable/ProductAvailable";
@@ -17,44 +17,24 @@ import ProductViewing from "../ProductViewing/ProductViewing";
 import ShippingList from "../ShippingList/ShippingList";
 import { AddToBasketWrapper, ProductFlexWrapper, ProductImageWrapper, ProductInfoWrapper, ProductTitleWrapper, ProductWrapper } from "./styles";
 import DetailsAccordion from "@/components/global/DetailsAccordeon/DetailsAccordion";
+import { ProductOptionsPanel } from "../ProductOptionsPanel";
 
-// Check default attributes
-// Check url params
-// Get attributes and use it for options
-// Check variations attributes by chosen option
-// Add lang option
-
-function getAttributesOptions(attr, attrName)
-{
-    if (!attr.length) return false;
-
-    const attribute = attr.filter(attr => attr.slug === attrName);
-    console.log('attribute[0]', attribute);
-    if (attribute[0].length && attribute[0]?.options.length)
-    {
-        console.log('attribute[0]', attribute[0]);
-
-        return attribute[0].options;
-    }
-}
 
 const ProductInfo: FC<ProductCardPropsType> = ({ product }) =>
 {
-    console.log(product);
     const { name, stock_quantity, sku, min_price, max_price, images, attributes } = product;
-    console.log(getAttributesOptions(attributes, 'colour'));
+
+    useEffect(() =>
+    {
+        if (product)
+        {
+            console.log('product:', product);
+
+        }
+    }, [product])
 
     const t = useTranslations("Product");
     const [quantity, setQuantity] = useState<number>(1);
-    const colors = getAttributesOptions(attributes, "colour");
-    console.log('colors', colors);
-
-    const sizeList = ['M', 'L', 'XL'];
-    const [currentSize, setCurrentSize] = useState<string>(sizeList[0]);
-    const lengthList = ['8-14mm', '0.05mm', '0.07mm', '2mm'];
-    const [currentLength, setCurrentLength] = useState<string>(lengthList[0]);
-    const colorList = ['red', 'white', 'green', 'grey'];
-    const [currentColor, setCurrentColor] = useState<string>(colorList[0]);
 
     const testimages = Array.from({ length: 4 }).map((_, index) => images[0]);
 
@@ -76,23 +56,11 @@ const ProductInfo: FC<ProductCardPropsType> = ({ product }) =>
                 <ProductPrice minPrice={min_price} maxPrice={max_price} />
             </ProductTitleWrapper>
             <ProductInfoWrapper>
-                <ProductVariations
-                    title="Curl"
-                    list={sizeList}
-                    currentVariation={currentSize}
-                    onChange={setCurrentSize}
-                />
-                <ProductVariations
-                    title="Length"
-                    list={lengthList}
-                    currentVariation={currentLength}
-                    onChange={setCurrentLength}
-                />
-                <ColorVariations
-                    list={colorList}
-                    currentVariation={currentColor}
-                    onChange={setCurrentColor}
-                />
+
+                {/* Options */}
+                {product.attributes && <ProductOptionsPanel attributes={product.attributes} />}
+                {/* Options END*/}
+
                 <ProductPromotion time={new Date("2024-10-30T00:00:00")} />
                 <AddToBasketWrapper>
                     <ProductQuantity quantity={quantity} onChange={setQuantity} />

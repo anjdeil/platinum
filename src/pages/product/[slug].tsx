@@ -9,6 +9,27 @@ import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import Head from "next/head";
 import { useEffect } from "react";
 
+// vinyl-gloves/
+// https://platinum.digiway-dev.online/wp-admin/edit.php?post_type=product&page=product_attributes
+
+/**
+ * Get all attributes - done
+ * Display options depending on attributes - done
+ * Change data depending on attributes
+ * Synchronize other attributes
+ * Get current variations
+ * Change params of variations
+ * Check other layouts elements
+ */
+
+// Colors
+// Array
+// Slug as title
+// Options as options
+
+
+// Map or Set for current variation
+// Variations FOR attributes FOR check slug and option
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) =>
 {
     const { slug } = context.query;
@@ -43,19 +64,7 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
 
 export default function ProductPage({ product })
 {
-    // const { data } = useGetProductQuery({ slug: 'uv-eyelash-extension-kit' });
-    // chocolate-platinum-20-lines-mix-cc-curl
     // const product: ProductType | undefined = data?.data?.item;
-
-
-    useEffect(() =>
-    {
-        if (product)
-        {
-            console.log(product);
-
-        }
-    }, [product])
 
     return (
         <>
