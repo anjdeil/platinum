@@ -50,14 +50,13 @@ export const FilterOverlay = styled.div<{ visible: boolean }>`
     }
 `;
 export const FilterNCategoriesMenu = styled.div<{ visible: boolean }>`
-box-sizing: border-box;
-
+    box-sizing: border-box;
     display: block;
     @media ${({ theme }) => theme.media.middle} {
     width: 350px;
     position: absolute;
     left: 0%;
-    top: 139.8px;
+    top: 145px;
     z-index: 10;
     padding: 24px 32px;
     border-top-right-radius: 8px;

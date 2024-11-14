@@ -72,16 +72,18 @@ export const Archive: FC<ArchivePropsType> = ({ products, pagesCount, page, cate
              language_code: item.language_code
          }))
      };
+     
     const AllCategories: CategoryType[] = categoriesItems.items
 
     const categories: CategoryType[]   = AllCategories.filter((category: CategoryType) =>
         categoriesSlugs.includes(category.slug)
       );
-
+  
+      
     return (
         <Container>
             <Title as="h2" fontWeight={600} fontSize="24px" uppercase={true} marginBottom='24px'>
-                {categories[0].name}
+             {categories[0].name} 
             </Title>
             <GridBox>
                 <FilterNCategoriesMenu visible={isMenuVisible}>
