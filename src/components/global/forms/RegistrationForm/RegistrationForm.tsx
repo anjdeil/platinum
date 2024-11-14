@@ -20,8 +20,8 @@ import { decodeJwt } from 'jose';
 /**
  * @todo
  * Add cookie with right date
- * Check if the cookie is redirect page
- * Phone input validation
+ * Check if the cookie is and redirect page
+ * To think how to validate cookie is they expires
  * Other styles
  */
 
@@ -105,21 +105,21 @@ export const RegistrationForm: FC = () =>
             const authToken = tokenResp.data.token;
 
             /** Decoded customer token */
-            const decodedToken = decodeJwt(tokenResp.data.token);
-            if (!decodedToken.exp) throw new Error('Error while decoding jwt token');
+            // const decodedToken = decodeJwt(tokenResp.data.token);
+            // if (!decodedToken.exp) throw new Error('Error while decoding jwt token');
 
             /**Set authToken cookie*/
-            const expiresDate = new Date(decodedToken.exp * 1000);
-            console.log(tokenResp.data);
+            // const expiresDate = new Date(decodedToken.exp * 1000);
+            // console.log(tokenResp.data);
 
-            setCookie('authToken', authToken,
-                {
-                    expires: expiresDate,
-                    // httpOnly: true,
-                    // secure: true,
-                    // sameSite: 'strict',
-                    path: '/'
-                });
+            // setCookie('authToken', authToken,
+            //     {
+            //         expires: expiresDate,
+            //         // httpOnly: true,
+            //         // secure: true,
+            //         // sameSite: 'strict',
+            //         path: '/'
+            //     });
         } catch (err)
         {
             setCustomError('Oops! Something went wrong with the server. Please try again or contact support.');

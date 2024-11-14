@@ -1,7 +1,7 @@
 import wpRestApi from "@/services/wpRestApi";
 import { validateApiError } from "@/utils/validateApiError";
 import { NextApiRequest, NextApiResponse } from 'next';
-import cookie from 'cookie';
+import { decodeJwt } from 'jose';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse)
 {
@@ -38,18 +38,41 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 return res.status(405).end(`Method ${method} Not Allowed`);
         }
 
+        function setAuthCookie(res: NextApiResponse, authToken: any)
+        {
+            if (typeof authToken !== 'string') return;
+            const decodedToken = decodeJwt(authToken);
+
+            if (!decodedToken || !decodedToken.exp) return;
+            const expiresDate = new Date(decodedToken.exp * 1000);
+
+            console.log('authToken', authToken);
+            const encodedToken = encodeURIComponent(authToken);
+
+            const cookieHeader = `authToken=${encodedToken}; 
+            HttpOnly; 
+            Secure; 
+            SameSite=Strict; 
+            Path=/; 
+            Max-Age=${24 * 60 * 60}`;
+            res.setHeader('Set-Cookie', cookieHeader);
+
+
+            // res.setHeader('Set-Cookie',
+            //     `authToken=${key}; 
+            //         HttpOnly; 
+            //         Secure; 
+            //         SameSite=Strict; 
+            //         Path=/; 
+            //         Max-Age=${expiresDate}`);
+        }
+
         if (response && response.data)
         {
             if ('token' in response.data)
             {
-                res.cookie('authToken', response.data.token, {
-                    httpOnly: true,
-                    secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
-                    sameSite: 'strict', // Adjust as needed
-                    maxAge: 24 * 60 * 60 * 1000 // Cookie expiration time (e.g., 1 day)
-                });
+                setAuthCookie(res, response.data.token)
             }
-
             return res.status(200).json(response?.data);
         }
 
