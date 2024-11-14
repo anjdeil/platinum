@@ -8,7 +8,7 @@ const CategoriesBlock: FC<CategoriesBlockProps> = ({ categories }) =>
 {
     return (
         <CategoriesBlockContainer>
-            <TitleBlock title="ourCategories" />
+            <TitleBlock subTitle="bestForYou" title="ourCategories" />
             <CategoriesList>
                 {categories.length && categories.map((category, index) => (
                     <CategoryItem

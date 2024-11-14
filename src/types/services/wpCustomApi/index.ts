@@ -1,4 +1,4 @@
-import { WpMenuResponseSchema } from "@/types/menus/wpMenus";
+import { WpMenuResponseSchema } from "@/types/menus/WpMenus";
 import { menuItemsSchema } from "./menus";
 import { ThemeOptionsItemSchema } from "./themeOptions";
 import { AttributeSchema } from "./attributes";

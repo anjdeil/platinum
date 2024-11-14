@@ -54,6 +54,7 @@ declare module '@emotion/react' {
         };
         media: {
             small: string;
+            preSmall: string;
             medium: string;
             mediumLarge: string;
             large: string;
