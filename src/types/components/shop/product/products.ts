@@ -67,6 +67,7 @@ export const ProductSchema = z.object({
     attributes: z.array(ProductAttributesSchema),
     default_attributes: z.array(ProductDefaultAttributesSchema),
     variations: z.array(ProductVariationSchema),
+    average_rating: z.number()
 })
 
 export const ProductDataResponseSchema = z.object({
@@ -78,3 +79,4 @@ export type ProductType = z.infer<typeof ProductSchema>;
 export type ProductDataResponseType = z.infer<typeof ProductDataResponseSchema>;
 export type defaultAttributesType = z.infer<typeof ProductDefaultAttributesSchema>;
 export type ProductImageType = z.infer<typeof ProductImageSchema>;
+export type ProductVariationType = z.infer<typeof ProductVariationSchema>;
