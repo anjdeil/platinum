@@ -72,7 +72,6 @@ export default function SearchBar({
         if (parent_id) return true;
 
         const childIndex = childParentCategories?.findIndex(({ parent_id }) => parent_id === id);
-        console.log(childIndex);
 
         if (childIndex && childIndex >= 0) return false;
 
