@@ -18,8 +18,6 @@ import { CustomFormCheckbox } from "../CustomFormCheckbox";
 
 /**
  * @todo
- * Check cookie in getServerSideProps
- * Redirect after successful validation during reg
  * Other styles
  */
 
@@ -192,13 +190,6 @@ export const RegistrationForm: FC = () =>
                     errors={errors}
                     inputTag={"input"}
                     inputType={"password"} />
-                {/* <CustomFormInput
-                    fieldName="Wyrażam zgodę na przetwarzanie danych osobowych."
-                    name='terms'
-                    register={register}
-                    errors={errors}
-                    inputTag={"input"}
-                    inputType={"checkbox"} /> */}
             </FormWrapper>
             <CustomFormCheckbox
                 name={"terms"}

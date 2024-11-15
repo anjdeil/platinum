@@ -1,7 +1,8 @@
 import { FC, useEffect, useState } from "react";
-import { CustomCheckbox } from "../CustomCheckbox";
 import { CustomError } from "../CustomFormInput/styles";
 import { CustomFormCheckboxType } from "@/types/components/global/forms/customFormCheckbox";
+import { CustomCheckboxStyled } from "../CustomCheckbox/styles";
+import { CustomCheckboxLabel } from "./styles";
 
 export const CustomFormCheckbox: FC<CustomFormCheckboxType> = ({ errors, label, name, register }) =>
 {
@@ -11,16 +12,18 @@ export const CustomFormCheckbox: FC<CustomFormCheckboxType> = ({ errors, label, 
     {
         if (!errors || !name) { setError(false); return; }
         setError(name in errors);
+        console.log('formErrors:', errors);
+
     }, [errors, name]);
 
     return (
         <div>
-            <label>
-                <CustomCheckbox
+            <CustomCheckboxLabel>
+                <CustomCheckboxStyled
                     {...register(name)}
                 />
                 {label}
-            </label>
+            </CustomCheckboxLabel>
             {isError && name && <CustomError>{errors[name]?.message}</CustomError>}
         </div>
     )

@@ -6,13 +6,11 @@ interface CustomInputStyleProps
 {
     isError: boolean;
     isTextArea: boolean;
-    isCheckbox: boolean;
     isPhone: boolean;
 }
 
 interface CustomInputProps
 {
-    isCheckbox: boolean;
     isError: boolean;
 }
 
@@ -20,17 +18,14 @@ interface CustomInputProps
 export const CustomInputStyle = styled.div<CustomInputStyleProps>`
         padding: 5px;
         display: flex;
-        flex-direction: ${({ isCheckbox }) => isCheckbox ? 'row' : 'column'};
-        align-items: ${({ isCheckbox }) => isCheckbox ? 'center' : 'flex-start'};
-        width: ${({ isCheckbox }) => isCheckbox ? 'fit-content' : '100%'};
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
         overflow: ${({ isPhone }) => isPhone ? 'inherit' : 'hidden'};
         font-family: ${({ theme }) => theme.typography.fontFamily};
-        div {
-            order: ${({ isCheckbox }) => isCheckbox ? '-1' : '0'};
-        }
 
         span {
-            margin-bottom: ${({ isCheckbox }) => isCheckbox ? '0' : '5px'};
+            margin-bottom: 5px;
         }
 
         div.react-international-phone-country-selector {
@@ -107,11 +102,10 @@ export const CustomPhoneInput = styled(PhoneInput)`
 
 export const Input = styled.input<CustomInputProps>`
     ${(props) => (props.as === 'textarea' ? 'min-height: 150px;' : '')};
-    margin-right: ${({ isCheckbox }) => isCheckbox ? '15px' : '0'}; 
     padding: 15px;
-    width: ${({ isCheckbox }) => isCheckbox ? '24px' : '100%'};
-    height:  ${({ isCheckbox }) => isCheckbox ? '24px' : '100%'};
-    border: ${({ isCheckbox }) => isCheckbox ? '1px solid #ccc' : 'none'};    
+    width: 100%;
+    height: 100%;
+    border: none;    
     border-radius: 10px;
     font-size: 16px;
 
@@ -137,8 +131,6 @@ export const Input = styled.input<CustomInputProps>`
     &[type="number"]-moz-appearance: textfield;
 
     @media ${({ theme }) => theme.media.medium} {
-        width: ${({ isCheckbox }) => isCheckbox ? '15px' : '100%'};
-        height:  ${({ isCheckbox }) => isCheckbox ? '15px' : '100%'};
         font-size: 14px;
     }
 `;

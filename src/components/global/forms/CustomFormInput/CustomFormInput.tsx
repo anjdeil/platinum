@@ -36,7 +36,6 @@ export const CustomFormInput: FC<CustomFormInputType> = (
                 as={'label'}
                 isError={isError}
                 isTextArea={false}
-                isCheckbox={inputType === 'checkbox'}
                 isPhone={inputType === 'phone'}>
                 <span>
                     {fieldName}
