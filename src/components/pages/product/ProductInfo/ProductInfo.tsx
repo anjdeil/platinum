@@ -47,8 +47,6 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
         }
     }, [cartItems]);
 
-    console.log(product);
-
 
     /**
      * Choosen variation
