@@ -1,7 +1,8 @@
 import wpRestApi from "@/services/wpRestApi";
+import { getCookieValue } from "@/utils/auth/getCookieValue";
+import { setAuthCookie } from "@/utils/auth/setAuthCookie";
 import { validateApiError } from "@/utils/validateApiError";
 import { NextApiRequest, NextApiResponse } from 'next';
-import { decodeJwt } from 'jose';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse)
 {
@@ -18,10 +19,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (slug.includes('jwt-auth'))
         v2 = false;
 
-
     const { method, body, headers } = req;
-    const authorization = "authorization" in headers ? headers.authorization : null;
+    let authorization = null;
     let response;
+
+    if (slug.includes('token/validate'))
+    {
+        const authToken = getCookieValue(headers.cookie || '', 'authToken');
+        authorization = authToken && `Bearer ${authToken}`;
+    }
 
     try
     {
@@ -31,51 +37,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 response = await wpRestApi.get(slug, params, authorization);
                 break;
             case 'POST':
-                response = await wpRestApi.post(slug, body, (!v2 && v2));
+                response = await wpRestApi.post(slug, body, (!v2 && v2), authorization);
                 break;
             default:
                 res.setHeader('Allow', ['POST', 'GET']);
                 return res.status(405).end(`Method ${method} Not Allowed`);
         }
 
-        function setAuthCookie(res: NextApiResponse, authToken: any)
-        {
-            if (typeof authToken !== 'string') return;
-            const decodedToken = decodeJwt(authToken);
-
-            if (!decodedToken || !decodedToken.exp) return;
-            const expiresDate = new Date(decodedToken.exp * 1000);
-
-            console.log('authToken', authToken);
-            const encodedToken = encodeURIComponent(authToken);
-
-            const cookieHeader = `authToken=${encodedToken}; 
-            HttpOnly; 
-            Secure; 
-            SameSite=Strict; 
-            Path=/; 
-            Max-Age=${24 * 60 * 60}`;
-            res.setHeader('Set-Cookie', cookieHeader);
-
-
-            // res.setHeader('Set-Cookie',
-            //     `authToken=${key}; 
-            //         HttpOnly; 
-            //         Secure; 
-            //         SameSite=Strict; 
-            //         Path=/; 
-            //         Max-Age=${expiresDate}`);
-        }
-
         if (response && response.data)
         {
             if ('token' in response.data)
-            {
                 setAuthCookie(res, response.data.token)
-            }
+
             return res.status(200).json(response?.data);
         }
-
 
     } catch (error)
     {

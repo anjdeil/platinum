@@ -10,7 +10,8 @@ export const JwtTokenResSchema = z.object({
     user_email: z.string(),
     user_nicename: z.string(),
     user_display_name: z.string()
-})
+});
+
 
 export type AuthConfigType = z.infer<typeof AuthConfigSchema>;
 export type JwtTokenResType = z.infer<typeof JwtTokenResSchema>;

@@ -1,5 +1,5 @@
 import { FC, useEffect, useMemo, useState } from "react";
-import { CustomError, CustomInputStyle, CustomInputWrapper, CustomPhoneInput, CustomRequired, Input, ShowPasswordImage } from "./styles";
+import { CustomError, CustomInputStyle, CustomInputWrapper, CustomRequired, Input, ShowPasswordImage } from "./styles";
 import { CustomFormInputType } from "@/types/components/global/forms/customFormInput";
 import { PhoneInput } from 'react-international-phone';
 import 'react-international-phone/style.css';
@@ -15,13 +15,10 @@ export const CustomFormInput: FC<CustomFormInputType> = (
         inputType,
         placeholder,
         register,
-        onChange,
         value,
         setValue,
     }) =>
 {
-    const registerProps = register ? { ...register(name) } : {};
-
     const [isPasswordVisible, setPasswordVisible] = useState(false);
     const togglePasswordVisibility = () => setPasswordVisible((prev) => !prev);
     const passwordImagePath = useMemo(() => isPasswordVisible ? '/images/show-pass.svg' : '/images/hidden-pass.svg', [isPasswordVisible]);
@@ -57,7 +54,6 @@ export const CustomFormInput: FC<CustomFormInputType> = (
                             placeholder={placeholder ? placeholder : ''}
                             {...register(name)}
                             type={isPasswordVisible ? 'text' : inputType}
-                            {...registerProps}
                         />}
                     {inputType === 'password' &&
                         <ShowPasswordImage

@@ -16,7 +16,13 @@ export const wpRtkApi = createApi({
                 }
             })
         }),
+        checkToken: builder.mutation({
+            query: () => ({
+                url: "/jwt-auth/v1/token/validate",
+                method: "POST"
+            })
+        })
     })
 })
 
-export const { useGetTokenMutation } = wpRtkApi;
+export const { useGetTokenMutation, useCheckTokenMutation } = wpRtkApi;

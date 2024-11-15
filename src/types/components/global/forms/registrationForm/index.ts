@@ -31,7 +31,7 @@ const postSchema = z.string()
     .min(5, 'The post code must contain at least 5 characters')
     .regex(/^[0-9-]+$/, 'The post code can only contain numbers and hyphens');
 
-export const RegistrationFormSchema = (isLoggedIn: boolean, isCheckout: boolean = false, isShipping: boolean = false) =>
+export const RegistrationFormSchema = (isLoggedIn: boolean) =>
 {
     const schema = z.object({
         name: z.string().min(3, 'Required field'),
@@ -63,8 +63,7 @@ export const RegistrationFormSchema = (isLoggedIn: boolean, isCheckout: boolean 
 
     return schema.refine((data) =>
     {
-        if (!isCheckout) return data.password === data.confirmPassword;
-        return true;
+        return data.password === data.confirmPassword;
     }, {
         message: 'Passwords do not match.',
         path: ['confirmPassword']

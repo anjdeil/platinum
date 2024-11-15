@@ -169,6 +169,7 @@ export const ShowPasswordImage = styled(Image)`
 `;
 
 export const CustomError = styled.p`
+    font-size: .8em;
     margin-top: 5px;
     padding-left: 5px;
     color: ${({ theme }) => theme.colors.error};

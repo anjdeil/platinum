@@ -9,7 +9,6 @@ export const CustomFormInputSchema = z.object({
     errors: z.any().optional(),
     isRequire: z.boolean().optional(),
     placeholder: z.string().optional(),
-    onChange: z.function().args(z.unknown() as z.ZodType<React.ChangeEvent<HTMLInputElement>>).returns(z.void()).optional(),
     value: z.string().optional(),
     setValue: z.function().args(
         z.any(),

@@ -62,7 +62,7 @@ const MyAccount: FC<MyAccountPropsType> = ({ user }) =>
                 <AccountInfoBlockList orderCount={ordersData?.ordersData} totalAmount={ordersData?.totalAmount} loyaltyProgram={user.loyaltyProgram || null} />
                 <AccountLinkBlockList list={translatedAccountLinkList} />
             </AccountInfoWrapper>
-            <OrderTable orderList={ordersData} title={t("recentOrders")} />
+            {/* <OrderTable orderList={ordersData} title={t("recentOrders")} /> */}
         </AccountLayout>
     );
 }

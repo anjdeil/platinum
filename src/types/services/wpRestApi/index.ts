@@ -15,6 +15,13 @@ export const JwtTokenResponseSchema = z.object({
     data: JwtTokenResSchema
 })
 
+export const JwtValidResponseSchema = z.object({
+    code: z.string(),
+    data: z.object({
+        status: z.string()
+    })
+});
+
 export type ParamsType = Record<string, string[] | string | number | undefined>;
 export type Method = 'GET' | 'POST' | 'PUT' | 'DELETE';
 export type WpParamsType = z.infer<typeof WpParamsSchema>;
