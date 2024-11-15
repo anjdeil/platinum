@@ -71,6 +71,9 @@
     },
     "Product": {
         "addToBasket": "Додати до кошика",
+        "viewCart": "Переглянути кошик",
+        "chooseOptions": "Виберіть варіант",
+        "updateCart": "Оновити кількість",
         "sortBy": "Сортувати за",
         "productList": "Список товарів",
         "notifyWhenAvailable": "Повідомити, коли буде доступний",

@@ -71,6 +71,9 @@
     },
     "Product": {
         "addToBasket": "In den Warenkorb legen",
+        "viewCart": "Warenkorb anzeigen",
+        "chooseOptions": "Wählen Sie eine Option",
+        "updateCart": "Menge aktualisieren",
         "sortBy": "Sortieren nach",
         "productList": "Produktliste",
         "notifyWhenAvailable": "Benachrichtigen, wenn verfügbar",

@@ -71,6 +71,9 @@
     },
     "Product": {
         "addToBasket": "Добавить в корзину",
+        "viewCart": "Просмотр корзины",
+        "chooseOptions": "Выбрать опцию",
+        "updateCart": "Обновить количество",
         "sortBy": "Сортировать по",
         "productList": "Список товаров",
         "notifyWhenAvailable": "Уведомить, когда будет доступен",
