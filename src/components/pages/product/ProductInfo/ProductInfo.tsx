@@ -19,6 +19,7 @@ import { ProductOptionsPanel } from "../ProductOptionsPanel";
 import { useRouter } from "next/router";
 import { ProductVariationType } from "@/types/components/shop/product/products";
 import { getCurrentVariation } from "@/utils/getCurrentVariation";
+import ReactHtmlParser from 'html-react-parser';
 
 
 const ProductInfo: FC<ProductCardPropsType> = ({ product }) =>
@@ -30,7 +31,8 @@ const ProductInfo: FC<ProductCardPropsType> = ({ product }) =>
         if (currentVariation?.stock_quantity) return currentVariation?.stock_quantity;
         if (product?.stock_quantity) return product?.stock_quantity;
         return 0;
-    }, [currentVariation, product])
+    }, [currentVariation, product]);
+
     const router = useRouter();
 
     useEffect(() =>
@@ -94,13 +96,9 @@ const ProductInfo: FC<ProductCardPropsType> = ({ product }) =>
                 <PaymentList />
                 <ShippingList />
                 <DetailsAccordion summary="Descriptions">
-                    {desc}
-                    <p>PLATINUM Black eyelashes by Chetvertinovskaya Liubov:</p>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Repellendus voluptas explicabo aut provident, ipsum quam quia ullam reiciendis molestias beatae id illo tempora, eos harum officia doloremque amet! Nam rerum exercitationem, adipisci veniam provident unde aliquam molestiae necessitatibus dolores in ratione, autem error tempora. Quisquam, iure? Corporis tenetur ad provident veritatis repellendus blanditiis, assumenda officia nam! Enim laboriosam beatae error veritatis praesentium culpa doloribus unde id magnam cum autem ipsam debitis maiores aliquid corporis expedita, hic dicta repellendus dolore fuga odit nihil aliquam maxime? Ipsam quasi ratione odio a minus, vitae voluptates iusto modi accusantium, quaerat, adipisci aut dolor asperiores?</p>
-                </DetailsAccordion>
-                <DetailsAccordion summary="Lashes lines">
-                    <p>PLATINUM Black eyelashes by Chetvertinovskaya Liubov:</p>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Repellendus voluptas explicabo aut provident, ipsum quam quia ullam reiciendis molestias beatae id illo tempora, eos harum officia doloremque amet! Nam rerum exercitationem, adipisci veniam provident unde aliquam molestiae necessitatibus dolores in ratione, autem error tempora. Quisquam, iure? Corporis tenetur ad provident veritatis repellendus blanditiis, assumenda officia nam! Enim laboriosam beatae error veritatis praesentium culpa doloribus unde id magnam cum autem ipsam debitis maiores aliquid corporis expedita, hic dicta repellendus dolore fuga odit nihil aliquam maxime? Ipsam quasi ratione odio a minus, vitae voluptates iusto modi accusantium, quaerat, adipisci aut dolor asperiores?</p>
+                    <div dangerouslySetInnerHTML={{
+                        __html: ReactHtmlParser(currentVariation?.description || product.description)
+                    }}></div>
                 </DetailsAccordion>
             </ProductInfoWrapper>
         </ProductWrapper>
