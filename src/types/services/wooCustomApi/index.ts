@@ -1,3 +1,4 @@
+import { LineItemSchema, ProductsMinimizedSchema } from "@/types/components/shop/product/products";
 import { lineOrderItemsSchema } from "@/types/store/reducers/сartSlice";
 import { z } from "zod";
 
@@ -220,36 +221,21 @@ const LineItemReqSchema = z.object({
     variation_id: z.number().optional(),
 });
 
+
 const CreateOrderRequestSchema = z.object({
     line_items: z.array(LineItemReqSchema),
     status: z.enum(['pending', 'processing', 'on-hold', 'completed', 'cancelled', 'refunded', 'failed']),
 });
 
+
+
 const CreateOrderResponseSchema = z.object({
     id: z.number(),
-    line_items: z.array(z.object({
-        id: z.number(),
-        name: z.string(),
-        parent_name: z.string().nullable(),
-        product_id: z.number(),
-        variation_id: z.number(),
-        quantity: z.number(),
-        tax_class: z.string(),
-        subtotal: z.string(),
-        subtotal_tax: z.string(),
-        total: z.string(),
-        total_tax: z.string(),
-        taxes: z.array(z.any()),
-        meta_data: z.array(z.any()),
-        image: z.object({
-            id: z.number(),
-            src: z.string()
-        }),
-        sku: z.string(),
-        price: z.number()
-    })),
+    line_items: z.array(LineItemSchema),
     status:z.enum(['pending', 'processing', 'on-hold', 'completed', 'cancelled', 'refunded', 'failed']),
 });
+
+
 
 export type OrderType = z.infer<typeof OrderTypeSchema>;
 export type AddressType = z.infer<typeof AddressTypeSchema>;
