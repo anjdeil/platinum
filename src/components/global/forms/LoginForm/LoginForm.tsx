@@ -1,37 +1,59 @@
-import { FC } from "react";
-import { CustomForm, FormWrapper, FormWrapperBottom } from "../RegistrationForm/styles";
+import { FC, useState } from "react";
+import { CustomForm, FormWrapperBottom } from "../RegistrationForm/styles";
 import { LoginFormSchema, LoginFormType } from "@/types/components/global/forms/LoginForm";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useGetTokenMutation } from "@/store/rtk-queries/wpApi";
-import { isAuthErrorResponseType } from "@/utils/isAuthErrorResponseType";
-import { CustomError } from "../CustomFormInput/styles";
+import { useCheckTokenMutation, useGetTokenMutation } from "@/store/rtk-queries/wpApi";
+import { CustomError, CustomSuccess } from "../CustomFormInput/styles";
 import { CustomFormInput } from "../CustomFormInput";
-
+import { FormWrapper } from "./styles";
+import { StyledButton } from "@/styles/components";
+import theme from "@/styles/theme";
+import { useRouter } from "next/router";
 
 export const LoginForm: FC = () =>
 {
-    const [getToken, { data, isLoading, error }] = useGetTokenMutation({});
+    const router = useRouter();
+    const [customError, setCustomError] = useState<string>('');
 
-    const { register, handleSubmit, formState: { errors, isSubmitting, isSubmitSuccessful }, setValue, reset } = useForm<LoginFormType>({
+    /** Form settings */
+    const { register, handleSubmit, formState: { errors, isSubmitting, isSubmitSuccessful, isLoading }, reset } = useForm<LoginFormType>({
         resolver: zodResolver(LoginFormSchema)
     });
 
+    /** API
+    * Get and validate token
+    */
+    const [fetchToken] = useGetTokenMutation();
+    const [checkToken] = useCheckTokenMutation();
+
+
     async function onSubmit(formData: LoginFormType)
     {
-        const data = {
-            username: formData.username,
-            password: formData.password,
-        }
+        setCustomError('');
 
         try
         {
-            const response = await getToken(data);
-            if (response)
-                console.log(response);
-        } catch (error)
+            /** Fetching auth token */
+            const tokenResp = await fetchToken({
+                password: formData.password,
+                username: formData.email
+            });
+            if (!tokenResp.data) throw new Error('Auth token getting failed.');
+
+            /** Validate auth token */
+            const isTokenValid = await checkToken({});
+            if (!isTokenValid) throw new Error('Auth token validation failed.');
+            router.push('/my-account');
+
+        } catch (err)
         {
-            console.error(error);
+            if (err instanceof Error)
+                setCustomError(err.message);
+        }
+        finally
+        {
+            reset();
         }
     }
 
@@ -40,10 +62,9 @@ export const LoginForm: FC = () =>
             <FormWrapper>
                 <CustomFormInput
                     fieldName="Adres e-mail"
-                    name='username'
+                    name='email'
                     register={register}
                     errors={errors}
-                    // setValue={setValue}
                     inputTag={"input"}
                     inputType={"text"} />
                 <CustomFormInput
@@ -51,13 +72,30 @@ export const LoginForm: FC = () =>
                     name='password'
                     register={register}
                     errors={errors}
-                    // setValue={setValue}
                     inputTag={"input"}
                     inputType={"password"} />
             </FormWrapper>
             <FormWrapperBottom>
-                <button type="submit" disabled={isSubmitting}>{isSubmitting ? 'Submitting...' : 'Submit'}</button>
-                {error && <CustomError dangerouslySetInnerHTML={{ __html: isAuthErrorResponseType(error) }}></CustomError>}
+                <StyledButton
+                    backgroundColor={theme.background.hover}
+                    color={theme.colors.white}
+                    type="submit"
+                    disabled={isSubmitting}>
+                    Login
+                </StyledButton>
+                <StyledButton
+                    backgroundColor={'transparent'}
+                    color={theme.colors.black}
+                    disabled={isSubmitting}
+                    onSubmit={() => { router.push('/my-account') }}
+                >
+                    Register
+                </StyledButton>
+                {customError && <CustomError>{customError}</CustomError>}
+                {(isSubmitSuccessful && !customError && !isLoading) &&
+                    <CustomSuccess>
+                        Your account has been created successfully!
+                    </CustomSuccess>}
             </FormWrapperBottom>
         </CustomForm>
     );

@@ -23,13 +23,11 @@ export const CustomInput: FC<CustomInputType> = ({ defaultValue, value, onChange
                 as={'label'}
                 isError={false}
                 isTextArea={false}
-                isCheckbox={false}
                 isPhone={false}>
                 <CustomInputWrapper>
                     <Input
                         as={'input'}
                         type={'number'}
-                        isCheckbox={false}
                         isError={false}
                         value={value}
                         defaultValue={defaultValue || ""}

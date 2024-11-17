@@ -1,4 +1,4 @@
-import { OrderType } from '@/types/services';
+import { OrderType } from '@/types/services/wooCustomApi/shop';
 import getSubtotalByLineItems from '@/utils/getSubtotalByLineItems';
 import { Document, Link, Page, StyleSheet, Text, View } from '@react-pdf/renderer';
 

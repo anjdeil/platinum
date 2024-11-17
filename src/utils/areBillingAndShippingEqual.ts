@@ -1,4 +1,4 @@
-import { AddressType } from "@/types/services";
+import { AddressType } from "@/types/services/wooCustomApi/shop";
 
 const areBillingAndShippingEqual = (billing: AddressType, shipping: AddressType) =>
 {

@@ -1,10 +1,10 @@
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { Archive } from "@/components/shop/Archive";
-import { CustomDataProductsSchema, CustomDataProductsType, ProductParamsType } from "@/types/services";
 import { findPageParam } from "@/utils/getCurrentPageNumber";
 import { customRestApi } from "@/services/wpCustomApi";
 import { ProductType } from "@/types/pages/shop";
 import { validateWpCustomProductsData } from "@/utils/zodValidators/validateWpCustomProductsData";
+import { ProductParamsType } from "@/types/services/wooCustomApi/shop";
 
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) =>
 {
@@ -55,9 +55,6 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
         // category string
         // search  string
     }
-
-    console.log('params before server', params)
-    console.log('currentParams', productsParams)
 
     try
     {

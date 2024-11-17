@@ -1,11 +1,11 @@
-import { RegistrationForm } from "@/components/global/forms/RegistrationForm";
-import { Container, Title } from "@/styles/components";
+import { Container } from "@/styles/components";
 import Head from "next/head";
 import { GetServerSidePropsContext } from "next";
 import wpRestApi from "@/services/wpRestApi";
+import { LoginForm } from "@/components/global/forms/LoginForm";
 import { FormContainer } from "@/components/pages/account/styles";
 
-export default function Registration()
+export default function Login()
 {
     return (
         <>
@@ -14,7 +14,7 @@ export default function Registration()
             </Head>
             <Container>
                 <FormContainer>
-                    <RegistrationForm />
+                    <LoginForm />
                 </FormContainer>
             </Container>
         </>

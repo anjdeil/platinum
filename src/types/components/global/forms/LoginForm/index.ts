@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const LoginFormSchema = z.object({
-    username: z.string().email(),
+    email: z.string().email(),
     password: z.string()
 });
 

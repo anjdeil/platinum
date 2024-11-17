@@ -1,4 +1,4 @@
-import { OrderType, WooCustomerReqType, WooCustomerType } from "@/types/services";
+import { WooCustomerReqType, WooCustomerType } from "@/types/services/wooCustomApi/customer";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const wooCustomRktApi = createApi({

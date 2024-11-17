@@ -5,12 +5,12 @@ import { GetServerSidePropsContext } from "next";
 import wpRestApi from "@/services/wpRestApi";
 import { FormContainer } from "@/components/pages/account/styles";
 
-export default function Registration()
+export default function UserInfo()
 {
     return (
         <>
             <Head>
-                <title>My account registration</title>
+                <title>User information</title>
             </Head>
             <Container>
                 <FormContainer>
@@ -29,14 +29,17 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) =>
     try
     {
         const response = await wpRestApi.post('jwt-auth/v1/token/validate', {}, false, `Bearer ${cookies.authToken}`);
-        if (!response.data) return { props: {} };
+        if (!response.data)
+        {
+            return {
+                redirect: {
+                    destination: '/my-account/login',
+                    permanent: false,
+                }
+            };
+        }
 
-        return {
-            redirect: {
-                destination: '/my-account',
-                permanent: false,
-            }
-        };
+        return { props: {} };
 
     } catch (err)
     {

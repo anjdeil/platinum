@@ -12,8 +12,6 @@ export const CustomFormCheckbox: FC<CustomFormCheckboxType> = ({ errors, label, 
     {
         if (!errors || !name) { setError(false); return; }
         setError(name in errors);
-        console.log('formErrors:', errors);
-
     }, [errors, name]);
 
     return (

@@ -109,6 +109,11 @@ export const StyledButton = styled.button<StyledButtonProps>`
         color: ${({ theme, hoverColor = theme.colors.white }) => hoverColor};
         background-color: ${({ theme, hoverBackgroundColor = theme.background.hover }) => hoverBackgroundColor};
     }
+    
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 0.6;
+    }
 
     @media ${({ theme }) => theme.media.large} {
         padding-block: 11px;

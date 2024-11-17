@@ -33,7 +33,10 @@ export const RegistrationForm: FC = () =>
         resolver: zodResolver(formSchema)
     });
 
-    /** API */
+    /** API
+     * Register a new customer
+     * Get and validate token
+     */
     const [registerCustomerMutation, { error }] = useRegisterCustomerMutation();
     const [fetchToken] = useGetTokenMutation();
     const [checkToken] = useCheckTokenMutation();

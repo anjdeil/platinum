@@ -2,8 +2,8 @@ import { useTranslations } from "next-intl";
 import { FC } from "react";
 import OrderTotalsRowsSkeleton from "./OrderTotalsRowsSkeleton";
 import { Label, LabelCode, LastRow, Row, TotalsTable, Value } from "./styles";
-import { OrderType } from "@/types/services";
 import getSubtotalByLineItems from "@/utils/getSubtotalByLineItems";
+import { OrderType } from "@/types/services/wooCustomApi/shop";
 
 interface OrderTotalsPropsType
 {

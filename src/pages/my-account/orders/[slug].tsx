@@ -9,13 +9,13 @@ import Notification from "@/components/global/Notification/Notification";
 import OrderPdf from "@/pdf/OrderPdf";
 import wooCommerceRestApi from "@/services/wooCommerceRestApi";
 import { AccountInfoWrapper } from "@/styles/components";
-import { OrderType } from "@/types/services";
 import areBillingAndShippingEqual from "@/utils/areBillingAndShippingEqual";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { FC } from "react";
+import { OrderType } from "@/types/services/wooCustomApi/shop";
 
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) =>
 {
