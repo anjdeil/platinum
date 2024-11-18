@@ -150,7 +150,10 @@ const CartTable: FC<CartTableProps> = ({
                       {resolveCount !== true && (
                         <td colSpan={6}>
                           <CartProductWarning
-                            onUpdate={() => handleChangeQuantity(item.product_id, "value", item.variation_id, resolveCount)}
+                            onUpdate={() => handleChangeQuantity(item.product_id, "value", item.variation_id, resolveCount)
+
+                            }
+                            resolveCount={resolveCount}
                           />
                         </td>
                       )}
@@ -201,6 +204,7 @@ const CartTable: FC<CartTableProps> = ({
                   {resolveCount !== true && (
                     <CartProductWarning
                       onUpdate={() => handleChangeQuantity(item.product_id, "value", item.variation_id, resolveCount)}
+                      resolveCount={resolveCount}
                     />
                   )}
                 </React.Fragment>
