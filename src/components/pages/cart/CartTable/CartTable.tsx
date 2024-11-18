@@ -52,6 +52,12 @@ const CartTable: FC<CartTableProps> = ({
   const dispatch = useAppDispatch();
   const { isMobile } = useResponsive();
   const status: CreateOrderRequestType["status"] = "on-hold";
+  /*   // test variation product
+    dispatch(updateCart({
+      product_id: 24133,
+      variation_id: 24134,
+      quantity: 1
+    })) */
 
   // Quantity
   const handleChangeQuantity = (
