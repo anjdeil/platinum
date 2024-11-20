@@ -1,9 +1,11 @@
-import styled from '@emotion/styled';
+import styled from "@emotion/styled";
 
 export const WarningWrapper = styled.div`
+  grid-column: span 6;
+  padding: 0 16px;
+
   background: ${({ theme }) => theme.background.secondary};
-  border: 1px solid ${({ theme }) => theme.colors.lightBorder};
-  border-top: none;
+  border-radius: 8px;
   padding: 10px 15px;
   display: flex;
   justify-content: end;

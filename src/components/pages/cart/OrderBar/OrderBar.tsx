@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { OrderBarContent, OrderBarSum, OrderBarWrapper, OrderBarTitle, OrderBarDesc } from "./style";
 import { Skeleton } from "@mui/material";
+import { useTranslations } from "next-intl";
 
 interface OrderBarProps {
   cartSum: number;
@@ -9,9 +10,10 @@ interface OrderBarProps {
 }
 
 const OrderBar: FC<OrderBarProps> = ({ cartSum, symbol, isLoadingOrder }) => {
+  const t = useTranslations("Cart");
   return (
     <OrderBarWrapper>
-      <OrderBarTitle>Order value</OrderBarTitle>
+      <OrderBarTitle>{t("orderValue")}</OrderBarTitle>
       <OrderBarContent>
         <OrderBarSum>
           {isLoadingOrder ?
@@ -25,7 +27,7 @@ const OrderBar: FC<OrderBarProps> = ({ cartSum, symbol, isLoadingOrder }) => {
           }
 
         </OrderBarSum>
-        <OrderBarDesc>You only need 26.01 zł to get free delivery</OrderBarDesc>
+        <OrderBarDesc>{t("priceToDelivery", { locale: '26 zl' })}</OrderBarDesc>
       </OrderBarContent>
     </OrderBarWrapper>
   );

@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+import styled from "@emotion/styled";
 
 export const OrderBarWrapper = styled.div`
   border-radius: 8px;
@@ -22,7 +22,7 @@ export const OrderBarContent = styled.div`
 export const OrderBarSum = styled.p`
   text-align: right;
   display: inline-block;
-  font: ${({ theme }) => theme.fonts.bodyMiddleSemiBold};
+  font: ${({ theme }) => theme.fonts.titleH2Medium};
   line-height: 24px;
   margin-bottom: 8px;
   &:not(:last-child) {

@@ -1,44 +1,62 @@
 import styled from "@emotion/styled";
 
+interface GridRowFullProps {
+  padding?: string;
+}
+
 export const CartTableWrapper = styled.div`
   width: 100%;
   margin: 24px 0;
 `;
 
-export const CartTableTable = styled.table`
-  box-sizing: border-box;
+export const CartTableGrid = styled.div`
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
   width: 100%;
-  border-collapse: collapse;
-  & tbody {
-    & tr {
-      border: 1px solid ${({ theme }) => theme.colors.lightBorder};
-      border-top: none;
-      & td {
-        padding: 5px 16px;
-      }
-    }
-  }
-  @media ${({ theme }) => theme.media.medium} {
-    font: ${({ theme }) => theme.fonts.bodypresmallReg};
+  overflow: hidden;
+`;
+
+export const GridHeader = styled.div`
+  background: ${({ theme }) => theme.background.secondary};
+  font: ${({ theme }) => theme.fonts.bodyMiddleReg};
+  text-transform: uppercase;
+  border: 1px solid ${({ theme }) => theme.background.secondary};
+`;
+export const RowWrapper = styled.div`
+  border: 1px solid ${({ theme }) => theme.colors.lightBorder};
+  border-top: none;
+  &:last-of-type {
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
   }
 `;
-export const CartTableHead = styled.thead`
-  border: 1px solid ${({ theme }) => theme.background.secondary};
-  border-top-right-radius: 8px;
-  border-top-left-radius: 8px;
-  background: ${({ theme }) => theme.background.secondary};
-  & tr {
-    border: none;
-    height: 56px;
-    & th {
-      padding: 0 16px;
-      text-transform: uppercase;
-      font: ${({ theme }) => theme.fonts.bodyMiddleReg};
-      @media ${({ theme }) => theme.media.medium} {
-        font: ${({ theme }) => theme.fonts.bodypresmallReg};
-      }
-    }
+export const GridRow = styled.div<GridRowFullProps>`
+  display: grid;
+  grid-template-columns: 0.3fr 0.6fr 4fr 1fr 2fr 1fr;
+  align-items: center;
+  padding: ${({ padding = "0" }) => padding};
+  & > div {
+    padding: 16px;
   }
+`;
+
+export const TextCell = styled.div`
+  text-align: center;
+`;
+export const TextNameCell = styled.div`
+  text-align: left;
+`;
+
+export const TextCellHeader = styled.div`
+  background: ${({ theme }) => theme.background.secondary};
+  text-align: center;
+`;
+
+export const DeleteCell = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const CartImgWrapper = styled.div`
@@ -47,46 +65,39 @@ export const CartImgWrapper = styled.div`
   max-height: 60px;
   width: 100%;
   height: 100%;
-
   aspect-ratio: 1 / 1;
   position: relative;
   @media ${({ theme }) => theme.media.medium} {
     max-width: 140px;
     max-height: 140px;
-
     margin-right: 16px;
   }
 `;
 export const CartItemImg = styled.img`
+  border-radius: 8px;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter:  contrast(0.94);
+  filter: contrast(0.94);
   @media ${({ theme }) => theme.media.medium} {
-   /*  box-shadow: 0px 0px 39px -10px rgba(34, 60, 80, 0.2); */
+    /*  box-shadow: 0px 0px 39px -10px rgba(34, 60, 80, 0.2); */
     border-radius: 8px;
   }
 `;
-export const CartTableCell = styled.td`
-  text-align: center;
-`;
-export const DeleteCell = styled.td`
-  display: flex;
-  flex-grow: 1;
-  align-items: center;
-  justify-content: center;
-`;
 
-/* cartCard */
+/* Mobile Cart */
 
-export const CartCardWrapper = styled.div`
+export const CartCardAllWrapper = styled.div`
   border: 1px solid ${({ theme }) => theme.background.secondary};
   padding: 16px;
-  display: flex;
-  align-items: top;
-
+  padding-bottom: 0px;
   margin-bottom: 16px;
   border-radius: 8px;
+`;
+export const CartCardWrapper = styled.div`
+  display: flex;
+  align-items: top;
+  margin-bottom: 18px;
 `;
 export const CardContent = styled.div`
   display: flex;
@@ -98,13 +109,10 @@ export const ProductPrice = styled.div`
   display: flex;
   justify-content: space-between;
   line-height: 24px;
-  & p{
-    display:flex;
+  & p {
+    display: flex;
     align-items: center;
   }
-  /* &:not(:last-child) {
-    margin-bottom: 30px;
-  } */
 `;
 export const ProducTitle = styled.div`
   align-items: top;
@@ -117,7 +125,6 @@ export const ProducTitle = styled.div`
   }
 `;
 export const OnePrice = styled.span`
-  
   font: ${({ theme }) => theme.fonts.bodyMiddleSemiBold};
   color: ${({ theme }) => theme.colors.primary};
 `;

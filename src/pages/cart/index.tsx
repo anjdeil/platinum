@@ -39,7 +39,6 @@ const CartPage: React.FC = () => {
 
     // Fetch product specs
     useEffect(() => {
-        console.log(JSON.stringify(cartItems, null, 2));
         getProductsMinimized(cartItems);
     }, [getProductsMinimized, cartItems]);
 
@@ -60,8 +59,6 @@ const CartPage: React.FC = () => {
                 return sum + (item.price * item.quantity);
             }, 0);
             setCartSum(roundedPrice(cartSum));
-        } else {
-            console.log("Cart sum error.");
         }
     }, [orderItems]);
 

@@ -1,24 +1,29 @@
 import React from "react";
 import { UpdateButton, WarningWrapper } from "./style";
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import { useTranslations } from "next-intl";
 
 interface CartProductWarningProps {
     onUpdate: () => void;
     resolveCount: number | false | undefined;
 }
 
-const CartProductWarning: React.FC<CartProductWarningProps> = ({ onUpdate, resolveCount }) => {
+const CartProductWarning: React.FC<CartProductWarningProps> = ({ onUpdate, resolveCount, }) => {
+    const t = useTranslations("Cart");
     return (
         <WarningWrapper>
             {resolveCount === 0 ?
-                (<span>This product is not available.</span>)
+                (
+                    <>
+                        <span>{t("productNotAvailable")}</span>
+                        <UpdateButton onClick={onUpdate}>{t("delete")}</UpdateButton>
+                    </>)
                 :
                 (<>
                     <div>
-                        <ExpandLessIcon />
-                        <span>This product is not available in selected quantity.</span>
+
+                        <span>{t("productNotAvailableQuantity")}</span>
                     </div>
-                    <UpdateButton onClick={onUpdate}>Update</UpdateButton>
+                    <UpdateButton onClick={onUpdate}>{t("updateTo")}&nbsp;{resolveCount}</UpdateButton>
                 </>)}
         </WarningWrapper>
     );

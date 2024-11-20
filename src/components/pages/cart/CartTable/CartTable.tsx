@@ -7,17 +7,22 @@ import { useAppSelector, useAppDispatch } from "@/store";
 import { updateCart } from "@/store/slices/cartSlice";
 import {
   CardContent,
+  CartCardAllWrapper,
   CartCardWrapper,
   CartImgWrapper,
   CartItemImg,
-  CartTableCell,
-  CartTableHead,
-  CartTableTable,
+  CartTableGrid,
   CartTableWrapper,
   DeleteCell,
+  GridHeader,
+  GridRow,
   OnePrice,
   ProducTitle,
   ProductPrice,
+  RowWrapper,
+  TextCell,
+  TextCellHeader,
+  TextNameCell,
 } from "./style";
 import DeleteIcon from "@/components/global/icons/DeleteIcon/DeleteIcon";
 import { useResponsive } from "@/hooks/useResponsive";
@@ -27,6 +32,8 @@ import CartProductWarning from "../CartProductWarning/CartProductWarning";
 import CartQuantity from "../CartQuantity/CartQuantity";
 import { MenuSkeleton } from "@/components/menus/MenuSkeleton";
 import { CartItem } from "@/types/store/reducers/сartSlice";
+import theme from "@/styles/theme";
+import { useTranslations } from "next-intl";
 
 interface CartTableProps {
   symbol: string;
@@ -49,6 +56,7 @@ const CartTable: FC<CartTableProps> = ({
   hasConflict,
   cartItems
 }) => {
+  const t = useTranslations("Cart");
   const dispatch = useAppDispatch();
   const { isMobile } = useResponsive();
   const status: CreateOrderRequestType["status"] = "on-hold";
@@ -66,8 +74,6 @@ const CartTable: FC<CartTableProps> = ({
     variation_id?: number,
     newQuantity?: number | boolean
   ) => {
-    console.log("handleChangeQuantity called with:", { product_id, action, variation_id, newQuantity });
-
     const updatedItem = cartItems.find(
       (item) =>
         item.product_id === product_id &&
@@ -87,8 +93,6 @@ const CartTable: FC<CartTableProps> = ({
         case "value":
           if (newQuantity !== undefined && !Number.isNaN(newQuantity)) {
             quantityToUpdate = newQuantity as number;
-          } else {
-            console.log("Invalid newQuantity:", newQuantity);
           }
           break;
         default:
@@ -96,7 +100,6 @@ const CartTable: FC<CartTableProps> = ({
       }
 
       if (quantityToUpdate >= 0) {
-        console.log("Dispatching updateCart with:", { product_id, variation_id, quantity: quantityToUpdate });
         dispatch(
           updateCart({
             product_id,
@@ -112,57 +115,68 @@ const CartTable: FC<CartTableProps> = ({
     <CartTableWrapper>
       {!isMobile ? (
         <>
-          <CartTableTable>
-            <CartTableHead>
-              <tr>
-                <th></th>
-                <th></th>
-                <th>Product Name</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Value</th>
-              </tr>
-            </CartTableHead>
-            {!(isLoadingOrder || isLoadingProductsMin) && (
-              <tbody>
-                {orderItems?.line_items.map((item) => {
-                  const { resolveCount } = checkProductAvailability(item, productsSpecs);
-                  return (
-                    <React.Fragment key={item.id}>
-                      <tr>
-                        <DeleteCell>
-                          <div>
-                            <DeleteIcon onClick={() => handleChangeQuantity(item.product_id, "value", item.variation_id, 0)} />
-                          </div>
-                        </DeleteCell>
-                        <td>
-                          <CartImgWrapper>
-                            <CartItemImg src={item.image.src} alt={item.name} width="50" />
-                          </CartImgWrapper>
-                        </td>
-                        <td>{item.name}</td>
-                        <CartTableCell>{roundedPrice(item.price)}&nbsp;{symbol}</CartTableCell>
-                        <CartTableCell>
-                          <CartQuantity item={item} handleChangeQuantity={handleChangeQuantity} />
-                        </CartTableCell>
-                        <CartTableCell>{roundedPrice(item.price * item.quantity)}&nbsp;{symbol}</CartTableCell>
-                      </tr>
-                      {resolveCount !== true && (
-                        <td colSpan={6}>
-                          <CartProductWarning
-                            onUpdate={() => handleChangeQuantity(item.product_id, "value", item.variation_id, resolveCount)
-
+          <CartTableGrid>
+            <GridHeader>
+              <GridRow >
+                <div />
+                <div />
+                <TextCellHeader>{t("productName")}</TextCellHeader>
+                <TextCellHeader>{t("price")}</TextCellHeader>
+                <TextCellHeader>{t("quantity")}</TextCellHeader>
+                <TextCellHeader>{t("value")}</TextCellHeader>
+              </GridRow>
+            </GridHeader>
+            {!(isLoadingOrder || isLoadingProductsMin) &&
+              orderItems?.line_items.map((item) => {
+                const { resolveCount } = checkProductAvailability(item, productsSpecs);
+                return (
+                  <RowWrapper key={item.id}>
+                    <GridRow >
+                      <DeleteCell>
+                        <div>
+                          <DeleteIcon
+                            onClick={() =>
+                              handleChangeQuantity(
+                                item.product_id,
+                                "value",
+                                item.variation_id,
+                                0
+                              )
                             }
-                            resolveCount={resolveCount}
                           />
-                        </td>
-                      )}
-                    </React.Fragment>
-                  );
-                })}
-              </tbody>
-            )}
-          </CartTableTable>
+                        </div>
+                      </DeleteCell>
+                      <CartImgWrapper>
+                        <CartItemImg src={item.image.src} alt={item.name} width="50" />
+                      </CartImgWrapper>
+                      <TextNameCell>{item.name}</TextNameCell>
+                      <TextCell>{roundedPrice(item.price)}&nbsp;{symbol}</TextCell>
+                      <TextCell>
+                        <CartQuantity item={item} handleChangeQuantity={handleChangeQuantity} />
+                      </TextCell>
+                      <TextCell>
+                        {roundedPrice(item.price * item.quantity)}&nbsp;{symbol}
+                      </TextCell>
+                    </GridRow>
+                    {resolveCount !== true && (
+                      <GridRow padding="5px 16px 16px 16px">
+                        <CartProductWarning
+                          onUpdate={() =>
+                            handleChangeQuantity(
+                              item.product_id,
+                              "value",
+                              item.variation_id,
+                              resolveCount
+                            )
+                          }
+                          resolveCount={resolveCount}
+                        />
+                      </GridRow>
+                    )}
+                  </RowWrapper >
+                );
+              })}
+          </CartTableGrid>
           {(isLoadingOrder || isLoadingProductsMin) && (
             <MenuSkeleton
               elements={cartItems.length}
@@ -170,6 +184,7 @@ const CartTable: FC<CartTableProps> = ({
               width="100%"
               height="72px"
               gap="5px"
+              color={theme.background.skeletonSecondary}
             />
           )}
         </>
@@ -178,8 +193,9 @@ const CartTable: FC<CartTableProps> = ({
           {!(isLoadingOrder || isLoadingProductsMin) ? (
             orderItems?.line_items.map((item) => {
               const { resolveCount } = checkProductAvailability(item, productsSpecs);
+
               return (
-                <React.Fragment key={item.id}>
+                <CartCardAllWrapper key={item.id}>
                   <CartCardWrapper>
                     <CartImgWrapper>
                       <CartItemImg src={item.image.src} alt={item.name} width="50" />
@@ -207,7 +223,7 @@ const CartTable: FC<CartTableProps> = ({
                       resolveCount={resolveCount}
                     />
                   )}
-                </React.Fragment>
+                </CartCardAllWrapper>
               );
             })
           ) : (
@@ -217,11 +233,12 @@ const CartTable: FC<CartTableProps> = ({
               width="100%"
               height="230px"
               gap="5px"
+              color={theme.background.skeletonSecondary}
             />
           )}
         </>
       )}
-      {hasConflict && <p>There are conflicts in your cart. Please review your items.</p>}
+      {hasConflict && <p>{t("cartConflict")}</p>}
     </CartTableWrapper>
   );
 };

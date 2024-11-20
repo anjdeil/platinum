@@ -90,5 +90,19 @@
         "newProduct": "New Products",
         "ourCategories": "Our categories",
         "moreProduct": "More product"
-    }
+    },
+    "Cart": {
+    "productName": "Name",
+    "price": "Price",
+    "quantity": "Quantity",
+    "value": "Total",
+    "orderValue": "Order Value",
+    "cartConflict": "Your cart contains unavailable items. Please review your items.",
+    "productNotAvailable": "This product is out of stock.",
+    "productNotAvailableQuantity": "This product is not available in this quantity.",
+    "delete": "Delete",
+    "updateTo": "Update to",
+    "priceToDelivery": "To get free delivery, you need to add items totaling {locale}"
+}
+
 }
