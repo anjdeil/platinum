@@ -17,12 +17,10 @@ import { useFetchCustomerQuery } from '@/store/rtk-queries/wooCustomApi';
 import { setCategories, setLoading } from '@/store/slices/categoriesSlice';
 import CategoriesMenu from '../shop/categories/CategoriesMenu/CategoriesMenu';
 
-
 export const MenusContext = createContext<WpMenuResponseType[] | []>([]);
 const currency = 'USD';
 
-export default function Layout({ children }: { children: React.ReactNode })
-{
+export default function Layout({ children }: { children: React.ReactNode }) {
     const dispatch = useDispatch();
     const { isMobile } = useResponsive();
     const { locale } = useRouter();
@@ -34,30 +32,25 @@ export default function Layout({ children }: { children: React.ReactNode })
     const { data: themeOptions, error: themeOptionsError, } = useGetThemeOptionsQuery();
     const { data: categoriesResp, isLoading: isCategoriesLoading } = useGetCategoriesQuery(langParam);
 
-    useEffect(() =>
-    {
-        if (menusResp && menusResp.data && menusResp.data.items)
-        {
+    useEffect(() => {
+        if (menusResp && menusResp.data && menusResp.data.items) {
             setMenus(menusResp.data.items);
         }
     }, [menusResp])
 
-    useEffect(() =>
-    {
-        if (themeOptions && themeOptions.data)
-        {
+    useEffect(() => {
+        if (themeOptions && themeOptions.data) {
             dispatch(setThemeOptions({ data: themeOptions, language: langParamStr }));
         }
     }, [themeOptions, locale, dispatch]);
 
-    useEffect(() =>
-    {
-        if (categoriesResp && categoriesResp.data)
-        {
+    useEffect(() => {
+        if (categoriesResp && categoriesResp.data) {
             dispatch(setCategories(categoriesResp.data.items));
+            dispatch(setLoading(isCategoriesLoading));
         }
-        dispatch(setLoading(isCategoriesLoading));
-    }, [categoriesResp, isCategoriesLoading, dispatch]);;
+
+    }, [categoriesResp, isCategoriesLoading, dispatch]);
 
 
     return (

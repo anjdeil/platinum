@@ -18,15 +18,12 @@ const Nav: FC<wpMenuProps> = ({
     align,
     gap,
     mobGap,
-}) =>
-{
+}) => {
     const menus: menuItemsType[] | undefined = useContext(MenusContext);
     const menuItems = menus?.find(({ id }) => id === menuId)?.items;
 
-    console.log(menuItems);
-    
-    if (!menuItems && skeleton)
-    {
+
+    if (!menuItems && skeleton) {
         return (
             <MenuSkeleton
                 elements={skeleton.elements}

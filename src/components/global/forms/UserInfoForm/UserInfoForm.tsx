@@ -19,8 +19,7 @@ import { CustomError } from "../CustomFormInput/styles";
 const isUpdate = true;
 const isCheckout = false;
 
-export const UserInfoForm: FC = () =>
-{
+export const UserInfoForm: FC = () => {
 
     // auth route
     /*   const router = useRouter();
@@ -54,12 +53,9 @@ export const UserInfoForm: FC = () =>
         });
 
 
-    useEffect(() =>
-    {
-        const subscription = watch((value, { name, type }) =>
-        {
-            if (type === 'change')
-            {
+    useEffect(() => {
+        const subscription = watch((value, { name, type }) => {
+            if (type === 'change') {
                 setHasChanges(true);
                 console.log('hasChanges:', hasChanges);
             }
@@ -67,11 +63,9 @@ export const UserInfoForm: FC = () =>
         return () => subscription.unsubscribe();
     }, [watch]);
 
-    async function onSubmit(formData: UserInfoFormType)
-    {
+    async function onSubmit(formData: UserInfoFormType) {
 
-        if (!customer)
-        {
+        if (!customer) {
             console.error("Customer data is not available");
             return;
         }
@@ -104,13 +98,11 @@ export const UserInfoForm: FC = () =>
                 country: isShipping && formData.countryShipping || formData.country,
             }
         }
-        try
-        {
+        try {
             const response = await UpdateCustomerMutation({ id: customer.id, ...data });
             if (response)
                 console.log(response);
-        } catch (error)
-        {
+        } catch (error) {
             console.error(error);
         }
     }
@@ -143,7 +135,7 @@ export const UserInfoForm: FC = () =>
                                 inputType={"text"}
                                 register={register}
                                 errors={errors}
-                                // defaultValue={customer?.first_name}
+                                //defaultValue={customer?.first_name}
                                 setValue={setValue}
                             />
                             <CustomFormInput
@@ -254,8 +246,7 @@ export const UserInfoForm: FC = () =>
                                 <OptionButton
                                     key={option.code}
                                     type="button"
-                                    onClick={() =>
-                                    {
+                                    onClick={() => {
                                         setValue("proofOfPurchase", option.code);
                                     }}
                                     isSelected={option.code === proofOfPurchaseValue}

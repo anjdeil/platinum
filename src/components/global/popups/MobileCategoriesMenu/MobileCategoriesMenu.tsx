@@ -11,19 +11,13 @@ import { MenuSkeleton } from "@/components/menus/MenuSkeleton";
 import { mockCategories } from '@/components/shop/categories/mock';
 import { StyledButton } from '@/styles/components';
 import { mobileCategoriesMenuProps } from '@/types/components/global/popups/mobilePopup';
+import { useAppSelector } from '@/store';
 
 
 const MobileCategoriesMenu: FC<mobileCategoriesMenuProps> = ({ padding, switchCategory, onClose, width, height, disableOverlay }) => {
     const [parent, setParent] = useState<CategoryType | undefined>();
 
-    /*    const categories: CategoryType[] | undefined = useAppSelector((state) => state.categoriesSlice.categories); */
-
-    const jsonObj = JSON.parse(mockCategories)
-    const categoriesItems = {
-        items: jsonObj.data.items.map((item: CategoryType) => ({ id: item.id, parent_id: item.parent_id, name: item.name, slug: item.slug, description: item.description, count: item.count, language_code: item.language_code }))
-    };
-    const categories: CategoryType[] = categoriesItems.items
-    //-----------------------------------------------------------------------
+    const categories: CategoryType[] | undefined = useAppSelector((state) => state.categoriesSlice.categories);
 
     const theme = useTheme();
     const scrollTop = window.scrollY;
