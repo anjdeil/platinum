@@ -29,8 +29,8 @@ const SelectParentCategory: FC<SelectParentCategoryMobileProps> = ({ selectedCat
 
     }, [categories, selectedCategories]);
 
-    console.log("selectedCategories: ", JSON.stringify(selectedCategories, null, 2));
-    console.log("children: ", JSON.stringify(children, null, 2));
+    /*  console.log("selectedCategories: ", JSON.stringify(selectedCategories, null, 2));
+     console.log("children: ", JSON.stringify(children, null, 2)); */
     return (
         <>
             {parent && (

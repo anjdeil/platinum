@@ -1,6 +1,6 @@
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { Archive } from "@/components/shop/Archive";
-import { ProductParamsType } from "@/types/services";
+import { LangParamType, ProductParamsType } from "@/types/services";
 import { findPageParam } from "@/utils/getCurrentPageNumber";
 import { customRestApi } from "@/services/wpCustomApi";
 import { ProductType } from "@/types/pages/shop";
@@ -13,6 +13,8 @@ function findCategoryParam(slugs: string[]): string[] {
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
+  const { locale } = context;
+
   const { slugs, ...params } = context.query;
 
   console.log("Initial slugs:", slugs);
@@ -58,6 +60,15 @@ export const getServerSideProps: GetServerSideProps = async (
   const minPrice = params.min_price ? Number(params.min_price) : null;
   const maxPrice = params.max_price ? Number(params.max_price) : null;
 
+  // language slug
+  let languageSlug = locale || "";
+
+  const allowedLanguages = ["de", "en", "pl", "ru", "uk"];
+
+  if (!allowedLanguages.includes(languageSlug)) {
+    languageSlug = "";
+  }
+
   const productsParams: ProductParamsType = {
     page: page || "1",
     per_page: productsPerPage,
@@ -67,7 +78,7 @@ export const getServerSideProps: GetServerSideProps = async (
     ...(maxPrice && { max_price: maxPrice }),
     // order_by string
     // order_by string
-    // lang string
+    lang: languageSlug,
     // ids array[string]
     // slugs array[string]
     // category string

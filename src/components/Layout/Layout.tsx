@@ -23,20 +23,21 @@ const currency = 'USD';
 export default function Layout({ children }: { children: React.ReactNode }) {
     const dispatch = useDispatch();
     const { isMobile } = useResponsive();
-    const { locale } = useRouter();
+    const router = useRouter();
+    const { locale } = router;
     const langParam: LangParamType | object = locale ? { lang: locale } : {};
     const langParamStr = locale ? locale : '';
     const [menus, setMenus] = useState<WpMenuResponseType[] | []>([]);
 
     const { data: menusResp, error, isLoading } = useGetMenusQuery(langParam);
-    const { data: themeOptions, error: themeOptionsError, } = useGetThemeOptionsQuery();
-    const { data: categoriesResp, isLoading: isCategoriesLoading } = useGetCategoriesQuery(langParam);
+    const { data: themeOptions, error: themeOptionsError } = useGetThemeOptionsQuery();
+    const { data: categoriesResp, isLoading: isCategoriesLoading, refetch: refetchCategories } = useGetCategoriesQuery(langParam);
 
     useEffect(() => {
         if (menusResp && menusResp.data && menusResp.data.items) {
             setMenus(menusResp.data.items);
         }
-    }, [menusResp])
+    }, [menusResp]);
 
     useEffect(() => {
         if (themeOptions && themeOptions.data) {
@@ -47,10 +48,16 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         if (categoriesResp && categoriesResp.data) {
             dispatch(setCategories(categoriesResp.data.items));
-            dispatch(setLoading(isCategoriesLoading));
+            console.log('Updated categories:', categoriesResp.data.items);
         }
-
+        dispatch(setLoading(isCategoriesLoading));
     }, [categoriesResp, isCategoriesLoading, dispatch]);
+
+    useEffect(() => {
+        // Перезапрашиваем категории при изменении маршрута
+        refetchCategories();
+        console.log('Refetching categories');
+    }, [router.asPath, refetchCategories,]);
 
 
     return (
@@ -63,7 +70,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 {children}
                 <Footer />
                 <CategoriesMenu isMenuVisible={true} shop={false} />
-            </MenusContext.Provider >
-        </Box >
+            </MenusContext.Provider>
+        </Box>
     );
-} 
+}

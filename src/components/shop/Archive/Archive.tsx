@@ -1,5 +1,5 @@
 import { Container, FlexBox, PagesNavigation, Title } from "@/styles/components";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import router from "next/router";
 import { FilterPanel } from "../filtration/FilterPanel";
 import { ArchivePropsType } from "@/types/components/shop/archive";
@@ -49,7 +49,6 @@ export const switchCategory = (parentSlug: string, childSlug?: string) => {
 };
 
 export const Archive: FC<ArchivePropsType> = ({ products, pagesCount, page, categoriesSlugs, statistic }) => {
-
     const [isMenuVisible, setMenuVisible] = useState(false);
     const { isMobile } = useResponsive();
     const toggleMenu = () => {
@@ -58,22 +57,28 @@ export const Archive: FC<ArchivePropsType> = ({ products, pagesCount, page, cate
 
     const [selectedCategories, setCategories] = useState<CategoryType[]>([]);
 
-
     const categoriesData: CategoryType[] | undefined = useAppSelector((state) => state.categoriesSlice.categories);
+
     const isLoading: boolean | undefined = useAppSelector((state) => state.categoriesSlice.loading);
 
     useEffect(() => {
-        if (categoriesData && categoriesData.length > 0) {
-            const filteredCategories = categoriesData.filter((category: CategoryType) =>
-                categoriesSlugs.includes(category.slug)
-            );
-            setCategories(filteredCategories);
+        if (!categoriesData || categoriesData.length === 0) {
+            setCategories([]);
+            return;
         }
+
+        const filteredCategories = categoriesData.filter((category) =>
+            categoriesSlugs.includes(category.slug)
+        );
+        setCategories(filteredCategories);
+        console.log('categoriesData use effect', JSON.stringify(categoriesData, null, 2));
+
     }, [categoriesData, categoriesSlugs]);
 
+    console.log('categoriesData ', JSON.stringify(categoriesData, null, 2));
     console.log(categoriesSlugs);
-
-    if (isLoading) return <div>categories loading</div>
+    /* 
+        if (isLoading) return <div>categories loading</div> */
     return (
         <Container>
             <Title as="h2" fontWeight={600} fontSize="24px" uppercase={true} marginBottom='24px'>
