@@ -11,8 +11,7 @@ import { CustomForm, FormWrapper, FormWrapperBottom } from "@/styles/components"
 import { isAuthErrorResponseType } from "@/utils/isAuthErrorResponseType";
 import { CustomError } from "../CustomFormInput/styles";
 
-interface RegistrationFormProps
-{
+interface RegistrationFormProps {
     isCheckout?: boolean;
     // userFields?: userFieldsType | null,
     // lineItems?: CartItem[] | [],
@@ -22,20 +21,17 @@ interface RegistrationFormProps
 const isCheckout = false;
 const isShipping = false;
 
-interface FormHandle
-{
+interface FormHandle {
     submit: () => void;
 }
 
 // Next
 // useImperativeHandle(ref, () => ({ submit: () => handleSubmit(onSubmit)() }));
-export const RegistrationForm: FC = () =>
-{
+export const RegistrationForm: FC = () => {
     const router = useRouter();
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
-    useEffect(() =>
-    {
+    useEffect(() => {
         if (isLoggedIn) router.push('/account');
     }, [router, isLoggedIn]);
 
@@ -49,8 +45,7 @@ export const RegistrationForm: FC = () =>
         resolver: zodResolver(formSchema)
     });
 
-    async function onSubmit(formData: RegistrationFormType)
-    {
+    async function onSubmit(formData: RegistrationFormType) {
         const data = {
             email: formData.email,
             first_name: formData.name,
@@ -71,13 +66,11 @@ export const RegistrationForm: FC = () =>
             }
         }
 
-        try
-        {
+        try {
             const response = await registerCustomerMutation(data);
             if (response)
                 console.log(response);
-        } catch (error)
-        {
+        } catch (error) {
             console.error(error);
         }
 
@@ -92,7 +85,6 @@ export const RegistrationForm: FC = () =>
                     name='name'
                     register={register}
                     errors={errors}
-                    // setValue={setValue}
                     inputTag={"input"}
                     inputType={"text"} />
                 <CustomFormInput

@@ -3,8 +3,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import 'react-international-phone/style.css';
-import { CustomInput } from "../CustomInput/CustomInput";
-import { useRouter } from "next/router";
 import { InfoCard, OptionButton, OptionButtonsContainer, ProofSelect } from "./styles";
 import { CustomForm, FormWrapper, FormWrapperBottom } from "@/styles/components";
 import { isAuthErrorResponseType } from "@/utils/isAuthErrorResponseType";
@@ -30,7 +28,7 @@ export const UserInfoForm: FC = () => {
 
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
     const [isShipping, setIsShipping] = useState<boolean>(true);
-    const [hasChanges, setHasChanges] = useState<boolean>(true);
+    const [hasChanges, setHasChanges] = useState<boolean>(false);
 
     // hard fetch user
     const { data: customer, error: customerError, isLoading: isCustomerLoading } = useFetchCustomerQuery({ customerId: '14408' });
@@ -124,7 +122,7 @@ export const UserInfoForm: FC = () => {
                 <Title as="h2" fontWeight={600} fontSize="24px" uppercase={true} marginBottom='16px'>
                     User information
                 </Title>
-                {isCustomerLoading ?
+                {isCustomerLoading && !customer ?
                     <CircularProgress /> :
                     <>
                         <FormWrapper>
@@ -135,7 +133,7 @@ export const UserInfoForm: FC = () => {
                                 inputType={"text"}
                                 register={register}
                                 errors={errors}
-                                //defaultValue={customer?.first_name}
+                                defaultValue={customer?.first_name || ""}
                                 setValue={setValue}
                             />
                             <CustomFormInput
@@ -145,7 +143,7 @@ export const UserInfoForm: FC = () => {
                                 errors={errors}
                                 inputTag={"input"}
                                 inputType={"text"}
-                                // defaultValue={customer?.last_name}
+                                defaultValue={customer?.last_name || ""}
                                 setValue={setValue} />
                             <CustomFormInput
                                 fieldName="Adres e-mail"
@@ -154,7 +152,7 @@ export const UserInfoForm: FC = () => {
                                 errors={errors}
                                 inputTag={"input"}
                                 inputType={"text"}
-                                // defaultValue={customer?.email}
+                                defaultValue={customer?.email || ""}
                                 setValue={setValue} />
                             <CustomFormInput
                                 fieldName="phone number"
@@ -163,7 +161,7 @@ export const UserInfoForm: FC = () => {
                                 errors={errors}
                                 inputTag={"input"}
                                 inputType={"phone"}
-                                // defaultValue={customer?.billing.phone}
+                                defaultValue={customer?.billing.phone || ""}
                                 setValue={setValue} />
                             <CustomFormInput
                                 fieldName="Kraj / region"
@@ -172,7 +170,7 @@ export const UserInfoForm: FC = () => {
                                 errors={errors}
                                 inputTag={"input"}
                                 inputType={"text"}
-                                // defaultValue={customer?.billing.country}
+                                defaultValue={customer?.billing.country || ""}
                                 setValue={setValue} />
                             <CustomFormInput
                                 fieldName="Miasto"
@@ -181,7 +179,7 @@ export const UserInfoForm: FC = () => {
                                 errors={errors}
                                 inputTag={"input"}
                                 inputType={"text"}
-                                // defaultValue={customer?.billing.city}
+                                defaultValue={customer?.billing.city || ""}
                                 setValue={setValue} />
                             <CustomFormInput
                                 fieldName="Ulica"
@@ -190,7 +188,7 @@ export const UserInfoForm: FC = () => {
                                 errors={errors}
                                 inputTag={"input"}
                                 inputType={"text"}
-                                // defaultValue={customer?.billing.address_1}
+                                defaultValue={customer?.billing.address_1 || ""}
                                 setValue={setValue} />
                             <CustomFormInput
                                 fieldName="Building number"
@@ -199,7 +197,7 @@ export const UserInfoForm: FC = () => {
                                 errors={errors}
                                 inputTag={"input"}
                                 inputType={"number"}
-                                // defaultValue={customer?.billing.address_2}
+                                defaultValue={customer?.billing.address_2 || ""}
                                 setValue={setValue} />
                             <CustomFormInput
                                 fieldName="№ apartment/office"
@@ -218,7 +216,7 @@ export const UserInfoForm: FC = () => {
                                 errors={errors}
                                 inputTag={"input"}
                                 inputType={"number"}
-                                // defaultValue={customer?.billing.postcode}
+                                defaultValue={customer?.billing.postcode || ""}
                                 setValue={setValue} />
                         </FormWrapper>
                         <ProofSelect>
@@ -230,7 +228,7 @@ export const UserInfoForm: FC = () => {
                                 errors={errors}
                                 options={proofOfPurchaseOptions}
                                 width="100%"
-                                defaultValue={proofOfPurchaseOptions[0].symbol}
+                                defaultValue={proofOfPurchaseOptions[0].symbol || ""}
                                 borderRadius="8px"
                                 background='#F2F8FE'
                                 padding="12px"
@@ -271,7 +269,7 @@ export const UserInfoForm: FC = () => {
                     errors={errors}
                     inputTag={"input"}
                     inputType={"checkbox"} />
-                {isCustomerLoading ?
+                {isCustomerLoading && !customer ?
                     <CircularProgress /> :
                     <>
                         {isShipping &&
@@ -284,7 +282,7 @@ export const UserInfoForm: FC = () => {
                                         errors={errors}
                                         inputTag={"input"}
                                         inputType={"text"}
-                                        // defaultValue={customer?.shipping.country}
+                                        defaultValue={customer?.shipping.country || ""}
                                         setValue={setValue} />
                                     <CustomFormInput
                                         fieldName="Miasto"
@@ -293,7 +291,7 @@ export const UserInfoForm: FC = () => {
                                         errors={errors}
                                         inputTag={"input"}
                                         inputType={"text"}
-                                        // defaultValue={customer?.shipping.city}
+                                        defaultValue={customer?.shipping.city || ""}
                                         setValue={setValue} />
                                     <CustomFormInput
                                         fieldName="Ulica"
@@ -302,7 +300,7 @@ export const UserInfoForm: FC = () => {
                                         errors={errors}
                                         inputTag={"input"}
                                         inputType={"text"}
-                                        // defaultValue={customer?.shipping.address_1}
+                                        defaultValue={customer?.shipping.address_1 || ""}
                                         setValue={setValue} />
                                     <CustomFormInput
                                         fieldName="Building number"
@@ -311,7 +309,7 @@ export const UserInfoForm: FC = () => {
                                         errors={errors}
                                         inputTag={"input"}
                                         inputType={"number"}
-                                        // defaultValue={customer?.shipping.address_2}
+                                        defaultValue={customer?.shipping.address_2 || ""}
                                         setValue={setValue} />
                                     <CustomFormInput
                                         fieldName="№ apartment/office"
@@ -320,8 +318,7 @@ export const UserInfoForm: FC = () => {
                                         errors={errors}
                                         inputTag={"input"}
                                         inputType={"number"}
-                                    /* defaultValue={'not exist in data'}
-                                    setValue={setValue} */
+
                                     />
                                     <CustomFormInput
                                         fieldName="Kod pocztowy"
@@ -330,7 +327,7 @@ export const UserInfoForm: FC = () => {
                                         errors={errors}
                                         inputTag={"input"}
                                         inputType={"number"}
-                                        // defaultValue={customer?.shipping.postcode}
+                                        defaultValue={customer?.shipping.postcode || ""}
                                         setValue={setValue} />
                                 </FormWrapper>
 

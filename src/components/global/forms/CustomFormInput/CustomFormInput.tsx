@@ -4,7 +4,6 @@ import { CustomFormInputType } from "@/types/components/global/forms/customFormI
 import { PhoneInput } from 'react-international-phone';
 import 'react-international-phone/style.css';
 
-
 export const CustomFormInput: FC<CustomFormInputType> = (
     {
         errors,
@@ -15,10 +14,10 @@ export const CustomFormInput: FC<CustomFormInputType> = (
         inputType,
         placeholder,
         register,
-        onChange,
         value,
-    }) =>
-{
+        setValue,
+        defaultValue,
+    }) => {
     const registerProps = register ? { ...register(name) } : {};
 
     const [isPasswordVisible, setPasswordVisible] = useState(false);
@@ -26,11 +25,21 @@ export const CustomFormInput: FC<CustomFormInputType> = (
     const passwordImagePath = useMemo(() => isPasswordVisible ? '/images/show-pass.svg' : '/images/hidden-pass.svg', [isPasswordVisible]);
 
     const [isError, setError] = useState(false);
-    useEffect(() =>
-    {
-        if (!errors || !name) { setError(false); return; }
+
+    useEffect(() => {
+        if (!errors || !name) {
+            console.error("Either 'errors' or 'name' is undefined");
+            setError(false);
+            return;
+        }
         setError(name in errors);
     }, [errors, name]);
+
+    useEffect(() => {
+        if (defaultValue && defaultValue !== "" && setValue) {
+            setValue(name, defaultValue, { shouldValidate: true });
+        }
+    }, [defaultValue, setValue, name]);
 
     return (
         <div>
@@ -48,8 +57,12 @@ export const CustomFormInput: FC<CustomFormInputType> = (
                     {inputType === 'phone' ?
                         <PhoneInput
                             defaultCountry="pl"
-                            {...register(name)}
-                        // onChange={(value) => { if (setValue) setValue('phoneNumber', value, { shouldValidate: true }); }}
+                            value={value || defaultValue}
+                            onChange={(phoneValue) => {
+                                if (setValue) {
+                                    setValue(name, phoneValue, { shouldValidate: true });
+                                }
+                            }}
                         />
                         : <Input
                             as={inputTag}
