@@ -71,6 +71,9 @@
     },
     "Product": {
         "addToBasket": "Добавить в корзину",
+        "viewCart": "Просмотр корзины",
+        "chooseOptions": "Выбрать опцию",
+        "updateCart": "Обновить количество",
         "sortBy": "Сортировать по",
         "productList": "Список товаров",
         "notifyWhenAvailable": "Уведомить, когда будет доступен",
@@ -81,9 +84,28 @@
         "fastShipping": "Быстрая доставка",
         "freeDeliveryOver": "Бесплатная доставка от {price}",
         "color": "Цвет",
+        "bestForYou": "Лучшее для вас",
+        "recommendProduct": "Рекомендуємые товары",
+        "bestSeller": "Бестселлеры",
+        "newProduct": "Новинки",
+        "ourCategories": "Наши категории",
+        "moreProduct": "Больше товара",
         "addComment": "Оставить комментарий",
         "submitting": "Отправка",
         "commentText1": "Вы протестировали наш продукт? Поделитесь своим мнением;",
         "commentText2": "- Мы стараемся быть лучшими для вас, и ваше мнение очень нам поможет!"
+    },
+    "Cart": {
+        "productName": "Название",
+        "price": "Цена",
+        "quantity": "Количество",
+        "value": "Итог",
+        "orderValue": "Стоимость заказа",
+        "cartConflict": "В вашей корзине есть недоступные товары. Пожалуйста, пересмотрите свои товары.",
+        "productNotAvailable": " Этот товар закончился.",
+        "productNotAvailableQuantity": " Этот товар недоступен в данном количестве.",
+        "delete": "Удалить",
+        "updateTo": "Обновить до",
+        "priceToDelivery": "Чтобы получить бесплатную доставку, вам нужно добавить товары всего на  {locale}"
     }
 }

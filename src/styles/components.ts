@@ -114,6 +114,10 @@ export const StyledButton = styled.button<StyledButtonProps>`
         min-width: ${({ minWidthTablet = 'auto' }) => minWidthTablet};
         font-size: 14px;
     }
+
+    @media ${({ theme }) => theme.media.medium} {
+        min-width: ${({ minWidthMobile = 'auto' }) => minWidthMobile};
+    }
 `;
 
 export const LogoLink = styled(Link) <LogoLinkProps>`

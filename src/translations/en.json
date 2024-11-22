@@ -71,6 +71,9 @@
     },
     "Product": {
         "addToBasket": "Add to basket",
+        "viewCart": "View cart",
+        "chooseOptions": "Choose an option",
+        "updateCart": "Update quantity",
         "sortBy": "Sort by",
         "productList": "Product List",
         "notifyWhenAvailable": "Notify when available",
@@ -81,9 +84,28 @@
         "fastShipping": "Fast shipping",
         "freeDeliveryOver": "Free delivery over {price}",
         "color": "Color",
+        "bestForYou": "Best for you",
+        "recommendProduct": "Recommend Product",
+        "bestSeller": "Bestsellers",
+        "newProduct": "New Products",
+        "ourCategories": "Our categories",
+        "moreProduct": "More product",
         "addComment": "Add comment",
         "submitting": "Submitting",
         "commentText1": "Have you tested our product? Share an opinion;",
         "commentText2": "- we try to be best for you, and your opinion will help us a lot!"
+    },
+    "Cart": {
+        "productName": "Name",
+        "price": "Price",
+        "quantity": "Quantity",
+        "value": "Total",
+        "orderValue": "Order Value",
+        "cartConflict": "Your cart contains unavailable items. Please review your items.",
+        "productNotAvailable": "This product is out of stock.",
+        "productNotAvailableQuantity": "This product is not available in this quantity.",
+        "delete": "Delete",
+        "updateTo": "Update to",
+        "priceToDelivery": "To get free delivery, you need to add items totaling {locale}"
     }
 }

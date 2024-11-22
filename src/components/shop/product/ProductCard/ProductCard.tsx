@@ -7,15 +7,49 @@ import Image from "next/image";
 import ProductBadge from "../ProductBadge/ProductBadge";
 import ProductBadgeWrapper from "../ProductBadgeWrapper/ProductBadgeWrapper";
 import { ProductImageWrapper, ProductPrice, ProductWrapper, StyledProductCard, TitlePriceWrapper } from "./styles";
+import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { useAppDispatch, useAppSelector } from "@/store";
+import { updateCart } from "@/store/slices/cartSlice";
 
-const ProductCard: React.FC<ProductCardPropsType> = ({ product }) =>
-{
+const ProductCard: React.FC<ProductCardPropsType> = ({ product }) => {
+
+    const t = useTranslations("Product");
+
+    const router = useRouter();
+
+    const dispatch = useAppDispatch();
+    const { cartItems } = useAppSelector(state => state.cartSlice);
+
+    const [isCartMatch, setIsCartMatch] = useState(false);
+
+    useEffect(() => {
+        const cartMatchIndex = cartItems.findIndex(({ product_id }) => product_id === product.id);
+        if (cartMatchIndex >= 0) setIsCartMatch(true);
+    }, [cartItems]);
+
+    function handleCartButtonClick() {
+        if (product?.type === 'variable') {
+            router.push(`/${router.locale === "en" ? "" : router.locale}/product/${product.slug}`);
+        }
+
+        if (!isCartMatch) {
+            dispatch(updateCart({
+                product_id: product.id,
+                quantity: 1
+            }))
+        } else {
+            router.push(`/${router.locale === "en" ? "" : router.locale}/cart`);
+        }
+    }
+
     return (
         <StyledProductCard>
             <ProductWrapper>
                 <ProductImageWrapper>
                     <Image
-                        src={product.images[0]?.src || ''}
+                        src={product.images[0]?.src || '/assets/images/not-found.webp'}
                         fill
                         style={{ objectFit: 'cover' }}
                         alt="image"
@@ -23,6 +57,7 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product }) =>
                     />
                 </ProductImageWrapper>
                 <Rating rating={5} />
+                {product.type}
                 <TitlePriceWrapper>
                     <Title
                         as="h3"
@@ -38,7 +73,14 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product }) =>
                     <FavoriteButton active={false} />
                 </ProductBadgeWrapper>
             </ProductWrapper>
-            <AddToBasketButton />
+            <>
+                <AddToBasketButton onClick={handleCartButtonClick}>
+                    {product?.type !== 'variable' ?
+                        isCartMatch ? t("viewCart") : t("addToBasket") :
+                        t("chooseOptions")
+                    }
+                </AddToBasketButton>
+            </>
         </StyledProductCard>
     );
 }

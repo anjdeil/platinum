@@ -1,9 +1,9 @@
 import { MenusContext } from '@/components/Layout/Layout';
-import { MenuItemsType } from '@/types/services/customApi/Menu/MenuItemsType';
 import { FC, useContext } from 'react';
 import { MenuSkeleton } from '../MenuSkeleton';
 import { NavLink, NavList } from './styles';
 import { wpMenuProps } from '@/types/menus/wpMenus';
+import { menuItemsType } from '@/types/services/wpCustomApi/menus';
 
 const Nav: FC<wpMenuProps> = ({
     menuId,
@@ -20,7 +20,7 @@ const Nav: FC<wpMenuProps> = ({
     mobGap,
 }) =>
 {
-    const menus: MenuItemsType[] | undefined = useContext(MenusContext);
+    const menus: menuItemsType[] | undefined = useContext(MenusContext);
     const menuItems = menus?.find(({ id }) => id === menuId)?.items;
 
     if (!menuItems && skeleton)

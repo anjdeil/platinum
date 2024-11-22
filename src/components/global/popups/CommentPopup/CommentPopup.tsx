@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
-import { CustomInput } from "../../forms/CustomInput";
+import { CustomFormInput } from "../../forms/CustomFormInput";
 import CloseIcon from "../../icons/CloseIcon/CloseIcon";
 import Rating from "../../Rating/Rating";
 import { CloseWrapper, FormWrapper, PopupBody, PopupOverlay, StyledForm, StyledName } from "./styles";
@@ -70,13 +70,13 @@ const CommentPopup: React.FC<SwiperPopupProps> = ({ onClose }) => {
                         {t('commentText2')}
                     </Text>
                     <StyledForm onSubmit={handleSubmit(onSubmit)}>
-                        <CustomInput
+                        <CustomFormInput
                             fieldName="Your opinion"
                             name='comment'
                             placeholder="Comment"
                             register={register}
                             errors={errors}
-                            isTextarea={true}
+                            inputTag="textarea"
                         />
                         <StyledButton
                             type="submit"

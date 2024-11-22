@@ -71,6 +71,9 @@
     },
     "Product": {
         "addToBasket": "In den Warenkorb legen",
+        "viewCart": "Warenkorb anzeigen",
+        "chooseOptions": "Wählen Sie eine Option",
+        "updateCart": "Menge aktualisieren",
         "sortBy": "Sortieren nach",
         "productList": "Produktliste",
         "notifyWhenAvailable": "Benachrichtigen, wenn verfügbar",
@@ -81,9 +84,28 @@
         "fastShipping": "Schneller Versand",
         "freeDeliveryOver": "Kostenloser Versand ab {price}",
         "color": "Farbe",
+        "bestForYou": "Das Beste für dich",
+        "recommendProduct": "Empfohlene Waren",
+        "bestSeller": "Bestseller",
+        "newProduct": "Neue Produkte",
+        "ourCategories": "Unsere Kategorien",
+        "moreProduct": "Mehr Produkt",
         "addComment": "Kommentar hinzufügen",
         "submitting": "Einreichen",
         "commentText1": "Haben Sie unser Produkt getestet? Teilen Sie Ihre Meinung mit;",
         "commentText2": "- Wir versuchen, das Beste für Sie zu sein, und Ihre Meinung wird uns sehr helfen!"
+    },
+    "Cart": {
+        "productName": "Name",
+        "price": "Preis",
+        "quantity": "Menge",
+        "value": "Gesamt",
+        "orderValue": "Bestellwert",
+        "cartConflict": "Ihr Warenkorb enthält nicht verfügbare Artikel. Bitte überprüfen Sie Ihre Artikel.",
+        "productNotAvailable": "Dieses Produkt ist nicht mehr verfügbar.",
+        "productNotAvailableQuantity": "Dieses Produkt ist in dieser Menge nicht verfügbar.",
+        "delete": "Löschen",
+        "updateTo": "Aktualisieren auf",
+        "priceToDelivery": "Um kostenlosen Versand zu erhalten, müssen Sie Artikel im Wert von insgesamt {locale} hinzufügen"
     }
 }
