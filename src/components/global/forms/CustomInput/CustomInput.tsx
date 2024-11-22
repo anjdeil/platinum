@@ -1,17 +1,14 @@
 import { ChangeEvent, FC, useCallback } from "react";
 import { CustomInputStyle, CustomInputWrapper, Input } from "../CustomFormInput/styles";
 
-interface CustomInputType
-{
+interface CustomInputType {
     defaultValue?: string | number;
     value: string | number;
     onChange: (newValue: number) => void;
 }
 
-export const CustomInput: FC<CustomInputType> = ({ defaultValue, value, onChange }) =>
-{
-    const onInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) =>
-    {
+export const CustomInput: FC<CustomInputType> = ({ defaultValue, value, onChange }) => {
+    const onInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
         if (!event.target.value) return false;
         const newValue = Number(event.target.value);
         onChange(newValue);

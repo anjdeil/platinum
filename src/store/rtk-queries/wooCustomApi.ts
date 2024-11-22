@@ -1,7 +1,9 @@
 import {
+  couponRespType,
   CreateOrderRequestType,
   CreateOrderResponseType,
   OrderType,
+  retrieveCouponQueryType,
   WooCustomerReqType,
   WooCustomerType,
 } from "@/types/services";
@@ -44,6 +46,18 @@ export const wooCustomRktApi = createApi({
         },
       }),
     }),
+    retrieveCoupon: builder.query<couponRespType, retrieveCouponQueryType>({
+      query: (params: retrieveCouponQueryType) => ({
+        url: `/coupons/${params.id}`,
+        method: "GET",
+      }),
+    }),
+    ListAllCoupons: builder.query<couponRespType[], void>({
+      query: () => ({
+        url: `/coupons`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -51,4 +65,5 @@ export const {
   useRegisterCustomerMutation,
   useFetchOrdersQuery,
   useCreateOrderMutation,
+  useListAllCouponsQuery,
 } = wooCustomRktApi;

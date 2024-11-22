@@ -1,5 +1,5 @@
 import { FC, useEffect, useMemo, useState } from "react";
-import { CustomError, CustomInputStyle, CustomInputWrapper, CustomRequired, Input, ShowPasswordImage } from "./styles";
+import { CustomError, CustomInputContainer, CustomInputStyle, CustomInputWrapper, CustomRequired, Input, ShowPasswordImage } from "./styles";
 import { CustomFormInputType } from "@/types/components/global/forms/customFormInput";
 import { PhoneInput } from 'react-international-phone';
 import 'react-international-phone/style.css';
@@ -17,8 +17,12 @@ export const CustomFormInput: FC<CustomFormInputType> = (
         register,
         onChange,
         value,
-    }) =>
-{
+        width,
+        padding,
+        height,
+        font,
+        label = true
+    }) => {
     const registerProps = register ? { ...register(name) } : {};
 
     const [isPasswordVisible, setPasswordVisible] = useState(false);
@@ -26,24 +30,28 @@ export const CustomFormInput: FC<CustomFormInputType> = (
     const passwordImagePath = useMemo(() => isPasswordVisible ? '/images/show-pass.svg' : '/images/hidden-pass.svg', [isPasswordVisible]);
 
     const [isError, setError] = useState(false);
-    useEffect(() =>
-    {
+    useEffect(() => {
         if (!errors || !name) { setError(false); return; }
         setError(name in errors);
     }, [errors, name]);
 
     return (
-        <div>
+        <CustomInputContainer isCheckbox={inputType === 'checkbox'} width={width}>
             <CustomInputStyle
                 as={'label'}
                 isError={isError}
                 isTextArea={false}
                 isCheckbox={inputType === 'checkbox'}
-                isPhone={inputType === 'phone'}>
-                <span>
-                    {fieldName}
-                    {isRequire && <CustomRequired>*</CustomRequired>}
-                </span>
+                isPhone={inputType === 'phone'}
+                padding={padding}
+                font={font}>
+                {label &&
+                    <span>
+                        {fieldName}
+                        {isRequire && <CustomRequired>*</CustomRequired>}
+                    </span>
+                }
+
                 <CustomInputWrapper>
                     {inputType === 'phone' ?
                         <PhoneInput
@@ -57,6 +65,7 @@ export const CustomFormInput: FC<CustomFormInputType> = (
                             {...register(name)}
                             type={isPasswordVisible ? 'text' : inputType}
                             {...registerProps}
+                            height={height}
                         />}
                     {inputType === 'password' &&
                         <ShowPasswordImage
@@ -69,6 +78,6 @@ export const CustomFormInput: FC<CustomFormInputType> = (
                 </CustomInputWrapper>
             </CustomInputStyle>
             {isError && name && <CustomError>{errors[name]?.message}</CustomError>}
-        </div>
+        </CustomInputContainer>
     )
 }

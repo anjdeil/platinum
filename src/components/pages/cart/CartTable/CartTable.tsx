@@ -3,7 +3,7 @@ import {
   CreateOrderRequestType,
   CreateOrderResponseType,
 } from "@/types/services";
-import { useAppSelector, useAppDispatch } from "@/store";
+import { useAppDispatch } from "@/store";
 import { updateCart } from "@/store/slices/cartSlice";
 import {
   CardContent,
