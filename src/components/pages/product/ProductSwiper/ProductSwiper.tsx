@@ -51,7 +51,7 @@ const ProductSwiper: React.FC<SwiperProps> = ({ data }) =>
 							<ImageStyled
 								unoptimized={true}
 								priority
-								src={item?.src || ""}
+								src={item?.src || '/assets/images/not-found.webp'}
 								alt={`Product ${index + 1}`}
 								width={452}
 								height={452}
@@ -88,7 +88,7 @@ const ProductSwiper: React.FC<SwiperProps> = ({ data }) =>
 							<ThumbnailWrapper>
 								<Thumbnail
 									unoptimized={true}
-									src={item?.src || ""}
+									src={item?.src || '/assets/images/not-found.webp'}
 									alt={`Thumbnail ${index + 1}`}
 									width={92}
 									height={92}

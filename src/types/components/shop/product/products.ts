@@ -15,17 +15,17 @@ export const ProductImageSchema = z.object({
   src: z.string(),
 });
 
+export const ProductAttrOptionSchema = z.object({
+    id: z.number(),
+    slug: z.string(),
+    name: z.string()
+})
+
 export const ProductAttributesSchema = z.object({
-  id: z.number(),
-  slug: z.string(),
-  name: z.string(),
-  options: z.array(
-    z.object({
-      id: z.number(),
-      slug: z.string(),
-      name: z.string(),
-    }),
-  ),
+    id: z.number(),
+    slug: z.string(),
+    name: z.string(),
+    options: z.array(ProductAttrOptionSchema)
 });
 
 export const ProductDefaultAttributesSchema = z.object({
@@ -55,23 +55,24 @@ export const ProductsMinimizedSchema = ProductVariationSchema.extend({
 });
 
 export const ProductSchema = z.object({
-  id: z.number(),
-  sku: z.string().nullable(),
-  slug: z.string(),
-  name: z.string(),
-  description: z.string(),
-  type: z.string(),
-  created: z.string(),
-  modified: z.string(),
-  language_code: z.string(),
-  stock_quantity: z.number().nullable(),
-  min_price: z.number(),
-  max_price: z.number(),
-  categories: z.array(ProductCategorySchema),
-  images: z.array(ProductImageSchema),
-  attributes: z.array(ProductAttributesSchema),
-  default_attributes: z.array(ProductDefaultAttributesSchema),
-  variations: z.array(ProductVariationSchema),
+    id: z.number(),
+    sku: z.string().nullable(),
+    slug: z.string(),
+    name: z.string(),
+    description: z.string(),
+    type: z.string(),
+    created: z.string(),
+    modified: z.string(),
+    language_code: z.string(),
+    stock_quantity: z.number().nullable(),
+    min_price: z.number(),
+    max_price: z.number(),
+    categories: z.array(ProductCategorySchema),
+    images: z.array(ProductImageSchema),
+    attributes: z.array(ProductAttributesSchema),
+    default_attributes: z.array(ProductDefaultAttributesSchema),
+    variations: z.array(ProductVariationSchema),
+    average_rating: z.number()
 });
 
 export const ProductDataResponseSchema = z.object({
@@ -106,5 +107,6 @@ export type ProductVariation = z.infer<typeof ProductVariationSchema>;
 export type ProductDataResponseType = z.infer<typeof ProductDataResponseSchema>;
 export type defaultAttributesType = z.infer<typeof ProductDefaultAttributesSchema>;
 export type ProductImageType = z.infer<typeof ProductImageSchema>;
+export type ProductVariationType = z.infer<typeof ProductVariationSchema>;
 export type ProductsMinimizedType = z.infer<typeof ProductsMinimizedSchema>;
 export type LineItemType = z.infer<typeof LineItemSchema>;
