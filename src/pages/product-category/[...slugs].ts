@@ -17,10 +17,7 @@ export const getServerSideProps: GetServerSideProps = async (
 
   const { slugs, ...params } = context.query;
 
-  console.log("Initial slugs:", slugs);
-
   if (!slugs || !Array.isArray(slugs)) {
-    console.log("slugs is not an array or does not exist");
     return { notFound: true };
   }
 
@@ -29,15 +26,12 @@ export const getServerSideProps: GetServerSideProps = async (
   if (!page) return { notFound: true };
 
   const categorySlugs = findCategoryParam(slugs);
-  console.log("Category Slugs:", categorySlugs);
 
   if (categorySlugs && categorySlugs.length > 2) {
-    console.log("Too many category slugs");
     return { notFound: true };
   }
 
   if (categorySlugs && categorySlugs.length === 0) {
-    console.log("No category slugs found");
     return { notFound: true };
   }
 
@@ -45,7 +39,6 @@ export const getServerSideProps: GetServerSideProps = async (
     const pageIndex = slugs.indexOf("page");
     if (pageIndex !== -1) {
       const newPath = slugs.slice(0, pageIndex).join("/");
-      console.log("Redirecting to:", `/product-category/${newPath}`);
       return {
         redirect: {
           destination: `/product-category/${newPath}`,

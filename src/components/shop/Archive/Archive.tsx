@@ -66,17 +66,12 @@ export const Archive: FC<ArchivePropsType> = ({ products, pagesCount, page, cate
             setCategories([]);
             return;
         }
-
         const filteredCategories = categoriesData.filter((category) =>
             categoriesSlugs.includes(category.slug)
         );
         setCategories(filteredCategories);
-        console.log('categoriesData use effect', JSON.stringify(categoriesData, null, 2));
-
     }, [categoriesData, categoriesSlugs]);
 
-    console.log('categoriesData ', JSON.stringify(categoriesData, null, 2));
-    console.log(categoriesSlugs);
     /* 
         if (isLoading) return <div>categories loading</div> */
     return (

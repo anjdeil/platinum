@@ -17,8 +17,6 @@ const SelectParentCategory: FC<SelectParentCategoryMobileProps> = ({ selectedCat
     const [children, setChildren] = useState<CategoryType[]>([]);
     const [parent, setParent] = useState<CategoryType | undefined>(undefined);
 
-
-
     useEffect(() => {
         if (categories && selectedCategories.length > 0) {
             const selectedParent = selectedCategories[0];
@@ -28,9 +26,6 @@ const SelectParentCategory: FC<SelectParentCategoryMobileProps> = ({ selectedCat
         }
 
     }, [categories, selectedCategories]);
-
-    /*  console.log("selectedCategories: ", JSON.stringify(selectedCategories, null, 2));
-     console.log("children: ", JSON.stringify(children, null, 2)); */
     return (
         <>
             {parent && (

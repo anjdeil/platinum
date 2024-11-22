@@ -48,16 +48,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         if (categoriesResp && categoriesResp.data) {
             dispatch(setCategories(categoriesResp.data.items));
-            console.log('Updated categories:', categoriesResp.data.items);
         }
         dispatch(setLoading(isCategoriesLoading));
     }, [categoriesResp, isCategoriesLoading, dispatch]);
-
-    useEffect(() => {
-        // Перезапрашиваем категории при изменении маршрута
-        refetchCategories();
-        console.log('Refetching categories');
-    }, [router.asPath, refetchCategories,]);
 
 
     return (
