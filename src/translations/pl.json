@@ -71,6 +71,9 @@
     },
     "Product": {
         "addToBasket": "Dodaj do koszyka",
+        "viewCart": "Wyświetl koszyk",
+        "chooseOptions": "Wybierz opcję",
+        "updateCart": "Zaktualizuj ilość",
         "sortBy": "Sortuj według",
         "productList": "Lista produktów",
         "notifyWhenAvailable": "Powiadom, gdy będzie dostępne",
@@ -80,6 +83,26 @@
         "viewingThisProduct": "Jest obecnie oglądany: {count}",
         "fastShipping": "Szybka wysyłka",
         "freeDeliveryOver": "Darmowa dostawa od {price}",
-        "color": "Kolor"
-    }
+        "color": "Kolor",
+        "bestForYou": "Najlepsze dla ciebie",
+        "recommendProduct": "Polecane towary",
+        "bestSeller": "Bestsellery",
+        "newProduct": "Nowe Produkty",
+        "ourCategories": "Nasze kategorie",
+        "moreProduct": "Więcej produktu"
+    },
+    "Cart": {
+    "productName": "Nazwa",
+    "price": "Cena",
+    "quantity": "Ilość",
+    "value": "Suma",
+    "orderValue": "Wartość zamówienia",
+    "cartConflict": "W Twoim koszyku są niedostępne produkty. Proszę przeglądnąć swoje produkty.",
+    "productNotAvailable": "Ten produkt jest niedostępny.",
+    "productNotAvailableQuantity": "Ten produkt jest niedostępny w tej ilości.",
+    "delete": "Usuń",
+    "updateTo": "Zaktualizuj do",
+    "priceToDelivery": "Aby otrzymać darmową dostawę, musisz dodać produkty o łącznej wartości {locale}"
+}
+
 }

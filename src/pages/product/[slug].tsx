@@ -1,4 +1,5 @@
 import Breadcrumbs from "@/components/global/Breadcrumbs/Breadcrumbs";
+import CustomProductList from "@/components/pages/product/CustomProductList/CustomProductList";
 import ProductInfo from "@/components/pages/product/ProductInfo/ProductInfo";
 import { customRestApi } from "@/services/wpCustomApi";
 import { useGetProductQuery } from "@/store/rtk-queries/wpCustomApi";
@@ -63,10 +64,18 @@ export default function ProductPage({ res }: ProductPageType)
                     <Breadcrumbs links={breadcrumbsLinks} />
                 </Box>
                 {product && <ProductInfo product={product} />}
+              <CustomProductList title="recommendProduct" productIds={recommendProducts} />
             </Container>
         </>
     );
 }
+        
+const recommendProducts = [
+  24707,
+  24777,
+  24737,
+  24717,
+];
 
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) =>
 {

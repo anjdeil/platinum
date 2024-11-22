@@ -71,6 +71,9 @@
     },
     "Product": {
         "addToBasket": "Додати до кошика",
+        "viewCart": "Переглянути кошик",
+        "chooseOptions": "Виберіть варіант",
+        "updateCart": "Оновити кількість",
         "sortBy": "Сортувати за",
         "productList": "Список товарів",
         "notifyWhenAvailable": "Повідомити, коли буде доступний",
@@ -80,6 +83,26 @@
         "viewingThisProduct": "Зараз переглядають: {count}",
         "fastShipping": "Швидка доставка",
         "freeDeliveryOver": "Безкоштовна доставка від {price}",
-        "color": "Колір"
-    }
+        "color": "Колір",
+        "bestForYou": "Найкраще для вас",
+        "recommendProduct": "Рекомендовані товари",
+        "bestSeller": "Бестселери",
+        "newProduct": "Новинки",
+        "ourCategories": "Наші категорії",
+        "moreProduct": "Більше товару"
+    },
+"Cart": {
+    "productName": "Назва",
+    "price": "Ціна",
+    "quantity": "Кількість",
+    "value": "Разом",
+    "orderValue": "Вартість замовлення",
+    "cartConflict": "У вашому кошику є недоступні товари. Будь ласка, перегляньте свої товари.",
+    "productNotAvailable": "Цей товар закінчився.",
+    "productNotAvailableQuantity": "Цей товар недоступний у цій кількості.",
+    "delete": "Видалити",
+    "updateTo": "Оновити до",
+    "priceToDelivery": "Щоб отримати безкоштовну доставку, вам потрібно додати товари на загальну суму {locale}"
+}
+
 }

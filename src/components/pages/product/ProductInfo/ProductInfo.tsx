@@ -4,6 +4,8 @@ import { StyledButton, Title } from "@/styles/components";
 import { ProductCardPropsType } from "@/types/components/shop";
 import { useTranslations } from "next-intl";
 import { FC, useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
+import ColorVariations from "../ColorVariations/ColorVariations";
 import PaymentList from "../PaymentList/PaymentList";
 import ProductAvailable from "../ProductAvailable/ProductAvailable";
 import ProductPrice from "../ProductPrice/ProductPrice";
@@ -24,7 +26,14 @@ import ReactHtmlParser from 'html-react-parser';
 
 const ProductInfo: FC<ProductCardPropsType> = ({ product }) =>
 {
-    const [currentVariation, setCurrentVariation] = useState<ProductVariationType | null>(null);
+
+import { ProductVariation } from "@/types/components/shop/product/products";
+import { CartItem } from "@/types/store/reducers/сartSlice";
+import { useAppDispatch, useAppSelector } from "@/store";
+import { updateCart } from "@/store/slices/cartSlice";
+
+const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
+      const [currentVariation, setCurrentVariation] = useState<ProductVariationType | null>(null);
     const stockQuantity = useMemo(() =>
     {
         if (!currentVariation?.stock_quantity && !product.stock_quantity) return 0;
@@ -52,9 +61,48 @@ const ProductInfo: FC<ProductCardPropsType> = ({ product }) =>
             if (variation) setCurrentVariation(variation);
         }
     }, [router.query]);
-
+  
+    const { name, stock_quantity, sku, min_price, max_price, images, variations } = product;
     const t = useTranslations("Product");
-    const [quantity, setQuantity] = useState<number>(1);
+
+    const dispatch = useAppDispatch();
+    const { cartItems } = useAppSelector(state => state.cartSlice);
+  
+    useEffect(() => {
+        const cartMatch = cartItems.find(({ product_id }) => product_id === product.id);
+        if (cartMatch) {
+            setCartMatch(cartMatch);
+            setQuantity(cartMatch.quantity);
+        }
+    }, [cartItems]);
+
+
+    /**
+     * Choosen variation
+     */
+    const [currentVariation, setCurrentVariation] = useState<ProductVariation>();
+
+    // Temporary code (whole useEffect) for assigning the current variation
+    useEffect(() => {
+        setCurrentVariation(product?.variations[0])
+    }, []);
+
+    function renderCartButtonInnerText() {
+        if (cartMatch) {
+            if (cartMatch.quantity === quantity) return t("viewCart");
+            return t("updateCart");
+        } else {
+            return t("addToBasket");
+        }
+    }
+
+    function handleCartButtonClick() {
+        dispatch(updateCart({
+            product_id: product.id,
+            quantity,
+            ...(currentVariation && { variation_id: currentVariation.id })
+        }));
+    }
 
     const testimages = Array.from({ length: 4 }).map((_, index) => product.images[0]);
 
@@ -88,8 +136,11 @@ const ProductInfo: FC<ProductCardPropsType> = ({ product }) =>
                 <ProductPromotion time={new Date("2024-10-30T00:00:00")} />
                 <AddToBasketWrapper>
                     <ProductQuantity quantity={quantity} onChange={setQuantity} />
-                    {(stockQuantity > 0)
-                        ? <AddToBasketButton maxWidth="309px" />
+
+                    {(stock_quantity !== null && stock_quantity > 0)
+                        ? <AddToBasketButton maxWidth="309px" onClick={handleCartButtonClick}>
+                            {renderCartButtonInnerText()}
+                        </AddToBasketButton>
                         : <StyledButton notify={true}>{t('notifyWhenAvailable')}</StyledButton>
                     }
                 </AddToBasketWrapper>
