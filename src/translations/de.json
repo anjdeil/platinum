@@ -90,5 +90,19 @@
         "newProduct": "Neue Produkte",
         "ourCategories": "Unsere Kategorien",
         "moreProduct": "Mehr Produkt"
-    }
+    },
+    "Cart": {
+    "productName": "Name",
+    "price": "Preis",
+    "quantity": "Menge",
+    "value": "Gesamt",
+    "orderValue": "Bestellwert",
+    "cartConflict": "Ihr Warenkorb enthält nicht verfügbare Artikel. Bitte überprüfen Sie Ihre Artikel.",
+    "productNotAvailable": "Dieses Produkt ist nicht mehr verfügbar.",
+    "productNotAvailableQuantity": "Dieses Produkt ist in dieser Menge nicht verfügbar.",
+    "delete": "Löschen",
+    "updateTo": "Aktualisieren auf",
+    "priceToDelivery": "Um kostenlosen Versand zu erhalten, müssen Sie Artikel im Wert von insgesamt {locale} hinzufügen"
+}
+
 }

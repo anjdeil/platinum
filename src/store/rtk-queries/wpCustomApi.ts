@@ -2,11 +2,13 @@ import
 {
     CustomDataCategoriesType,
     CustomDataMenuResponseType,
+    CustomDataProductsMinimizedResponseType,
     CustomDataProductsType,
     CustomDataProductType,
     CustomDataThemeOptionsType,
     QueryParamsType
 } from '@/types/services';
+import { CartItem } from '@/types/store/reducers/сartSlice';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const wpCustomRtkApi = createApi({
@@ -42,6 +44,13 @@ export const wpCustomRtkApi = createApi({
                 url: `/theme-options`,
             }),
         }),
+        getProductsMinimized: builder.mutation<CustomDataProductsMinimizedResponseType, CartItem[]>({
+            query: (cartItems) => ({
+                url: `/products/minimized`,
+                method: 'POST', 
+                body: cartItems, 
+            }),
+        }),
     }),
 });
 
@@ -51,4 +60,5 @@ export const {
     useGetProductsQuery,
     useGetProductQuery,
     useGetThemeOptionsQuery,
+    useGetProductsMinimizedMutation
 } = wpCustomRtkApi;

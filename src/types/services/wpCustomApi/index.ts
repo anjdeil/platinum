@@ -1,9 +1,10 @@
-import { WpMenuResponseSchema } from "@/types/menus/wpMenus";
+import { WpMenuResponseSchema } from "@/types/menus/WpMenus";
 import { menuItemsSchema } from "./menus";
 import { ThemeOptionsItemSchema } from "./themeOptions";
 import { AttributeSchema } from "./attributes";
 import { z } from "zod";
 import { CategorySchema, ProductSchema } from "../../pages/shop";
+import { ProductsMinimizedSchema } from "@/types/components/shop/product/products";
 
 const LangParamSchema = z.enum(['en', 'pl', 'de', 'ru', 'uk']).optional();
 
@@ -71,6 +72,13 @@ export const CustomDataThemeOptionsSchema = z.object({
         item: ThemeOptionsItemSchema
     })
 })
+export const CustomDataProductsMinimizedResponseSchema  = z.object({
+    success: z.boolean(),
+    data: z.object({
+        items: z.array(ProductsMinimizedSchema)
+    })
+})
+
 
 export type QueryParamsType = z.infer<typeof QueryParamsSchema>;
 export type LangParamType = z.infer<typeof LangParamSchema>;
@@ -81,4 +89,4 @@ export type CustomDataMenuResponseType = z.infer<typeof CustomDataMenuResponseSc
 export type CustomDataMenusType = z.infer<typeof CustomDataMenusSchema>;
 export type CustomDataThemeOptionsType = z.infer<typeof CustomDataThemeOptionsSchema>;
 
-export type CustomDataProductsStatisticType = z.infer<typeof CustomDataThemeOptionsSchema>;
+export type CustomDataProductsMinimizedResponseType = z.infer<typeof CustomDataProductsMinimizedResponseSchema>;
