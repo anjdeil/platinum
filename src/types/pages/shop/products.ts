@@ -73,7 +73,8 @@ export const ProductSchema = z.object({
     attributes: z.array(ProductAttributesSchema),
     default_attributes: z.array(ProductDefaultAttributesSchema),
     variations: z.array(ProductVariationSchema),
-})
+    average_rating: z.number(),
+});
 
 export const ProductDataResponseSchema = z.object({
     products_count: z.number(),

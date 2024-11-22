@@ -16,16 +16,16 @@ export const ProductImageSchema = z.object({
 });
 
 export const ProductAttrOptionSchema = z.object({
-    id: z.number(),
-    slug: z.string(),
-    name: z.string()
+  id: z.number(),
+  slug: z.string(),
+  name: z.string()
 })
 
 export const ProductAttributesSchema = z.object({
-    id: z.number(),
-    slug: z.string(),
-    name: z.string(),
-    options: z.array(ProductAttrOptionSchema)
+  id: z.number(),
+  slug: z.string(),
+  name: z.string(),
+  options: z.array(ProductAttrOptionSchema)
 });
 
 export const ProductDefaultAttributesSchema = z.object({
@@ -55,24 +55,24 @@ export const ProductsMinimizedSchema = ProductVariationSchema.extend({
 });
 
 export const ProductSchema = z.object({
-    id: z.number(),
-    sku: z.string().nullable(),
-    slug: z.string(),
-    name: z.string(),
-    description: z.string(),
-    type: z.string(),
-    created: z.string(),
-    modified: z.string(),
-    language_code: z.string(),
-    stock_quantity: z.number().nullable(),
-    min_price: z.number(),
-    max_price: z.number(),
-    categories: z.array(ProductCategorySchema),
-    images: z.array(ProductImageSchema),
-    attributes: z.array(ProductAttributesSchema),
-    default_attributes: z.array(ProductDefaultAttributesSchema),
-    variations: z.array(ProductVariationSchema),
-    average_rating: z.number()
+  id: z.number(),
+  sku: z.string().nullable(),
+  slug: z.string(),
+  name: z.string(),
+  description: z.string(),
+  type: z.string(),
+  created: z.string(),
+  modified: z.string(),
+  language_code: z.string(),
+  stock_quantity: z.number().nullable(),
+  min_price: z.number(),
+  max_price: z.number(),
+  categories: z.array(ProductCategorySchema),
+  images: z.array(ProductImageSchema),
+  attributes: z.array(ProductAttributesSchema),
+  default_attributes: z.array(ProductDefaultAttributesSchema),
+  variations: z.array(ProductVariationSchema),
+  average_rating: z.number(),
 });
 
 export const ProductDataResponseSchema = z.object({

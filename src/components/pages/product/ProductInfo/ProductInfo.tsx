@@ -4,7 +4,6 @@ import { StyledButton, Title } from "@/styles/components";
 import { ProductCardPropsType } from "@/types/components/shop";
 import { useTranslations } from "next-intl";
 import { FC, useEffect, useMemo, useState } from "react";
-import { useEffect, useState } from "react";
 import ColorVariations from "../ColorVariations/ColorVariations";
 import PaymentList from "../PaymentList/PaymentList";
 import ProductAvailable from "../ProductAvailable/ProductAvailable";
@@ -19,55 +18,32 @@ import { AddToBasketWrapper, ProductFlexWrapper, ProductImageWrapper, ProductInf
 import DetailsAccordion from "@/components/global/DetailsAccordeon/DetailsAccordion";
 import { ProductOptionsPanel } from "../ProductOptionsPanel";
 import { useRouter } from "next/router";
-import { ProductVariationType } from "@/types/components/shop/product/products";
+import { ProductVariation, ProductVariationType } from "@/types/components/shop/product/products";
 import { getCurrentVariation } from "@/utils/getCurrentVariation";
 import ReactHtmlParser from 'html-react-parser';
-
-
-const ProductInfo: FC<ProductCardPropsType> = ({ product }) =>
-{
-
-import { ProductVariation } from "@/types/components/shop/product/products";
 import { CartItem } from "@/types/store/reducers/сartSlice";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { updateCart } from "@/store/slices/cartSlice";
 
+
+
 const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
-      const [currentVariation, setCurrentVariation] = useState<ProductVariationType | null>(null);
-    const stockQuantity = useMemo(() =>
-    {
-        if (!currentVariation?.stock_quantity && !product.stock_quantity) return 0;
-        if (currentVariation?.stock_quantity) return currentVariation?.stock_quantity;
-        if (product?.stock_quantity) return product?.stock_quantity;
-        return 0;
-    }, [currentVariation, product]);
-
-    const router = useRouter();
-
-    useEffect(() =>
-    {
-        if (product)
-        {
-            console.log('product:', product);
-        }
-    }, [product])
-
-    /** Set default attributes */
-    useEffect(() =>
-    {
-        if (product.type === 'variable')
-        {
-            const variation = getCurrentVariation(product.variations, router.query);
-            if (variation) setCurrentVariation(variation);
-        }
-    }, [router.query]);
-  
     const { name, stock_quantity, sku, min_price, max_price, images, variations } = product;
     const t = useTranslations("Product");
 
     const dispatch = useAppDispatch();
     const { cartItems } = useAppSelector(state => state.cartSlice);
-  
+
+    const sizeList = ['M', 'L', 'XL'];
+
+    const [quantity, setQuantity] = useState<number>(1);
+    const [currentSize, setCurrentSize] = useState<string>(sizeList[0]);
+    const lengthList = ['8-14mm', '0.05mm', '0.07mm', '2mm'];
+    const [currentLength, setCurrentLength] = useState<string>(lengthList[0]);
+    const colorList = ['red', 'white', 'green', 'grey'];
+    const [currentColor, setCurrentColor] = useState<string>(colorList[0]);
+    const [cartMatch, setCartMatch] = useState<CartItem>();
+
     useEffect(() => {
         const cartMatch = cartItems.find(({ product_id }) => product_id === product.id);
         if (cartMatch) {
@@ -104,7 +80,30 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
         }));
     }
 
-    const testimages = Array.from({ length: 4 }).map((_, index) => product.images[0]);
+    const testimages = Array.from({ length: 4 }).map((_, index) => images[0]);
+
+    const stockQuantity = useMemo(() => {
+        if (!currentVariation?.stock_quantity && !product.stock_quantity) return 0;
+        if (currentVariation?.stock_quantity) return currentVariation?.stock_quantity;
+        if (product?.stock_quantity) return product?.stock_quantity;
+        return 0;
+    }, [currentVariation, product]);
+
+    const router = useRouter();
+
+    useEffect(() => {
+        if (product) {
+            console.log('product:', product);
+        }
+    }, [product])
+
+    /** Set default attributes */
+    useEffect(() => {
+        if (product.type === 'variable') {
+            const variation = getCurrentVariation(product.variations, router.query);
+            if (variation) setCurrentVariation(variation);
+        }
+    }, [router.query]);
 
     return (
         <ProductWrapper>

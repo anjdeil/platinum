@@ -2,10 +2,8 @@ import Breadcrumbs from "@/components/global/Breadcrumbs/Breadcrumbs";
 import CustomProductList from "@/components/pages/product/CustomProductList/CustomProductList";
 import ProductInfo from "@/components/pages/product/ProductInfo/ProductInfo";
 import { customRestApi } from "@/services/wpCustomApi";
-import { useGetProductQuery } from "@/store/rtk-queries/wpCustomApi";
 import { Container } from "@/styles/components";
 import { BreadcrumbType } from "@/types/components/global/breadcrumbs";
-import { ProductType } from "@/types/components/shop/product/products";
 import { ProductPageType } from "@/types/pages/product";
 import { validateCustomSingleProduct } from "@/utils/zodValidators/validateCustomSingleProduct";
 import { Box } from "@mui/material";
@@ -36,13 +34,11 @@ import { useEffect, useMemo, useState } from "react";
 // Map or Set for current variation
 // Variations FOR attributes FOR check slug and option
 
-export default function ProductPage({ res }: ProductPageType)
-{
+export default function ProductPage({ res }: ProductPageType) {
     const product = useMemo(() => res.data.item, [res]);
     const [breadcrumbsLinks, setBreadcrumbsLinks] = useState<BreadcrumbType[]>([]);
 
-    useEffect(() =>
-    {
+    useEffect(() => {
         const links = product.categories.map(item => ({
             name: item.name,
             url: `product-category/${item.name}`
@@ -64,25 +60,23 @@ export default function ProductPage({ res }: ProductPageType)
                     <Breadcrumbs links={breadcrumbsLinks} />
                 </Box>
                 {product && <ProductInfo product={product} />}
-              <CustomProductList title="recommendProduct" productIds={recommendProducts} />
+                <CustomProductList title="recommendProduct" productIds={recommendProducts} />
             </Container>
         </>
     );
 }
-        
+
 const recommendProducts = [
-  24707,
-  24777,
-  24737,
-  24717,
+    24707,
+    24777,
+    24737,
+    24717,
 ];
 
-export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) =>
-{
+export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
     const { slug } = context.query;
 
-    try
-    {
+    try {
         if (typeof slug !== "string") throw new Error("Invalid product slug");
 
         const response = await customRestApi.get(`products/${slug}`);
@@ -95,8 +89,7 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
                 res: response.data,
             },
         }
-    } catch (err)
-    {
+    } catch (err) {
         console.error("Failed to fetch product data:", err);
         return {
             notFound: true,
