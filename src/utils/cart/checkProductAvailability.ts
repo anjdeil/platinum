@@ -1,12 +1,12 @@
-import { ProductsMinimizedType } from '@/types/components/shop/product/products';
-import { CartItem } from '@/types/store/reducers/сartSlice';
+import { ProductsMinimizedType } from "@/types/components/shop/product/products";
+import { CartItem } from "@/types/store/reducers/сartSlice";
 
 export default function checkProductAvailability(
   item: CartItem,
-  productsSpecs: ProductsMinimizedType[],
+  productsSpecs: ProductsMinimizedType[]
 ) {
   if (!item || !item.product_id || !item.quantity) {
-    throw new Error('Invalid item object');
+    throw new Error("Invalid item object");
   }
 
   if (!productsSpecs) {
@@ -28,7 +28,8 @@ export default function checkProductAvailability(
   }
 
   const stockQuantity = productSpecs.stock_quantity ?? 0;
-  const resolveCount = stockQuantity < item.quantity ? stockQuantity : true;
+  const resolveCount = stockQuantity;
+  const isAvailable = stockQuantity < item.quantity ? false : true;
 
-  return { resolveCount };
+  return { resolveCount, isAvailable };
 }

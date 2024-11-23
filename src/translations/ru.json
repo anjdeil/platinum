@@ -110,6 +110,8 @@
     "LoginAnd": "ВОЙДИТЕ В СИСТЕМУ И ВОСПОЛЬЗУЙТЕСЬ",
     "Above": "ВЫШЕ",
     "ForOrders": "ДЛЯ ЗАКАЗОВ",
-    "CouponApply": "Купон успешно применен"
+    "CouponApply": "Купон успешно применен",
+    "CouponApplyBtn": "Применить купон",
+    "CouponInputPlaceholder": "Код купона"
   }
 }

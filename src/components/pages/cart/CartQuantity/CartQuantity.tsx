@@ -6,11 +6,12 @@ import { LineItemType } from '@/types/components/shop/product/products';
 import debounce from 'lodash/debounce';
 
 interface QuantityComponentProps {
+    resolveCount: number | undefined;
     item: LineItemType;
     handleChangeQuantity: (product_id: number, action: 'inc' | 'dec' | 'value', variation_id?: number, newQuantity?: number) => void;
 }
 
-const CartQuantity: React.FC<QuantityComponentProps> = ({ item, handleChangeQuantity }) => {
+const CartQuantity: React.FC<QuantityComponentProps> = ({ item, handleChangeQuantity, resolveCount }) => {
     const [inputValue, setInputValue] = useState(item.quantity);
 
     const debouncedChangeHandler = useCallback(
@@ -42,6 +43,7 @@ const CartQuantity: React.FC<QuantityComponentProps> = ({ item, handleChangeQuan
                 value={inputValue}
                 onChange={handleInputChange}
                 min="1"
+                max={resolveCount?.toString()}
             />
             <QuantityBtn
                 onClick={() =>

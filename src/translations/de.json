@@ -110,6 +110,8 @@
     "LoginAnd": "MELDEN SIE SICH AN UND NUTZEN SIE",
     "Above": "OBEN",
     "ForOrders": "FÜR BESTELLUNGEN",
-    "CouponApply": "Coupon erfolgreich angewendet"
+    "CouponApply": "Coupon erfolgreich angewendet",
+    "CouponApplyBtn": "Gutschein anwenden",
+    "CouponInputPlaceholder": "Gutscheincode"
   }
 }

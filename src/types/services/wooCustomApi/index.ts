@@ -325,7 +325,7 @@ const couponRespSchema = z.object({
   maximum_amount: z.number(),
   email_restrictions: z.array(z.string()),
   used_by: z.array(z.string()),
-  meta_data: z.array(z.any()),
+  meta_data: z.array(metaDataSchema).optional(),
   _links: z.object({
     self: z.array(z.object({ href: z.string() })),
     collection: z.array(z.object({ href: z.string() })),

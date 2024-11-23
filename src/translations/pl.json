@@ -110,6 +110,8 @@
     "LoginAnd": "ZALOGUJ SIĘ I SKORZYSTAJ Z",
     "Above": "POWYŻEJ",
     "ForOrders": "DLA ZAMÓWIEŃ",
-    "CouponApply": "Kupon został pomyślnie zastosowany"
+    "CouponApply": "Kupon został pomyślnie zastosowany",
+    "CouponApplyBtn": "Zastosuj kupon",
+    "CouponInputPlaceholder": "Kod kuponu"
   }
 }

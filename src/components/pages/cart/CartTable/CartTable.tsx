@@ -1,6 +1,5 @@
 import React, { FC } from "react";
 import {
-  CreateOrderRequestType,
   CreateOrderResponseType,
 } from "@/types/services";
 import { useAppDispatch } from "@/store";
@@ -59,14 +58,6 @@ const CartTable: FC<CartTableProps> = ({
   const t = useTranslations("Cart");
   const dispatch = useAppDispatch();
   const { isMobile } = useResponsive();
-  const status: CreateOrderRequestType["status"] = "on-hold";
-  /*   // test variation product
-    dispatch(updateCart({
-      product_id: 24133,
-      variation_id: 24134,
-      quantity: 1
-    })) */
-
   // Quantity
   const handleChangeQuantity = (
     product_id: number,
@@ -128,7 +119,7 @@ const CartTable: FC<CartTableProps> = ({
             </GridHeader>
             {!(isLoadingOrder || isLoadingProductsMin) &&
               orderItems?.line_items.map((item) => {
-                const { resolveCount } = checkProductAvailability(item, productsSpecs);
+                const { resolveCount, isAvailable } = checkProductAvailability(item, productsSpecs);
                 return (
                   <RowWrapper key={item.id}>
                     <GridRow >
@@ -152,13 +143,13 @@ const CartTable: FC<CartTableProps> = ({
                       <TextNameCell>{item.name}</TextNameCell>
                       <TextCell>{roundedPrice(item.price)}&nbsp;{symbol}</TextCell>
                       <TextCell>
-                        <CartQuantity item={item} handleChangeQuantity={handleChangeQuantity} />
+                        <CartQuantity resolveCount={resolveCount} item={item} handleChangeQuantity={handleChangeQuantity} />
                       </TextCell>
                       <TextCell>
                         {roundedPrice(item.price * item.quantity)}&nbsp;{symbol}
                       </TextCell>
                     </GridRow>
-                    {resolveCount !== true && (
+                    {isAvailable === false && (
                       <GridRow padding="5px 16px 16px 16px">
                         <CartProductWarning
                           onUpdate={() =>
@@ -192,7 +183,7 @@ const CartTable: FC<CartTableProps> = ({
         <>
           {!(isLoadingOrder || isLoadingProductsMin) ? (
             orderItems?.line_items.map((item) => {
-              const { resolveCount } = checkProductAvailability(item, productsSpecs);
+              const { resolveCount, isAvailable } = checkProductAvailability(item, productsSpecs);
 
               return (
                 <CartCardAllWrapper key={item.id}>
@@ -210,14 +201,14 @@ const CartTable: FC<CartTableProps> = ({
                           {roundedPrice(item.price)}&nbsp;{symbol}
                         </p>
                       </ProductPrice>
-                      <CartQuantity item={item} handleChangeQuantity={handleChangeQuantity} />
+                      <CartQuantity resolveCount={resolveCount} item={item} handleChangeQuantity={handleChangeQuantity} />
                       <ProductPrice>
                         <span>SUMMARY</span>
                         <OnePrice>{roundedPrice(item.price * item.quantity)}&nbsp;{symbol}</OnePrice>
                       </ProductPrice>
                     </CardContent>
                   </CartCardWrapper>
-                  {resolveCount !== true && (
+                  {isAvailable === false && (
                     <CartProductWarning
                       onUpdate={() => handleChangeQuantity(item.product_id, "value", item.variation_id, resolveCount)}
                       resolveCount={resolveCount}

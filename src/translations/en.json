@@ -109,6 +109,8 @@
     "LoginAnd": "LOG IN AND TAKE ADVANTAGE OF",
     "Above": "ABOVE",
     "ForOrders": "FOR ORDERS",
-    "CouponApply": "Coupon successfully applied"
+    "CouponApply": "Coupon successfully applied",
+    "CouponApplyBtn": "Apply coupon",
+    "CouponInputPlaceholder": "Code coupon"
   }
 }

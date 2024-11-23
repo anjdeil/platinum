@@ -37,6 +37,7 @@ export const CustomFormInputSchema = z.object({
     .returns(z.void())
     .optional(),
   initialValue: z.string().nullable().optional(),
+  defaultValue: z.string().nullable().optional(),
   label: z.boolean().optional(),
   font: z.string().optional(),
   padding: z.string().optional(),
