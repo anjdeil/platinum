@@ -36,7 +36,7 @@ export const CartSummaryCard = styled.div`
   margin-bottom: 16px;
 `;
 export const CartCommentInput = styled.textarea`
-  min-height: 150px;
+  min-height: 178px;
   height: 100%;
   width: 100%;
   border: none;
