@@ -5,6 +5,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 const cartInitialState: CartState = {
   cartItems: getCartItemsFromLocalStorage() || [],
   couponCodes: [],
+  commentToOrder: "",
 };
 
 export const cartSlice = createSlice({
@@ -18,7 +19,7 @@ export const cartSlice = createSlice({
         const foundItem = state.cartItems.find(
           (item) =>
             item.product_id === product_id &&
-            (!variation_id || item.variation_id === variation_id) // Fixed the logic here
+            (!variation_id || item.variation_id === variation_id)
         );
 
         if (foundItem) {
@@ -50,9 +51,21 @@ export const cartSlice = createSlice({
         (code) => code !== couponCode
       );
     },
+    setCommentToOrder: (state, action: PayloadAction<string>) => {
+      state.commentToOrder = action.payload;
+    },
+    clearCommentToOrder: (state) => {
+      state.commentToOrder = "";
+    },
   },
 });
 
-export const { updateCart, addCoupon, removeCoupon } = cartSlice.actions;
+export const {
+  updateCart,
+  addCoupon,
+  removeCoupon,
+  setCommentToOrder,
+  clearCommentToOrder,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;

@@ -112,6 +112,17 @@
     "ForOrders": "DLA ZAMÓWIEŃ",
     "CouponApply": "Kupon został pomyślnie zastosowany",
     "CouponApplyBtn": "Zastosuj kupon",
-    "CouponInputPlaceholder": "Kod kuponu"
+    "CouponInputPlaceholder": "Kod kuponu",
+
+    "OrderComments": "KOMENTARZE DO ZAMÓWIENIA",
+    "OrderCommentPlaceholder": "Podziel się konkretnymi szczegółami lub prośbami dotyczącymi zamówienia...",
+    "OrderCommentHint": "W tym miejscu można podać wszelkie dodatkowe instrukcje lub uwagi dotyczące zamówienia.",
+    "OrderSummary": "Podsumowanie zamówienia",
+    "Continue": "Kontynuuj",
+    "OrderSummaryTotal": "całkowita kwota do zapłaty",
+
+    "products": "Towary",
+    "coupon": "Kupon",
+    "paymentMethod": "Metoda płatności"
   }
 }

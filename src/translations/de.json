@@ -112,6 +112,17 @@
     "ForOrders": "FÜR BESTELLUNGEN",
     "CouponApply": "Coupon erfolgreich angewendet",
     "CouponApplyBtn": "Gutschein anwenden",
-    "CouponInputPlaceholder": "Gutscheincode"
+    "CouponInputPlaceholder": "Gutscheincode",
+
+    "OrderComments": "KOMMENTARE ZUR BESTELLUNG",
+    "OrderCommentPlaceholder": "Teilen Sie spezifische Details oder Anfragen zu Ihrer Bestellung...",
+    "OrderCommentHint": "Fühlen Sie sich frei, zusätzliche Anweisungen oder Hinweise zu Ihrer Bestellung hier anzugeben.",
+    "OrderSummary": "Bestellübersicht",
+    "Continue": "Weiter",
+    "OrderSummaryTotal": "Gesamtbetrag zu zahlen",
+
+    "products": "Artikel",
+    "coupon": "Gutschein",
+    "paymentMethod": "Zahlungsmethode"
   }
 }

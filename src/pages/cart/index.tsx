@@ -9,6 +9,7 @@ import OrderBar from "@/components/pages/cart/OrderBar/OrderBar";
 import { Container } from "@/styles/components";
 import CartCouponBlock from "@/components/pages/cart/CartCouponBlock/CartCouponBlock";
 import { CartPageWrapper } from "./style";
+import CartSummaryBlock from "@/components/pages/cart/CartSummaryBlock/CartSummaryBlock";
 
 const CartPage: React.FC = () => {
     const { symbol } = useAppSelector((state) => state.currencySlice);
@@ -76,7 +77,8 @@ const CartPage: React.FC = () => {
                     />
                     <OrderBar isLoadingOrder={isLoadingOrder} cartSum={cartSum} symbol={symbol} />
                 </div>
-                <CartCouponBlock />
+                <CartCouponBlock symbol={symbol} />
+                <CartSummaryBlock symbol={symbol} order={orderItems} isLoading={isLoadingOrder} />
             </CartPageWrapper>
         </Container>
     );

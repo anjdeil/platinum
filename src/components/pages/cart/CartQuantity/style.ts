@@ -12,16 +12,13 @@ export const QuantityBlock = styled.input`
   outline: none;
   border: none;
   text-align: center;
- /*  @media ${({ theme }) => theme.media.medium} {
-    width: 60px;
-  } */
 `;
 export const QuantityWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   @media ${({ theme }) => theme.media.medium} {
-    margin: 16px 0; 
+    margin: 16px 0;
   }
 `;
 

@@ -1,5 +1,5 @@
 import { OrderType } from '@/types/services';
-import getSubtotalByLineItems from '@/utils/getSubtotalByLineItems';
+import getSubtotalByLineItems from '@/utils/cart/getSubtotalByLineItems';
 import { Document, Link, Page, StyleSheet, Text, View } from '@react-pdf/renderer';
 
 const styles = StyleSheet.create({
@@ -64,8 +64,7 @@ const styles = StyleSheet.create({
 });
 
 
-const OrderPdf = ({ order }: { order: OrderType }) =>
-{
+const OrderPdf = ({ order }: { order: OrderType }) => {
 
     const date = new Date(order?.date_created);
     const formattedDate = date.toLocaleDateString('en-US', {
@@ -162,8 +161,7 @@ const OrderPdf = ({ order }: { order: OrderType }) =>
                         </View>
                     </View>
 
-                    {order?.coupon_lines?.map(line =>
-                    {
+                    {order?.coupon_lines?.map(line => {
                         const name = `Kod rabatowy ${line.discount_type === 'percent' ? `-${line.nominal_amount}% ` : ""}`;
                         return (
                             <View key={name} style={styles.split}>

@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import {
-  CreateOrderResponseType,
+  OrderType,
 } from "@/types/services";
 import { useAppDispatch } from "@/store";
 import { updateCart } from "@/store/slices/cartSlice";
@@ -36,7 +36,7 @@ import { useTranslations } from "next-intl";
 
 interface CartTableProps {
   symbol: string;
-  orderItems: CreateOrderResponseType | undefined;
+  orderItems: OrderType | undefined;
   isLoadingOrder: boolean;
   isLoadingProductsMin: boolean;
   productsSpecs: any[];
@@ -58,7 +58,8 @@ const CartTable: FC<CartTableProps> = ({
   const t = useTranslations("Cart");
   const dispatch = useAppDispatch();
   const { isMobile } = useResponsive();
-  // Quantity
+
+
   const handleChangeQuantity = (
     product_id: number,
     action: "inc" | "dec" | "value",
@@ -138,7 +139,7 @@ const CartTable: FC<CartTableProps> = ({
                         </div>
                       </DeleteCell>
                       <CartImgWrapper>
-                        <CartItemImg src={item.image.src} alt={item.name} width="50" />
+                        <CartItemImg src={item.image?.src} alt={item.name} width="50" />
                       </CartImgWrapper>
                       <TextNameCell>{item.name}</TextNameCell>
                       <TextCell>{roundedPrice(item.price)}&nbsp;{symbol}</TextCell>
@@ -189,7 +190,7 @@ const CartTable: FC<CartTableProps> = ({
                 <CartCardAllWrapper key={item.id}>
                   <CartCardWrapper>
                     <CartImgWrapper>
-                      <CartItemImg src={item.image.src} alt={item.name} width="50" />
+                      <CartItemImg src={item.image?.src} alt={item.name} width="50" />
                     </CartImgWrapper>
                     <CardContent>
                       <ProducTitle>

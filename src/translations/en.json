@@ -103,6 +103,7 @@
     "delete": "Delete",
     "updateTo": "Update to",
     "priceToDelivery": "To get free delivery, you need to add items totaling {locale}",
+
     "discountText": "LOG IN AND TAKE ADVANTAGE OF {discounts}",
     "CouponText": "IF YOU HAVE A DISCOUNT COUPON, USE IT AND GET A DISCOUNT!",
     "ChooseCouponText": "Choose if you have a discount code or reward points you want to use or would like to estimate your delivery cost.",
@@ -111,6 +112,17 @@
     "ForOrders": "FOR ORDERS",
     "CouponApply": "Coupon successfully applied",
     "CouponApplyBtn": "Apply coupon",
-    "CouponInputPlaceholder": "Code coupon"
+    "CouponInputPlaceholder": "Code coupon",
+
+    "OrderComments": "COMMENTS ON THE ORDER",
+    "OrderCommentPlaceholder": "Share any specific details or requests about your order...",
+    "OrderCommentHint": "Feel free to provide any additional instructions or notes for your order here.",
+    "OrderSummary": "Order Summary",
+    "Continue": "Continue",
+    "OrderSummaryTotal": "total to pay",
+
+    "products": "Products",
+    "сoupon": "Сoupon",
+    "paymentMethod": "Payment method"
   }
 }

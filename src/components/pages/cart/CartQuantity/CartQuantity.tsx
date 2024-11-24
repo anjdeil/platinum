@@ -4,10 +4,11 @@ import PlusIcon from "@/components/global/icons/PlusIcon/PlusIcon";
 import MinusIcon from "@/components/global/icons/MinusIcon/MinusIcon";
 import { LineItemType } from '@/types/components/shop/product/products';
 import debounce from 'lodash/debounce';
+import { lineOrderItems } from '@/types/store/reducers/сartSlice';
 
 interface QuantityComponentProps {
     resolveCount: number | undefined;
-    item: LineItemType;
+    item: lineOrderItems;
     handleChangeQuantity: (product_id: number, action: 'inc' | 'dec' | 'value', variation_id?: number, newQuantity?: number) => void;
 }
 

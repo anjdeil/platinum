@@ -33,10 +33,7 @@ export const wooCustomRktApi = createApi({
         },
       }),
     }),
-    createOrder: builder.mutation<
-      CreateOrderResponseType,
-      CreateOrderRequestType
-    >({
+    createOrder: builder.mutation<OrderType, CreateOrderRequestType>({
       query: (credentials) => ({
         url: `/orders`,
         method: "POST",

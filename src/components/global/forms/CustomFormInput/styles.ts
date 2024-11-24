@@ -58,9 +58,9 @@ export const CustomInputStyle = styled.div<CustomInputStyleProps>`
   }
 `;
 export const Input = styled.input<CustomInputProps>`
-  ${(props) => (props.as === "textarea" ? "min-height: 150px;" : "")};
+  ${(props) => props.as === "textarea" && "min-height: 150px;"};
   margin-right: ${({ isCheckbox }) => (isCheckbox ? "15px" : "0")};
-  padding: 15px;
+  padding: ${({ isCheckbox }) => (isCheckbox ? "0" : "15px")};
   width: ${({ isCheckbox }) => (isCheckbox ? "24px" : "100%")};
   height: ${({ isCheckbox, height = "100%" }) =>
     isCheckbox ? "24px" : height};
@@ -83,7 +83,7 @@ export const Input = styled.input<CustomInputProps>`
   }
 
   &::placeholder {
-    ${(props) => (props.as === "textarea" ? "text-align: start;" : "")};
+    ${(props) => props.as === "textarea" && "text-align: start;"};
   }
 
   &[type="number"]::-webkit-inner-spin-button,
@@ -91,12 +91,16 @@ export const Input = styled.input<CustomInputProps>`
     -webkit-appearance: none;
     margin: 0;
   }
-  &[type="number"]appearance: none;
-  &[type="number"]-moz-appearance: textfield;
+
+  &[type="number"] {
+    appearance: none;
+    -moz-appearance: textfield;
+  }
 
   @media ${({ theme }) => theme.media.medium} {
     width: ${({ isCheckbox }) => (isCheckbox ? "15px" : "100%")};
-    height: ${({ isCheckbox }) => (isCheckbox ? "15px" : "100%")};
+    height: ${({ isCheckbox, height = "100%" }) =>
+      isCheckbox ? "15px" : height};
     font-size: 14px;
   }
 `;

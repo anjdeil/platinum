@@ -112,6 +112,17 @@
     "ForOrders": "ДЛЯ ЗАКАЗОВ",
     "CouponApply": "Купон успешно применен",
     "CouponApplyBtn": "Применить купон",
-    "CouponInputPlaceholder": "Код купона"
+    "CouponInputPlaceholder": "Код купона",
+
+    "OrderComments": "КОММЕНТАРИИ К ЗАКАЗУ",
+    "OrderCommentPlaceholder": "Поделитесь любыми подробностями или пожеланиями по поводу вашего заказа...",
+    "OrderCommentHint": "Не стесняйтесь указывать здесь любые дополнительные инструкции или примечания к вашему заказу.",
+    "OrderSummary": "Сводка заказа",
+    "Continue": "Продолжить",
+    "OrderSummaryTotal": "Итого к оплате",
+
+    "products": "Товары",
+    "coupon": "Купон",
+    "paymentMethod": "Способ оплаты"
   }
 }

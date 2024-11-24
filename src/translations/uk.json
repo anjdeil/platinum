@@ -112,6 +112,19 @@
     "ForOrders": "ДЛЯ ЗАМОВЛЕНЬ",
     "CouponApply": "Купон успішно застосований",
     "CouponApplyBtn": "Применить купон",
-    "CouponInputPlaceholder": "Код купона"
+    "CouponInputPlaceholder": "Код купона",
+
+    "uk": {
+      "OrderComments": "КОМЕНТАРІ ДО ЗАМОВЛЕННЯ",
+      "OrderCommentPlaceholder": "Поділіться будь-якими конкретними деталями або запитами щодо вашого замовлення...",
+      "OrderCommentHint": "Не соромтеся надавати будь-які додаткові інструкції або нотатки до вашого замовлення тут.",
+      "OrderSummary": "Підсумок замовлення",
+      "Continue": "Продовжити",
+      "OrderSummaryTotal": "загальна сума до сплати",
+
+      "products": "Товари",
+      "coupon": "Купон",
+      "paymentMethod": "Спосіб оплати"
+    }
   }
 }

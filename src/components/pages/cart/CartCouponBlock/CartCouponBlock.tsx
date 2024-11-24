@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { CouponBlock, CouponButton, CouponError, CouponForm, CouponInput, CouponSuccess, CouponText } from './style';
 import theme from '@/styles/theme';
 import { useForm } from 'react-hook-form';
@@ -10,7 +10,13 @@ import { CustomFormInput } from '@/components/global/forms/CustomFormInput';
 import { useResponsive } from '@/hooks/useResponsive';
 import { MenuSkeleton } from '@/components/menus/MenuSkeleton';
 
-const CartCouponBlock = () => {
+interface CartCouponBlockProps {
+    symbol: string;
+}
+
+const CartCouponBlock: FC<CartCouponBlockProps> = ({
+    symbol,
+}) => {
     const { isMobile } = useResponsive();
     const t = useTranslations('Cart');
     const dispatch = useAppDispatch();
@@ -22,7 +28,6 @@ const CartCouponBlock = () => {
 
     const onSubmit = (data: any) => {
         const isValidCoupon = coupons?.some(coupon => coupon.code === data.couponCode);
-
         if (isValidCoupon) {
             dispatch(addCoupon({ couponCode: data.couponCode }));
             setCouponState('success');
@@ -33,9 +38,9 @@ const CartCouponBlock = () => {
 
     return (
         <CouponBlock>
-            <CouponText uppercase marginBottom="8px">
-                {t('LoginAnd')} <span>-3%</span> {t('ForOrders')} {t('Above')} <span>500zł</span>,
-                <span>5%</span> {t('Above')} <span>1000zł</span>, <span>-10%</span> {t('Above')} <span>2000zł</span>
+            <CouponText uppercase marginBottom="8px">{/*  need to add diff  DISCOUNT */}
+                {t('LoginAnd')} <span>&nbsp;-3%&nbsp;</span> {t('ForOrders')} {t('Above')} <span>&nbsp;500 {symbol}&nbsp;</span>,
+                <span>&nbsp;5%&nbsp;</span> {t('Above')} <span>&nbsp;1000{symbol}&nbsp;</span>, <span>&nbsp;-10%&nbsp;</span> {t('Above')} <span>&nbsp;2000{symbol}&nbsp;</span>
             </CouponText>
             <CouponText uppercase>{t('CouponText')}</CouponText>
             <CouponText>{t('ChooseCouponText')}</CouponText>
