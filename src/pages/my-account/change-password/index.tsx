@@ -1,20 +1,20 @@
-import { Container, Title } from '@/styles/components';
+import { Container } from '@/styles/components';
 import { GetServerSidePropsContext } from 'next';
 import { FormContainer } from '@/components/pages/account/styles';
 import { ChangeInfoForm } from '@/components/global/forms/ChangeInfoForm';
-import axios from 'axios';
 import { WooCustomerReqType } from '@/types/services/wooCustomApi/customer';
+import wpRestApi from '@/services/wpRestApi';
 
 interface Props {
   defaultCustomerData: WooCustomerReqType;
 }
 
-export default function UserInfo({ defaultCustomerData }: Props) {
+export default function ResetPassword({ defaultCustomerData }: Props) {
   return (
     <>
       <Container>
         <FormContainer>
-          <ChangeInfoForm defaultCustomerData={defaultCustomerData} />
+          {/* <ChangeInfoForm defaultCustomerData={defaultCustomerData} /> */}
         </FormContainer>
       </Container>
     </>
@@ -25,25 +25,21 @@ export const getServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
   const cookies = context.req.cookies;
-  const reqUrl =
-    process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3000';
 
   try {
     if (!cookies?.authToken)
       throw new Error('Invalid or missing authentication token');
-    const resp = await axios.get(`${reqUrl}/api/wooAuth/customers`, {
-      headers: {
-        Cookie: `authToken=${cookies.authToken}`,
-      },
-    });
+    const response = await wpRestApi.post(
+      'jwt-auth/v1/token/validate',
+      {},
+      false,
+      `Bearer ${cookies.authToken}`
+    );
 
-    if (!resp.data) throw new Error('Invalid or missing authentication token');
+    if (!response.data)
+      throw new Error('Invalid or missing authentication token');
 
-    return {
-      props: {
-        defaultCustomerData: resp.data,
-      },
-    };
+    return { props: {} };
   } catch (err) {
     console.error(err);
     return {

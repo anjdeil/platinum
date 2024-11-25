@@ -1,20 +1,20 @@
-import { Container, Title } from '@/styles/components';
+import { Container } from '@/styles/components';
 import { GetServerSidePropsContext } from 'next';
 import { FormContainer } from '@/components/pages/account/styles';
-import { ChangeInfoForm } from '@/components/global/forms/ChangeInfoForm';
 import axios from 'axios';
 import { WooCustomerReqType } from '@/types/services/wooCustomApi/customer';
+import { ChangeShippingForm } from '@/components/global/forms/ChangeShippingForm';
 
 interface Props {
   defaultCustomerData: WooCustomerReqType;
 }
 
-export default function UserInfo({ defaultCustomerData }: Props) {
+export default function Addresses({ defaultCustomerData }: Props) {
   return (
     <>
       <Container>
         <FormContainer>
-          <ChangeInfoForm defaultCustomerData={defaultCustomerData} />
+          <ChangeShippingForm defaultCustomerData={defaultCustomerData} />
         </FormContainer>
       </Container>
     </>

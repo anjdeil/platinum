@@ -1,61 +1,70 @@
-import { FC, useMemo, useState } from 'react';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import 'react-international-phone/style.css';
-import { useRegisterCustomerMutation } from '@/store/rtk-queries/wooCustomApi';
-import { useRouter } from 'next/router';
-import { RegistrationFormSchema } from '@/types/components/global/forms/registrationForm';
-import { CustomForm, FormWrapper, FormWrapperBottom } from './styles';
-import { isAuthErrorResponseType } from '@/utils/isAuthErrorResponseType';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { CustomFormInput } from '../CustomFormInput';
 import { CustomError, CustomSuccess } from '../CustomFormInput/styles';
 import { StyledButton, Title } from '@/styles/components';
 import theme from '@/styles/theme';
-import { validateWooCustomer } from '@/utils/zodValidators/validateWooCustomer';
 import {
-  useCheckTokenMutation,
-  useGetTokenMutation,
-} from '@/store/rtk-queries/wpApi';
-import { CustomFormCheckbox } from '../CustomFormCheckbox';
+  CustomForm,
+  FormWrapper,
+  FormWrapperBottom,
+} from '../RegistrationForm/styles';
+import { WooCustomerReqType } from '@/types/services/wooCustomApi/customer';
+import {
+  ChangeFormSchema,
+  ChangeFormType,
+} from '@/types/components/global/forms/changeInfoForm';
+import { useUpdateCustomerInfoMutation } from '@/store/rtk-queries/wooCustomAuthApi';
 
-export const RegistrationForm: FC = () => {
-  const router = useRouter();
+interface Props {
+  defaultCustomerData: WooCustomerReqType;
+}
+
+export const ChangeInfoForm: FC<Props> = ({ defaultCustomerData }) => {
   const [customError, setCustomError] = useState<string>('');
+  const [customerInfo, setCustomerInfo] =
+    useState<WooCustomerReqType>(defaultCustomerData);
 
-  /** Form settings */
-  const formSchema = useMemo(() => RegistrationFormSchema(false), []);
-  type RegistrationFormType = z.infer<typeof formSchema>;
+  /** API
+   * Update customer info
+   */
+  const [updateCustomerMutation, { error }] = useUpdateCustomerInfoMutation();
+
+  /**
+   * Form settings
+   * Add default values
+   */
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isSubmitSuccessful },
     reset,
-  } = useForm<RegistrationFormType>({
-    resolver: zodResolver(formSchema),
+  } = useForm<ChangeFormType>({
+    resolver: zodResolver(ChangeFormSchema),
+    defaultValues: {
+      name: customerInfo.first_name || '',
+      lastName: customerInfo.last_name || '',
+      email: customerInfo.email || '',
+      phoneNumber: customerInfo.billing?.phone || '',
+      country: customerInfo.billing?.country || '',
+      city: customerInfo.billing?.city || '',
+      address1: customerInfo.billing?.address_1 || '',
+      address2: customerInfo.billing?.address_2 || '',
+      postCode: customerInfo.billing?.postcode || '',
+    },
   });
 
-  /** API
-   * Register a new customer
-   * Get and validate token
-   */
-  const [registerCustomerMutation, { error }] = useRegisterCustomerMutation();
-  const [fetchToken] = useGetTokenMutation();
-  const [checkToken] = useCheckTokenMutation();
-
-  async function onSubmit(formData: RegistrationFormType) {
+  async function onSubmit(formData: ChangeFormType) {
     setCustomError('');
     const reqBody = {
       email: formData.email,
       first_name: formData.name,
       last_name: formData.lastName,
-      password: formData.password,
-      role: 'customer',
       username: formData.email,
       billing: {
         first_name: formData.name,
         last_name: formData.lastName,
-        // apartmentNumber
         address_1: formData.address1,
         address_2: formData.address2,
         city: formData.city,
@@ -67,39 +76,22 @@ export const RegistrationForm: FC = () => {
     };
 
     try {
-      /** Register a new customer */
-      const resp = await registerCustomerMutation(reqBody);
+      /** Update customer info */
+      const resp = await updateCustomerMutation(reqBody);
       if (!resp.data) throw new Error('Invalid customer response.');
-
-      /** Validate type of the response */
-      const isResponseValid = await validateWooCustomer(resp.data);
-      if (!isResponseValid)
-        throw new Error('Customer response data validation failed.');
-
-      /** Fetching auth token */
-      const tokenResp = await fetchToken({
-        password: formData.password || '',
-        username: formData.email,
-      });
-      if (!tokenResp.data) throw new Error('Auth token getting failed.');
-
-      /** Validate auth token */
-      const isTokenValid = await checkToken({});
-      if (!isTokenValid) throw new Error('Auth token validation failed.');
-      router.push('/my-account');
+      setCustomerInfo(resp.data);
     } catch (err) {
       setCustomError(
         'Oops! Something went wrong with the server. Please try again or contact support.'
       );
-    } finally {
       reset();
     }
   }
 
   return (
     <CustomForm onSubmit={handleSubmit(onSubmit)}>
-      <Title as={'h2'} uppercase={true} marginBottom={'24px'}>
-        Register
+      <Title as={'h1'} uppercase={true} marginBottom={'24px'}>
+        User information
       </Title>
       <FormWrapper>
         <CustomFormInput
@@ -109,6 +101,7 @@ export const RegistrationForm: FC = () => {
           errors={errors}
           inputTag={'input'}
           inputType={'text'}
+          isRequire={false}
         />
         <CustomFormInput
           fieldName="Nazwisko"
@@ -117,6 +110,7 @@ export const RegistrationForm: FC = () => {
           errors={errors}
           inputTag={'input'}
           inputType={'text'}
+          isRequire={false}
         />
         <CustomFormInput
           fieldName="Adres e-mail"
@@ -125,6 +119,7 @@ export const RegistrationForm: FC = () => {
           errors={errors}
           inputTag={'input'}
           inputType={'text'}
+          isRequire={false}
         />
         <CustomFormInput
           fieldName="phone number"
@@ -133,6 +128,7 @@ export const RegistrationForm: FC = () => {
           errors={errors}
           inputTag={'input'}
           inputType={'text'}
+          isRequire={false}
         />
         <CustomFormInput
           fieldName="Kraj / region"
@@ -141,6 +137,7 @@ export const RegistrationForm: FC = () => {
           errors={errors}
           inputTag={'input'}
           inputType={'text'}
+          isRequire={false}
         />
         <CustomFormInput
           fieldName="Miasto"
@@ -149,6 +146,7 @@ export const RegistrationForm: FC = () => {
           errors={errors}
           inputTag={'input'}
           inputType={'text'}
+          isRequire={false}
         />
         <CustomFormInput
           fieldName="Ulica"
@@ -157,6 +155,7 @@ export const RegistrationForm: FC = () => {
           errors={errors}
           inputTag={'input'}
           inputType={'text'}
+          isRequire={false}
         />
         <CustomFormInput
           fieldName="Building number"
@@ -165,6 +164,7 @@ export const RegistrationForm: FC = () => {
           errors={errors}
           inputTag={'input'}
           inputType={'number'}
+          isRequire={false}
         />
         <CustomFormInput
           fieldName="№ apartment/office"
@@ -173,6 +173,7 @@ export const RegistrationForm: FC = () => {
           errors={errors}
           inputTag={'input'}
           inputType={'number'}
+          isRequire={false}
         />
         <CustomFormInput
           fieldName="Kod pocztowy"
@@ -181,49 +182,29 @@ export const RegistrationForm: FC = () => {
           errors={errors}
           inputTag={'input'}
           inputType={'text'}
-        />
-        <CustomFormInput
-          fieldName="Hasło"
-          name="password"
-          register={register}
-          errors={errors}
-          inputTag={'input'}
-          inputType={'password'}
-        />
-        <CustomFormInput
-          fieldName="Powtórz hasło"
-          name="confirmPassword"
-          register={register}
-          errors={errors}
-          inputTag={'input'}
-          inputType={'password'}
+          isRequire={false}
         />
       </FormWrapper>
-      <CustomFormCheckbox
-        name={'terms'}
-        register={register}
-        errors={errors}
-        label={'Wyrażam zgodę na przetwarzanie danych osobowych.'}
-      />
       <FormWrapperBottom>
         <StyledButton
-          backgroundColor={theme.background.hover}
+          backgroundColor={theme.background.main}
+          hoverBackgroundColor={theme.background.hover}
           color={theme.colors.white}
           type="submit"
           disabled={isSubmitting}
         >
-          Register
+          {isSubmitting ? 'Wait...' : ' Save changes'}
         </StyledButton>
         {error && customError && (
           <CustomError
             dangerouslySetInnerHTML={{
-              __html: isAuthErrorResponseType(error || customError),
+              __html: error,
             }}
           ></CustomError>
         )}
-        {isSubmitSuccessful && !error && customError && (
+        {isSubmitSuccessful && !error && !customError && (
           <CustomSuccess>
-            Your account has been created successfully!
+            The customer's information has been successfully updated.
           </CustomSuccess>
         )}
       </FormWrapperBottom>
