@@ -92,7 +92,11 @@
         "bestSeller": "Bestsellers",
         "newProduct": "New Products",
         "ourCategories": "Our categories",
-        "moreProduct": "More product"
+        "moreProduct": "More product",
+        "addComment": "Add comment",
+        "submitting": "Submitting",
+        "commentText1": "Have you tested our product? Share an opinion;",
+        "commentText2": "- we try to be best for you, and your opinion will help us a lot!"
     },
     "Cart": {
         "productName": "Name",

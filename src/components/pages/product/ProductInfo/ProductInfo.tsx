@@ -3,15 +3,18 @@ import DetailsAccordion from "@/components/global/DetailsAccordeon/DetailsAccord
 import Rating from "@/components/global/Rating/Rating";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { updateCart } from "@/store/slices/cartSlice";
+import { popupSet } from "@/store/slices/PopupSlice";
+import { setData } from "@/store/slices/ProductSlice";
 import { StyledButton, Title } from "@/styles/components";
 import { ProductCardPropsType } from "@/types/components/shop";
-import { ProductVariation } from "@/types/pages/shop";
+import { ProductVariation } from "@/types/components/shop/product/products";
+import { ProductType } from "@/types/pages/shop";
 import { CartItem } from "@/types/store/reducers/сartSlice";
 import { getCurrentVariation } from "@/utils/getCurrentVariation";
 import ReactHtmlParser from 'html-react-parser';
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/router";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import PaymentList from "../PaymentList/PaymentList";
 import ProductAvailable from "../ProductAvailable/ProductAvailable";
 import { ProductOptionsPanel } from "../ProductOptionsPanel";
@@ -104,6 +107,15 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
         }
     }, [router.query]);
 
+    const updateProductState = useCallback((data: ProductType) => {
+        dispatch(setData(data));
+    }, [dispatch]);
+
+    const addComment = () => {
+        updateProductState(product);
+        dispatch(popupSet('add-comment'));
+    };
+
     return (
         <ProductWrapper>
             <ProductImageWrapper>
@@ -144,6 +156,7 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
                 </AddToBasketWrapper>
                 <PaymentList />
                 <ShippingList />
+                <StyledButton onClick={addComment} secondary={true}>Leave a review about product</StyledButton>
                 <DetailsAccordion summary="Descriptions">
                     <div dangerouslySetInnerHTML={{
                         __html: ReactHtmlParser(currentVariation?.description || product.description)
