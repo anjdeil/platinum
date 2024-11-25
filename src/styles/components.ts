@@ -1,5 +1,5 @@
 import { AccountInfoWrapperProps } from '@/types/pages/account';
-import { LogoLinkImageProps, LogoLinkProps, StyledButtonProps } from '@/types/styles/components';
+import { LogoLinkImageProps, LogoLinkProps, StyledButtonProps, TextProps } from '@/types/styles/components';
 import styled from "@emotion/styled";
 import { Pagination } from '@mui/material';
 import Image from 'next/image';
@@ -92,8 +92,8 @@ export const StyledButton = styled.button<StyledButtonProps>`
     min-width: ${({ minWidthDesktop = 'auto' }) => minWidthDesktop};    
     padding-inline: 16px;
     border-radius: 10px;
-    color: ${({ theme, color = theme.colors.black }) => color};
-    background-color: ${({ notify = false, theme, backgroundColor = 'transparent' }) => notify ? theme.colors.secondary : backgroundColor};
+    color: ${({ theme, secondary = false }) => secondary ? theme.colors.black : theme.colors.white};
+    background-color: ${({ notify = false, secondary = false, theme }) => notify ? theme.colors.secondary : secondary ? 'transparent' : theme.colors.primary};
     padding-block: 16px;
     font: ${({ theme }) => theme.fonts.bodyMiddleReg};
     text-transform: none;
@@ -176,8 +176,9 @@ export const LogoLinkImage = styled(Image) <LogoLinkImageProps>`
     height: 100%;
 `;
 
-export const Text = styled.span`
+export const Text = styled.span<TextProps>`
     font: ${({ theme }) => theme.fonts.bodyMiddleReg};
+    text-align: ${({ textalign = 'left' }) => textalign};
 `;
 
 export const VariationTitle = styled(Text)`

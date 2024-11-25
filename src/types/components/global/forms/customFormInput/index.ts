@@ -3,7 +3,7 @@ import { z } from "zod";
 export const CustomFormInputSchema = z.object({
     fieldName: z.string().optional(),
     inputTag: z.union([z.literal('input'), z.literal('textarea')]),
-    inputType: z.union([z.literal('text'), z.literal('checkbox'), z.literal('password'), z.literal('number'), z.literal('phone')]),
+    inputType: z.union([z.literal('text'), z.literal('checkbox'), z.literal('password'), z.literal('number'), z.literal('phone')]).optional(),
     name: z.string().optional(),
     register: z.any().optional(),
     errors: z.any().optional(),
