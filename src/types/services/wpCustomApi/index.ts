@@ -1,10 +1,11 @@
+import { ProductsMinimizedSchema } from "@/types/components/shop/product/products";
 import { WpMenuResponseSchema } from "@/types/menus/WpMenus";
-import { menuItemsSchema } from "./menus";
-import { ThemeOptionsItemSchema } from "./themeOptions";
-import { AttributeSchema } from "./attributes";
+import { ProductReviewSchema } from "@/types/pages/shop/reviews";
 import { z } from "zod";
 import { CategorySchema, ProductSchema } from "../../pages/shop";
-import { ProductsMinimizedSchema } from "@/types/components/shop/product/products";
+import { AttributeSchema } from "./attributes";
+import { menuItemsSchema } from "./menus";
+import { ThemeOptionsItemSchema } from "./themeOptions";
 
 const LangParamSchema = z.enum(['en', 'pl', 'de', 'ru', 'uk']).optional();
 
@@ -52,6 +53,13 @@ export const CustomDataProductSchema = z.object({
     })
 })
 
+export const CustomDataProductReviewsSchema = z.object({
+    success: z.boolean(),
+    data: CustomDataSchema.extend({
+        items: z.array(ProductReviewSchema),
+    })
+})
+
 export const CustomDataCategoriesSchema = z.object({
     success: z.boolean(),
     data: CustomDataSchema.extend({
@@ -72,7 +80,7 @@ export const CustomDataThemeOptionsSchema = z.object({
         item: ThemeOptionsItemSchema
     })
 })
-export const CustomDataProductsMinimizedResponseSchema  = z.object({
+export const CustomDataProductsMinimizedResponseSchema = z.object({
     success: z.boolean(),
     data: z.object({
         items: z.array(ProductsMinimizedSchema)
@@ -85,6 +93,7 @@ export type LangParamType = z.infer<typeof LangParamSchema>;
 export type CustomDataCategoriesType = z.infer<typeof CustomDataCategoriesSchema>;
 export type CustomDataProductsType = z.infer<typeof CustomDataProductsSchema>;
 export type CustomDataProductType = z.infer<typeof CustomDataProductSchema>;
+export type CustomDataProductReviewsType = z.infer<typeof CustomDataProductReviewsSchema>;
 export type CustomDataMenuResponseType = z.infer<typeof CustomDataMenuResponseSchema>;
 export type CustomDataMenusType = z.infer<typeof CustomDataMenusSchema>;
 export type CustomDataThemeOptionsType = z.infer<typeof CustomDataThemeOptionsSchema>;
