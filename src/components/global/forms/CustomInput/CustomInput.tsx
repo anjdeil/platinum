@@ -1,40 +1,41 @@
-import { ChangeEvent, FC, useCallback } from "react";
-import { CustomInputStyle, CustomInputWrapper, Input } from "../CustomFormInput/styles";
+import { ChangeEvent, FC, useCallback } from 'react';
+import {
+  CustomInputStyle,
+  CustomInputWrapper,
+  Input,
+} from '../CustomFormInput/styles';
 
-interface CustomInputType
-{
-    defaultValue?: string | number;
-    value: string | number;
-    onChange: (newValue: number) => void;
+interface CustomInputType {
+  defaultValue?: string | number;
+  value: string | number;
+  onChange: (newValue: number) => void;
 }
 
-export const CustomInput: FC<CustomInputType> = ({ defaultValue, value, onChange }) =>
-{
-    const onInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) =>
-    {
-        if (!event.target.value) return false;
-        const newValue = Number(event.target.value);
-        onChange(newValue);
-    }, [])
+export const CustomInput: FC<CustomInputType> = ({
+  defaultValue,
+  value,
+  onChange,
+}) => {
+  const onInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.value) return false;
+    const newValue = Number(event.target.value);
+    onChange(newValue);
+  }, []);
 
-    return (
-        <div>
-            <CustomInputStyle
-                as={'label'}
-                isError={false}
-                isTextArea={false}
-                isPhone={false}>
-                <CustomInputWrapper>
-                    <Input
-                        as={'input'}
-                        type={'number'}
-                        isError={false}
-                        value={value}
-                        defaultValue={defaultValue || ""}
-                        onChange={onInputChange}
-                    />
-                </CustomInputWrapper>
-            </CustomInputStyle>
-        </div>
-    )
-}
+  return (
+    <div>
+      <CustomInputStyle as={'label'} isError={false} isTextArea={false}>
+        <CustomInputWrapper>
+          <Input
+            as={'input'}
+            type={'number'}
+            isError={false}
+            value={value}
+            defaultValue={defaultValue || ''}
+            onChange={onInputChange}
+          />
+        </CustomInputWrapper>
+      </CustomInputStyle>
+    </div>
+  );
+};
