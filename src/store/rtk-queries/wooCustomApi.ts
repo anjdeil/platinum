@@ -21,14 +21,13 @@ export const wooCustomRktApi = createApi({
       }),
     }),
     fetchOrders: builder.query({
-      query: (credentials: any) => ({
-        url: "/orders",
-        method: "POST",
-        body: credentials,
+      query: (params: any) => ({
+        url: `/orders?${new URLSearchParams(params).toString()}`,
+        method: "GET",
         headers: {
-          "Content-Type": "application/json",
-        },
-      }),
+          'Content-Type': 'application/json',
+        }
+      })
     }),
     createOrder: builder.mutation<
       CreateOrderResponseType,
