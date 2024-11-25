@@ -2,6 +2,7 @@ import { StyledProductCardListProps } from "@/types/components/shop";
 import styled from "@emotion/styled";
 
 export const StyledProductCardList = styled.div<StyledProductCardListProps>`
+    width: 100%;
     display: grid;
     justify-content: space-between;
     gap: ${({ gap = "16px" }) => gap};

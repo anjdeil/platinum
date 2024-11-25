@@ -1,3 +1,4 @@
+import { Thumbnail } from "@/components/pages/product/ProductSwiper/styles";
 import { z } from "zod";
 
 export const ProductCategorySchema = z.object({
@@ -47,6 +48,12 @@ export const ProductVariationSchema = z.object({
     attributes: z.array(ProductDefaultAttributesSchema),
 })
 
+export const ThumbnailSchema = z.object({
+    id: z.number(),
+    name: z.string(),
+    src: z.string()
+});
+
 export const ProductSchema = z.object({
     id: z.number(),
     sku: z.string().nullable(),
@@ -61,11 +68,13 @@ export const ProductSchema = z.object({
     min_price: z.number(),
     max_price: z.number(),
     categories: z.array(ProductCategorySchema),
+    thumbnail: ThumbnailSchema.optional(),
     images: z.array(ProductImageSchema),
     attributes: z.array(ProductAttributesSchema),
     default_attributes: z.array(ProductDefaultAttributesSchema),
     variations: z.array(ProductVariationSchema),
-})
+    average_rating: z.number(),
+});
 
 export const ProductDataResponseSchema = z.object({
     products_count: z.number(),

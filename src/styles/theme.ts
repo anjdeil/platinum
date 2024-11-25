@@ -13,6 +13,7 @@ const theme: Theme = {
   },
   fonts: {
     bodysmallReg: '400 0.75rem/1rem ' + montserrat.style.fontFamily,
+    bodypresmallReg: '400 0.875rem/1rem ' + montserrat.style.fontFamily,
     bodyMiddleReg: '400 1rem/1.5rem ' + montserrat.style.fontFamily,
     bodyMiddleSemiBold: '600 1rem/1.5rem ' + montserrat.style.fontFamily,
     bodyMiddleMedium: '500 1rem/1.5rem ' + montserrat.style.fontFamily,
@@ -45,8 +46,10 @@ const theme: Theme = {
   background: {
     secondary: '#f2f8fe',
     main: '#063e7b',
-    hover: '#3f70a9',
+    hover: '#063e7b',
     skeleton: 'linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%)',
+    skeletonSecondary:
+      'linear-gradient(90deg, #f2f8fe 25%, #DFEAF4  50%, #f2f8fe 75%)',
     grey: '#BEBEBE',
     success: '#17AA40',
     warning: '#F2B517',
