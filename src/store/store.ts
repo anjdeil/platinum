@@ -6,12 +6,16 @@ import currencySlice from "./slices/currencySlice";
 import languageSlice from "./slices/languageSlice";
 import MenuCategoriesSlice from "./slices/MenuCategoriesSlice";
 import PopupSlice from "./slices/PopupSlice";
+import { wpRtkApi } from "./rtk-queries/wpApi";
 import themeOptionsSlice from "./slices/themeOptionsSlice";
+import cartSlice from "./slices/cartSlice";
+import saveCartSliceToLocalStorageMiddleware from "@/utils/cartSlice/saveCartSliceToLocalStorageMiddleware";
 
 const rootReducer = combineReducers({
     [wpCustomRtkApi.reducerPath]: wpCustomRtkApi.reducer,
     [wooCustomRktApi.reducerPath]: wooCustomRktApi.reducer,
-    // [wp.reducerPath]: wooCustomRktApi.reducer,
+    [wpRtkApi.reducerPath]: wpRtkApi.reducer,
+    cartSlice,
     languageSlice: languageSlice,
     currencySlice: currencySlice,
     themeOptions: themeOptionsSlice,
@@ -29,6 +33,8 @@ export const setupStore = () => {
             getDefaultMiddleware()
                 .concat(wpCustomRtkApi.middleware)
                 .concat(wooCustomRktApi.middleware)
+                .concat(wpRtkApi.middleware)
+                .concat(saveCartSliceToLocalStorageMiddleware)
     })
 }
 

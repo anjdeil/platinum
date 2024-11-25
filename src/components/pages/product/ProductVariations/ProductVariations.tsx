@@ -1,27 +1,27 @@
 import { VariationTitle } from "@/styles/components";
-import { ProductVariationsProps } from "@/types/components/shop/product/productVariations";
+import { ColorVariationsProps } from "@/types/components/shop/product/productVariations";
 import React from "react";
 import { ProductVariationsContainer, VariationListBlock, VariationsButton } from "./styles";
 
-const ProductVariations: React.FC<ProductVariationsProps> = ({ title, list, currentVariation, onChange }) =>
+const ProductVariations: React.FC<ColorVariationsProps> = ({ attr, currentVariation, onChange }) =>
 {
     return (
         <ProductVariationsContainer>
             <VariationTitle>
-                {title}
+                {attr.slug}
             </VariationTitle>
             <VariationListBlock>
-                {list.map((item) => (
+                {attr.options && attr.options.map((item) => (
                     <VariationsButton
-                        key={item}
-                        active={item === currentVariation}
-                        onClick={() => onChange(item)}
+                        key={item.slug}
+                        active={item.slug === currentVariation}
+                        onClick={() => onChange(attr.slug, item.slug)}
                     >
-                        {item}
+                        {item.slug}
                     </VariationsButton>
                 ))}
             </VariationListBlock>
-        </ProductVariationsContainer >           
+        </ProductVariationsContainer >
     );
 };
 

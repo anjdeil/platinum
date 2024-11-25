@@ -53,7 +53,7 @@ const ReviewItem: FC<ReviewItemPropsType> = ({ review, isOpen, setOpened }) => {
             <FlexWrapper>
                 <ImageWrapper>
                     <Image
-                        src={product?.images[0]?.src || ''}
+                        src={product?.thumbnail?.src || ''}
                         width={64}
                         height={64}
                         alt={product?.name || ''}

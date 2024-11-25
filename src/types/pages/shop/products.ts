@@ -47,6 +47,12 @@ export const ProductVariationSchema = z.object({
     attributes: z.array(ProductDefaultAttributesSchema),
 })
 
+export const ThumbnailSchema = z.object({
+    id: z.number(),
+    name: z.string(),
+    src: z.string()
+});
+
 export const ProductSchema = z.object({
     id: z.number(),
     sku: z.string().nullable(),
@@ -62,11 +68,12 @@ export const ProductSchema = z.object({
     max_price: z.number(),
     average_rating: z.number(),
     categories: z.array(ProductCategorySchema),
+    thumbnail: ThumbnailSchema.optional(),
     images: z.array(ProductImageSchema),
     attributes: z.array(ProductAttributesSchema),
     default_attributes: z.array(ProductDefaultAttributesSchema),
     variations: z.array(ProductVariationSchema),
-})
+});
 
 export const ProductDataResponseSchema = z.object({
     products_count: z.number(),
@@ -77,3 +84,4 @@ export type ProductType = z.infer<typeof ProductSchema>;
 export type ProductDataResponseType = z.infer<typeof ProductDataResponseSchema>;
 export type ProductAttributesType = z.infer<typeof ProductAttributesSchema>;
 export type ProductImageType = z.infer<typeof ProductImageSchema>;
+export type ProductVariation = z.infer<typeof ProductVariationSchema>;
