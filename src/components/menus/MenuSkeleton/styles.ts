@@ -27,3 +27,11 @@ export const SkeletonContainer = styled.div<SkeletonContainerProps>`
   flex-direction: ${({ direction = 'row' }) => direction};
   gap: ${({ gap }) => gap || "10px"};
 `;
+
+
+/* 
+from CustomListSkeleton styles.ts
+export const SkeletonWrapper = styled.div`
+  width: 100%;
+`;
+*/

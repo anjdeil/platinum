@@ -20,44 +20,41 @@ const currency = 'USD';
 
 export default function Layout({ children }: { children: React.ReactNode })
 {
-    const dispatch = useDispatch();
-    const { isMobile } = useResponsive();
-    const { locale } = useRouter();
-    const langParam: LangParamType | object = locale ? { lang: locale } : {};
-    const langParamStr = locale ? locale : '';
-    const [menus, setMenus] = useState<WpMenuResponseType[] | []>([]);
+  const dispatch = useDispatch();
+  const { isMobile } = useResponsive();
+  const { locale } = useRouter();
+  const langParam: LangParamType | object = locale ? { lang: locale } : {};
+  const langParamStr = locale ? locale : '';
+  const [menus, setMenus] = useState<WpMenuResponseType[] | []>([]);
 
-    const { data: menusResp, error, isLoading } = useGetMenusQuery(langParam);
-    const { data: themeOptions, error: themeOptionsError, } = useGetThemeOptionsQuery();
-    /*     const { data: products, error: productError, isError } = useGetProductsQuery(langParam); */
+  const { data: menusResp, error, isLoading } = useGetMenusQuery(langParam);
+  const { data: themeOptions, error: themeOptionsError } =
+    useGetThemeOptionsQuery();
+  /*     const { data: products, error: productError, isError } = useGetProductsQuery(langParam); */
 
-    useEffect(() =>
-    {
-        if (menusResp && menusResp.data && menusResp.data.items)
-        {
-            setMenus(menusResp.data.items);
-        }
-    }, [menusResp])
+  useEffect(() => {
+    if (menusResp && menusResp.data && menusResp.data.items) {
+      setMenus(menusResp.data.items);
+    }
+  }, [menusResp]);
 
-    useEffect(() =>
-    {
-        if (themeOptions && themeOptions.data)
-        {
-            dispatch(setThemeOptions({ data: themeOptions, language: langParamStr }));
-        }
-    }, [themeOptions, locale, dispatch]);
+  useEffect(() => {
+    if (themeOptions && themeOptions.data) {
+      dispatch(setThemeOptions({ data: themeOptions, language: langParamStr }));
+    }
+  }, [themeOptions, locale, dispatch]);
 
-    return (
-        <Box>
-            <MenusContext.Provider value={menus}>
-                {!isMobile && <TopBar />}
-                {!isMobile ? <Header /> : <MobileHeader />}
-                <PopupContainer />
-                {isMobile && (<BottomMenu />)}
-                {children}
-                <Footer />
-                <CategoriesMenu />
-            </MenusContext.Provider >
-        </Box >
-    );
+  return (
+    <Box>
+      <MenusContext.Provider value={menus}>
+        {!isMobile && <TopBar />}
+        {!isMobile ? <Header /> : <MobileHeader />}
+        <PopupContainer />
+        {isMobile && <BottomMenu />}
+        {children}
+        <Footer />
+        <CategoriesMenu />
+      </MenusContext.Provider>
+    </Box>
+  );
 } 
