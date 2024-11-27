@@ -1,4 +1,5 @@
 import Breadcrumbs from "@/components/global/Breadcrumbs/Breadcrumbs";
+import SortSelect from "@/components/global/selects/SortSelect/SortSelect";
 import { PagesNavigation, Title } from "@/styles/components";
 import { ArchivePropsType } from "@/types/components/shop/archive";
 import router from "next/router";
@@ -62,6 +63,7 @@ export const Archive: FC<ArchivePropsType> = (props) =>
                 </CatalogFilterBlock>
                 <CatalogRightWrapper>
                     <CatalogTopWrapper>
+                        <SortSelect />
                         <PagesNavigation
                             page={+page}
                             count={pagesCount}
