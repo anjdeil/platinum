@@ -18,14 +18,9 @@ export const BannerWrapper = styled.div<BannerWrapperProps>`
     }
 
     @media ${({ theme }) => theme.media.medium} {
-        max-width: 390px;
         aspect-ratio: ${({ mobileProportion = 0.7 }) => mobileProportion};
         margin: auto;
         padding-top: 20px;
-    }
-
-    @media ${({ theme }) => theme.media.small} {
-        margin-inline: 20px
     }
 `;
 

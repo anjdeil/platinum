@@ -1,5 +1,4 @@
 import { AddToBasketButtonProps } from "@/types/components/global/buttons/addToBasketButton";
-import { useTranslations } from "next-intl";
 import { AddToBasketButtonStyled } from "./styles";
 
 const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({
@@ -14,9 +13,10 @@ const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({
     lineHeight,
     fontSize,
     maxWidth,
-    mobileMaxWidth,
+    children,
+    onClick
 }) => {
-    const t = useTranslations("Product");
+
 
     return (
         <AddToBasketButtonStyled
@@ -31,9 +31,10 @@ const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({
             lineHeight={lineHeight}
             fontSize={fontSize}
             maxWidth={maxWidth}
-            mobileMaxWidth={mobileMaxWidth}
+            onClick={onClick}
         >
-            {t("addToBasket")}
+
+            {children}
         </AddToBasketButtonStyled>
     );
 }

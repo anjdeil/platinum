@@ -1,3 +1,4 @@
+import { MouseEventHandler } from 'react';
 import { z } from 'zod';
 
 export const AddToBasketButtonPropsSchema = z.object({
@@ -12,7 +13,8 @@ export const AddToBasketButtonPropsSchema = z.object({
     lineHeight: z.string().optional(),
     fontSize: z.string().optional(),
     maxWidth: z.string().optional(),
-    mobileMaxWidth: z.string().optional(),
+    children: z.any().optional(),
+    onClick: z.custom<MouseEventHandler<HTMLButtonElement>>().optional()
 });
 
 export type AddToBasketButtonProps = z.infer<typeof AddToBasketButtonPropsSchema>;

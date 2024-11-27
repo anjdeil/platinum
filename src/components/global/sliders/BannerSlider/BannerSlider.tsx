@@ -28,7 +28,7 @@ const BannerSlider: React.FC<BannerSliderProps> = ({ slides, proportion, mobileP
                         <br/>
                     {t('productForYou')}
                 </Title>
-                <AddToBasketButton maxWidth="250px" mobileMaxWidth="160px" />
+                <AddToBasketButton maxWidth="250px">Add to basket</AddToBasketButton>
             </ContentWrapper>
             <CustomSwiper
                 modules={slides.length > 1 ? [Pagination] : []}

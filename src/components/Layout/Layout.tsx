@@ -1,7 +1,7 @@
 import { useResponsive } from '@/hooks/useResponsive';
 import { useGetMenusQuery, useGetThemeOptionsQuery } from '@/store/rtk-queries/wpCustomApi';
 import { setThemeOptions } from '@/store/slices/themeOptionsSlice';
-import { WpMenuResponseType } from '@/types/menus/wpMenus';
+import { WpMenuResponseType } from '@/types/menus/WpMenus';
 import { LangParamType } from '@/types/services/wpCustomApi';
 import Box from '@mui/material/Box';
 import { useRouter } from 'next/router';
@@ -18,8 +18,7 @@ import TopBar from '../widgets/TopBar/TopBar';
 export const MenusContext = createContext<WpMenuResponseType[] | []>([]);
 const currency = 'USD';
 
-export default function Layout({ children }: { children: React.ReactNode })
-{
+export default function Layout({ children }: { children: React.ReactNode }) {
     const dispatch = useDispatch();
     const { isMobile } = useResponsive();
     const { locale } = useRouter();
@@ -31,18 +30,14 @@ export default function Layout({ children }: { children: React.ReactNode })
     const { data: themeOptions, error: themeOptionsError, } = useGetThemeOptionsQuery();
     /*     const { data: products, error: productError, isError } = useGetProductsQuery(langParam); */
 
-    useEffect(() =>
-    {
-        if (menusResp && menusResp.data && menusResp.data.items)
-        {
+    useEffect(() => {
+        if (menusResp && menusResp.data && menusResp.data.items) {
             setMenus(menusResp.data.items);
         }
     }, [menusResp])
 
-    useEffect(() =>
-    {
-        if (themeOptions && themeOptions.data)
-        {
+    useEffect(() => {
+        if (themeOptions && themeOptions.data) {
             dispatch(setThemeOptions({ data: themeOptions, language: langParamStr }));
         }
     }, [themeOptions, locale, dispatch]);

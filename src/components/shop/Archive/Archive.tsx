@@ -1,17 +1,15 @@
-import { PagesNavigation } from "@/styles/components";
+import { Container, PagesNavigation } from "@/styles/components";
 import { FC, useEffect } from "react";
 import { ProductCardList } from "../ProductCardsList";
-import { CustomDataProductsType } from "@/types/services";
+import { CustomDataProductsStatisticType, CustomDataProductsType } from "@/types/services";
 import { ProductType } from "@/types/pages/shop";
 import router, { NextRouter, useRouter } from "next/router";
 import { Pagination } from "@mui/material";
-
-interface ArchiveProps
-{
-    products: ProductType[];
-    pagesCount: number;
-    page: number;
-}
+import { CustomSingleAccordion } from "@/components/global/accordions/CustomSingleAccordion/CustomSingleAccordion";
+import { CustomCheckbox } from "@/components/global/forms/CustomCheckbox";
+import { PriceFilter } from "../filtration/PriceFilter/PriceFilter";
+import { FilterPanel } from "../filtration/FilterPanel";
+import { ArchivePropsType } from "@/types/components/shop/archive";
 
 const switchPage = (page: number, maxPage: number) =>
 {
@@ -31,22 +29,40 @@ const switchPage = (page: number, maxPage: number) =>
     })
 }
 
-export const Archive: FC<ArchiveProps> = ({ products, pagesCount, page }) =>
+export const Archive: FC<ArchivePropsType> = (props) =>
 {
-    const router = useRouter();
+    const { products, pagesCount, page, statistic } = props;
 
     return (
-        <div>
-            <PagesNavigation
-                page={+page}
-                count={pagesCount}
-                siblingCount={1}
-                shape="rounded"
-                hidePrevButton
-                hideNextButton
-                onChange={(_, newPage) => { switchPage(newPage, pagesCount); }}
-            />
-            {products.length && <ProductCardList products={products} />}
-        </div>
+        <Container>
+            <div>
+                <PagesNavigation
+                    page={+page}
+                    count={pagesCount}
+                    siblingCount={1}
+                    shape="rounded"
+                    hidePrevButton
+                    hideNextButton
+                    onChange={(_, newPage) => { switchPage(newPage, pagesCount); }}
+                />
+                <div style={{ display: 'flex', gap: '50px' }}>
+                    <div style={{ margin: '50px auto' }}>
+                        <FilterPanel
+                            attributes={statistic.attributes}
+                            maxPrice={statistic.max_price}
+                            minPrice={statistic.min_price} />
+                    </div>
+                    {products.length && <ProductCardList products={products}
+                        columns={
+                            {
+                                mobileColumns: 2,
+                                tabletColumns: 4,
+                                desktopColumns: 3
+                            }
+                        }
+                    />}
+                </div>
+            </div >
+        </Container>
     )
 }

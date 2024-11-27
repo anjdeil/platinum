@@ -1,6 +1,7 @@
-
-
-import { SkeletonContainerProps, SkeletonElementProps } from "@/types/menus/skeletons";
+import {
+  SkeletonContainerProps,
+  SkeletonElementProps,
+} from "@/types/menus/skeletons";
 import { keyframes } from "@emotion/react";
 import styled from "@emotion/styled";
 
@@ -14,7 +15,7 @@ const waveAnimation = keyframes`
 `;
 
 export const SkeletonElement = styled.div<SkeletonElementProps>`
-  background: ${({ theme }) => theme.background.skeleton};
+  background: ${({ color, theme }) => color || theme.background.skeleton};
   background-size: 200% 100%;
   animation: ${waveAnimation} 1.5s infinite ease-in-out;
   width: ${({ width }) => width};
@@ -24,6 +25,6 @@ export const SkeletonElement = styled.div<SkeletonElementProps>`
 
 export const SkeletonContainer = styled.div<SkeletonContainerProps>`
   display: flex;
-  flex-direction: ${({ direction = 'row' }) => direction};
+  flex-direction: ${({ direction = "row" }) => direction};
   gap: ${({ gap }) => gap || "10px"};
 `;

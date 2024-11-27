@@ -4,12 +4,12 @@ import styled from "@emotion/styled";
 export const AddToBasketButtonStyled = styled.button<AddToBasketButtonProps>`
     width: 100%;
     max-width: ${({ maxWidth = "" }) => maxWidth};
-    background-color: ${({ theme }) => theme.colors.primary};
+    background-color: transparent;
     font: ${({ theme }) => theme.fonts.bodyMiddleReg};
     font-size: ${({ fontSize }) => fontSize};
     line-height: ${({ lineHeight }) => lineHeight};
     font-weight: ${({ fontWeight }) => fontWeight};    
-    color: ${({ theme, color = theme.colors.white }) => color};
+    color: ${({ theme, color = theme.colors.black }) => color};
     padding: 16px 25px;    
     text-align: center;
     border-radius: ${({ borderRadius = '10px' }) => borderRadius};
@@ -40,7 +40,6 @@ export const AddToBasketButtonStyled = styled.button<AddToBasketButtonProps>`
     }
 
     @media ${({ theme }) => theme.media.medium} {
-        max-width: ${({ mobileMaxWidth = "" }) => mobileMaxWidth};
         padding: 10px 16px;
         font-size: ${({ mobFontSize = '14px' }) => mobFontSize};   
         line-height: ${({ mobLineHeight = '1.5em' }) => mobLineHeight};     
