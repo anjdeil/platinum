@@ -14,7 +14,6 @@ export const BannerWrapper = styled.div<BannerWrapperProps>`
     
     @media ${({ theme }) => theme.media.large} {
         width: auto;
-        margin-inline: 32px;
     }
 
     @media ${({ theme }) => theme.media.medium} {

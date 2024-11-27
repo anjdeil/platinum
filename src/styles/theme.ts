@@ -68,7 +68,7 @@ const theme: Theme = {
   },
   media: {
     small: "(max-width: 430px)",
-    medium: "(max-width: 768px)",
+    medium: "(max-width: 767px)",
     mediumLarge: "(max-width: 900px)",
     large: "(max-width: 1024px)",
     middle: "(max-width: 1100px)",
