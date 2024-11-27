@@ -5,8 +5,6 @@ export const BreadcrumbsWrapper = styled.nav`
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 24px;
-    margin-bottom: 12px;
 `;
 
 export const BreadcrumbsList = styled.ol`

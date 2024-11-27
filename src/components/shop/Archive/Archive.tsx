@@ -1,11 +1,11 @@
 import Breadcrumbs from "@/components/global/Breadcrumbs/Breadcrumbs";
-import { Container, PagesNavigation, Title } from "@/styles/components";
+import { PagesNavigation, Title } from "@/styles/components";
 import { ArchivePropsType } from "@/types/components/shop/archive";
 import router from "next/router";
 import { FC } from "react";
 import { FilterPanel } from "../filtration/FilterPanel";
 import { ProductCardList } from "../ProductCardsList";
-import { CatalogFilterBlock, CatalogLayout, CatalogListBlock } from "./styles";
+import { CatalogContainer, CatalogFilterBlock, CatalogLayout, CatalogListBlock, CatalogRightWrapper, CatalogTitleWrapper, CatalogTopWrapper } from "./styles";
 
 const switchPage = (page: number, maxPage: number) =>
 {
@@ -29,6 +29,8 @@ export const Archive: FC<ArchivePropsType> = (props) =>
 {
     const { products, pagesCount, page, statistic } = props;
 
+    console.log('props...', props);
+
     const breadcrumbsLinks = [
     {
         name: 'ALL SHOP',
@@ -45,18 +47,11 @@ export const Archive: FC<ArchivePropsType> = (props) =>
     ];
 
     return (
-        <Container>
-            <Breadcrumbs links={breadcrumbsLinks} />
-            <Title as='h1' uppercase>Colored eyelashes</Title>
-            <PagesNavigation
-                page={+page}
-                count={pagesCount}
-                siblingCount={1}
-                shape="rounded"
-                hidePrevButton
-                hideNextButton
-                onChange={(_, newPage) => { switchPage(newPage, pagesCount); }}
-            />
+        <CatalogContainer>
+            <CatalogTitleWrapper>
+                <Breadcrumbs links={breadcrumbsLinks} />
+                <Title as='h1' uppercase>Colored eyelashes</Title>  
+            </CatalogTitleWrapper>    
             <CatalogLayout>
                 <CatalogFilterBlock>
                     <Title as='h3' uppercase textalign="left" marginBottom="24px">Filters</Title>
@@ -65,18 +60,31 @@ export const Archive: FC<ArchivePropsType> = (props) =>
                         maxPrice={statistic.max_price}
                         minPrice={statistic.min_price} />
                 </CatalogFilterBlock>
-                <CatalogListBlock>
-                    {products.length && <ProductCardList products={products}
-                        columns={
-                            {
-                                mobileColumns: 2,
-                                tabletColumns: 4,
-                                desktopColumns: 3
+                <CatalogRightWrapper>
+                    <CatalogTopWrapper>
+                        <PagesNavigation
+                            page={+page}
+                            count={pagesCount}
+                            siblingCount={1}
+                            shape="rounded"
+                            hidePrevButton
+                            hideNextButton
+                            onChange={(_, newPage) => { switchPage(newPage, pagesCount); }}
+                        />
+                    </CatalogTopWrapper>
+                    <CatalogListBlock>
+                        {products.length && <ProductCardList products={products}
+                            columns={
+                                {
+                                    mobileColumns: 2,
+                                    tabletColumns: 4,
+                                    desktopColumns: 3
+                                }
                             }
-                        }
                         />}
-                </CatalogListBlock>
+                    </CatalogListBlock>                    
+                </CatalogRightWrapper>
             </CatalogLayout>
-        </Container>
+        </CatalogContainer>
     )
 }
