@@ -3,8 +3,7 @@ import { CustomInput } from "@/components/global/forms/CustomInput";
 import { Slider } from "@mui/material";
 import { Divider, PriceFilterContainer } from "./styles";
 
-interface PriceFilter
-{
+interface PriceFilter {
     currentMin: number;
     currentMax: number;
     minPrice: number;
@@ -13,8 +12,7 @@ interface PriceFilter
     updateMaxPrice: (newValue: number) => void;
 }
 
-export const PriceFilter: FC<PriceFilter> = (props) =>
-{
+export const PriceFilter: FC<PriceFilter> = (props) => {
     const {
         currentMin,
         currentMax,
@@ -24,8 +22,7 @@ export const PriceFilter: FC<PriceFilter> = (props) =>
         updateMaxPrice
     } = props;
 
-    const handleSliderChange = useCallback((_: Event, newValue: number | number[]) =>
-    {
+    const handleSliderChange = useCallback((_: Event, newValue: number | number[]) => {
         if (!Array.isArray(newValue)) return;
 
         if (newValue[0] !== currentMin)

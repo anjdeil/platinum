@@ -4,13 +4,15 @@ import PlusIcon from "@/components/global/icons/PlusIcon/PlusIcon";
 import MinusIcon from "@/components/global/icons/MinusIcon/MinusIcon";
 import { LineItemType } from '@/types/components/shop/product/products';
 import debounce from 'lodash/debounce';
+import { lineOrderItems } from '@/types/store/reducers/сartSlice';
 
 interface QuantityComponentProps {
-    item: LineItemType;
+    resolveCount: number | undefined;
+    item: lineOrderItems;
     handleChangeQuantity: (product_id: number, action: 'inc' | 'dec' | 'value', variation_id?: number, newQuantity?: number) => void;
 }
 
-const CartQuantity: React.FC<QuantityComponentProps> = ({ item, handleChangeQuantity }) => {
+const CartQuantity: React.FC<QuantityComponentProps> = ({ item, handleChangeQuantity, resolveCount }) => {
     const [inputValue, setInputValue] = useState(item.quantity);
 
     const debouncedChangeHandler = useCallback(
@@ -42,6 +44,7 @@ const CartQuantity: React.FC<QuantityComponentProps> = ({ item, handleChangeQuan
                 value={inputValue}
                 onChange={handleInputChange}
                 min="1"
+                max={resolveCount?.toString()}
             />
             <QuantityBtn
                 onClick={() =>

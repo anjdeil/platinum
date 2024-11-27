@@ -80,13 +80,11 @@ export const CartItemImg = styled.img`
   object-fit: cover;
   filter: contrast(0.94);
   @media ${({ theme }) => theme.media.medium} {
-    /*  box-shadow: 0px 0px 39px -10px rgba(34, 60, 80, 0.2); */
     border-radius: 8px;
   }
 `;
 
 /* Mobile Cart */
-
 export const CartCardAllWrapper = styled.div`
   border: 1px solid ${({ theme }) => theme.background.secondary};
   padding: 16px;
