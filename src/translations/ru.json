@@ -124,5 +124,26 @@
     "products": "Товары",
     "coupon": "Купон",
     "paymentMethod": "Способ оплаты"
+  },
+  "Contacts": {
+    "contacts": "Контакты",
+    "telephone": "Телефон",
+    "call": "Позвонить",
+    "address": "Адрес",
+    "schedule": "Пн-Пт: с",
+    "dayOff": "Сб-Вс: Выходной",
+    "satSun": "Сб-Вс: с",
+    "howToGetThere": "Как добраться?",
+    "email": "Электронная почта",
+    "toWrite": "Написать",
+    "socialMedia": "Мы в социальных сетях",
+    "askUsQuestion": "Задайте нам вопрос",
+    "yourNamePlaceholder": "Как вас зовут?",
+    "emailPlaceholder": "Электронная почта",
+    "yourQuestionPlaceholder": "Напишите ваш вопрос",
+    "sending": "Отправляется...",
+    "sendButton": "Отправить",
+    "errorMessage": "Что-то пошло не так. Пожалуйста, попробуйте снова.",
+    "successMessage": "Ваше сообщение успешно отправлено!"
   }
 }

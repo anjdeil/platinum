@@ -124,5 +124,26 @@
     "products": "Artikel",
     "coupon": "Gutschein",
     "paymentMethod": "Zahlungsmethode"
+  },
+  "Contacts": {
+    "contacts": "Kontakte",
+    "telephone": "Telefon",
+    "call": "Anrufen",
+    "address": "Adresse",
+    "schedule": "Mo-Fr: von",
+    "dayOff": "Sa-So: Ruhetag",
+    "satSun": "Sa-So: von",
+    "howToGetThere": "Wie man dorthin kommt?",
+    "email": "E-Mail",
+    "toWrite": "Schreiben",
+    "socialMedia": "Wir sind in sozialen Medien",
+    "askUsQuestion": "Stellen Sie uns eine Frage",
+    "yourNamePlaceholder": "Wie heißen Sie?",
+    "emailPlaceholder": "E-Mail",
+    "yourQuestionPlaceholder": "Schreiben Sie Ihre Frage",
+    "sending": "Wird gesendet...",
+    "sendButton": "Senden",
+    "errorMessage": "Etwas ist schief gelaufen. Bitte versuchen Sie es erneut.",
+    "successMessage": "Ihre Nachricht wurde erfolgreich gesendet!"
   }
 }

@@ -124,5 +124,26 @@
     "products": "Towary",
     "coupon": "Kupon",
     "paymentMethod": "Metoda płatności"
+  },
+  "Contacts": {
+    "contacts": "Kontakty",
+    "telephone": "Telefon",
+    "call": "Zadzwoń",
+    "address": "Adres",
+    "schedule": "Pn-Pt: od",
+    "dayOff": "Sb-Nd: Dzień wolny",
+    "satSun": "Sb-Nd: od",
+    "howToGetThere": "Jak się tam dostać?",
+    "email": "E-mail",
+    "toWrite": "Napisz",
+    "socialMedia": "Jesteśmy w mediach społecznościowych",
+    "askUsQuestion": "Zadaj nam pytanie",
+    "yourNamePlaceholder": "Jak masz na imię?",
+    "emailPlaceholder": "E-mail",
+    "yourQuestionPlaceholder": "Napisz swoje pytanie",
+    "sending": "Wysyłanie...",
+    "sendButton": "Wyślij",
+    "errorMessage": "Coś poszło nie tak. Spróbuj ponownie.",
+    "successMessage": "Twoja wiadomość została wysłana pomyślnie!"
   }
 }

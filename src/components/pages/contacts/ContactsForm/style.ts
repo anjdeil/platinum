@@ -1,47 +1,63 @@
+import { StyledButton } from "@/styles/components";
 import styled from "@emotion/styled";
 
 export const FormWrapper = styled.div`
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  padding: 22px 22px 38px 22px;
   gap: 16px;
   width: 100%;
   max-width: 500px;
   margin: 0 auto;
-`;
-
-export const FormTitle = styled.h2`
-  text-align: center;
-  margin-bottom: 24px;
-`;
-
-export const FormInput = styled.input`
-  padding: 12px;
-  border: 1px solid ${({ theme }) => theme.colors.grey};
-  border-radius: 8px;
-  width: 100%;
-  box-sizing: border-box;
+  background-color: ${({ theme }) => theme.background.secondary};
+  border-radius: 16px;
 `;
 
 export const FormTextarea = styled.textarea`
-  padding: 12px;
-  border: 1px solid ${({ theme }) => theme.colors.grey};
-  border-radius: 8px;
+  min-height: 150px;
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
   width: 100%;
   box-sizing: border-box;
   resize: vertical;
-`;
+  background: ${({ theme }) => theme.colors.white};
+  margin-bottom: 16px;
 
-export const FormButton = styled.button`
-  padding: 14px 0;
-  border: none;
-  border-radius: 8px;
-  background-color: ${({ theme }) => theme.colors.primary};
-  color: ${({ theme }) => theme.colors.white};
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.primary};
+  & placeholder {
+    text-align: left;
+    align-items: center;
+    font: ${({ theme }) => theme.fonts.bodyMiddleReg};
+    color: ${({ theme }) => theme.colors.grey};
   }
+
+  outline: 1px solid ${({ theme }) => theme.background.formElements};
+  transition: outline-width 0.2s ease-in-out;
+
+  &:focus {
+    outline: 1px solid ${({ theme }) => theme.colors.primary};
+    box-shadow: ${({ theme }) => theme.customShadows.primaryShadow};
+  }
+`;
+export const InputsWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  gap: 17px;
+  margin-bottom: 12px;
+  @media ${({ theme }) => theme.media.medium} {
+    flex-direction: column;
+    align-items: center;
+  }
+`;
+export const ContactsStyledButton = styled(StyledButton)`
+  margin-top: 16px;
+`;
+export const ErrorMessage = styled.div`
+  margin-top: 16px;
+  color: ${({ theme }) => theme.colors.error};
+`;
+export const SuccessMessage = styled.div`
+  margin-top: 16px;
+  color: ${({ theme }) => theme.colors.active};
 `;

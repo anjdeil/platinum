@@ -11,7 +11,11 @@ export const ContactsCards = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
-  width: 100%;
+
+  @media ${({ theme }) => theme.media.medium} {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, 1fr);
+  }
 `;
 export const ContactCard = styled.div`
   display: flex;
@@ -21,19 +25,30 @@ export const ContactCard = styled.div`
   gap: 16px;
   background: ${({ theme }) => theme.background.secondary};
   border-radius: 20px;
+
   padding: 24px;
+  box-sizing: border-box;
+  width: 100%;
+  flex-grow: 1;
 
   & svg {
     margin-bottom: 26px;
   }
 `;
 export const ContactCardText = styled.div`
+  width: 100%;
+  white-space: normal;
+
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
   text-align: center;
-  & p {
+
+  & div {
     margin-top: 16px;
   }
 `;
-export const ContsctsSocials = styled.div`
+export const ContactsSocials = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;

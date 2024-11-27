@@ -17,6 +17,7 @@ interface CustomInputContainerProps {
 
 interface CustomInputProps {
   height?: string;
+  background?: string;
   isCheckbox: boolean;
   isError: boolean;
 }
@@ -72,8 +73,16 @@ export const Input = styled.input<CustomInputProps>`
   outline: 1px solid
     ${({ theme, isError }) =>
       isError ? theme.colors.error : theme.background.formElements};
-  background-color: ${({ theme }) => theme.background.formElements};
+  background-color: ${({ theme, background = theme.background.formElements }) =>
+    background};
   transition: outline-width 0.2s ease-in-out;
+
+  &:-webkit-autofill {
+    background-color: ${({ theme, background }) =>
+      background || theme.colors.white} !important;
+    color: ${({ theme }) => theme.colors.black} !important;
+    transition: background-color 5000s ease-in-out 0s;
+  }
 
   &:focus {
     outline: 1px solid
@@ -139,6 +148,6 @@ export const CustomError = styled.p`
     margin-top: 10px;
   }
 `;
-export const CustomInputContainer = styled.p<CustomInputContainerProps>`
-  width: ${({ isCheckbox, width = "auto" }) => (isCheckbox ? "18px" : width)};
+export const CustomInputContainer = styled.div<CustomInputContainerProps>`
+  width: ${({ isCheckbox, width = "100%" }) => (isCheckbox ? "18px" : width)};
 `;

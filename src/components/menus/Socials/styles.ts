@@ -11,6 +11,9 @@ interface SocialTextProps {
 export const SocialsContainer = styled.div<SocialsContainerProps>`
   display: flex;
   margin: ${({ margin = "0 0 0 0" }) => margin};
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
 `;
 export const SocialItemLink = styled(Link)<SocialItemLinkProps>`
   display: flex;

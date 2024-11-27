@@ -10,35 +10,37 @@ import { wpRtkApi } from "./rtk-queries/wpApi";
 import themeOptionsSlice from "./slices/themeOptionsSlice";
 import cartSlice from "./slices/cartSlice";
 import saveCartSliceToLocalStorageMiddleware from "@/utils/cartSlice/saveCartSliceToLocalStorageMiddleware";
+import { contactForm7Api } from "./rtk-queries/contactFrom7/contactFromApi7";
 
 const rootReducer = combineReducers({
-    [wpCustomRtkApi.reducerPath]: wpCustomRtkApi.reducer,
-    [wooCustomRktApi.reducerPath]: wooCustomRktApi.reducer,
-    [wpRtkApi.reducerPath]: wpRtkApi.reducer,
-    cartSlice,
-    languageSlice: languageSlice,
-    currencySlice: currencySlice,
-    themeOptions: themeOptionsSlice,
-    popup: PopupSlice,
-    MenuCategoriesSlice: MenuCategoriesSlice.reducer,
-    currentCurrency: currencySlice,
-    Popup: PopupSlice,
-    swiperModal: SwiperModal
+  [wpCustomRtkApi.reducerPath]: wpCustomRtkApi.reducer,
+  [wooCustomRktApi.reducerPath]: wooCustomRktApi.reducer,
+  [wpRtkApi.reducerPath]: wpRtkApi.reducer,
+  [contactForm7Api.reducerPath]: contactForm7Api.reducer,
+  cartSlice,
+  languageSlice: languageSlice,
+  currencySlice: currencySlice,
+  themeOptions: themeOptionsSlice,
+  popup: PopupSlice,
+  MenuCategoriesSlice: MenuCategoriesSlice.reducer,
+  currentCurrency: currencySlice,
+  Popup: PopupSlice,
+  swiperModal: SwiperModal,
 });
 
 export const setupStore = () => {
-    return configureStore({
-        reducer: rootReducer,
-        middleware: (getDefaultMiddleware) =>
-            getDefaultMiddleware()
-                .concat(wpCustomRtkApi.middleware)
-                .concat(wooCustomRktApi.middleware)
-                .concat(wpRtkApi.middleware)
-                .concat(saveCartSliceToLocalStorageMiddleware)
-    })
-}
-
+  return configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware()
+        .concat(wpCustomRtkApi.middleware)
+        .concat(wooCustomRktApi.middleware)
+        .concat(wpRtkApi.middleware)
+        .concat(contactForm7Api.middleware)
+        .concat(saveCartSliceToLocalStorageMiddleware),
+  });
+};
 
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppStore = ReturnType<typeof setupStore>;
-export type AppDispatch = AppStore['dispatch'];
+export type AppDispatch = AppStore["dispatch"];

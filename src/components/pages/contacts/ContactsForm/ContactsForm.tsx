@@ -1,47 +1,124 @@
 import React from "react";
-import { FormButton, FormInput, FormTextarea, FormTitle, FormWrapper } from "./style";
+import { ContactsStyledButton, ErrorMessage, FormTextarea, FormWrapper, InputsWrapper, SuccessMessage } from "./style";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { CustomFormInput } from "@/components/global/forms/CustomFormInput";
-
+import { ContactsFormSchema, ContactsFormType } from "@/types/pages/contacts/ContactsForm";
+import { zodResolver } from "@hookform/resolvers/zod";
+import theme from "@/styles/theme";
+import { Title } from "@/styles/components";
+import { useSendAnEmailMutation } from "@/store/rtk-queries/contactFrom7/contactFromApi7";
+import { tree } from "next/dist/build/templates/app-page";
 
 const ContactsForm = () => {
+    const t = useTranslations("Contacts");
 
+    const [sendAnEmail, { isLoading, isError, error, isSuccess }] = useSendAnEmailMutation();
 
-    const t = useTranslations('Cart');
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isSubmitting, isSubmitSuccessful },
+        setValue,
+        reset,
+    } = useForm<ContactsFormType>({
+        resolver: zodResolver(ContactsFormSchema),
+        mode: "onBlur",
+    });
 
+    const onSubmit = async (data: ContactsFormType) => {
+        try {
+            const formData = {
+                formId: 25798,
+                formData: {
+                    _wpcf7_unit_tag: "wpcf7-2ac395a-o1",
+                    "your-name": data.name,
+                    "your-email": data.email,
+                    "your-message": data.question,
+                },
+            };
 
-    const { register, handleSubmit, formState: { errors }, setValue } = useForm();
+            await sendAnEmail(formData).unwrap();
 
-
-    /*     const [couponState, setCouponState] = useState<'success' | 'error' | null>(null); */
-
-    const onSubmit = (data: any) => {
-
+            reset();
+        } catch (err) {
+            console.error("Ошибка при отправке данных формы:", err);
+        }
     };
 
     return (
-
         <FormWrapper>
-            <FormTitle>ASK US A QUESTION</FormTitle>
-            <CustomFormInput
-                label={false}
-                name="couponCode"
-                register={register}
-                errors={errors}
-                inputTag="input"
-                inputType="text"
-                setValue={setValue}
-                /*   placeholder={t('CouponInputPlaceholder')} */
-                placeholder={'What is your name'}
-                height="28px"
-            />
-            <FormInput type="text" placeholder="What is your name" />
-            <FormInput type="email" placeholder="Email" />
-            <FormTextarea placeholder="Write your question" rows={5} />
-            <FormButton>Send a question</FormButton>
-        </FormWrapper>
+            <Title as="h2" uppercase marginTop="12px">
+                {t("askUsQuestion")}
+            </Title>
 
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <InputsWrapper>
+                    {/* NAME */}
+                    <CustomFormInput
+                        label={false}
+                        name="name"
+                        register={register}
+                        errors={errors}
+                        inputTag="input"
+                        inputType="text"
+                        setValue={setValue}
+                        placeholder={t("yourNamePlaceholder")}
+                        height="28px"
+                        background={theme.colors.white}
+                    />
+                    {/* EMAIL */}
+                    <CustomFormInput
+                        label={false}
+                        name="email"
+                        register={register}
+                        errors={errors}
+                        inputTag="input"
+                        inputType="text"
+                        setValue={setValue}
+                        placeholder={t("emailPlaceholder")}
+                        height="28px"
+                        background={theme.colors.white}
+                    />
+                </InputsWrapper>
+                <CustomFormInput
+                    label={false}
+                    name="question"
+                    register={register}
+                    errors={errors}
+                    inputTag="textarea"
+                    inputType="text"
+                    setValue={setValue}
+                    placeholder={t("yourQuestionPlaceholder")}
+                    background={theme.colors.white}
+                />
+
+                <ContactsStyledButton
+                    type="submit"
+                    disabled={isSubmitting || isLoading}
+                    width="100%"
+                    height="56px"
+                    color={theme.colors.white}
+                    backgroundColor={theme.colors.primary}
+                    hoverColor={theme.colors.primary}
+                    hoverBackgroundColor={theme.background.secondary}
+                >
+                    {isSubmitting || isLoading ? t("sending") : t("sendButton")}
+                </ContactsStyledButton>
+
+                {isError && (
+                    <ErrorMessage >
+                        {t("errorMessage")}
+                    </ErrorMessage>
+                )}
+
+                {isSuccess && !isLoading && (
+                    <SuccessMessage >
+                        {t("successMessage")}
+                    </SuccessMessage>
+                )}
+            </form>
+        </FormWrapper>
     );
 };
 

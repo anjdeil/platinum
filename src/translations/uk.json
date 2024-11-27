@@ -126,5 +126,26 @@
       "coupon": "Купон",
       "paymentMethod": "Спосіб оплати"
     }
+  },
+  "Contacts": {
+    "contacts": "Контакти",
+    "telephone": "Телефон",
+    "call": "Подзвонити",
+    "address": "Адреса",
+    "schedule": "Пн-Пт: з",
+    "dayOff": "Сб-Нд: Вихідний",
+    "satSun": "Сб-Нд: з",
+    "howToGetThere": "Як дістатися?",
+    "email": "Електронна пошта",
+    "toWrite": "Написати",
+    "socialMedia": "Ми в соціальних мережах",
+    "askUsQuestion": "Задайте нам питання",
+    "yourNamePlaceholder": "Як вас звати?",
+    "emailPlaceholder": "Електронна пошта",
+    "yourQuestionPlaceholder": "Напишіть своє питання",
+    "sending": "Відправляється...",
+    "sendButton": "Відправити",
+    "errorMessage": "Щось пішло не так. Будь ласка, спробуйте ще раз.",
+    "successMessage": "Ваше повідомлення успішно відправлено!"
   }
 }

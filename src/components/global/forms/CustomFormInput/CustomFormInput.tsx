@@ -21,6 +21,7 @@ export const CustomFormInput: FC<CustomFormInputType> = (
         padding,
         height,
         font,
+        background,
         label = true
     }) => {
     const registerProps = register ? { ...register(name) } : {};
@@ -66,6 +67,7 @@ export const CustomFormInput: FC<CustomFormInputType> = (
                             type={isPasswordVisible ? 'text' : inputType}
                             {...registerProps}
                             height={height}
+                            background={background}
                         />}
                     {inputType === 'password' &&
                         <ShowPasswordImage
