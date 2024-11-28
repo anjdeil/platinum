@@ -19,7 +19,7 @@ import Breadcrumbs from "@/components/global/Breadcrumbs/Breadcrumbs";
 import ContactsForm from "@/components/pages/contacts/ContactsForm/ContactsForm";
 import { useTranslations } from "next-intl";
 import { useResponsive } from "@/hooks/useResponsive";
-import { Skeleton } from "@mui/material"; // Импортируем Skeleton из MUI
+import { Skeleton } from "@mui/material";
 
 const ContactsPage = () => {
     const t = useTranslations("Contacts");
@@ -28,7 +28,8 @@ const ContactsPage = () => {
     const themeOptions = useAppSelector((state) => state.themeOptions);
     const ContactItems = themeOptions.data.item.contacts;
 
-    // Breadcrumbs
+    //which  way for  breadcrumbs is right?
+    //1
     const router = useRouter();
     const currentPath = router.asPath;
     const pathParts = currentPath.split("/").filter((part) => part);
@@ -36,8 +37,7 @@ const ContactsPage = () => {
         const url = `/${pathParts.slice(0, index + 1).join("/")}`;
         return { name: part.charAt(0).toUpperCase() + part.slice(1), url };
     });
-
-    // Breadcrumbs mock
+    //2
     const breadcrumbsLinksMock = [
         { name: tBreadcrumbs("homePage"), url: "/" },
         { name: t("contacts"), url: "/contacts" },

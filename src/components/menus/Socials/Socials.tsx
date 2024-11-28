@@ -15,7 +15,6 @@ export const Socials: FC<SocialsProps> = ({
     const themeOptions = useAppSelector(state => state.themeOptions);
     const SocialItems = themeOptions.data.item.contacts.socials;
 
-    // Функция для рендеринга иконок
     const renderIcon = (social: string) => {
         switch (social) {
             case 'facebook':

@@ -9,19 +9,18 @@ import theme from "@/styles/theme";
 import { Title } from "@/styles/components";
 import { useSendAnEmailMutation } from "@/store/rtk-queries/contactFrom7/contactFromApi7";
 
-
 const ContactsForm = () => {
     const t = useTranslations("Contacts");
     const tValidation = useTranslations("Validation");
 
     const schema = ContactsFormValidationSchema(tValidation);
 
-    const [sendAnEmail, { isLoading, isError, error, isSuccess }] = useSendAnEmailMutation();
+    const [sendAnEmail, { isLoading, isError, isSuccess }] = useSendAnEmailMutation();
 
     const {
         register,
         handleSubmit,
-        formState: { errors, isSubmitting, isSubmitSuccessful },
+        formState: { errors, isSubmitting, },
         setValue,
         reset,
     } = useForm<ContactsFormType>({
@@ -57,7 +56,6 @@ const ContactsForm = () => {
 
             <form onSubmit={handleSubmit(onSubmit)}>
                 <InputsWrapper>
-                    {/* NAME */}
                     <CustomFormInput
                         label={false}
                         name="name"
@@ -70,7 +68,6 @@ const ContactsForm = () => {
                         height="28px"
                         background={theme.colors.white}
                     />
-                    {/* EMAIL */}
                     <CustomFormInput
                         label={false}
                         name="email"
@@ -95,7 +92,6 @@ const ContactsForm = () => {
                     placeholder={t("yourQuestionPlaceholder")}
                     background={theme.colors.white}
                 />
-
                 <ContactsStyledButton
                     type="submit"
                     disabled={isSubmitting || isLoading}
