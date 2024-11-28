@@ -10,7 +10,7 @@ const nextConfig = {
     domains: ['platinum.digiway-dev.online'],
   },
   env: {
-    TIME_ZONE: 'Europe/Warsaw',
+    timeZone: 'Europe/Warsaw',
   },
 };
 
