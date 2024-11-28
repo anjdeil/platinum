@@ -20,38 +20,41 @@ const BannerSlider: React.FC<BannerSliderProps> = ({ slides, proportion, mobileP
     }), [isMobile, proportion, mobileProportion]);
     
     return (
-        <BannerWrapper proportion={proportion} mobileProportion={mobileProportion}>
-            <ContentWrapper>
-                <StyledText>{t('welcomeToPlatinumShop')}</StyledText>
-                <Title as="h2" uppercase>
-                    {t('theBest')}
-                        <br/>
-                    {t('productForYou')}
-                </Title>
-                <AddToBasketButton maxWidth="250px">Add to basket</AddToBasketButton>
-            </ContentWrapper>
-            <CustomSwiper
-                modules={slides.length > 1 ? [Pagination] : []}
-                pagination={slides.length > 1 ? { clickable: true } : false}
-                spaceBetween={0}
-                slidesPerView={1}
-                loop={true}
-            >
-                {slides.map(slide => (
-                    <SwiperSlide key={0}>
-                        <ImageStyled
-                            unoptimized={true}
-                            priority
-                            src={imageConfig.imageSrc(slide)}
-                            alt={`Banner`}
-                            width={imageConfig.width}
-                            height={imageConfig.height}
-                        />
-                    </SwiperSlide>
-                ))}
-			</CustomSwiper>
-        </BannerWrapper>
-    )
+      <BannerWrapper
+        proportion={proportion}
+        mobileProportion={mobileProportion}
+      >
+        <ContentWrapper>
+          <StyledText>{t('welcomeToPlatinumShop')}</StyledText>
+          <Title as='h2' uppercase>
+            {t('theBest')}
+            <br />
+            {t('productForYou')}
+          </Title>
+          <AddToBasketButton maxWidth='250px'>Add to basket</AddToBasketButton>
+        </ContentWrapper>
+        <CustomSwiper
+          modules={slides.length > 1 ? [Pagination] : []}
+          pagination={slides.length > 1 ? { clickable: true } : false}
+          spaceBetween={0}
+          slidesPerView={1}
+          loop={true}
+        >
+          {slides.map((slide, index) => (
+            <SwiperSlide key={index}>
+              <ImageStyled
+                unoptimized={true}
+                priority
+                src={imageConfig.imageSrc(slide)}
+                alt={`Banner`}
+                width={imageConfig.width}
+                height={imageConfig.height}
+              />
+            </SwiperSlide>
+          ))}
+        </CustomSwiper>
+      </BannerWrapper>
+    );
 }
 
 export default BannerSlider;
