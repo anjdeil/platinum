@@ -19,29 +19,29 @@ import Breadcrumbs from "@/components/global/Breadcrumbs/Breadcrumbs";
 import ContactsForm from "@/components/pages/contacts/ContactsForm/ContactsForm";
 import { useTranslations } from "next-intl";
 import { useResponsive } from "@/hooks/useResponsive";
+import { Skeleton } from "@mui/material"; // Импортируем Skeleton из MUI
 
 const ContactsPage = () => {
     const t = useTranslations("Contacts");
-    const { isTablet } = useResponsive()
+    const tBreadcrumbs = useTranslations("Breadcrumbs");
+    const { isTablet } = useResponsive();
     const themeOptions = useAppSelector((state) => state.themeOptions);
     const ContactItems = themeOptions.data.item.contacts;
+
+    // Breadcrumbs
     const router = useRouter();
-
     const currentPath = router.asPath;
-
     const pathParts = currentPath.split("/").filter((part) => part);
-
     const breadcrumbsLinks = pathParts.map((part, index) => {
         const url = `/${pathParts.slice(0, index + 1).join("/")}`;
         return { name: part.charAt(0).toUpperCase() + part.slice(1), url };
     });
 
+    // Breadcrumbs mock
     const breadcrumbsLinksMock = [
-        { name: "Home Page", url: "/" },
-        { name: "Contacts", url: "/contacts" },
+        { name: tBreadcrumbs("homePage"), url: "/" },
+        { name: t("contacts"), url: "/contacts" },
     ];
-
-
 
     return (
         <Container>
@@ -57,8 +57,14 @@ const ContactsPage = () => {
                             <Title as="h2" uppercase marginBottom="24px" fontWeight={500}>
                                 {t("telephone")}
                             </Title>
-                            <ContactCardText>{ContactItems.phone}</ContactCardText>
-                            <ContactLink href={`tel:${ContactItems.phone}`} passHref>
+                            <ContactCardText>
+                                {ContactItems?.phone ? (
+                                    ContactItems.phone
+                                ) : (
+                                    <Skeleton width="100%" />
+                                )}
+                            </ContactCardText>
+                            <ContactLink href={ContactItems?.phone ? `tel:${ContactItems.phone}` : "#"} passHref>
                                 {t("call")}
                             </ContactLink>
                         </ContactCard>
@@ -68,20 +74,23 @@ const ContactsPage = () => {
                                 {t("address")}
                             </Title>
                             <ContactCardText>
-                                {ContactItems.address}
-                                <div>
-                                    {t("schedule")}
-                                    : {ContactItems.schedule[0]?.from_time} -{" "}
-                                    {ContactItems.schedule[0]?.to_time} <br />
-                                    {ContactItems.schedule[1]?.not_working
-                                        ? t("dayOff")
-                                        : `${t("satSun")} ${ContactItems.schedule[1]?.from_time} - ${ContactItems.schedule[1]?.to_time}`}
-                                </div>
+                                {ContactItems?.address ? (
+                                    <>
+                                        {ContactItems.address}
+                                        <div>
+                                            {t("schedule")}: {ContactItems.schedule[0]?.from_time} -{" "}
+                                            {ContactItems.schedule[0]?.to_time} <br />
+                                            {ContactItems.schedule[1]?.not_working
+                                                ? t("dayOff")
+                                                : `${t("satSun")} ${ContactItems.schedule[1]?.from_time} - ${ContactItems.schedule[1]?.to_time}`}
+                                        </div>
+                                    </>
+                                ) : (
+                                    <Skeleton width="100%" height="100%" />
+                                )}
                             </ContactCardText>
                             <ContactLink
-                                href={`https://www.google.com/maps?q=${encodeURIComponent(
-                                    ContactItems.address
-                                )}`}
+                                href={ContactItems?.address ? `https://www.google.com/maps?q=${encodeURIComponent(ContactItems.address)}` : "#"}
                                 passHref
                             >
                                 {t("howToGetThere")}
@@ -93,12 +102,15 @@ const ContactsPage = () => {
                                 {t("email")}
                             </Title>
                             <ContactCardText>
-                                {isTablet ?
-                                    ContactItems.email.replace("@", " @")
-                                    : ContactItems.email
-                                }
+                                {ContactItems?.email ? (
+                                    isTablet
+                                        ? ContactItems.email.replace("@", " @")
+                                        : ContactItems.email
+                                ) : (
+                                    <Skeleton width="100%" />
+                                )}
                             </ContactCardText>
-                            <ContactLink href={`mailto:${ContactItems.email}`} passHref>
+                            <ContactLink href={ContactItems?.email ? `mailto:${ContactItems.email}` : "#"} passHref>
                                 {t("toWrite")}
                             </ContactLink>
                         </ContactCard>

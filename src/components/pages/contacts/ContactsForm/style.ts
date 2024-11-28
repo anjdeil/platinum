@@ -14,32 +14,6 @@ export const FormWrapper = styled.div`
   border-radius: 16px;
 `;
 
-export const FormTextarea = styled.textarea`
-  min-height: 150px;
-  padding: 15px;
-  border: none;
-  border-radius: 10px;
-  width: 100%;
-  box-sizing: border-box;
-  resize: vertical;
-  background: ${({ theme }) => theme.colors.white};
-  margin-bottom: 16px;
-
-  & placeholder {
-    text-align: left;
-    align-items: center;
-    font: ${({ theme }) => theme.fonts.bodyMiddleReg};
-    color: ${({ theme }) => theme.colors.grey};
-  }
-
-  outline: 1px solid ${({ theme }) => theme.background.formElements};
-  transition: outline-width 0.2s ease-in-out;
-
-  &:focus {
-    outline: 1px solid ${({ theme }) => theme.colors.primary};
-    box-shadow: ${({ theme }) => theme.customShadows.primaryShadow};
-  }
-`;
 export const InputsWrapper = styled.div`
   width: 100%;
   display: flex;

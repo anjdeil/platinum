@@ -13,6 +13,7 @@ export const SocialsContainer = styled.div<SocialsContainerProps>`
   margin: ${({ margin = "0 0 0 0" }) => margin};
   flex-wrap: wrap;
   gap: 15px;
+  width: 100%;
   justify-content: center;
 `;
 export const SocialItemLink = styled(Link)<SocialItemLinkProps>`

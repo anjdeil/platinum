@@ -1,17 +1,20 @@
 import React from "react";
-import { ContactsStyledButton, ErrorMessage, FormTextarea, FormWrapper, InputsWrapper, SuccessMessage } from "./style";
+import { ContactsStyledButton, ErrorMessage, FormWrapper, InputsWrapper, SuccessMessage } from "./style";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { CustomFormInput } from "@/components/global/forms/CustomFormInput";
-import { ContactsFormSchema, ContactsFormType } from "@/types/pages/contacts/ContactsForm";
+import { ContactsFormType, ContactsFormValidationSchema } from "@/types/pages/contacts/ContactsForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import theme from "@/styles/theme";
 import { Title } from "@/styles/components";
 import { useSendAnEmailMutation } from "@/store/rtk-queries/contactFrom7/contactFromApi7";
-import { tree } from "next/dist/build/templates/app-page";
+
 
 const ContactsForm = () => {
     const t = useTranslations("Contacts");
+    const tValidation = useTranslations("Validation");
+
+    const schema = ContactsFormValidationSchema(tValidation);
 
     const [sendAnEmail, { isLoading, isError, error, isSuccess }] = useSendAnEmailMutation();
 
@@ -22,7 +25,7 @@ const ContactsForm = () => {
         setValue,
         reset,
     } = useForm<ContactsFormType>({
-        resolver: zodResolver(ContactsFormSchema),
+        resolver: zodResolver(schema),
         mode: "onBlur",
     });
 
@@ -42,7 +45,7 @@ const ContactsForm = () => {
 
             reset();
         } catch (err) {
-            console.error("Ошибка при отправке данных формы:", err);
+            console.error("Error send question form", err);
         }
     };
 

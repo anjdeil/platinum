@@ -145,5 +145,12 @@
     "sendButton": "Senden",
     "errorMessage": "Etwas ist schief gelaufen. Bitte versuchen Sie es erneut.",
     "successMessage": "Ihre Nachricht wurde erfolgreich gesendet!"
+  },
+  "Validation": {
+    "email": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+    "minChar": "Muss mindestens {count} Zeichen lang sein."
+  },
+  "Breadcrumbs": {
+    "homePage": "Startseite"
   }
 }

@@ -145,5 +145,12 @@
     "sendButton": "Send",
     "errorMessage": "Something went wrong. Please try again.",
     "successMessage": "Your message has been sent successfully!"
+  },
+  "Validation": {
+    "email": "Please enter a valid email.",
+    "minChar": "Must be at least {count} characters long."
+  },
+  "Breadcrumbs": {
+    "homePage": "Home Page"
   }
 }

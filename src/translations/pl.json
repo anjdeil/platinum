@@ -145,5 +145,12 @@
     "sendButton": "Wyślij",
     "errorMessage": "Coś poszło nie tak. Spróbuj ponownie.",
     "successMessage": "Twoja wiadomość została wysłana pomyślnie!"
+  },
+  "Validation": {
+    "email": "Proszę wprowadzić poprawny adres e-mail.",
+    "minChar": "Musi mieć co najmniej {count} znaków."
+  },
+  "Breadcrumbs": {
+    "homePage": "Strona Główna"
   }
 }
