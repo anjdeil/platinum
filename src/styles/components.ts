@@ -188,3 +188,7 @@ export const VariationTitle = styled(Text)`
        font-size: 14px;
     }
 `;
+
+export const TinyText = styled.p`
+    font: ${({ theme }) => theme.fonts.bodysmallReg};
+`;

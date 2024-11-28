@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { useCreateOrderMutation } from "@/store/rtk-queries/wooCustomApi";
-import { CreateOrderRequestType } from "@/types/services";
-import { useAppSelector, useAppDispatch } from "@/store";
-import { updateCart } from "@/store/slices/cartSlice";
-import { useResponsive } from "@/hooks/useResponsive";
-import checkCartConflict from "@/utils/cart/checkCartConflict";
-import { useGetProductsMinimizedMutation } from "@/store/rtk-queries/wpCustomApi";
-import checkProductAvailability from "@/utils/cart/checkProductAvailability";
+import BannerCart from "@/components/pages/cart/BannerCart/BannerCart";
 import CartTable from "@/components/pages/cart/CartTable/CartTable";
 import OrderBar from "@/components/pages/cart/OrderBar/OrderBar";
+import { useAppSelector } from "@/store";
+import { useCreateOrderMutation } from "@/store/rtk-queries/wooCustomApi";
+import { useGetProductsMinimizedMutation } from "@/store/rtk-queries/wpCustomApi";
 import { Container } from "@/styles/components";
-import { ItemBlock } from "@/components/pages/product/ProductPromotion/styles";
+import { CreateOrderRequestType } from "@/types/services";
+import checkCartConflict from "@/utils/cart/checkCartConflict";
+import React, { useEffect, useState } from "react";
+
 
 const CartPage: React.FC = () => {
 
@@ -67,6 +65,7 @@ const CartPage: React.FC = () => {
 
     return (
         <Container>
+            <BannerCart slug="stove" image="bunnerDesktop.png" mobileImage="bunnerMobile.png"/>
             <CartTable
                 symbol={symbol}
                 cartItems={cartItems}

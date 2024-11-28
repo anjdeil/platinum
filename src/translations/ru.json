@@ -109,6 +109,9 @@
         "productNotAvailableQuantity": " Этот товар недоступен в данном количестве.",
         "delete": "Удалить",
         "updateTo": "Обновить до",
-        "priceToDelivery": "Чтобы получить бесплатную доставку, вам нужно добавить товары всего на  {locale}"
+        "priceToDelivery": "Чтобы получить бесплатную доставку, вам нужно добавить товары всего на  {locale}",
+        "welcomeToPlatinumShop": "Добро пожаловать в Platinum Shop",
+        "theBest": "Лучший",
+        "productForYou": "Продукт для вас"
     }
 }

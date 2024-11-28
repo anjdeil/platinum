@@ -46,6 +46,7 @@ declare module "@emotion/react" {
       resetButton: string;
       resetButtonHover: string;
       resetButtonActive: string;
+      banner: string;
     };
     spacing: {
       small: string;

@@ -109,6 +109,9 @@
         "productNotAvailableQuantity": "Dieses Produkt ist in dieser Menge nicht verfügbar.",
         "delete": "Löschen",
         "updateTo": "Aktualisieren auf",
-        "priceToDelivery": "Um kostenlosen Versand zu erhalten, müssen Sie Artikel im Wert von insgesamt {locale} hinzufügen"
+        "priceToDelivery": "Um kostenlosen Versand zu erhalten, müssen Sie Artikel im Wert von insgesamt {locale} hinzufügen",
+        "welcomeToPlatinumShop": "Willkommen im Platinum Schop",
+        "theBest": "Das beste",
+        "productForYou": "Produkt für Sie"
     }
 }

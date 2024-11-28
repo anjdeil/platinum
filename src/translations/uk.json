@@ -109,6 +109,9 @@
         "productNotAvailableQuantity": "Цей товар недоступний у цій кількості.",
         "delete": "Видалити",
         "updateTo": "Оновити до",
-        "priceToDelivery": "Щоб отримати безкоштовну доставку, вам потрібно додати товари на загальну суму {locale}"
+        "priceToDelivery": "Щоб отримати безкоштовну доставку, вам потрібно додати товари на загальну суму {locale}",
+        "welcomeToPlatinumShop": "Ласкаво просимо до Platinum Shop",
+        "theBest": "Найкращий",
+        "productForYou": "Продукт для вас"
     }
 }

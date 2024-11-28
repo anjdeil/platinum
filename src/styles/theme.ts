@@ -59,6 +59,7 @@ const theme: Theme = {
     resetButton: "#f1f1f5",
     resetButtonHover: "#e8e8f0",
     resetButtonActive: "#d9d9e6",
+    banner: '#71BFE6'
   },
   spacing: {
     small: "8px",
@@ -67,7 +68,7 @@ const theme: Theme = {
   },
   media: {
     small: "(max-width: 430px)",
-    medium: "(max-width: 768px)",
+    medium: "(max-width: 767px)",
     mediumLarge: "(max-width: 900px)",
     large: "(max-width: 1024px)",
     middle: "(max-width: 1100px)",

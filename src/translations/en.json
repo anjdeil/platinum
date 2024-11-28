@@ -109,6 +109,9 @@
         "productNotAvailableQuantity": "This product is not available in this quantity.",
         "delete": "Delete",
         "updateTo": "Update to",
-        "priceToDelivery": "To get free delivery, you need to add items totaling {locale}"
+        "priceToDelivery": "To get free delivery, you need to add items totaling {locale}",
+        "welcomeToPlatinumShop": "Welcome to Platinum Shop",
+        "theBest": "The best",
+        "productForYou": "Product for you"
     }
 }
