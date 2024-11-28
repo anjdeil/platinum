@@ -5,22 +5,22 @@ import Link from "next/link";
 import { Swiper } from "swiper/react";
 
 export const BannerWrapper = styled.div<BannerWrapperProps>`
-    position: relative;
-    width: 100%;
-    aspect-ratio: ${({ proportion = 3 }) => proportion};
-    max-width: 1440px;
-    margin: auto;
-    overflow: hidden;
-    
-    @media ${({ theme }) => theme.media.large} {
-        width: auto;
-    }
+  position: relative;
+  width: 100%;
+  aspect-ratio: ${({ proportion = 3 }) => proportion};
+  max-width: 1440px;
+  margin: auto;
+  overflow: hidden;
 
-    @media ${({ theme }) => theme.media.medium} {
-        aspect-ratio: ${({ mobileProportion = 0.7 }) => mobileProportion};
-        margin: auto;
-        padding-top: 20px;
-    }
+  @media ${({ theme }) => theme.media.large} {
+    width: auto;
+  }
+
+  @media ${({ theme }) => theme.media.medium} {
+    aspect-ratio: ${({ mobileProportion = 0.7 }) => mobileProportion};
+    margin: auto;
+    padding-top: ${({ isMainPage }) => (isMainPage ? '0px' : '20px')};
+  }
 `;
 
 export const ContentWrapper = styled.div`

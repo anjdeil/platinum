@@ -1,4 +1,3 @@
-import BannerSlider from '@/components/global/sliders/BannerSlider/BannerSlider';
 import { MenusContext } from '@/components/Layout';
 import { SectionRenderer } from '@/components/sections/SectionRenderer';
 import CustomProductList from '@/components/pages/product/CustomProductList/CustomProductList';
@@ -12,7 +11,6 @@ import axios from 'axios';
 import { GetServerSideProps } from 'next';
 import { Inter } from 'next/font/google';
 import { useContext, useState } from 'react';
-import { BannerSlideType } from '@/types/components/global/sliders/BannerSlider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -67,7 +65,7 @@ export default function Home({ sections }: HomeProps) {
           <button onClick={() => dispatch(popupToggle('categories-menu'))}>
             Categories
           </button>
-          <BannerSlider slides={slides} proportion={5.1} />
+
           <CustomProductList title='bestSeller' productIds={Bestsellers} />
           <CustomProductList title='newProduct' productIds={Bestsellers} />
         </Container>
@@ -104,7 +102,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   };
 };
 
-const slides: BannerSlideType[] = [
+// const slides: BannerSlideType[] = [
 //   {
 //     product: {
 //       id: 3,

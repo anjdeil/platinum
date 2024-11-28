@@ -16,6 +16,7 @@ import { LoyaltySection } from '../LoyaltySection';
 import { ContactsSection } from '../ContactsSection';
 
 import { SectionsType } from '@/types/components/sections';
+import { normalizeSlides } from '@/utils/normalizeSlides';
 
 interface SectionRendererProps {
   sections: SectionsType[];
@@ -29,11 +30,12 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
       {sections.map((section, index) => {
         switch (section._type) {
           case 'slider':
-            return <SliderSection key={index} slider={section.slider} />;
+            const normalizedSlides = normalizeSlides(section.slider);
+            return <SliderSection key={index} slides={normalizedSlides} />;
           case 'product_list':
             return (
               <BestsellerSection
-                key={section.subtitle}
+                key={index}
                 subtitle={section.subtitle}
                 title={section.title}
                 products={section.products}
@@ -42,7 +44,7 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
           case 'product_list':
             return (
               <NewProductSection
-                key={section.subtitle}
+                key={index}
                 subtitle={section.subtitle}
                 title={section.title}
                 products={section.products}
@@ -51,7 +53,7 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
           case 'categories':
             return (
               <CategoriesSection
-                key={section._type}
+                key={index}
                 subtitle={section.subtitle}
                 title={section.title}
               />
@@ -59,7 +61,7 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
           case 'instagram':
             return (
               <InstagramSection
-                key={section._type}
+                key={index}
                 subtitle={section.subtitle}
                 title={section.title}
               />
@@ -67,7 +69,7 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
           case 'reviews':
             return (
               <ReviewsSection
-                key={section._type}
+                key={index}
                 subtitle={section.subtitle}
                 title={section.title}
               />
@@ -75,21 +77,21 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
           case 'newsletter':
             return (
               <NewsletterSection
-                key={section._type}
+                key={index}
                 newsletter_separator={section.newsletter_separator}
               />
             );
           case 'about_platinum':
             return (
               <AboutPlatinumSection
-                key={section._type}
+                key={index}
                 about_platinum_separator={section.about_platinum_separator}
               />
             );
           case 'features':
             return (
               <FeaturesSection
-                key={section._type}
+                key={index}
                 subtitle={section.subtitle}
                 title={section.title}
                 items={section.items}
@@ -98,7 +100,7 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
           case 'blog':
             return (
               <BlogSection
-                key={section.subtitle}
+                key={index}
                 subtitle={section.subtitle}
                 title={section.title}
               />
@@ -107,7 +109,7 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
           case 'hero':
             return (
               <HeroSection
-                key={section._type}
+                key={index}
                 is_reverse={section.is_reverse}
                 image={section.image}
                 object_fit={section.object_fit}
@@ -121,14 +123,14 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
           case 'loyalty':
             return (
               <LoyaltySection
-                key={section._type}
+                key={index}
                 loyalty_separator={section.loyalty_separator}
               />
             );
           case 'contacts':
             return (
               <ContactsSection
-                key={section._type}
+                key={index}
                 contacts_separator={section.contacts_separator}
               />
             );
