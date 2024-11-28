@@ -123,6 +123,10 @@
 
     "products": "Products",
     "сoupon": "Сoupon",
-    "paymentMethod": "Payment method"
+    "paymentMethod": "Payment method",
+
+    "Basket": "Basket",
+    "PersonalInformation": "Personal Information",
+    "Confirmation": "Confirmation"
   }
 }

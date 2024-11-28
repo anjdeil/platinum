@@ -10,6 +10,7 @@ import { Container } from "@/styles/components";
 import CartCouponBlock from "@/components/pages/cart/CartCouponBlock/CartCouponBlock";
 import { CartPageWrapper } from "./style";
 import CartSummaryBlock from "@/components/pages/cart/CartSummaryBlock/CartSummaryBlock";
+import OrderProgress from "@/components/pages/cart/OrderProgress/OrderProgress";
 
 const CartPage: React.FC = () => {
     const { symbol } = useAppSelector((state) => state.currencySlice);
@@ -63,7 +64,9 @@ const CartPage: React.FC = () => {
 
     return (
         <Container>
+            <OrderProgress />
             <CartPageWrapper>
+
                 <div>
                     <CartTable
                         symbol={symbol}

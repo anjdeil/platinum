@@ -124,7 +124,11 @@
 
       "products": "Товари",
       "coupon": "Купон",
-      "paymentMethod": "Спосіб оплати"
+      "paymentMethod": "Спосіб оплати",
+
+      "Basket": "Кошик",
+      "PersonalInformation": "Особиста інформація",
+      "Confirmation": "Підтвердження"
     }
   }
 }

@@ -123,6 +123,10 @@
 
     "products": "Товары",
     "coupon": "Купон",
-    "paymentMethod": "Способ оплаты"
+    "paymentMethod": "Способ оплаты",
+
+    "Basket": "Корзина",
+    "PersonalInformation": "Личная информация",
+    "Confirmation": "Подтверждение"
   }
 }

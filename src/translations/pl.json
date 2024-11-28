@@ -123,6 +123,10 @@
 
     "products": "Towary",
     "coupon": "Kupon",
-    "paymentMethod": "Metoda płatności"
+    "paymentMethod": "Metoda płatności",
+
+    "Basket": "Koszyk",
+    "PersonalInformation": "Informacje osobiste",
+    "Confirmation": "Potwierdzenie"
   }
 }

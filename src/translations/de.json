@@ -123,6 +123,10 @@
 
     "products": "Artikel",
     "coupon": "Gutschein",
-    "paymentMethod": "Zahlungsmethode"
+    "paymentMethod": "Zahlungsmethode",
+
+    "Basket": "Warenkorb",
+    "PersonalInformation": "Persönliche Informationen",
+    "Confirmation": "Bestätigung"
   }
 }
