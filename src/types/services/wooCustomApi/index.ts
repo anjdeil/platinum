@@ -1,3 +1,4 @@
+import { LineItemSchema, ProductsMinimizedSchema } from "@/types/components/shop/product/products";
 import { lineOrderItemsSchema } from "@/types/store/reducers/сartSlice";
 import { z } from "zod";
 
@@ -213,8 +214,33 @@ const ProductParamsSchema = z.object({
     search: z.string().optional(),
 })
 
+
+const LineItemReqSchema = z.object({
+    product_id: z.number(),
+    quantity: z.number(),
+    variation_id: z.number().optional(),
+});
+
+
+const CreateOrderRequestSchema = z.object({
+    line_items: z.array(LineItemReqSchema),
+    status: z.enum(['pending', 'processing', 'on-hold', 'completed', 'cancelled', 'refunded', 'failed']),
+});
+
+
+
+const CreateOrderResponseSchema = z.object({
+    id: z.number(),
+    line_items: z.array(LineItemSchema),
+    status:z.enum(['pending', 'processing', 'on-hold', 'completed', 'cancelled', 'refunded', 'failed']),
+});
+
+
+
 export type OrderType = z.infer<typeof OrderTypeSchema>;
 export type AddressType = z.infer<typeof AddressTypeSchema>;
 export type WooCustomerType = z.infer<typeof WooCustomerSchema>;
 export type WooCustomerReqType = z.infer<typeof WooCustomerReqSchema>;
 export type ProductParamsType = z.infer<typeof ProductParamsSchema>;
+export type CreateOrderResponseType = z.infer<typeof CreateOrderResponseSchema>;
+export type CreateOrderRequestType = z.infer<typeof CreateOrderRequestSchema>;

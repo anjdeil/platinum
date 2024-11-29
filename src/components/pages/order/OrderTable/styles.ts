@@ -23,7 +23,7 @@ export const StyledHead = styled.thead`
     box-sizing: border-box;
     width: 100%;
     min-height: 56px;
-    background-color: ${({ theme }) => theme.colors.silver};
+    background-color: ${({ theme }) => theme.colors.lightBorder};
     padding: 12px;
     display: flex;
     text-transform: uppercase;
@@ -76,7 +76,7 @@ export const StyledBody = styled.tbody`
 export const StyledBodyTr = styled(StyledTr)`
     padding: 16px;
     border-radius: 0;
-    border: ${({ theme }) => `1px solid ${theme.colors.silver}`};
+    border: ${({ theme }) => `1px solid ${theme.colors.lightBorder}`};
     border-top: none;
     display: grid;
     grid-template-columns: repeat(10, 1fr);
@@ -91,7 +91,7 @@ export const StyledBodyTr = styled(StyledTr)`
         flex-direction: column;        
         row-gap: 16px;
         border-radius: 8px;
-        border-top: ${({ theme }) => `1px solid ${theme.colors.silver}`};;
+        border-top: ${({ theme }) => `1px solid ${theme.colors.lightBorder}`};;
     }
 `;
 

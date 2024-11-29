@@ -4,6 +4,7 @@ import { popupClosed } from "@/store/slices/PopupSlice";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import CommentPopup from "../CommentPopup/CommentPopup";
 import MobileCategoriesMenu from "../MobileCategoriesMenu/MobileCategoriesMenu";
 import SwiperPopup from "../SwiperPopup/SwiperPopup";
 
@@ -73,6 +74,11 @@ const PopupContainer = () => {
         case 'swiper-popup': {
             return (
                 <SwiperPopup onClose={closePopup} />
+            )
+        }
+        case 'add-comment': {
+            return (
+                <CommentPopup onClose={closePopup} />
             )
         }
     }

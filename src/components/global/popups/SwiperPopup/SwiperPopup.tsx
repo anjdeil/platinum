@@ -7,13 +7,16 @@ import CloseIcon from "../../icons/CloseIcon/CloseIcon";
 import ForwardArrow from "../../icons/ForwardArrow/ForwardArrow";
 import { CloseWrapper, NavigationButton, PopupBody, PopupOverlay, SlideImage, StyledSwiper, StyledSwiperSlide } from "./styles";
 
-const SwiperPopup: React.FC<SwiperPopupProps> = ({ onClose }) => {
+const SwiperPopup: React.FC<SwiperPopupProps> = ({ onClose }) =>
+{
     const swiperId = `swiper-3`;
     const nextElId = `${swiperId}-next`;
     const prevElId = `${swiperId}-prev`;
 
-    const handleClickBackground = (event: React.MouseEvent<HTMLDivElement>) => {
-        if (event.target === event.currentTarget) {
+    const handleClickBackground = (event: React.MouseEvent<HTMLDivElement>) =>
+    {
+        if (event.target === event.currentTarget)
+        {
             onClose();
         }
     }
@@ -28,41 +31,41 @@ const SwiperPopup: React.FC<SwiperPopupProps> = ({ onClose }) => {
 
     return (
         <PopupOverlay onClick={handleClickBackground}>
-            <PopupBody>               
+            <PopupBody>
                 <CloseWrapper>
-                    <CloseIcon  onClick={onClose}/>
+                    <CloseIcon onClick={onClose} />
                 </CloseWrapper>
-                    <StyledSwiper
-                        slidesPerView={1}            
-                        spaceBetween={10}
-                        centeredSlides={true}
-                        navigation={{
-                            nextEl: `#${nextElId}`,
-                            prevEl: `#${prevElId}`,
-                        }}
-                        modules={[FreeMode, Navigation]}
-                        initialSlide={currentSlide}
-                    >
-                        
-                        {data && data.length > 0 &&
-                            data.map((item, index) => (
-                                <StyledSwiperSlide key={item.id}>
-                                    <SlideImage
-                                        unoptimized
-                                        src={item.src}
-                                        alt={`Product image ${index + 1}`}
-                                        width={600}
-                                        height={600}
-                                    />
-                                </StyledSwiperSlide>
-                            ))}
-                        <NavigationButton id={prevElId} prev={true}>
-                            <BackArrow />
-                        </NavigationButton>
-                        <NavigationButton id={nextElId} next={true}>
-                            <ForwardArrow />
-                        </NavigationButton>
-                    </StyledSwiper>                    
+                <StyledSwiper
+                    slidesPerView={1}
+                    spaceBetween={10}
+                    centeredSlides={true}
+                    navigation={{
+                        nextEl: `#${nextElId}`,
+                        prevEl: `#${prevElId}`,
+                    }}
+                    modules={[FreeMode, Navigation]}
+                    initialSlide={currentSlide}
+                >
+
+                    {data && data.length > 0 &&
+                        data.map((item, index) => (
+                            <StyledSwiperSlide key={item?.id || index}>
+                                <SlideImage
+                                    unoptimized
+                                    src={item?.src || '/assets/images/not-found.webp'}
+                                    alt={`Product image ${index + 1}`}
+                                    width={600}
+                                    height={600}
+                                />
+                            </StyledSwiperSlide>
+                        ))}
+                    <NavigationButton id={prevElId} prev={true}>
+                        <BackArrow />
+                    </NavigationButton>
+                    <NavigationButton id={nextElId} next={true}>
+                        <ForwardArrow />
+                    </NavigationButton>
+                </StyledSwiper>
             </PopupBody>
         </PopupOverlay>
     );

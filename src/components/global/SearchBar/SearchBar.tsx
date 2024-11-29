@@ -4,8 +4,10 @@ import BackIcon from '../icons/BackIcon/BackIcon';
 import FindIcon from '../icons/FindIcon/FindIcon';
 import FindMiniIcon from '../icons/FindMiniIcon/FindMiniIcon';
 import { FormEvent, useEffect, useRef, useState } from 'react';
-import { useGetProductsQuery } from '@/store/rtk-queries/wpCustomApi';
+import { useGetCategoriesQuery, useGetProductsQuery } from '@/store/rtk-queries/wpCustomApi';
 import { useRouter } from 'next/router';
+
+const inputWaitType = 1500;
 
 export default function SearchBar({
     onClose
@@ -28,9 +30,55 @@ export default function SearchBar({
     }, {
         skip: checkSkipping()
     });
-
     const products = productsDataResponse?.data?.items;
-    const isLoading = isProductsLoading || isProductsFetching;
+
+    const {
+        data: categoriesDataResponse,
+        isLoading: isCategoriesLoading,
+        isFetching: isCategoriesFetching
+    } = useGetCategoriesQuery({
+        search: searchTerm,
+        lang: router.locale
+    }, {
+        skip: checkSkipping()
+    });
+    const categories = categoriesDataResponse?.data?.items;
+
+    let childParentCategories = categories?.map(({
+        name,
+        slug,
+        parent_id,
+        ...props
+    }) => {
+        const parent = categories?.find(({ id }) => id === parent_id);
+        if (!parent) return {
+            name,
+            slug,
+            parent_id,
+            ...props
+        }
+
+        const { name: parentName, slug: parentSlug } = parent;
+
+        return {
+            name: `${parentName} | ${name}`,
+            slug: `${parentSlug}/${slug}`,
+            parent_id,
+            ...props
+        }
+    });
+
+    childParentCategories = childParentCategories?.filter(({ id, parent_id }) => {
+        if (parent_id) return true;
+
+        const childIndex = childParentCategories?.findIndex(({ parent_id }) => parent_id === id);
+
+        if (childIndex && childIndex >= 0) return false;
+
+        return true;
+    });
+
+    const isLoading = isProductsLoading || isProductsFetching || isCategoriesLoading || isCategoriesFetching;
 
     const SearchInputRef = useRef<HTMLInputElement>(null);
     const typingTimerRef = useRef<NodeJS.Timeout | null>(null)
@@ -47,7 +95,7 @@ export default function SearchBar({
 
             typingTimerRef.current = setTimeout(() => {
                 setTyping(false);
-            }, 1500);
+            }, inputWaitType);
         }
 
         return () => {
@@ -58,7 +106,7 @@ export default function SearchBar({
     }, [isTyping, searchTerm]);
 
     function checkSkipping() {
-        return !isFocused || searchTerm.length < 3 || isTyping || !isFocused;
+        return !isFocused || searchTerm.length < 3 || isTyping;
     }
 
     function handleBlur() {
@@ -81,6 +129,10 @@ export default function SearchBar({
         router.push(`/${router.locale === "en" ? "" : router.locale}/product/${slug}`)
     }
 
+    function routeToCategory(slug: string) {
+        router.push(`/${router.locale === "en" ? "" : router.locale}/product-category/${slug}`)
+    }
+
     return (
         <SearchFormWrap>
             <SearchForm searchListOpen={isFocused}>
@@ -101,83 +153,80 @@ export default function SearchBar({
                         <IconButton color="#252525" IconComponent={FindIcon} />
                     </SearchInputIcons>
                 </SearchInputWrap>
-                {isFocused && Boolean(products?.length) &&
+                {isFocused && (Boolean(products?.length) || Boolean(categories?.length)) &&
                     <SearchResults>
-                        {/* <SearchResultsGroup>
-                            <SearchResultsTitle>
-                                Categories
-                            </SearchResultsTitle>
-                            <SearchResultsRows>
-                                <SearchResultsRow href='/'>
-                                    <SearchResultsRowIcon>
-                                        <FindMiniIcon color="#000" />
-                                    </SearchResultsRowIcon>
-                                    <SearchResultsRowCaption>
-                                        Lorem, ipsum dolor.
-                                    </SearchResultsRowCaption>
-                                </SearchResultsRow>
-                                <SearchResultsRow href='/'>
-                                    <SearchResultsRowIcon>
-                                        <FindMiniIcon color="#000" />
-                                    </SearchResultsRowIcon>
-                                    <SearchResultsRowCaption>
-                                        Lorem, ipsum dolor.
-                                    </SearchResultsRowCaption>
-                                </SearchResultsRow>
-                                <SearchResultsRow href='/'>
-                                    <SearchResultsRowIcon>
-                                        <FindMiniIcon color="#000" />
-                                    </SearchResultsRowIcon>
-                                    <SearchResultsRowCaption>
-                                        Lorem, ipsum dolor.
-                                    </SearchResultsRowCaption>
-                                </SearchResultsRow>
-                            </SearchResultsRows>
-                        </SearchResultsGroup> */}
-
-                        <SearchResultsGroup>
-                            <SearchResultsTitle>
-                                Products
-                            </SearchResultsTitle>
-                            <SearchResultsRows>
-                                {products?.map(({
-                                    id,
-                                    name,
-                                    slug,
-                                    images,
-                                    categories
-                                }) => {
-                                    const imageUrl = images[0];
-
-                                    return (
-                                        <SearchResultsRow key={id} onMouseDown={() => routeToProduct(slug)}>
-                                            {imageUrl &&
-                                                <SearchResultsRowImage
-                                                    src={'https://platinum.digiway-dev.online/wp-content/uploads/2024/10/pompa-24.jpg'}
-                                                    alt='Pompa'
-                                                    width={40}
-                                                    height={40}
-                                                />
-                                            }
-                                            <SearchResultsRowCaptionWrap>
+                        {Boolean(categories?.length) &&
+                            <SearchResultsGroup>
+                                <SearchResultsTitle>
+                                    Categories
+                                </SearchResultsTitle>
+                                <SearchResultsRows>
+                                    {childParentCategories?.map(({
+                                        id,
+                                        name,
+                                        slug
+                                    }) => {
+                                        return (
+                                            <SearchResultsRow key={id} onMouseDown={() => routeToCategory(slug)}>
+                                                <SearchResultsRowIcon>
+                                                    <FindMiniIcon color="#000" />
+                                                </SearchResultsRowIcon>
                                                 <SearchResultsRowCaption>
                                                     {name}
                                                 </SearchResultsRowCaption>
-                                                <SearchResultsRowCat>
-                                                    {
-                                                        categories.map(({ name }, i) => {
-                                                            return `${i > 0 ? ' | ' : ''}${name}`;
-                                                        })
-                                                    }
-                                                </SearchResultsRowCat>
-                                            </SearchResultsRowCaptionWrap>
-                                        </SearchResultsRow>
-                                    );
-                                }
-                                )}
+                                            </SearchResultsRow>
 
-                            </SearchResultsRows>
-                        </SearchResultsGroup>
+                                        )
+                                    }
+                                    )}
+                                </SearchResultsRows>
+                            </SearchResultsGroup>
+                        }
+
+                        {Boolean(products?.length) &&
+                            <SearchResultsGroup>
+                                <SearchResultsTitle>
+                                    Products
+                                </SearchResultsTitle>
+                                <SearchResultsRows>
+                                    {products?.map(({
+                                        id,
+                                        name,
+                                        thumbnail,
+                                        slug,
+                                        categories
+                                    }) => {
+
+                                        return (
+                                            <SearchResultsRow key={id} onMouseDown={() => routeToProduct(slug)}>
+                                                {thumbnail?.src &&
+                                                    <SearchResultsRowImage
+                                                        src={thumbnail.src}
+                                                        alt='Pompa'
+                                                        width={40}
+                                                        height={40}
+                                                    />
+                                                }
+                                                <SearchResultsRowCaptionWrap>
+                                                    <SearchResultsRowCaption>
+                                                        {name}
+                                                    </SearchResultsRowCaption>
+                                                    <SearchResultsRowCat>
+                                                        {
+                                                            categories.map(({ name }, i) => {
+                                                                return `${i > 0 ? ' | ' : ''}${name}`;
+                                                            })
+                                                        }
+                                                    </SearchResultsRowCat>
+                                                </SearchResultsRowCaptionWrap>
+                                            </SearchResultsRow>
+                                        );
+                                    }
+                                    )}
+
+                                </SearchResultsRows>
+                            </SearchResultsGroup>
+                        }
                     </SearchResults>
                 }
             </SearchForm>

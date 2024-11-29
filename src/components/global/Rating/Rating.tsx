@@ -1,18 +1,29 @@
 import { RatingProps } from "@/types/components/global/rating";
 import StarIcon from "../icons/StarIcon/StarIcon";
-import { StarsWrapper } from "./styles";
+import { StarButton, StarsWrapper } from "./styles";
 
-const Rating: React.FC<RatingProps> = ({ rating }) =>
+const Rating: React.FC<RatingProps> = ({ rating, onChange }) =>
 {
   const totalStars = 5;
+
+  const handleRatingChange = (newRating: number) => {
+    if (onChange) {
+      onChange(newRating);
+    }
+  };
 
   return (
     <StarsWrapper>
       {Array.from({ length: totalStars }, (_, index) => (
-        <StarIcon
+        <StarButton
           key={index}
-          filled={index < rating}
-        />        
+          onClick={() => handleRatingChange(index + 1)}
+          style={{ cursor: onChange ? "pointer" : "default" }}
+        >
+          <StarIcon            
+            filled={index < rating}
+          />
+        </StarButton>
       ))}
     </StarsWrapper>
   );
