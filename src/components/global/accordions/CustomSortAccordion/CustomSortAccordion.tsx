@@ -9,6 +9,7 @@ export const CustomSortAccordion = () =>
     const searchParams = useSearchParams();
     const router = useRouter();
     const accordionRef = useRef<HTMLDivElement | null>(null);
+    const detailsRef = useRef<HTMLDivElement | null>(null);
 
     const currentSort = useMemo(() => {
         const orderBy = searchParams.get('order_by');
@@ -44,6 +45,25 @@ export const CustomSortAccordion = () =>
     ];
 
     const [expanded, setExpanded] = useState(false);
+    const [accordionWidth, setAccordionWidth] = useState<number | undefined>(undefined);
+
+    useEffect(() => {
+        const getMaxWidth = () => {
+            if (detailsRef.current) {
+                const items = Array.from(detailsRef.current.children) as HTMLElement[];
+                const maxWidth = Math.max(...items.map(item => item.offsetWidth || 0));
+                setAccordionWidth(maxWidth);
+            }
+        };
+
+        getMaxWidth();
+
+        window.addEventListener('resize', getMaxWidth);
+
+        return () => {
+            window.removeEventListener('resize', getMaxWidth);
+        };
+    }, [currentSort]);
 
     const handleSortChange = useCallback(
         (sort: string) => {
@@ -117,23 +137,24 @@ export const CustomSortAccordion = () =>
             disableGutters
             expanded={expanded} 
             onChange={handleAccordionChange}
+            style={{ minWidth: accordionWidth }}
         >
-        <StyledSortAccordionSummary expanded={expanded} expandIcon={<ExpandMoreIcon />}>
-            <StyledText>
-                {sorts.find(sort => sort.name === currentSort)?.label}
-            </StyledText>
-        </StyledSortAccordionSummary>
-        <StyledSortDetails>
-            {sorts.map((sort) => (
-                <StyledSortItem
-                    key={sort.name}
-                    isSelected={currentSort === sort.name}
-                    onClick={() => handleSortChange(sort.name)}
-                >
-                    {sort.label}
-                </StyledSortItem>
-            ))}
-        </StyledSortDetails>
+            <StyledSortAccordionSummary expanded={expanded} expandIcon={<ExpandMoreIcon />}>
+                <StyledText>
+                    {sorts.find(sort => sort.name === currentSort)?.label}
+                </StyledText>
+            </StyledSortAccordionSummary>
+            <StyledSortDetails ref={detailsRef}>
+                {sorts.map((sort, index) => (
+                    <StyledSortItem
+                        key={sort.name}
+                        isSelected={currentSort === sort.name}
+                        onClick={() => handleSortChange(sort.name)}
+                    >
+                        {sort.label}
+                    </StyledSortItem>
+                ))}
+            </StyledSortDetails>
         </StyledSortAccordion>
     );
 };
