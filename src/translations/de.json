@@ -114,4 +114,9 @@
         "theBest": "Das beste",
         "productForYou": "Produkt für Sie"
     }
+    "NotFoundPage": {
+      "notFound": "Seite nicht gefunden",
+      "description": "Es tut uns leid, wir können die Seite, die Sie suchen, nicht finden. Sie wurde möglicherweise verschoben, gelöscht oder hat nie existiert.",
+      "backToHome": "Zurück zur Startseite"
+    }
 }
