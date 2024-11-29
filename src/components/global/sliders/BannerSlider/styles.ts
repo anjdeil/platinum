@@ -8,7 +8,7 @@ export const BannerWrapper = styled.div<BannerWrapperProps>`
   position: relative;
   width: 100%;
   aspect-ratio: ${({ proportion = 3 }) => proportion};
-  max-width: 1440px;
+  ${({ isMainPage }) => !isMainPage && 'max-width: 20px;'}
   margin: auto;
   overflow: hidden;
 

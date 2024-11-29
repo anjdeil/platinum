@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { ProductSchema } from '@/types/pages/shop';
 
 const SliderItemSchema = z.object({
   _type: z.literal('_'),
@@ -18,7 +17,7 @@ export const ProductListSectionSchema = z.object({
   _type: z.literal('product_list'),
   subtitle: z.string(),
   title: z.string(),
-  products: z.array(ProductSchema),
+  sort_type: z.string().optional(),
 });
 
 export const CategoriesSectionSchema = z.object({

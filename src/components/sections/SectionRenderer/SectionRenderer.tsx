@@ -1,8 +1,7 @@
 import React from 'react';
 import { Container } from '@/styles/components';
 import { SliderSection } from '../SliderSection';
-import { BestsellerSection } from '../BestsellerSection';
-import { NewProductSection } from '../NewProductSection';
+import { ProductListSection } from '../ProductListSection';
 import { CategoriesSection } from '../CategoriesSection';
 import { InstagramSection } from '../InstagramSection';
 import { ReviewsSection } from '../ReviewsSection';
@@ -34,20 +33,11 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
             return <SliderSection key={index} slides={normalizedSlides} />;
           case 'product_list':
             return (
-              <BestsellerSection
+              <ProductListSection
                 key={index}
-                subtitle={section.subtitle}
                 title={section.title}
-                products={section.products}
-              />
-            );
-          case 'product_list':
-            return (
-              <NewProductSection
-                key={index}
                 subtitle={section.subtitle}
-                title={section.title}
-                products={section.products}
+                sort_type={section.sort_type}
               />
             );
           case 'categories':
