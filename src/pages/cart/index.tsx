@@ -12,9 +12,11 @@ import { CartPageWrapper } from "./style";
 import CartSummaryBlock from "@/components/pages/cart/CartSummaryBlock/CartSummaryBlock";
 import OrderProgress from "@/components/pages/cart/OrderProgress/OrderProgress";
 
+
 const CartPage: React.FC = () => {
-    const { symbol } = useAppSelector((state) => state.currencySlice);
+    const { code } = useAppSelector((state) => state.currencySlice);
     const status: CreateOrderRequestType["status"] = "on-hold";
+    const [symbol, setSymbol] = useState<string>('');
 
     const roundedPrice = (price: number) => Math.round(price * 100) / 100;
 
@@ -31,12 +33,21 @@ const CartPage: React.FC = () => {
             const requestData = {
                 line_items: cartItems,
                 status: status,
-                coupon_lines: couponCodes.map(code => ({ code }))
+                coupon_lines: couponCodes.map(code => ({ code })),
+                currency: code,
             };
-            createOrder(requestData);
+            await createOrder(requestData);
         };
         handleCreateOrder();
-    }, [createOrder, cartItems, couponCodes]);
+    }, [createOrder, cartItems, couponCodes, code]);
+
+    useEffect(() => {
+        if (orderItems?.currency_symbol) {
+            setSymbol(orderItems.currency_symbol);
+        } else {
+            setSymbol('');
+        }
+    }, [orderItems]);
 
     // Fetch product specs
     useEffect(() => {
@@ -55,9 +66,7 @@ const CartPage: React.FC = () => {
     useEffect(() => {
         if (orderItems && orderItems.line_items) {
             const lineItems = orderItems.line_items;
-            let cartSum = lineItems.reduce((sum, item) => {
-                return sum + (item.price * item.quantity);
-            }, 0);
+            const cartSum = lineItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             setCartSum(roundedPrice(cartSum));
         }
     }, [orderItems]);
@@ -66,7 +75,6 @@ const CartPage: React.FC = () => {
         <Container>
             <OrderProgress />
             <CartPageWrapper>
-
                 <div>
                     <CartTable
                         symbol={symbol}

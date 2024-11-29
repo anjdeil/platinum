@@ -2,7 +2,6 @@ import React, { useCallback, useState } from 'react';
 import { QuantityBlock, QuantityBtn, QuantityWrapper } from './style';
 import PlusIcon from "@/components/global/icons/PlusIcon/PlusIcon";
 import MinusIcon from "@/components/global/icons/MinusIcon/MinusIcon";
-import { LineItemType } from '@/types/components/shop/product/products';
 import debounce from 'lodash/debounce';
 import { lineOrderItems } from '@/types/store/reducers/сartSlice';
 

@@ -5,6 +5,8 @@ import {
 import { lineOrderItemsSchema } from "@/types/store/reducers/сartSlice";
 import { z } from "zod";
 
+const currencies: [string, ...string[]] = ["EUR", "USD", "PLN"];
+
 export const WooCustomerSchema = z.object({
   id: z.number(),
   date_created: z.string(),
@@ -268,6 +270,7 @@ const CreateOrderRequestSchema = z.object({
     "refunded",
     "failed",
   ]),
+  currency: z.enum(currencies),
 });
 
 const CreateOrderResponseSchema = z.object({
@@ -296,6 +299,7 @@ const CreateOrderResponseSchema = z.object({
     "refunded",
     "failed",
   ]),
+  currency: z.enum(currencies),
 });
 
 const couponRespSchema = z.object({
