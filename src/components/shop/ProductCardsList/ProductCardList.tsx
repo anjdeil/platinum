@@ -1,8 +1,8 @@
+import { ProductCardListProps } from "@/types/components/shop";
 import { FC } from "react";
 import ProductCard from "../product/ProductCard/ProductCard";
-import { StyledProductCardList } from "./styles";
-import { ProductCardListProps } from "@/types/components/shop";
 import { ProductCardListSkeleton } from "./ProductCardListSkeleton";
+import { StyledProductCardList } from "./styles";
 
 export const ProductCardList: FC<ProductCardListProps> = ({ isLoading = false, isError = false, products, columns }) =>
 {

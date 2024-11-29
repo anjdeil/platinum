@@ -1,12 +1,13 @@
+import { CustomSortAccordion } from "@/components/global/accordions/CustomSortAccordion";
 import Breadcrumbs from "@/components/global/Breadcrumbs/Breadcrumbs";
-import SortSelect from "@/components/global/selects/SortSelect/SortSelect";
+import FilterButton from "@/components/global/buttons/FilterButton/FilterButton";
 import { PagesNavigation, Title } from "@/styles/components";
 import { ArchivePropsType } from "@/types/components/shop/archive";
 import router from "next/router";
 import { FC } from "react";
 import { FilterPanel } from "../filtration/FilterPanel";
 import { ProductCardList } from "../ProductCardsList";
-import { CatalogContainer, CatalogFilterBlock, CatalogLayout, CatalogListBlock, CatalogRightWrapper, CatalogTitleWrapper, CatalogTopWrapper } from "./styles";
+import { CatalogContainer, CatalogFilterBlock, CatalogLayout, CatalogListBlock, CatalogRightWrapper, CatalogTitleWrapper, CatalogTopWrapper, CountProduct, FilterSortWrapper, FIlterWrapper, PagesNavifationWrapper } from "./styles";
 
 const switchPage = (page: number, maxPage: number) =>
 {
@@ -30,21 +31,19 @@ export const Archive: FC<ArchivePropsType> = (props) =>
 {
     const { products, pagesCount, page, statistic } = props;
 
-    console.log('props...', props);
-
     const breadcrumbsLinks = [
-    {
-        name: 'ALL SHOP',
-        url: '/',
-    },
-    {
-        name: 'EYELASH EXTENSIONS',
-        url: '/',
-    },
-    {
-        name: ' NEW System UV',
-        url: '/',
-    },
+        {
+            name: 'ALL SHOP',
+            url: '/',
+        },
+        {
+            name: 'EYELASH EXTENSIONS',
+            url: '/',
+        },
+        {
+            name: ' NEW System UV',
+            url: '/',
+        },
     ];
 
     return (
@@ -63,16 +62,26 @@ export const Archive: FC<ArchivePropsType> = (props) =>
                 </CatalogFilterBlock>
                 <CatalogRightWrapper>
                     <CatalogTopWrapper>
-                        <SortSelect />
-                        <PagesNavigation
-                            page={+page}
-                            count={pagesCount}
-                            siblingCount={1}
-                            shape="rounded"
-                            hidePrevButton
-                            hideNextButton
-                            onChange={(_, newPage) => { switchPage(newPage, pagesCount); }}
-                        />
+                        <FilterSortWrapper>
+                            <FIlterWrapper>
+                                <FilterButton />
+                            </FIlterWrapper>
+                            <CustomSortAccordion />
+                        </FilterSortWrapper>
+                        <CountProduct>
+                            {`${products.length}/${statistic.products_count}`}
+                        </CountProduct>
+                        <PagesNavifationWrapper>
+                            <PagesNavigation
+                                page={+page}
+                                count={pagesCount}
+                                siblingCount={1}
+                                shape="rounded"
+                                hidePrevButton
+                                hideNextButton
+                                onChange={(_, newPage) => { switchPage(newPage, pagesCount); }}
+                            />
+                        </PagesNavifationWrapper>
                     </CatalogTopWrapper>
                     <CatalogListBlock>
                         {products.length && <ProductCardList products={products}

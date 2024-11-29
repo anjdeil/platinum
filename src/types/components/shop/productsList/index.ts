@@ -1,5 +1,5 @@
+import { ProductSchema } from "@/types/pages/shop";
 import { z } from "zod";
-import { ProductSchema } from "../product/products";
 
 export const ColumnsPropsSchema = z.object({
     mobileColumns: z.number().optional(),
