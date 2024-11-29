@@ -1,9 +1,8 @@
 import {
   CreateOrderRequestType,
   CreateOrderResponseType,
-  OrderType,
   WooCustomerReqType,
-  WooCustomerType,
+  WooCustomerType
 } from "@/types/services";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
@@ -22,14 +21,13 @@ export const wooCustomRktApi = createApi({
       }),
     }),
     fetchOrders: builder.query({
-      query: (credentials: any) => ({
-        url: "/orders",
-        method: "POST",
-        body: credentials,
+      query: (params: any) => ({
+        url: `/orders?${new URLSearchParams(params).toString()}`,
+        method: "GET",
         headers: {
-          "Content-Type": "application/json",
-        },
-      }),
+          'Content-Type': 'application/json',
+        }
+      })
     }),
     createOrder: builder.mutation<
       CreateOrderResponseType,
@@ -44,6 +42,16 @@ export const wooCustomRktApi = createApi({
         },
       }),
     }),
+    addComment: builder.mutation({
+      query: (credentials: any) => ({
+        url: "/products/reviews",
+        method: "POST",
+        body: credentials,
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+    })
   }),
 });
 
@@ -51,4 +59,5 @@ export const {
   useRegisterCustomerMutation,
   useFetchOrdersQuery,
   useCreateOrderMutation,
+  useAddCommentMutation,
 } = wooCustomRktApi;

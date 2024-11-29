@@ -1,12 +1,23 @@
 import AddToBasketButton from "@/components/global/buttons/AddToBasketButton/AddToBasketButton";
+import DetailsAccordion from "@/components/global/DetailsAccordeon/DetailsAccordion";
 import Rating from "@/components/global/Rating/Rating";
+import { useAppDispatch, useAppSelector } from "@/store";
+import { updateCart } from "@/store/slices/cartSlice";
+import { popupSet } from "@/store/slices/PopupSlice";
+import { setData } from "@/store/slices/ProductSlice";
 import { StyledButton, Title } from "@/styles/components";
 import { ProductCardPropsType } from "@/types/components/shop";
+import { ProductVariation } from "@/types/components/shop/product/products";
+import { ProductType } from "@/types/pages/shop";
+import { CartItem } from "@/types/store/reducers/сartSlice";
+import { getCurrentVariation } from "@/utils/getCurrentVariation";
+import ReactHtmlParser from 'html-react-parser';
 import { useTranslations } from "next-intl";
-import { FC, useEffect, useMemo, useState } from "react";
-import ColorVariations from "../ColorVariations/ColorVariations";
+import { useRouter } from "next/router";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import PaymentList from "../PaymentList/PaymentList";
 import ProductAvailable from "../ProductAvailable/ProductAvailable";
+import { ProductOptionsPanel } from "../ProductOptionsPanel";
 import ProductPrice from "../ProductPrice/ProductPrice";
 import ProductPromotion from "../ProductPromotion/ProductPromotion";
 import ProductQuantity from "../ProductQuantity/ProductQuantity";
@@ -15,15 +26,6 @@ import ProductSwiper from "../ProductSwiper/ProductSwiper";
 import ProductViewing from "../ProductViewing/ProductViewing";
 import ShippingList from "../ShippingList/ShippingList";
 import { AddToBasketWrapper, ProductFlexWrapper, ProductImageWrapper, ProductInfoWrapper, ProductTitleWrapper, ProductWrapper } from "./styles";
-import DetailsAccordion from "@/components/global/DetailsAccordeon/DetailsAccordion";
-import { ProductOptionsPanel } from "../ProductOptionsPanel";
-import { useRouter } from "next/router";
-import { ProductVariation, ProductVariationType } from "@/types/components/shop/product/products";
-import { getCurrentVariation } from "@/utils/getCurrentVariation";
-import ReactHtmlParser from 'html-react-parser';
-import { CartItem } from "@/types/store/reducers/сartSlice";
-import { useAppDispatch, useAppSelector } from "@/store";
-import { updateCart } from "@/store/slices/cartSlice";
 
 
 
@@ -105,6 +107,15 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
         }
     }, [router.query]);
 
+    const updateProductState = useCallback((data: ProductType) => {
+        dispatch(setData(data));
+    }, [dispatch]);
+
+    const addComment = () => {
+        updateProductState(product);
+        dispatch(popupSet('add-comment'));
+    };
+
     return (
         <ProductWrapper>
             <ProductImageWrapper>
@@ -145,6 +156,7 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
                 </AddToBasketWrapper>
                 <PaymentList />
                 <ShippingList />
+                <StyledButton onClick={addComment} secondary={true}>Leave a review about product</StyledButton>
                 <DetailsAccordion summary="Descriptions">
                     <div dangerouslySetInnerHTML={{
                         __html: ReactHtmlParser(currentVariation?.description || product.description)

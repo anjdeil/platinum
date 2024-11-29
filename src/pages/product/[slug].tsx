@@ -1,4 +1,5 @@
 import Breadcrumbs from "@/components/global/Breadcrumbs/Breadcrumbs";
+import Reviews from "@/components/global/reviews/Reviews/Reviews";
 import CustomProductList from "@/components/pages/product/CustomProductList/CustomProductList";
 import ProductInfo from "@/components/pages/product/ProductInfo/ProductInfo";
 import { customRestApi } from "@/services/wpCustomApi";
@@ -61,6 +62,7 @@ export default function ProductPage({ res }: ProductPageType) {
                 </Box>
                 {product && <ProductInfo product={product} />}
                 <CustomProductList title="recommendProduct" productIds={recommendProducts} />
+                <Reviews product={product} />
             </Container>
         </>
     );

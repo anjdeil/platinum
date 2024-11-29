@@ -1,7 +1,7 @@
-import
-{
+import {
     CustomDataCategoriesType,
     CustomDataMenuResponseType,
+    CustomDataProductReviewsType,
     CustomDataProductsMinimizedResponseType,
     CustomDataProductsType,
     CustomDataProductType,
@@ -39,6 +39,12 @@ export const wpCustomRtkApi = createApi({
                 params,
             }),
         }),
+        getProductReviews: builder.query<CustomDataProductReviewsType, QueryParamsType>({
+            query: (params: QueryParamsType) => ({
+                url: `/products/reviews/${params.slug}`,
+                params,
+            }),
+        }),
         getThemeOptions: builder.query<CustomDataThemeOptionsType, void>({
             query: () => ({
                 url: `/theme-options`,
@@ -47,8 +53,8 @@ export const wpCustomRtkApi = createApi({
         getProductsMinimized: builder.mutation<CustomDataProductsMinimizedResponseType, CartItem[]>({
             query: (cartItems) => ({
                 url: `/products/minimized`,
-                method: 'POST', 
-                body: cartItems, 
+                method: 'POST',
+                body: cartItems,
             }),
         }),
     }),
@@ -59,6 +65,7 @@ export const {
     useGetCategoriesQuery,
     useGetProductsQuery,
     useGetProductQuery,
+    useGetProductReviewsQuery,
     useGetThemeOptionsQuery,
     useGetProductsMinimizedMutation
 } = wpCustomRtkApi;
