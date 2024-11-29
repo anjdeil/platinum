@@ -113,10 +113,10 @@
         "welcomeToPlatinumShop": "Welcome to Platinum Shop",
         "theBest": "The best",
         "productForYou": "Product for you"
-    }
+    },
     "NotFoundPage": {
-    "notFound": "Page not found",
-    "description": "Sorry, we can't seem to find the page you're looking for. It may have been moved, deleted, or never existed.",
-    "backToHome": "Go back to the homepage"
-  }
+        "notFound": "Page not found",
+        "description": "Sorry, we can't seem to find the page you're looking for. It may have been moved, deleted, or never existed.",
+        "backToHome": "Go back to the homepage"
+    }
 }

@@ -113,10 +113,10 @@
         "welcomeToPlatinumShop": "Witamy w Platinum Shop",
         "theBest": "Najlepszy",
         "productForYou": "Produkt dla Ciebie"
-    }
+    },
     "NotFoundPage": {
-      "notFound": "Strona nie znaleziona",
-      "description": "Przepraszamy, ale nie możemy znaleźć strony, której szukasz. Mogła ona zostać przeniesiona, usunięta lub nigdy nie istniała.",
-      "backToHome": "Wróć do strony głównej"
+        "notFound": "Strona nie znaleziona",
+        "description": "Przepraszamy, ale nie możemy znaleźć strony, której szukasz. Mogła ona zostać przeniesiona, usunięta lub nigdy nie istniała.",
+        "backToHome": "Wróć do strony głównej"
     }
 }
