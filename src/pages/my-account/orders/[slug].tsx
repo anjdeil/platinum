@@ -59,11 +59,6 @@ const Order: FC<OrderPropsType> = ({ order }) =>
             <Notification>
                 {`${t("notification", { orderId: order.id, date: formattedDate })} ${t(order.status)}.`}
                 <PDFDownloadButton item={order} />
-                {/* <PDFDownloadLink document={<OrderPdf order={order} />} fileName={`order-${order.id}.pdf`}>
-                    <StyledOrderButton aria-label={t("downloadPdf")} >
-                        <Image width={28} height={28} src={`/assets/icons/pdf-icon.svg`} alt="pdf" />
-                    </StyledOrderButton>
-                </PDFDownloadLink> */}
             </Notification>
             <AccountInfoWrapper>
                 <OrderProductList lineItems={order.line_items} currency={order.currency_symbol} />
