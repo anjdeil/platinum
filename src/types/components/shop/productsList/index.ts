@@ -14,14 +14,16 @@ const StyledProductCardListPropsSchema = z.object({
 });
 
 export const ProductCardListPropsSchema = z.object({
-    isLoading: z.boolean().optional(),
-    isError: z.boolean().optional(),
-    products: z.array(ProductSchema),
-    columns: ColumnsPropsSchema.optional(),
+  isLoading: z.boolean().optional(),
+  isError: z.boolean().optional(),
+  products: z.array(ProductSchema),
+  columns: ColumnsPropsSchema.optional(),
+  length: z.number().optional(),
 });
 
 const ProductCardListSkeletonPropsSchema = z.object({
-    columns: ColumnsPropsSchema.optional(),
+  columns: ColumnsPropsSchema.optional(),
+  length: z.number().optional(),
 });
 
 const CustomProductListPropsSchema = z.object({

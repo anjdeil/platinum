@@ -20,10 +20,18 @@ export const ProductListSectionSchema = z.object({
   sort_type: z.string().optional(),
 });
 
+export const CategoriesBarSchema = z.object({
+  _type: z.literal('_'),
+  image: z.string().url(),
+  title: z.string(),
+  slug: z.string(),
+});
+
 export const CategoriesSectionSchema = z.object({
   _type: z.literal('categories'),
   subtitle: z.string(),
   title: z.string(),
+  categories_bars: z.array(CategoriesBarSchema),
 });
 
 export const InstagramSectionSchema = z.object({
