@@ -69,7 +69,7 @@ export const Archive: FC<ArchivePropsType> = (props) =>
                             <CustomSortAccordion />
                         </FilterSortWrapper>
                         <CountProduct>
-                            {`${products.length}/${statistic.products_count}`}
+                            {`${statistic.products_count} products`}
                         </CountProduct>
                         <PagesNavifationWrapper>
                             <PagesNavigation
