@@ -7,6 +7,7 @@ import { StyledText } from '@/components/global/TitleBlock/styles';
 import { Title } from '@/styles/components';
 import { ProductCardList } from '@/components/shop/ProductCardsList';
 import { TitleBlock } from '../styles';
+import { useRouter } from 'next/router';
 
 type ProductListSectionProps = Omit<ProductListSectionData, '_type'>;
 
@@ -15,13 +16,16 @@ export const ProductListSection: React.FC<ProductListSectionProps> = ({
   title,
   sort_type,
 }) => {
+  const router = useRouter();
   const PER_PAGE = 4;
   const NEWEST_PARAMS = {
+    lang: router.locale,
     per_page: PER_PAGE,
     order_by: 'created',
     order: 'desc' as const,
   };
   const POPULAR_PARAMS = {
+    lang: router.locale,
     per_page: PER_PAGE,
     order_by: 'stock_quantity',
     order: 'desc' as const,
@@ -41,7 +45,7 @@ export const ProductListSection: React.FC<ProductListSectionProps> = ({
 
   const newestProducts: ProductType[] = newestData?.data?.items || [];
   const popularProducts: ProductType[] = popularData?.data?.items || [];
-  
+
   return (
     <StyledContainer>
       <RecommendContainer>
@@ -56,6 +60,7 @@ export const ProductListSection: React.FC<ProductListSectionProps> = ({
             products={newestProducts}
             isLoading={isNewestLoading}
             isError={!!newestError}
+            length={PER_PAGE}
           />
         )}
         {sort_type === 'popular' && (
@@ -63,6 +68,7 @@ export const ProductListSection: React.FC<ProductListSectionProps> = ({
             products={popularProducts}
             isLoading={isPopularLoading}
             isError={!!popularError}
+            length={PER_PAGE}
           />
         )}
       </RecommendContainer>

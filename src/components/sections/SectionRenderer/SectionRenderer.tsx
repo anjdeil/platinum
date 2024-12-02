@@ -33,28 +33,35 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
             return <SliderSection key={index} slides={normalizedSlides} />;
           case 'product_list':
             return (
-              <ProductListSection
-                key={index}
-                title={section.title}
-                subtitle={section.subtitle}
-                sort_type={section.sort_type}
-              />
+              <Container key={index}>
+                <ProductListSection
+                  key={index}
+                  title={section.title}
+                  subtitle={section.subtitle}
+                  sort_type={section.sort_type}
+                />
+              </Container>
             );
           case 'categories':
             return (
-              <CategoriesSection
-                key={index}
-                subtitle={section.subtitle}
-                title={section.title}
-              />
+              <Container key={index}>
+                <CategoriesSection
+                  key={index}
+                  subtitle={section.subtitle}
+                  title={section.title}
+                  categories_bars={section.categories_bars}
+                />
+              </Container>
             );
           case 'instagram':
             return (
-              <InstagramSection
-                key={index}
-                subtitle={section.subtitle}
-                title={section.title}
-              />
+              <Container key={index}>
+                <InstagramSection
+                  key={index}
+                  subtitle={section.subtitle}
+                  title={section.title}
+                />
+              </Container>
             );
           case 'reviews':
             return (

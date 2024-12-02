@@ -7,7 +7,7 @@ import { popupToggle } from '@/store/slices/PopupSlice';
 import { Container, Title } from '@/styles/components';
 import { SectionsType } from '@/types/components/sections';
 import axios from 'axios';
-import { GetServerSideProps } from 'next';
+import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { Inter } from 'next/font/google';
 import { useContext, useState } from 'react';
 import { customRestApi } from '@/services/wpCustomApi';
@@ -16,8 +16,13 @@ import { HomePageType } from '@/types/pages';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const sectionsResponse = await customRestApi.get(`pages/homepage`);
+export const getServerSideProps: GetServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  const { locale } = context;
+  const sectionsResponse = await customRestApi.get(`pages/homepage`, {
+    lang: locale,
+  });
   const sectionsData = sectionsResponse.data as HomePageType;
 
   const isValidSectionsData = validateWpHomePage(sectionsData);
