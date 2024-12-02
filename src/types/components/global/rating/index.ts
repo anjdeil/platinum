@@ -2,6 +2,7 @@ import { z } from 'zod';
 
 export const RatingPropsSchema = z.object({
     rating: z.number().min(0).max(5),
+    onChange: z.function().args(z.number()).optional(),
 });
 
 export const StarPropsSchema = z.object({

@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import React from "react";
 import { ColorVariationsContainer, VariationListBlock, VariationsColorButton } from "./styles";
 
-const ColorVariations: React.FC<ColorVariationsProps> = ({ list, currentVariation, onChange }) =>
+const ColorVariations: React.FC<ColorVariationsProps> = ({ attr, currentVariation, onChange }) =>
 {
     const t = useTranslations("Product");
 
@@ -14,17 +14,17 @@ const ColorVariations: React.FC<ColorVariationsProps> = ({ list, currentVariatio
                 {t('color')}
             </VariationTitle>
             <VariationListBlock>
-                {list.map((item) => (
+                {attr.options && attr.options.map((item) => (
                     <VariationsColorButton
-                        key={item}
-                        active={item === currentVariation}
-                        onClick={() => onChange(item)}
-                        color={item}
+                        key={item.slug}
+                        active={item.slug === currentVariation}
+                        onClick={() => onChange(attr.slug, item.slug)}
+                        color={item.slug}
                     >
                     </VariationsColorButton>
                 ))}
             </VariationListBlock>
-        </ColorVariationsContainer >           
+        </ColorVariationsContainer >
     );
 };
 

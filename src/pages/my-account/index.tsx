@@ -48,18 +48,17 @@ const MyAccount: FC<MyAccountPropsType> = ({ user }) =>
         per_page: 5
     });
 
-
     const translatedAccountLinkList = accountLinkList.map(({ title, ...props }) => ({
         title: t(title),
         ...props
     }));
 
-    // const { orderCount, totalAmount } = transformOrders(ordersData || []);
+    const { orderCount, totalAmount } = transformOrders(ordersData || []);
 
     return (
         <AccountLayout title={t("clientPersonalAccount")}>
             <AccountInfoWrapper>
-                <AccountInfoBlockList orderCount={ordersData?.ordersData} totalAmount={ordersData?.totalAmount} loyaltyProgram={user.loyaltyProgram || null} />
+                <AccountInfoBlockList orderCount={orderCount} totalAmount={totalAmount} loyaltyProgram={user.loyaltyProgram || null} />
                 <AccountLinkBlockList list={translatedAccountLinkList} />
             </AccountInfoWrapper>
             <OrderTable orderList={ordersData} title={t("recentOrders")} />

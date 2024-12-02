@@ -1,5 +1,5 @@
 import { Category, Subcategory } from "@/types/components/widgets/categoriesMenu";
-import CategoryType from "@/types/pages/shop/categories";
+import { CategoryType } from "@/types/pages/shop";
 
 const transformCategoriesMenu = (response: CategoryType[]): Category[] =>
 {

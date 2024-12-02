@@ -7,15 +7,18 @@ export interface TitleProps {
 }
 
 export const StyledButtonPropsSchema = z.object({
-    width: z.string().optional(),
-    height: z.string().optional(),
-    minWidthTablet: z.string().optional(),
-    minWidthDesktop: z.string().optional(),
-    color: z.string().optional(),
-    backgroundColor: z.string().optional(),
-    hoverColor: z.string().optional(),
-    hoverBackgroundColor: z.string().optional(),
-    notify: z.boolean().optional(),
+  width: z.string().optional(),
+  widthMobile: z.string().optional(),
+  widthTablet: z.string().optional(),
+  widthDesktop: z.string().optional(),
+  height: z.string().optional(),
+  minWidthMobile: z.string().optional(),
+  minWidthTablet: z.string().optional(),
+  minWidthDesktop: z.string().optional(),
+  hoverColor: z.string().optional(),
+  hoverBackgroundColor: z.string().optional(),
+  notify: z.boolean().optional(),
+  secondary: z.boolean().optional(),
 });
 
 export const LogoLinkImagePropsSchema = z.object({
@@ -34,6 +37,11 @@ export const LogoLinkPropsSchema = z.object({
     children: z.any().optional()
 });
 
+export const TextPropsSchema = z.object({
+    textalign: z.string().optional(),
+});
+
 export type LogoLinkProps = z.infer<typeof LogoLinkPropsSchema>;
+export type TextProps = z.infer<typeof TextPropsSchema>;
 export type StyledButtonProps = z.infer<typeof StyledButtonPropsSchema>;
 export type LogoLinkImageProps = z.infer<typeof LogoLinkImagePropsSchema>;

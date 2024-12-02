@@ -56,14 +56,15 @@ export const ProductWrapper = styled.div`
 
 export const ProductImageWrapper = styled.div`
     position: relative;
-    width: 205px;
+    width: 100%;
+    max-width: 205px;
     aspect-ratio: 1;
 
     @media ${({ theme }) => theme.media.large} {
-        width: 100px;
+        max-width: 100px;
     }
 
     @media ${({ theme }) => theme.media.medium} {
-        width: 80px;
+        max-width: 80px;
     }
 `

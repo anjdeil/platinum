@@ -1,13 +1,11 @@
 import { OrderSummaryType } from "@/types/pages/account";
 import { OrderType } from "@/types/services";
 
-export function transformOrders(orders: OrderType[]): OrderSummaryType | []
+export function transformOrders(orders: OrderType[]): OrderSummaryType
 {
   if (!Array.isArray(orders))
   {
-    console.log(orders);
-    // throw new Error("orders must be an array");
-    return [];
+    throw new Error("orders must be an array");
   }
 
   const orderCount = orders.length;
