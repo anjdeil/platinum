@@ -52,7 +52,7 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product }) => {
                         <Image
                             src={product.thumbnail?.src || '/assets/images/not-found.webp'}
                             fill
-                            style={{ objectFit: 'cover' }}
+                            style={{ objectFit: 'contain' }}
                             alt="image"
                             unoptimized={true}
                         />
