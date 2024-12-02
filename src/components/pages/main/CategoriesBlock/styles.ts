@@ -7,7 +7,6 @@ export const CategoriesBlockContainer = styled.div`
   justify-content: space-between;
   row-gap: 24px;
   width: 100%;
-  margin-bottom: 72px;
 `;
 
 export const CategoriesList = styled.div`
