@@ -15,6 +15,7 @@ export const CategoriesList = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 8px;
+  aspect-ratio: 1.65;
 
   @media ${({ theme }) => theme.media.large} {
     gap: 16px;
@@ -22,5 +23,10 @@ export const CategoriesList = styled.div`
 
   @media ${({ theme }) => theme.media.medium} {
     grid-template-columns: repeat(2, 1fr);
+    aspect-ratio: 0.35;
+  }
+
+  @media ${({ theme }) => theme.media.small} {
+    aspect-ratio: 0.3;
   }
 `;

@@ -11,16 +11,16 @@ export const CategoryItemContainer = styled.div<CategoryItemContainerProps>`
   grid-column: ${({ double }) => (double ? 'span 2' : 'span 1')};
   background-color: ${({ theme }) => theme.background.secondary};
   border-radius: 20px;
-  height: 392px;
+  // height: 392px;
   padding: 16px;
   z-index: 1;
 
   @media ${({ theme }) => theme.media.large} {
-    height: 208px;
+    // height: 208px;
   }
 
   @media ${({ theme }) => theme.media.medium} {
-    height: 236px;
+    // height: 236px;
   }
 `;
 
@@ -99,6 +99,10 @@ export const StyledButton = styled.button<StyledButtonProps>`
   }
 
   @media ${({ theme }) => theme.media.medium} {
+    width: ${({ widthMobile = 'auto' }) => widthMobile};
+  }
+
+  @media ${({ theme }) => theme.media.small} {
     width: ${({ widthTablet = 'auto' }) => widthTablet};
   }
 `;
