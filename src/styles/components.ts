@@ -13,7 +13,7 @@ interface TitleProps {
     textalign?: "center" | "left" | "right";
     uppercase?: boolean;
     marginTop?: number;
-    marginBottom?: number;
+    marginBottom?: string;
     tabletMarginBottom?: number;
     mobMarginBottom?: number;
 }
