@@ -31,6 +31,8 @@ export const Title = styled.h1<TitleProps>`
 
     @media ${({ theme }) => theme.media.large} {
         font: ${({ theme }) => theme.fonts.bodyMiddleSemiBold};
+        font-weight: ${({ fontWeight }) => fontWeight};
+        font-size: ${({ fontSize }) => fontSize};
     }
 
     @media ${({ theme }) => theme.media.small} {

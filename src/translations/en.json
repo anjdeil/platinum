@@ -96,7 +96,8 @@
     "addComment": "Add comment",
     "submitting": "Submitting",
     "commentText1": "Have you tested our product? Share an opinion;",
-    "commentText2": "- we try to be best for you, and your opinion will help us a lot!"
+    "commentText2": "- we try to be best for you, and your opinion will help us a lot!",
+    "lastedArticles": "Lasted Articles"
   },
   "Cart": {
     "productName": "Name",

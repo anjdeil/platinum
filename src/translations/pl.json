@@ -96,7 +96,8 @@
     "addComment": "Dodaj komentarz",
     "submitting": "Wysyłanie",
     "commentText1": "Czy przetestowałeś nasz produkt? Podziel się swoją opinią;",
-    "commentText2": "- Staramy się być najlepsi dla Ciebie, a Twoja opinia bardzo nam pomoże!"
+    "commentText2": "- Staramy się być najlepsi dla Ciebie, a Twoja opinia bardzo nam pomoże!",
+    "lastedArticles": "Najnowsze artykuły"
   },
   "Cart": {
     "productName": "Nazwa",
