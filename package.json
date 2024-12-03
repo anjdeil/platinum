@@ -22,7 +22,9 @@
     "awesome-phonenumber": "^7.2.0",
     "axios": "^1.7.7",
     "dotenv": "^16.4.5",
+    "html-react-parser": "^5.1.18",
     "i": "^0.3.7",
+    "lodash": "^4.17.21",
     "next": "14.2.6",
     "next-intl": "^3.19.0",
     "npm": "^10.9.0",
@@ -43,6 +45,7 @@
   },
   "devDependencies": {
     "@types/axios": "^0.9.36",
+    "@types/lodash": "^4.17.13",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

@@ -1,15 +1,13 @@
-import { Container, PagesNavigation } from "@/styles/components";
-import { FC, useEffect } from "react";
-import { ProductCardList } from "../ProductCardsList";
-import { CustomDataProductsStatisticType, CustomDataProductsType } from "@/types/services";
-import { ProductType } from "@/types/pages/shop";
-import router, { NextRouter, useRouter } from "next/router";
-import { Pagination } from "@mui/material";
-import { CustomSingleAccordion } from "@/components/global/accordions/CustomSingleAccordion/CustomSingleAccordion";
-import { CustomCheckbox } from "@/components/global/forms/CustomCheckbox";
-import { PriceFilter } from "../filtration/PriceFilter/PriceFilter";
-import { FilterPanel } from "../filtration/FilterPanel";
+import { CustomSortAccordion } from "@/components/global/accordions/CustomSortAccordion";
+import Breadcrumbs from "@/components/global/Breadcrumbs/Breadcrumbs";
+import FilterButton from "@/components/global/buttons/FilterButton/FilterButton";
+import { PagesNavigation, Title } from "@/styles/components";
 import { ArchivePropsType } from "@/types/components/shop/archive";
+import router from "next/router";
+import { FC } from "react";
+import { FilterPanel } from "../filtration/FilterPanel";
+import { ProductCardList } from "../ProductCardsList";
+import { CatalogContainer, CatalogFilterBlock, CatalogLayout, CatalogListBlock, CatalogRightWrapper, CatalogTitleWrapper, CatalogTopWrapper, CountProduct, FilterSortWrapper, FIlterWrapper, PagesNavifationWrapper } from "./styles";
 
 const switchPage = (page: number, maxPage: number) =>
 {
@@ -33,36 +31,71 @@ export const Archive: FC<ArchivePropsType> = (props) =>
 {
     const { products, pagesCount, page, statistic } = props;
 
+    const breadcrumbsLinks = [
+        {
+            name: 'ALL SHOP',
+            url: '/',
+        },
+        {
+            name: 'EYELASH EXTENSIONS',
+            url: '/',
+        },
+        {
+            name: ' NEW System UV',
+            url: '/',
+        },
+    ];
+
     return (
-        <Container>
-            <div>
-                <PagesNavigation
-                    page={+page}
-                    count={pagesCount}
-                    siblingCount={1}
-                    shape="rounded"
-                    hidePrevButton
-                    hideNextButton
-                    onChange={(_, newPage) => { switchPage(newPage, pagesCount); }}
-                />
-                <div style={{ display: 'flex', gap: '50px' }}>
-                    <div style={{ margin: '50px auto' }}>
-                        <FilterPanel
-                            attributes={statistic.attributes}
-                            maxPrice={statistic.max_price}
-                            minPrice={statistic.min_price} />
-                    </div>
-                    {products.length && <ProductCardList products={products}
-                        columns={
-                            {
-                                mobileColumns: 2,
-                                tabletColumns: 4,
-                                desktopColumns: 3
+        <CatalogContainer>
+            <CatalogTitleWrapper>
+                <Breadcrumbs links={breadcrumbsLinks} />
+                <Title as='h1' uppercase>Colored eyelashes</Title>  
+            </CatalogTitleWrapper>    
+            <CatalogLayout>
+                <CatalogFilterBlock>
+                    <Title as='h3' uppercase textalign="left" marginBottom="24px">Filters</Title>
+                    <FilterPanel
+                        attributes={statistic.attributes}
+                        maxPrice={statistic.max_price}
+                        minPrice={statistic.min_price} />
+                </CatalogFilterBlock>
+                <CatalogRightWrapper>
+                    <CatalogTopWrapper>
+                        <FilterSortWrapper>
+                            <FIlterWrapper>
+                                <FilterButton />
+                            </FIlterWrapper>
+                            <CustomSortAccordion />
+                        </FilterSortWrapper>
+                        <CountProduct>
+                            {`${products.length}/${statistic.products_count}`}
+                        </CountProduct>
+                        <PagesNavifationWrapper>
+                            <PagesNavigation
+                                page={+page}
+                                count={pagesCount}
+                                siblingCount={1}
+                                shape="rounded"
+                                hidePrevButton
+                                hideNextButton
+                                onChange={(_, newPage) => { switchPage(newPage, pagesCount); }}
+                            />
+                        </PagesNavifationWrapper>
+                    </CatalogTopWrapper>
+                    <CatalogListBlock>
+                        {products.length && <ProductCardList products={products}
+                            columns={
+                                {
+                                    mobileColumns: 2,
+                                    tabletColumns: 4,
+                                    desktopColumns: 3
+                                }
                             }
-                        }
-                    />}
-                </div>
-            </div >
-        </Container>
+                        />}
+                    </CatalogListBlock>                    
+                </CatalogRightWrapper>
+            </CatalogLayout>
+        </CatalogContainer>
     )
 }

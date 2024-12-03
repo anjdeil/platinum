@@ -1,8 +1,7 @@
 import React from "react";
 import { z } from "zod";
 
-const isValidReactElement = (value: any) =>
-{
+const isValidReactElement = (value: any) => {
     return React.isValidElement(value) || (Array.isArray(value) && value.every(React.isValidElement));
 };
 

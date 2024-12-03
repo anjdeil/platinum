@@ -9,5 +9,5 @@ export const BadgeWrapper = styled.div`
     position: absolute;
     padding: 16px;
     top: 0;
-    z-index: 100;
+    z-index: 10;
 `
