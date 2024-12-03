@@ -41,6 +41,9 @@ const theme: Theme = {
     best: "#1E71BE",
     hot: "#F2B517",
     sale: "#D92D20",
+    primaryBlue200: '#e0effe',
+    primaryBlue500: '#1e71be',
+    primaryBlue700: '#113760',
   },
   background: {
     secondary: "#f2f8fe",
@@ -59,7 +62,7 @@ const theme: Theme = {
     resetButton: "#f1f1f5",
     resetButtonHover: "#e8e8f0",
     resetButtonActive: "#d9d9e6",
-    banner: '#71BFE6'
+    banner: '#71BFE6',
   },
   spacing: {
     small: "8px",
@@ -78,6 +81,9 @@ const theme: Theme = {
   },
   customShadows: {
     primaryShadow: "0 0 6px 0 rgba(17, 55, 96, .4)",
+    primaryBlue200: '#e0effe',
+    primaryBlue500: '#1e71be',
+    primaryBlue700: '#113760',
   },
 };
 
