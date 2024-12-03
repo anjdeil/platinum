@@ -1,8 +1,8 @@
 import CategoriesBlock from '@/components/pages/main/CategoriesBlock/CategoriesBlock';
 import { CategoriesSectionData } from '@/types/components/sections/index';
-import { RecommendContainer, StyledText, TitleBlock } from '../styles';
-import { Title } from '@/styles/components';
+import { RecommendContainer } from '../styles';
 import { StyledContainer } from './styles';
+import { SectionHeader } from '../SectionHeader';
 
 type CategoriesSectionProps = Omit<CategoriesSectionData, '_type'>;
 
@@ -14,13 +14,7 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
   return (
     <StyledContainer>
       <RecommendContainer>
-        <TitleBlock>
-          <StyledText>{subtitle}</StyledText>
-          <Title as='h4' uppercase>
-            {title}
-          </Title>
-        </TitleBlock>
-
+        <SectionHeader title={title} subtitle={subtitle} />
         <CategoriesBlock categories={categories_bars} />
       </RecommendContainer>
     </StyledContainer>
