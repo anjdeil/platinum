@@ -10,17 +10,17 @@ export function transformDate(date: string): string {
   }
 
   const languageTransform: Record<string, string> = {
-    'En': "en-GB",
-    'De': "de-DE",
-    'Pl': "pl-PL",
-    'Ru': "ru-RU",
-    'Ua': "uk-UA",
+    'en': "en-GB",
+    'de': "de-DE",
+    'pl': "pl-PL",
+    'ru': "ru-RU",
+    'uk': "uk-UA",
   }
 
-  const locale = languageTransform[language.symbol];
+  const locale = languageTransform[language.code];
 
   if (!locale) {
-    throw new Error(`Unsupported language symbol: ${language.symbol}`);
+    throw new Error(`Unsupported language symbol: ${language.code}`);
   }
 
   const formattedDate = parsedDate.toLocaleDateString(locale, options);

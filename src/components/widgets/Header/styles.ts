@@ -12,24 +12,20 @@ export const HeaderWrapper = styled.div<HeaderWrapperProps>`
   background: ${({ theme, backgroundColor = theme.background.primaryGradient }) =>
     backgroundColor};
   position: relative;
-  z-index: 101;
+  /* z-index: 101; */
 
   @media ${({ theme }) => theme.media.large} {
     padding-block: 16px;
   }
 `;
 
-export const HeaderContainer = styled(Container)<HeaderContainerProps>`
+export const HeaderContainer = styled(Container) <HeaderContainerProps>`
   display: flex;
   justify-content: space-between;
   gap: ${({ gap = '30px' }) => gap};
   align-items: center;
   overflow: visible;
   width: 93%;
-`;
-
-export const HeaderNav = styled.div`
-  flex-grow: 1;
 `;
 
 export const HeaderContent = styled.div`

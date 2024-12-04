@@ -123,6 +123,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
 `;
 
 export const LogoLink = styled(Link) <LogoLinkProps>`
+    flex-shrink: 0;
     display: flex;
     position: relative;
     width: ${({ desktopwidth = 92 }) => `${desktopwidth}px`};

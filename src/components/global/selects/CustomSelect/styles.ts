@@ -19,6 +19,7 @@ export const CustomSelectStyled = styled.div<CustomSelectStyledProps>`
     font: ${({ theme }) => theme.fonts.bodyMiddleReg};
     font-size: ${({ fontSize }) => fontSize};
     cursor: pointer;
+    text-transform: uppercase;
 
     @media ${({ theme }) => theme.media.large} {
         padding: ${({ tabletPadding = "4px" }) => tabletPadding};     
