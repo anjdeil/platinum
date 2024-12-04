@@ -60,12 +60,9 @@ const CartPage: React.FC = () => {
         }
     }, [orderItems]);
 
-
-
-
     return (
         <Container>
-            <BannerCart slug="stove" image="bunnerDesktop.png" mobileImage="bunnerMobile.png"/>
+            <BannerCart slug="stove" image="bunnerDesktop.png" mobileImage="bunnerMobile.png" />
             <CartTable
                 symbol={symbol}
                 cartItems={cartItems}

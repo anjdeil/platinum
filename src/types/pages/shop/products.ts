@@ -68,7 +68,7 @@ export const ProductSchema = z.object({
     max_price: z.number(),
     average_rating: z.number(),
     categories: z.array(ProductCategorySchema),
-    thumbnail: ThumbnailSchema.optional(),
+    thumbnail: ThumbnailSchema.nullable(),
     images: z.array(ProductImageSchema),
     attributes: z.array(ProductAttributesSchema),
     default_attributes: z.array(ProductDefaultAttributesSchema),
