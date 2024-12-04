@@ -1,4 +1,5 @@
 import { string, z } from 'zod';
+import { ProductAttributesSchema } from '../products';
 
 export const VariationsButtonPropsSchema = z.object({
     active: z.boolean().optional(),
@@ -6,16 +7,10 @@ export const VariationsButtonPropsSchema = z.object({
 });
 
 export const ColorVariationsPropsSchema = z.object({
-    list: z.array(string()),
+    attr: ProductAttributesSchema,
     currentVariation: z.string().optional(),
-    onChange: z.function().args(string()).returns(z.void()),
-})
-
-export const ProductVariationsPropsSchema = z.object({
-    title: z.string(),
-    ...ColorVariationsPropsSchema.shape,
+    onChange: z.function().args(string(), string()).returns(z.void()),
 })
 
 export type VariationsButtonProps = z.infer<typeof VariationsButtonPropsSchema>;
 export type ColorVariationsProps = z.infer<typeof ColorVariationsPropsSchema>;
-export type ProductVariationsProps = z.infer<typeof ProductVariationsPropsSchema>;

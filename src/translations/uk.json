@@ -84,12 +84,20 @@
     "fastShipping": "Швидка доставка",
     "freeDeliveryOver": "Безкоштовна доставка від {price}",
     "color": "Колір",
+    "yourFeedback": "Ваш відгук",
+    "reviews": "Відгуки",
+    "readMore": "Читати далі",
     "bestForYou": "Найкраще для вас",
     "recommendProduct": "Рекомендовані товари",
     "bestSeller": "Бестселери",
     "newProduct": "Новинки",
     "ourCategories": "Наші категорії",
-    "moreProduct": "Більше товару"
+    "moreProduct": "Більше товару",
+    "addComment": "Додати коментар",
+    "submitting": "Відправка",
+    "commentText1": "Ви протестували наш продукт? Поділіться своєю думкою;",
+    "commentText2": "- Ми намагаємося бути найкращими для вас, і ваша думка дуже нам допоможе!",
+    "lastedArticles": "Останні статті"
   },
   "Cart": {
     "productName": "Назва",
@@ -114,21 +122,28 @@
     "CouponApplyBtn": "Применить купон",
     "CouponInputPlaceholder": "Код купона",
 
-    "uk": {
-      "OrderComments": "КОМЕНТАРІ ДО ЗАМОВЛЕННЯ",
-      "OrderCommentPlaceholder": "Поділіться будь-якими конкретними деталями або запитами щодо вашого замовлення...",
-      "OrderCommentHint": "Не соромтеся надавати будь-які додаткові інструкції або нотатки до вашого замовлення тут.",
-      "OrderSummary": "Підсумок замовлення",
-      "Continue": "Продовжити",
-      "OrderSummaryTotal": "загальна сума до сплати",
+    "OrderComments": "КОМЕНТАРІ ДО ЗАМОВЛЕННЯ",
+    "OrderCommentPlaceholder": "Поділіться будь-якими конкретними деталями або запитами щодо вашого замовлення...",
+    "OrderCommentHint": "Не соромтеся надавати будь-які додаткові інструкції або нотатки до вашого замовлення тут.",
+    "OrderSummary": "Підсумок замовлення",
+    "Continue": "Продовжити",
+    "OrderSummaryTotal": "загальна сума до сплати",
 
-      "products": "Товари",
-      "coupon": "Купон",
-      "paymentMethod": "Спосіб оплати",
+    "products": "Товари",
+    "coupon": "Купон",
+    "paymentMethod": "Спосіб оплати",
 
-      "Basket": "Кошик",
-      "PersonalInformation": "Особиста інформація",
-      "Confirmation": "Підтвердження"
-    }
+    "Basket": "Кошик",
+    "PersonalInformation": "Особиста інформація",
+    "Confirmation": "Підтвердження",
+
+    "welcomeToPlatinumShop": "Ласкаво просимо до Platinum Shop",
+    "theBest": "Найкращий",
+    "productForYou": "Продукт для вас"
+  },
+  "NotFoundPage": {
+    "notFound": "Сторінка не знайдена",
+    "description": "На жаль, ми не можемо знайти сторінку, яку ви шукаєте. Можливо, її було переміщено, видалено або вона ніколи не існувала.",
+    "backToHome": "Повернутися на головну сторінку"
   }
 }

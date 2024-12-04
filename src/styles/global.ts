@@ -5,6 +5,7 @@ const GlobalStyle = createGlobalStyle`
  * {
     padding: 0;
     margin: 0;
+    box-sizing: border-box;
     scrollbar-width: 4px;    
 
     @media (min-width: 1024px) {
@@ -62,7 +63,6 @@ h1 {
 }
 
 hr {
-    box-sizing: content-box;
     height: 0;
     overflow: visible;
 }
@@ -173,9 +173,6 @@ fieldset {
     padding: 0.35em 0.75em 0.625em;
 }
 
-legend {
-    box-sizing: border-box;
-}
 fieldset {
     padding: 0.35em 0.75em 0.625em;
 }

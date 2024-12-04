@@ -1,5 +1,5 @@
+import { ProductSchema } from '@/types/pages/shop';
 import { z } from 'zod';
-import { ProductSchema } from '../products';
 
 export const CommonTextPropsSchema = z.object({
     fontSize: z.string().optional(),

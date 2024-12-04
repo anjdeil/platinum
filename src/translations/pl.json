@@ -84,12 +84,20 @@
     "fastShipping": "Szybka wysyłka",
     "freeDeliveryOver": "Darmowa dostawa od {price}",
     "color": "Kolor",
+    "yourFeedback": "Twoja opinia",
+    "reviews": "Opinie",
+    "readMore": "Czytaj więcej",
     "bestForYou": "Najlepsze dla ciebie",
     "recommendProduct": "Polecane towary",
     "bestSeller": "Bestsellery",
     "newProduct": "Nowe Produkty",
     "ourCategories": "Nasze kategorie",
-    "moreProduct": "Więcej produktu"
+    "moreProduct": "Więcej produktu",
+    "addComment": "Dodaj komentarz",
+    "submitting": "Wysyłanie",
+    "commentText1": "Czy przetestowałeś nasz produkt? Podziel się swoją opinią;",
+    "commentText2": "- Staramy się być najlepsi dla Ciebie, a Twoja opinia bardzo nam pomoże!",
+    "lastedArticles": "Najnowsze artykuły"
   },
   "Cart": {
     "productName": "Nazwa",
@@ -103,6 +111,7 @@
     "delete": "Usuń",
     "updateTo": "Zaktualizuj do",
     "priceToDelivery": "Aby otrzymać darmową dostawę, musisz dodać produkty o łącznej wartości {locale}",
+    "welcomeToPlatinumShop": "Witamy w Platinum Shop",
     "discountText": "ZALOGUJ SIĘ I SKORZYSTAJ Z {discounts}",
     "CouponText": "JEŚLI MASZ KUPON ZNIŻKOWY, UŻYJ GO I OTRZYMAJ ZNIŻKĘ!",
     "ChooseCouponText": "Wybierz, jeśli masz kod rabatowy lub punkty premiowe, które chcesz użyć, lub chcesz oszacować koszt dostawy.",
@@ -127,6 +136,14 @@
 
     "Basket": "Koszyk",
     "PersonalInformation": "Informacje osobiste",
-    "Confirmation": "Potwierdzenie"
+    "Confirmation": "Potwierdzenie",
+
+    "theBest": "Najlepszy",
+    "productForYou": "Produkt dla Ciebie"
+  },
+  "NotFoundPage": {
+    "notFound": "Strona nie znaleziona",
+    "description": "Przepraszamy, ale nie możemy znaleźć strony, której szukasz. Mogła ona zostać przeniesiona, usunięta lub nigdy nie istniała.",
+    "backToHome": "Wróć do strony głównej"
   }
 }

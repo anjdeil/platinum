@@ -84,12 +84,20 @@
     "fastShipping": "Schneller Versand",
     "freeDeliveryOver": "Kostenloser Versand ab {price}",
     "color": "Farbe",
+    "yourFeedback": "Ihr Feedback",
+    "reviews": "Bewertungen",
     "bestForYou": "Das Beste für dich",
     "recommendProduct": "Empfohlene Waren",
     "bestSeller": "Bestseller",
     "newProduct": "Neue Produkte",
     "ourCategories": "Unsere Kategorien",
-    "moreProduct": "Mehr Produkt"
+    "moreProduct": "Mehr Produkt",
+    "lastedArticles": "Neueste Artikel",
+    "readMore": "Mehr erfahren",
+    "addComment": "Kommentar hinzufügen",
+    "submitting": "Einreichen",
+    "commentText1": "Haben Sie unser Produkt getestet? Teilen Sie Ihre Meinung mit;",
+    "commentText2": "- Wir versuchen, das Beste für Sie zu sein, und Ihre Meinung wird uns sehr helfen!"
   },
   "Cart": {
     "productName": "Name",
@@ -128,5 +136,10 @@
     "Basket": "Warenkorb",
     "PersonalInformation": "Persönliche Informationen",
     "Confirmation": "Bestätigung"
+  },
+  "NotFoundPage": {
+    "notFound": "Seite nicht gefunden",
+    "description": "Es tut uns leid, wir können die Seite, die Sie suchen, nicht finden. Sie wurde möglicherweise verschoben, gelöscht oder hat nie existiert.",
+    "backToHome": "Zurück zur Startseite"
   }
 }

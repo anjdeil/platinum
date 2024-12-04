@@ -84,12 +84,20 @@
     "fastShipping": "Fast shipping",
     "freeDeliveryOver": "Free delivery over {price}",
     "color": "Color",
+    "yourFeedback": "Your feedback",
+    "reviews": "Reviews",
+    "readMore": "Read more",
     "bestForYou": "Best for you",
     "recommendProduct": "Recommend Product",
     "bestSeller": "Bestsellers",
     "newProduct": "New Products",
     "ourCategories": "Our categories",
-    "moreProduct": "More product"
+    "moreProduct": "More product",
+    "addComment": "Add comment",
+    "submitting": "Submitting",
+    "commentText1": "Have you tested our product? Share an opinion;",
+    "commentText2": "- we try to be best for you, and your opinion will help us a lot!",
+    "lastedArticles": "Lasted Articles"
   },
   "Cart": {
     "productName": "Name",
@@ -128,6 +136,14 @@
 
     "Basket": "Basket",
     "PersonalInformation": "Personal Information",
-    "Confirmation": "Confirmation"
+    "Confirmation": "Confirmation",
+    "welcomeToPlatinumShop": "Welcome to Platinum Shop",
+    "theBest": "The best",
+    "productForYou": "Product for you"
+  },
+  "NotFoundPage": {
+    "notFound": "Page not found",
+    "description": "Sorry, we can't seem to find the page you're looking for. It may have been moved, deleted, or never existed.",
+    "backToHome": "Go back to the homepage"
   }
 }
