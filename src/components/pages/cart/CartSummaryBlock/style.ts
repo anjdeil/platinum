@@ -1,10 +1,5 @@
-import { StyledButton, Title } from "@/styles/components";
+import { Title } from "@/styles/components";
 import styled from "@emotion/styled";
-
-interface CouponTextProps {
-  uppercase?: boolean;
-  marginBottom?: string;
-}
 
 export const CartSummaryBlockWrapper = styled.div`
   display: flex;
@@ -67,13 +62,11 @@ export const CartCommentInput = styled.textarea`
 
 export const CartSummaryTitleWrapper = styled.div`
   margin-bottom: 24px;
-  @media ${({ theme }) => theme.media.large} {
-    background: ${({ theme }) => theme.background.secondary};
-    padding: 16px 0;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    margin-bottom: 0px;
-  }
+  background: ${({ theme }) => theme.background.secondary};
+  padding: 16px 0;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  margin-bottom: 0px;
 `;
 export const CartCommentsTitle = styled(Title)`
   margin-bottom: 24px;

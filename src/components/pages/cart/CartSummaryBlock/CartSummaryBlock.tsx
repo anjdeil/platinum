@@ -16,9 +16,7 @@ import theme from '@/styles/theme';
 import { debounce } from 'lodash';
 import { setCommentToOrder } from '@/store/slices/cartSlice';
 import OrderSummary from '../OrderSummary/OrderSummary';
-import { useResponsive } from '@/hooks/useResponsive';
 import { OrderType } from '@/types/services';
-import OrderTotals from '../../order/OrderTotals/OrderTotals';
 
 interface CartSummaryBlockProps {
     symbol: string;
@@ -47,6 +45,7 @@ const CartSummaryBlock: FC<CartSummaryBlockProps> = ({
         setInputValue(value);
         debouncedChangeHandler(value);
     };
+
 
     return (
         <CartSummaryBlockWrapper>

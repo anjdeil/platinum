@@ -30,6 +30,7 @@ const OrderProgress: FC = () => {
             <OrderProgressWrapper>
                 {steps.map((step, index) => {
                     const isCurrent = step.url === pathname;
+                    const isCompleted = index < steps.findIndex((s) => s.url === pathname);
                     const StepContent = (
                         <>
                             <OrderStepNum active={isCurrent}>{index + 1}</OrderStepNum>
@@ -38,16 +39,19 @@ const OrderProgress: FC = () => {
                     );
                     return (
                         <React.Fragment key={step.url}>
-                            {isCurrent ? (
-                                <OrderStepWrapper>{StepContent}</OrderStepWrapper>
+                            {isCompleted ? (
+                                <OrderStepWrapperLink href={step.url} completed>
+                                    {StepContent}
+                                </OrderStepWrapperLink>
                             ) : (
-                                <OrderStepWrapperLink href={step.url}>{StepContent}</OrderStepWrapperLink>
+                                <OrderStepWrapper>{StepContent}</OrderStepWrapper>
                             )}
 
                             {index < steps.length - 1 && <ForwardArrow />}
                         </React.Fragment>
                     );
                 })}
+
             </OrderProgressWrapper>
         </OrderProgressContainer>
     );

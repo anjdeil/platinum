@@ -139,6 +139,6 @@ export const CustomError = styled.p`
     margin-top: 10px;
   }
 `;
-export const CustomInputContainer = styled.p<CustomInputContainerProps>`
+export const CustomInputContainer = styled.div<CustomInputContainerProps>`
   width: ${({ isCheckbox, width = "auto" }) => (isCheckbox ? "18px" : width)};
 `;

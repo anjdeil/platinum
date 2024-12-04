@@ -12,7 +12,6 @@ import getSubtotalByLineItems from '@/utils/cart/getSubtotalByLineItems';
 import formatPrice from '@/utils/cart/formatPrice';
 import OrderTotalsRowsSkeleton from '../../order/OrderTotals/OrderTotalsRowsSkeleton';
 
-
 interface OrderSummaryProps {
     order: OrderType | undefined | null;
     symbol: string;

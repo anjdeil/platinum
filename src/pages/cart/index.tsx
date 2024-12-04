@@ -11,6 +11,7 @@ import CartCouponBlock from "@/components/pages/cart/CartCouponBlock/CartCouponB
 import { CartPageWrapper } from "./style";
 import CartSummaryBlock from "@/components/pages/cart/CartSummaryBlock/CartSummaryBlock";
 import OrderProgress from "@/components/pages/cart/OrderProgress/OrderProgress";
+import getSubtotalByLineItems from "@/utils/cart/getSubtotalByLineItems";
 
 
 const CartPage: React.FC = () => {
@@ -63,13 +64,7 @@ const CartPage: React.FC = () => {
         }
     }, [cartItems, productsSpecs]);
 
-    useEffect(() => {
-        if (orderItems && orderItems.line_items) {
-            const lineItems = orderItems.line_items;
-            const cartSum = lineItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            setCartSum(roundedPrice(cartSum));
-        }
-    }, [orderItems]);
+    const subtotal = orderItems?.line_items ? getSubtotalByLineItems(orderItems.line_items) : 0;
 
     return (
         <Container>
@@ -86,7 +81,7 @@ const CartPage: React.FC = () => {
                         roundedPrice={roundedPrice}
                         hasConflict={hasConflict}
                     />
-                    <OrderBar isLoadingOrder={isLoadingOrder} cartSum={cartSum} symbol={symbol} />
+                    <OrderBar isLoadingOrder={isLoadingOrder} cartSum={subtotal} symbol={symbol} />
                 </div>
                 <CartCouponBlock symbol={symbol} />
                 <CartSummaryBlock symbol={symbol} order={orderItems} isLoading={isLoadingOrder} />

@@ -1,11 +1,5 @@
-import { StyledButton, Title } from "@/styles/components";
 import styled from "@emotion/styled";
 import { Skeleton } from "@mui/material";
-
-interface CouponTextProps {
-  uppercase?: boolean;
-  marginBottom?: string;
-}
 
 export const OrderSummaryWrapper = styled.div`
   width: 100%;

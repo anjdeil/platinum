@@ -12,21 +12,17 @@ import { useContext, useState } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home()
-{
+export default function Home() {
   const [data, setData] = useState<null | any>(null);
   const currency = useAppSelector((state) => state.currencySlice);
   const language = useAppSelector((state) => state.languageSlice);
   const menus = useContext(MenusContext);
 
-  async function check()
-  {
+  async function check() {
     const res = await axios.get('/api/wp/users');
-    if (res.status === 200)
-    {
+    if (res.status === 200) {
       setData(res.data);
-    } else
-    {
+    } else {
       console.error(res);
     }
   }

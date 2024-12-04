@@ -111,6 +111,7 @@
     "Above": "ABOVE",
     "ForOrders": "FOR ORDERS",
     "CouponApply": "Coupon successfully applied",
+    "ErrorCoupon": "This coupon doesn't exist.",
     "CouponApplyBtn": "Apply coupon",
     "CouponInputPlaceholder": "Code coupon",
 
