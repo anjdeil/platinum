@@ -37,6 +37,8 @@ export const StyledImage = styled(Image)`
     height: 100%;
     object-fit: cover;
     object-position: center;
+    fill
+    priority
 `;
 
 export const ContentBlock = styled.div`

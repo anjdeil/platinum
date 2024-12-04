@@ -7,6 +7,7 @@ import { AttributeSchema } from "./attributes";
 import { menuItemsSchema } from "./menus";
 import { ThemeOptionsItemSchema } from "./themeOptions";
 import { SectionsTypeSchema } from '@/types/components/sections';
+import { BlogItemSchema } from '@/types/pages/blog';
 
 const LangParamSchema = z.enum(['en', 'pl', 'de', 'ru', 'uk']).optional();
 
@@ -101,10 +102,18 @@ export const CustomDataThemeOptionsSchema = z.object({
     item: ThemeOptionsItemSchema,
   }),
 });
+
 export const CustomDataProductsMinimizedResponseSchema = z.object({
   success: z.boolean(),
   data: z.object({
     items: z.array(ProductsMinimizedSchema),
+  }),
+});
+
+export const CustomDataPostsSchema = z.object({
+  success: z.boolean(),
+  data: CustomDataSchema.extend({
+    items: z.array(BlogItemSchema),
   }),
 });
 
@@ -130,3 +139,5 @@ export type CustomDataThemeOptionsType = z.infer<
 export type CustomDataProductsMinimizedResponseType = z.infer<
   typeof CustomDataProductsMinimizedResponseSchema
 >;
+
+export type CustomDataPostsType = z.infer<typeof CustomDataPostsSchema>;

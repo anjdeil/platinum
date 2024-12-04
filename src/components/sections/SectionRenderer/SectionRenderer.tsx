@@ -96,11 +96,13 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
             );
           case 'blog':
             return (
-              <BlogSection
-                key={index}
-                subtitle={section.subtitle}
-                title={section.title}
-              />
+              <Container key={index}>
+                <BlogSection
+                  key={index}
+                  subtitle={section.subtitle}
+                  title={section.title}
+                />
+              </Container>
             );
 
           case 'hero':
