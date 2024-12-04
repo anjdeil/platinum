@@ -1,9 +1,9 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 export interface TitleProps {
-    as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
-    fontWeight?: number;
-    fontSize: number;
+  as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+  fontWeight?: number;
+  fontSize: number;
 }
 
 export const StyledButtonPropsSchema = z.object({
@@ -19,26 +19,27 @@ export const StyledButtonPropsSchema = z.object({
   hoverBackgroundColor: z.string().optional(),
   notify: z.boolean().optional(),
   secondary: z.boolean().optional(),
+  /* backgroundColor:z.string().optional(), */
 });
 
 export const LogoLinkImagePropsSchema = z.object({
-    width: z.number().optional(),
-    height: z.number().optional(),
-    desktopwidth: z.number().optional(),
-    desktopheight: z.number().optional(),
-    children: z.any().optional(),
+  width: z.number().optional(),
+  height: z.number().optional(),
+  desktopwidth: z.number().optional(),
+  desktopheight: z.number().optional(),
+  children: z.any().optional(),
 });
 
 export const LogoLinkPropsSchema = z.object({
-    width: z.number().optional(),
-    height: z.number().optional(),
-    desktopwidth: z.number().optional(),
-    desktopheight: z.number().optional(),
-    children: z.any().optional()
+  width: z.number().optional(),
+  height: z.number().optional(),
+  desktopwidth: z.number().optional(),
+  desktopheight: z.number().optional(),
+  children: z.any().optional(),
 });
 
 export const TextPropsSchema = z.object({
-    textalign: z.string().optional(),
+  textalign: z.string().optional(),
 });
 
 export type LogoLinkProps = z.infer<typeof LogoLinkPropsSchema>;

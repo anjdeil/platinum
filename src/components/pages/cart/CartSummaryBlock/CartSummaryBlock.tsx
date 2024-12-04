@@ -76,7 +76,8 @@ const CartSummaryBlock: FC<CartSummaryBlockProps> = ({
                 <StyledButton
                     width="100%"
                     height="56px"
-                    backgroundColor="transparent"
+                    secondary={true}
+
                     hoverColor={theme.colors.white}
                     hoverBackgroundColor={theme.colors.primary}
                 >
