@@ -1,20 +1,22 @@
-import { Title } from "@/styles/components";
-import { useTranslations } from "next-intl";
-import { StyledText, TitleBlockContainer } from "./styles";
+import { Title } from '@/styles/components';
+import { useTranslations } from 'next-intl';
+import { StyledText, TitleBlockContainer } from './styles';
 
 interface TitleBlockProps {
   title: string;
+  subTitle: string | undefined;
 }
 
-const TitleBlock: React.FC<TitleBlockProps> = ({ title }) =>
-{
-  const t = useTranslations("Product");
+const TitleBlock: React.FC<TitleBlockProps> = ({ title, subTitle }) => {
+  const t = useTranslations('Product');
 
   return (
     <TitleBlockContainer>
-        <StyledText>{t('bestForYou')}</StyledText>
-        <Title as="h4" uppercase>{t(title)}</Title>
-    </TitleBlockContainer>  
+      <StyledText>{t(subTitle)}</StyledText>
+      <Title as='h4' uppercase>
+        {t(title)}
+      </Title>
+    </TitleBlockContainer>
   );
 };
 
