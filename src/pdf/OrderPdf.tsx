@@ -1,5 +1,5 @@
 import { OrderType } from '@/types/services';
-import getSubtotalByLineItems from '@/utils/getSubtotalByLineItems';
+import getSubtotalByLineItems from '@/utils/cart/getSubtotalByLineItems';
 import { Document, Link, Page, StyleSheet, Text, View } from '@react-pdf/renderer';
 
 const styles = StyleSheet.create({
