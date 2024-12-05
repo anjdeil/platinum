@@ -1,7 +1,6 @@
 import BlogListBlock from '@/components/pages/main/BlogListBlock/BlogListBlock';
 import { BlogSectionData } from '@/types/components/sections';
-import { StyledContainer } from '../SliderSection/styles';
-import { RecommendContainer } from '../styles';
+import { RecommendContainer, SectionContainer } from '../styles';
 import { useRouter } from 'next/router';
 import { useGetPostsQuery } from '@/store/rtk-queries/wpCustomApi';
 import { BlogItemType } from '@/types/pages/blog';
@@ -29,7 +28,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({
   const posts: BlogItemType[] = postsData?.data?.items || [];
 
   return (
-    <StyledContainer>
+    <SectionContainer>
       <RecommendContainer>
         <SectionHeader title={title} subtitle={subtitle} />
         <BlogListBlock
@@ -38,6 +37,6 @@ export const BlogSection: React.FC<BlogSectionProps> = ({
           isLoading={isPostsLoading}
         />
       </RecommendContainer>
-    </StyledContainer>
+    </SectionContainer>
   );
 };

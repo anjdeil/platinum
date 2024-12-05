@@ -79,20 +79,17 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
               />
             );
           case 'about_platinum':
-            return (
-              <AboutPlatinumSection
-                key={index}
-                about_platinum_separator={section.about_platinum_separator}
-              />
-            );
+            return <AboutPlatinumSection key={index} />;
           case 'features':
             return (
-              <FeaturesSection
-                key={index}
-                subtitle={section.subtitle}
-                title={section.title}
-                items={section.items}
-              />
+              <Container key={index}>
+                <FeaturesSection
+                  key={index}
+                  subtitle={section.subtitle}
+                  title={section.title}
+                  items={section.items}
+                />
+              </Container>
             );
           case 'blog':
             return (

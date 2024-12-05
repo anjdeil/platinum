@@ -1,6 +1,15 @@
 import { Text } from '@/styles/components';
 import styled from '@emotion/styled';
 
+export const SectionContainer = styled.section`
+  width: 100%;
+  margin-bottom: 72px;
+
+  @media ${({ theme }) => theme.media.medium} {
+    margin-bottom: 64px;
+  }
+`;
+
 export const RecommendContainer = styled.div`
   display: flex;
   flex-direction: column;
