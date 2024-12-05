@@ -53,8 +53,14 @@ export const NewsletterSectionSchema = z.object({
 
 export const AboutPlatinumSectionSchema = z.object({
   _type: z.literal('about_platinum'),
-  about_platinum_separator: z.string().optional(),
 });
+
+export const AboutPLangSchema = z.object({
+  subtitle: z.string(),
+  title: z.string(),
+  text: z.string(),
+});
+
 
 const FeatureItemSchema = z.object({
   _type: z.literal('_'),
