@@ -6,13 +6,13 @@ export const NavList = styled.ul<NavListProps>`
     display: flex;
     flex-direction: ${({ direction = "row" }) => direction};
     padding: 0;
-    gap: ${({ gap = "40px" }) => gap};
+    gap: ${({ gap = "75px" }) => gap};
     justify-content: ${({ justify = "center" }) => justify};
     list-style: none;
     align-items: ${({ align = "center" }) => align};
 
-    @media (max-width: 1200px) {
-        gap: ${({ mobGap = "24px" }) => mobGap};
+    @media ${({ theme }) => theme.media.large} {
+        gap: ${({ mobGap = "48px" }) => mobGap};
     }
 `;
 
@@ -25,7 +25,6 @@ export const NavLink = styled(Link) <NavLinkProps>`
     transition: all 0.2s ease;
     color: ${({ theme, color = theme.colors.white }) => color};
     text-transform: ${({ texttransform = 'none' }) => (texttransform)};
-    transition: all 0.2s ease;
 
     &.active {
         font-weight: 600;

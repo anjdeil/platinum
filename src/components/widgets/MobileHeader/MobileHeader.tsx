@@ -1,9 +1,9 @@
+import MobileSearchButton from '@/components/global/buttons/MobileSearchButton/MobileSearchButton';
 import { LogoLink, LogoLinkImage } from '@/styles/components';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FC } from 'react';
 import { IconButton, MobileHeaderContainer, MobileHeaderWrapper, SearchWrapper } from './styles';
-import MobileSearchButton from '@/components/global/buttons/MobileSearchButton/MobileSearchButton';
 
 const MobileHeader: FC = () =>
 {
@@ -11,7 +11,7 @@ const MobileHeader: FC = () =>
         <MobileHeaderWrapper>
             <MobileHeaderContainer>
                 <LogoLink href={'/'} width={54} height={48}>
-                    <LogoLinkImage src="/assets/images/logo_white.png" alt="Logo" fill />
+                    <LogoLinkImage src="/assets/icons/logo_white.svg" alt="Logo" fill />
                 </LogoLink>
                 <SearchWrapper>
                     <MobileSearchButton />
