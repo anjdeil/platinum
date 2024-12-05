@@ -64,8 +64,7 @@ const styles = StyleSheet.create({
 });
 
 
-const OrderPdf = ({ order }: { order: OrderType }) =>
-{
+const OrderPdf = ({ order }: { order: OrderType }) => {
 
     const date = new Date(order?.date_created);
     const formattedDate = date.toLocaleDateString('en-US', {
@@ -118,7 +117,7 @@ const OrderPdf = ({ order }: { order: OrderType }) =>
 
                     <View>
                         {order?.line_items?.map(item =>
-                            <View style={styles.productTableRow}>
+                            <View key={item.id} style={styles.productTableRow}>
                                 <View style={styles.productTableTwoColumn}>
                                     <Text style={styles.text}>
                                         {item.name}
@@ -162,8 +161,7 @@ const OrderPdf = ({ order }: { order: OrderType }) =>
                         </View>
                     </View>
 
-                    {order?.coupon_lines?.map(line =>
-                    {
+                    {order?.coupon_lines?.map(line => {
                         const name = `Kod rabatowy ${line.discount_type === 'percent' ? `-${line.nominal_amount}% ` : ""}`;
                         return (
                             <View key={name} style={styles.split}>
