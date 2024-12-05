@@ -20,15 +20,15 @@ const currencySlice = createSlice({
     name: 'currency',
     initialState,
     reducers: {
-        setCurrentCurrency: (state, action: PayloadAction<{ name: string }>) => {
-            const name = action.payload.name;
-            const currency = currencySymbols.find((curr) => curr.name === name);
+        setCurrentCurrency: (state, action: PayloadAction<{ code: string }>) => {
+            const code = action.payload.code;
+            const currency = currencySymbols.find((curr) => curr.code === code);
 
             if (currency) {
                 state.name = currency.name;
                 state.code = currency.code;
             } else {
-                console.error(`Currency code "${name}" not recognized.`);
+                console.error(`Currency code "${code}" not recognized.`);
             }
         }
     }

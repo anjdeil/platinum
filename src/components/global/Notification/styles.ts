@@ -6,6 +6,7 @@ export const NotificationWrapper = styled.div<{ type?: "success" | "warning" | "
     border-radius: 8px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     gap: 16px;
     background-color: ${({ type, theme }) => {
         switch (type) {

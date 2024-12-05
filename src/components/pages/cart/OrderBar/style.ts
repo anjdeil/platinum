@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 
 export const OrderBarWrapper = styled.div`
   border-radius: 8px;
+  margin-top: 24px;
   padding: 12px 16px;
   background: ${({ theme }) => theme.background.secondary};
   display: flex;

@@ -8,7 +8,7 @@ export default function CurrencySelect() {
   const dispatch = useAppDispatch();
 
   const onCurrencyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    dispatch(setCurrentCurrency({ name: event.target.value }));
+    dispatch(setCurrentCurrency({ code: event.target.value }));
   };
 
   return (

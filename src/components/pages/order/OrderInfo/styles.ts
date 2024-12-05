@@ -36,7 +36,7 @@ export const TableBody = styled.ul`
     display: flex;
     flex-direction: column;
     gap: 16px;
-    border: 1px solid ${({ theme }) => theme.colors.silver};
+    border: 1px solid ${({ theme }) => theme.colors.lightBorder};
     border-top: none;
     border-radius: 0 0 10px 10px;
 

@@ -2,19 +2,16 @@ import AccountLayout from "@/components/pages/account/AccountLayout";
 import BillingShippingAddress from "@/components/pages/order/BillingShippingAddress/BillingShippingAddress";
 import OrderInfo from "@/components/pages/order/OrderInfo/OrderInfo";
 // import OrderInfo from "@/components/Account/OrderInfo/OrderInfo";
-import OrderProductList from "@/components/pages/order/OrderProductList/OrderProductList";
-import { StyledOrderButton } from "@/components/pages/order/OrderTable/styles";
-import OrderTotals from "@/components/pages/order/OrderTotals/OrderTotals";
+import PDFDownloadButton from "@/components/global/buttons/PDFDownloadButton/PDFDownloadButton";
 import Notification from "@/components/global/Notification/Notification";
-import OrderPdf from "@/pdf/OrderPdf";
+import OrderProductList from "@/components/pages/order/OrderProductList/OrderProductList";
+import OrderTotals from "@/components/pages/order/OrderTotals/OrderTotals";
 import wooCommerceRestApi from "@/services/wooCommerceRestApi";
 import { AccountInfoWrapper } from "@/styles/components";
 import { OrderType } from "@/types/services";
 import areBillingAndShippingEqual from "@/utils/areBillingAndShippingEqual";
-import { PDFDownloadLink } from "@react-pdf/renderer";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { useTranslations } from "next-intl";
-import Image from "next/image";
 import { FC } from "react";
 
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) =>
@@ -61,11 +58,7 @@ const Order: FC<OrderPropsType> = ({ order }) =>
         <AccountLayout title={`${t('order')} #${order.id}`}>
             <Notification>
                 {`${t("notification", { orderId: order.id, date: formattedDate })} ${t(order.status)}.`}
-                <PDFDownloadLink document={<OrderPdf order={order} />} fileName={`order-${order.id}.pdf`}>
-                    <StyledOrderButton aria-label={t("downloadPdf")} >
-                        <Image width={28} height={28} src={`/assets/icons/pdf-icon.svg`} alt="pdf" />
-                    </StyledOrderButton>
-                </PDFDownloadLink>
+                <PDFDownloadButton item={order} />
             </Notification>
             <AccountInfoWrapper>
                 <OrderProductList lineItems={order.line_items} currency={order.currency_symbol} />

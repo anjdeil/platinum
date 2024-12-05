@@ -25,7 +25,6 @@ export const NavLink = styled(Link) <NavLinkProps>`
     transition: all 0.2s ease;
     color: ${({ theme, color = theme.colors.white }) => color};
     text-transform: ${({ texttransform = 'none' }) => (texttransform)};
-    transition: all 0.2s ease;
 
     &.active {
         font-weight: 600;

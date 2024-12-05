@@ -61,13 +61,13 @@ export const ListBody = styled.ul`
     width: 100%;    
     display: flex;
     flex-direction: column;    
-    border: 1px solid ${({ theme }) => theme.colors.silver};
+    border: 1px solid ${({ theme }) => theme.colors.lightBorder};
     border-top: none;
     list-style: none;
 
     @media ${({ theme }) => theme.media.medium} {
         border-radius: 8px;
-        border-top: 1px solid ${({ theme }) => theme.colors.silver};
+        border-top: 1px solid ${({ theme }) => theme.colors.lightBorder};
     }
 `;
 
@@ -114,6 +114,10 @@ export const StyledValue = styled.span`
     @media ${({ theme }) => theme.media.large} {
         font-size: 14px;
     }
+`;
+
+export const TotalStyledValue = styled(StyledValue)`
+    text-align: right;
 `;
 
 export const WrapperBlockInfo = styled.div`
