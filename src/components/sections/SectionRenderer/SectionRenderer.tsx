@@ -82,12 +82,14 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
             return <AboutPlatinumSection key={index} />;
           case 'features':
             return (
-              <FeaturesSection
-                key={index}
-                subtitle={section.subtitle}
-                title={section.title}
-                items={section.items}
-              />
+              <Container key={index}>
+                <FeaturesSection
+                  key={index}
+                  subtitle={section.subtitle}
+                  title={section.title}
+                  items={section.items}
+                />
+              </Container>
             );
           case 'blog':
             return (
