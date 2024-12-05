@@ -3,6 +3,8 @@ import { HeaderWrapperProps } from "@/types/components/widgets/header";
 import styled from "@emotion/styled";
 
 export const MobileHeaderWrapper = styled.div<HeaderWrapperProps>`
+    position: relative;
+    z-index: 101;
     padding-block: 6px;
     background: ${({ theme, backgroundColor = theme.background.primaryGradient }) => backgroundColor};
 `;

@@ -1,12 +1,12 @@
+import MobileSearchButton from '@/components/global/buttons/MobileSearchButton/MobileSearchButton';
 import { LogoLink, LogoLinkImage } from '@/styles/components';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FC } from 'react';
 import { IconButton, MobileHeaderContainer, MobileHeaderWrapper, SearchWrapper } from './styles';
-import MobileSearchButton from '@/components/global/buttons/MobileSearchButton/MobileSearchButton';
 
 const MobileHeader: FC = () =>
-{
+{    
     return (
         <MobileHeaderWrapper>
             <MobileHeaderContainer>
