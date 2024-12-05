@@ -62,7 +62,7 @@ export function useSearchLogic() {
     const isLoading = isProductsLoading || isProductsFetching || isCategoriesLoading || isCategoriesFetching;
 
     function checkSkipping() {
-        return !isFocused || searchTerm.length < 3 || isTyping;
+        return searchTerm.length < 3 || isTyping;
     }
 
     function handleInputChange(value: string) {
