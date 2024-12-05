@@ -13,7 +13,7 @@ interface TitleProps {
     textalign?: "center" | "left" | "right";
     uppercase?: boolean;
     marginTop?: number;
-    marginBottom?: number;
+    marginBottom?: string;
     tabletMarginBottom?: number;
     mobMarginBottom?: number;
 }
@@ -31,6 +31,8 @@ export const Title = styled.h1<TitleProps>`
 
     @media ${({ theme }) => theme.media.large} {
         font: ${({ theme }) => theme.fonts.bodyMiddleSemiBold};
+        font-weight: ${({ fontWeight }) => fontWeight};
+        font-size: ${({ fontSize }) => fontSize};
     }
 
     @media ${({ theme }) => theme.media.small} {

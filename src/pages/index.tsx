@@ -1,4 +1,3 @@
-import { MenusContext } from '@/components/Layout';
 import { SectionRenderer } from '@/components/sections/SectionRenderer';
 import { useResponsive } from '@/hooks/useResponsive';
 import { useAppDispatch, useAppSelector } from '@/store';
@@ -6,18 +5,18 @@ import { useGetCategoriesQuery } from '@/store/rtk-queries/wpCustomApi';
 import { popupToggle } from '@/store/slices/PopupSlice';
 import { Container, Title } from '@/styles/components';
 import { SectionsType } from '@/types/components/sections';
-import axios from 'axios';
-import { GetServerSideProps } from 'next';
-import { Inter } from 'next/font/google';
-import { useContext, useState } from 'react';
+import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { customRestApi } from '@/services/wpCustomApi';
 import { validateWpHomePage } from '@/utils/zodValidators/validateWpHomePage';
 import { HomePageType } from '@/types/pages';
 
-const inter = Inter({ subsets: ['latin'] });
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  const sectionsResponse = await customRestApi.get(`pages/homepage`);
+export const getServerSideProps: GetServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  const { locale } = context;
+  const sectionsResponse = await customRestApi.get(`pages/homepage`, {
+    lang: locale,
+  });
   const sectionsData = sectionsResponse.data as HomePageType;
 
   const isValidSectionsData = validateWpHomePage(sectionsData);
@@ -50,26 +49,10 @@ interface HomeProps {
 }
 
 const Home: React.FC<HomeProps> = ({ sections }) => {
-  const [data, setData] = useState<null | any>(null);
   const currency = useAppSelector((state) => state.currencySlice);
   const language = useAppSelector((state) => state.languageSlice);
-  const menus = useContext(MenusContext);
-
-  async function check() {
-    const res = await axios.get('/api/wp/users');
-    if (res.status === 200) {
-      setData(res.data);
-    } else {
-      console.error(res);
-    }
-  }
 
   const dispatch = useAppDispatch();
-  const popup = useAppSelector((state) => state.popup);
-
-  {
-    data && <p>{data}</p>;
-  }
 
   const { data: categoriesData } = useGetCategoriesQuery({});
   const { isMobile } = useResponsive();

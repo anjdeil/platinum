@@ -20,10 +20,18 @@ export const ProductListSectionSchema = z.object({
   sort_type: z.string().optional(),
 });
 
+export const CategoriesBarSchema = z.object({
+  _type: z.literal('_'),
+  image: z.string().url(),
+  title: z.string(),
+  slug: z.string(),
+});
+
 export const CategoriesSectionSchema = z.object({
   _type: z.literal('categories'),
   subtitle: z.string(),
   title: z.string(),
+  categories_bars: z.array(CategoriesBarSchema),
 });
 
 export const InstagramSectionSchema = z.object({
@@ -45,8 +53,14 @@ export const NewsletterSectionSchema = z.object({
 
 export const AboutPlatinumSectionSchema = z.object({
   _type: z.literal('about_platinum'),
-  about_platinum_separator: z.string().optional(),
 });
+
+export const AboutPLangSchema = z.object({
+  subtitle: z.string(),
+  title: z.string(),
+  text: z.string(),
+});
+
 
 const FeatureItemSchema = z.object({
   _type: z.literal('_'),

@@ -28,6 +28,20 @@ export const CustomSelectPropsSchema = z.object({
     ...CustomSelectStyledPropsSchema.shape,
 });
 
+export const SortSelectPropsSchema = z.object({
+    isOpen: z.boolean().optional(),
+});
+
+export const SortSelectStyledPropsSchema = SortSelectPropsSchema.extend({
+    width: z.string().optional(),
+    maxWidth: z.string().optional(),
+    mobFontSize: z.string().optional(),
+    fontSize: z.string().optional(),
+});
+
 export type CustomSelectStyledProps = z.infer<typeof CustomSelectStyledPropsSchema>;
 export type SelectOptionsProps = z.infer<typeof SelectOptionsPropsSchema>;
 export type CustomSelectProps = z.infer<typeof CustomSelectPropsSchema>;
+
+export type SortSelectStyledProps = z.infer<typeof SortSelectStyledPropsSchema>;
+export type SortSelectProps = z.infer<typeof SortSelectPropsSchema>;

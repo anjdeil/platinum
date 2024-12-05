@@ -28,9 +28,15 @@ declare module "@emotion/react" {
       best: string;
       hot: string;
       sale: string;
+      primaryBlue200: string;
+      primaryBlue500: string;
+      primaryBlue700: string;
     };
     customShadows: {
       primaryShadow: string;
+      primaryBlue200: string;
+      primaryBlue500: string;
+      primaryBlue700: string;
     };
     background: {
       primaryGradient: string;

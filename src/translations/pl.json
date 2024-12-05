@@ -96,7 +96,8 @@
     "addComment": "Dodaj komentarz",
     "submitting": "Wysyłanie",
     "commentText1": "Czy przetestowałeś nasz produkt? Podziel się swoją opinią;",
-    "commentText2": "- Staramy się być najlepsi dla Ciebie, a Twoja opinia bardzo nam pomoże!"
+    "commentText2": "- Staramy się być najlepsi dla Ciebie, a Twoja opinia bardzo nam pomoże!",
+    "lastedArticles": "Najnowsze artykuły"
   },
   "Cart": {
     "productName": "Nazwa",
@@ -118,5 +119,8 @@
     "notFound": "Strona nie znaleziona",
     "description": "Przepraszamy, ale nie możemy znaleźć strony, której szukasz. Mogła ona zostać przeniesiona, usunięta lub nigdy nie istniała.",
     "backToHome": "Wróć do strony głównej"
+  },
+  "HomePage": {
+    "aboutOurBrand": "O naszej marce"
   }
 }
