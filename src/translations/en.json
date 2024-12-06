@@ -133,13 +133,40 @@
     "products": "Products",
     "сoupon": "Сoupon",
     "paymentMethod": "Payment method",
-
     "Basket": "Basket",
     "PersonalInformation": "Personal Information",
     "Confirmation": "Confirmation",
     "welcomeToPlatinumShop": "Welcome to Platinum Shop",
     "theBest": "The best",
     "productForYou": "Product for you"
+  },
+  "Contacts": {
+    "contacts": "Contacts",
+    "telephone": "Telephone",
+    "call": "Call",
+    "address": "Address",
+    "schedule": "Mon-Fri: from",
+    "dayOff": "Sat-Sun: Day off",
+    "satSun": "Sat-Sun: from",
+    "howToGetThere": "How to get there?",
+    "email": "Email",
+    "toWrite": "To write",
+    "socialMedia": "We are in social media",
+    "askUsQuestion": "Ask Us a Question",
+    "yourNamePlaceholder": "What is your name?",
+    "emailPlaceholder": "Email",
+    "yourQuestionPlaceholder": "Write your question",
+    "sending": "Sending...",
+    "sendButton": "Send",
+    "errorMessage": "Something went wrong. Please try again.",
+    "successMessage": "Your message has been sent successfully!"
+  },
+  "Validation": {
+    "email": "Please enter a valid email.",
+    "minChar": "Must be at least {count} characters long."
+  },
+  "Breadcrumbs": {
+    "homePage": "Home Page"
   },
   "NotFoundPage": {
     "notFound": "Page not found",
