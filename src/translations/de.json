@@ -42,6 +42,7 @@
     "price": "Preis",
     "quantity": "Menge",
     "summaryOrder": "Bestellübersicht",
+
     "customerData": "Kundendaten",
     "products": "Produkte",
     "delivery": "Lieferung",
@@ -61,7 +62,8 @@
     "amount": "Betrag",
     "paymentMethod": "Zahlungsmethode",
     "total": "Gesamt",
-    "action": "Aktion"
+    "action": "Aktion",
+    "availablePcs": "Verfügbar {quantity} Stk"
   },
   "TopBar": {
     "CallUs": "Rufen Sie uns an"
@@ -126,6 +128,7 @@
     "OrderCommentPlaceholder": "Teilen Sie spezifische Details oder Anfragen zu Ihrer Bestellung...",
     "OrderCommentHint": "Fühlen Sie sich frei, zusätzliche Anweisungen oder Hinweise zu Ihrer Bestellung hier anzugeben.",
     "OrderSummary": "Bestellübersicht",
+    "summary": "Summe",
     "Continue": "Weiter",
     "OrderSummaryTotal": "Gesamtbetrag zu zahlen",
 

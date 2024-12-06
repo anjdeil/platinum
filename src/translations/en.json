@@ -42,6 +42,7 @@
     "price": "Price",
     "quantity": "Quantity",
     "summaryOrder": "Summary Order",
+
     "customerData": "Customer Data",
     "products": "Products",
     "delivery": "Delivery",
@@ -61,7 +62,9 @@
     "amount": "Amount",
     "paymentMethod": "Payment method",
     "total": "Total",
-    "action": "Action"
+    "action": "Action",
+
+    "availablePcs": "Available {quantity} pcs"
   },
   "TopBar": {
     "CallUs": "Call us"
@@ -139,8 +142,10 @@
     "Confirmation": "Confirmation",
     "welcomeToPlatinumShop": "Welcome to Platinum Shop",
     "theBest": "The best",
-    "productForYou": "Product for you"
+    "productForYou": "Product for you",
+    "summary": "Summary"
   },
+
   "NotFoundPage": {
     "notFound": "Page not found",
     "description": "Sorry, we can't seem to find the page you're looking for. It may have been moved, deleted, or never existed.",
