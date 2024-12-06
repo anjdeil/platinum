@@ -74,7 +74,7 @@ const ContactsForm = () => {
             inputType="text"
             setValue={setValue}
             placeholder={t('yourNamePlaceholder')}
-            height="28px"
+            height="100%"
             background={theme.colors.white}
           />
           <CustomFormInput
@@ -86,7 +86,7 @@ const ContactsForm = () => {
             inputType="text"
             setValue={setValue}
             placeholder={t('emailPlaceholder')}
-            height="28px"
+            height="100%"
             background={theme.colors.white}
           />
         </InputsWrapper>
@@ -107,7 +107,6 @@ const ContactsForm = () => {
           width="100%"
           height="56px"
           color={theme.colors.white}
-          backgroundColor={theme.colors.primary}
           hoverColor={theme.colors.primary}
           hoverBackgroundColor={theme.background.secondary}
         >

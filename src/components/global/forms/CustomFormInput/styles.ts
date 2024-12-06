@@ -138,10 +138,10 @@ export const ShowPasswordImage = styled(Image)`
 
 export const CustomError = styled.p`
   margin-top: 5px;
-  padding-left: 5px;
+  padding: 0 10px;
+
   color: ${({ theme }) => theme.colors.error};
   @media ${({ theme }) => theme.media.medium} {
-    padding-left: 10px;
     margin-top: 10px;
   }
 `
