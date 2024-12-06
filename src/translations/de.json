@@ -84,12 +84,20 @@
     "fastShipping": "Schneller Versand",
     "freeDeliveryOver": "Kostenloser Versand ab {price}",
     "color": "Farbe",
+    "yourFeedback": "Ihr Feedback",
+    "reviews": "Bewertungen",
+    "readMore": "Mehr erfahren",
     "bestForYou": "Das Beste für dich",
     "recommendProduct": "Empfohlene Waren",
     "bestSeller": "Bestseller",
     "newProduct": "Neue Produkte",
     "ourCategories": "Unsere Kategorien",
-    "moreProduct": "Mehr Produkt"
+    "moreProduct": "Mehr Produkt",
+    "addComment": "Kommentar hinzufügen",
+    "submitting": "Einreichen",
+    "commentText1": "Haben Sie unser Produkt getestet? Teilen Sie Ihre Meinung mit;",
+    "commentText2": "- Wir versuchen, das Beste für Sie zu sein, und Ihre Meinung wird uns sehr helfen!",
+    "lastedArticles": "Neueste Artikel"
   },
   "Cart": {
     "productName": "Name",
@@ -113,17 +121,18 @@
     "CouponApply": "Coupon erfolgreich angewendet",
     "CouponApplyBtn": "Gutschein anwenden",
     "CouponInputPlaceholder": "Gutscheincode",
-
     "OrderComments": "KOMMENTARE ZUR BESTELLUNG",
     "OrderCommentPlaceholder": "Teilen Sie spezifische Details oder Anfragen zu Ihrer Bestellung...",
     "OrderCommentHint": "Fühlen Sie sich frei, zusätzliche Anweisungen oder Hinweise zu Ihrer Bestellung hier anzugeben.",
     "OrderSummary": "Bestellübersicht",
     "Continue": "Weiter",
     "OrderSummaryTotal": "Gesamtbetrag zu zahlen",
-
     "products": "Artikel",
     "coupon": "Gutschein",
-    "paymentMethod": "Zahlungsmethode"
+    "paymentMethod": "Zahlungsmethode",
+    "Basket": "Warenkorb",
+    "PersonalInformation": "Persönliche Informationen",
+    "Confirmation": "Bestätigung"
   },
   "Contacts": {
     "contacts": "Kontakte",
@@ -152,5 +161,13 @@
   },
   "Breadcrumbs": {
     "homePage": "Startseite"
+  },
+  "NotFoundPage": {
+    "notFound": "Seite nicht gefunden",
+    "description": "Es tut uns leid, wir können die Seite, die Sie suchen, nicht finden. Sie wurde möglicherweise verschoben, gelöscht oder hat nie existiert.",
+    "backToHome": "Zurück zur Startseite"
+  },
+  "HomePage": {
+    "aboutOurBrand": "Über unsere Marke"
   }
 }

@@ -1,5 +1,6 @@
 import { ProductsMinimizedType } from "@/types/components/shop/product/products";
 import { CartItem } from "@/types/store/reducers/сartSlice";
+import { log } from "console";
 
 export default function checkProductAvailability(
   item: CartItem,
@@ -29,7 +30,8 @@ export default function checkProductAvailability(
 
   const stockQuantity = productSpecs.stock_quantity ?? 0;
   const resolveCount = stockQuantity;
-  const isAvailable = stockQuantity < item.quantity ? false : true;
+  const isAvailable =
+    stockQuantity < item.quantity || stockQuantity === 0 ? false : true;
 
   return { resolveCount, isAvailable };
 }

@@ -67,9 +67,10 @@ const CartCouponBlock: FC<CartCouponBlockProps> = ({
                             inputType="text"
                             setValue={setValue}
                             placeholder={t('CouponInputPlaceholder')}
-                            height="28px"
+                            height="100%"
+
                         />
-                        <CouponButton type="submit" backgroundColor={theme.colors.primary}>
+                        <CouponButton type="submit" >
                             {t('CouponApplyBtn')}
                         </CouponButton>
                     </CouponForm>

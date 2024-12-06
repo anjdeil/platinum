@@ -33,6 +33,7 @@ import { MenuSkeleton } from "@/components/menus/MenuSkeleton";
 import { CartItem } from "@/types/store/reducers/сartSlice";
 import theme from "@/styles/theme";
 import { useTranslations } from "next-intl";
+import Notification from "@/components/global/Notification/Notification";
 
 interface CartTableProps {
   symbol: string;
@@ -103,10 +104,15 @@ const CartTable: FC<CartTableProps> = ({
     }
   };
 
+
+
   return (
     <CartTableWrapper>
+      {!(isLoadingOrder || isLoadingProductsMin) && hasConflict && <Notification type="warning" >{t("cartConflict")}</Notification>}
+
       {!isMobile ? (
         <>
+
           <CartTableGrid>
             <GridHeader>
               <GridRow >
@@ -121,6 +127,7 @@ const CartTable: FC<CartTableProps> = ({
             {!(isLoadingOrder || isLoadingProductsMin) &&
               orderItems?.line_items.map((item) => {
                 const { resolveCount, isAvailable } = checkProductAvailability(item, productsSpecs);
+
                 return (
                   <RowWrapper key={item.id}>
                     <GridRow >
@@ -230,7 +237,7 @@ const CartTable: FC<CartTableProps> = ({
           )}
         </>
       )}
-      {hasConflict && <p>{t("cartConflict")}</p>}
+
     </CartTableWrapper>
   );
 };

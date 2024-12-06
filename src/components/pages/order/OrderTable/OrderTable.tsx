@@ -1,30 +1,16 @@
-import OrderPdf from "@/pdf/OrderPdf";
+import PDFDownloadButton from "@/components/global/buttons/PDFDownloadButton/PDFDownloadButton";
 import { AccountTitle, StyledButton } from "@/styles/components";
+import { TableProps } from "@/types/pages/account";
 import { useTheme } from "@emotion/react";
-import { PDFDownloadLink } from '@react-pdf/renderer';
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import { SkeletonOrderTable } from "./SkeletonOrderTable";
 import { StyledActionsTd, StyledBody, StyledBodyTr, StyledDateTd, StyledDetailesTd, StyledDetailesTh, StyledHead, StyledLinkDesktopButton, StyledLinkMobileButton, StyledNoAndDate, StyledOrderButton, StyledOrderSpan, StyledOrderWrapper, StyledSpan, StyledTable, StyledTd, StyledTh, StyledTotalSpan, StyledTr } from "./styles";
-import { TableProps } from "@/types/pages/account";
 
 const OrderTable: React.FC<TableProps> = ({ orderList, title }) =>
 {
     const theme = useTheme();
     const t = useTranslations("MyAccount");
-
-    const [isClient, setIsClient] = useState(false);
-
-    useEffect(() =>
-    {
-        setIsClient(true);
-    }, []);
-
-    if (!isClient)
-    {
-        return null;
-    }
 
     return (
         <>
@@ -73,7 +59,7 @@ const OrderTable: React.FC<TableProps> = ({ orderList, title }) =>
                                         </StyledNoAndDate>
                                     </StyledTd>
                                     <StyledDetailesTd>
-                                        <StyledTotalSpan>{t("shipping")}: {item.shipping_lines[0].method_title}</StyledTotalSpan>
+                                        <StyledTotalSpan>{t("shipping")}: {item.shipping_lines[0]?.method_title}</StyledTotalSpan>
                                         <StyledTotalSpan>{t("payment")}: {item.payment_method_title}</StyledTotalSpan>
                                         <StyledTotalSpan>{item.total} {item.currency_symbol}</StyledTotalSpan>
                                     </StyledDetailesTd>
@@ -88,18 +74,14 @@ const OrderTable: React.FC<TableProps> = ({ orderList, title }) =>
                                     </StyledTd>
                                     <StyledActionsTd>
                                         <StyledLinkMobileButton href={`/my-account/orders/${item.id}`}>
-                                            <StyledButton color={theme.colors.white} backgroundColor={theme.colors.primary}>{t("seeMore")}</StyledButton>
+                                            <StyledButton color={theme.colors.white}>{t("seeMore")}</StyledButton>
                                         </StyledLinkMobileButton>
                                         <StyledLinkDesktopButton href={`/my-account/orders/${item.id}`}>
                                             <StyledOrderButton aria-label={t("seeMore")} >
                                                 <Image width={28} height={28} src={`/assets/icons/view-icon.svg`} alt="view" />
                                             </StyledOrderButton>
                                         </StyledLinkDesktopButton>
-                                        <PDFDownloadLink document={<OrderPdf order={item} />} fileName={`order-${item.id}.pdf`}>
-                                            <StyledOrderButton aria-label={t("downloadPdf")} >
-                                                <Image width={28} height={28} src={`/assets/icons/pdf-icon.svg`} alt="pdf" />
-                                            </StyledOrderButton>
-                                        </PDFDownloadLink>
+                                        <PDFDownloadButton item={item} />                                        
                                     </StyledActionsTd>
                                 </StyledBodyTr>
                             )

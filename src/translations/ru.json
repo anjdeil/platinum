@@ -84,12 +84,20 @@
     "fastShipping": "Быстрая доставка",
     "freeDeliveryOver": "Бесплатная доставка от {price}",
     "color": "Цвет",
+    "yourFeedback": "Ваш отзыв",
+    "reviews": "Отзывы",
+    "readMore": "Читать далее",
     "bestForYou": "Лучшее для вас",
     "recommendProduct": "Рекомендуємые товары",
     "bestSeller": "Бестселлеры",
     "newProduct": "Новинки",
     "ourCategories": "Наши категории",
-    "moreProduct": "Больше товара"
+    "moreProduct": "Больше товара",
+    "addComment": "Оставить комментарий",
+    "submitting": "Отправка",
+    "commentText1": "Вы протестировали наш продукт? Поделитесь своим мнением;",
+    "commentText2": "- Мы стараемся быть лучшими для вас, и ваше мнение очень нам поможет!",
+    "lastedArticles": "Последние статьи"
   },
   "Cart": {
     "productName": "Название",
@@ -123,7 +131,15 @@
 
     "products": "Товары",
     "coupon": "Купон",
-    "paymentMethod": "Способ оплаты"
+    "paymentMethod": "Способ оплаты",
+
+    "Basket": "Корзина",
+    "PersonalInformation": "Личная информация",
+    "Confirmation": "Подтверждение",
+
+    "welcomeToPlatinumShop": "Добро пожаловать в Platinum Shop",
+    "theBest": "Лучший",
+    "productForYou": "Продукт для вас"
   },
   "Contacts": {
     "contacts": "Контакты",
@@ -152,5 +168,13 @@
   },
   "Breadcrumbs": {
     "homePage": "Главная"
+  },
+  "NotFoundPage": {
+    "notFound": "Страница не найдена",
+    "description": "К сожалению, мы не можем найти страницу, которую вы ищете. Возможно, она была перемещена, удалена или никогда не существовала.",
+    "backToHome": "Вернуться на главную страницу"
+  },
+  "HomePage": {
+    "aboutOurBrand": "О нашем бренде"
   }
 }

@@ -5,7 +5,7 @@ export const BreadcrumbSchema = z.object({
     url: z.string()
 });
 
-const BreadcrumbsSchema = z.object({
+export const BreadcrumbsSchema = z.object({
     links: z.array(BreadcrumbSchema),
 });
 

@@ -1,13 +1,12 @@
-import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { Archive } from "@/components/shop/Archive";
-import { CustomDataProductsSchema, CustomDataProductsType, ProductParamsType } from "@/types/services";
-import { findPageParam } from "@/utils/getCurrentPageNumber";
 import { customRestApi } from "@/services/wpCustomApi";
 import { ProductType } from "@/types/pages/shop";
+import { ProductParamsType } from "@/types/services";
+import { findPageParam } from "@/utils/getCurrentPageNumber";
 import { validateWpCustomProductsData } from "@/utils/zodValidators/validateWpCustomProductsData";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
 
-export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) =>
-{
+export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
     const { slugs, ...params } = context.query;
     if (!slugs || !Array.isArray(slugs)) return { notFound: true };
 
@@ -20,11 +19,9 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
 
     if (!page) return { notFound: true };
 
-    if (page === '1' || page === '0')
-    {
+    if (page === '1' || page === '0') {
         const pageIndex = slugs.indexOf('page');
-        if (pageIndex !== -1)
-        {
+        if (pageIndex !== -1) {
             const newPath = slugs.slice(0, pageIndex).join('/');
             return {
                 redirect: {
@@ -59,14 +56,12 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
     console.log('params before server', params)
     console.log('currentParams', productsParams)
 
-    try
-    {
+    try {
         const response = await customRestApi.get('products', productsParams);
         const validatedData = validateWpCustomProductsData(response.data);
         let products: ProductType[] = [];
         let pagesCount = 0;
-        if (validatedData)
-        {
+        if (validatedData) {
             products = validatedData.data.items;
             const productsCount = validatedData.data.statistic?.products_count;
             pagesCount = Math.ceil(productsCount / productsPerPage);
@@ -82,12 +77,11 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
                 products,
                 pagesCount,
                 page,
-                statistic: validatedData?.data.statistic
+                statistic: validatedData?.data.statistic,
             },
         }
 
-    } catch (error)
-    {
+    } catch (error) {
         console.error(error);
         return {
             props: {

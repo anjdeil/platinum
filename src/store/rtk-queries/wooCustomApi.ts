@@ -24,10 +24,9 @@ export const wooCustomRktApi = createApi({
       }),
     }),
     fetchOrders: builder.query({
-      query: (credentials: any) => ({
-        url: "/orders",
-        method: "POST",
-        body: credentials,
+      query: (params: any) => ({
+        url: `/orders?${new URLSearchParams(params).toString()}`,
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
@@ -55,6 +54,16 @@ export const wooCustomRktApi = createApi({
         method: "GET",
       }),
     }),
+    addComment: builder.mutation({
+      query: (credentials: any) => ({
+        url: "/products/reviews",
+        method: "POST",
+        body: credentials,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+    }),
   }),
 });
 
@@ -63,4 +72,5 @@ export const {
   useFetchOrdersQuery,
   useCreateOrderMutation,
   useListAllCouponsQuery,
+  useAddCommentMutation,
 } = wooCustomRktApi;

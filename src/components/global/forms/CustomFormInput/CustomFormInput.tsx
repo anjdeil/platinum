@@ -4,7 +4,6 @@ import { CustomFormInputType } from "@/types/components/global/forms/customFormI
 import { PhoneInput } from 'react-international-phone';
 import 'react-international-phone/style.css';
 
-
 export const CustomFormInput: FC<CustomFormInputType> = (
     {
         errors,

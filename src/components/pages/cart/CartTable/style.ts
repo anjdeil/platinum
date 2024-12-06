@@ -6,7 +6,6 @@ interface GridRowFullProps {
 
 export const CartTableWrapper = styled.div`
   width: 100%;
-  margin: 24px 0;
 `;
 
 export const CartTableGrid = styled.div`

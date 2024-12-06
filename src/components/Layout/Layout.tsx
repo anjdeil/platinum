@@ -26,9 +26,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     const langParamStr = locale ? locale : '';
     const [menus, setMenus] = useState<WpMenuResponseType[] | []>([]);
 
-    const { data: menusResp, error, isLoading } = useGetMenusQuery(langParam);
-    const { data: themeOptions, error: themeOptionsError, } = useGetThemeOptionsQuery();
-    /*     const { data: products, error: productError, isError } = useGetProductsQuery(langParam); */
+  const { data: menusResp, error, isLoading } = useGetMenusQuery(langParam);
+  const { data: themeOptions, error: themeOptionsError } =
+    useGetThemeOptionsQuery();
+  /*     const { data: products, error: productError, isError } = useGetProductsQuery(langParam); */
 
     useEffect(() => {
         if (menusResp && menusResp.data && menusResp.data.items) {
@@ -42,17 +43,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         }
     }, [themeOptions, locale, dispatch]);
 
-    return (
-        <Box>
-            <MenusContext.Provider value={menus}>
-                {!isMobile && <TopBar />}
-                {!isMobile ? <Header /> : <MobileHeader />}
-                <PopupContainer />
-                {isMobile && (<BottomMenu />)}
-                {children}
-                <Footer />
-                <CategoriesMenu />
-            </MenusContext.Provider >
-        </Box >
-    );
+  return (
+    <Box>
+      <MenusContext.Provider value={menus}>
+        {!isMobile && <TopBar />}
+        {!isMobile ? <Header /> : <MobileHeader />}
+        <PopupContainer />
+        {isMobile && <BottomMenu />}
+        {children}
+        <Footer />
+        <CategoriesMenu />
+      </MenusContext.Provider>
+    </Box>
+  );
 } 

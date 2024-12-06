@@ -117,7 +117,7 @@ const OrderPdf = ({ order }: { order: OrderType }) => {
 
                     <View>
                         {order?.line_items?.map(item =>
-                            <View style={styles.productTableRow}>
+                            <View key={item.id} style={styles.productTableRow}>
                                 <View style={styles.productTableTwoColumn}>
                                     <Text style={styles.text}>
                                         {item.name}
