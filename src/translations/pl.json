@@ -42,6 +42,7 @@
     "price": "Cena",
     "quantity": "Ilość",
     "summaryOrder": "Podsumowanie zamówienia",
+
     "customerData": "Dane klienta",
     "products": "Produkty",
     "delivery": "Dostawa",
@@ -61,7 +62,8 @@
     "amount": "Kwota",
     "paymentMethod": "Metoda płatności",
     "total": "Razem",
-    "action": "Działanie"
+    "action": "Działanie",
+    "availablePcs": "Dostępne {quantity} szt"
   },
   "TopBar": {
     "CallUs": "Zadzwoń do nas"
@@ -127,6 +129,7 @@
     "OrderCommentPlaceholder": "Podziel się konkretnymi szczegółami lub prośbami dotyczącymi zamówienia...",
     "OrderCommentHint": "W tym miejscu można podać wszelkie dodatkowe instrukcje lub uwagi dotyczące zamówienia.",
     "OrderSummary": "Podsumowanie zamówienia",
+    "summary": "Suma",
     "Continue": "Kontynuuj",
     "OrderSummaryTotal": "całkowita kwota do zapłaty",
 

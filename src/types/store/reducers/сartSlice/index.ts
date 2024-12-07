@@ -1,16 +1,26 @@
-import { z } from "zod";
+import { z } from 'zod'
 
 export const CartItemSchema = z.object({
   product_id: z.number(),
   variation_id: z.number().optional(),
   quantity: z.number(),
-});
+})
 
 export const CartStateSchema = z.object({
   cartItems: z.array(CartItemSchema),
   couponCodes: z.array(z.string()),
   commentToOrder: z.string(),
-});
+})
+
+export const WishlistItemSchema = z.object({
+  product_id: z.number(),
+  variation_id: z.number().optional(),
+})
+export const ProductMinReqSchema = z.object({
+  product_id: z.number(),
+  quantity: z.number().optional(),
+  variation_id: z.number().optional(),
+})
 
 export const lineOrderItemsSchema = z.object({
   id: z.number(),
@@ -34,8 +44,10 @@ export const lineOrderItemsSchema = z.object({
     .optional(),
   sku: z.string(),
   price: z.number(),
-});
+})
 
-export type lineOrderItems = z.infer<typeof lineOrderItemsSchema>;
-export type CartItem = z.infer<typeof CartItemSchema>;
-export type CartState = z.infer<typeof CartStateSchema>;
+export type WishlistItem = z.infer<typeof WishlistItemSchema>
+export type lineOrderItems = z.infer<typeof lineOrderItemsSchema>
+export type CartItem = z.infer<typeof CartItemSchema>
+export type CartState = z.infer<typeof CartStateSchema>
+export type ProductMinReq = z.infer<typeof ProductMinReqSchema>
