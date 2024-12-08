@@ -147,6 +147,17 @@
     "backToHome": "Вернуться на главную страницу"
   },
   "HomePage": {
-    "aboutOurBrand": "О нашем бренде"
+    "aboutOurBrand": "О нашем бренде",
+    "newUnreadMessage": "Новое непрочитанное сообщение",
+    "unreadMessageDate": "Сейчас",
+    "subscribeToOurNewsletter": "Подпишитесь на нашу рассылку!",
+    "newArrivals": "Узнавайте первыми о новых поступлениях, эксклюзивных скидках и специальных предложениях.",
+    "joinToWhatsApp": "Присоединяйтесь к нашему WhatsApp сообществу",
+    "subscribe": "Подписаться"
+  },
+  "SubscriptionForm": {
+    "subscribe": "Подписаться",
+    "typeValidEmail": "Введите действительный адрес электронной почты",
+    "failedToSendEmail": "Не удалось отправить электронное письмо"
   }
 }

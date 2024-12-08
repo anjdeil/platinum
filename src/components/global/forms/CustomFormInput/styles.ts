@@ -17,8 +17,8 @@ interface CustomInputContainerProps {
 
 interface CustomInputProps {
   height?: string;
-  isCheckbox: boolean;
-  isError: boolean;
+  isCheckbox?: boolean;
+  isError?: boolean;
 }
 
 // Styles with classes name are for international phone input from react-international-phone

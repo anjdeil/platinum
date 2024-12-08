@@ -147,6 +147,17 @@
     "backToHome": "Wróć do strony głównej"
   },
   "HomePage": {
-    "aboutOurBrand": "O naszej marce"
+    "aboutOurBrand": "O naszej marce",
+    "newUnreadMessage": "Nowa nieprzeczytana wiadomość",
+    "unreadMessageDate": "Teraz",
+    "subscribeToOurNewsletter": "Zapisz się do naszego newslettera!",
+    "newArrivals": "Bądź pierwszy, który dowie się o nowościach, ekskluzywnych zniżkach i ofertach specjalnych.",
+    "joinToWhatsApp": "Dołącz do nas na WhatsApp",
+    "subscribe": "Zapisz się"
+  },
+  "SubscriptionForm": {
+    "subscribe": "Zapisz się",
+    "typeValidEmail": "Wpisz poprawny adres e-mail",
+    "failedToSendEmail": "Nie udało się wysłać e-maila"
   }
 }

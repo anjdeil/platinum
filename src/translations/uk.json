@@ -147,6 +147,17 @@
     "backToHome": "Повернутися на головну сторінку"
   },
   "HomePage": {
-    "aboutOurBrand": "Про наш бренд"
+    "aboutOurBrand": "Про наш бренд",
+    "newUnreadMessage": "Нове непрочитане повідомлення",
+    "unreadMessageDate": "Зараз",
+    "subscribeToOurNewsletter": "Підпишіться на нашу розсилку!",
+    "newArrivals": "Дізнавайтеся першими про новинки, ексклюзивні знижки та спеціальні пропозиції.",
+    "joinToWhatsApp": "Приєднуйтесь до нашого WhatsApp спільноти",
+    "subscribe": "Підписатися"
+  },
+  "SubscriptionForm": {
+    "subscribe": "Підписатися",
+    "typeValidEmail": "Введіть дійсну адресу електронної пошти",
+    "failedToSendEmail": "Не вдалося відправити електронний лист"
   }
 }
