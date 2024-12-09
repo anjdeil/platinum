@@ -135,9 +135,11 @@
         "Confirmation": "Bestätigung"
     },
     "NotFoundPage": {
-        "notFound": "Seite nicht gefunden",
-        "description": "Es tut uns leid, wir können die Seite, die Sie suchen, nicht finden. Sie wurde möglicherweise verschoben, gelöscht oder hat nie existiert.",
-        "backToHome": "Zurück zur Startseite"
+      "notFound": "Seite nicht gefunden",
+      "description": "Es tut uns leid, wir können die Seite, die Sie suchen, nicht finden. Sie wurde möglicherweise verschoben, gelöscht oder hat nie existiert.",
+      "backToHome": "Zurück zur Startseite",
+      "serverError": "Serverfehler",
+      "serverErrorDescription": "Es tut uns leid, auf dem Server ist ein Fehler aufgetreten. Wir arbeiten daran, das Problem zu beheben."
     },
     "HomePage": {
         "aboutOurBrand": "Über unsere Marke"

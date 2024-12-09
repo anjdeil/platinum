@@ -144,7 +144,9 @@
   "NotFoundPage": {
     "notFound": "Page not found",
     "description": "Sorry, we can't seem to find the page you're looking for. It may have been moved, deleted, or never existed.",
-    "backToHome": "Go back to the homepage"
+    "backToHome": "Go back to the homepage",
+    "serverError": "Server error",
+    "serverErrorDescription": "Sorry, something went wrong. Please try again later."
   },
   "HomePage": {
     "aboutOurBrand": "About our brand"
