@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 
 interface CartProductWarningProps {
     onUpdate: () => void;
-    resolveCount: number | false | undefined;
+    resolveCount: number
 }
 
 const CartProductWarning: React.FC<CartProductWarningProps> = ({ onUpdate, resolveCount, }) => {
