@@ -1,4 +1,5 @@
 import IconButton from '@/components/global/buttons/IconButton/IconButton';
+import { useRouter } from 'next/router';
 import { FormEvent } from 'react';
 import BackIcon from '../icons/BackIcon/BackIcon';
 import FindIcon from '../icons/FindIcon/FindIcon';
@@ -20,7 +21,11 @@ export default function SearchInputComponent({
   onBlur: () => void;
   onClose: () => void;
   inputRef: React.RefObject<HTMLInputElement>;
-}) {
+  }) {
+  const router = useRouter();
+
+  const searchHref = `/${router.locale === 'en' ? '' : router.locale}/search/${encodeURIComponent(searchTerm)}`;
+
   return (
     <SearchInputWrap>
       <IconButton onClick={onClose} color="#252525" IconComponent={BackIcon} />
@@ -34,7 +39,7 @@ export default function SearchInputComponent({
       />
       <SearchInputIcons>
         {isLoading && <SearchInputLoadingIcon size={24} color="inherit" />}
-        <IconButton color="#252525" IconComponent={FindIcon} />
+        <IconButton href={searchHref} color="#252525" IconComponent={FindIcon} />
       </SearchInputIcons>
     </SearchInputWrap>
   );
