@@ -103,6 +103,10 @@
     "lastedArticles": "Lasted Articles"
   },
   "Cart": {
+    "cart": "Cart",
+    "psc": "psc",
+    "placeAnOrder": "Place an order",
+    "goToCart": "Go to cart",
     "productName": "Name",
     "price": "Price",
     "quantity": "Quantity",

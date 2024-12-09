@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useCallback, useEffect } from 'react'
 import { OrderType } from '@/types/services'
 import { useAppDispatch } from '@/store'
 import { updateCart } from '@/store/slices/cartSlice'
@@ -32,6 +32,7 @@ import { CartItem } from '@/types/store/reducers/сartSlice'
 import theme from '@/styles/theme'
 import { useTranslations } from 'next-intl'
 import Notification from '@/components/global/Notification/Notification'
+import { handleQuantityChange } from '@/utils/cart/handleQuantityChange'
 
 interface CartTableProps {
   symbol: string
@@ -58,48 +59,25 @@ const CartTable: FC<CartTableProps> = ({
   const dispatch = useAppDispatch()
   const { isMobile } = useResponsive()
 
-  const handleChangeQuantity = (
-    product_id: number,
-    action: 'inc' | 'dec' | 'value',
-    variation_id?: number,
-    newQuantity?: number | boolean
-  ) => {
-    const updatedItem = cartItems.find(
-      (item) =>
-        item.product_id === product_id &&
-        (!variation_id || item.variation_id === variation_id)
-    )
-
-    if (updatedItem) {
-      let quantityToUpdate = updatedItem.quantity
-
-      switch (action) {
-        case 'inc':
-          quantityToUpdate = updatedItem.quantity + 1
-          break
-        case 'dec':
-          quantityToUpdate = updatedItem.quantity - 1
-          break
-        case 'value':
-          if (newQuantity !== undefined && !Number.isNaN(newQuantity)) {
-            quantityToUpdate = newQuantity as number
-          }
-          break
-        default:
-          return
-      }
-
-      if (quantityToUpdate >= 0) {
-        dispatch(
-          updateCart({
-            product_id,
-            variation_id,
-            quantity: quantityToUpdate,
-          })
-        )
-      }
-    }
-  }
+  useEffect(() => console.log('CartTable', cartItems))
+  const handleChangeQuantity = useCallback(
+    (
+      product_id: number,
+      action: 'inc' | 'dec' | 'value',
+      variation_id?: number,
+      newQuantity?: number | boolean
+    ) => {
+      handleQuantityChange(
+        cartItems,
+        dispatch,
+        product_id,
+        action,
+        variation_id,
+        newQuantity
+      )
+    },
+    [cartItems, dispatch]
+  )
 
   return (
     <CartTableWrapper>

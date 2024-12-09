@@ -102,6 +102,10 @@
     "lastedArticles": "Najnowsze artykuły"
   },
   "Cart": {
+    "cart": "Koszyk",
+    "psc": "szt",
+    "placeAnOrder": "Złóż zamówienie",
+    "goToCart": "Przejdź do koszyka",
     "productName": "Nazwa",
     "price": "Cena",
     "quantity": "Ilość",

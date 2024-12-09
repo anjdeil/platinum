@@ -36,6 +36,7 @@ interface TitleProps {
   mobFontSize?: string
   textalign?: 'center' | 'left' | 'right'
   uppercase?: boolean
+  lowercase?: boolean
   marginTop?: number
   marginBottom?: string
   tabletMarginBottom?: number
@@ -48,7 +49,8 @@ export const Title = styled.h1<TitleProps>`
   font: ${({ theme }) => theme.fonts.titleH2SemiBold};
   font-size: ${({ fontSize }) => fontSize};
   font-weight: ${({ fontWeight }) => fontWeight};
-  text-transform: ${({ uppercase }) => (uppercase ? 'uppercase' : 'none')};
+  text-transform: ${({ uppercase, lowercase }) =>
+    uppercase ? 'uppercase' : lowercase ? 'lowercase' : 'none'};
   text-align: ${({ textalign = 'center' }) => textalign};
   margin-top: ${({ marginTop = '0' }) => marginTop};
   margin-bottom: ${({ marginBottom = '0' }) => marginBottom};
@@ -120,10 +122,20 @@ export const StyledButton = styled.button<StyledButtonProps>`
   min-width: ${({ minWidthDesktop = 'auto' }) => minWidthDesktop};
   padding-inline: 16px;
   border-radius: 10px;
+
   color: ${({ theme, secondary = false }) =>
     secondary ? theme.colors.black : theme.colors.white};
   background-color: ${({ notify = false, secondary = false, theme }) =>
     notify ? theme.colors.secondary : secondary ? 'transparent' : theme.colors.primary};
+
+  ${({ disabled, theme }) =>
+    disabled &&
+    `
+      background-color: ${theme.colors.secondary};
+      cursor: not-allowed;
+      pointer-events: none;
+    `}
+
   padding-block: 16px;
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
   text-transform: none;
@@ -133,11 +145,20 @@ export const StyledButton = styled.button<StyledButtonProps>`
   display: flex;
   justify-content: center;
   align-items: center;
+  text-decoration: ${({ textDecoration = 'none' }) => textDecoration};
 
   &:hover {
-    color: ${({ theme, hoverColor = theme.colors.white }) => hoverColor};
-    background-color: ${({ theme, hoverBackgroundColor = theme.background.hover }) =>
-      hoverBackgroundColor};
+    ${({
+      disabled,
+      theme,
+      hoverColor = theme.colors.white,
+      hoverBackgroundColor = theme.background.hover,
+    }) =>
+      !disabled &&
+      `
+        color: ${hoverColor};
+        background-color: ${hoverBackgroundColor};
+      `}
   }
 
   @media ${({ theme }) => theme.media.large} {

@@ -22,6 +22,7 @@ import {
   TitleWrapper,
 } from './styles'
 import { WishlistItem } from '@/types/store/reducers/сartSlice'
+import { popupToggle } from '@/store/slices/PopupSlice'
 
 const ProductCard: React.FC<ProductCardPropsType> = ({
   product,
@@ -59,6 +60,7 @@ const ProductCard: React.FC<ProductCardPropsType> = ({
           quantity: 1,
         })
       )
+      dispatch(popupToggle('mini-cart'))
     } else {
       router.push(`/${router.locale === 'en' ? '' : router.locale}/cart`)
     }

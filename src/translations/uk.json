@@ -101,6 +101,10 @@
     "lastedArticles": "Останні статті"
   },
   "Cart": {
+    "cart": "Кошик",
+    "psc": "шт",
+    "placeAnOrder": "Оформити замовлення",
+    "goToCart": "Перейти до кошика",
     "productName": "Назва",
     "price": "Ціна",
     "quantity": "Кількість",

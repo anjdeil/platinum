@@ -101,6 +101,10 @@
     "lastedArticles": "Последние статьи"
   },
   "Cart": {
+    "cart": "Корзина",
+    "psc": "шт",
+    "placeAnOrder": "Оформить заказ",
+    "goToCart": "Перейти в корзину",
     "productName": "Название",
     "price": "Цена",
     "quantity": "Количество",

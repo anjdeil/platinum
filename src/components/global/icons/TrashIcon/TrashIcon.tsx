@@ -1,14 +1,15 @@
 import { CloseButton } from './styles'
 
-interface CloseProps {
+export interface CloseProps {
   onClick: () => void
+  padding?: string
 }
 
-const TrashIcon = ({ onClick }: CloseProps) => (
-  <CloseButton onClick={onClick} aria-label="delete product">
+const TrashIcon = ({ onClick, padding }: CloseProps) => (
+  <CloseButton padding={padding} onClick={onClick} aria-label="delete product">
     <svg
-      width="24"
-      height="25"
+      width="28"
+      height="28"
       viewBox="0 0 24 25"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

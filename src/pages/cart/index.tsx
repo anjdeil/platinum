@@ -30,9 +30,7 @@ const CartPage: React.FC = () => {
     { data: productsSpecsData, isLoading: isLoadingProductsMin, error: errorProductsMin },
   ] = useGetProductsMinimizedMutation()
   const productsSpecs = productsSpecsData?.data ? productsSpecsData.data.items : []
-  const [cartSum, setCartSum] = useState<number>(0)
 
-  // Order creation effect
   useEffect(() => {
     const handleCreateOrder = async () => {
       const requestData = {
@@ -44,7 +42,13 @@ const CartPage: React.FC = () => {
       await createOrder(requestData)
     }
     handleCreateOrder()
-  }, [createOrder, cartItems, couponCodes, code])
+  }, [cartItems, couponCodes, code])
+
+  useEffect(() => {
+    if (cartItems.length > 0) {
+      getProductsMinimized(cartItems)
+    }
+  }, [getProductsMinimized, cartItems.length])
 
   useEffect(() => {
     if (orderItems?.currency_symbol) {
@@ -53,11 +57,6 @@ const CartPage: React.FC = () => {
       setSymbol('')
     }
   }, [orderItems])
-
-  // Fetch product specs
-  useEffect(() => {
-    getProductsMinimized(cartItems)
-  }, [getProductsMinimized, cartItems])
 
   // Conflict detection
   const [hasConflict, setHasConflict] = useState(false)
@@ -87,7 +86,12 @@ const CartPage: React.FC = () => {
             roundedPrice={roundedPrice}
             hasConflict={hasConflict}
           />
-          <OrderBar isLoadingOrder={isLoadingOrder} cartSum={subtotal} symbol={symbol} />
+          <OrderBar
+            miniCart={false}
+            isLoadingOrder={isLoadingOrder}
+            cartSum={subtotal}
+            symbol={symbol}
+          />
         </div>
         <CartCouponBlock symbol={symbol} />
         <CartSummaryBlock symbol={symbol} order={orderItems} isLoading={isLoadingOrder} />

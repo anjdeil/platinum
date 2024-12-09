@@ -17,6 +17,11 @@ interface OnePriceProps {
 interface CartCardAllWrapperProps {
   padding?: string
 }
+interface CartCardWrapperProps {
+  padding?: string
+  marginBottom?: string
+  gap?: string
+}
 
 export const CartTableWrapper = styled.div`
   width: 100%;
@@ -54,7 +59,7 @@ export const GridRow = styled.div<GridRowFullProps>`
     padding: 16px;
   }
   @media ${({ theme }) => theme.media.large} {
-    grid-template-columns: 0.3fr 0.6fr 4fr 1fr 2fr 1.7fr;
+    grid-template-columns: 0.1fr 0.6fr 3fr 1.5fr 2fr 1.7fr;
   }
 `
 
@@ -110,10 +115,12 @@ export const CartCardAllWrapper = styled.div<CartCardAllWrapperProps>`
   margin-bottom: 16px;
   border-radius: 8px;
 `
-export const CartCardWrapper = styled.div`
+export const CartCardWrapper = styled.div<CartCardWrapperProps>`
   display: flex;
   align-items: top;
-  margin-bottom: 18px;
+  gap: ${({ gap = '0' }) => gap};
+  margin-bottom: ${({ marginBottom = '18px' }) => marginBottom};
+  padding: ${({ padding = '0' }) => padding};
 `
 export const CardContent = styled.div<CartContentProps>`
   display: flex;
@@ -142,14 +149,14 @@ export const ProducTitle = styled.div`
   align-items: top;
   display: flex;
   justify-content: space-between;
+  gap: 16px;
   & p {
-    padding: 8px 0;
     margin-bottom: 10px;
     line-height: 22px;
   }
 `
 export const OnePrice = styled.span<OnePriceProps>`
-  font: ${({ theme }) => theme.fonts.bodyMiddleSemiBold};
+  font: ${({ theme }) => theme.fonts.bodyMiddleMedium};
   color: ${({ theme }) => theme.colors.primary};
   font-size: ${({ fontSize = '1em' }) => fontSize};
 `

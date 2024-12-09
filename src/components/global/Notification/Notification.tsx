@@ -1,13 +1,13 @@
-import { FC, ReactNode } from "react";
-import { NotificationWrapper } from "./styles";
+import { FC, ReactNode } from 'react'
+import { NotificationWrapper } from './styles'
 
 interface NotificationPropsType {
-    children: ReactNode,
-    type?: "success" | "warning" | "info" 
+  children: ReactNode
+  type?: 'success' | 'warning' | 'info' | 'warningSecondary'
 }
 
 const Notification: FC<NotificationPropsType> = ({ children, type }) => {
-    return <NotificationWrapper type={type}>{children}</NotificationWrapper>;
-};
+  return <NotificationWrapper type={type}>{children}</NotificationWrapper>
+}
 
-export default Notification;
+export default Notification

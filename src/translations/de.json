@@ -102,6 +102,10 @@
     "commentText2": "- Wir versuchen, das Beste für Sie zu sein, und Ihre Meinung wird uns sehr helfen!"
   },
   "Cart": {
+    "cart": "Warenkorb",
+    "psc": "Stk",
+    "placeAnOrder": "Bestellung aufgeben",
+    "goToCart": "Zum Warenkorb",
     "productName": "Name",
     "price": "Preis",
     "quantity": "Menge",

@@ -1,9 +1,9 @@
-import { ProductsMinimizedType } from '@/types/components/shop/product/products';
-import { CartItem } from '@/types/store/reducers/сartSlice';
+import { ProductsMinimizedType } from '@/types/components/shop/product/products'
+import { CartItem } from '@/types/store/reducers/сartSlice'
 
 export default function checkCartConflict(
   cartItems: CartItem[],
-  productsSpecs: ProductsMinimizedType[],
+  productsSpecs: ProductsMinimizedType[]
 ) {
   return cartItems.some(
     ({
@@ -17,17 +17,16 @@ export default function checkCartConflict(
             return (
               cartProductId === specsParentProductId &&
               cartVariationId === specsVariationId
-            );
-          return cartProductId === specsVariationId;
-        },
-      );
+            )
+          return cartProductId === specsVariationId
+        }
+      )
 
-      if (!productSpecs) return true;
-      const { stock_quantity: specsQuantity } = productSpecs;
+      if (!productSpecs) return true
+      const { stock_quantity: specsQuantity } = productSpecs
 
-      const actualQuantity = specsQuantity !== null ? specsQuantity : 0;
-
-      return actualQuantity < cartQuantity;
-    },
-  );
+      const actualQuantity = specsQuantity !== null ? specsQuantity : 0
+      return actualQuantity < cartQuantity
+    }
+  )
 }
