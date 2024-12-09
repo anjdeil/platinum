@@ -14,12 +14,8 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
   };
 };
 
-export default function notFoundPage({ buttonWidth }: { buttonWidth: string }) {
+export default function Custom500({ buttonWidth }: { buttonWidth: string }) {
   return (
-    <ErrorPage
-      isNotFoundPage
-      imageURL={`/assets/images/404.svg`}
-      buttonWidth={buttonWidth}
-    />
+    <ErrorPage imageURL={`/assets/images/500.svg`} buttonWidth={buttonWidth} />
   );
 }

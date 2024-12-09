@@ -104,18 +104,23 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
 
           case 'hero':
             return (
-              <HeroSection
-                key={index}
-                is_reverse={section.is_reverse}
-                image={section.image}
-                object_fit={section.object_fit}
-                title={section.title}
-                text={section.text}
-              />
+              <Container key={index}>
+                <HeroSection
+                  key={index}
+                  is_reverse={section.is_reverse}
+                  image={section.image}
+                  object_fit={section.object_fit}
+                  title={section.title}
+                  text={section.text}
+                />
+              </Container>
             );
           case 'split':
-            return <SplitSection key={section._type} split={section.split} />;
-
+            return (
+              <Container key={index}>
+                <SplitSection key={section._type} split={section.split} />
+              </Container>
+            );
           case 'loyalty':
             return (
               <LoyaltySection
