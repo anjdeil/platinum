@@ -209,3 +209,11 @@ export const VariationTitle = styled(Text)`
 export const TinyText = styled.p`
   font: ${({ theme }) => theme.fonts.bodysmallReg};
 `;
+
+export const StyledHeaderWrapper = styled.header`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin: 24px 0;
+`;
