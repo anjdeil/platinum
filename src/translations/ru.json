@@ -141,10 +141,40 @@
     "theBest": "Лучший",
     "productForYou": "Продукт для вас"
   },
+  "Contacts": {
+    "contacts": "Контакты",
+    "telephone": "Телефон",
+    "call": "Позвонить",
+    "address": "Адрес",
+    "schedule": "Пн-Пт: с",
+    "dayOff": "Сб-Вс: Выходной",
+    "satSun": "Сб-Вс: с",
+    "howToGetThere": "Как добраться?",
+    "email": "Электронная почта",
+    "toWrite": "Написать",
+    "socialMedia": "Мы в социальных сетях",
+    "askUsQuestion": "Задайте нам вопрос",
+    "yourNamePlaceholder": "Как вас зовут?",
+    "emailPlaceholder": "Электронная почта",
+    "yourQuestionPlaceholder": "Напишите ваш вопрос",
+    "sending": "Отправляется...",
+    "sendButton": "Отправить",
+    "errorMessage": "Что-то пошло не так. Пожалуйста, попробуйте снова.",
+    "successMessage": "Ваше сообщение успешно отправлено!"
+  },
+  "Validation": {
+    "email": "Пожалуйста, введите правильный адрес электронной почты.",
+    "minChar": "Должно быть не менее {count} символов."
+  },
+  "Breadcrumbs": {
+    "homePage": "Главная"
+  },
   "NotFoundPage": {
     "notFound": "Страница не найдена",
     "description": "К сожалению, мы не можем найти страницу, которую вы ищете. Возможно, она была перемещена, удалена или никогда не существовала.",
-    "backToHome": "Вернуться на главную страницу"
+    "backToHome": "Вернуться на главную страницу",
+    "serverError": "Ошибка сервера",
+    "serverErrorDescription": "К сожалению, на сервере произошла ошибка."
   },
   "HomePage": {
     "aboutOurBrand": "О нашем бренде",

@@ -141,10 +141,40 @@
     "theBest": "Najlepszy",
     "productForYou": "Produkt dla Ciebie"
   },
+  "Contacts": {
+    "contacts": "Kontakty",
+    "telephone": "Telefon",
+    "call": "Zadzwoń",
+    "address": "Adres",
+    "schedule": "Pn-Pt: od",
+    "dayOff": "Sb-Nd: Dzień wolny",
+    "satSun": "Sb-Nd: od",
+    "howToGetThere": "Jak się tam dostać?",
+    "email": "E-mail",
+    "toWrite": "Napisz",
+    "socialMedia": "Jesteśmy w mediach społecznościowych",
+    "askUsQuestion": "Zadaj nam pytanie",
+    "yourNamePlaceholder": "Jak masz na imię?",
+    "emailPlaceholder": "E-mail",
+    "yourQuestionPlaceholder": "Napisz swoje pytanie",
+    "sending": "Wysyłanie...",
+    "sendButton": "Wyślij",
+    "errorMessage": "Coś poszło nie tak. Spróbuj ponownie.",
+    "successMessage": "Twoja wiadomość została wysłana pomyślnie!"
+  },
+  "Validation": {
+    "email": "Proszę wprowadzić poprawny adres e-mail.",
+    "minChar": "Musi mieć co najmniej {count} znaków."
+  },
+  "Breadcrumbs": {
+    "homePage": "Strona Główna"
+  },
   "NotFoundPage": {
     "notFound": "Strona nie znaleziona",
     "description": "Przepraszamy, ale nie możemy znaleźć strony, której szukasz. Mogła ona zostać przeniesiona, usunięta lub nigdy nie istniała.",
-    "backToHome": "Wróć do strony głównej"
+    "backToHome": "Wróć do strony głównej",
+    "serverError": "Błąd serwera",
+    "serverErrorDescription": "Przepraszamy, wystąpił błąd serwera. Pracujemy nad rozwiązaniem problemu."
   },
   "HomePage": {
     "aboutOurBrand": "O naszej marce",

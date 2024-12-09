@@ -43,6 +43,7 @@ export const CustomFormInputSchema = z.object({
   padding: z.string().optional(),
   height: z.string().optional(),
   width: z.string().optional(),
+  background: z.string().optional(),
 });
 
 export type CustomFormInputType = z.infer<typeof CustomFormInputSchema>;

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import Image from 'next/image';
 
-export const NotFoundPageContainer = styled.div`
+export const ErrorPageContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -21,7 +21,7 @@ export const NotFoundPageContainer = styled.div`
   }
 `;
 
-export const NotFoundPageSubtitle = styled.h2`
+export const ErrorPageSubtitle = styled.h2`
   font-size: 1.5rem;
   margin: 0;
   color: #6c757d;
@@ -36,7 +36,7 @@ export const NotFoundPageSubtitle = styled.h2`
   }
 `;
 
-export const NotFoundPageImage = styled(Image)`
+export const ErrorPageImage = styled(Image)`
   width: 484px;
   height: 206px;
 
@@ -51,7 +51,7 @@ export const NotFoundPageImage = styled(Image)`
   }
 `;
 
-export const NotFoundPageDescription = styled.p`
+export const ErrorPageDescription = styled.p`
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5rem;
@@ -64,7 +64,7 @@ export const NotFoundPageDescription = styled.p`
   }
 `;
 
-export const NotFoundPageButtonGoHome = styled.button<{ buttonWidth: string }>`
+export const ErrorPageButtonGoHome = styled.button<{ buttonWidth: string }>`
   width: ${({ buttonWidth }) => buttonWidth};
   height: 56px;
   font-size: 1rem;
@@ -73,12 +73,10 @@ export const NotFoundPageButtonGoHome = styled.button<{ buttonWidth: string }>`
   background-color: #113760;
   border-radius: 10px;
   border: none;
-  cursor: pointer;
-  line-height: 1.5rem;
   text-align: center;
   transition: all 0.2s ease;
   padding: 16px;
-  coursor: pointer;
+  cursor: pointer;
 
   &:hover {
     background-color: ${({ theme }) => theme.background.hover};
