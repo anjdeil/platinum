@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import CommentPopup from "../CommentPopup/CommentPopup";
 import MobileCategoriesMenu from "../MobileCategoriesMenu/MobileCategoriesMenu";
+import MobileSearchPopup from "../MobileSearchPopup/MobileSearchPopup";
 import SwiperPopup from "../SwiperPopup/SwiperPopup";
 
 const unscrollablePopups = ['mobile-search', 'hamburger-menu', 'swiper-popup', 'mobile-cart', 'mobile-categories'];
@@ -79,6 +80,11 @@ const PopupContainer = () => {
         case 'add-comment': {
             return (
                 <CommentPopup onClose={closePopup} />
+            )
+        }
+        case 'mobile-search': {
+            return (
+                <MobileSearchPopup onClose={closePopup} />
             )
         }
     }

@@ -1,13 +1,13 @@
+import IconButton from '@/components/global/buttons/IconButton/IconButton';
+import AccountIcon from '@/components/global/icons/AccountIcon/AccountIcon';
+import CartIcon from '@/components/global/icons/CartIcon/CartIcon';
+import FindIcon from '@/components/global/icons/FindIcon/FindIcon';
+import HeartIcon from '@/components/global/icons/HeartIcon/HeartIcon';
+import SearchBar from '@/components/global/SearchBar/SearchBar';
+import { useAppSelector } from '@/store';
 import React, { useEffect, useState } from 'react';
 import Nav from '../../menus/Nav/Nav';
 import { HeaderContainer, HeaderContent, HeaderIcons, HeaderNav, HeaderWrapper } from './styles';
-import AccountIcon from '@/components/global/icons/AccountIcon/AccountIcon';
-import CartIcon from '@/components/global/icons/CartIcon/CartIcon';
-import HeartIcon from '@/components/global/icons/HeartIcon/HeartIcon';
-import IconButton from '@/components/global/buttons/IconButton/IconButton';
-import FindIcon from '@/components/global/icons/FindIcon/FindIcon';
-import SearchBar from '@/components/global/SearchBar/SearchBar';
-import { useAppSelector } from '@/store';
 
 const Header: React.FC = () => {
 

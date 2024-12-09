@@ -1,9 +1,9 @@
 import { popupSet } from '@/store/slices/PopupSlice';
-import React from 'react';
 import { useDispatch } from 'react-redux';
 import { ButtonStyled, IconStyled } from './styles';
 
-const MobileSearchButton: React.FC = () => {
+
+const MobileSearchButton = () => {
     const dispatch = useDispatch();
 
     return (
