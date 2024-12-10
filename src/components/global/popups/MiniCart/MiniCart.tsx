@@ -56,7 +56,7 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
     { data: productsSpecsData, isLoading: isLoadingProducts },
   ] = useGetProductsMinimizedMutation()
 
-  const handleCreateOrder = useCallback(async () => {
+  const handleCreateOrder = async () => {
     const requestData = {
       line_items: cartItems,
       status: 'on-hold' as CreateOrderRequestType['status'],
@@ -71,8 +71,15 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
     } finally {
       setLoadingItems((prev) => prev.filter((id) => id !== preLoadingItem))
     }
-  }, [cartItems, couponCodes, code])
+  }
 
+  useEffect(() => {
+    const createOrderEffect = async () => {
+      await handleCreateOrder()
+    }
+
+    createOrderEffect()
+  }, [cartItems, couponCodes, code])
   const [cachedOrderItems, setCachedOrderItems] = useState(orderItems)
 
   // STATES
@@ -114,10 +121,6 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
   useEffect(() => {
     setIsVisible(true)
   }, [])
-
-  useEffect(() => {
-    handleCreateOrder()
-  }, [handleCreateOrder])
 
   useEffect(() => {
     if (orderItems?.currency_symbol) {

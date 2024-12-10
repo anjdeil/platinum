@@ -24,17 +24,15 @@ const CartPage: React.FC = () => {
   const [preLoadingItem, setPreLoadingItem] = useState<number>()
 
   // Mutations
-  const [
-    createOrder,
-    { data: orderItems, isLoading: isLoadingOrder, error: errorOrder },
-  ] = useCreateOrderMutation()
+  const [createOrder, { data: orderItems, isLoading: isLoadingOrder }] =
+    useCreateOrderMutation()
   const { cartItems, couponCodes } = useAppSelector((state) => state.cartSlice)
   const [
     getProductsMinimized,
     { data: productsSpecsData, isLoading: isLoadingProductsMin, error: errorProductsMin },
   ] = useGetProductsMinimizedMutation()
 
-  const handleCreateOrder = useCallback(async () => {
+  const handleCreateOrder = async () => {
     const requestData = {
       line_items: cartItems,
       status: 'on-hold' as CreateOrderRequestType['status'],
@@ -49,6 +47,14 @@ const CartPage: React.FC = () => {
     } finally {
       setLoadingItems((prev) => prev.filter((id) => id !== preLoadingItem))
     }
+  }
+
+  useEffect(() => {
+    const createOrderEffect = async () => {
+      await handleCreateOrder()
+    }
+
+    createOrderEffect()
   }, [cartItems, couponCodes, code])
 
   const [cachedOrderItems, setCachedOrderItems] = useState(orderItems)
@@ -87,9 +93,6 @@ const CartPage: React.FC = () => {
     [cartItems, dispatch]
   )
 
-  useEffect(() => {
-    handleCreateOrder()
-  }, [handleCreateOrder])
   // Conflict detection
   const [hasConflict, setHasConflict] = useState(false)
 
