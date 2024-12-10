@@ -179,6 +179,20 @@
     "serverErrorDescription": "Sorry, something went wrong. Please try again later."
   },
   "HomePage": {
-    "aboutOurBrand": "About our brand"
+    "aboutOurBrand": "About our brand",
+    "newUnreadMessage": "New unread message",
+    "unreadMessageDate": "Now",
+    "subscribeToOurNewsletter": "Subscribe to our  newsletter!",
+    "newArrivals": "Be the first to know about new arrivals, exclusive discounts and special offers.",
+    "joinToWhatsApp": "Join to WhatsApp",
+    "subscribe": "Subscribe"
+  },
+  "SubscriptionForm": {
+    "subscribe": "Subscribe",
+    "sending": "Sending...",
+    "typeValidEmail": "Please, type valid email",
+    "failedSubscribe": "Failed to send email",
+    "successSubscribe": "Subscribed!",
+    "userAlreadySubscribed": "User already subscribed"
   }
 }

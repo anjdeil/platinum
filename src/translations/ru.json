@@ -180,6 +180,20 @@
     "serverErrorDescription": "К сожалению, на сервере произошла ошибка."
   },
   "HomePage": {
-    "aboutOurBrand": "О нашем бренде"
+    "aboutOurBrand": "О нашем бренде",
+    "newUnreadMessage": "Новое непрочитанное сообщение",
+    "unreadMessageDate": "Сейчас",
+    "subscribeToOurNewsletter": "Подпишитесь на нашу рассылку!",
+    "newArrivals": "Узнавайте первыми о новых поступлениях, эксклюзивных скидках и специальных предложениях.",
+    "joinToWhatsApp": "Присоединяйтесь к WhatsApp",
+    "subscribe": "Подписаться"
+  },
+  "SubscriptionForm": {
+    "subscribe": "Подписаться",
+    "sending": "Отправка...",
+    "typeValidEmail": "Введите правильный email",
+    "failedSubscribe": "Не удалось отправить письмо",
+    "successSubscribe": "Подписались!",
+    "userAlreadySubscribed": "Пользователь уже подписан"
   }
 }

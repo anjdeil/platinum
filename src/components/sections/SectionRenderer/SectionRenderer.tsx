@@ -16,6 +16,7 @@ import { ContactsSection } from '../ContactsSection';
 
 import { SectionsType } from '@/types/components/sections';
 import { normalizeSlides } from '@/utils/normalizeSlides';
+import { useMediaQuery } from '@mui/material';
 
 interface SectionRendererProps {
   sections: SectionsType[];
@@ -24,6 +25,7 @@ interface SectionRendererProps {
 export const SectionRenderer: React.FC<SectionRendererProps> = ({
   sections,
 }) => {
+  const isMobile = useMediaQuery('(max-width:768px)');
   return (
     <>
       {sections.map((section, index) => {
@@ -65,18 +67,27 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
             );
           case 'reviews':
             return (
-              <ReviewsSection
-                key={index}
-                subtitle={section.subtitle}
-                title={section.title}
-              />
+              <Container key={index}>
+                <ReviewsSection
+                  key={index}
+                  subtitle={section.subtitle}
+                  title={section.title}
+                />
+              </Container>
             );
           case 'newsletter':
-            return (
+            return isMobile ? (
               <NewsletterSection
                 key={index}
                 newsletter_separator={section.newsletter_separator}
               />
+            ) : (
+              <Container key={index}>
+                <NewsletterSection
+                  key={index}
+                  newsletter_separator={section.newsletter_separator}
+                />
+              </Container>
             );
           case 'about_platinum':
             return <AboutPlatinumSection key={index} />;

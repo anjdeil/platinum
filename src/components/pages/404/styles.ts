@@ -78,6 +78,10 @@ export const ErrorPageButtonGoHome = styled.button<{ buttonWidth: string }>`
   padding: 16px;
   cursor: pointer;
 
+  &:hover {
+    background-color: ${({ theme }) => theme.background.hover};
+  }
+
   @media ${({ theme }) => theme.media.medium} {
     width: 300px;
     height: 52px;

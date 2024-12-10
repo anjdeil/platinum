@@ -173,6 +173,20 @@
       "serverErrorDescription": "Es tut uns leid, auf dem Server ist ein Fehler aufgetreten. Wir arbeiten daran, das Problem zu beheben."
     },
     "HomePage": {
-        "aboutOurBrand": "Über unsere Marke"
-    }
+    "aboutOurBrand": "Über unsere Marke",
+    "newUnreadMessage": "Neue ungelesene Nachricht",
+    "unreadMessageDate": "Jetzt",
+    "subscribeToOurNewsletter": "Abonnieren Sie unseren Newsletter!",
+    "newArrivals": "Seien Sie der Erste, der über Neuzugänge, exklusive Rabatte und Sonderangebote informiert wird.",
+    "joinToWhatsApp": "Beitritt zu WhatsAp",
+    "subscribe": "Subscribe"
+  },
+  "SubscriptionForm": {
+    "subscribe": "Abonnieren",
+    "sending": "Senden...",
+    "typeValidEmail": "Geben Sie eine gültige email ein",
+    "failedSubscribe": "Fehler beim Abonnieren",
+    "successSubscribe": "Erfolgreich abonniert",
+    "userAlreadySubscribed": "Du wurdest bereits bemalt"
+  }
 }

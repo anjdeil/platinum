@@ -1,4 +1,6 @@
 import { ReviewsSectionData } from '@/types/components/sections/index';
+import { SectionContainer } from '../styles';
+import { SectionHeader } from '../SectionHeader';
 
 type ReviewsSectionProps = Omit<ReviewsSectionData, '_type'>;
 
@@ -7,9 +9,8 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
   title,
 }) => {
   return (
-    <div>
-      <h2>{title}</h2>
-      <p>{subtitle}</p>
-    </div>
+    <SectionContainer>
+      <SectionHeader subtitle={subtitle} title={title} />
+    </SectionContainer>
   );
 };

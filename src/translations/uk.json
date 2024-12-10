@@ -180,6 +180,20 @@
     "serverErrorDescription": "На жаль, на сервері виникла помилка."
   },
   "HomePage": {
-    "aboutOurBrand": "Про наш бренд"
+    "aboutOurBrand": "Про наш бренд",
+    "newUnreadMessage": "Нове непрочитане повідомлення",
+    "unreadMessageDate": "Зараз",
+    "subscribeToOurNewsletter": "Підпишіться на нашу розсилку!",
+    "newArrivals": "Дізнавайтеся першими про новинки, ексклюзивні знижки та спеціальні пропозиції.",
+    "joinToWhatsApp": "Приєднуйтесь до WhatsApp",
+    "subscribe": "Підписатися"
+  },
+  "SubscriptionForm": {
+    "subscribe": "Підписатися",
+    "sending": "Відправка...",
+    "typeValidEmail": "Введіть правильну електронну адресу",
+    "failedSubscribe": "Не вдалося відправити лист",
+    "successSubscribe": "Підписався!",
+    "userAlreadySubscribed": "Користувач вже підписаний"
   }
 }
