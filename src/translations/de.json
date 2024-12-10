@@ -174,13 +174,16 @@
     "newUnreadMessage": "Neue ungelesene Nachricht",
     "unreadMessageDate": "Jetzt",
     "subscribeToOurNewsletter": "Abonnieren Sie unseren Newsletter!",
-    "newArrivals": "Erfahren Sie als Erster von Neuankömmlingen, exklusiven Rabatten und Sonderangeboten.",
-    "joinToWhatsApp": "Join to WhatsApp",
+    "newArrivals": "Seien Sie der Erste, der über Neuzugänge, exklusive Rabatte und Sonderangebote informiert wird.",
+    "joinToWhatsApp": "Beitritt zu WhatsAp",
     "subscribe": "Subscribe"
   },
   "SubscriptionForm": {
     "subscribe": "Abonnieren",
-    "typeValidEmail": "Geben Sie eine gültige E-Mail-Adresse ein",
-    "failedToSendEmail": "E-Mail konnte nicht gesendet werden"
+    "sending": "Senden...",
+    "typeValidEmail": "Geben Sie eine gültige email ein",
+    "failedSubscribe": "Fehler beim Abonnieren",
+    "successSubscribe": "Erfolgreich abonniert",
+    "userAlreadySubscribed": "Du wurdest bereits bemalt"
   }
 }

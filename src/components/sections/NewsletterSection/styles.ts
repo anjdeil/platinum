@@ -25,7 +25,7 @@ export const StyledContainer = styled.div`
 
 export const StyledCard = styled.div`
   width: 849px;
-  height: 360px;
+  height: auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -39,7 +39,6 @@ export const StyledCard = styled.div`
 
   @media ${({ theme }) => theme.media.large} {
     width: 498px;
-    height: 276px;
     border-radius: 8px;
     padding: 16px;
     gap: 16px;
@@ -47,7 +46,6 @@ export const StyledCard = styled.div`
 
   @media ${({ theme }) => theme.media.medium} {
     width: 271px;
-    height: 418px;
   }
 `;
 
@@ -61,7 +59,7 @@ export const StyledNotificationContainer = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    gap: 16px;
+    gap: 8px;
   }
 `;
 
@@ -102,7 +100,7 @@ export const StyledSubtext = styled.p`
 
 export const StyledLink = styled(Link)`
   width: 418px;
-  height: 56px;
+  height: auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -120,13 +118,11 @@ export const StyledLink = styled(Link)`
   }
 
   @media ${({ theme }) => theme.media.large} {
-    height: 48px;
     font: ${({ theme }) => theme.fonts.bodypresmallReg};
   }
 
   @media ${({ theme }) => theme.media.medium} {
     width: 239px;
-    height: 48px;
   }
 `;
 

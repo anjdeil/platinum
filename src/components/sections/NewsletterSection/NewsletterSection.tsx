@@ -28,10 +28,10 @@ export const NewsletterSection: React.FC<NewsletterSectionProps> = ({
         <StyledCard>
           <StyledNotificationContainer>
             <StyledNotificationText>
-              {t('newUnreadMessage')}
+              {t('unreadMessageDate')}
             </StyledNotificationText>
             <StyledNotificationText>
-              {t('unreadMessageDate')}
+              {t('newUnreadMessage')}
             </StyledNotificationText>
           </StyledNotificationContainer>
           <StyledTextWrapper>
@@ -41,11 +41,7 @@ export const NewsletterSection: React.FC<NewsletterSectionProps> = ({
             <StyledSubtext>{t('newArrivals')}</StyledSubtext>
           </StyledTextWrapper>
 
-          <StyledLink
-            href='https://wa.me/yourphonenumber'
-            passHref
-            target='_blanc'
-          >
+          <StyledLink href='https://wa.me/48883462736' passHref target='_blanc'>
             <StyledIcon
               src={'/assets/icons/whatsapp.svg'}
               alt={'WhatsApp'}

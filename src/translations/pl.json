@@ -187,7 +187,10 @@
   },
   "SubscriptionForm": {
     "subscribe": "Zapisz się",
-    "typeValidEmail": "Wpisz poprawny adres e-mail",
-    "failedToSendEmail": "Nie udało się wysłać e-maila"
+    "sending": "Wysyłanie...",
+    "typeValidEmail": "Wprowadź poprawny adres e-mail",
+    "failedSubscribe": "Nie udało się wysłać e-maila",
+    "successSubscribe": "Zapisano!",
+    "userAlreadySubscribed": "Użytkownik jest już zapisany"
   }
 }

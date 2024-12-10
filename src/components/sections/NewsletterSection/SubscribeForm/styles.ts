@@ -64,14 +64,13 @@ export const StyledSubscribeButton = styled.button`
 `;
 
 export const StyledError = styled.p`
-  position: absolute;
-  left: 0;
-  top: -17px;
   font: ${({ theme }) => theme.fonts.bodypresmallReg};
   color: ${({ theme }) => theme.colors.error};
+  padding-bottom: 8px;
+`;
 
-  @media ${({ theme }) => theme.media.medium} {
-    left: 0;
-    top: 45px;
-  }
+export const StyledSuccessMessage = styled.p`
+  font: ${({ theme }) => theme.fonts.bodypresmallReg};
+  color: ${({ theme }) => theme.background.success};
+  padding-bottom: 8px;
 `;

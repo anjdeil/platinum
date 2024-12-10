@@ -182,12 +182,15 @@
     "unreadMessageDate": "Сейчас",
     "subscribeToOurNewsletter": "Подпишитесь на нашу рассылку!",
     "newArrivals": "Узнавайте первыми о новых поступлениях, эксклюзивных скидках и специальных предложениях.",
-    "joinToWhatsApp": "Присоединяйтесь к нашему WhatsApp сообществу",
+    "joinToWhatsApp": "Присоединяйтесь к WhatsApp",
     "subscribe": "Подписаться"
   },
   "SubscriptionForm": {
     "subscribe": "Подписаться",
-    "typeValidEmail": "Введите действительный адрес электронной почты",
-    "failedToSendEmail": "Не удалось отправить электронное письмо"
+    "sending": "Отправка...",
+    "typeValidEmail": "Введите правильный email",
+    "failedSubscribe": "Не удалось отправить письмо",
+    "successSubscribe": "Подписались!",
+    "userAlreadySubscribed": "Пользователь уже подписан"
   }
 }

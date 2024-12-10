@@ -182,12 +182,15 @@
     "unreadMessageDate": "Зараз",
     "subscribeToOurNewsletter": "Підпишіться на нашу розсилку!",
     "newArrivals": "Дізнавайтеся першими про новинки, ексклюзивні знижки та спеціальні пропозиції.",
-    "joinToWhatsApp": "Приєднуйтесь до нашого WhatsApp спільноти",
+    "joinToWhatsApp": "Приєднуйтесь до WhatsApp",
     "subscribe": "Підписатися"
   },
   "SubscriptionForm": {
     "subscribe": "Підписатися",
-    "typeValidEmail": "Введіть дійсну адресу електронної пошти",
-    "failedToSendEmail": "Не вдалося відправити електронний лист"
+    "sending": "Відправка...",
+    "typeValidEmail": "Введіть правильну електронну адресу",
+    "failedSubscribe": "Не вдалося відправити лист",
+    "successSubscribe": "Підписався!",
+    "userAlreadySubscribed": "Користувач вже підписаний"
   }
 }
