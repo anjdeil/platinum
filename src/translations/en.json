@@ -69,6 +69,9 @@
   "Search": {
     "Search": "Search"
   },
+  "Archive": {
+    "goHome": "Home"
+  },
   "Product": {
     "addToBasket": "Add to basket",
     "viewCart": "View cart",
