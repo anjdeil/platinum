@@ -21,38 +21,30 @@ type UpdateAttributesParams = {
     isPrefix: boolean;
 };
 
-export const FilterPanel: FC<FilterPanelPropsType> = ({ attributes, maxPrice, minPrice }) =>
-{
+export const FilterPanel: FC<FilterPanelPropsType> = ({ attributes, maxPrice, minPrice }) => {
     const [priceRange, setPriceRange] = useState({ min: minPrice, max: maxPrice });
     const [chosenAttributes, setChosenAttributes] = useState<ChosenAttributesType>(new Map());
     const router = useRouter();
 
     /** Updates chosen attributes state */
-    const updateChosenAttributes = useCallback(({ key, paramValue, isPrefix }: UpdateAttributesParams) =>
-    {
+    const updateChosenAttributes = useCallback(({ key, paramValue, isPrefix }: UpdateAttributesParams) => {
         const newMap = new Map(chosenAttributes);
-        console.log(chosenAttributes);
+        // console.log(chosenAttributes);
 
-        if (isPrefix)
-        {
+        if (isPrefix) {
             const existingSet = newMap.get(key) || new Set<string | number>();
 
-            if (Array.isArray(paramValue))
-            {
+            if (Array.isArray(paramValue)) {
                 paramValue.forEach(value => existingSet.add(value));
-            } else
-            {
-                if (existingSet.has(paramValue))
-                {
+            } else {
+                if (existingSet.has(paramValue)) {
                     existingSet.delete(paramValue);
-                } else
-                {
+                } else {
                     existingSet.add(paramValue);
                 }
             }
             newMap.set(key, existingSet);
-        } else
-        {
+        } else {
             const existingSet = new Set<string | number>();
             newMap.set(key, existingSet.add(Array.isArray(paramValue) ? paramValue.toString() : paramValue));
         }
@@ -61,13 +53,11 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({ attributes, maxPrice, mi
     }, [chosenAttributes, setChosenAttributes]);
 
     /** Updates chosen with url params */
-    useEffect(() =>
-    {
+    useEffect(() => {
         const url = new URL(router.asPath, window.location.origin);
         const params = new URLSearchParams(url.search);
 
-        for (let param of params.keys())
-        {
+        for (let param of params.keys()) {
             const value = params.get(param);
             const valuesArray = value ? value.split(',').map(item => item.trim()) : [];
             updateChosenAttributes({
@@ -77,8 +67,7 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({ attributes, maxPrice, mi
     }, [])
 
     /** Updates chosen by click on attribute */
-    const updateCurrentParams = useCallback((paramName: string, paramValue: string | number, isPrefix: boolean) =>
-    {
+    const updateCurrentParams = useCallback((paramName: string, paramValue: string | number, isPrefix: boolean) => {
         if (!paramName && !paramValue) return;
 
         const attr = isPrefix ? 'pa_' + paramName : paramName;
@@ -87,30 +76,40 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({ attributes, maxPrice, mi
     }, [chosenAttributes])
 
     /** Updates url params by chosen */
-    const updateUrlParams = useCallback(() =>
-    {
+    const updateUrlParams = useCallback(() => {
         const params = Object.fromEntries(
             Array.from(chosenAttributes.entries())
                 .map(([key, set]) => [key, Array.from(set).join(',')])
         );
 
+
+        if (!Array.isArray(router?.query?.slugs)) return;
+
+        const newSlugs = router?.query?.slugs?.filter(slug => slug !== 'page' && Number.isNaN(+slug));
+
         router.push({
             pathname: router.pathname,
-            query: { ...router.query, ...params }
+            query: {
+                slugs: newSlugs,
+                ...router.query,
+                ...params
+            }
         });
+
+        // router.push({
+        //     pathname: router.pathname,
+        //     query: { ...router.query, ...params }
+        // });
     }, [chosenAttributes])
 
     /** Apply params */
-    const onApplyClick = useCallback(() =>
-    {
-        // console.log(chosenAttributes);
+    const onApplyClick = useCallback(() => {
 
         updateUrlParams();
     }, [chosenAttributes]);
 
     /** Reset params */
-    const onResetClick = useCallback(() =>
-    {
+    const onResetClick = useCallback(() => {
         const { slugs } = router.query;
         router.replace({
             pathname: router.pathname,
@@ -119,25 +118,36 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({ attributes, maxPrice, mi
         setChosenAttributes(new Map());
     }, [chosenAttributes]);
 
-    const updateMinPrice = useCallback((newValue: number) =>
-    {
 
-        if (newValue !== priceRange.min && newValue >= 0 && newValue <= maxPrice && newValue > minPrice)
-        {
+    // console.log('chosenAttributes', chosenAttributes);
+
+
+    const updateMinPrice = useCallback((newValue: number) => {
+
+        if (newValue !== priceRange.min && newValue >= 0 && newValue <= maxPrice && newValue > minPrice) {
             setPriceRange((prev) => ({ ...prev, min: newValue }));
             updateCurrentParams('min_price', newValue, false);
+            // updateCurrentParams('max_price', priceRange.max, false);
+
         }
+
 
     }, [priceRange])
 
-    const updateMaxPrice = useCallback((newValue: number) =>
-    {
-        if (newValue !== priceRange.min && newValue >= 0 && newValue <= maxPrice)
-        {
+    const updateMaxPrice = useCallback((newValue: number) => {
+        if (newValue !== priceRange.min && newValue >= 0 && newValue <= maxPrice) {
             setPriceRange((prev) => ({ ...prev, max: newValue }));
+            // updateCurrentParams('min_price', priceRange.min, false);
             updateCurrentParams('max_price', newValue, false);
         }
+
     }, [priceRange])
+
+
+    // useEffect(() => {
+    //     console.log(chosenAttributes);
+
+    // }, [priceRange]);
 
     return (
         <FilterPanelWrap>
@@ -152,8 +162,7 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({ attributes, maxPrice, mi
                         updateMinPrice={updateMinPrice}
                     />
                 </CustomSingleAccordion>
-                {attributes.map((attribute) =>
-                {
+                {attributes.map((attribute) => {
                     const attrName = `pa_${attribute.slug}`;
                     const existingSet = chosenAttributes.get(attrName);
                     const currentAttr = existingSet ? [...existingSet] : [];

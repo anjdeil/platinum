@@ -69,6 +69,9 @@
   "Search": {
     "Search": "Поиск"
   },
+  "Archive": {
+    "goHome": "Главная"
+  },
   "Product": {
     "addToBasket": "Добавить в корзину",
     "viewCart": "Просмотр корзины",
