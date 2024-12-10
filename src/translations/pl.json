@@ -69,6 +69,9 @@
   "Search": {
     "Search": "Wyszukiwanie"
   },
+  "Archive": {
+    "goHome": "Główna"
+  },
   "Product": {
     "addToBasket": "Dodaj do koszyka",
     "viewCart": "Wyświetl koszyk",
@@ -112,15 +115,85 @@
     "updateTo": "Zaktualizuj do",
     "priceToDelivery": "Aby otrzymać darmową dostawę, musisz dodać produkty o łącznej wartości {locale}",
     "welcomeToPlatinumShop": "Witamy w Platinum Shop",
+    "discountText": "ZALOGUJ SIĘ I SKORZYSTAJ Z {discounts}",
+    "CouponText": "JEŚLI MASZ KUPON ZNIŻKOWY, UŻYJ GO I OTRZYMAJ ZNIŻKĘ!",
+    "ChooseCouponText": "Wybierz, jeśli masz kod rabatowy lub punkty premiowe, które chcesz użyć, lub chcesz oszacować koszt dostawy.",
+    "ErrorCoupon": "Ten kupon nie istnieje",
+    "LoginAnd": "ZALOGUJ SIĘ I SKORZYSTAJ Z",
+    "Above": "POWYŻEJ",
+    "ForOrders": "DLA ZAMÓWIEŃ",
+    "CouponApply": "Kupon został pomyślnie zastosowany",
+    "CouponApplyBtn": "Zastosuj kupon",
+    "CouponInputPlaceholder": "Kod kuponu",
+
+    "OrderComments": "KOMENTARZE DO ZAMÓWIENIA",
+    "OrderCommentPlaceholder": "Podziel się konkretnymi szczegółami lub prośbami dotyczącymi zamówienia...",
+    "OrderCommentHint": "W tym miejscu można podać wszelkie dodatkowe instrukcje lub uwagi dotyczące zamówienia.",
+    "OrderSummary": "Podsumowanie zamówienia",
+    "Continue": "Kontynuuj",
+    "OrderSummaryTotal": "całkowita kwota do zapłaty",
+
+    "products": "Towary",
+    "coupon": "Kupon",
+    "paymentMethod": "Metoda płatności",
+
+    "Basket": "Koszyk",
+    "PersonalInformation": "Informacje osobiste",
+    "Confirmation": "Potwierdzenie",
+
     "theBest": "Najlepszy",
     "productForYou": "Produkt dla Ciebie"
+  },
+  "Contacts": {
+    "contacts": "Kontakty",
+    "telephone": "Telefon",
+    "call": "Zadzwoń",
+    "address": "Adres",
+    "schedule": "Pn-Pt: od",
+    "dayOff": "Sb-Nd: Dzień wolny",
+    "satSun": "Sb-Nd: od",
+    "howToGetThere": "Jak się tam dostać?",
+    "email": "E-mail",
+    "toWrite": "Napisz",
+    "socialMedia": "Jesteśmy w mediach społecznościowych",
+    "askUsQuestion": "Zadaj nam pytanie",
+    "yourNamePlaceholder": "Jak masz na imię?",
+    "emailPlaceholder": "E-mail",
+    "yourQuestionPlaceholder": "Napisz swoje pytanie",
+    "sending": "Wysyłanie...",
+    "sendButton": "Wyślij",
+    "errorMessage": "Coś poszło nie tak. Spróbuj ponownie.",
+    "successMessage": "Twoja wiadomość została wysłana pomyślnie!"
+  },
+  "Validation": {
+    "email": "Proszę wprowadzić poprawny adres e-mail.",
+    "minChar": "Musi mieć co najmniej {count} znaków."
+  },
+  "Breadcrumbs": {
+    "homePage": "Strona Główna"
   },
   "NotFoundPage": {
     "notFound": "Strona nie znaleziona",
     "description": "Przepraszamy, ale nie możemy znaleźć strony, której szukasz. Mogła ona zostać przeniesiona, usunięta lub nigdy nie istniała.",
-    "backToHome": "Wróć do strony głównej"
+    "backToHome": "Wróć do strony głównej",
+    "serverError": "Błąd serwera",
+    "serverErrorDescription": "Przepraszamy, wystąpił błąd serwera. Pracujemy nad rozwiązaniem problemu."
   },
   "HomePage": {
-    "aboutOurBrand": "O naszej marce"
+    "aboutOurBrand": "O naszej marce",
+    "newUnreadMessage": "Nowa nieprzeczytana wiadomość",
+    "unreadMessageDate": "Teraz",
+    "subscribeToOurNewsletter": "Zapisz się do naszego newslettera!",
+    "newArrivals": "Bądź pierwszy, który dowie się o nowościach, ekskluzywnych zniżkach i ofertach specjalnych.",
+    "joinToWhatsApp": "Dołącz do nas na WhatsApp",
+    "subscribe": "Zapisz się"
+  },
+  "SubscriptionForm": {
+    "subscribe": "Zapisz się",
+    "sending": "Wysyłanie...",
+    "typeValidEmail": "Wprowadź poprawny adres e-mail",
+    "failedSubscribe": "Nie udało się wysłać e-maila",
+    "successSubscribe": "Zapisano!",
+    "userAlreadySubscribed": "Użytkownik jest już zapisany"
   }
 }

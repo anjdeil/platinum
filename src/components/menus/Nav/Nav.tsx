@@ -2,7 +2,7 @@ import { MenusContext } from '@/components/Layout/Layout';
 import { FC, useContext } from 'react';
 import { MenuSkeleton } from '../MenuSkeleton';
 import { NavLink, NavList } from './styles';
-import { wpMenuProps } from '@/types/menus/wpMenus';
+import { wpMenuProps } from '@/types/menus/WpMenus';
 import { menuItemsType } from '@/types/services/wpCustomApi/menus';
 
 const Nav: FC<wpMenuProps> = ({
@@ -18,13 +18,11 @@ const Nav: FC<wpMenuProps> = ({
     align,
     gap,
     mobGap,
-}) =>
-{
+}) => {
     const menus: menuItemsType[] | undefined = useContext(MenusContext);
     const menuItems = menus?.find(({ id }) => id === menuId)?.items;
 
-    if (!menuItems && skeleton)
-    {
+    if (!menuItems && skeleton) {
         return (
             <MenuSkeleton
                 elements={skeleton.elements}

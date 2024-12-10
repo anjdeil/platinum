@@ -1,8 +1,11 @@
 import {
+  couponRespType,
   CreateOrderRequestType,
   CreateOrderResponseType,
+  OrderType,
+  retrieveCouponQueryType,
   WooCustomerReqType,
-  WooCustomerType
+  WooCustomerType,
 } from "@/types/services";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
@@ -25,14 +28,11 @@ export const wooCustomRktApi = createApi({
         url: `/orders?${new URLSearchParams(params).toString()}`,
         method: "GET",
         headers: {
-          'Content-Type': 'application/json',
-        }
-      })
+          "Content-Type": "application/json",
+        },
+      }),
     }),
-    createOrder: builder.mutation<
-      CreateOrderResponseType,
-      CreateOrderRequestType
-    >({
+    createOrder: builder.mutation<OrderType, CreateOrderRequestType>({
       query: (credentials) => ({
         url: `/orders`,
         method: "POST",
@@ -42,16 +42,28 @@ export const wooCustomRktApi = createApi({
         },
       }),
     }),
+    retrieveCoupon: builder.query<couponRespType, retrieveCouponQueryType>({
+      query: (params: retrieveCouponQueryType) => ({
+        url: `/coupons/${params.id}`,
+        method: "GET",
+      }),
+    }),
+    ListAllCoupons: builder.query<couponRespType[], void>({
+      query: () => ({
+        url: `/coupons`,
+        method: "GET",
+      }),
+    }),
     addComment: builder.mutation({
       query: (credentials: any) => ({
         url: "/products/reviews",
         method: "POST",
         body: credentials,
         headers: {
-          'Content-Type': 'application/json',
-        }
-      })
-    })
+          "Content-Type": "application/json",
+        },
+      }),
+    }),
   }),
 });
 
@@ -59,5 +71,6 @@ export const {
   useRegisterCustomerMutation,
   useFetchOrdersQuery,
   useCreateOrderMutation,
+  useListAllCouponsQuery,
   useAddCommentMutation,
 } = wooCustomRktApi;

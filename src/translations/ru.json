@@ -69,6 +69,9 @@
   "Search": {
     "Search": "Поиск"
   },
+  "Archive": {
+    "goHome": "Главная"
+  },
   "Product": {
     "addToBasket": "Добавить в корзину",
     "viewCart": "Просмотр корзины",
@@ -111,16 +114,86 @@
     "delete": "Удалить",
     "updateTo": "Обновить до",
     "priceToDelivery": "Чтобы получить бесплатную доставку, вам нужно добавить товары всего на  {locale}",
+    "discountText": "ВОЙДИТЕ В СИСТЕМУ И ВОСПОЛЬЗУЙТЕСЬ {discounts}",
+    "CouponText": "ЕСЛИ У ВАС ЕСТЬ КУПОН НА СКИДКУ, ИСПОЛЬЗУЙТЕ ЕГО И ПОЛУЧИТЕ СКИДКУ!",
+    "ChooseCouponText": "Выберите, если у вас есть код скидки или бонусные баллы, которые вы хотите использовать, или хотите оценить стоимость доставки.",
+    "ErrorCoupon": "Этот купон не существует",
+    "LoginAnd": "ВОЙДИТЕ В СИСТЕМУ И ВОСПОЛЬЗУЙТЕСЬ",
+    "Above": "ВЫШЕ",
+    "ForOrders": "ДЛЯ ЗАКАЗОВ",
+    "CouponApply": "Купон успешно применен",
+    "CouponApplyBtn": "Применить купон",
+    "CouponInputPlaceholder": "Код купона",
+
+    "OrderComments": "КОММЕНТАРИИ К ЗАКАЗУ",
+    "OrderCommentPlaceholder": "Поделитесь любыми подробностями или пожеланиями по поводу вашего заказа...",
+    "OrderCommentHint": "Не стесняйтесь указывать здесь любые дополнительные инструкции или примечания к вашему заказу.",
+    "OrderSummary": "Сводка заказа",
+    "Continue": "Продолжить",
+    "OrderSummaryTotal": "Итого к оплате",
+
+    "products": "Товары",
+    "coupon": "Купон",
+    "paymentMethod": "Способ оплаты",
+
+    "Basket": "Корзина",
+    "PersonalInformation": "Личная информация",
+    "Confirmation": "Подтверждение",
+
     "welcomeToPlatinumShop": "Добро пожаловать в Platinum Shop",
     "theBest": "Лучший",
     "productForYou": "Продукт для вас"
   },
+  "Contacts": {
+    "contacts": "Контакты",
+    "telephone": "Телефон",
+    "call": "Позвонить",
+    "address": "Адрес",
+    "schedule": "Пн-Пт: с",
+    "dayOff": "Сб-Вс: Выходной",
+    "satSun": "Сб-Вс: с",
+    "howToGetThere": "Как добраться?",
+    "email": "Электронная почта",
+    "toWrite": "Написать",
+    "socialMedia": "Мы в социальных сетях",
+    "askUsQuestion": "Задайте нам вопрос",
+    "yourNamePlaceholder": "Как вас зовут?",
+    "emailPlaceholder": "Электронная почта",
+    "yourQuestionPlaceholder": "Напишите ваш вопрос",
+    "sending": "Отправляется...",
+    "sendButton": "Отправить",
+    "errorMessage": "Что-то пошло не так. Пожалуйста, попробуйте снова.",
+    "successMessage": "Ваше сообщение успешно отправлено!"
+  },
+  "Validation": {
+    "email": "Пожалуйста, введите правильный адрес электронной почты.",
+    "minChar": "Должно быть не менее {count} символов."
+  },
+  "Breadcrumbs": {
+    "homePage": "Главная"
+  },
   "NotFoundPage": {
     "notFound": "Страница не найдена",
     "description": "К сожалению, мы не можем найти страницу, которую вы ищете. Возможно, она была перемещена, удалена или никогда не существовала.",
-    "backToHome": "Вернуться на главную страницу"
+    "backToHome": "Вернуться на главную страницу",
+    "serverError": "Ошибка сервера",
+    "serverErrorDescription": "К сожалению, на сервере произошла ошибка."
   },
   "HomePage": {
-    "aboutOurBrand": "О нашем бренде"
+    "aboutOurBrand": "О нашем бренде",
+    "newUnreadMessage": "Новое непрочитанное сообщение",
+    "unreadMessageDate": "Сейчас",
+    "subscribeToOurNewsletter": "Подпишитесь на нашу рассылку!",
+    "newArrivals": "Узнавайте первыми о новых поступлениях, эксклюзивных скидках и специальных предложениях.",
+    "joinToWhatsApp": "Присоединяйтесь к WhatsApp",
+    "subscribe": "Подписаться"
+  },
+  "SubscriptionForm": {
+    "subscribe": "Подписаться",
+    "sending": "Отправка...",
+    "typeValidEmail": "Введите правильный email",
+    "failedSubscribe": "Не удалось отправить письмо",
+    "successSubscribe": "Подписались!",
+    "userAlreadySubscribed": "Пользователь уже подписан"
   }
 }
