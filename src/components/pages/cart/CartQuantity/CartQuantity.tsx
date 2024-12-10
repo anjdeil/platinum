@@ -3,20 +3,7 @@ import { QuantityBlock, QuantityBtn, QuantityWrapper } from './style'
 import PlusIcon from '@/components/global/icons/PlusIcon/PlusIcon'
 import MinusIcon from '@/components/global/icons/MinusIcon/MinusIcon'
 import debounce from 'lodash/debounce'
-import { lineOrderItems } from '@/types/store/reducers/сartSlice'
-
-interface QuantityComponentProps {
-  resolveCount: number | undefined
-  item: lineOrderItems
-  inputWidth?: string
-  inputHeight?: string
-  handleChangeQuantity: (
-    product_id: number,
-    action: 'inc' | 'dec' | 'value',
-    variation_id?: number,
-    newQuantity?: number
-  ) => void
-}
+import { QuantityComponentProps } from '@/types/pages/cart'
 
 const CartQuantity: React.FC<QuantityComponentProps> = ({
   item,
@@ -32,7 +19,7 @@ const CartQuantity: React.FC<QuantityComponentProps> = ({
   const debouncedChangeHandler = useCallback(
     debounce((product_id, newQuantity, variation_id) => {
       handleChangeQuantity(product_id, 'value', variation_id, newQuantity)
-    }, 4000),
+    }, 1500),
     []
   )
 
@@ -50,7 +37,7 @@ const CartQuantity: React.FC<QuantityComponentProps> = ({
     if (inputValue < maxCount) {
       const newValue = inputValue + 1
       setInputValue(newValue)
-      handleChangeQuantity(item.product_id, 'inc', item.variation_id)
+      handleChangeQuantity(item.product_id, 'inc', item.variation_id, false)
     }
   }
 
@@ -58,7 +45,7 @@ const CartQuantity: React.FC<QuantityComponentProps> = ({
     if (inputValue > 1) {
       const newValue = inputValue - 1
       setInputValue(newValue)
-      handleChangeQuantity(item.product_id, 'dec', item.variation_id)
+      handleChangeQuantity(item.product_id, 'dec', item.variation_id, false)
     }
   }
 

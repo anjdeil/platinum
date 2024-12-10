@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useCreateOrderMutation } from '@/store/rtk-queries/wooCustomApi'
 import { CreateOrderRequestType } from '@/types/services'
-import { useAppSelector } from '@/store'
+import { useAppDispatch, useAppSelector } from '@/store'
 import checkCartConflict from '@/utils/cart/checkCartConflict'
 import { useGetProductsMinimizedMutation } from '@/store/rtk-queries/wpCustomApi'
 import CartTable from '@/components/pages/cart/CartTable/CartTable'
@@ -13,11 +13,15 @@ import CartSummaryBlock from '@/components/pages/cart/CartSummaryBlock/CartSumma
 import OrderProgress from '@/components/pages/cart/OrderProgress/OrderProgress'
 import getSubtotalByLineItems from '@/utils/cart/getSubtotalByLineItems'
 import { roundedPrice } from '@/utils/cart/roundedPrice'
+import { handleQuantityChange } from '@/utils/cart/handleQuantityChange'
 
 const CartPage: React.FC = () => {
   const { code } = useAppSelector((state) => state.currencySlice)
   const status: CreateOrderRequestType['status'] = 'on-hold'
   const [symbol, setSymbol] = useState<string>('')
+  const dispatch = useAppDispatch()
+  const [loadingItems, setLoadingItems] = useState<number[]>([])
+  const [preLoadingItem, setPreLoadingItem] = useState<number>()
 
   // Mutations
   const [
@@ -29,20 +33,25 @@ const CartPage: React.FC = () => {
     getProductsMinimized,
     { data: productsSpecsData, isLoading: isLoadingProductsMin, error: errorProductsMin },
   ] = useGetProductsMinimizedMutation()
-  const productsSpecs = productsSpecsData?.data ? productsSpecsData.data.items : []
 
-  useEffect(() => {
-    const handleCreateOrder = async () => {
-      const requestData = {
-        line_items: cartItems,
-        status: status,
-        coupon_lines: couponCodes.map((code) => ({ code })),
-        currency: code,
-      }
-      await createOrder(requestData)
+  const handleCreateOrder = useCallback(async () => {
+    const requestData = {
+      line_items: cartItems,
+      status: 'on-hold' as CreateOrderRequestType['status'],
+      coupon_lines: couponCodes.map((code: string) => ({ code })),
+      currency: code,
     }
-    handleCreateOrder()
+    if (preLoadingItem) {
+      setLoadingItems((prev) => [...prev, preLoadingItem])
+    }
+    try {
+      await createOrder(requestData)
+    } finally {
+      setLoadingItems((prev) => prev.filter((id) => id !== preLoadingItem))
+    }
   }, [cartItems, couponCodes, code])
+
+  const [cachedOrderItems, setCachedOrderItems] = useState(orderItems)
 
   useEffect(() => {
     if (cartItems.length > 0) {
@@ -58,18 +67,47 @@ const CartPage: React.FC = () => {
     }
   }, [orderItems])
 
+  const handleChangeQuantity = useCallback(
+    async (
+      product_id: number,
+      action: 'inc' | 'dec' | 'value',
+      variation_id?: number,
+      newQuantity?: number | boolean
+    ) => {
+      setPreLoadingItem(product_id)
+      handleQuantityChange(
+        cartItems,
+        dispatch,
+        product_id,
+        action,
+        variation_id,
+        newQuantity
+      )
+    },
+    [cartItems, dispatch]
+  )
+
+  useEffect(() => {
+    handleCreateOrder()
+  }, [handleCreateOrder])
   // Conflict detection
   const [hasConflict, setHasConflict] = useState(false)
 
-  useEffect(() => {
-    if (productsSpecs) {
-      setHasConflict(checkCartConflict(cartItems, productsSpecs))
-    }
-  }, [cartItems, productsSpecs])
+  const productsSpecs = useMemo(
+    () => productsSpecsData?.data?.items || [],
+    [productsSpecsData]
+  )
 
-  const subtotal = orderItems?.line_items
-    ? getSubtotalByLineItems(orderItems.line_items)
-    : 0
+  const subtotal = useMemo(
+    () => (orderItems?.line_items ? getSubtotalByLineItems(orderItems.line_items) : 0),
+    [orderItems]
+  )
+  useEffect(() => {
+    if (orderItems) {
+      setCachedOrderItems(orderItems)
+    }
+  }, [orderItems])
+  const currentOrderItems = orderItems ?? cachedOrderItems
 
   return (
     <Container>
@@ -79,12 +117,14 @@ const CartPage: React.FC = () => {
           <CartTable
             symbol={symbol}
             cartItems={cartItems}
-            orderItems={orderItems}
+            orderItems={currentOrderItems}
             isLoadingOrder={isLoadingOrder}
             isLoadingProductsMin={isLoadingProductsMin}
             productsSpecs={productsSpecs}
             roundedPrice={roundedPrice}
             hasConflict={hasConflict}
+            handleChangeQuantity={handleChangeQuantity}
+            loadingItems={loadingItems}
           />
           <OrderBar
             miniCart={false}

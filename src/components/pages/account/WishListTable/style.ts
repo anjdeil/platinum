@@ -3,7 +3,7 @@ import {
   CartCardAllWrapper,
   CartImgWrapper,
   TextNameCell,
-} from '../../cart/CartTable/style'
+} from '@/components/pages/cart/styles/index'
 
 export const WishlistCardAllWrapper = styled(CartCardAllWrapper)`
   border: 1px solid ${({ theme }) => theme.colors.lightBorder};

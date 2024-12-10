@@ -62,7 +62,7 @@ const Header: React.FC = () => {
               count={cartCount}
               IconComponent={CartIcon}
             />
-            <IconButton count={2} IconComponent={HeartIcon} />
+            <IconButton href="/my-account/wishlist" count={2} IconComponent={HeartIcon} />
           </HeaderIcons>
         </HeaderContent>
       </HeaderContainer>

@@ -1,31 +1,10 @@
 import styled from '@emotion/styled'
+import { css } from '@emotion/react'
+import { blink } from '../styles'
 
 interface GridRowFullProps {
   padding?: string
 }
-interface CartImgWrapperProps {
-  maxWidth?: string
-  maxHeight?: string
-}
-interface CartContentProps {
-  gap?: string
-  padding?: string
-}
-interface OnePriceProps {
-  fontSize?: string
-}
-interface CartCardAllWrapperProps {
-  padding?: string
-}
-interface CartCardWrapperProps {
-  padding?: string
-  marginBottom?: string
-  gap?: string
-}
-
-export const CartTableWrapper = styled.div`
-  width: 100%;
-`
 
 export const CartTableGrid = styled.div`
   display: flex;
@@ -34,20 +13,24 @@ export const CartTableGrid = styled.div`
   width: 100%;
   overflow: hidden;
 `
-
 export const GridHeader = styled.div`
   background: ${({ theme }) => theme.background.secondary};
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
   text-transform: uppercase;
   border: 1px solid ${({ theme }) => theme.background.secondary};
 `
-export const RowWrapper = styled.div`
+export const RowWrapper = styled.div<{ isLoadingItem: boolean }>`
   border: 1px solid ${({ theme }) => theme.colors.lightBorder};
   border-top: none;
   &:last-of-type {
     border-bottom-right-radius: 8px;
     border-bottom-left-radius: 8px;
   }
+  ${({ isLoadingItem }) =>
+    isLoadingItem &&
+    css`
+      animation: ${blink} 1.2s ease-in-out infinite;
+    `}
 `
 export const GridRow = styled.div<GridRowFullProps>`
   height: 100%;
@@ -66,97 +49,8 @@ export const GridRow = styled.div<GridRowFullProps>`
 export const TextCell = styled.div`
   text-align: center;
 `
-export const TextNameCell = styled.div`
-  text-align: left;
-`
 
 export const TextCellHeader = styled.div`
   background: ${({ theme }) => theme.background.secondary};
   text-align: center;
-`
-
-export const DeleteCell = styled.div`
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: top;
-`
-
-export const CartImgWrapper = styled.div<CartImgWrapperProps>`
-  display: inline-block;
-  max-width: ${({ maxWidth = '60px' }) => maxWidth};
-  max-height: ${({ maxHeight = '60px' }) => maxHeight};
-  width: 100%;
-  height: 100%;
-  aspect-ratio: 1 / 1;
-  position: relative;
-  @media ${({ theme }) => theme.media.medium} {
-    max-width: 140px;
-    max-height: 140px;
-    margin-right: 16px;
-  }
-  padding: 0 !important;
-`
-export const CartItemImg = styled.img`
-  border-radius: 8px;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: contrast(0.94);
-  @media ${({ theme }) => theme.media.medium} {
-    border-radius: 8px;
-  }
-`
-
-/* Mobile Cart */
-export const CartCardAllWrapper = styled.div<CartCardAllWrapperProps>`
-  border: 1px solid ${({ theme }) => theme.colors.lightBorder};
-  padding: ${({ padding = '16px 16px 0 16px' }) => padding};
-  margin-bottom: 16px;
-  border-radius: 8px;
-`
-export const CartCardWrapper = styled.div<CartCardWrapperProps>`
-  display: flex;
-  align-items: top;
-  gap: ${({ gap = '0' }) => gap};
-  margin-bottom: ${({ marginBottom = '18px' }) => marginBottom};
-  padding: ${({ padding = '0' }) => padding};
-`
-export const CardContent = styled.div<CartContentProps>`
-  display: flex;
-  flex-grow: 1;
-  gap: ${({ gap = '0' }) => gap};
-  flex-direction: column;
-  padding: ${({ padding = '0' }) => padding};
-`
-export const ProductPrice = styled.div`
-  align-items: top;
-  display: flex;
-  justify-content: space-between;
-  line-height: 24px;
-  & p {
-    display: flex;
-    align-items: center;
-  }
-  & span {
-    text-transform: uppercase;
-    display: flex;
-    align-items: center;
-  }
-`
-export const ProducTitle = styled.div`
-  flex-grow: 1;
-  align-items: top;
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  & p {
-    margin-bottom: 10px;
-    line-height: 22px;
-  }
-`
-export const OnePrice = styled.span<OnePriceProps>`
-  font: ${({ theme }) => theme.fonts.bodyMiddleMedium};
-  color: ${({ theme }) => theme.colors.primary};
-  font-size: ${({ fontSize = '1em' }) => fontSize};
 `

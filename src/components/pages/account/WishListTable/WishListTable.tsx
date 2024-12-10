@@ -10,10 +10,10 @@ import {
   ProducTitle,
   ProductPrice,
   TextNameCell,
-} from '../../cart/CartTable/style'
+} from '@/components/pages/cart/styles/index'
 import { useResponsive } from '@/hooks/useResponsive'
 import { MenuSkeleton } from '@/components/menus/MenuSkeleton'
-import { CartItem, WishlistItem } from '@/types/store/reducers/сartSlice'
+import { CartItem } from '@/types/store/reducers/сartSlice'
 import theme from '@/styles/theme'
 import { useTranslations } from 'next-intl'
 import { ProductsMinimizedType } from '@/types/components/shop/product/products'
@@ -24,14 +24,7 @@ import { useAppDispatch, useAppSelector } from '@/store'
 import AddToBasketButton from '@/components/global/buttons/AddToBasketButton/AddToBasketButton'
 import { useRouter } from 'next/router'
 import { updateCart } from '@/store/slices/cartSlice'
-
-interface WishListTableProps {
-  symbol: string
-  wishlist: ProductsMinimizedType[] | undefined
-  wishlistMinElements: WishlistItem[]
-  isLoading: boolean
-  onDelete: ({ product_id, variation_id }: WishlistItem) => void
-}
+import { WishListTableProps } from '@/types/components/pages/myAccount/wishlist'
 
 const WishListTable: FC<WishListTableProps> = ({
   symbol,
@@ -82,9 +75,7 @@ const WishListTable: FC<WishListTableProps> = ({
                 return (
                   <WishlistCardAllWrapper key={item.id} padding="16px">
                     <DeleteCell>
-                      <div>
-                        <TrashIcon onClick={() => onDelete({ product_id: item.id })} />
-                      </div>
+                      <TrashIcon onClick={() => onDelete({ product_id: item.id })} />
                     </DeleteCell>
                     <WishlistImgWrapper maxHeight="100px" maxWidth="100px">
                       <CartItemImg src={item?.image.src} alt={item.name} width="50" />
@@ -127,7 +118,10 @@ const WishListTable: FC<WishListTableProps> = ({
                       <CardContent gap="8px" padding="0 0 4px 0">
                         <ProducTitle>
                           <p>{item.name}</p>
-                          <TrashIcon onClick={() => onDelete({ product_id: item.id })} />
+                          <TrashIcon
+                            padding="0 10px 0 0"
+                            onClick={() => onDelete({ product_id: item.id })}
+                          />
                         </ProducTitle>
                         <QuantityRow>
                           <Circle />

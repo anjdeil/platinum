@@ -35,7 +35,8 @@ export const OrderBarContent = styled.div`
 `
 export const OrderBarSum = styled.p`
   text-align: right;
-  display: inline-block;
+  display: flex;
+  justify-content: end;
   font: ${({ theme }) => theme.fonts.titleH2Medium};
   line-height: 24px;
 

@@ -23,6 +23,7 @@ export const MiniCartContainer = styled.div<MiniCartContainerProps>`
     scrollbar-width: none;
     -ms-overflow-style: none;
   } */
+  z-index: 1001;
   @media ${({ theme }) => theme.media.large} {
     width: 500px;
   }

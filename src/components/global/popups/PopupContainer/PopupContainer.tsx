@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux'
 import CommentPopup from '../CommentPopup/CommentPopup'
 import MobileCategoriesMenu from '../MobileCategoriesMenu/MobileCategoriesMenu'
 import SwiperPopup from '../SwiperPopup/SwiperPopup'
-import MiniCart from '@/components/widgets/MiniCart/MiniCart'
+import MiniCart from '@/components/global/popups/MiniCart/MiniCart'
 
 const unscrollablePopups = [
   'mobile-search',
@@ -65,6 +65,7 @@ const PopupContainer = () => {
 
   const closePopup = () => {
     dispatch(popupClosed())
+    console.log('close popup')
   }
 
   switch (popup) {

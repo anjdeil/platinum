@@ -14,7 +14,7 @@ import {
   ProducTitle,
   ProductPrice,
   CardContent,
-} from '@/components/pages/cart/CartTable/style'
+} from '@/components/pages/cart/styles/index'
 import CloseIcon from '@/components/global/icons/CloseIcon/CloseIcon'
 import CartQuantity from '@/components/pages/cart/CartQuantity/CartQuantity'
 import checkProductAvailability from '@/utils/cart/checkProductAvailability'
@@ -40,12 +40,14 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
   const { code } = useAppSelector((state) => state.currencySlice)
   const { cartItems, couponCodes } = useAppSelector((state) => state.cartSlice)
   const t = useTranslations('Cart')
-
   const [symbol, setSymbol] = useState<string>('')
   const [hasConflict, setHasConflict] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
 
-  // Mutations
+  const [loadingItems, setLoadingItems] = useState<number[]>([])
+  const [preLoadingItem, setPreLoadingItem] = useState<number>()
+
+  // FETCH
   const [createOrder, { data: orderItems, isLoading: isLoadingOrder }] =
     useCreateOrderMutation()
 
@@ -54,6 +56,26 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
     { data: productsSpecsData, isLoading: isLoadingProducts },
   ] = useGetProductsMinimizedMutation()
 
+  const handleCreateOrder = useCallback(async () => {
+    const requestData = {
+      line_items: cartItems,
+      status: 'on-hold' as CreateOrderRequestType['status'],
+      coupon_lines: couponCodes.map((code: string) => ({ code })),
+      currency: code,
+    }
+    if (preLoadingItem) {
+      setLoadingItems((prev) => [...prev, preLoadingItem])
+    }
+    try {
+      await createOrder(requestData)
+    } finally {
+      setLoadingItems((prev) => prev.filter((id) => id !== preLoadingItem))
+    }
+  }, [cartItems, couponCodes, code])
+
+  const [cachedOrderItems, setCachedOrderItems] = useState(orderItems)
+
+  // STATES
   const productsSpecs = useMemo(
     () => productsSpecsData?.data?.items || [],
     [productsSpecsData]
@@ -64,23 +86,14 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
     [orderItems]
   )
 
-  const handleCreateOrder = useCallback(async () => {
-    const requestData = {
-      line_items: cartItems,
-      status: 'on-hold' as CreateOrderRequestType['status'],
-      coupon_lines: couponCodes.map((code: string) => ({ code })),
-      currency: code,
-    }
-    await createOrder(requestData)
-  }, [cartItems, couponCodes, code, createOrder])
-
   const handleChangeQuantity = useCallback(
-    (
+    async (
       product_id: number,
       action: 'inc' | 'dec' | 'value',
       variation_id?: number,
       newQuantity?: number | boolean
     ) => {
+      setPreLoadingItem(product_id)
       handleQuantityChange(
         cartItems,
         dispatch,
@@ -98,7 +111,6 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
     setTimeout(onClose, 300)
   }, [onClose])
 
-  // Effects
   useEffect(() => {
     setIsVisible(true)
   }, [])
@@ -115,14 +127,25 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
 
   useEffect(() => {
     getProductsMinimized(cartItems)
-  }, [getProductsMinimized, cartItems])
+  }, [getProductsMinimized, cartItems.length])
 
   useEffect(() => {
     setHasConflict(checkCartConflict(cartItems, productsSpecs))
   }, [cartItems, productsSpecs])
 
+  useEffect(() => {
+    if (orderItems) {
+      setCachedOrderItems(orderItems)
+    }
+  }, [orderItems])
+
+  const currentOrderItems = orderItems ?? cachedOrderItems
   return (
-    <PopupOverlay onClick={handleClose}>
+    <PopupOverlay
+      onClick={(e) => {
+        if (e.target === e.currentTarget) handleClose()
+      }}
+    >
       <MiniCartContainer isVisible={isVisible}>
         <FlexBox justifyContent="space-between" margin="0 0 10px 0">
           <FlexBox alignItems="center">
@@ -145,54 +168,54 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
         {!(isLoadingOrder || isLoadingProducts) && hasConflict && (
           <Notification type="warning">{t('cartConflict')}</Notification>
         )}
-        {!(isLoadingOrder || isLoadingProducts) ? (
-          orderItems?.line_items.map((item) => {
-            const { resolveCount } = checkProductAvailability(item, productsSpecs)
-            return (
-              <CartCardWrapper key={item.id} marginBottom="68px" gap="16px">
-                <CartImgWrapper maxHeight="140px" maxWidth="140px">
-                  <CartItemImg src={item.image?.src} alt={item.name} width="50" />
-                </CartImgWrapper>
-                <CardContent padding="8px 0" gap="1px">
-                  <ProducTitle>
-                    <p>{item.name}</p>
-                    <TrashIcon
-                      padding="0"
-                      onClick={() =>
-                        handleChangeQuantity(
-                          item.product_id,
-                          'value',
-                          item.variation_id,
-                          0
-                        )
-                      }
-                    />
-                  </ProducTitle>
-                  <FlexBox justifyContent="space-between" margin="0 0 16px 0">
-                    <ProductPrice>
-                      <p>
-                        {roundedPrice(item.price)}&nbsp;{symbol}
-                      </p>
-                    </ProductPrice>
-                    <CartQuantity
-                      resolveCount={resolveCount}
-                      item={item}
-                      handleChangeQuantity={handleChangeQuantity}
-                      inputWidth="50px"
-                      inputHeight="32px"
-                    />
-                  </FlexBox>
+        {currentOrderItems?.line_items.map((item) => {
+          const { resolveCount } = checkProductAvailability(item, productsSpecs)
+          const isLoadingItem = loadingItems.includes(item.product_id)
+          return (
+            <CartCardWrapper
+              isLoadingItem={isLoadingItem}
+              key={item.id}
+              marginBottom="68px"
+              gap="16px"
+            >
+              <CartImgWrapper maxHeight="140px" maxWidth="140px">
+                <CartItemImg src={item.image?.src} alt={item.name} width="50" />
+              </CartImgWrapper>
+              <CardContent padding="8px 0" gap="1px">
+                <ProducTitle>
+                  <p>{item.name}</p>
+                  <TrashIcon
+                    padding="0"
+                    onClick={() =>
+                      handleChangeQuantity(item.product_id, 'value', item.variation_id, 0)
+                    }
+                  />
+                </ProducTitle>
+                <FlexBox justifyContent="space-between" margin="0 0 16px 0">
                   <ProductPrice>
-                    <span>{t('summary')}</span>
-                    <OnePrice fontSize="1.2em">
-                      {roundedPrice(item.price * item.quantity)}&nbsp;{symbol}
-                    </OnePrice>
+                    <p>
+                      {roundedPrice(item.price)}&nbsp;{symbol}
+                    </p>
                   </ProductPrice>
-                </CardContent>
-              </CartCardWrapper>
-            )
-          })
-        ) : (
+                  <CartQuantity
+                    resolveCount={resolveCount}
+                    item={item}
+                    handleChangeQuantity={handleChangeQuantity}
+                    inputWidth="50px"
+                    inputHeight="32px"
+                  />
+                </FlexBox>
+                <ProductPrice>
+                  <span>{t('summary')}</span>
+                  <OnePrice fontSize="1.2em">
+                    {roundedPrice(item.price * item.quantity)}&nbsp;{symbol}
+                  </OnePrice>
+                </ProductPrice>
+              </CardContent>
+            </CartCardWrapper>
+          )
+        })}
+        {!currentOrderItems && (
           <MenuSkeleton
             elements={cartItems.length || 3}
             direction="column"
@@ -208,18 +231,17 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
           symbol={symbol}
           miniCart
         />
-        {!isLoadingOrder && !isLoadingProducts && (
-          <FlexBox flexDirection="column" gap="8px" margin="20px 0 0 0">
-            <StyledButton height="58px" disabled={hasConflict}>
-              {t('placeAnOrder')}
+
+        <FlexBox flexDirection="column" gap="8px" margin="20px 0 0 0">
+          <StyledButton height="58px" disabled={hasConflict || loadingItems.length > 0}>
+            {t('placeAnOrder')}
+          </StyledButton>
+          <CartLink href="/cart">
+            <StyledButton secondary height="58px">
+              {t('goToCart')}
             </StyledButton>
-            <CartLink href="/cart">
-              <StyledButton secondary height="58px">
-                {t('goToCart')}
-              </StyledButton>
-            </CartLink>
-          </FlexBox>
-        )}
+          </CartLink>
+        </FlexBox>
       </MiniCartContainer>
     </PopupOverlay>
   )

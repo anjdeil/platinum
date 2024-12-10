@@ -9,13 +9,7 @@ import {
 import { Skeleton } from '@mui/material'
 import { useTranslations } from 'next-intl'
 import { roundedPrice } from '@/utils/cart/roundedPrice'
-
-interface OrderBarProps {
-  cartSum: number
-  symbol: string
-  isLoadingOrder: boolean
-  miniCart?: boolean
-}
+import { OrderBarProps } from '@/types/pages/cart'
 
 const OrderBar: FC<OrderBarProps> = ({
   cartSum,
@@ -31,7 +25,7 @@ const OrderBar: FC<OrderBarProps> = ({
         <OrderBarSum>
           {isLoadingOrder ? (
             <>
-              <Skeleton width="30px" />
+              <Skeleton width="50px" />
             </>
           ) : (
             <>
