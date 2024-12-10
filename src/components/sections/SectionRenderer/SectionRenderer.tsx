@@ -79,44 +79,48 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
               />
             );
           case 'about_platinum':
-            return (
-              <AboutPlatinumSection
-                key={index}
-                about_platinum_separator={section.about_platinum_separator}
-              />
-            );
+            return <AboutPlatinumSection key={index} />;
           case 'features':
             return (
-              <FeaturesSection
-                key={index}
-                subtitle={section.subtitle}
-                title={section.title}
-                items={section.items}
-              />
+              <Container key={index}>
+                <FeaturesSection
+                  key={index}
+                  subtitle={section.subtitle}
+                  title={section.title}
+                  items={section.items}
+                />
+              </Container>
             );
           case 'blog':
             return (
-              <BlogSection
-                key={index}
-                subtitle={section.subtitle}
-                title={section.title}
-              />
+              <Container key={index}>
+                <BlogSection
+                  key={index}
+                  subtitle={section.subtitle}
+                  title={section.title}
+                />
+              </Container>
             );
 
           case 'hero':
             return (
-              <HeroSection
-                key={index}
-                is_reverse={section.is_reverse}
-                image={section.image}
-                object_fit={section.object_fit}
-                title={section.title}
-                text={section.text}
-              />
+              <Container key={index}>
+                <HeroSection
+                  key={index}
+                  is_reverse={section.is_reverse}
+                  image={section.image}
+                  object_fit={section.object_fit}
+                  title={section.title}
+                  text={section.text}
+                />
+              </Container>
             );
           case 'split':
-            return <SplitSection key={section._type} split={section.split} />;
-
+            return (
+              <Container key={index}>
+                <SplitSection key={section._type} split={section.split} />
+              </Container>
+            );
           case 'loyalty':
             return (
               <LoyaltySection

@@ -1,11 +1,12 @@
 import styled from "@emotion/styled";
 
-export const BlogListBlockContainer = styled.div`    
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    row-gap: 24px;
+export const BlogListBlockContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  row-gap: 24px;
 `;
 
 export const BlogList = styled.div`

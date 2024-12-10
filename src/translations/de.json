@@ -89,18 +89,18 @@
         "color": "Farbe",
         "yourFeedback": "Ihr Feedback",
         "reviews": "Bewertungen",
+        "readMore": "Mehr erfahren",
         "bestForYou": "Das Beste für dich",
         "recommendProduct": "Empfohlene Waren",
         "bestSeller": "Bestseller",
         "newProduct": "Neue Produkte",
         "ourCategories": "Unsere Kategorien",
         "moreProduct": "Mehr Produkt",
-        "lastedArticles": "Neueste Artikel",
-        "readMore": "Mehr erfahren",
         "addComment": "Kommentar hinzufügen",
         "submitting": "Einreichen",
         "commentText1": "Haben Sie unser Produkt getestet? Teilen Sie Ihre Meinung mit;",
-        "commentText2": "- Wir versuchen, das Beste für Sie zu sein, und Ihre Meinung wird uns sehr helfen!"
+        "commentText2": "- Wir versuchen, das Beste für Sie zu sein, und Ihre Meinung wird uns sehr helfen!",
+        "lastedArticles": "Neueste Artikel"
     },
     "Cart": {
         "productName": "Name",
@@ -114,13 +114,65 @@
         "delete": "Löschen",
         "updateTo": "Aktualisieren auf",
         "priceToDelivery": "Um kostenlosen Versand zu erhalten, müssen Sie Artikel im Wert von insgesamt {locale} hinzufügen",
-        "welcomeToPlatinumShop": "Willkommen im Platinum Schop",
-        "theBest": "Das beste",
-        "productForYou": "Produkt für Sie"
+        "discountText": "MELDEN SIE SICH AN UND NUTZEN SIE {discounts}",
+        "CouponText": "FALLS SIE EINEN RABATTGUTSCHEIN HABEN, VERWENDEN SIE IHN UND ERHALTEN SIE EINEN RABATT!",
+        "ChooseCouponText": "Wählen Sie, wenn Sie einen Rabattcode oder Bonuspunkte haben, die Sie verwenden möchten, oder möchten Sie Ihre Versandkosten schätzen.",
+        "ErrorCoupon": "Dieser Gutschein existiert nicht",
+        "LoginAnd": "MELDEN SIE SICH AN UND NUTZEN SIE",
+        "Above": "OBEN",
+        "ForOrders": "FÜR BESTELLUNGEN",
+        "CouponApply": "Coupon erfolgreich angewendet",
+        "CouponApplyBtn": "Gutschein anwenden",
+        "CouponInputPlaceholder": "Gutscheincode",
+        "OrderComments": "KOMMENTARE ZUR BESTELLUNG",
+        "OrderCommentPlaceholder": "Teilen Sie spezifische Details oder Anfragen zu Ihrer Bestellung...",
+        "OrderCommentHint": "Fühlen Sie sich frei, zusätzliche Anweisungen oder Hinweise zu Ihrer Bestellung hier anzugeben.",
+        "OrderSummary": "Bestellübersicht",
+        "Continue": "Weiter",
+        "OrderSummaryTotal": "Gesamtbetrag zu zahlen",
+        "products": "Artikel",
+        "coupon": "Gutschein",
+        "paymentMethod": "Zahlungsmethode",
+        "Basket": "Warenkorb",
+        "PersonalInformation": "Persönliche Informationen",
+        "Confirmation": "Bestätigung"
+    },
+    "Contacts": {
+      "contacts": "Kontakte",
+      "telephone": "Telefon",
+      "call": "Anrufen",
+      "address": "Adresse",
+      "schedule": "Mo-Fr: von",
+      "dayOff": "Sa-So: Ruhetag",
+      "satSun": "Sa-So: von",
+      "howToGetThere": "Wie man dorthin kommt?",
+      "email": "E-Mail",
+      "toWrite": "Schreiben",
+      "socialMedia": "Wir sind in sozialen Medien",
+      "askUsQuestion": "Stellen Sie uns eine Frage",
+      "yourNamePlaceholder": "Wie heißen Sie?",
+      "emailPlaceholder": "E-Mail",
+      "yourQuestionPlaceholder": "Schreiben Sie Ihre Frage",
+      "sending": "Wird gesendet...",
+      "sendButton": "Senden",
+      "errorMessage": "Etwas ist schief gelaufen. Bitte versuchen Sie es erneut.",
+      "successMessage": "Ihre Nachricht wurde erfolgreich gesendet!"
+    },
+    "Validation": {
+      "email": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+      "minChar": "Muss mindestens {count} Zeichen lang sein."
+    },
+    "Breadcrumbs": {
+      "homePage": "Startseite"
     },
     "NotFoundPage": {
-        "notFound": "Seite nicht gefunden",
-        "description": "Es tut uns leid, wir können die Seite, die Sie suchen, nicht finden. Sie wurde möglicherweise verschoben, gelöscht oder hat nie existiert.",
-        "backToHome": "Zurück zur Startseite"
+      "notFound": "Seite nicht gefunden",
+      "description": "Es tut uns leid, wir können die Seite, die Sie suchen, nicht finden. Sie wurde möglicherweise verschoben, gelöscht oder hat nie existiert.",
+      "backToHome": "Zurück zur Startseite",
+      "serverError": "Serverfehler",
+      "serverErrorDescription": "Es tut uns leid, auf dem Server ist ein Fehler aufgetreten. Wir arbeiten daran, das Problem zu beheben."
+    },
+    "HomePage": {
+        "aboutOurBrand": "Über unsere Marke"
     }
 }

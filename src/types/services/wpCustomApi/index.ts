@@ -7,6 +7,8 @@ import { AttributeSchema } from "./attributes";
 import { menuItemsSchema } from "./menus";
 import { ThemeOptionsItemSchema } from "./themeOptions";
 import { SectionsTypeSchema } from '@/types/components/sections';
+import { BlogItemSchema } from '@/types/pages/blog';
+import { Page } from 'react-pdf';
 
 const LangParamSchema = z.enum(['en', 'pl', 'de', 'ru', 'uk']).optional();
 
@@ -34,6 +36,26 @@ export const CustomDataSchema = z.object({
       products_count: z.number().optional(),
     })
     .optional(),
+});
+
+export const PageDataItemsSchema = z.object({
+  id: z.number(),
+  slug: z.string(),
+  title: z.string(),
+  content: z.string(),
+  language_code: z.string(),
+  created: z.string(),
+  modified: z.string(),
+  author_id: z.number(),
+  menu_order: z.number(),
+  sections: z.array(SectionsTypeSchema),
+});
+
+export const PageDataFullSchema = z.object({
+  success: z.boolean(),
+  data: z.object({
+    item: PageDataItemsSchema,
+  }),
 });
 
 export const PageDataSchema = z.object({
@@ -101,6 +123,7 @@ export const CustomDataThemeOptionsSchema = z.object({
     item: ThemeOptionsItemSchema,
   }),
 });
+
 export const CustomDataProductsMinimizedResponseSchema = z.object({
   success: z.boolean(),
   data: z.object({
@@ -108,8 +131,17 @@ export const CustomDataProductsMinimizedResponseSchema = z.object({
   }),
 });
 
+export const CustomDataPostsSchema = z.object({
+  success: z.boolean(),
+  data: CustomDataSchema.extend({
+    items: z.array(BlogItemSchema),
+  }),
+});
+
 export type QueryParamsType = z.infer<typeof QueryParamsSchema>;
 export type LangParamType = z.infer<typeof LangParamSchema>;
+export type PageDataItemType = z.infer<typeof PageDataItemsSchema>;
+export type PageDataFullType = z.infer<typeof PageDataFullSchema>;
 export type PageDataType = z.infer<typeof PageDataSchema>;
 export type CustomDataCategoriesType = z.infer<
   typeof CustomDataCategoriesSchema
@@ -130,3 +162,5 @@ export type CustomDataThemeOptionsType = z.infer<
 export type CustomDataProductsMinimizedResponseType = z.infer<
   typeof CustomDataProductsMinimizedResponseSchema
 >;
+
+export type CustomDataPostsType = z.infer<typeof CustomDataPostsSchema>;

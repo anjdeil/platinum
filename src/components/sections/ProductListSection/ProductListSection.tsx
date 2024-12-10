@@ -1,13 +1,11 @@
 import { ProductListSectionData } from '@/types/components/sections';
-import { StyledContainer } from './styles';
 import { useGetProductsQuery } from '@/store/rtk-queries/wpCustomApi';
 import { ProductType } from '@/types/pages/shop';
 import { RecommendContainer } from '@/components/pages/product/CustomProductList/styles';
-import { StyledText } from '@/components/global/TitleBlock/styles';
-import { Title } from '@/styles/components';
 import { ProductCardList } from '@/components/shop/ProductCardsList';
-import { TitleBlock } from '../styles';
 import { useRouter } from 'next/router';
+import { SectionHeader } from '../SectionHeader';
+import { SectionContainer } from '../styles';
 
 type ProductListSectionProps = Omit<ProductListSectionData, '_type'>;
 
@@ -47,14 +45,9 @@ export const ProductListSection: React.FC<ProductListSectionProps> = ({
   const popularProducts: ProductType[] = popularData?.data?.items || [];
 
   return (
-    <StyledContainer>
+    <SectionContainer>
       <RecommendContainer>
-        <TitleBlock>
-          <StyledText>{subtitle}</StyledText>
-          <Title as='h4' uppercase>
-            {title}
-          </Title>
-        </TitleBlock>
+        <SectionHeader title={title} subtitle={subtitle} />
         {sort_type === 'newest' && (
           <ProductCardList
             products={newestProducts}
@@ -72,6 +65,6 @@ export const ProductListSection: React.FC<ProductListSectionProps> = ({
           />
         )}
       </RecommendContainer>
-    </StyledContainer>
+    </SectionContainer>
   );
 };

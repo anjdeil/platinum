@@ -114,13 +114,71 @@
     "delete": "Delete",
     "updateTo": "Update to",
     "priceToDelivery": "To get free delivery, you need to add items totaling {locale}",
+
+    "discountText": "LOG IN AND TAKE ADVANTAGE OF {discounts}",
+    "CouponText": "IF YOU HAVE A DISCOUNT COUPON, USE IT AND GET A DISCOUNT!",
+    "ChooseCouponText": "Choose if you have a discount code or reward points you want to use or would like to estimate your delivery cost.",
+    "LoginAnd": "LOG IN AND TAKE ADVANTAGE OF",
+    "Above": "ABOVE",
+    "ForOrders": "FOR ORDERS",
+    "CouponApply": "Coupon successfully applied",
+    "ErrorCoupon": "This coupon doesn't exist.",
+    "CouponApplyBtn": "Apply coupon",
+    "CouponInputPlaceholder": "Code coupon",
+
+    "OrderComments": "COMMENTS ON THE ORDER",
+    "OrderCommentPlaceholder": "Share any specific details or requests about your order...",
+    "OrderCommentHint": "Feel free to provide any additional instructions or notes for your order here.",
+    "OrderSummary": "Order Summary",
+    "Continue": "Continue",
+    "OrderSummaryTotal": "total to pay",
+
+    "products": "Products",
+    "сoupon": "Сoupon",
+    "paymentMethod": "Payment method",
+    "Basket": "Basket",
+    "PersonalInformation": "Personal Information",
+    "Confirmation": "Confirmation",
     "welcomeToPlatinumShop": "Welcome to Platinum Shop",
     "theBest": "The best",
     "productForYou": "Product for you"
   },
+  "Contacts": {
+    "contacts": "Contacts",
+    "telephone": "Telephone",
+    "call": "Call",
+    "address": "Address",
+    "schedule": "Mon-Fri: from",
+    "dayOff": "Sat-Sun: Day off",
+    "satSun": "Sat-Sun: from",
+    "howToGetThere": "How to get there?",
+    "email": "Email",
+    "toWrite": "To write",
+    "socialMedia": "We are in social media",
+    "askUsQuestion": "Ask Us a Question",
+    "yourNamePlaceholder": "What is your name?",
+    "emailPlaceholder": "Email",
+    "yourQuestionPlaceholder": "Write your question",
+    "sending": "Sending...",
+    "sendButton": "Send",
+    "errorMessage": "Something went wrong. Please try again.",
+    "successMessage": "Your message has been sent successfully!"
+  },
+  "Validation": {
+    "email": "Please enter a valid email.",
+    "minChar": "Must be at least {count} characters long."
+  },
+  "Breadcrumbs": {
+    "homePage": "Home Page"
+  },
   "NotFoundPage": {
     "notFound": "Page not found",
     "description": "Sorry, we can't seem to find the page you're looking for. It may have been moved, deleted, or never existed.",
-    "backToHome": "Go back to the homepage"
+    "backToHome": "Go back to the homepage",
+    "serverError": "Server error",
+    "serverErrorDescription": "Sorry, something went wrong. Please try again later."
+  },
+  "HomePage": {
+    "aboutOurBrand": "About our brand"
   }
 }
