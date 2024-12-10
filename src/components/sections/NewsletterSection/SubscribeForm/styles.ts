@@ -20,6 +20,11 @@ export const StyledSubscribeInput = styled(Input)`
     box-shadow: 0 0 6px 0 rgba(17, 55, 96, 0.4);
   }
 
+  &:focus {
+    outline: 1px solid ${({ theme }) => theme.colors.primary};
+    box-shadow: 0 0 6px 0 rgba(17, 55, 96, 0.4);
+  }
+
   @media ${({ theme }) => theme.media.large} {
     height: 48px;
     font: ${({ theme }) => theme.fonts.bodypresmallReg};
@@ -38,6 +43,7 @@ export const StyledSubscribeButton = styled.button`
   top: 0;
   bottom: 0;
   width: 132px;
+  height: 56px;
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
   text-align: center;
   background-color: ${({ theme }) => theme.colors.primary};
@@ -53,24 +59,36 @@ export const StyledSubscribeButton = styled.button`
   }
 
   @media ${({ theme }) => theme.media.large} {
+    height: 48px;
     font: ${({ theme }) => theme.fonts.bodypresmallReg};
   }
 
   @media ${({ theme }) => theme.media.medium} {
     position: relative;
     width: 239px;
-    height: 48px;
   }
 `;
 
 export const StyledError = styled.p`
   font: ${({ theme }) => theme.fonts.bodypresmallReg};
+  font-weight: 600;
   color: ${({ theme }) => theme.colors.error};
-  padding-bottom: 8px;
+  padding-top: 8px;
+
+  @media ${({ theme }) => theme.media.medium} {
+    padding-top: 0;
+    padding-bottom: 8px;
+  }
 `;
 
 export const StyledSuccessMessage = styled.p`
   font: ${({ theme }) => theme.fonts.bodypresmallReg};
+  font-weight: 600;
   color: ${({ theme }) => theme.background.success};
-  padding-bottom: 8px;
+  padding-top: 8px;
+
+  @media ${({ theme }) => theme.media.medium} {
+    padding-top: 0;
+    padding-bottom: 8px;
+  }
 `;
