@@ -69,6 +69,9 @@
     "Search": {
         "Search": "Suche"
     },
+    "Archive": {
+        "goHome": "Home"
+    },
     "Product": {
         "addToBasket": "In den Warenkorb legen",
         "viewCart": "Warenkorb anzeigen",
@@ -116,8 +119,8 @@
         "productForYou": "Produkt für Sie"
     },
     "NotFoundPage": {
-      "notFound": "Seite nicht gefunden",
-      "description": "Es tut uns leid, wir können die Seite, die Sie suchen, nicht finden. Sie wurde möglicherweise verschoben, gelöscht oder hat nie existiert.",
-      "backToHome": "Zurück zur Startseite"
+        "notFound": "Seite nicht gefunden",
+        "description": "Es tut uns leid, wir können die Seite, die Sie suchen, nicht finden. Sie wurde möglicherweise verschoben, gelöscht oder hat nie existiert.",
+        "backToHome": "Zurück zur Startseite"
     }
 }

@@ -232,7 +232,7 @@ const CreateOrderRequestSchema = z.object({
 const CreateOrderResponseSchema = z.object({
     id: z.number(),
     line_items: z.array(LineItemSchema),
-    status:z.enum(['pending', 'processing', 'on-hold', 'completed', 'cancelled', 'refunded', 'failed']),
+    status: z.enum(['pending', 'processing', 'on-hold', 'completed', 'cancelled', 'refunded', 'failed']),
 });
 
 

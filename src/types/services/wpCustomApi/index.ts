@@ -52,8 +52,8 @@ export const CustomDataMenuResponseSchema = z.object({
 
 export const CustomDataProductsStatisticSchema = z.object({
   products_count: z.number(),
-  min_price: z.number(),
-  max_price: z.number(),
+  min_price: z.number().nullable(),
+  max_price: z.number().nullable(),
   attributes: z.array(AttributeSchema),
 });
 
