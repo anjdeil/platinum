@@ -1,85 +1,54 @@
 import { ReviewsSectionData } from '@/types/components/sections/index';
-import { SectionContainer } from '../styles';
-import { SectionHeader } from '../SectionHeader';
-import { ReviewContainer } from './styles';
-import { useEffect, useState } from 'react';
-import {
-  CustomSwiper,
-  ReviewsContainer,
-} from '@/components/global/reviews/Reviews/styles';
-import { Pagination } from 'swiper/modules';
-import { SwiperSlide } from 'swiper/react';
+import { SectionContainer, StyledError } from "../styles";
+import { SectionHeader } from "../SectionHeader";
+import { ReviewRespType } from "@/types/services";
+import { useGetProductsReviewsQuery } from "@/store/rtk-queries/wooCustomApi";
+import { ReviewsSlider } from "./ReviewsSlider";
+import { ReviewsSkeleton } from "./ReviewsSkeleton";
+import { ValidateWooCustomRktApiReviews } from "@/utils/zodValidators/validatewooCustomRktApiReviews";
 
-interface Review {
-  author_name: string;
-  rating: number;
-  text: string;
-  time: string;
-}
-
-type ReviewsSectionProps = Omit<ReviewsSectionData, '_type'>;
+type ReviewsSectionProps = Omit<ReviewsSectionData, "_type">;
 
 export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
   subtitle,
   title,
 }) => {
-  const [reviews, setReviews] = useState<Review[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [opened, setOpened] = useState<boolean>(false);
+  const { data, isLoading, isError } = useGetProductsReviewsQuery();
 
-  useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        const response = await axios.get('/api/google-reviews');
-        setReviews(response.data as Review[]);
-      } catch (error) {
-        setError('Failed to fetch reviews');
-      } finally {
-        setLoading(false);
-      }
-    };
+  const reviewsNotFound = (
+    <SectionContainer>
+      <SectionHeader title={title} subtitle={subtitle} />
+      <StyledError>Reviews not found</StyledError>
+    </SectionContainer>
+  );
 
-    fetchReviews();
-  }, []);
+  if (data) {
+    const isValidSectionsData = ValidateWooCustomRktApiReviews(data);
+    if (!isValidSectionsData) {
+      console.error("Invalid data format:");
+      return reviewsNotFound;
+    }
+  }
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
+  const reviews = data as ReviewRespType[];
+
+  if (isLoading) {
+    return (
+      <SectionContainer>
+        <SectionHeader title={title} subtitle={subtitle} />
+        <ReviewsSkeleton />
+      </SectionContainer>
+    );
+  }
+
+  if (isError || !reviews.length) {
+    return reviewsNotFound;
+  }
 
   return (
     <SectionContainer>
       <SectionHeader title={title} subtitle={subtitle} />
-      <ReviewsContainer>
-        <CustomSwiper
-          modules={[Pagination]}
-          pagination={{ clickable: true }}
-          loop={true}
-          breakpoints={{
-            0: {
-              slidesPerView: 1,
-              spaceBetween: 16,
-            },
-            769: {
-              slidesPerView: 3,
-              spaceBetween: 16,
-            },
-            1025: {
-              slidesPerView: 3,
-              spaceBetween: 20,
-            },
-          }}
-        >
-          {reviews.map((review) => (
-            <SwiperSlide key={review.id}>
-              <ReviewItem
-                review={review}
-                isOpen={opened === review.id}
-                setOpened={setOpened}
-              />
-            </SwiperSlide>
-          ))}
-        </CustomSwiper>
-      </ReviewsContainer>
+      <ReviewsSlider reviews={reviews} />
     </SectionContainer>
   );
 };
