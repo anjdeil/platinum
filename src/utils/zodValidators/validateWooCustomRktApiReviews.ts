@@ -1,10 +1,9 @@
-import { ReviewsRespSchema, ReviewsRespType } from "@/types/services";
+import { ReviewsRespSchema } from "@/types/services";
 import { ZodError } from "zod";
 
 export const ValidateWooCustomRktApiReviews = (data: any) => {
   try {
     ReviewsRespSchema.parse(data);
-    console.log("Validation passed in ValidateWooCustomRktApiReviews");
     return true;
   } catch (error) {
     if (error instanceof ZodError) {

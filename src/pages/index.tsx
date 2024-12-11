@@ -24,8 +24,12 @@ export const getServerSideProps: GetServerSideProps = async (
       return { notFound: true };
     }
 
-    const isValidSectionsData = validateWpPage(responseData);
-    if (!isValidSectionsData) throw new Error('Invalid SectionsData data');
+    if (responseData) {
+      const isValidSectionsData = validateWpPage(responseData);
+      if (!isValidSectionsData) {
+        console.error("Invalid data format:");
+      }
+    }
 
     if (responseData && responseData.data) {
       const pageResponseData = responseData.data as PageDataFullType;
