@@ -1,9 +1,9 @@
 import {
   couponRespType,
   CreateOrderRequestType,
-  CreateOrderResponseType,
   OrderType,
   retrieveCouponQueryType,
+  ReviewsRespType,
   WooCustomerReqType,
   WooCustomerType,
 } from "@/types/services";
@@ -64,6 +64,12 @@ export const wooCustomRktApi = createApi({
         },
       }),
     }),
+    getProductsReviews: builder.query<ReviewsRespType, void>({
+      query: () => ({
+        url: `/products/reviews`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -73,4 +79,5 @@ export const {
   useCreateOrderMutation,
   useListAllCouponsQuery,
   useAddCommentMutation,
+  useGetProductsReviewsQuery,
 } = wooCustomRktApi;

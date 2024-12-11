@@ -52,6 +52,11 @@ export const ContactsSocials = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 72px;
+
+  @media ${({ theme }) => theme.media.medium} {
+    margin-bottom: 64px;
+  }
 `;
 export const ContactLink = styled(Link)`
   display: flex;
