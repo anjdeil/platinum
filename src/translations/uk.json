@@ -69,6 +69,9 @@
   "Search": {
     "Search": "Пошук"
   },
+  "Archive": {
+    "goHome": "Головна"
+  },
   "Product": {
     "addToBasket": "Додати до кошика",
     "viewCart": "Переглянути кошик",
@@ -141,12 +144,56 @@
     "theBest": "Найкращий",
     "productForYou": "Продукт для вас"
   },
+  "Contacts": {
+    "contacts": "Контакти",
+    "telephone": "Телефон",
+    "call": "Подзвонити",
+    "address": "Адреса",
+    "schedule": "Пн-Пт: з",
+    "dayOff": "Сб-Нд: Вихідний",
+    "satSun": "Сб-Нд: з",
+    "howToGetThere": "Як дістатися?",
+    "email": "Електронна пошта",
+    "toWrite": "Написати",
+    "socialMedia": "Ми в соціальних мережах",
+    "askUsQuestion": "Задайте нам питання",
+    "yourNamePlaceholder": "Як вас звати?",
+    "emailPlaceholder": "Електронна пошта",
+    "yourQuestionPlaceholder": "Напишіть своє питання",
+    "sending": "Відправляється...",
+    "sendButton": "Відправити",
+    "errorMessage": "Щось пішло не так. Будь ласка, спробуйте ще раз.",
+    "successMessage": "Ваше повідомлення успішно відправлено!"
+  },
+  "Validation": {
+    "email": "Будь ласка, введіть правильну електронну адресу.",
+    "minChar": "Має бути не менше {count} символів."
+  },
+  "Breadcrumbs": {
+    "homePage": "Головна"
+  },
   "NotFoundPage": {
     "notFound": "Сторінка не знайдена",
     "description": "На жаль, ми не можемо знайти сторінку, яку ви шукаєте. Можливо, її було переміщено, видалено або вона ніколи не існувала.",
-    "backToHome": "Повернутися на головну сторінку"
+    "backToHome": "Повернутися на головну сторінку",
+    "serverError": "Помилка сервера",
+    "serverErrorDescription": "На жаль, на сервері виникла помилка."
   },
   "HomePage": {
-    "aboutOurBrand": "Про наш бренд"
+    "aboutOurBrand": "Про наш бренд",
+    "newUnreadMessage": "Нове непрочитане повідомлення",
+    "unreadMessageDate": "Зараз",
+    "subscribeToOurNewsletter": "Підпишіться на нашу розсилку!",
+    "newArrivals": "Дізнавайтеся першими про новинки, ексклюзивні знижки та спеціальні пропозиції.",
+    "joinToWhatsApp": "Приєднуйтесь до WhatsApp",
+    "subscribe": "Підписатися"
+  },
+  "SubscriptionForm": {
+    "subscribe": "Підписатися",
+    "sending": "Відправка...",
+    "typeValidEmail": "Введіть правильну електронну адресу",
+    "failedSubscribe": "Не вдалося відправити лист",
+    "successSubscribe": "Підписався!",
+    "userAlreadySubscribed": "Користувач вже підписаний"
   }
 }

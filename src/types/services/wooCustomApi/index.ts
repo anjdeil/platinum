@@ -339,6 +339,31 @@ const retrieveCouponQuerySchema = z.object({
   id: z.number(),
 });
 
+export const ReviewRespSchema = z.object({
+  id: z.number(),
+  date_created: z.string(),
+  date_created_gmt: z.string(),
+  product_id: z.number(),
+  status: z.string(),
+  reviewer: z.string(),
+  reviewer_email: z.string(),
+  review: z.string(),
+  rating: z.number(),
+  verified: z.boolean(),
+  reviewer_avatar_urls: z.object({
+    24: z.string(),
+    48: z.string(),
+    96: z.string(),
+  }),
+  _links: z.object({
+    self: z.array(z.object({ href: z.string() })),
+    collection: z.array(z.object({ href: z.string() })),
+    up: z.array(z.object({ href: z.string() })),
+  }),
+});
+
+export const ReviewsRespSchema = z.array(ReviewRespSchema);
+
 export type OrderType = z.infer<typeof OrderTypeSchema>;
 export type AddressType = z.infer<typeof AddressTypeSchema>;
 export type WooCustomerType = z.infer<typeof WooCustomerSchema>;
@@ -348,3 +373,5 @@ export type CreateOrderResponseType = z.infer<typeof CreateOrderResponseSchema>;
 export type CreateOrderRequestType = z.infer<typeof CreateOrderRequestSchema>;
 export type couponRespType = z.infer<typeof couponRespSchema>;
 export type retrieveCouponQueryType = z.infer<typeof retrieveCouponQuerySchema>;
+export type ReviewRespType = z.infer<typeof ReviewRespSchema>;
+export type ReviewsRespType = z.infer<typeof ReviewsRespSchema>;

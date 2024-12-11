@@ -71,6 +71,7 @@ const CartPage: React.FC = () => {
             <OrderProgress />
             <CartPageWrapper>
                 <div>
+                    <BannerCart slug="stove" image="bunnerDesktop.png" mobileImage="bunnerMobile.png" />
                     <CartTable
                         symbol={symbol}
                         cartItems={cartItems}

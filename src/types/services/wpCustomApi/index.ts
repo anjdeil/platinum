@@ -8,6 +8,7 @@ import { menuItemsSchema } from './menus';
 import { ThemeOptionsItemSchema } from './themeOptions';
 import { SectionsTypeSchema } from '@/types/components/sections';
 import { BlogItemSchema } from '@/types/pages/blog';
+import { Page } from 'react-pdf';
 
 const LangParamSchema = z.enum(['en', 'pl', 'de', 'ru', 'uk']).optional();
 
@@ -37,6 +38,26 @@ export const CustomDataSchema = z.object({
     .optional(),
 });
 
+export const PageDataItemsSchema = z.object({
+  id: z.number(),
+  slug: z.string(),
+  title: z.string(),
+  content: z.string(),
+  language_code: z.string(),
+  created: z.string(),
+  modified: z.string(),
+  author_id: z.number(),
+  menu_order: z.number(),
+  sections: z.array(SectionsTypeSchema),
+});
+
+export const PageDataFullSchema = z.object({
+  success: z.boolean(),
+  data: z.object({
+    item: PageDataItemsSchema,
+  }),
+});
+
 export const PageDataSchema = z.object({
   success: z.boolean(),
   data: z.object({
@@ -53,8 +74,8 @@ export const CustomDataMenuResponseSchema = z.object({
 
 export const CustomDataProductsStatisticSchema = z.object({
   products_count: z.number(),
-  min_price: z.number(),
-  max_price: z.number(),
+  min_price: z.number().nullable(),
+  max_price: z.number().nullable(),
   attributes: z.array(AttributeSchema),
 });
 
@@ -119,6 +140,8 @@ export const CustomDataPostsSchema = z.object({
 
 export type QueryParamsType = z.infer<typeof QueryParamsSchema>;
 export type LangParamType = z.infer<typeof LangParamSchema>;
+export type PageDataItemType = z.infer<typeof PageDataItemsSchema>;
+export type PageDataFullType = z.infer<typeof PageDataFullSchema>;
 export type PageDataType = z.infer<typeof PageDataSchema>;
 export type CustomDataCategoriesType = z.infer<
   typeof CustomDataCategoriesSchema
