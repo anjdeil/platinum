@@ -67,7 +67,8 @@ const CartCouponBlock: FC<CartCouponBlockProps> = ({
       )}
       {validStatus && (
         <CouponText uppercase marginBottom="8px">
-          You have a {validStatus} status and get{' '}
+          {t('UserLoyalityStatus', { validStatus: validStatus })}
+
           <span>&nbsp;{discountMapping[validStatus] as string} &nbsp;</span>
         </CouponText>
       )}

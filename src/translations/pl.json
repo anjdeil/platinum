@@ -146,7 +146,8 @@
     "Confirmation": "Potwierdzenie",
 
     "theBest": "Najlepszy",
-    "productForYou": "Produkt dla Ciebie"
+    "productForYou": "Produkt dla Ciebie",
+    "UserLoyalityStatus": "Masz status {validStatus} i otrzymujesz"
   },
   "NotFoundPage": {
     "notFound": "Strona nie znaleziona",

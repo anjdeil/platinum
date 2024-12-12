@@ -142,7 +142,8 @@
 
     "Basket": "Warenkorb",
     "PersonalInformation": "Persönliche Informationen",
-    "Confirmation": "Bestätigung"
+    "Confirmation": "Bestätigung",
+    "UserLoyalityStatus": "Sie haben einen {validStatus} status und erhalten"
   },
   "NotFoundPage": {
     "notFound": "Seite nicht gefunden",

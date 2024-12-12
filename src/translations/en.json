@@ -147,7 +147,8 @@
     "welcomeToPlatinumShop": "Welcome to Platinum Shop",
     "theBest": "The best",
     "productForYou": "Product for you",
-    "summary": "Summary"
+    "summary": "Summary",
+    "UserLoyalityStatus": "You have a {validStatus} status and get"
   },
 
   "NotFoundPage": {

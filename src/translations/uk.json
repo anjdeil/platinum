@@ -145,7 +145,8 @@
 
     "welcomeToPlatinumShop": "Ласкаво просимо до Platinum Shop",
     "theBest": "Найкращий",
-    "productForYou": "Продукт для вас"
+    "productForYou": "Продукт для вас",
+    "UserLoyalityStatus": "Ви маєте статус {validStatus} i отримуєте"
   },
   "NotFoundPage": {
     "notFound": "Сторінка не знайдена",
