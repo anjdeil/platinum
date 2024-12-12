@@ -7,7 +7,6 @@ import { popupToggle } from '@/store/slices/PopupSlice';
 import { Container, Title } from '@/styles/components';
 import { SectionsType } from '@/types/components/sections';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
-import { customRestApi } from '@/services/wpCustomApi';
 import { validateWpPage } from '@/utils/zodValidators/validateWpPage';
 import { PageDataFullType, PageDataItemType } from '@/types/services';
 
