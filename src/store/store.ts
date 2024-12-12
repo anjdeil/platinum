@@ -13,7 +13,7 @@ import cartSlice from "./slices/cartSlice";
 import saveCartSliceToLocalStorageMiddleware from "@/utils/cartSlice/saveCartSliceToLocalStorageMiddleware";
 import { contactForm7Api } from "./rtk-queries/contactFrom7/contactFromApi7";
 import { mailpoetApi } from "./rtk-queries/mailpoetApi";
-import { instCustomRtkApi } from "./rtk-queries/InstCustomApi";
+import { instCustomRtkApi } from "./rtk-queries/instagram/InstCustomApi";
 
 const rootReducer = combineReducers({
   [wpCustomRtkApi.reducerPath]: wpCustomRtkApi.reducer,
