@@ -6,42 +6,72 @@ import { useGetCategoriesQuery } from '@/store/rtk-queries/wpCustomApi';
 import { popupToggle } from '@/store/slices/PopupSlice';
 import { Container, Title } from '@/styles/components';
 import { SectionsType } from '@/types/components/sections';
-import { HomePageType } from '@/types/pages';
-import { validateWpHomePage } from '@/utils/zodValidators/validateWpHomePage';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
+import { customRestApi } from '@/services/wpCustomApi';
+import { validateWpPage } from '@/utils/zodValidators/validateWpPage';
+import { PageDataFullType, PageDataItemType } from '@/types/services';
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
   const { locale } = context;
-  const sectionsResponse = await customRestApi.get(`pages/homepage`, {
-    lang: locale,
-  });
-  const sectionsData = sectionsResponse.data as HomePageType;
 
-  const isValidSectionsData = validateWpHomePage(sectionsData);
-  if (!isValidSectionsData) throw new Error('Invalid SectionsData data');
+  try {
+    const responseData = await customRestApi.get(`pages/homepage`, {
+      lang: locale,
+    });
 
-  const filteredSections = sectionsData.data.item.sections.filter(
-    (section: { _type: string }) =>
-      [
-        'slider',
-        'product_list',
-        'categories',
-        'instagram',
-        'reviews',
-        'newsletter',
-        'about_platinum',
-        'features',
-        'blog',
-      ].includes(section._type)
-  );
+    if (!responseData || responseData.status !== 200) {
+      return { notFound: true };
+    }
 
-  return {
-    props: {
-      sections: filteredSections,
-    },
-  };
+    if (responseData) {
+      const isValidSectionsData = validateWpPage(responseData);
+      if (!isValidSectionsData) {
+        console.error("Invalid data format:");
+      }
+    }
+
+    if (responseData && responseData.data) {
+      const pageResponseData = responseData.data as PageDataFullType;
+      const pageData = pageResponseData.data.item as PageDataItemType;
+
+      if (!pageData) {
+        return { notFound: true };
+      }
+
+      const filteredSections = pageData.sections.filter(
+        (section: { _type: string }) =>
+          [
+            'slider',
+            'product_list',
+            'categories',
+            'instagram',
+            'reviews',
+            'newsletter',
+            'about_platinum',
+            'features',
+            'blog',
+          ].includes(section._type)
+      );
+
+      return {
+        props: {
+          sections: filteredSections,
+        },
+      };
+    }
+
+    return { notFound: true };
+  } catch (error) {
+    console.error('Server Error:', error);
+    return {
+      redirect: {
+        destination: '/500',
+        permanent: false,
+      },
+    };
+  }
 };
 
 interface HomeProps {

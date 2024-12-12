@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 
 export const StarsWrapper = styled.div<StarsWrapperProps>`
   display: flex;
-  gap: ${({ gap = '1px' }) => gap};
+  gap: ${({ gap = '4px' }) => gap};
 `;
 
 export const StarButton = styled.button`

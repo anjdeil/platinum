@@ -16,6 +16,7 @@ import { ContactsSection } from '../ContactsSection';
 
 import { SectionsType } from '@/types/components/sections';
 import { normalizeSlides } from '@/utils/normalizeSlides';
+import { useMediaQuery } from '@mui/material';
 
 interface SectionRendererProps {
   sections: SectionsType[];
@@ -24,6 +25,7 @@ interface SectionRendererProps {
 export const SectionRenderer: React.FC<SectionRendererProps> = ({
   sections,
 }) => {
+  const isMobile = useMediaQuery('(max-width:768px)');
   return (
     <>
       {sections.map((section, index) => {
@@ -65,18 +67,27 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
             );
           case 'reviews':
             return (
-              <ReviewsSection
-                key={index}
-                subtitle={section.subtitle}
-                title={section.title}
-              />
+              <Container key={index}>
+                <ReviewsSection
+                  key={index}
+                  subtitle={section.subtitle}
+                  title={section.title}
+                />
+              </Container>
             );
           case 'newsletter':
-            return (
+            return isMobile ? (
               <NewsletterSection
                 key={index}
                 newsletter_separator={section.newsletter_separator}
               />
+            ) : (
+              <Container key={index}>
+                <NewsletterSection
+                  key={index}
+                  newsletter_separator={section.newsletter_separator}
+                />
+              </Container>
             );
           case 'about_platinum':
             return <AboutPlatinumSection key={index} />;
@@ -104,18 +115,23 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
 
           case 'hero':
             return (
-              <HeroSection
-                key={index}
-                is_reverse={section.is_reverse}
-                image={section.image}
-                object_fit={section.object_fit}
-                title={section.title}
-                text={section.text}
-              />
+              <Container key={index}>
+                <HeroSection
+                  key={index}
+                  is_reverse={section.is_reverse}
+                  image={section.image}
+                  object_fit={section.object_fit}
+                  title={section.title}
+                  text={section.text}
+                />
+              </Container>
             );
           case 'split':
-            return <SplitSection key={section._type} split={section.split} />;
-
+            return (
+              <Container key={index}>
+                <SplitSection key={section._type} split={section.split} />
+              </Container>
+            );
           case 'loyalty':
             return (
               <LoyaltySection

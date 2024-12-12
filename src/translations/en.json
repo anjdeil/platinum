@@ -69,6 +69,9 @@
   "Search": {
     "Search": "Search"
   },
+  "Archive": {
+    "goHome": "Home"
+  },
   "Product": {
     "addToBasket": "Add to basket",
     "viewCart": "View cart",
@@ -133,7 +136,6 @@
     "products": "Products",
     "сoupon": "Сoupon",
     "paymentMethod": "Payment method",
-
     "Basket": "Basket",
     "PersonalInformation": "Personal Information",
     "Confirmation": "Confirmation",
@@ -141,12 +143,56 @@
     "theBest": "The best",
     "productForYou": "Product for you"
   },
+  "Contacts": {
+    "contacts": "Contacts",
+    "telephone": "Telephone",
+    "call": "Call",
+    "address": "Address",
+    "schedule": "Mon-Fri: from",
+    "dayOff": "Sat-Sun: Day off",
+    "satSun": "Sat-Sun: from",
+    "howToGetThere": "How to get there?",
+    "email": "Email",
+    "toWrite": "To write",
+    "socialMedia": "We are in social media",
+    "askUsQuestion": "Ask Us a Question",
+    "yourNamePlaceholder": "What is your name?",
+    "emailPlaceholder": "Email",
+    "yourQuestionPlaceholder": "Write your question",
+    "sending": "Sending...",
+    "sendButton": "Send",
+    "errorMessage": "Something went wrong. Please try again.",
+    "successMessage": "Your message has been sent successfully!"
+  },
+  "Validation": {
+    "email": "Please enter a valid email.",
+    "minChar": "Must be at least {count} characters long."
+  },
+  "Breadcrumbs": {
+    "homePage": "Home Page"
+  },
   "NotFoundPage": {
     "notFound": "Page not found",
     "description": "Sorry, we can't seem to find the page you're looking for. It may have been moved, deleted, or never existed.",
-    "backToHome": "Go back to the homepage"
+    "backToHome": "Go back to the homepage",
+    "serverError": "Server error",
+    "serverErrorDescription": "Sorry, something went wrong. Please try again later."
   },
   "HomePage": {
-    "aboutOurBrand": "About our brand"
+    "aboutOurBrand": "About our brand",
+    "newUnreadMessage": "New unread message",
+    "unreadMessageDate": "Now",
+    "subscribeToOurNewsletter": "Subscribe to our  newsletter!",
+    "newArrivals": "Be the first to know about new arrivals, exclusive discounts and special offers.",
+    "joinToWhatsApp": "Join to WhatsApp",
+    "subscribe": "Subscribe"
+  },
+  "SubscriptionForm": {
+    "subscribe": "Subscribe",
+    "sending": "Sending...",
+    "typeValidEmail": "Please, type valid email",
+    "failedSubscribe": "Failed to send email",
+    "successSubscribe": "Subscribed!",
+    "userAlreadySubscribed": "User already subscribed"
   }
 }
