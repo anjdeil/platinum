@@ -42,6 +42,7 @@
     "price": "Cena",
     "quantity": "Ilość",
     "summaryOrder": "Podsumowanie zamówienia",
+
     "customerData": "Dane klienta",
     "products": "Produkty",
     "delivery": "Dostawa",
@@ -61,7 +62,8 @@
     "amount": "Kwota",
     "paymentMethod": "Metoda płatności",
     "total": "Razem",
-    "action": "Działanie"
+    "action": "Działanie",
+    "availablePcs": "Dostępne {quantity} szt"
   },
   "TopBar": {
     "CallUs": "Zadzwoń do nas"
@@ -103,6 +105,10 @@
     "lastedArticles": "Najnowsze artykuły"
   },
   "Cart": {
+    "cart": "Koszyk",
+    "psc": "szt",
+    "placeAnOrder": "Złóż zamówienie",
+    "goToCart": "Przejdź do koszyka",
     "productName": "Nazwa",
     "price": "Cena",
     "quantity": "Ilość",
@@ -130,6 +136,7 @@
     "OrderCommentPlaceholder": "Podziel się konkretnymi szczegółami lub prośbami dotyczącymi zamówienia...",
     "OrderCommentHint": "W tym miejscu można podać wszelkie dodatkowe instrukcje lub uwagi dotyczące zamówienia.",
     "OrderSummary": "Podsumowanie zamówienia",
+    "summary": "Suma",
     "Continue": "Kontynuuj",
     "OrderSummaryTotal": "całkowita kwota do zapłaty",
 
@@ -142,7 +149,8 @@
     "Confirmation": "Potwierdzenie",
 
     "theBest": "Najlepszy",
-    "productForYou": "Produkt dla Ciebie"
+    "productForYou": "Produkt dla Ciebie",
+    "UserLoyalityStatus": "Masz status {validStatus} i otrzymujesz"
   },
   "Contacts": {
     "contacts": "Kontakty",

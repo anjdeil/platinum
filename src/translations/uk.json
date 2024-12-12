@@ -61,7 +61,8 @@
     "amount": "Сума",
     "paymentMethod": "Спосіб оплати",
     "total": "Всього",
-    "action": "Дія"
+    "action": "Дія",
+    "availablePcs": "У наявності {quantity} шт"
   },
   "TopBar": {
     "CallUs": "Зателефонуйте нам"
@@ -103,6 +104,10 @@
     "lastedArticles": "Останні статті"
   },
   "Cart": {
+    "cart": "Кошик",
+    "psc": "шт",
+    "placeAnOrder": "Оформити замовлення",
+    "goToCart": "Перейти до кошика",
     "productName": "Назва",
     "price": "Ціна",
     "quantity": "Кількість",
@@ -129,6 +134,7 @@
     "OrderCommentPlaceholder": "Поділіться будь-якими конкретними деталями або запитами щодо вашого замовлення...",
     "OrderCommentHint": "Не соромтеся надавати будь-які додаткові інструкції або нотатки до вашого замовлення тут.",
     "OrderSummary": "Підсумок замовлення",
+    "summary": "Сума",
     "Continue": "Продовжити",
     "OrderSummaryTotal": "загальна сума до сплати",
 
@@ -142,7 +148,8 @@
 
     "welcomeToPlatinumShop": "Ласкаво просимо до Platinum Shop",
     "theBest": "Найкращий",
-    "productForYou": "Продукт для вас"
+    "productForYou": "Продукт для вас",
+    "UserLoyalityStatus": "Ви маєте статус {validStatus} i отримуєте"
   },
   "Contacts": {
     "contacts": "Контакти",

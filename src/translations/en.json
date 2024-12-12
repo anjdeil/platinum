@@ -42,6 +42,7 @@
     "price": "Price",
     "quantity": "Quantity",
     "summaryOrder": "Summary Order",
+
     "customerData": "Customer Data",
     "products": "Products",
     "delivery": "Delivery",
@@ -61,7 +62,9 @@
     "amount": "Amount",
     "paymentMethod": "Payment method",
     "total": "Total",
-    "action": "Action"
+    "action": "Action",
+
+    "availablePcs": "Available {quantity} pcs"
   },
   "TopBar": {
     "CallUs": "Call us"
@@ -103,6 +106,10 @@
     "lastedArticles": "Lasted Articles"
   },
   "Cart": {
+    "cart": "Cart",
+    "psc": "psc",
+    "placeAnOrder": "Place an order",
+    "goToCart": "Go to cart",
     "productName": "Name",
     "price": "Price",
     "quantity": "Quantity",
@@ -141,7 +148,9 @@
     "Confirmation": "Confirmation",
     "welcomeToPlatinumShop": "Welcome to Platinum Shop",
     "theBest": "The best",
-    "productForYou": "Product for you"
+    "productForYou": "Product for you",
+    "summary": "Summary",
+    "UserLoyalityStatus": "You have a {validStatus} status and get"
   },
   "Contacts": {
     "contacts": "Contacts",
