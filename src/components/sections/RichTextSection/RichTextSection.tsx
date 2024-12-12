@@ -1,19 +1,19 @@
+import { parseData } from "@/services/transformers/transformDataHeroSection";
 import { StyledItem, StyledList, StyledSubtitle, StyledTitle } from "./styles";
-
-type RichTextSectionProps = {
-  title?: string;
-  subtitle?: string;
-  list?: string[];
-};
+import { RichTextSectionProps } from "@/types/components/sections";
 
 export const RichTextSection: React.FC<RichTextSectionProps> = ({
   title,
-  subtitle,
-  list,
+  is_reverse,
+  text,
 }) => {
-  if (!list && !title && !subtitle) {
+  const { subtitle, listItems } = parseData(text || "");
+
+  if (!listItems && !title && !subtitle) {
     return null;
   }
+
+  const list = is_reverse ? listItems.reverse() : listItems;
 
   return (
     <>
