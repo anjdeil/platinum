@@ -77,16 +77,10 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
             );
           case 'newsletter':
             return isMobile ? (
-              <NewsletterSection
-                key={index}
-                newsletter_separator={section.newsletter_separator}
-              />
+              <NewsletterSection key={index} />
             ) : (
               <Container key={index}>
-                <NewsletterSection
-                  key={index}
-                  newsletter_separator={section.newsletter_separator}
-                />
+                <NewsletterSection key={index} />
               </Container>
             );
           case 'about_platinum':
