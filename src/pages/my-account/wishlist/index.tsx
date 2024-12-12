@@ -27,7 +27,7 @@ import { WishlistItem } from '@/types/store/rtk-queries/wpApi'
  */
 function Wishlist() {
   const [cookie] = useCookies(['userToken'])
-  const { symbol } = useAppSelector((state) => state.currencySlice)
+  const { code: symbol } = useAppSelector((state) => state.currencySlice)
   const router = useRouter()
 
   const tMyAccount = useTranslations('MyAccount')

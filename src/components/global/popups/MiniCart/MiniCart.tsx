@@ -37,7 +37,7 @@ interface MiniCartProps {
 
 const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
   const dispatch = useAppDispatch()
-  const { code } = useAppSelector((state) => state.currencySlice)
+  const { name: code } = useAppSelector((state) => state.currencySlice)
   const { cartItems, couponCodes } = useAppSelector((state) => state.cartSlice)
   const t = useTranslations('Cart')
   const [symbol, setSymbol] = useState<string>('')

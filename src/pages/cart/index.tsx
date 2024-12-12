@@ -18,7 +18,7 @@ import BannerCart from '@/components/pages/cart/BannerCart/BannerCart'
 import { useLazyFetchUserDataQuery } from '@/store/rtk-queries/wpApi'
 
 const CartPage: React.FC = () => {
-  const { code } = useAppSelector((state) => state.currencySlice)
+  const { name: code } = useAppSelector((state) => state.currencySlice)
   const status: CreateOrderRequestType['status'] = 'on-hold'
   const [symbol, setSymbol] = useState<string>('')
   const dispatch = useAppDispatch()
