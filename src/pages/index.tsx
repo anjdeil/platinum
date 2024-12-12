@@ -1,5 +1,6 @@
 import { SectionRenderer } from '@/components/sections/SectionRenderer';
 import { useResponsive } from '@/hooks/useResponsive';
+import { customRestApi } from '@/services/wpCustomApi';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { useGetCategoriesQuery } from '@/store/rtk-queries/wpCustomApi';
 import { popupToggle } from '@/store/slices/PopupSlice';
@@ -100,10 +101,10 @@ const Home: React.FC<HomeProps> = ({ sections }) => {
         {/* <TestSelect /> */}
         <Container>
           <Title as='h2' fontSize={'20px'}>
-            Symbol of {currency.code} currency isQQ {currency.symbol}
+            Symbol of {currency.name} currency isQQ {currency.code}
           </Title>
           <Title as='h2' fontSize={'20px'}>
-            Symbol of {language.code} language isQQ {language.symbol}
+            Symbol of {language.name} language isQQ {language.code}
           </Title>
           <button onClick={() => dispatch(popupToggle('categories-menu'))}>
             Categories
