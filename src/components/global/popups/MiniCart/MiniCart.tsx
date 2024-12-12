@@ -80,9 +80,9 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
 
     createOrderEffect()
   }, [cartItems, couponCodes, code])
+
   const [cachedOrderItems, setCachedOrderItems] = useState(orderItems)
 
-  // STATES
   const productsSpecs = useMemo(
     () => productsSpecsData?.data?.items || [],
     [productsSpecsData]
@@ -125,6 +125,7 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
   useEffect(() => {
     if (orderItems?.currency_symbol) {
       setSymbol(orderItems.currency_symbol)
+      setCachedOrderItems(orderItems)
     }
   }, [orderItems])
 
@@ -135,12 +136,6 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
   useEffect(() => {
     setHasConflict(checkCartConflict(cartItems, productsSpecs))
   }, [cartItems, productsSpecs])
-
-  useEffect(() => {
-    if (orderItems) {
-      setCachedOrderItems(orderItems)
-    }
-  }, [orderItems])
 
   const currentOrderItems = orderItems ?? cachedOrderItems
   return (
@@ -236,7 +231,10 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
         />
 
         <FlexBox flexDirection="column" gap="8px" margin="20px 0 0 0">
-          <StyledButton height="58px" disabled={hasConflict || loadingItems.length > 0}>
+          <StyledButton
+            height="58px"
+            disabled={hasConflict || loadingItems.length > 0 || isLoadingOrder}
+          >
             {t('placeAnOrder')}
           </StyledButton>
           <CartLink href="/cart">

@@ -14,6 +14,8 @@ import OrderProgress from '@/components/pages/cart/OrderProgress/OrderProgress'
 import getSubtotalByLineItems from '@/utils/cart/getSubtotalByLineItems'
 import { roundedPrice } from '@/utils/cart/roundedPrice'
 import { handleQuantityChange } from '@/utils/cart/handleQuantityChange'
+import BannerCart from '@/components/pages/cart/BannerCart/BannerCart'
+import { useLazyFetchUserDataQuery } from '@/store/rtk-queries/wpApi'
 
 const CartPage: React.FC = () => {
   const { code } = useAppSelector((state) => state.currencySlice)
@@ -23,7 +25,25 @@ const CartPage: React.FC = () => {
   const [loadingItems, setLoadingItems] = useState<number[]>([])
   const [preLoadingItem, setPreLoadingItem] = useState<number>()
 
-  // Mutations
+  //USER
+  const [auth, setAuth] = useState<boolean>(false)
+  const [userLoyalityStatus, setUserLoyalityStatus] = useState<string | undefined>('')
+
+  const USER_ID = 1
+  const [
+    fetchUserData,
+    { data: userData, isLoading: isUserDataLoading, isFetching: isUserFetching },
+  ] = useLazyFetchUserDataQuery()
+
+  useEffect(() => {
+    fetchUserData({ id: USER_ID })
+    setAuth(true)
+    /* if ("userToken" in cookie) {
+            fetchUserData(cookie.userToken);
+        } */
+  }, [/* cookie, */ fetchUserData])
+
+  // FETCH
   const [createOrder, { data: orderItems, isLoading: isLoadingOrder }] =
     useCreateOrderMutation()
   const { cartItems, couponCodes } = useAppSelector((state) => state.cartSlice)
@@ -32,11 +52,19 @@ const CartPage: React.FC = () => {
     { data: productsSpecsData, isLoading: isLoadingProductsMin, error: errorProductsMin },
   ] = useGetProductsMinimizedMutation()
 
+  const [cachedOrderItems, setCachedOrderItems] = useState(orderItems)
+
   const handleCreateOrder = async () => {
+    const userCoupons = userData?.meta?.loyalty ? [{ code: userData.meta.loyalty }] : []
+    const additionalCoupons = couponCodes.map((code: string) => ({ code }))
+    const combinedCoupons =
+      auth && userData ? [...userCoupons, ...additionalCoupons] : additionalCoupons
+    setUserLoyalityStatus(userData?.meta?.loyalty)
+
     const requestData = {
       line_items: cartItems,
-      status: 'on-hold' as CreateOrderRequestType['status'],
-      coupon_lines: couponCodes.map((code: string) => ({ code })),
+      status: status,
+      coupon_lines: combinedCoupons,
       currency: code,
     }
     if (preLoadingItem) {
@@ -55,9 +83,7 @@ const CartPage: React.FC = () => {
     }
 
     createOrderEffect()
-  }, [cartItems, couponCodes, code])
-
-  const [cachedOrderItems, setCachedOrderItems] = useState(orderItems)
+  }, [cartItems, couponCodes, code, userData])
 
   useEffect(() => {
     if (cartItems.length > 0) {
@@ -68,8 +94,7 @@ const CartPage: React.FC = () => {
   useEffect(() => {
     if (orderItems?.currency_symbol) {
       setSymbol(orderItems.currency_symbol)
-    } else {
-      setSymbol('')
+      setCachedOrderItems(orderItems)
     }
   }, [orderItems])
 
@@ -93,9 +118,6 @@ const CartPage: React.FC = () => {
     [cartItems, dispatch]
   )
 
-  // Conflict detection
-  const [hasConflict, setHasConflict] = useState(false)
-
   const productsSpecs = useMemo(
     () => productsSpecsData?.data?.items || [],
     [productsSpecsData]
@@ -105,41 +127,55 @@ const CartPage: React.FC = () => {
     () => (orderItems?.line_items ? getSubtotalByLineItems(orderItems.line_items) : 0),
     [orderItems]
   )
+
+  // Conflict detection
+  const [hasConflict, setHasConflict] = useState(false)
+
   useEffect(() => {
-    if (orderItems) {
-      setCachedOrderItems(orderItems)
-    }
-  }, [orderItems])
+    setHasConflict(checkCartConflict(cartItems, productsSpecs))
+  }, [cartItems, productsSpecs])
+
   const currentOrderItems = orderItems ?? cachedOrderItems
 
   return (
-    <Container>
+    <>
       <OrderProgress />
-      <CartPageWrapper>
-        <div>
-          <CartTable
+      <BannerCart slug="stove" image="bunnerDesktop.png" mobileImage="bunnerMobile.png" />
+      <Container>
+        <CartPageWrapper>
+          <div>
+            <CartTable
+              symbol={symbol}
+              cartItems={cartItems}
+              orderItems={currentOrderItems}
+              isLoadingOrder={isLoadingOrder}
+              isLoadingProductsMin={isLoadingProductsMin}
+              productsSpecs={productsSpecs}
+              roundedPrice={roundedPrice}
+              hasConflict={hasConflict}
+              handleChangeQuantity={handleChangeQuantity}
+              loadingItems={loadingItems}
+            />
+            <OrderBar
+              miniCart={false}
+              isLoadingOrder={isLoadingOrder}
+              cartSum={subtotal}
+              symbol={symbol}
+            />
+          </div>
+          <CartCouponBlock
+            userLoyalityStatus={userLoyalityStatus}
+            auth={auth}
             symbol={symbol}
-            cartItems={cartItems}
-            orderItems={currentOrderItems}
-            isLoadingOrder={isLoadingOrder}
-            isLoadingProductsMin={isLoadingProductsMin}
-            productsSpecs={productsSpecs}
-            roundedPrice={roundedPrice}
-            hasConflict={hasConflict}
-            handleChangeQuantity={handleChangeQuantity}
-            loadingItems={loadingItems}
           />
-          <OrderBar
-            miniCart={false}
-            isLoadingOrder={isLoadingOrder}
-            cartSum={subtotal}
+          <CartSummaryBlock
             symbol={symbol}
+            order={orderItems}
+            isLoading={isLoadingOrder}
           />
-        </div>
-        <CartCouponBlock symbol={symbol} />
-        <CartSummaryBlock symbol={symbol} order={orderItems} isLoading={isLoadingOrder} />
-      </CartPageWrapper>
-    </Container>
+        </CartPageWrapper>
+      </Container>
+    </>
   )
 }
 

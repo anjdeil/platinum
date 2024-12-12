@@ -1,5 +1,6 @@
 import { ProductSchema } from '@/types/pages/shop'
-import { WishlistItemSchema } from '@/types/store/reducers/сartSlice'
+import { WishlistItemSchema } from '@/types/store/rtk-queries/wpApi'
+
 import { z } from 'zod'
 
 export const CommonTextPropsSchema = z.object({

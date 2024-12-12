@@ -17,11 +17,22 @@ import { CustomFormInput } from '@/components/global/forms/CustomFormInput'
 import { useResponsive } from '@/hooks/useResponsive'
 import { MenuSkeleton } from '@/components/menus/MenuSkeleton'
 import { CartCouponBlockProps } from '@/types/pages/cart'
+import {
+  discountMapping,
+  userLoyalityStatusSchema,
+} from '@/types/store/rtk-queries/wpApi'
 
-const CartCouponBlock: FC<CartCouponBlockProps> = ({ symbol }) => {
+const CartCouponBlock: FC<CartCouponBlockProps> = ({
+  symbol,
+  auth,
+  userLoyalityStatus,
+}) => {
   const { isMobile } = useResponsive()
   const t = useTranslations('Cart')
   const dispatch = useAppDispatch()
+
+  const isValidStatus = userLoyalityStatusSchema.safeParse(userLoyalityStatus)
+  const validStatus = isValidStatus.data
 
   const {
     register,
@@ -45,13 +56,22 @@ const CartCouponBlock: FC<CartCouponBlockProps> = ({ symbol }) => {
 
   return (
     <CouponBlock>
-      <CouponText uppercase marginBottom="8px">
-        {/*  need to add diff  DISCOUNT */}
-        {t('LoginAnd')} <span>&nbsp;-3%&nbsp;</span> {t('ForOrders')} {t('Above')}{' '}
-        <span>&nbsp;500 {symbol}&nbsp;</span>,<span>&nbsp;5%&nbsp;</span> {t('Above')}{' '}
-        <span>&nbsp;1000{symbol}&nbsp;</span>, <span>&nbsp;-10%&nbsp;</span> {t('Above')}{' '}
-        <span>&nbsp;2000{symbol}&nbsp;</span>
-      </CouponText>
+      {!auth && (
+        <CouponText uppercase marginBottom="8px">
+          {/*  need to add diff  DISCOUNT */}
+          {t('LoginAnd')} <span>&nbsp;-3%&nbsp;</span> {t('ForOrders')} {t('Above')}{' '}
+          <span>&nbsp;500 {symbol}&nbsp;</span>,<span>&nbsp;5%&nbsp;</span> {t('Above')}{' '}
+          <span>&nbsp;1000{symbol}&nbsp;</span>, <span>&nbsp;-10%&nbsp;</span>{' '}
+          {t('Above')} <span>&nbsp;2000{symbol}&nbsp;</span>
+        </CouponText>
+      )}
+      {validStatus && (
+        <CouponText uppercase marginBottom="8px">
+          You have a {validStatus} status and get{' '}
+          <span>&nbsp;{discountMapping[validStatus] as string} &nbsp;</span>
+        </CouponText>
+      )}
+
       <CouponText uppercase>{t('CouponText')}</CouponText>
       <CouponText>{t('ChooseCouponText')}</CouponText>
 

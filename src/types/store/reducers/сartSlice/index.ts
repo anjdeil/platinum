@@ -12,10 +12,6 @@ export const CartStateSchema = z.object({
   commentToOrder: z.string(),
 })
 
-export const WishlistItemSchema = z.object({
-  product_id: z.number(),
-  variation_id: z.number().optional(),
-})
 export const ProductMinReqSchema = z.object({
   product_id: z.number(),
   quantity: z.number().optional(),
@@ -46,7 +42,6 @@ export const lineOrderItemsSchema = z.object({
   price: z.number(),
 })
 
-export type WishlistItem = z.infer<typeof WishlistItemSchema>
 export type lineOrderItems = z.infer<typeof lineOrderItemsSchema>
 export type CartItem = z.infer<typeof CartItemSchema>
 export type CartState = z.infer<typeof CartStateSchema>

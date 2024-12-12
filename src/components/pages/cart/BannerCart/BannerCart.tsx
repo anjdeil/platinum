@@ -9,6 +9,7 @@ import { BannerCartProps } from '@/types/pages/cart'
 
 const BannerCart: React.FC<BannerCartProps> = ({ slug, image, mobileImage }) => {
   const t = useTranslations('Cart')
+  const tProduct = useTranslations('Product')
   const { isMobile } = useResponsive()
 
   return (
@@ -20,7 +21,7 @@ const BannerCart: React.FC<BannerCartProps> = ({ slug, image, mobileImage }) => 
           <br />
           {t('productForYou')}
         </Title>
-        <AddToBasketButton />
+        <AddToBasketButton>{tProduct('addToBasket')}</AddToBasketButton>
       </ContentWrapper>
       {isMobile ? (
         <Image

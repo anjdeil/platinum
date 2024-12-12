@@ -28,6 +28,8 @@ export const BannerCartSchema = z.object({
 })
 export const CartCouponBlockSchema = z.object({
   symbol: z.string(),
+  userLoyalityStatus: z.string().optional(),
+  auth: z.boolean(),
 })
 export const CartSummaryBlockSchema = z.object({
   symbol: z.string(),

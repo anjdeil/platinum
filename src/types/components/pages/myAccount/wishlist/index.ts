@@ -1,5 +1,6 @@
 import { ProductsMinimizedSchema } from '@/types/components/shop/product/products'
-import { WishlistItemSchema } from '@/types/store/reducers/сartSlice'
+import { WishlistItemSchema } from '@/types/store/rtk-queries/wpApi'
+
 import { z } from 'zod'
 
 export const WishListTableSchema = z.object({

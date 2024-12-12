@@ -9,11 +9,12 @@ import {
   useFetchUserUpdateByIdMutation,
   useLazyFetchUserDataQuery,
 } from '@/store/rtk-queries/wpApi'
-import { WishlistItem } from '@/types/store/reducers/сartSlice'
+
 import { useAppSelector } from '@/store'
 import { useGetProductsMinimizedMutation } from '@/store/rtk-queries/wpCustomApi'
 import { ProductsMinimizedType } from '@/types/components/shop/product/products'
 import { useTranslations } from 'next-intl'
+import { WishlistItem } from '@/types/store/rtk-queries/wpApi'
 
 /* export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
     const customer = await checkUserTokenInServerSide('/my-account', context, 'userToken');
@@ -48,7 +49,7 @@ function Wishlist() {
   const [wishListProducts, setWishListProducts] = useState<ProductsMinimizedType[]>()
 
   useEffect(() => {
-    fetchUserData({ id: '1' })
+    fetchUserData({ id: 1 })
 
     /* if ("userToken" in cookie) {
             fetchUserData(cookie.userToken);
@@ -73,7 +74,7 @@ function Wishlist() {
              return;
          } */
 
-    const userWishlist: WishlistItem[] = userData.meta.wishlist || []
+    const userWishlist: WishlistItem[] = userData?.meta?.wishlist || []
 
     const index = userWishlist.findIndex(
       (item: WishlistItem) =>
