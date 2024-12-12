@@ -36,3 +36,9 @@ export const StyledText = styled(Text)`
     font: ${({ theme }) => theme.fonts.bodysmallReg};
   }
 `;
+
+export const StyledError = styled.p`
+  font: ${({ theme }) => theme.fonts.bodyMiddleReg};
+  text-align: center;
+  margin-top: 24px;
+`;

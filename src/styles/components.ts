@@ -36,8 +36,8 @@ interface TitleProps {
   mobFontSize?: string
   textalign?: 'center' | 'left' | 'right'
   uppercase?: boolean
+  marginTop?: string
   lowercase?: boolean
-  marginTop?: number
   marginBottom?: string
   tabletMarginBottom?: number
   mobMarginBottom?: number
@@ -257,4 +257,12 @@ export const FlexBox = styled.div<FlexBoxProps>`
   width: ${({ width = 'auto' }) => width};
   height: ${({ height = 'auto' }) => height};
   background-color: ${({ bgColor = 'transparent' }) => bgColor};
+`
+
+export const StyledHeaderWrapper = styled.header`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin: 24px 0;
 `

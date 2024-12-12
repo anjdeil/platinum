@@ -149,5 +149,22 @@
     "notFound": "Seite nicht gefunden",
     "description": "Es tut uns leid, wir können die Seite, die Sie suchen, nicht finden. Sie wurde möglicherweise verschoben, gelöscht oder hat nie existiert.",
     "backToHome": "Zurück zur Startseite"
+  },
+  "HomePage": {
+    "aboutOurBrand": "Über unsere Marke",
+    "newUnreadMessage": "Neue ungelesene Nachricht",
+    "unreadMessageDate": "Jetzt",
+    "subscribeToOurNewsletter": "Abonnieren Sie unseren Newsletter!",
+    "newArrivals": "Seien Sie der Erste, der über Neuzugänge, exklusive Rabatte und Sonderangebote informiert wird.",
+    "joinToWhatsApp": "Beitritt zu WhatsAp",
+    "subscribe": "Subscribe"
+  },
+  "SubscriptionForm": {
+    "subscribe": "Abonnieren",
+    "sending": "Senden...",
+    "typeValidEmail": "Geben Sie eine gültige email ein",
+    "failedSubscribe": "Fehler beim Abonnieren",
+    "successSubscribe": "Erfolgreich abonniert",
+    "userAlreadySubscribed": "Du wurdest bereits bemalt"
   }
 }

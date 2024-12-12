@@ -1,19 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface CurrencyState {
+    name: string;
     code: string;
-    symbol: string;
 }
 
 export const currencySymbols: CurrencyState[] = [
-    { code: 'EUR', symbol: '€' },
-    { code: 'PLN', symbol: 'zł' },
-    { code: 'USD', symbol: '$' },
+    { name: 'EUR', code: '€' },
+    { name: 'PLN', code: 'zł' },
+    { name: 'USD', code: '$' },
 ];
 
 const initialState: CurrencyState = {
-    code: 'EUR',
-    symbol: '€',
+    name: 'EUR',
+    code: '€',
 };
 
 const currencySlice = createSlice({
@@ -25,8 +25,8 @@ const currencySlice = createSlice({
             const currency = currencySymbols.find((curr) => curr.code === code);
 
             if (currency) {
+                state.name = currency.name;
                 state.code = currency.code;
-                state.symbol = currency.symbol;
             } else {
                 console.error(`Currency code "${code}" not recognized.`);
             }

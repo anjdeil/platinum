@@ -1,9 +1,5 @@
-import NotFoundPage from '@/components/pages/404/NotFoundPage';
+import ErrorPage from '@/components/pages/404/ErrorPage';
 import { GetStaticProps } from 'next';
-
-export default function notFoundPage({ buttonWidth }: { buttonWidth: string }) {
-  return <NotFoundPage buttonWidth={buttonWidth} />;
-}
 
 const isLocaleRuOrUk = (locale: string | undefined) =>
   locale === 'ru' || locale === 'uk';
@@ -17,3 +13,13 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     },
   };
 };
+
+export default function notFoundPage({ buttonWidth }: { buttonWidth: string }) {
+  return (
+    <ErrorPage
+      isNotFoundPage
+      imageURL={`/assets/images/404.svg`}
+      buttonWidth={buttonWidth}
+    />
+  );
+}

@@ -1,69 +1,119 @@
 import { Archive } from "@/components/shop/Archive";
 import { customRestApi } from "@/services/wpCustomApi";
+import CategoryType from "@/types/components/shop/categories";
 import { ProductType } from "@/types/pages/shop";
-import { ProductParamsType } from "@/types/services";
+import { CustomDataCategoriesType, ProductParamsType } from "@/types/services";
 import { findPageParam } from "@/utils/getCurrentPageNumber";
+import { sanitizeSearchParams } from "@/utils/sanitizeSearchParams";
 import { validateWpCustomProductsData } from "@/utils/zodValidators/validateWpCustomProductsData";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 
-export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
-    const { slugs, ...params } = context.query;
-    if (!slugs || !Array.isArray(slugs)) return { notFound: true };
+export const getServerSideProps: GetServerSideProps = async ({ query, locale }: GetServerSidePropsContext) => {
+    try {
 
-    /** Find pagination param: */
-    const page = findPageParam(slugs);
+        const { slugs, ...params } = query;
+        if (slugs === undefined || !Array.isArray(slugs)) return {
+            notFound: true
+        };
 
-    /** Redirect:
-     * if the page params < 0
-     * if the page params equals 1 */
+        /** 
+         * Find pagination param: 
+         */
+        const page = findPageParam(slugs);
+        if (!page) return { notFound: true };
 
-    if (!page) return { notFound: true };
-
-    if (page === '1' || page === '0') {
         const pageIndex = slugs.indexOf('page');
-        if (pageIndex !== -1) {
+
+        /** Redirect with saving params:
+         * if the page params < 0
+         * if the page params equals 1
+         */
+        if (pageIndex !== -1 && (page === '1' || page === '0')) {
             const newPath = slugs.slice(0, pageIndex).join('/');
+            const searchParamsString = sanitizeSearchParams(params);
             return {
                 redirect: {
-                    destination: `/product-category/${newPath}`,
+                    destination: `${locale === "en" ? "" : `/${locale}`}/product-category/${newPath}${searchParamsString ? `?${searchParamsString}` : ''}`,
                     permanent: false,
-                },
+                }
             };
         }
-    }
 
-    /** Indicate the products number*/
-    const productsPerPage = 11;
-    const minPrice = params.min_price ? Number(params.min_price) : null;
-    const maxPrice = params.max_price ? Number(params.max_price) : null;
+        /**
+         * Indicate the products number 
+         */
+        const productsPerPage = 21;
 
-    /** Generate product product params */
-    const productsParams: ProductParamsType = {
-        page: page || "1",
-        per_page: productsPerPage,
-        ...params,
-        ...(minPrice && { min_price: minPrice }),
-        ...(maxPrice && { max_price: maxPrice }),
-        // order_by string
-        // order_by string
-        // lang string
-        // ids array[string]
-        // slugs array[string]
-        // category string
-        // search  string
-    }
 
-    console.log('params before server', params)
-    console.log('currentParams', productsParams)
+        /** Categories:
+         * 
+         * Find categories param
+         */
+        const lastCategorySlugIndex = pageIndex >= 0 ? pageIndex : slugs.length;
+        const categorySlugs = slugs.slice(0, lastCategorySlugIndex);
 
-    try {
+        /* Сannot be more than two categories */
+        if (categorySlugs[2]) return {
+            notFound: true
+        };
+
+        /* Fetch categories */
+        const categoriesResponseData = await customRestApi.get(`categories`, {
+            slugs: categorySlugs.join(','),
+            lang: locale,
+        });
+        const categoriesResponse = categoriesResponseData?.data as CustomDataCategoriesType;
+        let categories = categoriesResponse?.data && categoriesResponse.data.items as CategoryType[];
+
+        /* Filter only current lang results */
+        categories = categories.filter(({ language_code }) => language_code === locale);
+
+        /* Return 404 if the categories not found */
+        if (!categories?.length) return {
+            notFound: true
+        };
+
+        /* Return 404 if the categories in the response are less than the requested categories */
+        if (categories.length < categorySlugs.length) return {
+            notFound: true
+        };
+
+        /* Sort categories */
+        categories.sort((a, b) => a.parent_id - b.parent_id);
+
+        /* Do not open a subcategory without a parent category */
+        if (categories[0].parent_id !== 0) return {
+            notFound: true
+        };
+
+        /* Check if the second category is the child of the first category */
+        if (categories[1] && categories[1].parent_id !== categories[0].id) return {
+            notFound: true
+        };
+
+        /** 
+         * Products:
+         * 
+         * Generate product product params 
+         */
+        const productsParams: ProductParamsType = {
+            page: page || "1",
+            per_page: productsPerPage,
+            lang: locale,
+            category: categorySlugs[categorySlugs.length - 1],
+            ...params,
+        };
+
         const response = await customRestApi.get('products', productsParams);
-        const validatedData = validateWpCustomProductsData(response.data);
+
+        const validatedProductsData = validateWpCustomProductsData(response.data);
+
         let products: ProductType[] = [];
         let pagesCount = 0;
-        if (validatedData) {
-            products = validatedData.data.items;
-            const productsCount = validatedData.data.statistic?.products_count;
+
+        if (validatedProductsData) {
+            products = validatedProductsData.data.items;
+            const productsCount = validatedProductsData.data.statistic?.products_count;
             pagesCount = Math.ceil(productsCount / productsPerPage);
         }
 
@@ -77,7 +127,9 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
                 products,
                 pagesCount,
                 page,
-                statistic: validatedData?.data.statistic,
+                categories,
+                locale,
+                statistic: validatedProductsData?.data.statistic,
             },
         }
 
