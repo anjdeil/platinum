@@ -6,7 +6,7 @@ import { FC } from 'react';
 import { IconButton, MobileHeaderContainer, MobileHeaderWrapper, SearchWrapper } from './styles';
 
 const MobileHeader: FC = () =>
-{
+{    
     return (
         <MobileHeaderWrapper>
             <MobileHeaderContainer>
