@@ -14,7 +14,6 @@ export const CustomFormInput: FC<CustomFormInputType> = (
         inputType,
         placeholder,
         register,
-        onChange,
         value,
         width,
         padding,
@@ -22,6 +21,8 @@ export const CustomFormInput: FC<CustomFormInputType> = (
         font,
         background,
         label = true
+        setValue,
+        defaultValue,
     }) => {
     const registerProps = register ? { ...register(name) } : {};
 
@@ -30,10 +31,21 @@ export const CustomFormInput: FC<CustomFormInputType> = (
     const passwordImagePath = useMemo(() => isPasswordVisible ? '/images/show-pass.svg' : '/images/hidden-pass.svg', [isPasswordVisible]);
 
     const [isError, setError] = useState(false);
+
     useEffect(() => {
-        if (!errors || !name) { setError(false); return; }
+        if (!errors || !name) {
+            console.error("Either 'errors' or 'name' is undefined");
+            setError(false);
+            return;
+        }
         setError(name in errors);
     }, [errors, name]);
+
+    useEffect(() => {
+        if (defaultValue && defaultValue !== "" && setValue) {
+            setValue(name, defaultValue, { shouldValidate: true });
+        }
+    }, [defaultValue, setValue, name]);
 
     return (
         <CustomInputContainer isCheckbox={inputType === 'checkbox'} width={width}>
@@ -56,8 +68,12 @@ export const CustomFormInput: FC<CustomFormInputType> = (
                     {inputType === 'phone' ?
                         <PhoneInput
                             defaultCountry="pl"
-                            {...register(name)}
-                        // onChange={(value) => { if (setValue) setValue('phoneNumber', value, { shouldValidate: true }); }}
+                            value={value || defaultValue}
+                            onChange={(phoneValue) => {
+                                if (setValue) {
+                                    setValue(name, phoneValue, { shouldValidate: true });
+                                }
+                            }}
                         />
                         : <Input
                             as={inputTag}

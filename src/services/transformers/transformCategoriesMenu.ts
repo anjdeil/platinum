@@ -1,36 +1,33 @@
-import { Category, Subcategory } from "@/types/components/widgets/categoriesMenu";
-import { CategoryType } from "@/types/pages/shop";
+import { Category, Subcategory } from '@/types/components/widgets/categoriesMenu'
+import { CategoryType } from '@/types/pages/shop'
 
-const transformCategoriesMenu = (response: CategoryType[]): Category[] =>
-{
-    const categories: Category[] = [];
+const transformCategoriesMenu = (response: CategoryType[]): Category[] => {
+  const categories: Category[] = []
 
-    response.forEach(parentRow =>
-    {
-        if (parentRow.parent_id) return;
-        if (parentRow.slug === 'uncategorized') return;
+  response.forEach((parentRow) => {
+    if (parentRow.parent_id) return
+    if (parentRow.slug === 'uncategorized') return
 
-        const subcategories: Subcategory[] = [];
-        response.forEach(childRow =>
-        {
-            if (childRow.parent_id !== parentRow.id) return;
+    const subcategories: Subcategory[] = []
+    response.forEach((childRow) => {
+      if (childRow.parent_id !== parentRow.id) return
 
-            subcategories.push({
-                id: childRow.id,
-                categoryName: childRow.name,
-                url: `/product-category/${parentRow.slug}/${childRow.slug}`
-            });
-        });
+      subcategories.push({
+        id: childRow.id,
+        categoryName: childRow.name,
+        url: `/product-category/${parentRow.slug}/${childRow.slug}`,
+      })
+    })
 
-        categories.push({
-            id: parentRow.id,
-            categoryName: parentRow.name,
-            url: `/product-category/${parentRow.slug}`,
-            subcategories
-        });
-    });
+    categories.push({
+      id: parentRow.id,
+      categoryName: parentRow.name,
+      url: `/product-category/${parentRow.slug}`,
+      subcategories,
+    })
+  })
 
-    return categories;
+  return categories
 }
 
-export default transformCategoriesMenu;
+export default transformCategoriesMenu

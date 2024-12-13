@@ -1,4 +1,4 @@
-import styled from "@emotion/styled";
+import styled from '@emotion/styled'
 
 export const BadgeWrapper = styled.div`
   box-sizing: border-box;
@@ -9,5 +9,5 @@ export const BadgeWrapper = styled.div`
   position: absolute;
   padding: 16px;
   top: 0;
-  z-index: 10;
-`;
+  z-index: 2;
+`

@@ -8,9 +8,9 @@ import {
   CustomDataProductType,
   CustomDataThemeOptionsType,
   QueryParamsType,
-} from '@/types/services';
-import { CartItem } from '@/types/store/reducers/сartSlice';
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+} from '@/types/services'
+import { CartItem } from '@/types/store/reducers/сartSlice'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const wpCustomRtkApi = createApi({
   reducerPath: 'wpCustomRtkApi',
@@ -40,10 +40,7 @@ export const wpCustomRtkApi = createApi({
         params,
       }),
     }),
-    getProductReviews: builder.query<
-      CustomDataProductReviewsType,
-      QueryParamsType
-    >({
+    getProductReviews: builder.query<CustomDataProductReviewsType, QueryParamsType>({
       query: (params: QueryParamsType) => ({
         url: `/products/reviews/${params.slug}`,
         params,
@@ -71,7 +68,7 @@ export const wpCustomRtkApi = createApi({
       }),
     }),
   }),
-});
+})
 
 export const {
   useGetMenusQuery,
@@ -82,4 +79,4 @@ export const {
   useGetThemeOptionsQuery,
   useGetProductsMinimizedMutation,
   useGetPostsQuery,
-} = wpCustomRtkApi;
+} = wpCustomRtkApi

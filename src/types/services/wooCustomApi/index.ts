@@ -1,11 +1,11 @@
 import {
   LineItemSchema,
   ProductsMinimizedSchema,
-} from "@/types/components/shop/product/products";
-import { lineOrderItemsSchema } from "@/types/store/reducers/сartSlice";
-import { z } from "zod";
+} from '@/types/components/shop/product/products'
+import { lineOrderItemsSchema } from '@/types/store/reducers/сartSlice'
+import { z } from 'zod'
 
-const currencies: [string, ...string[]] = ["EUR", "USD", "PLN"];
+const currencies: [string, ...string[]] = ['EUR', 'USD', 'PLN']
 
 export const WooCustomerSchema = z.object({
   id: z.number(),
@@ -64,7 +64,7 @@ export const WooCustomerSchema = z.object({
       })
     ),
   }),
-});
+})
 
 export const WooCustomerReqSchema = z.object({
   email: z.string(),
@@ -101,7 +101,7 @@ export const WooCustomerReqSchema = z.object({
       phone: z.string().optional(),
     })
     .optional(),
-});
+})
 
 export const AddressTypeSchema = z.object({
   first_name: z.string(),
@@ -115,13 +115,13 @@ export const AddressTypeSchema = z.object({
   country: z.string(),
   email: z.string().optional(),
   phone: z.string().optional(),
-});
+})
 
 const metaDataSchema = z.object({
   id: z.number(),
   key: z.string(),
   value: z.string(),
-});
+})
 
 export const OrderTypeSchema = z.object({
   id: z.number(),
@@ -223,7 +223,7 @@ export const OrderTypeSchema = z.object({
   date_paid_gmt: z.string().nullable(),
   currency_symbol: z.string().optional(),
   _links: z.any().optional(),
-});
+})
 
 const ProductParamsSchema = z.object({
   page: z.string().optional(),
@@ -237,13 +237,13 @@ const ProductParamsSchema = z.object({
   min_price: z.number().optional(),
   max_price: z.number().optional(),
   search: z.string().optional(),
-});
+})
 
 const LineItemReqSchema = z.object({
   product_id: z.number(),
   quantity: z.number(),
   variation_id: z.number().optional(),
-});
+})
 
 const CreateOrderRequestSchema = z.object({
   line_items: z.array(LineItemReqSchema),
@@ -262,16 +262,16 @@ const CreateOrderRequestSchema = z.object({
     )
     .optional(),
   status: z.enum([
-    "pending",
-    "processing",
-    "on-hold",
-    "completed",
-    "cancelled",
-    "refunded",
-    "failed",
+    'pending',
+    'processing',
+    'on-hold',
+    'completed',
+    'cancelled',
+    'refunded',
+    'failed',
   ]),
   currency: z.enum(currencies),
-});
+})
 
 const CreateOrderResponseSchema = z.object({
   id: z.number(),
@@ -291,16 +291,16 @@ const CreateOrderResponseSchema = z.object({
     )
     .optional(),
   status: z.enum([
-    "pending",
-    "processing",
-    "on-hold",
-    "completed",
-    "cancelled",
-    "refunded",
-    "failed",
+    'pending',
+    'processing',
+    'on-hold',
+    'completed',
+    'cancelled',
+    'refunded',
+    'failed',
   ]),
   currency: z.enum(currencies),
-});
+})
 
 const couponRespSchema = z.object({
   id: z.number().int(),
@@ -334,10 +334,10 @@ const couponRespSchema = z.object({
     self: z.array(z.object({ href: z.string() })),
     collection: z.array(z.object({ href: z.string() })),
   }),
-});
+})
 const retrieveCouponQuerySchema = z.object({
   id: z.number(),
-});
+})
 
 export const ReviewRespSchema = z.object({
   id: z.number(),
@@ -360,18 +360,18 @@ export const ReviewRespSchema = z.object({
     collection: z.array(z.object({ href: z.string() })),
     up: z.array(z.object({ href: z.string() })),
   }),
-});
+})
 
-export const ReviewsRespSchema = z.array(ReviewRespSchema);
+export const ReviewsRespSchema = z.array(ReviewRespSchema)
 
-export type OrderType = z.infer<typeof OrderTypeSchema>;
-export type AddressType = z.infer<typeof AddressTypeSchema>;
-export type WooCustomerType = z.infer<typeof WooCustomerSchema>;
-export type WooCustomerReqType = z.infer<typeof WooCustomerReqSchema>;
-export type ProductParamsType = z.infer<typeof ProductParamsSchema>;
-export type CreateOrderResponseType = z.infer<typeof CreateOrderResponseSchema>;
-export type CreateOrderRequestType = z.infer<typeof CreateOrderRequestSchema>;
-export type couponRespType = z.infer<typeof couponRespSchema>;
-export type retrieveCouponQueryType = z.infer<typeof retrieveCouponQuerySchema>;
-export type ReviewRespType = z.infer<typeof ReviewRespSchema>;
-export type ReviewsRespType = z.infer<typeof ReviewsRespSchema>;
+export type OrderType = z.infer<typeof OrderTypeSchema>
+export type AddressType = z.infer<typeof AddressTypeSchema>
+export type WooCustomerType = z.infer<typeof WooCustomerSchema>
+export type WooCustomerReqType = z.infer<typeof WooCustomerReqSchema>
+export type ProductParamsType = z.infer<typeof ProductParamsSchema>
+export type CreateOrderResponseType = z.infer<typeof CreateOrderResponseSchema>
+export type CreateOrderRequestType = z.infer<typeof CreateOrderRequestSchema>
+export type couponRespType = z.infer<typeof couponRespSchema>
+export type retrieveCouponQueryType = z.infer<typeof retrieveCouponQuerySchema>
+export type ReviewRespType = z.infer<typeof ReviewRespSchema>
+export type ReviewsRespType = z.infer<typeof ReviewsRespSchema>

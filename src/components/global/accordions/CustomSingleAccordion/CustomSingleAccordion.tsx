@@ -1,12 +1,11 @@
 import React, { FC, useEffect, useMemo, useState } from 'react';
-import { AccordionDetails, Typography } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { StyledAccordion, StyledAccordionSummary } from './styles';
+import { StyledAccordion, StyledAccordionDetails, StyledAccordionSummary } from './styles';
 import { CustomSingleAccordionType } from '@/types/components/global/accordions/customSingleAccordion';
 import { validateCustomSingleAccordion } from '@/utils/zodValidators/validateCustomSingleAccordion';
 import { Title } from '@/styles/components';
 
-export const CustomSingleAccordion: FC<CustomSingleAccordionType> = ({ title, children }) =>
+export const CustomSingleAccordion: FC<CustomSingleAccordionType> = ({ title, children, detailsPadding }) =>
 {
     const [isPropsValidated, setPropsValidated] = useState(false);
 
@@ -27,9 +26,9 @@ export const CustomSingleAccordion: FC<CustomSingleAccordionType> = ({ title, ch
             <StyledAccordionSummary expandIcon={<ExpandMoreIcon />}>
                 <Title as={'h3'} uppercase fontSize='16px' fontWeight={400}>{title}</Title>
             </StyledAccordionSummary>
-            <AccordionDetails>
+            <StyledAccordionDetails padding={detailsPadding} >
                 {children}
-            </AccordionDetails>
+            </StyledAccordionDetails>
         </StyledAccordion>
     );
 };

@@ -1,14 +1,14 @@
-import { z } from "zod";
+import { z } from 'zod'
 
 export const CustomFormInputSchema = z.object({
   fieldName: z.string().optional(),
-  inputTag: z.union([z.literal("input"), z.literal("textarea")]),
+  inputTag: z.union([z.literal('input'), z.literal('textarea')]),
   inputType: z.union([
-    z.literal("text"),
-    z.literal("checkbox"),
-    z.literal("password"),
-    z.literal("number"),
-    z.literal("phone"),
+    z.literal('text'),
+    z.literal('checkbox'),
+    z.literal('password'),
+    z.literal('number'),
+    z.literal('phone'),
   ]),
   name: z.string().optional(),
   register: z.any().optional(),
@@ -44,6 +44,6 @@ export const CustomFormInputSchema = z.object({
   height: z.string().optional(),
   width: z.string().optional(),
   background: z.string().optional(),
-});
+})
 
-export type CustomFormInputType = z.infer<typeof CustomFormInputSchema>;
+export type CustomFormInputType = z.infer<typeof CustomFormInputSchema>

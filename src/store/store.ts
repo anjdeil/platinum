@@ -12,7 +12,7 @@ import themeOptionsSlice from './slices/themeOptionsSlice'
 import cartSlice from './slices/cartSlice'
 import saveCartSliceToLocalStorageMiddleware from '@/utils/cartSlice/saveCartSliceToLocalStorageMiddleware'
 import { contactForm7Api } from './rtk-queries/contactFrom7/contactFromApi7'
-import { mailpoetApi } from './rtk-queries/mailpoetApi';
+import { mailpoetApi } from './rtk-queries/mailpoetApi'
 
 const rootReducer = combineReducers({
   [wpCustomRtkApi.reducerPath]: wpCustomRtkApi.reducer,
@@ -29,7 +29,7 @@ const rootReducer = combineReducers({
   currentCurrency: currencySlice,
   Popup: PopupSlice,
   swiperModal: SwiperModal,
-});
+})
 
 export const setupStore = () => {
   return configureStore({
@@ -42,8 +42,8 @@ export const setupStore = () => {
         .concat(contactForm7Api.middleware)
         .concat(saveCartSliceToLocalStorageMiddleware)
         .concat(mailpoetApi.middleware),
-  });
-};
+  })
+}
 
 export type RootState = ReturnType<typeof rootReducer>
 export type AppStore = ReturnType<typeof setupStore>

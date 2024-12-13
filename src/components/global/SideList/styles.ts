@@ -1,4 +1,4 @@
-import { ListProps, SideListContainerProps, StyledListItemrops } from "@/types/components/global/sideList";
+import { ListProps, SideListContainerProps, StyledListItemProps } from "@/types/components/global/sideList";
 import styled from "@emotion/styled";
 
 export const SideListContainer = styled.nav<SideListContainerProps>`
@@ -16,9 +16,8 @@ export const List = styled.ul<ListProps>`
     row-gap: ${({ rowGap = '16px' }) => rowGap};
 `;
 
-export const StyledListItem = styled.li<StyledListItemrops>`
+export const StyledListItem = styled.li<StyledListItemProps>`
     box-sizing: border-box;
-    background-color: ${({ isActive, theme, hoverBackground = theme.colors.primary }) => isActive ? hoverBackground : 'transparent'};
     font: ${({ theme }) => theme.fonts.bodyMiddleReg}; 
     font-size: ${({ fontSize }) => fontSize};
     line-height: ${({ lineHeight }) => lineHeight};
@@ -33,6 +32,10 @@ export const StyledListItem = styled.li<StyledListItemrops>`
     width: ${({ width = '100%' }) => width};
     cursor: pointer;
     text-transform: uppercase;
+    text-align: left;
+    padding:  ${({ padding = '0' }) => padding};
+    background-color: ${({ isActive, theme, hoverBackground = theme.colors.primary }) => isActive ? hoverBackground : 'transparent'};
+    
 
     @media ${({ theme }) => theme.media.large} {
         font-size: ${({ tabletFontSize = '14px' }) => tabletFontSize};
@@ -53,7 +56,8 @@ export const StyledListItem = styled.li<StyledListItemrops>`
         text-transform: uppercase;
         font-size: ${({ fontSize = '16px' }) => fontSize};
         line-height: ${({ lineHeight = '24px' }) => lineHeight};
-        font-weight: ${({ fontWeight = 400 }) => fontWeight};    
+        font-weight: ${({ fontWeight = 400 }) => fontWeight};  
+        text-align: left;  
 
         @media ${({ theme }) => theme.media.large} {
             padding: 12px 16px;
