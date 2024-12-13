@@ -24,7 +24,7 @@ export default function SearchInputComponent({
   }) {
   const router = useRouter();
 
-  const searchHref = `/${router.locale === 'en' ? '' : router.locale}/search/${encodeURIComponent(searchTerm)}`;
+  const searchHref = `/${router.locale === 'en' ? '' : `${router.locale}/`}search/${encodeURIComponent(searchTerm)}`;
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
