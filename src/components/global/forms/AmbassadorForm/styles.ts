@@ -8,7 +8,7 @@ interface InfoCardProps {
 export const InfoCard = styled.div<InfoCardProps>`
   margin-bottom: ${({ marginBottom }) => (marginBottom ? marginBottom : '20px')};
   border-radius: 8px;
-  border: 1px solid ${({ theme }) => theme.colors.border};
+  border: 1px solid ${({ theme }) => theme.colors.lightBorder};
   margin: 0 auto;
   padding: 32px;
 `
@@ -34,5 +34,37 @@ export const OptionButton = styled.button<{ isSelected: boolean }>`
   &:focus {
     outline: 1px solid ${({ theme }) => theme.colors.primary};
     box-shadow: ${({ theme }) => theme.customShadows.primaryShadow};
+  }
+`
+
+export const FileUploadLabel = styled.label`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  text-align: center;
+
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: ${({ theme }) => theme.background.formElements};
+  height: 120px;
+  & p {
+    max-width: 400px;
+    & span {
+      color: ${({ theme }) => theme.colors.active};
+    }
+  }
+`
+export const FileUploadWrapper = styled.div``
+export const FileUploadPreview = styled.div`
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  & img {
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 `

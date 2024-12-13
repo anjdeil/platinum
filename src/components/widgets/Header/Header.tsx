@@ -27,7 +27,6 @@ const Header: React.FC = () => {
     setCartCount(cartItems.length)
   }, [cartItems])
 
-  const dispatch = useAppDispatch()
   const popup = useAppSelector((state) => state.popup)
   return (
     <HeaderWrapper>

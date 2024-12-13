@@ -23,6 +23,25 @@ interface TitleProps {
   mobMarginBottom?: number
 }
 
+interface FlexBoxProps {
+  flexDirection?: 'row' | 'row-reverse' | 'column' | 'column-reverse'
+  justifyContent?:
+    | 'flex-start'
+    | 'flex-end'
+    | 'center'
+    | 'space-between'
+    | 'space-around'
+    | 'space-evenly'
+  alignItems?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline'
+  flexWrap?: 'nowrap' | 'wrap' | 'wrap-reverse'
+  gap?: string
+  padding?: string
+  margin?: string
+  width?: string
+  height?: string
+  bgColor?: string
+}
+
 /** Titles components */
 export const Title = styled.h1<TitleProps>`
   color: ${({ theme }) => theme.colors.black};
@@ -211,4 +230,54 @@ export const StyledHeaderWrapper = styled.header`
   align-items: center;
   gap: 8px;
   margin: 24px 0;
+`
+
+//----------------------FORM
+
+interface CustomFormProps {
+  maxWidth?: string
+}
+
+export const CustomForm = styled.form<CustomFormProps>`
+  margin: 0 auto;
+  max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : '1100px')};
+`
+
+export const FormWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(49%, 1fr));
+  column-gap: 2%;
+  row-gap: 15px;
+  padding-bottom: 20px;
+
+  @media ${({ theme }) => theme.media.medium} {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+  }
+`
+
+export const FormWrapperBottom = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`
+export const FlexBox = styled.div<FlexBoxProps>`
+  display: flex;
+  flex-direction: ${({ flexDirection = 'row' }) => flexDirection};
+  justify-content: ${({ justifyContent = 'flex-start' }) => justifyContent};
+  align-items: ${({ alignItems = 'stretch' }) => alignItems};
+  flex-wrap: ${({ flexWrap = 'nowrap' }) => flexWrap};
+  gap: ${({ gap = '0' }) => gap};
+  padding: ${({ padding = '0' }) => padding};
+  margin: ${({ margin = '0' }) => margin};
+  width: ${({ width = 'auto' }) => width};
+  height: ${({ height = 'auto' }) => height};
+  background-color: ${({ bgColor = 'transparent' }) => bgColor};
+`
+
+export const Overlay = styled.div`
+  position: fixed;
+  z-index: 90;
+  inset: 0;
 `

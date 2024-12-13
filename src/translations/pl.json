@@ -166,8 +166,24 @@
     "successMessage": "Twoja wiadomość została wysłana pomyślnie!"
   },
   "Validation": {
-    "email": "Proszę wprowadzić poprawny adres e-mail.",
-    "minChar": "Musi mieć co najmniej {count} znaków."
+    "emailValidation": "Proszę wprowadzić poprawny adres e-mail.",
+    "minChar": "Musi mieć co najmniej {count} znaków.",
+    "RequiredField": "Pole wymagane",
+    "email": "E-mail",
+    "name": "Imię",
+    "lastName": "Nazwisko",
+    "address": "Adres",
+    "phoneNumber": "Numer telefonu",
+    "country": "Kraj",
+    "city": "Miasto",
+    "aboutYourself": "O sobie",
+    "preview": "Podgląd",
+    "clickToUpload": "Kliknij, aby przesłać",
+    "orDragAndDrop": "lub przeciągnij i upuść",
+    "or": "lub",
+    "max": "maks.",
+    "sending": "Wysyłanie...",
+    "sendButton": "Wyślij"
   },
   "Breadcrumbs": {
     "homePage": "Strona Główna"

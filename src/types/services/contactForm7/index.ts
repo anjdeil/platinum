@@ -1,26 +1,42 @@
-import { z } from "zod";
+import { z } from 'zod'
 
 export const formDataSchema = z.object({
   _wpcf7_unit_tag: z.string(),
-  "your-name": z.string(),
-  "your-email": z.string().email(),
-  "your-message": z.string(),
-});
-
+  'your-name': z.string(),
+  'your-email': z.string().email(),
+  'your-message': z.string(),
+})
 export const ContactFormReqSchema = z.object({
   formId: z.number(),
   formData: formDataSchema,
-});
+})
+export const formAmbassadorDataSchema = z.object({
+  _wpcf7_unit_tag: z.string(),
+  firstName: z.string(),
+  lastName: z.string(),
+  email: z.string().email(),
+  country: z.string(),
+  phone: z.string(),
+  city: z.string(),
+  about: z.string(),
+  file: z.any(),
+})
+
+export const AmbassadorFormReqSchema = z.object({
+  formId: z.number(),
+  formData: formAmbassadorDataSchema,
+})
 
 export const ContactFormResponseSchema = z.object({
   contact_form_id: z.number(),
-  status: z.enum(["mail_sent", "failed", "other"]),
+  status: z.enum(['mail_sent', 'failed', 'other']),
   message: z.string(),
   posted_data_hash: z.string(),
   into: z.string(),
   invalid_fields: z.array(z.string()),
-});
+})
 
-export type formDataType = z.infer<typeof formDataSchema>;
-export type ContactFormResponseType = z.infer<typeof ContactFormResponseSchema>;
-export type ContactFormReqType = z.infer<typeof ContactFormReqSchema>;
+export type formDataType = z.infer<typeof formDataSchema>
+export type ContactFormResponseType = z.infer<typeof ContactFormResponseSchema>
+export type ContactFormReqType = z.infer<typeof ContactFormReqSchema>
+export type AmbassadorFormReqType = z.infer<typeof AmbassadorFormReqSchema>

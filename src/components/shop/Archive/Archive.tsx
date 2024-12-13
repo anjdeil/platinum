@@ -23,9 +23,10 @@ import {
 import SideList from '@/components/global/SideList/SideList'
 import transformCategoriesIntoLinks from '@/services/transformers/transformCategoriesIntoLinks'
 import { useTranslations } from 'next-intl'
-import CategoryType from '@/types/components/shop/categories'
+
 import { useGetCategoriesQuery } from '@/store/rtk-queries/wpCustomApi'
 import transformSubcategoriesIntoLinks from '@/services/transformers/transformSubcategoriesIntoLinks'
+import CategoryType from '@/types/components/shop/categories/categories'
 
 const switchPage = (page: number, maxPage: number) => {
   if (maxPage < page) return
@@ -33,7 +34,7 @@ const switchPage = (page: number, maxPage: number) => {
   if (!Array.isArray(slugs)) return
 
   const newSlugs = slugs.filter((slug) => slug !== 'page' && Number.isNaN(+slug))
-  if (page !== 1) newSlugs.push('page', String(page))
+  newSlugs.push('page', String(page))
 
   router.push({
     pathname: router.pathname,
@@ -86,55 +87,6 @@ export const Archive: FC<ArchivePropsType> = (props) => {
     currentCategory?.id
   )
 
-  router.push({
-    pathname: router.pathname,
-    query: {
-      slugs: newSlugs,
-      ...params,
-    },
-  })
-}
-
-export const Archive: FC<ArchivePropsType> = ({
-  products,
-  pagesCount,
-  page,
-  categoriesSlugs,
-  statistic,
-}) => {
-  const [isMenuVisible, setMenuVisible] = useState(false)
-  const { isMobile } = useResponsive()
-  const toggleMenu = () => {
-    setMenuVisible(!isMenuVisible)
-  }
-
-  const [selectedCategories, setCategories] = useState<CategoryType[]>([])
-
-  const categoriesData: CategoryType[] | undefined = useAppSelector(
-    (state) => state.categoriesSlice.categories
-  )
-
-  const isLoading: boolean | undefined = useAppSelector(
-    (state) => state.categoriesSlice.loading
-  )
-
-  useEffect(() => {
-    if (!categoriesData || categoriesData.length === 0) {
-      setCategories([])
-      return
-    }
-
-    const filteredCategories = categoriesData.filter((category) =>
-      categoriesSlugs.includes(category.slug)
-    )
-    setCategories(filteredCategories)
-    console.log('categoriesData use effect', JSON.stringify(categoriesData, null, 2))
-  }, [categoriesData, categoriesSlugs])
-
-  console.log('categoriesData ', JSON.stringify(categoriesData, null, 2))
-  console.log(categoriesSlugs)
-  /* 
-        if (isLoading) return <div>categories loading</div> */
   return (
     <CatalogContainer>
       <CatalogTitleWrapper>

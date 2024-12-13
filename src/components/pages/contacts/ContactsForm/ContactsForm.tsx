@@ -110,7 +110,7 @@ const ContactsForm = () => {
           hoverColor={theme.colors.primary}
           hoverBackgroundColor={theme.background.secondary}
         >
-          {isSubmitting || isLoading ? t('sending') : t('sendButton')}
+          {isSubmitting || isLoading ? tValidation('sending') : tValidation('sendButton')}
         </ContactsStyledButton>
 
         {isError && <ErrorMessage>{t('errorMessage')}</ErrorMessage>}

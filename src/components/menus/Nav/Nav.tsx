@@ -4,7 +4,6 @@ import { MenuSkeleton } from '../MenuSkeleton'
 import { NavLink, NavList } from './styles'
 import { wpMenuProps } from '@/types/menus/WpMenus'
 import { menuItemsType } from '@/types/services/wpCustomApi/menus'
-im
 
 const Nav: FC<wpMenuProps> = ({
   menuId,

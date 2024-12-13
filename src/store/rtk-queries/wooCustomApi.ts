@@ -6,6 +6,7 @@ import {
   ReviewsRespType,
   WooCustomerReqType,
   WooCustomerType,
+  WooCustomerUpdateReq,
 } from '@/types/services'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
@@ -70,6 +71,25 @@ export const wooCustomRktApi = createApi({
         method: 'GET',
       }),
     }),
+    fetchCustomer: builder.query<WooCustomerType, { customerId: string }>({
+      query: ({ customerId }) => ({
+        url: `/customers/${customerId}`,
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }),
+    }),
+    updateCustomer: builder.mutation<WooCustomerType, WooCustomerUpdateReq>({
+      query: (credentials: WooCustomerUpdateReq) => ({
+        url: `/customers/${credentials.id}`,
+        method: 'PUT',
+        body: credentials,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }),
+    }),
   }),
 })
 
@@ -80,4 +100,6 @@ export const {
   useListAllCouponsQuery,
   useAddCommentMutation,
   useGetProductsReviewsQuery,
+  useFetchCustomerQuery,
+  useUpdateCustomerMutation,
 } = wooCustomRktApi

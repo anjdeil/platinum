@@ -58,7 +58,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         {isMobile && <BottomMenu />}
         {children}
         <Footer />
-        <CategoriesMenu />
       </MenusContext.Provider>
     </Box>
   )

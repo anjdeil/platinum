@@ -1,7 +1,7 @@
 import { CustomDataProductsStatisticSchema } from '@/types/services'
 import { z } from 'zod'
 import { ProductSchema } from '../product/products'
-import { CategorySchema } from '../categories'
+import { CategorySchema } from '../categories/categories'
 
 export const ArchivePropsSchema = z.object({
   products: z.array(ProductSchema),

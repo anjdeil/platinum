@@ -362,6 +362,12 @@ export const ReviewRespSchema = z.object({
   }),
 })
 
+export const WooCustomerUpdateReqSchema = WooCustomerReqSchema.extend({
+  id: z.number(),
+}).extend({
+  email: z.string().optional(),
+})
+
 export const ReviewsRespSchema = z.array(ReviewRespSchema)
 
 export type OrderType = z.infer<typeof OrderTypeSchema>
@@ -375,3 +381,4 @@ export type couponRespType = z.infer<typeof couponRespSchema>
 export type retrieveCouponQueryType = z.infer<typeof retrieveCouponQuerySchema>
 export type ReviewRespType = z.infer<typeof ReviewRespSchema>
 export type ReviewsRespType = z.infer<typeof ReviewsRespSchema>
+export type WooCustomerUpdateReq = z.infer<typeof WooCustomerUpdateReqSchema>

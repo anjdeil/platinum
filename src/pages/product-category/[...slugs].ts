@@ -1,6 +1,7 @@
 import { Archive } from '@/components/shop/Archive'
 import { customRestApi } from '@/services/wpCustomApi'
-import CategoryType from '@/types/components/shop/categories'
+import CategoryType from '@/types/components/shop/categories/categories'
+
 import { ProductType } from '@/types/pages/shop'
 import { CustomDataCategoriesType, ProductParamsType } from '@/types/services'
 import { findPageParam } from '@/utils/getCurrentPageNumber'

@@ -120,13 +120,10 @@ export const CustomInputWrapper = styled.div`
 `
 
 export const CustomRequired = styled.span`
-  font-size: 16px;
-
-  @media ${({ theme }) => theme.media.medium} {
-    margin-left: 5px;
-    font-size: 21px;
-    color: ${({ theme }) => theme.colors.primary};
-  }
+  font-size: 20px;
+  font-weight: 500;
+  margin-left: 5px;
+  color: ${({ theme }) => theme.colors.primary};
 `
 
 export const ShowPasswordImage = styled(Image)`
@@ -149,38 +146,47 @@ export const CustomError = styled.p`
 export const CustomInputContainer = styled.div<CustomInputContainerProps>`
   width: ${({ isCheckbox, width = '100%' }) => (isCheckbox ? '18px' : width)};
 
-  padding-left: 5px;
-  color: ${({ theme }) => theme.colors.error};
   @media ${({ theme }) => theme.media.medium} {
-    padding-left: 10px;
     margin-top: 10px;
   }
 `
-/* export const PhoneCustomInput = styled(PhoneInput)`
-  padding: 15px;
-  width: 100%;
 
-  border: none;
-  border-radius: 10px;
-  font-size: 16px;
+export const StyledPhoneInput = styled(PhoneInput)`
+  && input {
+    display: flex;
+    align-items: center;
+    background-color: ${({ theme }) => theme.background.formElements};
+    border: none;
+    border-radius: 10px;
+    padding: 10px 15px;
+    font-size: 16px;
+    color: #333;
+    width: 100%;
+    height: 49px;
+    padding-left: 60px;
 
-  background-color: ${({ theme }) => theme.background.formElements};
-  transition: outline-width 0.2s ease-in-out;
-
-  &:focus {
-    box-shadow: ${({ theme }) => theme.customShadows.primaryShadow};
+    &:focus {
+      outline: 1px solid ${({ theme }) => theme.colors.primary};
+      box-shadow: ${({ theme }) => theme.customShadows.primaryShadow};
+    }
   }
 
-  &[type="number"]::-webkit-inner-spin-button,
-  &[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  .react-international-phone-country-selector {
+    & button {
+      .react-international-phone-country-selector-button__button-content {
+        & img {
+          width: 24px;
+          /*     height: 30px;
+          border-radius: 50%;
+          object-fit: cover; */
+        }
+      }
+    }
   }
 
-  &[type="number"]appearance: none;
-  &[type="number"]-moz-appearance: textfield;
-
-  @media ${({ theme }) => theme.media.medium} {
-    font-size: 14px;
+  .react-international-phone-country-selector-dropdown {
+    left: -10px;
+    width: 285px;
+    border-radius: 10px;
   }
-`; */
+`
