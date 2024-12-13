@@ -17,7 +17,7 @@ interface TitleProps {
   mobFontSize?: string;
   textalign?: "center" | "left" | "right";
   uppercase?: boolean;
-  marginTop?: number;
+  marginTop?: string;
   marginBottom?: string;
   tabletMarginBottom?: number;
   mobMarginBottom?: number;
@@ -45,7 +45,7 @@ export const Title = styled.h1<TitleProps>`
   }
 `;
 
-export const AccountTitle = styled(Title)<TitleProps>`
+export const AccountTitle = styled(Title) <TitleProps>`
   margin-top: 24px;
   margin-bottom: ${({ marginBottom = 48 }) => marginBottom}px;
 
@@ -85,7 +85,7 @@ export const AccountInfoWrapper = styled.div<AccountInfoWrapperProps>`
 
   @media ${({ theme }) => theme.media.medium} {
     flex-direction: ${({ mobileReverse = false }) =>
-      mobileReverse ? "column-reverse" : "column"};
+    mobileReverse ? "column-reverse" : "column"};
     margin-bottom: 64px;
   }
 `;
@@ -106,8 +106,8 @@ export const StyledButton = styled.button<StyledButtonProps>`
     notify
       ? theme.colors.secondary
       : secondary
-      ? "transparent"
-      : theme.colors.primary};
+        ? "transparent"
+        : theme.colors.primary};
   padding-block: 16px;
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
   text-transform: none;
@@ -121,9 +121,9 @@ export const StyledButton = styled.button<StyledButtonProps>`
   &:hover {
     color: ${({ theme, hoverColor = theme.colors.white }) => hoverColor};
     background-color: ${({
-      theme,
-      hoverBackgroundColor = theme.background.hover,
-    }) => hoverBackgroundColor};
+          theme,
+          hoverBackgroundColor = theme.background.hover,
+        }) => hoverBackgroundColor};
   }
 
   @media ${({ theme }) => theme.media.large} {
@@ -137,16 +137,17 @@ export const StyledButton = styled.button<StyledButtonProps>`
   }
 `;
 
-export const LogoLink = styled(Link)<LogoLinkProps>`
-  display: flex;
-  position: relative;
-  width: ${({ desktopwidth = 92 }) => `${desktopwidth}px`};
-  height: ${({ desktopheight = 92 }) => `${desktopheight}px`};
-
-  @media ${({ theme }) => theme.media.large} {
-    width: ${({ width = 44 }) => `${width}px`};
-    height: ${({ height = 44 }) => `${height}px`};
-  }
+export const LogoLink = styled(Link) <LogoLinkProps>`
+    flex-shrink: 0;
+    display: flex;
+    position: relative;
+    width: ${({ desktopwidth = 92 }) => `${desktopwidth}px`};
+    height: ${({ desktopheight = 92 }) => `${desktopheight}px`};
+    
+    @media ${({ theme }) => theme.media.large} {
+        width: ${({ width = 44 }) => `${width}px`};
+        height: ${({ height = 44 }) => `${height}px`};
+    }
 `;
 
 export const PagesNavigation = styled(Pagination)(({ theme }) => ({
@@ -188,7 +189,7 @@ export const StyledIconWrapper = styled.div`
   }
 `;
 
-export const LogoLinkImage = styled(Image)<LogoLinkImageProps>`
+export const LogoLinkImage = styled(Image) <LogoLinkImageProps>`
   width: 100%;
   height: 100%;
 `;
@@ -208,4 +209,12 @@ export const VariationTitle = styled(Text)`
 
 export const TinyText = styled.p`
   font: ${({ theme }) => theme.fonts.bodysmallReg};
+`;
+
+export const StyledHeaderWrapper = styled.header`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin: 24px 0;
 `;

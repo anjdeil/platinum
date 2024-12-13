@@ -1,8 +1,8 @@
 import { z } from "zod";
 
 export const SelectOptionsPropsSchema = z.object({
+    name: z.string(),
     code: z.string(),
-    symbol: z.string(),
 });
 
 export const CustomSelectStyledPropsSchema = z.object({
@@ -23,7 +23,7 @@ export const CustomSelectStyledPropsSchema = z.object({
 
 export const CustomSelectPropsSchema = z.object({
     options: z.array(SelectOptionsPropsSchema),
-    value: z.string(),
+    value: z.string().optional(),
     onChange: z.function().args(z.any()).returns(z.void()),
     ...CustomSelectStyledPropsSchema.shape,
 });

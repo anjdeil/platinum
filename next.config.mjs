@@ -7,7 +7,7 @@ const nextConfig = {
     localeDetection: false,
   },
   images: {
-    domains: ['platinum.digiway-dev.online'],
+    domains: ['platinum.digiway-dev.online', 'secure.gravatar.com'],
   },
   env: {
     timeZone: 'Europe/Warsaw',

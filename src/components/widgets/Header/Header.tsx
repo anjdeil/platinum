@@ -4,13 +4,14 @@ import CartIcon from '@/components/global/icons/CartIcon/CartIcon';
 import FindIcon from '@/components/global/icons/FindIcon/FindIcon';
 import HeartIcon from '@/components/global/icons/HeartIcon/HeartIcon';
 import SearchBar from '@/components/global/SearchBar/SearchBar';
-import { useAppSelector } from '@/store';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { popupToggle } from '@/store/slices/PopupSlice';
 import React, { useEffect, useState } from 'react';
 import Nav from '../../menus/Nav/Nav';
-import { HeaderContainer, HeaderContent, HeaderIcons, HeaderNav, HeaderWrapper } from './styles';
+import { CategoriesButton, HeaderContainer, HeaderContent, HeaderIcons, HeaderWrapper, MenuWrapper } from './styles';
 
 const Header: React.FC = () => {
-
+    const dispatch = useAppDispatch();
     const [displayedSearchBar, setDisplayedSearchBar] = useState(false);
     const { cartItems } = useAppSelector((state) => state.cartSlice);
     const [cartCount, setCartCount] = useState(0);
@@ -23,19 +24,23 @@ const Header: React.FC = () => {
         <HeaderWrapper>
             <HeaderContainer>
                 {!displayedSearchBar ?
-                    <HeaderNav>
+                    <MenuWrapper>
+                        <CategoriesButton onClick={() => dispatch(popupToggle('categories-menu'))}>
+                            All Shop
+                        </CategoriesButton>
                         <Nav
                             menuId={344}
                             skeleton={{
-                                elements: 4,
+                                elements: 3,
                                 width: "80px",
                                 height: "24px",
-                                gap: '24px'
+                                gap: '48px'
                             }}
                             texttransform='uppercase'
-                            justify='space-evenly'
+                            justify='space-between'
                         />
-                    </HeaderNav> :
+                    </MenuWrapper>
+                :
                     <SearchBar onClose={() => setDisplayedSearchBar(false)} />
                 }
                 <HeaderContent>
@@ -44,8 +49,8 @@ const Header: React.FC = () => {
                             <IconButton onClick={() => setDisplayedSearchBar(true)} IconComponent={FindIcon} />
                         }
                         <IconButton href='/my-account' IconComponent={AccountIcon} />
-                        <IconButton href='/cart' count={cartCount} IconComponent={CartIcon} />
                         <IconButton count={2} IconComponent={HeartIcon} />
+                        <IconButton href='/cart' count={cartCount} IconComponent={CartIcon} />
                     </HeaderIcons>
                 </HeaderContent>
             </HeaderContainer>

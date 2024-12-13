@@ -1,4 +1,9 @@
+import { Container } from "@/styles/components";
 import styled from "@emotion/styled";
+
+export const TopBarWrapper = styled(Container)`
+    overflow: visible;
+`;
 
 export const Stack = styled.div`
     margin: 10px auto;
