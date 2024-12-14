@@ -281,3 +281,12 @@ export const Overlay = styled.div`
   z-index: 90;
   inset: 0;
 `
+
+export const ErrorMessage = styled.div`
+  margin-top: 16px;
+  color: ${({ theme }) => theme.colors.error};
+`
+export const SuccessMessage = styled.div`
+  margin-top: 16px;
+  color: ${({ theme }) => theme.colors.active};
+`

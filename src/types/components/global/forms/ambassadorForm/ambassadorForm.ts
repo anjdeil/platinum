@@ -16,7 +16,7 @@ export const AmbassadorFormSchema = z.object({
   phoneNumber: phoneSchema,
   country: z.string().min(1, 'Required field'),
   city: z.string().min(1, 'Required field'),
-  about: z.string().min(40, 'Required field'),
+  about: z.string().min(1, 'Required field'),
   file:
     typeof window !== 'undefined'
       ? z.instanceof(File).optional()
@@ -33,7 +33,7 @@ export const AmbassadorFormValidationSchema = (
     phoneNumber: phoneSchema,
     country: z.string().min(1, t('RequiredField')),
     city: z.string().min(1, t('RequiredField')),
-    about: z.string().min(40, t('minChar', { count: 40 })),
+    about: z.string().min(1, t('minChar', { count: 40 })),
     file:
       typeof window !== 'undefined'
         ? z.instanceof(File).optional()

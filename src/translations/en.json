@@ -183,6 +183,9 @@
     "sending": "Sending...",
     "sendButton": "Send"
   },
+  "Forms": {
+    "applicationForm": "application form"
+  },
   "Breadcrumbs": {
     "homePage": "Home Page"
   },

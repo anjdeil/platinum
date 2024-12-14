@@ -1,5 +1,4 @@
 import {
-  AmbassadorFormReqType,
   ContactFormReqType,
   ContactFormResponseType,
 } from '@/types/services/contactForm7'
@@ -11,9 +10,6 @@ export const contactForm7Api = createApi({
   endpoints: (build) => ({
     sendAnEmail: build.mutation<ContactFormResponseType, ContactFormReqType>({
       query: ({ formId, formData }) => ({
-        headers: {
-          'Content-Type': 'application/json',
-        },
         url: `/${formId}/feedback`,
         method: 'POST',
         body: formData,
@@ -21,7 +17,7 @@ export const contactForm7Api = createApi({
     }),
     sendAmbassadorForm: build.mutation<ContactFormResponseType, any>({
       query: ({ formId, formData }) => ({
-        url: `/${formId}`,
+        url: `/${formId}/feedback`,
         method: 'POST',
         body: formData,
       }),
