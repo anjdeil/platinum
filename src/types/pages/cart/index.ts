@@ -1,5 +1,6 @@
+import { ProductsWithCartDataSchema } from '@/types/components/shop/product/products'
 import { OrderTypeSchema } from '@/types/services'
-import { lineOrderItemsSchema } from '@/types/store/reducers/сartSlice'
+import { CartItemSchema, lineOrderItemsSchema } from '@/types/store/reducers/сartSlice'
 import { z } from 'zod'
 
 export const CartProductWarningSchema = z.object({
@@ -8,7 +9,7 @@ export const CartProductWarningSchema = z.object({
 })
 export const QuantityComponentSchema = z.object({
   resolveCount: z.number().optional(),
-  item: lineOrderItemsSchema,
+  item: lineOrderItemsSchema || ProductsWithCartDataSchema,
   inputWidth: z.string().optional(),
   inputHeight: z.string().optional(),
   handleChangeQuantity: z
@@ -35,10 +36,11 @@ export const CartSummaryBlockSchema = z.object({
   symbol: z.string(),
   order: OrderTypeSchema.optional(),
   isLoading: z.boolean().optional(),
+  cartItems: z.array(CartItemSchema),
 })
 export const CartTableSchema = z.object({
   symbol: z.string(),
-  orderItems: OrderTypeSchema.optional(),
+  order: OrderTypeSchema.optional(),
   isLoadingOrder: z.boolean(),
   isLoadingProductsMin: z.boolean(),
   productsSpecs: z.array(z.any()),

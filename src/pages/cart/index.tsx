@@ -6,7 +6,7 @@ import checkCartConflict from '@/utils/cart/checkCartConflict'
 import { useGetProductsMinimizedMutation } from '@/store/rtk-queries/wpCustomApi'
 import CartTable from '@/components/pages/cart/CartTable/CartTable'
 import OrderBar from '@/components/pages/cart/OrderBar/OrderBar'
-import { Container } from '@/styles/components'
+import { Container, FlexBox, StyledButton } from '@/styles/components'
 import CartCouponBlock from '@/components/pages/cart/CartCouponBlock/CartCouponBlock'
 import { CartPageWrapper } from './style'
 import CartSummaryBlock from '@/components/pages/cart/CartSummaryBlock/CartSummaryBlock'
@@ -16,6 +16,8 @@ import { roundedPrice } from '@/utils/cart/roundedPrice'
 import { handleQuantityChange } from '@/utils/cart/handleQuantityChange'
 import BannerCart from '@/components/pages/cart/BannerCart/BannerCart'
 import { useLazyFetchUserDataQuery } from '@/store/rtk-queries/wpApi'
+import { CartLink } from '@/components/global/popups/MiniCart/style'
+import { useTranslations } from 'next-intl'
 
 const CartPage: React.FC = () => {
   const { name: code } = useAppSelector((state) => state.currencySlice)
@@ -24,6 +26,7 @@ const CartPage: React.FC = () => {
   const dispatch = useAppDispatch()
   const [loadingItems, setLoadingItems] = useState<number[]>([])
   const [preLoadingItem, setPreLoadingItem] = useState<number>()
+  const t = useTranslations('Cart')
 
   //USER
   const [auth, setAuth] = useState<boolean>(false)
@@ -147,7 +150,7 @@ const CartPage: React.FC = () => {
             <CartTable
               symbol={symbol}
               cartItems={cartItems}
-              orderItems={currentOrderItems}
+              order={currentOrderItems}
               isLoadingOrder={isLoadingOrder}
               isLoadingProductsMin={isLoadingProductsMin}
               productsSpecs={productsSpecs}
@@ -156,12 +159,24 @@ const CartPage: React.FC = () => {
               handleChangeQuantity={handleChangeQuantity}
               loadingItems={loadingItems}
             />
-            <OrderBar
-              miniCart={false}
-              isLoadingOrder={isLoadingOrder}
-              cartSum={subtotal}
-              symbol={symbol}
-            />
+            {cartItems.length > 0 ? (
+              <OrderBar
+                miniCart={false}
+                isLoadingOrder={isLoadingOrder}
+                cartSum={subtotal}
+                symbol={symbol}
+              />
+            ) : (
+              <>
+                <FlexBox justifyContent="center">
+                  <CartLink href="/">
+                    <StyledButton height="58px" width="310px" minWidthMobile="100%">
+                      {t('goToShop')}
+                    </StyledButton>
+                  </CartLink>
+                </FlexBox>
+              </>
+            )}
           </div>
           <CartCouponBlock
             userLoyalityStatus={userLoyalityStatus}
@@ -171,6 +186,7 @@ const CartPage: React.FC = () => {
           <CartSummaryBlock
             symbol={symbol}
             order={orderItems}
+            cartItems={cartItems}
             isLoading={isLoadingOrder}
           />
         </CartPageWrapper>

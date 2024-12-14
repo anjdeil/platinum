@@ -1,11 +1,8 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react'
-import { useCreateOrderMutation } from '@/store/rtk-queries/wooCustomApi'
-import { CreateOrderRequestType } from '@/types/services'
 import { useAppDispatch, useAppSelector } from '@/store'
 import checkCartConflict from '@/utils/cart/checkCartConflict'
 import { useGetProductsMinimizedMutation } from '@/store/rtk-queries/wpCustomApi'
 import OrderBar from '@/components/pages/cart/OrderBar/OrderBar'
-import getSubtotalByLineItems from '@/utils/cart/getSubtotalByLineItems'
 import {
   CartCardWrapper,
   CartImgWrapper,
@@ -16,8 +13,9 @@ import {
   CardContent,
 } from '@/components/pages/cart/styles/index'
 import CloseIcon from '@/components/global/icons/CloseIcon/CloseIcon'
-import CartQuantity from '@/components/pages/cart/CartQuantity/CartQuantity'
-import checkProductAvailability from '@/utils/cart/checkProductAvailability'
+import CartQuantity, {
+  adaptItemToCartQuantity,
+} from '@/components/pages/cart/CartQuantity/CartQuantity'
 import { useTranslations } from 'next-intl'
 import { PopupOverlay } from '@/components/global/popups/SwiperPopup/styles'
 import { CartLink, MiniCartContainer } from './style'
@@ -37,60 +35,50 @@ interface MiniCartProps {
 
 const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
   const dispatch = useAppDispatch()
-  const { name: code } = useAppSelector((state) => state.currencySlice)
-  const { cartItems, couponCodes } = useAppSelector((state) => state.cartSlice)
+  const { code: symbol } = useAppSelector((state) => state.currencySlice)
+  const { cartItems } = useAppSelector((state) => state.cartSlice)
   const t = useTranslations('Cart')
-  const [symbol, setSymbol] = useState<string>('')
+
   const [hasConflict, setHasConflict] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
 
-  const [loadingItems, setLoadingItems] = useState<number[]>([])
-  const [preLoadingItem, setPreLoadingItem] = useState<number>()
-
   // FETCH
-  const [createOrder, { data: orderItems, isLoading: isLoadingOrder }] =
-    useCreateOrderMutation()
-
   const [
     getProductsMinimized,
-    { data: productsSpecsData, isLoading: isLoadingProducts },
+    { data: productsSpecsData, isLoading: isLoadingProducts, isSuccess },
   ] = useGetProductsMinimizedMutation()
 
-  const handleCreateOrder = async () => {
-    const requestData = {
-      line_items: cartItems,
-      status: 'on-hold' as CreateOrderRequestType['status'],
-      coupon_lines: couponCodes.map((code: string) => ({ code })),
-      currency: code,
+  const productsWithCartData = useMemo(() => {
+    if (!productsSpecsData?.data?.items || !cartItems) {
+      return []
     }
-    if (preLoadingItem) {
-      setLoadingItems((prev) => [...prev, preLoadingItem])
-    }
-    try {
-      await createOrder(requestData)
-    } finally {
-      setLoadingItems((prev) => prev.filter((id) => id !== preLoadingItem))
-    }
-  }
+    const cartItemsMap = cartItems.reduce((acc, cartItem) => {
+      acc[cartItem.product_id] = cartItem
+      return acc
+    }, {} as Record<number, (typeof cartItems)[0]>)
 
-  useEffect(() => {
-    const createOrderEffect = async () => {
-      await handleCreateOrder()
-    }
+    return productsSpecsData.data.items.map((product) => {
+      const cartItem = cartItemsMap[product.id] || {}
+      const quantity = cartItem.quantity || 0
+      const price = product.price || 0
+      const totalPrice = price * quantity
 
-    createOrderEffect()
-  }, [cartItems, couponCodes, code])
-
-  const [cachedOrderItems, setCachedOrderItems] = useState(orderItems)
+      return {
+        ...product,
+        quantity,
+        variation: cartItem.variation_id || undefined,
+        totalPrice,
+      }
+    })
+  }, [productsSpecsData, cartItems])
 
   const productsSpecs = useMemo(
     () => productsSpecsData?.data?.items || [],
     [productsSpecsData]
   )
-
-  const subtotal = useMemo(
-    () => (orderItems?.line_items ? getSubtotalByLineItems(orderItems.line_items) : 0),
-    [orderItems]
+  const totalCartPrice = useMemo(
+    () => productsWithCartData.reduce((sum, item) => sum + item.totalPrice, 0),
+    [productsWithCartData]
   )
 
   const handleChangeQuantity = useCallback(
@@ -100,7 +88,6 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
       variation_id?: number,
       newQuantity?: number | boolean
     ) => {
-      setPreLoadingItem(product_id)
       handleQuantityChange(
         cartItems,
         dispatch,
@@ -123,21 +110,15 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
   }, [])
 
   useEffect(() => {
-    if (orderItems?.currency_symbol) {
-      setSymbol(orderItems.currency_symbol)
-      setCachedOrderItems(orderItems)
-    }
-  }, [orderItems])
-
-  useEffect(() => {
     getProductsMinimized(cartItems)
   }, [getProductsMinimized, cartItems.length])
 
   useEffect(() => {
-    setHasConflict(checkCartConflict(cartItems, productsSpecs))
+    if (productsSpecs.length > 0) {
+      setHasConflict(checkCartConflict(cartItems, productsSpecs))
+    }
   }, [cartItems, productsSpecs])
 
-  const currentOrderItems = orderItems ?? cachedOrderItems
   return (
     <PopupOverlay
       onClick={(e) => {
@@ -150,9 +131,9 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
             <Title fontSize="1.5em" as="h3">
               {t('cart')}&nbsp;/&nbsp;
             </Title>
-            {orderItems ? (
+            {cartItems ? (
               <Title fontSize="1em" as="h6" lowercase>
-                {orderItems.line_items.length} {t('psc')}.
+                {cartItems.length} {t('psc')}.
               </Title>
             ) : (
               <Skeleton width="30px" height="20px" />
@@ -163,59 +144,60 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
         <OrderBarDesc textAlign="left" marginBottom="40px">
           {t('priceToDelivery', { locale: '26 zl' })}
         </OrderBarDesc>
-        {!(isLoadingOrder || isLoadingProducts) && hasConflict && (
+        {!isLoadingProducts && hasConflict && productsWithCartData && (
           <Notification type="warning">{t('cartConflict')}</Notification>
         )}
-        {currentOrderItems?.line_items.map((item) => {
-          const { resolveCount } = checkProductAvailability(item, productsSpecs)
-          const isLoadingItem = loadingItems.includes(item.product_id)
-          return (
-            <CartCardWrapper
-              isLoadingItem={isLoadingItem}
-              key={item.id}
-              marginBottom="68px"
-              gap="16px"
-            >
-              <CartImgWrapper maxHeight="140px" maxWidth="140px">
-                <CartItemImg src={item.image?.src} alt={item.name} width="50" />
-              </CartImgWrapper>
-              <CardContent padding="8px 0" gap="1px">
-                <ProducTitle>
-                  <p>{item.name}</p>
-                  <TrashIcon
-                    padding="0"
-                    onClick={() =>
-                      handleChangeQuantity(item.product_id, 'value', item.variation_id, 0)
-                    }
-                  />
-                </ProducTitle>
-                <FlexBox justifyContent="space-between" margin="0 0 16px 0">
+        {productsWithCartData && !isLoadingProducts && cartItems.length == 0 && (
+          <Title fontSize="1.5em" as="h3" marginTop="46px" marginBottom="36px">
+            {t('nothingInTheCart')}
+          </Title>
+        )}
+        {productsWithCartData && !isLoadingProducts ? (
+          productsWithCartData?.map((item) => {
+            const resolveCount = item.stock_quantity
+
+            return (
+              <CartCardWrapper key={item.id} marginBottom="68px" gap="16px">
+                <CartImgWrapper maxHeight="140px" maxWidth="140px">
+                  <CartItemImg src={item.image?.src} alt={item.name} width="50" />
+                </CartImgWrapper>
+                <CardContent padding="8px 0" gap="1px">
+                  <ProducTitle>
+                    <p>{item.name}</p>
+                    <TrashIcon
+                      padding="0"
+                      onClick={() =>
+                        handleChangeQuantity(item.id, 'value', item.variation, 0)
+                      }
+                    />
+                  </ProducTitle>
+                  <FlexBox justifyContent="space-between" margin="0 0 16px 0">
+                    <ProductPrice>
+                      <p>
+                        {item.price && roundedPrice(item.price)}&nbsp;{symbol}
+                      </p>
+                    </ProductPrice>
+                    <CartQuantity
+                      resolveCount={resolveCount}
+                      item={adaptItemToCartQuantity(item)}
+                      handleChangeQuantity={handleChangeQuantity}
+                      inputWidth="50px"
+                      inputHeight="32px"
+                    />
+                  </FlexBox>
                   <ProductPrice>
-                    <p>
-                      {roundedPrice(item.price)}&nbsp;{symbol}
-                    </p>
+                    <span>{t('summary')}</span>
+                    <OnePrice fontSize="1.2em">
+                      {roundedPrice(item.totalPrice)}&nbsp;{symbol}
+                    </OnePrice>
                   </ProductPrice>
-                  <CartQuantity
-                    resolveCount={resolveCount}
-                    item={item}
-                    handleChangeQuantity={handleChangeQuantity}
-                    inputWidth="50px"
-                    inputHeight="32px"
-                  />
-                </FlexBox>
-                <ProductPrice>
-                  <span>{t('summary')}</span>
-                  <OnePrice fontSize="1.2em">
-                    {roundedPrice(item.price * item.quantity)}&nbsp;{symbol}
-                  </OnePrice>
-                </ProductPrice>
-              </CardContent>
-            </CartCardWrapper>
-          )
-        })}
-        {!currentOrderItems && (
+                </CardContent>
+              </CartCardWrapper>
+            )
+          })
+        ) : (
           <MenuSkeleton
-            elements={cartItems.length || 3}
+            elements={cartItems.length || 1}
             direction="column"
             width="100%"
             height="150px"
@@ -223,25 +205,26 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
             color={theme.background.skeletonSecondary}
           />
         )}
+
         <OrderBar
-          isLoadingOrder={isLoadingOrder}
-          cartSum={subtotal}
+          isLoadingOrder={isLoadingProducts}
+          cartSum={totalCartPrice}
           symbol={symbol}
           miniCart
         />
 
         <FlexBox flexDirection="column" gap="8px" margin="20px 0 0 0">
-          <StyledButton
-            height="58px"
-            disabled={hasConflict || loadingItems.length > 0 || isLoadingOrder}
-          >
-            {t('placeAnOrder')}
-          </StyledButton>
           <CartLink href="/cart">
             <StyledButton secondary height="58px">
               {t('goToCart')}
             </StyledButton>
           </CartLink>
+          <StyledButton
+            height="58px"
+            disabled={hasConflict || isLoadingProducts || productsWithCartData.length < 1}
+          >
+            {t('placeAnOrder')}
+          </StyledButton>
         </FlexBox>
       </MiniCartContainer>
     </PopupOverlay>

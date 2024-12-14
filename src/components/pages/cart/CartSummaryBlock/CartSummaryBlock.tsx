@@ -18,7 +18,12 @@ import { setCommentToOrder } from '@/store/slices/cartSlice'
 import OrderSummary from '../OrderSummary/OrderSummary'
 import { CartSummaryBlockProps } from '@/types/pages/cart'
 
-const CartSummaryBlock: FC<CartSummaryBlockProps> = ({ symbol, order, isLoading }) => {
+const CartSummaryBlock: FC<CartSummaryBlockProps> = ({
+  symbol,
+  order,
+  isLoading,
+  cartItems,
+}) => {
   const t = useTranslations('Cart')
   const dispatch = useAppDispatch()
   const [inputValue, setInputValue] = useState('')
@@ -65,7 +70,7 @@ const CartSummaryBlock: FC<CartSummaryBlockProps> = ({ symbol, order, isLoading 
           secondary={true}
           hoverColor={theme.colors.white}
           hoverBackgroundColor={theme.colors.primary}
-          disabled={isLoading}
+          disabled={isLoading || cartItems.length === 0}
         >
           {t('Continue')}
         </StyledButton>

@@ -59,7 +59,7 @@ const Header: React.FC = () => {
               />
             )}
             <IconButton href="/my-account" IconComponent={AccountIcon} />
-            <IconButton href="/my-account/wishlist" count={2} IconComponent={HeartIcon} />
+            <IconButton href="/my-account/wishlist" IconComponent={HeartIcon} />
             <IconButton
               onClick={() => dispatch(popupToggle('mini-cart'))}
               count={cartCount}

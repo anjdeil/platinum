@@ -5,6 +5,27 @@ import MinusIcon from '@/components/global/icons/MinusIcon/MinusIcon'
 import debounce from 'lodash/debounce'
 import { QuantityComponentProps } from '@/types/pages/cart'
 
+export const adaptItemToCartQuantity = (item: any): QuantityComponentProps['item'] => {
+  return {
+    id: item.id,
+    name: item.name,
+    parent_name: item.parent_name || '',
+    product_id: item.product_id || item.id,
+    variation_id: item.variation_id || item.variation || 0,
+    quantity: item.quantity,
+    tax_class: item.tax_class || '',
+    subtotal: item.subtotal || '',
+    subtotal_tax: item.subtotal_tax || '',
+    total: item.total || '',
+    total_tax: item.total_tax || '',
+    taxes: item.taxes || [],
+    meta_data: item.meta_data || [],
+    image: item.image ? { id: item.image.id, src: item.image.src } : undefined,
+    sku: item.sku || '',
+    price: item.price || 0,
+  }
+}
+
 const CartQuantity: React.FC<QuantityComponentProps> = ({
   item,
   handleChangeQuantity,

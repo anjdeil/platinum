@@ -62,7 +62,8 @@
     "paymentMethod": "Способ оплаты",
     "total": "Итого",
     "action": "Действие",
-    "availablePcs": "В наличии {quantity} шт"
+    "availablePcs": "В наличии {quantity} шт",
+    "nothingInTheWishlist": "В списке желаний ничего нет ..."
   },
   "TopBar": {
     "CallUs": "Позвоните нам"
@@ -149,7 +150,9 @@
     "welcomeToPlatinumShop": "Добро пожаловать в Platinum Shop",
     "theBest": "Лучший",
     "productForYou": "Продукт для вас",
-    "UserLoyalityStatus": "Вы имеете статус {validStatus} и получаете"
+    "UserLoyalityStatus": "Вы имеете статус {validStatus} и получаете",
+    "nothingInTheCart": "В корзине ничего нет...",
+    "goToShop": "Перейти в магазин"
   },
   "Contacts": {
     "contacts": "Контакты",

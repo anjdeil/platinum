@@ -64,7 +64,8 @@
     "total": "Total",
     "action": "Action",
 
-    "availablePcs": "Available {quantity} pcs"
+    "availablePcs": "Available {quantity} pcs",
+    "nothingInTheWishlist": "There's nothing in the wishlist..."
   },
   "TopBar": {
     "CallUs": "Call us"
@@ -110,6 +111,7 @@
     "psc": "psc",
     "placeAnOrder": "Place an order",
     "goToCart": "Go to cart",
+
     "productName": "Name",
     "price": "Price",
     "quantity": "Quantity",
@@ -150,7 +152,9 @@
     "theBest": "The best",
     "productForYou": "Product for you",
     "summary": "Summary",
-    "UserLoyalityStatus": "You have a {validStatus} status and get"
+    "UserLoyalityStatus": "You have a {validStatus} status and get",
+    "nothingInTheCart": "There's nothing in the cart...",
+    "goToShop": "Go to shop"
   },
   "Contacts": {
     "contacts": "Contacts",

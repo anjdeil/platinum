@@ -1,5 +1,4 @@
-import React, { FC, useCallback } from 'react'
-import { useAppDispatch } from '@/store'
+import React, { FC } from 'react'
 import {
   CartTableGrid,
   GridHeader,
@@ -32,10 +31,11 @@ import {
   ProducTitle,
 } from '../styles'
 import { CartTableProps } from '@/types/pages/cart'
+import { Title } from '@/styles/components'
 
 const CartTable: FC<CartTableProps> = ({
   symbol,
-  orderItems,
+  order,
   isLoadingOrder,
   isLoadingProductsMin,
   productsSpecs,
@@ -47,87 +47,97 @@ const CartTable: FC<CartTableProps> = ({
 }) => {
   const t = useTranslations('Cart')
   const { isMobile } = useResponsive()
+  console.log(order)
 
   return (
     <CartTableWrapper>
       {!(isLoadingOrder || isLoadingProductsMin) && hasConflict && (
         <Notification type="warning">{t('cartConflict')}</Notification>
       )}
-
+      {cartItems.length == 0 && (
+        <Title fontSize="1.5em" as="h3" marginTop="46px" marginBottom="36px">
+          {t('nothingInTheCart')}
+        </Title>
+      )}
       {!isMobile ? (
         <>
-          <CartTableGrid>
-            <GridHeader>
-              <GridRow>
-                <div />
-                <div />
-                <TextCellHeader>{t('productName')}</TextCellHeader>
-                <TextCellHeader>{t('price')}</TextCellHeader>
-                <TextCellHeader>{t('quantity')}</TextCellHeader>
-                <TextCellHeader>{t('value')}</TextCellHeader>
-              </GridRow>
-            </GridHeader>
-            {orderItems?.line_items.map((item) => {
-              const { resolveCount, isAvailable } = checkProductAvailability(
-                item,
-                productsSpecs
-              )
-              const isLoadingItem = loadingItems.includes(item.product_id)
-              return (
-                <RowWrapper key={item.id} isLoadingItem={isLoadingItem}>
-                  <GridRow>
-                    <DeleteCell>
-                      <div>
-                        <DeleteIcon
-                          onClick={() =>
+          {cartItems.length !== 0 && (
+            <CartTableGrid>
+              <GridHeader>
+                <GridRow>
+                  <div />
+                  <div />
+                  <TextCellHeader>{t('productName')}</TextCellHeader>
+                  <TextCellHeader>{t('price')}</TextCellHeader>
+                  <TextCellHeader>{t('quantity')}</TextCellHeader>
+                  <TextCellHeader>{t('value')}</TextCellHeader>
+                </GridRow>
+              </GridHeader>
+
+              {order?.line_items.map((item) => {
+                const { resolveCount, isAvailable } = checkProductAvailability(
+                  item,
+                  productsSpecs
+                )
+                const isLoadingItem = loadingItems.includes(item.product_id)
+
+                return (
+                  <RowWrapper key={item.id} isLoadingItem={isLoadingItem}>
+                    <GridRow>
+                      <DeleteCell>
+                        <div>
+                          <DeleteIcon
+                            onClick={() =>
+                              handleChangeQuantity(
+                                item.product_id,
+                                'value',
+                                item.variation_id,
+                                0
+                              )
+                            }
+                          />
+                        </div>
+                      </DeleteCell>
+                      <CartImgWrapper>
+                        <CartItemImg src={item.image?.src} alt={item.name} width="50" />
+                      </CartImgWrapper>
+                      <TextNameCell>{item.name}</TextNameCell>
+                      <TextCell>
+                        {roundedPrice(item.price)}&nbsp;{symbol}
+                      </TextCell>
+                      <TextCell>
+                        <CartQuantity
+                          resolveCount={resolveCount}
+                          item={item}
+                          handleChangeQuantity={handleChangeQuantity}
+                        />
+                      </TextCell>
+                      <TextCell>
+                        {roundedPrice(item.price * item.quantity)}&nbsp;{symbol}
+                      </TextCell>
+                    </GridRow>
+                    {isAvailable === false && (
+                      <GridRow padding="5px 16px 16px 16px">
+                        <CartProductWarning
+                          onUpdate={() =>
                             handleChangeQuantity(
                               item.product_id,
                               'value',
                               item.variation_id,
-                              0
+                              resolveCount
                             )
                           }
+                          resolveCount={resolveCount}
                         />
-                      </div>
-                    </DeleteCell>
-                    <CartImgWrapper>
-                      <CartItemImg src={item.image?.src} alt={item.name} width="50" />
-                    </CartImgWrapper>
-                    <TextNameCell>{item.name}</TextNameCell>
-                    <TextCell>
-                      {roundedPrice(item.price)}&nbsp;{symbol}
-                    </TextCell>
-                    <TextCell>
-                      <CartQuantity
-                        resolveCount={resolveCount}
-                        item={item}
-                        handleChangeQuantity={handleChangeQuantity}
-                      />
-                    </TextCell>
-                    <TextCell>
-                      {roundedPrice(item.price * item.quantity)}&nbsp;{symbol}
-                    </TextCell>
-                  </GridRow>
-                  {isAvailable === false && (
-                    <GridRow padding="5px 16px 16px 16px">
-                      <CartProductWarning
-                        onUpdate={() =>
-                          handleChangeQuantity(
-                            item.product_id,
-                            'value',
-                            item.variation_id,
-                            resolveCount
-                          )
-                        }
-                        resolveCount={resolveCount}
-                      />
-                    </GridRow>
-                  )}
-                </RowWrapper>
-              )
-            })}
-          </CartTableGrid>
-          {!orderItems && (
+                      </GridRow>
+                    )}
+                  </RowWrapper>
+                )
+              })}
+            </CartTableGrid>
+          )}
+
+          {!!(!order && cartItems.length !== 0) && (
             <MenuSkeleton
               elements={cartItems.length || 3}
               direction="column"
@@ -140,69 +150,70 @@ const CartTable: FC<CartTableProps> = ({
         </>
       ) : (
         <>
-          {orderItems?.line_items.map((item) => {
-            const { resolveCount, isAvailable } = checkProductAvailability(
-              item,
-              productsSpecs
-            )
-            const isLoadingItem = loadingItems.includes(item.product_id)
+          {cartItems.length !== 0 &&
+            order?.line_items.map((item) => {
+              const { resolveCount, isAvailable } = checkProductAvailability(
+                item,
+                productsSpecs
+              )
+              const isLoadingItem = loadingItems.includes(item.product_id)
 
-            return (
-              <CartCardAllWrapper key={item.id}>
-                <CartCardWrapper isLoadingItem={isLoadingItem}>
-                  <CartImgWrapper>
-                    <CartItemImg src={item.image?.src} alt={item.name} width="50" />
-                  </CartImgWrapper>
-                  <CardContent>
-                    <ProducTitle>
-                      <p>{item.name}</p>
-                      <CloseIcon
-                        padding="8px"
-                        onClick={() =>
-                          handleChangeQuantity(
-                            item.product_id,
-                            'value',
-                            item.variation_id,
-                            0
-                          )
-                        }
+              return (
+                <CartCardAllWrapper key={item.id}>
+                  <CartCardWrapper isLoadingItem={isLoadingItem}>
+                    <CartImgWrapper>
+                      <CartItemImg src={item.image?.src} alt={item.name} width="50" />
+                    </CartImgWrapper>
+                    <CardContent>
+                      <ProducTitle>
+                        <p>{item.name}</p>
+                        <CloseIcon
+                          padding="8px"
+                          onClick={() =>
+                            handleChangeQuantity(
+                              item.product_id,
+                              'value',
+                              item.variation_id,
+                              0
+                            )
+                          }
+                        />
+                      </ProducTitle>
+                      <ProductPrice>
+                        <p>
+                          {roundedPrice(item.price)}&nbsp;{symbol}
+                        </p>
+                      </ProductPrice>
+                      <CartQuantity
+                        resolveCount={resolveCount}
+                        item={item}
+                        handleChangeQuantity={handleChangeQuantity}
                       />
-                    </ProducTitle>
-                    <ProductPrice>
-                      <p>
-                        {roundedPrice(item.price)}&nbsp;{symbol}
-                      </p>
-                    </ProductPrice>
-                    <CartQuantity
+                      <ProductPrice>
+                        <span>{t('summary')}</span>
+                        <OnePrice>
+                          {roundedPrice(item.price * item.quantity)}&nbsp;{symbol}
+                        </OnePrice>
+                      </ProductPrice>
+                    </CardContent>
+                  </CartCardWrapper>
+                  {isAvailable === false && (
+                    <CartProductWarning
+                      onUpdate={() =>
+                        handleChangeQuantity(
+                          item.product_id,
+                          'value',
+                          item.variation_id,
+                          resolveCount
+                        )
+                      }
                       resolveCount={resolveCount}
-                      item={item}
-                      handleChangeQuantity={handleChangeQuantity}
                     />
-                    <ProductPrice>
-                      <span>{t('summary')}</span>
-                      <OnePrice>
-                        {roundedPrice(item.price * item.quantity)}&nbsp;{symbol}
-                      </OnePrice>
-                    </ProductPrice>
-                  </CardContent>
-                </CartCardWrapper>
-                {isAvailable === false && (
-                  <CartProductWarning
-                    onUpdate={() =>
-                      handleChangeQuantity(
-                        item.product_id,
-                        'value',
-                        item.variation_id,
-                        resolveCount
-                      )
-                    }
-                    resolveCount={resolveCount}
-                  />
-                )}
-              </CartCardAllWrapper>
-            )
-          })}
-          {!orderItems && (
+                  )}
+                </CartCardAllWrapper>
+              )
+            })}
+          {!!(!order && cartItems.length !== 0) && (
             <MenuSkeleton
               elements={cartItems.length}
               direction="column"

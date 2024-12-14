@@ -63,7 +63,8 @@
     "paymentMethod": "Zahlungsmethode",
     "total": "Gesamt",
     "action": "Aktion",
-    "availablePcs": "Verfügbar {quantity} Stk"
+    "availablePcs": "Verfügbar {quantity} Stk",
+    "nothingInTheWishlist": "Auf der Wunschliste steht nichts..."
   },
   "TopBar": {
     "CallUs": "Rufen Sie uns an"
@@ -143,7 +144,9 @@
     "Basket": "Warenkorb",
     "PersonalInformation": "Persönliche Informationen",
     "Confirmation": "Bestätigung",
-    "UserLoyalityStatus": "Sie haben einen {validStatus} status und erhalten"
+    "UserLoyalityStatus": "Sie haben einen {validStatus} status und erhalten",
+    "nothingInTheCart": "Es ist nichts im Warenkorb...",
+    "goToShop": "Zum Shop gehen"
   },
   "NotFoundPage": {
     "notFound": "Seite nicht gefunden",

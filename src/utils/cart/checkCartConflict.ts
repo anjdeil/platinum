@@ -25,7 +25,7 @@ export default function checkCartConflict(
       if (!productSpecs) return true
       const { stock_quantity: specsQuantity } = productSpecs
 
-      const actualQuantity = specsQuantity !== null ? specsQuantity : 0
+      const actualQuantity = specsQuantity ? specsQuantity : 0
       return actualQuantity < cartQuantity
     }
   )

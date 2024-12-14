@@ -63,7 +63,8 @@
     "paymentMethod": "Metoda płatności",
     "total": "Razem",
     "action": "Działanie",
-    "availablePcs": "Dostępne {quantity} szt"
+    "availablePcs": "Dostępne {quantity} szt",
+    "nothingInTheWishlist": "Na liście życzeń nie ma nic..."
   },
   "TopBar": {
     "CallUs": "Zadzwoń do nas"
@@ -150,7 +151,9 @@
 
     "theBest": "Najlepszy",
     "productForYou": "Produkt dla Ciebie",
-    "UserLoyalityStatus": "Masz status {validStatus} i otrzymujesz"
+    "UserLoyalityStatus": "Masz status {validStatus} i otrzymujesz",
+    "nothingInTheCart": "Nie ma nic w koszyku...",
+    "goToShop": "Przejdź do sklepu"
   },
   "Contacts": {
     "contacts": "Kontakty",
