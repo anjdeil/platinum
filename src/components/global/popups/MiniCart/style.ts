@@ -6,6 +6,8 @@ interface MiniCartContainerProps {
 }
 
 export const MiniCartContainer = styled.div<MiniCartContainerProps>`
+  display: flex;
+  flex-direction: column;
   width: 620px;
   height: 100vh;
   background-color: ${({ theme }) => theme.colors.white};

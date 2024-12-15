@@ -146,7 +146,8 @@
     "Confirmation": "Bestätigung",
     "UserLoyalityStatus": "Sie haben einen {validStatus} status und erhalten",
     "nothingInTheCart": "Es ist nichts im Warenkorb...",
-    "goToShop": "Zum Shop gehen"
+    "goToShop": "Zum Shop gehen",
+    "nothingInTheCartText": "Sehen Sie sich unsere neuen Produkte an oder nutzen Sie die Suche, wenn Sie etwas Bestimmtes suchen"
   },
   "NotFoundPage": {
     "notFound": "Seite nicht gefunden",

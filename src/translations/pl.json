@@ -153,7 +153,8 @@
     "productForYou": "Produkt dla Ciebie",
     "UserLoyalityStatus": "Masz status {validStatus} i otrzymujesz",
     "nothingInTheCart": "Nie ma nic w koszyku...",
-    "goToShop": "Przejdź do sklepu"
+    "goToShop": "Przejdź do sklepu",
+    "nothingInTheCartText": "Sprawdź nasze nowe produkty lub skorzystaj z wyszukiwarki, jeśli szukasz czegoś konkretnego"
   },
   "Contacts": {
     "contacts": "Kontakty",

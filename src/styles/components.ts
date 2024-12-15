@@ -27,6 +27,7 @@ interface FlexBoxProps {
   width?: string
   height?: string
   bgColor?: string
+  flex?: string
 }
 
 interface TitleProps {
@@ -251,6 +252,7 @@ export const FlexBox = styled.div<FlexBoxProps>`
   justify-content: ${({ justifyContent = 'flex-start' }) => justifyContent};
   align-items: ${({ alignItems = 'stretch' }) => alignItems};
   flex-wrap: ${({ flexWrap = 'nowrap' }) => flexWrap};
+  flex: ${({ flex }) => flex};
   gap: ${({ gap = '0' }) => gap};
   padding: ${({ padding = '0' }) => padding};
   margin: ${({ margin = '0' }) => margin};

@@ -154,7 +154,8 @@
     "summary": "Summary",
     "UserLoyalityStatus": "You have a {validStatus} status and get",
     "nothingInTheCart": "There's nothing in the cart...",
-    "goToShop": "Go to shop"
+    "goToShop": "Go to shop",
+    "nothingInTheCartText": "Check out our new products or use the search, if you're looking for something specific"
   },
   "Contacts": {
     "contacts": "Contacts",

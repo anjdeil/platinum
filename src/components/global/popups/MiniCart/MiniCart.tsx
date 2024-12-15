@@ -148,9 +148,12 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
           <Notification type="warning">{t('cartConflict')}</Notification>
         )}
         {productsWithCartData && !isLoadingProducts && cartItems.length == 0 && (
-          <Title fontSize="1.5em" as="h3" marginTop="46px" marginBottom="36px">
-            {t('nothingInTheCart')}
-          </Title>
+          <FlexBox flexDirection="column" margin="0 0 46px 0">
+            <Title fontSize="1.5em" as="h3" marginTop="46px" marginBottom="16px">
+              {t('nothingInTheCart')}
+            </Title>
+            <p>{t('nothingInTheCartText')}</p>
+          </FlexBox>
         )}
         {productsWithCartData && !isLoadingProducts ? (
           productsWithCartData?.map((item) => {

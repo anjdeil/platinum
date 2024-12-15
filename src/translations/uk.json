@@ -152,7 +152,8 @@
     "productForYou": "Продукт для вас",
     "UserLoyalityStatus": "Ви маєте статус {validStatus} i отримуєте",
     "nothingInTheCart": "У кошику нічого немає...",
-    "goToShop": "Перейти до магазину"
+    "goToShop": "Перейти до магазину",
+    "nothingInTheCartText": "Перегляньте наші нові продукти або скористайтеся пошуком, якщо ви шукаєте щось конкретне"
   },
   "Contacts": {
     "contacts": "Контакти",
