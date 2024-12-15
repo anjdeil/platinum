@@ -14,6 +14,7 @@ import { useTranslations } from 'next-intl'
 import { WishlistItem } from '@/types/store/rtk-queries/wpApi'
 import { StyledButton, Title } from '@/styles/components'
 import { CartLink } from '@/components/global/popups/MiniCart/style'
+import Notification from '@/components/global/Notification/Notification'
 
 function Wishlist() {
   const [cookie] = useCookies(['userToken'])
@@ -23,7 +24,6 @@ function Wishlist() {
   const tMyAccount = useTranslations('MyAccount')
   const tCart = useTranslations('Cart')
 
-  // query
   const [
     fetchUserData,
     { data: userData, isLoading: isUserDataLoading, isFetching: isUserFetching },
@@ -102,16 +102,9 @@ function Wishlist() {
 
   return (
     <AccountLayout title={tMyAccount('wishlist')}>
-      {!!(
-        !isLoading &&
-        isWishlistUpdated &&
-        wishListProducts &&
-        wishListProducts.length === 0
-      ) && (
+      {!!(!isLoading && wishListProducts && wishListProducts.length === 0) && (
         <>
-          <Title fontSize="1.5em" as="h3" marginBottom="36px" textalign="left">
-            {tMyAccount('nothingInTheWishlist')}
-          </Title>
+          <Notification type="info">{tMyAccount('nothingInTheWishlist')}</Notification>
           <CartLink href="/">
             <StyledButton height="58px" width="310px" minWidthMobile="100%">
               {tCart('goToShop')}
