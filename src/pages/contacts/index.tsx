@@ -20,6 +20,7 @@ import { useTranslations } from 'next-intl'
 import { useResponsive } from '@/hooks/useResponsive'
 import { Skeleton, useMediaQuery } from '@mui/material';
 import { NewsletterSection } from '@/components/sections/NewsletterSection';
+import { IsMobileScreen } from '@/components/global/isMobileScreenWrapper';
 
 const ContactsPage = () => {
   const t = useTranslations('Contacts');
@@ -27,7 +28,6 @@ const ContactsPage = () => {
   const { isTablet } = useResponsive();
   const themeOptions = useAppSelector((state) => state.themeOptions);
   const ContactItems = themeOptions.data.item.contacts;
-  const isMobile = useMediaQuery('(max-width:768px)');
 
   const breadcrumbsLinks = [
     { name: tBreadcrumbs('homePage'), url: '/' },
@@ -135,13 +135,9 @@ const ContactsPage = () => {
           </ContactsSocials>
         </ContactsPageWrapper>
       </Container>
-      {isMobile ? (
+      <IsMobileScreen>
         <NewsletterSection />
-      ) : (
-        <Container>
-          <NewsletterSection />
-        </Container>
-      )}
+      </IsMobileScreen>
     </>
   );
 };

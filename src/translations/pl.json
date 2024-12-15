@@ -170,7 +170,8 @@
     "minChar": "Musi mieć co najmniej {count} znaków."
   },
   "Breadcrumbs": {
-    "homePage": "Strona Główna"
+    "homePage": "Strona Główna",
+    "benefitsPage": "Lojalnościowy Program"
   },
   "NotFoundPage": {
     "notFound": "Strona nie znaleziona",
@@ -195,5 +196,10 @@
     "failedSubscribe": "Nie udało się wysłać e-maila",
     "successSubscribe": "Zapisano!",
     "userAlreadySubscribed": "Użytkownik jest już zapisany"
+  },
+  "Delivery": {
+    "costsTitle": "Koszty dostawy nie są uwzględnione w kalkulacji zakupu.",
+    "freeCostsPoland": "Darmowa dostawa w Polsce przy zamówieniach powyżej 200 PLN.",
+    "freeCostsEurope": "Darmowa dostawa do Niemiec, Austrii, Słowacji, Słowenii, Belgii, Węgier, Litwy, Czech, Danii, Rumunii i Estonii dla zamówień powyżej 150 EUR."
   }
 }

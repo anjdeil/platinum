@@ -2,23 +2,21 @@ import { FC } from 'react';
 import { BenefitsInfoWrapper, BenefitsInfoTitle } from './styles';
 import { BenefitsList } from '../BenefitsList';
 import { CustomSvgMarker } from '../CustomSvgMarker';
+import { useTranslations } from 'next-intl';
 
 export const BenefitsInfo: FC = () => {
+  const t = useTranslations('Delivery');
   return (
     <BenefitsInfoWrapper>
-      <BenefitsInfoTitle>
-        Delivery costs are not included in the purchase calculation.
-      </BenefitsInfoTitle>
+      <BenefitsInfoTitle>{t('costsTitle')}</BenefitsInfoTitle>
       <BenefitsList>
         <li>
           <CustomSvgMarker />
-          Free delivery within Poland for orders over 200 PLN.
+          {t('freeCostsPoland')}
         </li>
         <li>
           <CustomSvgMarker />
-          Free delivery to Germany, Austria, Slovakia, Slovenia, Belgium,
-          Hungary, Lithuania, Czech Republic, Denmark, Romania, and Estonia for
-          orders over 150 EUR.
+          {t('freeCostsEurope')}
         </li>
       </BenefitsList>
     </BenefitsInfoWrapper>
