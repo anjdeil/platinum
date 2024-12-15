@@ -183,10 +183,15 @@
     "or": "lub",
     "max": "maks.",
     "sending": "Wysyłanie...",
-    "sendButton": "Wyślij"
+    "sendButton": "Wyślij",
+    "InvalidPhoneNumber": "Nieprawidłowy numer telefonu",
+    "fileTooLarge": "zbyt duży plik"
   },
   "Breadcrumbs": {
     "homePage": "Strona Główna"
+  },
+  "Forms": {
+    "applicationForm": "Formularz zgłoszeniowy"
   },
   "NotFoundPage": {
     "notFound": "Strona nie znaleziona",

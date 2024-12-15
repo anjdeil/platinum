@@ -23,6 +23,7 @@ import {
   AmbassadorFormValidationSchema,
 } from '@/types/components/global/forms/ambassadorForm/ambassadorForm'
 import { useSendAmbassadorFormMutation } from '@/store/rtk-queries/contactFrom7/contactFromApi7'
+import UploadIcon from '../../icons/UploadIcon/UploadIcon'
 
 export const AmbassadorForm: FC = () => {
   // auth route
@@ -35,7 +36,10 @@ export const AmbassadorForm: FC = () => {
   const [hasChanges, setHasChanges] = useState<boolean>(false)
 
   const [file, setFile] = useState<File | null>(null)
+  const [fileErr, setFileErr] = useState<string>()
   const [preview, setPreview] = useState<string | null>(null)
+  const [isDragging, setIsDragging] = useState<boolean>(false)
+
   // hard fetch user
   const {
     data: customer,
@@ -112,13 +116,41 @@ export const AmbassadorForm: FC = () => {
     return () => subscription.unsubscribe()
   }, [watch])
 
+  const MAX_FILE_SIZE = 3 * 1024 * 1024
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const uploadedFile = e.target.files?.[0] || null
-    setFile(uploadedFile)
+    validateAndSetFile(uploadedFile)
+  }
 
+  const validateAndSetFile = (uploadedFile: File | null) => {
     if (uploadedFile) {
+      if (uploadedFile.size > MAX_FILE_SIZE) {
+        setFileErr(tValidation('fileTooLarge'))
+        return
+      }
+      setFile(uploadedFile)
       setPreview(URL.createObjectURL(uploadedFile))
+      setFileErr('')
     }
+  }
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    setIsDragging(true)
+  }
+
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    setIsDragging(false)
+  }
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    setIsDragging(false)
+
+    const uploadedFile = e.dataTransfer.files?.[0] || null
+    validateAndSetFile(uploadedFile)
   }
 
   return (
@@ -134,7 +166,9 @@ export const AmbassadorForm: FC = () => {
           {tForms('applicationForm')}
         </Title>
         {isCustomerLoading && !customer ? (
-          <CircularProgress />
+          <FlexBox justifyContent="center" alignItems="center" margin="50px 0 0 0 ">
+            <CircularProgress />
+          </FlexBox>
         ) : (
           <>
             <FormWrapper>
@@ -210,14 +244,19 @@ export const AmbassadorForm: FC = () => {
                 setValue={setValue}
               />
 
-              <FileUploadWrapper>
-                <FileUploadLabel htmlFor="file-upload">
+              <FileUploadWrapper
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+              >
+                <FileUploadLabel htmlFor="file-upload" isDragging={isDragging}>
                   {preview ? (
                     <FileUploadPreview>
                       <img src={preview} alt={tValidation('preview')} />
                     </FileUploadPreview>
                   ) : (
                     <>
+                      <UploadIcon />
                       <p>
                         <span>{tValidation('clickToUpload')} </span>&nbsp;
                         {tValidation('orDragAndDrop')} SVG, PNG, JPG {tValidation('or')}{' '}
@@ -234,7 +273,7 @@ export const AmbassadorForm: FC = () => {
                   style={{ display: 'none' }}
                 />
               </FileUploadWrapper>
-
+              <CustomError> {fileErr}</CustomError>
               <FormWrapperBottom>
                 <StyledButton type="submit" disabled={isSubmitting || !hasChanges}>
                   {isSubmitting ? tValidation('sending') : tValidation('sendButton')}

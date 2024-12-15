@@ -183,10 +183,15 @@
     "or": "або",
     "max": "макс.",
     "sending": "Відправка...",
-    "sendButton": "Надіслати"
+    "sendButton": "Надіслати",
+    "InvalidPhoneNumber": "Неправильний номер телефону",
+    "fileTooLarge": "файл занадто великий"
   },
   "Breadcrumbs": {
     "homePage": "Головна"
+  },
+  "Forms": {
+    "applicationForm": "форма заявки"
   },
   "NotFoundPage": {
     "notFound": "Сторінка не знайдена",

@@ -183,10 +183,15 @@
     "or": "или",
     "max": "макс.",
     "sending": "Отправка...",
-    "sendButton": "Отправить"
+    "sendButton": "Отправить",
+    "InvalidPhoneNumber": "Неправильный номер телефона",
+    "fileTooLarge": "слишком большой файл"
   },
   "Breadcrumbs": {
     "homePage": "Главная"
+  },
+  "Forms": {
+    "applicationForm": "Форма заявки"
   },
   "NotFoundPage": {
     "notFound": "Страница не найдена",

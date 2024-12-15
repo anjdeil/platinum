@@ -37,7 +37,7 @@ export const OptionButton = styled.button<{ isSelected: boolean }>`
   }
 `
 
-export const FileUploadLabel = styled.label`
+export const FileUploadLabel = styled.label<{ isDragging: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -47,12 +47,16 @@ export const FileUploadLabel = styled.label`
 
   border-radius: 10px;
   cursor: pointer;
-  background-color: ${({ theme }) => theme.background.formElements};
-  height: 120px;
+  background-color: ${({ theme, isDragging }) =>
+    isDragging ? theme.colors.secondary : theme.background.formElements};
+  color: ${({ theme, isDragging }) => isDragging && theme.colors.white};
+  height: 150px;
+  transition: background-color 0.3s;
   & p {
     max-width: 400px;
     & span {
-      color: ${({ theme }) => theme.colors.active};
+      color: ${({ theme, isDragging }) =>
+        isDragging ? theme.colors.white : theme.colors.active};
     }
   }
 `

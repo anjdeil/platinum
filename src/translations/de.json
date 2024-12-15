@@ -176,10 +176,15 @@
     "or": "oder",
     "max": "max",
     "sending": "Senden...",
-    "sendButton": "Senden"
+    "sendButton": "Senden",
+    "InvalidPhoneNumber": "Ungültige Rufnummer",
+    "fileTooLarge": "Datei zu groß"
   },
   "Breadcrumbs": {
     "homePage": "Startseite"
+  },
+  "Forms": {
+    "applicationForm": "Antragsformular"
   },
   "NotFoundPage": {
     "notFound": "Seite nicht gefunden",

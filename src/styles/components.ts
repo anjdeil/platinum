@@ -116,13 +116,24 @@ export const AccountInfoWrapper = styled.div<AccountInfoWrapperProps>`
 export const StyledButton = styled.button<StyledButtonProps>`
   box-sizing: border-box;
   width: ${({ width = '100%' }) => width};
+  height: ${({ height = '100%' }) => height};
   min-width: ${({ minWidthDesktop = 'auto' }) => minWidthDesktop};
   padding-inline: 16px;
   border-radius: 10px;
+
   color: ${({ theme, secondary = false }) =>
     secondary ? theme.colors.black : theme.colors.white};
   background-color: ${({ notify = false, secondary = false, theme }) =>
     notify ? theme.colors.secondary : secondary ? 'transparent' : theme.colors.primary};
+
+  ${({ disabled, theme }) =>
+    disabled &&
+    `
+      background-color: ${theme.colors.secondary};
+      cursor: not-allowed;
+      pointer-events: none;
+    `}
+
   padding-block: 16px;
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
   text-transform: none;
@@ -134,9 +145,17 @@ export const StyledButton = styled.button<StyledButtonProps>`
   align-items: center;
 
   &:hover {
-    color: ${({ theme, hoverColor = theme.colors.white }) => hoverColor};
-    background-color: ${({ theme, hoverBackgroundColor = theme.background.hover }) =>
-      hoverBackgroundColor};
+    ${({
+      disabled,
+      theme,
+      hoverColor = theme.colors.white,
+      hoverBackgroundColor = theme.background.hover,
+    }) =>
+      !disabled &&
+      `
+        color: ${hoverColor};
+        background-color: ${hoverBackgroundColor};
+      `}
   }
 
   @media ${({ theme }) => theme.media.large} {

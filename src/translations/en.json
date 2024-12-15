@@ -181,7 +181,9 @@
     "or": "or",
     "max": "max",
     "sending": "Sending...",
-    "sendButton": "Send"
+    "sendButton": "Send",
+    "InvalidPhoneNumber": "Invalid phone number",
+    "fileTooLarge": "file too large"
   },
   "Forms": {
     "applicationForm": "application form"
