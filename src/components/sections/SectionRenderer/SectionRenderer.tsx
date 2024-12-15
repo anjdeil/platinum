@@ -17,6 +17,7 @@ import { ContactsSection } from '../ContactsSection';
 import { SectionsType } from '@/types/components/sections';
 import { normalizeSlides } from '@/utils/normalizeSlides';
 import { useMediaQuery } from '@mui/material';
+import { IsMobileScreen } from '@/components/global/isMobileScreenWrapper';
 
 interface SectionRendererProps {
   sections: SectionsType[];
@@ -76,12 +77,10 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
               </Container>
             );
           case 'newsletter':
-            return isMobile ? (
-              <NewsletterSection key={index} />
-            ) : (
-              <Container key={index}>
-                <NewsletterSection key={index} />
-              </Container>
+            return (
+              <IsMobileScreen key={index}>
+                <NewsletterSection />
+              </IsMobileScreen>
             );
           case 'about_platinum':
             return <AboutPlatinumSection key={index} />;
