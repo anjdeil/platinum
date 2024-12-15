@@ -6,6 +6,7 @@ import {
 import styled from '@emotion/styled'
 
 export const HeaderWrapper = styled.div<HeaderWrapperProps>`
+  z-index: 10;
   height: 78px;
   display: grid;
   align-items: center;
