@@ -6,6 +6,8 @@ import { Title } from '@/styles/components';
 import { useTranslations } from 'next-intl';
 import Breadcrumbs from '@/components/global/Breadcrumbs/Breadcrumbs';
 import { SectionContainer } from '@/components/sections/styles';
+import { IsMobileScreen } from '@/components/global/isMobileScreenWrapper';
+import { NewsletterSection } from '@/components/sections/NewsletterSection';
 
 export default function benefits() {
   const t = useTranslations('Breadcrumbs');
@@ -42,6 +44,9 @@ export default function benefits() {
           <BenefitsInfo />
         </SectionContainer>
       </Container>
+      <IsMobileScreen>
+        <NewsletterSection />
+      </IsMobileScreen>
     </>
   );
 }
