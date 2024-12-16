@@ -6,6 +6,7 @@ import { SectionsType } from '@/types/components/sections';
 import { PageDataFullType, PageDataItemType } from '@/types/services';
 import { validateWpPage } from '@/utils/zodValidators/validateWpPage';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
+import { useTranslations } from "next-intl";
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
@@ -23,7 +24,7 @@ export const getServerSideProps: GetServerSideProps = async (
     }
 
     const isValidSectionsData = validateWpPage(responseData);
-    if (!isValidSectionsData) throw new Error('Invalid SectionsData data');
+    if (!isValidSectionsData) throw new Error("Invalid SectionsData data");
 
     if (responseData && responseData.data) {
       const pageResponseData = responseData.data as PageDataFullType;
@@ -43,10 +44,10 @@ export const getServerSideProps: GetServerSideProps = async (
 
     return { notFound: true };
   } catch (error) {
-    console.error('Server Error:', error);
+    console.error("Server Error:", error);
     return {
       redirect: {
-        destination: '/500',
+        destination: "/500",
         permanent: false,
       },
     };
@@ -59,14 +60,15 @@ interface PageProps {
 }
 
 const SlugPage = ({ page, sections }: PageProps) => {
+  const t = useTranslations("Breadcrumbs");
   const breadcrumbsLinks = [
     {
-      name: 'Home Page',
-      url: '/',
+      name: t("homePage"),
+      url: "/",
     },
     {
       name: page?.title,
-      url: '',
+      url: "",
     },
   ];
 
@@ -74,7 +76,7 @@ const SlugPage = ({ page, sections }: PageProps) => {
     <>
       <StyledHeaderWrapper>
         <Breadcrumbs links={breadcrumbsLinks} />
-        <Title as={'h1'} uppercase>
+        <Title as={"h1"} uppercase>
           {page?.title}
         </Title>
       </StyledHeaderWrapper>

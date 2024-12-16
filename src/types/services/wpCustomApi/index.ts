@@ -7,8 +7,7 @@ import { AttributeSchema } from './attributes';
 import { menuItemsSchema } from './menus';
 import { ThemeOptionsItemSchema } from './themeOptions';
 import { SectionsTypeSchema } from '@/types/components/sections';
-import { BlogItemSchema } from '@/types/pages/blog';
-import { Page } from 'react-pdf';
+import { BlogItemSchema, BlogItemUnionSchema } from '@/types/pages/blog';
 
 const LangParamSchema = z.enum(['en', 'pl', 'de', 'ru', 'uk']).optional();
 
@@ -134,8 +133,43 @@ export const CustomDataProductsMinimizedResponseSchema = z.object({
 export const CustomDataPostsSchema = z.object({
   success: z.boolean(),
   data: CustomDataSchema.extend({
+    statistic: z
+      .object({
+        posts_count: z.number(),
+      })
+      .optional(),
     items: z.array(BlogItemSchema),
   }),
+});
+
+export const DataPostsSchema = z.object({
+  success: z.boolean(),
+  data: z.object({
+    statistic: z.object({
+      posts_count: z.number(),
+    }),
+    items: z.array(BlogItemSchema),
+  }),
+});
+
+export const CustomDataPostsUnionSchema = z.object({
+  data: z.object({
+    items: z.array(BlogItemUnionSchema),
+    statistic: z
+      .object({
+        posts_count: z.number().optional(),
+      })
+      .optional(),
+  }),
+});
+
+export const PostsDataSchema = z.object({
+  statistic: z
+    .object({
+      posts_count: z.number(),
+    })
+    .optional(),
+  items: z.array(BlogItemSchema),
 });
 
 export type QueryParamsType = z.infer<typeof QueryParamsSchema>;
@@ -164,3 +198,5 @@ export type CustomDataProductsMinimizedResponseType = z.infer<
 >;
 
 export type CustomDataPostsType = z.infer<typeof CustomDataPostsSchema>;
+export type PostsDataType = z.infer<typeof PostsDataSchema>;
+export type DataPostsType = z.infer<typeof DataPostsSchema>;

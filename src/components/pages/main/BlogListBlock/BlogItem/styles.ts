@@ -12,6 +12,15 @@ export const BlogItemContainer = styled.div`
     row-gap: 16px;
 `;
 
+export const StyledWrapperLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
 export const ImageBlock = styled.div`
     position: relative;
     width: 100%;

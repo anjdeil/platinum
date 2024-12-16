@@ -6,32 +6,60 @@ import {
 import styled from "@emotion/styled";
 
 export const HeaderWrapper = styled.div<HeaderWrapperProps>`
+  z-index: 10;
   height: 78px;
   display: grid;
   align-items: center;
   background: ${({
-    theme,
-    backgroundColor = theme.background.primaryGradient,
-  }) => backgroundColor};
+  theme,
+  backgroundColor = theme.background.primaryGradient,
+}) => backgroundColor};
   position: relative;
-  z-index: 101;
 
   @media ${({ theme }) => theme.media.large} {
     padding-block: 16px;
   }
 `;
 
-export const HeaderContainer = styled(Container)<HeaderContainerProps>`
+export const MenuWrapper = styled.div`
+  display: flex;
+  gap: 75px;
+
+  @media ${({ theme }) => theme.media.large} {
+      gap: 48px;
+  }
+`;
+
+export const CategoriesButton = styled.button`
+  display: inline-block;
+  font: ${({ theme }) => theme.fonts.bodyMiddleReg}; 
+  transition: all 0.2s ease;
+  color: ${({ theme, color = theme.colors.white }) => color};
+  text-transform: uppercase;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+
+  &.active {
+      font-weight: 600;
+  }
+
+  &:hover {
+      opacity: 0.7;
+  }
+
+  @media ${({ theme }) => theme.media.large} {
+      font-size: 16px;
+  }
+`;
+
+export const HeaderContainer = styled(Container) <HeaderContainerProps>`
   display: flex;
   justify-content: space-between;
   gap: ${({ gap = "30px" }) => gap};
   align-items: center;
   overflow: visible;
   width: 93%;
-`;
-
-export const HeaderNav = styled.div`
-  flex-grow: 1;
 `;
 
 export const HeaderContent = styled.div`

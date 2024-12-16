@@ -41,10 +41,10 @@ export const FIlterWrapper = styled.div`
     }
 `;
 
-export const PagesNavifationWrapper = styled.div`
-    @media ${({ theme }) => theme.media.medium} {
-        display: none;
-    }
+export const PagesNavigationWrapper = styled.div`
+  @media ${({ theme }) => theme.media.medium} {
+    display: none;
+  }
 `;
 
 export const CountProduct = styled.span`

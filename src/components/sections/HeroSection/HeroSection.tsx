@@ -1,6 +1,9 @@
 import { HeroSectionData } from '@/types/components/sections/index';
+import { SectionContainer } from "../styles";
+import { ContentWrapper, StyledImage, StyledWrapper } from "./styles";
+import { RichTextSection } from "../RichTextSection";
 
-type HeroSectionProps = Omit<HeroSectionData, '_type'>;
+type HeroSectionProps = Omit<HeroSectionData, "_type">;
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
   is_reverse,
@@ -10,20 +13,20 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   text,
 }) => {
   return (
-    <div>
-      <h2>{title}</h2>
-
-      <p>{text}</p>
-      <img src={image} alt={title} />
-    </div>
+    <SectionContainer>
+      <StyledWrapper>
+        <StyledImage
+          src={image || "/assets/images/about-section-1.5.png"}
+          alt={title}
+          width={524}
+          height={524}
+          priority
+          objectfitprop={object_fit}
+        />
+        <ContentWrapper>
+          <RichTextSection title={title} is_reverse={is_reverse} text={text} />
+        </ContentWrapper>
+      </StyledWrapper>
+    </SectionContainer>
   );
 };
-
-// export const HeroSectionSchema = z.object({
-//   _type: z.literal('hero'),
-//   is_reverse: z.boolean(),
-//   image: z.string().url(),
-//   object_fit: z.enum(['cover', 'contain']),
-//   title: z.string(),
-//   text: z.string(),
-// });

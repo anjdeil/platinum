@@ -1,7 +1,7 @@
 import { CustomSelectProps } from "@/types/components/global/selects";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { CustomSelectStyled, MenuItem, StyledCollapse } from "./styles";
 import ArrowIcon from "../../icons/ArrowIcon/ArrowIcon";
+import { CustomSelectStyled, MenuItem, StyledCollapse } from "./styles";
 
 export default function CustomSelect({
   options,
@@ -63,7 +63,7 @@ export default function CustomSelect({
       <StyledCollapse in={isOpen} timeout="auto">
         {options.map(option => (
           <MenuItem
-            key={option.code}
+            key={option.name}
             onClick={() => onChange({ target: { value: option.code } } as React.ChangeEvent<HTMLSelectElement>)}
             mobFontSize={mobFontSize}
             background={background}
@@ -73,7 +73,7 @@ export default function CustomSelect({
             allignItem={allignItem}
             paddingOptions={paddingOptions}
           >
-            {option.symbol}
+            {option.name}
           </MenuItem>
         ))}
       </StyledCollapse>

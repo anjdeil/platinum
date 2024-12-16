@@ -1,12 +1,10 @@
 import { SectionRenderer } from '@/components/sections/SectionRenderer';
-import { useResponsive } from '@/hooks/useResponsive';
+import { customRestApi } from '@/services/wpCustomApi';
 import { useAppDispatch, useAppSelector } from '@/store';
-import { useGetCategoriesQuery } from '@/store/rtk-queries/wpCustomApi';
 import { popupToggle } from '@/store/slices/PopupSlice';
 import { Container, Title } from '@/styles/components';
 import { SectionsType } from '@/types/components/sections';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
-import { customRestApi } from '@/services/wpCustomApi';
 import { validateWpPage } from '@/utils/zodValidators/validateWpPage';
 import { PageDataFullType, PageDataItemType } from '@/types/services';
 
@@ -27,7 +25,7 @@ export const getServerSideProps: GetServerSideProps = async (
     if (responseData) {
       const isValidSectionsData = validateWpPage(responseData);
       if (!isValidSectionsData) {
-        console.error("Invalid data format:");
+        console.error('Invalid data format:');
       }
     }
 
@@ -83,27 +81,27 @@ const Home: React.FC<HomeProps> = ({ sections }) => {
 
   const dispatch = useAppDispatch();
 
-  const { data: categoriesData } = useGetCategoriesQuery({});
-  const { isMobile } = useResponsive();
+  // const { data: categoriesData } = useGetCategoriesQuery({});
+  // const { isMobile } = useResponsive();
 
-  const categories = categoriesData?.data
-    ? categoriesData?.data?.items.filter((category) => category.parent_id === 0)
-    : [];
+  // const categories = categoriesData?.data
+  //   ? categoriesData?.data?.items.filter((category) => category.parent_id === 0)
+  //   : [];
 
-  const visibleCategoriesCount = isMobile ? 2 : 6;
-  const displayedCategories = categories.slice(0, visibleCategoriesCount);
+  // const visibleCategoriesCount = isMobile ? 2 : 6;
+  // const displayedCategories = categories.slice(0, visibleCategoriesCount);
 
   return (
-    <div className='homepage'>
+    <div className="homepage">
       <SectionRenderer sections={sections} />
       <main>
         {/* <TestSelect /> */}
         <Container>
-          <Title as='h2' fontSize={'20px'}>
-            Symbol of {currency.code} currency isQQ {currency.symbol}
+          <Title as="h2" fontSize={'20px'}>
+            Symbol of {currency.name} currency isQQ {currency.code}
           </Title>
-          <Title as='h2' fontSize={'20px'}>
-            Symbol of {language.code} language isQQ {language.symbol}
+          <Title as="h2" fontSize={'20px'}>
+            Symbol of {language.name} language isQQ {language.code}
           </Title>
           <button onClick={() => dispatch(popupToggle('categories-menu'))}>
             Categories
