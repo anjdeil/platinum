@@ -1,4 +1,3 @@
-import React from 'react';
 import { Container } from '@/styles/components';
 import { SliderSection } from '../SliderSection';
 import { ProductListSection } from '../ProductListSection';
@@ -13,10 +12,8 @@ import { HeroSection } from '../HeroSection';
 import { SplitSection } from '../SplitSection';
 import { LoyaltySection } from '../LoyaltySection';
 import { ContactsSection } from '../ContactsSection';
-
 import { SectionsType } from '@/types/components/sections';
 import { normalizeSlides } from '@/utils/normalizeSlides';
-import { useMediaQuery } from '@mui/material';
 import { IsMobileScreen } from '@/components/global/isMobileScreenWrapper';
 
 interface SectionRendererProps {
@@ -26,7 +23,6 @@ interface SectionRendererProps {
 export const SectionRenderer: React.FC<SectionRendererProps> = ({
   sections,
 }) => {
-  const isMobile = useMediaQuery('(max-width:768px)');
   return (
     <>
       {sections.map((section, index) => {

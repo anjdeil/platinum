@@ -7,7 +7,19 @@ import router from "next/router";
 import { FC } from "react";
 import { FilterPanel } from "../filtration/FilterPanel";
 import { ProductCardList } from "../ProductCardsList";
-import { CatalogContainer, CatalogFilterBlock, CatalogLayout, CatalogListBlock, CatalogRightWrapper, CatalogTitleWrapper, CatalogTopWrapper, CountProduct, FilterSortWrapper, FIlterWrapper, PagesNavifationWrapper } from "./styles";
+import {
+  CatalogContainer,
+  CatalogFilterBlock,
+  CatalogLayout,
+  CatalogListBlock,
+  CatalogRightWrapper,
+  CatalogTitleWrapper,
+  CatalogTopWrapper,
+  CountProduct,
+  FilterSortWrapper,
+  FIlterWrapper,
+  PagesNavigationWrapper,
+} from './styles';
 import SideList from "@/components/global/SideList/SideList";
 import transformCategoriesIntoLinks from "@/services/transformers/transformCategoriesIntoLinks";
 import { useTranslations } from "next-intl";
@@ -102,7 +114,7 @@ export const Archive: FC<ArchivePropsType> = (props) => {
                         <CountProduct>
                             {`${statistic.products_count} products`}
                         </CountProduct>
-                        <PagesNavifationWrapper>
+                        <PagesNavigationWrapper>
                             <PagesNavigation
                                 page={+page}
                                 count={pagesCount}
@@ -112,7 +124,7 @@ export const Archive: FC<ArchivePropsType> = (props) => {
                                 hideNextButton
                                 onChange={(_, newPage) => { switchPage(newPage, pagesCount); }}
                             />
-                        </PagesNavifationWrapper>
+                        </PagesNavigationWrapper>
                     </CatalogTopWrapper>
                     <CatalogListBlock>
                         {products.length && <ProductCardList products={products}

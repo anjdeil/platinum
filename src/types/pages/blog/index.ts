@@ -1,4 +1,3 @@
-import { isError } from 'lodash';
 import { z } from 'zod';
 
 export const ThumbnailSchema = z.object({
@@ -7,11 +6,10 @@ export const ThumbnailSchema = z.object({
   src: z.string(),
 });
 
-export const BlogItemSchema = z.object({
+export const BaseBlogItemSchema = z.object({
   id: z.number(),
   slug: z.string(),
   title: z.string(),
-  content: z.string(),
   excerpt: z.string(),
   thumbnail: z.union([
     z.object({
@@ -21,7 +19,6 @@ export const BlogItemSchema = z.object({
     }),
     z.null(),
   ]),
-  type: z.string(),
   created: z.string(),
   modified: z.string(),
   status: z.string(),
@@ -39,14 +36,35 @@ export const BlogItemSchema = z.object({
   ),
 });
 
-export const BlogItemPropsSchema = z.object({
-  post: BlogItemSchema,
+export const BlogItemSchema = BaseBlogItemSchema.extend({
+  content: z.string(),
+});
+
+const BlogParsedItemSchema = BaseBlogItemSchema.extend({
+  parsedContent: z.string(),
+});
+
+export const BlogItemUnionSchema = z.union([
+  BlogItemSchema,
+  BlogParsedItemSchema,
+]);
+
+export const BlogPageDataFullSchema = z.object({
+  success: z.boolean(),
+  data: z.object({
+    statistic: z
+      .object({
+        posts_count: z.number().optional(),
+      })
+      .optional(),
+    items: z.array(BlogItemSchema),
+  }),
 });
 
 export const BlogListBlockPropsSchema = z.object({
   posts: z.array(BlogItemSchema),
-  isError: z.boolean(),
-  isLoading: z.boolean(),
+  isError: z.boolean().optional(),
+  isLoading: z.boolean().optional(),
 });
 
 export const BlogListSkeletonPropsSchema = z.object({
@@ -54,6 +72,7 @@ export const BlogListSkeletonPropsSchema = z.object({
 });
 
 export type BlogItemType = z.infer<typeof BlogItemSchema>;
-export type BlogItemTypeProps = z.infer<typeof BlogItemPropsSchema>;
 export type BlogListBlockProps = z.infer<typeof BlogListBlockPropsSchema>;
 export type BlogListSkeletonProps = z.infer<typeof BlogListSkeletonPropsSchema>;
+export type BlogParsedItemType = z.infer<typeof BlogParsedItemSchema>;
+export type BlogItemUnionType = z.infer<typeof BlogItemUnionSchema>;
