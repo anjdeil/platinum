@@ -57,7 +57,9 @@ export const CustomInputStyle = styled.div<CustomInputStyleProps>`
   input.react-international-phone-input {
     padding-left: ${({ isPhone }) => (isPhone ? '60px' : '15px')};
   }
+}
 `;
+
 export const Input = styled.input<CustomInputProps>`
   ${(props) => props.as === 'textarea' && 'min-height: 150px;'};
   margin-right: ${({ isCheckbox }) => (isCheckbox ? '15px' : '0')};
@@ -72,14 +74,14 @@ export const Input = styled.input<CustomInputProps>`
 
   outline: 1px solid
     ${({ theme, isError }) =>
-      isError ? theme.colors.error : theme.background.formElements};
+    isError ? theme.colors.error : theme.background.formElements};
   background-color: ${({ theme, background = theme.background.formElements }) =>
     background};
   transition: outline-width 0.2s ease-in-out;
 
   &:-webkit-autofill {
     background-color: ${({ theme, background }) =>
-      background || theme.colors.white} !important;
+    background || theme.colors.white} !important;
     color: ${({ theme }) => theme.colors.black} !important;
     transition: background-color 5000s ease-in-out 0s;
   }
@@ -87,7 +89,7 @@ export const Input = styled.input<CustomInputProps>`
   &:focus {
     outline: 1px solid
       ${({ theme, isError }) =>
-        isError ? theme.colors.error : theme.colors.primary};
+    isError ? theme.colors.error : theme.colors.primary};
     box-shadow: ${({ theme }) => theme.customShadows.primaryShadow};
   }
 
@@ -109,7 +111,7 @@ export const Input = styled.input<CustomInputProps>`
   @media ${({ theme }) => theme.media.medium} {
     width: ${({ isCheckbox }) => (isCheckbox ? '15px' : '100%')};
     height: ${({ isCheckbox, height = '100%' }) =>
-      isCheckbox ? '15px' : height};
+    isCheckbox ? '15px' : height};
     font-size: 14px;
   }
 `;
@@ -142,12 +144,16 @@ export const ShowPasswordImage = styled(Image)`
 export const CustomError = styled.p`
   margin-top: 5px;
   padding: 0 10px;
-
   color: ${({ theme }) => theme.colors.error};
   @media ${({ theme }) => theme.media.medium} {
     margin-top: 10px;
   }
 `;
+
 export const CustomInputContainer = styled.div<CustomInputContainerProps>`
   width: ${({ isCheckbox, width = '100%' }) => (isCheckbox ? '18px' : width)};
+`;
+
+export const CustomSuccess = styled(CustomError)`
+  color: ${({ theme }) => theme.colors.success};
 `;

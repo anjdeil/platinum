@@ -7,14 +7,11 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { NavLink } from '../../../menus/Nav/styles';
 import { NavButton, Slide, SliderWrapper } from './styles';
 import { MenuSkeleton } from '../../../menus/MenuSkeleton';
-import { wpMenuProps } from '@/types/menus/wpMenus';
 import { MenusContext } from '@/components/Layout/Layout';
 import { menuItemsType } from '@/types/services/wpCustomApi/menus';
+import { wpMenuProps } from '@/types/menus/WpMenus';
 
-
-const VerticalSlider: FC<wpMenuProps> = ({ menuId, skeleton }) =>
-{
-
+const VerticalSlider: FC<wpMenuProps> = ({ menuId, skeleton }) => {
   const sliderRef = React.createRef<Slider>();
   const settings = {
     dots: false,
@@ -29,21 +26,18 @@ const VerticalSlider: FC<wpMenuProps> = ({ menuId, skeleton }) =>
     nextArrow: <NavButton className="next" />,
   };
 
-  const goToPrev = () =>
-  {
+  const goToPrev = () => {
     sliderRef.current?.slickPrev();
   };
 
-  const goToNext = () =>
-  {
+  const goToNext = () => {
     sliderRef.current?.slickNext();
   };
 
   const menus: menuItemsType[] | undefined = useContext(MenusContext);
   const menuItems = menus?.find(({ id }) => id === menuId)?.items;
 
-  if (!menuItems && skeleton)
-  {
+  if (!menuItems && skeleton) {
     return (
       <MenuSkeleton
         elements={skeleton.elements}
@@ -52,20 +46,17 @@ const VerticalSlider: FC<wpMenuProps> = ({ menuId, skeleton }) =>
         height={skeleton.height}
         gap={skeleton.gap}
       />
-    )
+    );
   }
   return (
     <SliderWrapper>
       <Slider ref={sliderRef} {...settings}>
-        {menuItems && menuItems.map(({ title, url }) => (
-          <Slide key={title}>
-            <NavLink
-              href={url}
-            >
-              {title}
-            </NavLink>
-          </Slide>
-        ))}
+        {menuItems &&
+          menuItems.map(({ title, url }) => (
+            <Slide key={title}>
+              <NavLink href={url}>{title}</NavLink>
+            </Slide>
+          ))}
       </Slider>
       <NavButton className="prev" onClick={goToPrev}>
         <KeyboardArrowUpIcon />
