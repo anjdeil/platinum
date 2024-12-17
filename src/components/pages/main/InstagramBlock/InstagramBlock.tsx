@@ -1,58 +1,93 @@
 import InstagramIcon from "@/components/global/icons/InstagramIcon/InstagramIcon";
 import {
   IconWrapper,
-  InstgramAccountWrapper,
-  InstgramBlockContainer,
-  InstgramPhoto,
-  InstgramPhotoWrapper,
+  InstagramAccountWrapper,
+  InstagramBlockContainer,
+  InstagramPhoto,
+  InstagramPhotoWrapper,
+  StyledSkeleton,
+  StyledSkeletonContainer,
 } from "./styles";
-import { useGetInstaPostsQuery } from "@/store/rtk-queries/instagram/InstCustomApi";
-import { Skeleton } from "@mui/material";
+import {
+  InstagramApiResponseSchema,
+  MediaInfoResponse,
+} from "@/types/services";
+
+import { useGetInstagramMediaQuery } from "@/store/rtk-queries/instagramMedia";
+import { SectionContainer, StyledError } from "@/components/sections/styles";
 
 const InstagramBlock = () => {
-  const { data: posts, isLoading, isError } = useGetInstaPostsQuery();
-  const fload = true;
+  const { data, error, isFetching, isLoading } = useGetInstagramMediaQuery();
+  const isComponentLoading = isLoading || isFetching;
+
+  const mediaNotFound = (
+    <SectionContainer>
+      <StyledError>Instagram Media not found</StyledError>
+    </SectionContainer>
+  );
+
+  let media: MediaInfoResponse[] = [];
+
+  if (data) {
+    const validationResult = InstagramApiResponseSchema.safeParse(data);
+    if (!validationResult.success) {
+      console.error("Invalid data format:", validationResult.error);
+      return (
+        <SectionContainer>
+          <StyledError>Invalid Instagram Media data</StyledError>
+        </SectionContainer>
+      );
+    }
+    media = validationResult.data;
+  }
+
+  if (isComponentLoading) {
+    return (
+      <>
+        <StyledSkeletonContainer>
+          {[...Array(4)].map((_, index) => (
+            <StyledSkeleton key={index} variant="rectangular" />
+          ))}
+        </StyledSkeletonContainer>
+      </>
+    );
+  }
+
+  if (error) {
+    return mediaNotFound;
+  }
+
   return (
     <>
-      <InstgramBlockContainer>
-        <InstgramAccountWrapper href="#">
+      <InstagramBlockContainer>
+        <InstagramAccountWrapper
+          href="https://www.instagram.com/platinum_poland/"
+          target="_blank"
+        >
           <IconWrapper>
             <InstagramIcon />
           </IconWrapper>
           <p>platinum_poland</p>
-          {/* {user} */}
-        </InstgramAccountWrapper>
-        {fload ? (
-          <>
-            {[...Array(3)].map((_, index) => (
-              <Skeleton
-                key={index}
-                variant="rounded"
-                width="100%"
-                height="100%"
+        </InstagramAccountWrapper>
+        {media &&
+          media.length > 0 &&
+          media.map((item) => (
+            <InstagramPhotoWrapper
+              href={item.permalink}
+              key={item.id}
+              target="_blank"
+            >
+              <InstagramPhoto
+                src={
+                  item.media_type === "VIDEO"
+                    ? item.thumbnail_url || ""
+                    : item.media_url || ""
+                }
+                alt={item.username}
               />
-            ))}
-          </>
-        ) : (
-          <>
-            <InstgramPhotoWrapper href="#" /* key={photo.id} */>
-              <InstgramPhoto src="/assets/images/1.png" alt="12" />
-            </InstgramPhotoWrapper>
-            <InstgramPhotoWrapper href="#" /* key={photo.id} */>
-              <InstgramPhoto src="/assets/images/2.png" alt="12" />
-            </InstgramPhotoWrapper>
-            <InstgramPhotoWrapper href="#" /* key={photo.id} */>
-              <InstgramPhoto src="/assets/images/4.jpg" alt="12" />
-            </InstgramPhotoWrapper>
-          </>
-        )}
-        {/*     {photos.map((photo) => (
-                    <InstgramPhotoWrapper href={photo.permalink} key={photo.id}>
-                        <InstgramPhoto src={photo.media_url} alt={photo.caption} />
-                    </InstgramPhotoWrapper>
-                ))}
-                 */}
-      </InstgramBlockContainer>
+            </InstagramPhotoWrapper>
+          ))}
+      </InstagramBlockContainer>
     </>
   );
 };

@@ -13,7 +13,7 @@ import cartSlice from "./slices/cartSlice";
 import saveCartSliceToLocalStorageMiddleware from "@/utils/cartSlice/saveCartSliceToLocalStorageMiddleware";
 import { contactForm7Api } from "./rtk-queries/contactFrom7/contactFromApi7";
 import { mailpoetApi } from "./rtk-queries/mailpoetApi";
-import { instCustomRtkApi } from "./rtk-queries/instagram/InstCustomApi";
+import { instagramCustomRtkApi } from './rtk-queries/instagramMedia';
 
 const rootReducer = combineReducers({
   [wpCustomRtkApi.reducerPath]: wpCustomRtkApi.reducer,
@@ -21,7 +21,7 @@ const rootReducer = combineReducers({
   [wpRtkApi.reducerPath]: wpRtkApi.reducer,
   [contactForm7Api.reducerPath]: contactForm7Api.reducer,
   [mailpoetApi.reducerPath]: mailpoetApi.reducer,
-  [instCustomRtkApi.reducerPath]: instCustomRtkApi.reducer,
+  [instagramCustomRtkApi.reducerPath]: instagramCustomRtkApi.reducer,
   cartSlice,
   languageSlice: languageSlice,
   currencySlice: currencySlice,
@@ -44,7 +44,7 @@ export const setupStore = () => {
         .concat(contactForm7Api.middleware)
         .concat(saveCartSliceToLocalStorageMiddleware)
         .concat(mailpoetApi.middleware)
-        .concat(instCustomRtkApi.middleware),
+        .concat(instagramCustomRtkApi.middleware),
   });
 };
 

@@ -1,21 +1,24 @@
 import styled from '@emotion/styled';
+import { Skeleton } from '@mui/material';
 import Link from 'next/link';
 
-export const InstgramBlockContainer = styled.div`
+export const InstagramBlockContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: 1fr;
   align-items: center;
   gap: 16px;
-  margin: 24px;
+  margin-top: 24px;
 
   @media ${({ theme }) => theme.media.preSmall} {
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    grid-auto-flow: dense;
+    direction: rtl;
   }
 `;
 
-export const InstgramAccountWrapper = styled(Link)`
+export const InstagramAccountWrapper = styled(Link)`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,7 +26,12 @@ export const InstgramAccountWrapper = styled(Link)`
   text-decoration: none;
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
   color: ${({ theme }) => theme.colors.black};
+
+  @media ${({ theme }) => theme.media.medium} {
+    font: ${({ theme }) => theme.fonts.bodypresmallReg};
+  }
 `;
+
 export const IconWrapper = styled.div`
   width: 102px;
   height: 102px;
@@ -39,7 +47,7 @@ export const IconWrapper = styled.div`
     height: 80px;
   }
 `;
-export const InstgramPhotoWrapper = styled(Link)`
+export const InstagramPhotoWrapper = styled(Link)`
   display: inline-block;
   max-width: 308px;
   max-height: 306px;
@@ -63,11 +71,31 @@ export const InstgramPhotoWrapper = styled(Link)`
     opacity: 1;
   }
 `;
-export const InstgramPhoto = styled.img`
+export const InstagramPhoto = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
 `;
-/* export const InstgramPhoto = styled(Image)`
-   
-`; */
+
+export const StyledSkeletonContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
+
+  @media ${({ theme }) => theme.media.preSmall} {
+    flex-wrap: wrap;
+  }
+`;
+
+export const StyledSkeleton = styled(Skeleton)`
+  width: 24%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+
+  @media ${({ theme }) => theme.media.preSmall} {
+    width: 46%;
+  }
+`;
