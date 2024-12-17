@@ -5,7 +5,7 @@ import { ReviewRespType } from "@/types/services";
 import { useGetProductsReviewsQuery } from "@/store/rtk-queries/wooCustomApi";
 import { ReviewsSlider } from "./ReviewsSlider";
 import { ReviewsSkeleton } from "./ReviewsSkeleton";
-import { ValidateWooCustomRktApiReviews } from "@/utils/zodValidators/validatewooCustomRktApiReviews";
+import { ValidateWooCustomRktApiReviews } from "@/utils/zodValidators/validateWooCustomRktApiReviews";
 
 type ReviewsSectionProps = Omit<ReviewsSectionData, "_type">;
 

@@ -13,6 +13,7 @@ import saveCartSliceToLocalStorageMiddleware from '@/utils/cartSlice/saveCartSli
 import { wooCustomAuthRktApi } from './rtk-queries/wooCustomAuthApi';
 import { contactForm7Api } from './rtk-queries/contactFrom7/contactFromApi7'
 import { mailpoetApi } from './rtk-queries/mailpoetApi';
+import { instagramCustomRtkApi } from './rtk-queries/instagramMedia';
 
 const rootReducer = combineReducers({
   [wpCustomRtkApi.reducerPath]: wpCustomRtkApi.reducer,
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   [contactForm7Api.reducerPath]: contactForm7Api.reducer,
   [mailpoetApi.reducerPath]: mailpoetApi.reducer,
   [wooCustomAuthRktApi.reducerPath]: wooCustomAuthRktApi.reducer,
+  [instagramCustomRtkApi.reducerPath]: instagramCustomRtkApi.reducer,
   cartSlice,
   languageSlice: languageSlice,
   currencySlice: currencySlice,
@@ -44,6 +46,7 @@ export const setupStore = () => {
         .concat(saveCartSliceToLocalStorageMiddleware)
         .concat(mailpoetApi.middleware)
         .concat(wooCustomAuthRktApi.middleware)
+        .concat(instagramCustomRtkApi.middleware),
   });
 };
 

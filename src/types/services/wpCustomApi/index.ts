@@ -1,11 +1,11 @@
-import { ProductsMinimizedSchema } from "@/types/components/shop/product/products";
-import { WpMenuResponseSchema } from "@/types/menus/WpMenus";
-import { ProductReviewSchema } from "@/types/pages/shop/reviews";
-import { z } from "zod";
-import { CategorySchema, ProductSchema } from "../../pages/shop";
-import { AttributeSchema } from "./attributes";
-import { menuItemsSchema } from "./menus";
-import { ThemeOptionsItemSchema } from "./themeOptions";
+import { ProductsMinimizedSchema } from '@/types/components/shop/product/products';
+import { WpMenuResponseSchema } from '@/types/menus/WpMenus';
+import { ProductReviewSchema } from '@/types/pages/shop/reviews';
+import { z } from 'zod';
+import { CategorySchema, ProductSchema } from '../../pages/shop';
+import { AttributeSchema } from './attributes';
+import { menuItemsSchema } from './menus';
+import { ThemeOptionsItemSchema } from './themeOptions';
 import { SectionsTypeSchema } from '@/types/components/sections';
 import { BlogItemSchema, BlogItemUnionSchema } from '@/types/pages/blog';
 

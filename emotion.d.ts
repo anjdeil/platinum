@@ -1,6 +1,6 @@
-import "@emotion/react";
+import '@emotion/react';
 
-declare module "@emotion/react" {
+declare module '@emotion/react' {
   export interface Theme {
     typography: {
       fontFamily: string;
@@ -63,6 +63,7 @@ declare module "@emotion/react" {
     };
     media: {
       small: string;
+      preSmall: string;
       medium: string;
       mediumLarge: string;
       large: string;
