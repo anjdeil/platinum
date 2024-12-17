@@ -22,6 +22,7 @@ declare module "@emotion/react" {
       platinum: string;
       shadow: string;
       error: string;
+      success: string;
       border: string;
       lightBorder: string;
       new: string;
@@ -39,6 +40,7 @@ declare module "@emotion/react" {
       primaryBlue700: string;
     };
     background: {
+      main: string;
       primaryGradient: string;
       infoGradient: string;
       secondary: string;

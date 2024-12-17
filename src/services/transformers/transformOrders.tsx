@@ -1,5 +1,5 @@
 import { OrderSummaryType } from "@/types/pages/account";
-import { OrderType } from "@/types/services";
+import { OrderType } from "@/types/services/wooCustomApi/shop";
 
 export function transformOrders(orders: OrderType[]): OrderSummaryType
 {

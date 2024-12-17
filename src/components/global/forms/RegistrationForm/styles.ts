@@ -6,8 +6,14 @@ interface CustomFormProps
 }
 
 export const CustomForm = styled.form<CustomFormProps>`
-    margin: 0 auto;
-    max-width: ${({ maxWidth }) => maxWidth ? maxWidth : '1100px'};
+    padding: 32px;
+    border: ${({ theme }) => `1px solid ${theme.colors.lightBorder}`};
+    border-radius: 10px;
+    
+    @media ${({ theme }) => theme.media.middle} {
+        padding: 0;   
+        border: none;
+    }
 `;
 
 export const FormWrapper = styled.div`

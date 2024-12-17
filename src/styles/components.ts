@@ -1,4 +1,4 @@
-import { AccountInfoWrapperProps } from "@/types/pages/account";
+import { AccountInfoWrapperProps } from '@/types/pages/account';
 import {
   LogoLinkImageProps,
   LogoLinkProps,
@@ -21,7 +21,7 @@ interface TitleProps {
   marginBottom?: string;
   tabletMarginBottom?: number;
   mobMarginBottom?: number;
-}
+};
 
 /** Titles components */
 export const Title = styled.h1<TitleProps>`
@@ -39,6 +39,7 @@ export const Title = styled.h1<TitleProps>`
     font-weight: ${({ fontWeight }) => fontWeight};
     font-size: ${({ fontSize }) => fontSize};
   }
+
 
   @media ${({ theme }) => theme.media.small} {
     font-size: ${({ mobFontSize }) => mobFontSize};
@@ -126,14 +127,19 @@ export const StyledButton = styled.button<StyledButtonProps>`
         }) => hoverBackgroundColor};
   }
 
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
   @media ${({ theme }) => theme.media.large} {
     padding-block: 11px;
-    min-width: ${({ minWidthTablet = "auto" }) => minWidthTablet};
+    min-width: ${({ minWidthTablet = 'auto' }) => minWidthTablet};
     font-size: 14px;
   }
 
   @media ${({ theme }) => theme.media.medium} {
-    min-width: ${({ minWidthMobile = "auto" }) => minWidthMobile};
+    min-width: ${({ minWidthMobile = 'auto' }) => minWidthMobile};
   }
 `;
 

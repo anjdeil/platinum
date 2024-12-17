@@ -1,7 +1,4 @@
-import {
-  LineItemSchema,
-  ProductsMinimizedSchema,
-} from "@/types/components/shop/product/products";
+import { LineItemSchema } from "@/types/components/shop/product/products";
 import { lineOrderItemsSchema } from "@/types/store/reducers/сartSlice";
 import { z } from "zod";
 

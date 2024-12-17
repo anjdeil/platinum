@@ -1,13 +1,12 @@
-import { LoginFormType } from "@/types/components/global/forms/LoginForm";
-import { JwtTokenResponseType } from "@/types/services";
+import { AuthConfigType, JwtTokenResType } from "@/types/services/wpRestApi/auth";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const wpRtkApi = createApi({
     reducerPath: "wpApi",
     baseQuery: fetchBaseQuery({ baseUrl: "/api/wp" }),
     endpoints: (builder) => ({
-        getToken: builder.mutation<JwtTokenResponseType, LoginFormType>({
-            query: (credentials: LoginFormType) => ({
+        getToken: builder.mutation<JwtTokenResType, AuthConfigType>({
+            query: (credentials: AuthConfigType) => ({
                 url: "/jwt-auth/v1/token",
                 method: "POST",
                 body: credentials,
@@ -16,7 +15,13 @@ export const wpRtkApi = createApi({
                 }
             })
         }),
+        checkToken: builder.mutation({
+            query: () => ({
+                url: "/jwt-auth/v1/token/validate",
+                method: "POST"
+            })
+        })
     })
 })
 
-export const { useGetTokenMutation } = wpRtkApi;
+export const { useGetTokenMutation, useCheckTokenMutation } = wpRtkApi;

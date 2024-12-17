@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 import { InfoLine } from "./styles";
-import { AddressType } from "@/types/services";
+import { AddressType } from "@/types/services/wooCustomApi/shop";
 
 interface BillingShippingAdressProps
 {

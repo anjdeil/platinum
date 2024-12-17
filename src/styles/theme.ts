@@ -1,28 +1,28 @@
-import { Theme } from "@emotion/react";
-import { Montserrat } from "next/font/google";
+import { Theme } from '@emotion/react';
+import { Montserrat } from 'next/font/google';
 
 export const montserrat = Montserrat({
-  subsets: ["latin", "cyrillic"],
-  weight: ["400", "500", "600", "700"],
+  subsets: ['latin', 'cyrillic'],
+  weight: ['400', '500', '600', '700'],
 });
 
 const theme: Theme = {
   typography: {
     fontFamily: `${montserrat.style.fontFamily}`,
-    fontSize: "16px",
+    fontSize: '16px',
   },
   fonts: {
-    bodysmallReg: "400 0.75rem/1rem " + montserrat.style.fontFamily,
-    bodypresmallReg: "400 0.875rem/1rem " + montserrat.style.fontFamily,
-    bodyMiddleReg: "400 1rem/1.5rem " + montserrat.style.fontFamily,
-    bodyMiddleSemiBold: "600 1rem/1.5rem " + montserrat.style.fontFamily,
-    bodyMiddleMedium: "500 1rem/1.5rem " + montserrat.style.fontFamily,
-    titleH1SemiBold: "600 3rem/3.5rem " + montserrat.style.fontFamily,
-    titleH2SemiBold: "600 1.5rem/2rem " + montserrat.style.fontFamily,
-    titleH2Medium: "500 1.5rem/2rem " + montserrat.style.fontFamily,
+    bodysmallReg: '400 0.75rem/1rem ' + montserrat.style.fontFamily,
+    bodypresmallReg: '400 0.875rem/1rem ' + montserrat.style.fontFamily,
+    bodyMiddleReg: '400 1rem/1.5rem ' + montserrat.style.fontFamily,
+    bodyMiddleSemiBold: '600 1rem/1.5rem ' + montserrat.style.fontFamily,
+    bodyMiddleMedium: '500 1rem/1.5rem ' + montserrat.style.fontFamily,
+    titleH1SemiBold: '600 3rem/3.5rem ' + montserrat.style.fontFamily,
+    titleH2SemiBold: '600 1.5rem/2rem ' + montserrat.style.fontFamily,
+    titleH2Medium: '500 1.5rem/2rem ' + montserrat.style.fontFamily,
   },
   colors: {
-    primary: "#113760",
+    primary: '#113760',
     backgroundGradient:
       "radial-gradient(79.43% 79.43% at 49.95% 64.07%, #024584 0%, #0B233D 100%)",
     secondary: "#738ebc",
@@ -44,18 +44,20 @@ const theme: Theme = {
     primaryBlue200: '#e0effe',
     primaryBlue500: '#1e71be',
     primaryBlue700: '#113760',
+    success: '#28a745',
   },
   background: {
-    secondary: "#f2f8fe",
-    hover: "#063e7b",
-    skeleton: "linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%)",
+    secondary: '#f2f8fe',
+    main: '#063e7b',
+    hover: '#063e7b',
+    skeleton: 'linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%)',
     skeletonSecondary:
-      "linear-gradient(90deg, #f2f8fe 25%, #DFEAF4  50%, #f2f8fe 75%)",
-    grey: "#BEBEBE",
-    success: "#17AA40",
-    warning: "#F2B517",
+      'linear-gradient(90deg, #f2f8fe 25%, #DFEAF4  50%, #f2f8fe 75%)',
+    grey: '#BEBEBE',
+    success: '#17AA40',
+    warning: '#F2B517',
     primaryGradient:
-      "radial-gradient(79.43% 79.43% at 49.95% 64.07%, #024584 0%, #0B233D 100%)",
+      'radial-gradient(79.43% 79.43% at 49.95% 64.07%, #024584 0%, #0B233D 100%)',
     infoGradient:
       "radial-gradient(66.14% 66.14% at 49.95% 64.07%, #024584 0%, #0B233D 100%)",
     formElements: "#F2F8FE",
@@ -65,9 +67,9 @@ const theme: Theme = {
     banner: '#71BFE6',
   },
   spacing: {
-    small: "8px",
-    medium: "16px",
-    large: "24px",
+    small: '8px',
+    medium: '16px',
+    large: '24px',
   },
   media: {
     small: "(max-width: 430px)",
