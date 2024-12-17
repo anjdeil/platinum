@@ -2,12 +2,14 @@ import { FC, forwardRef, useCallback, useImperativeHandle, useState } from "reac
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import 'react-international-phone/style.css';
+import { RegistrationFormSchema } from "@/types/pages/account/RegistrationForm/registrationForm";
+import { CustomForm, FormWrapper } from "@/styles/components";
+import { CustomInput } from "@/components/global/forms/CustomInput";
 import { WooCustomerReqType } from "@/types/services";
 import { PhoneInput } from "react-international-phone";
 import 'react-international-phone/style.css';
-import { RegistrationFormSchema } from "@/types/pages/account/RegistrationForm/registrationForm";
 import { CustomFormInput } from "@/components/global/forms/CustomFormInput";
-import { CustomForm, FormWrapper } from "@/components/global/forms/RegistrationForm/styles";
 
 interface RegistrationFormProps
 {
@@ -49,6 +51,8 @@ export const RegistrationForm = forwardRef((props, ref) =>
 
     return (
         <CustomForm onSubmit={handleSubmit(onSubmit)}>
+            {/*       <FormWrapper>
+                <CustomInput
             <FormWrapper>
                 <CustomFormInput
                     fieldName="Imię"
@@ -95,8 +99,8 @@ export const RegistrationForm = forwardRef((props, ref) =>
                     value={phone}
                     onChange={(phone) => setPhone(phone)}
                 />
-            </FormWrapper>
+            </FormWrapper> */}
             <button type="submit" disabled={isSubmitting}>{isSubmitting ? 'Submitting...' : 'Submit'}</button>
-        </CustomForm>
+        </CustomForm >
     );
 });

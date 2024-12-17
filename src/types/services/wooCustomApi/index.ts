@@ -1,7 +1,4 @@
-import {
-  LineItemSchema,
-  ProductsMinimizedSchema,
-} from "@/types/components/shop/product/products";
+import { LineItemSchema, ProductsMinimizedSchema } from "@/types/components/shop/product/products";
 import { lineOrderItemsSchema } from "@/types/store/reducers/сartSlice";
 import { z } from "zod";
 
@@ -273,6 +270,11 @@ const CreateOrderRequestSchema = z.object({
   currency: z.enum(currencies),
 });
 
+export const WooCustomerUpdateReqSchema = WooCustomerReqSchema.extend({
+  id: z.number(),
+}).extend({
+  email: z.string().optional(),
+});
 const CreateOrderResponseSchema = z.object({
   id: z.number(),
   line_items: z.array(LineItemSchema),
@@ -375,3 +377,4 @@ export type couponRespType = z.infer<typeof couponRespSchema>;
 export type retrieveCouponQueryType = z.infer<typeof retrieveCouponQuerySchema>;
 export type ReviewRespType = z.infer<typeof ReviewRespSchema>;
 export type ReviewsRespType = z.infer<typeof ReviewsRespSchema>;
+export type WooCustomerUpdateReqType = z.infer<typeof WooCustomerUpdateReqSchema>;

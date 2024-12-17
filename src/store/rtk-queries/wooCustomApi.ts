@@ -42,6 +42,25 @@ export const wooCustomRktApi = createApi({
         },
       }),
     }),
+    fetchCustomer: builder.query<WooCustomerType, { customerId: string }>({
+      query: ({ customerId }) => ({
+        url: `/customers/${customerId}`,
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+    }),
+    updateCustomer: builder.mutation<WooCustomerType, WooCustomerUpdateReqType>({
+      query: (credentials: WooCustomerUpdateReqType) => ({
+        url: `/customers/${credentials.id}`,
+        method: "PUT",
+        body: credentials,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+    }),
     retrieveCoupon: builder.query<couponRespType, retrieveCouponQueryType>({
       query: (params: retrieveCouponQueryType) => ({
         url: `/coupons/${params.id}`,
@@ -80,4 +99,6 @@ export const {
   useListAllCouponsQuery,
   useAddCommentMutation,
   useGetProductsReviewsQuery,
+  useFetchCustomerQuery,
+  useUpdateCustomerMutation,
 } = wooCustomRktApi;

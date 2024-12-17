@@ -1,5 +1,5 @@
-import styled from '@emotion/styled';
-import Image from 'next/image';
+import styled from "@emotion/styled";
+import Image from "next/image";
 
 interface CustomInputStyleProps {
   isError: boolean;
@@ -24,18 +24,18 @@ interface CustomInputProps {
 
 // Styles with classes name are for international phone input from react-international-phone
 export const CustomInputStyle = styled.div<CustomInputStyleProps>`
-  padding: ${({ padding = '5px' }) => padding};
+  padding: ${({ padding = "5px" }) => padding};
   display: flex;
-  flex-direction: ${({ isCheckbox }) => (isCheckbox ? 'row' : 'column')};
-  align-items: ${({ isCheckbox }) => (isCheckbox ? 'center' : 'flex-start')};
-  width: ${({ isCheckbox }) => (isCheckbox ? 'fit-content' : '100%')};
-  overflow: ${({ isPhone }) => (isPhone ? 'inherit' : 'hidden')};
+  flex-direction: ${({ isCheckbox }) => (isCheckbox ? "row" : "column")};
+  align-items: ${({ isCheckbox }) => (isCheckbox ? "center" : "flex-start")};
+  width: ${({ isCheckbox }) => (isCheckbox ? "fit-content" : "100%")};
+  overflow: ${({ isPhone }) => (isPhone ? "inherit" : "hidden")};
   font: ${({ theme, font = theme.fonts.bodyMiddleReg }) => font};
   div {
-    order: ${({ isCheckbox }) => (isCheckbox ? '-1' : '0')};
+    order: ${({ isCheckbox }) => (isCheckbox ? "-1" : "0")};
   }
   span {
-    margin-bottom: ${({ isCheckbox }) => (isCheckbox ? '0' : '5px')};
+    margin-bottom: ${({ isCheckbox }) => (isCheckbox ? "0" : "5px")};
   }
   div.react-international-phone-country-selector {
     position: absolute;
@@ -55,61 +55,55 @@ export const CustomInputStyle = styled.div<CustomInputStyleProps>`
 
   input,
   input.react-international-phone-input {
-    padding-left: ${({ isPhone }) => (isPhone ? '60px' : '15px')};
+    padding-left: ${({ isPhone }) => (isPhone ? "60px" : "15px")};
   }
 `;
 export const Input = styled.input<CustomInputProps>`
-  ${(props) => props.as === 'textarea' && 'min-height: 150px;'};
-  margin-right: ${({ isCheckbox }) => (isCheckbox ? '15px' : '0')};
-  padding: ${({ isCheckbox }) => (isCheckbox ? '0' : '15px')};
-  width: ${({ isCheckbox }) => (isCheckbox ? '24px' : '100%')};
-  height: ${({ isCheckbox, height = '100%' }) =>
-    isCheckbox ? '24px' : height};
+  ${(props) => props.as === "textarea" && "min-height: 150px;"};
+  margin-right: ${({ isCheckbox }) => (isCheckbox ? "15px" : "0")};
+  padding: ${({ isCheckbox }) => (isCheckbox ? "0" : "15px")};
+  width: ${({ isCheckbox }) => (isCheckbox ? "24px" : "100%")};
+  height: ${({ isCheckbox, height = "100%" }) => (isCheckbox ? "24px" : height)};
 
-  border: ${({ isCheckbox }) => (isCheckbox ? '1px solid #ccc' : 'none')};
+  border: ${({ isCheckbox }) => (isCheckbox ? "1px solid #ccc" : "none")};
   border-radius: 10px;
   font-size: 16px;
 
   outline: 1px solid
-    ${({ theme, isError }) =>
-      isError ? theme.colors.error : theme.background.formElements};
-  background-color: ${({ theme, background = theme.background.formElements }) =>
-    background};
+    ${({ theme, isError }) => (isError ? theme.colors.error : theme.background.formElements)};
+  background-color: ${({ theme, background = theme.background.formElements }) => background};
   transition: outline-width 0.2s ease-in-out;
 
   &:-webkit-autofill {
-    background-color: ${({ theme, background }) =>
-      background || theme.colors.white} !important;
+    background-color: ${({ theme, background }) => background || theme.colors.white} !important;
     color: ${({ theme }) => theme.colors.black} !important;
     transition: background-color 5000s ease-in-out 0s;
   }
 
   &:focus {
     outline: 1px solid
-      ${({ theme, isError }) =>
-        isError ? theme.colors.error : theme.colors.primary};
+      ${({ theme, isError }) => (isError ? theme.colors.error : theme.colors.primary)};
     box-shadow: ${({ theme }) => theme.customShadows.primaryShadow};
   }
 
   &::placeholder {
-    ${(props) => props.as === 'textarea' && 'text-align: start;'};
+    ${(props) => props.as === "textarea" && "text-align: start;"};
   }
 
-  &[type='number']::-webkit-inner-spin-button,
-  &[type='number']::-webkit-outer-spin-button {
+  &[type="number"]::-webkit-inner-spin-button,
+  &[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
 
-  &[type='number'] {
+  &[type="number"] {
     appearance: none;
     -moz-appearance: textfield;
   }
 
   @media ${({ theme }) => theme.media.medium} {
-    width: ${({ isCheckbox }) => (isCheckbox ? '15px' : '100%')};
-    height: ${({ isCheckbox, height = '100%' }) =>
-      isCheckbox ? '15px' : height};
+    width: ${({ isCheckbox }) => (isCheckbox ? "15px" : "100%")};
+    height: ${({ isCheckbox, height = "100%" }) => (isCheckbox ? "15px" : height)};
     font-size: 14px;
   }
 `;
@@ -149,5 +143,5 @@ export const CustomError = styled.p`
   }
 `;
 export const CustomInputContainer = styled.div<CustomInputContainerProps>`
-  width: ${({ isCheckbox, width = '100%' }) => (isCheckbox ? '18px' : width)};
+  width: ${({ isCheckbox, width = "100%" }) => (isCheckbox ? "18px" : width)};
 `;

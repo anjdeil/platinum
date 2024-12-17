@@ -7,9 +7,9 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { NavLink } from '../../../menus/Nav/styles';
 import { NavButton, Slide, SliderWrapper } from './styles';
 import { MenuSkeleton } from '../../../menus/MenuSkeleton';
-import { wpMenuProps } from '@/types/menus/wpMenus';
 import { MenusContext } from '@/components/Layout/Layout';
 import { menuItemsType } from '@/types/services/wpCustomApi/menus';
+import { wpMenuProps } from '@/types/menus/wpMenus';
 
 
 const VerticalSlider: FC<wpMenuProps> = ({ menuId, skeleton }) =>

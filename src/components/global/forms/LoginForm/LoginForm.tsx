@@ -1,10 +1,12 @@
 import { FC } from "react";
-import { CustomForm, FormWrapper, FormWrapperBottom } from "../RegistrationForm/styles";
 import { LoginFormSchema, LoginFormType } from "@/types/components/global/forms/LoginForm";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+
 import { useGetTokenMutation } from "@/store/rtk-queries/wpApi";
 import { isAuthErrorResponseType } from "@/utils/isAuthErrorResponseType";
+
+import { CustomForm, FormWrapper, FormWrapperBottom } from "@/styles/components";
 import { CustomError } from "../CustomFormInput/styles";
 import { CustomFormInput } from "../CustomFormInput";
 

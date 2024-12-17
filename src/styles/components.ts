@@ -45,7 +45,7 @@ export const Title = styled.h1<TitleProps>`
   }
 `;
 
-export const AccountTitle = styled(Title) <TitleProps>`
+export const AccountTitle = styled(Title)<TitleProps>`
   margin-top: 24px;
   margin-bottom: ${({ marginBottom = 48 }) => marginBottom}px;
 
@@ -84,8 +84,7 @@ export const AccountInfoWrapper = styled.div<AccountInfoWrapperProps>`
   }
 
   @media ${({ theme }) => theme.media.medium} {
-    flex-direction: ${({ mobileReverse = false }) =>
-    mobileReverse ? "column-reverse" : "column"};
+    flex-direction: ${({ mobileReverse = false }) => (mobileReverse ? "column-reverse" : "column")};
     margin-bottom: 64px;
   }
 `;
@@ -100,14 +99,9 @@ export const StyledButton = styled.button<StyledButtonProps>`
   min-width: ${({ minWidthDesktop = "auto" }) => minWidthDesktop};
   padding-inline: 16px;
   border-radius: 10px;
-  color: ${({ theme, secondary = false }) =>
-    secondary ? theme.colors.black : theme.colors.white};
+  color: ${({ theme, secondary = false }) => (secondary ? theme.colors.black : theme.colors.white)};
   background-color: ${({ notify = false, secondary = false, theme }) =>
-    notify
-      ? theme.colors.secondary
-      : secondary
-        ? "transparent"
-        : theme.colors.primary};
+    notify ? theme.colors.secondary : secondary ? "transparent" : theme.colors.primary};
   padding-block: 16px;
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
   text-transform: none;
@@ -120,10 +114,8 @@ export const StyledButton = styled.button<StyledButtonProps>`
 
   &:hover {
     color: ${({ theme, hoverColor = theme.colors.white }) => hoverColor};
-    background-color: ${({
-          theme,
-          hoverBackgroundColor = theme.background.hover,
-        }) => hoverBackgroundColor};
+    background-color: ${({ theme, hoverBackgroundColor = theme.background.hover }) =>
+      hoverBackgroundColor};
   }
 
   @media ${({ theme }) => theme.media.large} {
@@ -137,17 +129,17 @@ export const StyledButton = styled.button<StyledButtonProps>`
   }
 `;
 
-export const LogoLink = styled(Link) <LogoLinkProps>`
-    flex-shrink: 0;
-    display: flex;
-    position: relative;
-    width: ${({ desktopwidth = 92 }) => `${desktopwidth}px`};
-    height: ${({ desktopheight = 92 }) => `${desktopheight}px`};
-    
-    @media ${({ theme }) => theme.media.large} {
-        width: ${({ width = 44 }) => `${width}px`};
-        height: ${({ height = 44 }) => `${height}px`};
-    }
+export const LogoLink = styled(Link)<LogoLinkProps>`
+  flex-shrink: 0;
+  display: flex;
+  position: relative;
+  width: ${({ desktopwidth = 92 }) => `${desktopwidth}px`};
+  height: ${({ desktopheight = 92 }) => `${desktopheight}px`};
+
+  @media ${({ theme }) => theme.media.large} {
+    width: ${({ width = 44 }) => `${width}px`};
+    height: ${({ height = 44 }) => `${height}px`};
+  }
 `;
 
 export const PagesNavigation = styled(Pagination)(({ theme }) => ({
@@ -189,7 +181,7 @@ export const StyledIconWrapper = styled.div`
   }
 `;
 
-export const LogoLinkImage = styled(Image) <LogoLinkImageProps>`
+export const LogoLinkImage = styled(Image)<LogoLinkImageProps>`
   width: 100%;
   height: 100%;
 `;
@@ -197,6 +189,46 @@ export const LogoLinkImage = styled(Image) <LogoLinkImageProps>`
 export const Text = styled.span<TextProps>`
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
   text-align: ${({ textalign = "left" }) => textalign};
+`;
+//----------------------FORM
+
+interface CustomFormProps {
+  maxWidth?: string;
+}
+
+export const CustomForm = styled.form<CustomFormProps>`
+  margin: 0 auto;
+  max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : "1100px")};
+`;
+
+export const FormWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(49%, 1fr));
+  column-gap: 1%;
+  row-gap: 15px;
+  padding-bottom: 20px;
+
+  @media ${({ theme }) => theme.media.medium} {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+  }
+`;
+
+export const FormWrapperBottom = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
+export const FlexBox = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const Overlay = styled.div`
+  position: fixed;
+  z-index: 90;
+  inset: 0;
 `;
 
 export const VariationTitle = styled(Text)`

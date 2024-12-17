@@ -23,8 +23,7 @@ const theme: Theme = {
   },
   colors: {
     primary: "#113760",
-    backgroundGradient:
-      "radial-gradient(79.43% 79.43% at 49.95% 64.07%, #024584 0%, #0B233D 100%)",
+    backgroundGradient: "radial-gradient(79.43% 79.43% at 49.95% 64.07%, #024584 0%, #0B233D 100%)",
     secondary: "#738ebc",
     tertiary: "#0000FF",
     grey: "#878787",
@@ -41,28 +40,25 @@ const theme: Theme = {
     best: "#1E71BE",
     hot: "#F2B517",
     sale: "#D92D20",
-    primaryBlue200: '#e0effe',
-    primaryBlue500: '#1e71be',
-    primaryBlue700: '#113760',
+    primaryBlue200: "#e0effe",
+    primaryBlue500: "#1e71be",
+    primaryBlue700: "#113760",
   },
   background: {
     secondary: "#f2f8fe",
     hover: "#063e7b",
     skeleton: "linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%)",
-    skeletonSecondary:
-      "linear-gradient(90deg, #f2f8fe 25%, #DFEAF4  50%, #f2f8fe 75%)",
+    skeletonSecondary: "linear-gradient(90deg, #f2f8fe 25%, #DFEAF4  50%, #f2f8fe 75%)",
     grey: "#BEBEBE",
     success: "#17AA40",
     warning: "#F2B517",
-    primaryGradient:
-      "radial-gradient(79.43% 79.43% at 49.95% 64.07%, #024584 0%, #0B233D 100%)",
-    infoGradient:
-      "radial-gradient(66.14% 66.14% at 49.95% 64.07%, #024584 0%, #0B233D 100%)",
+    primaryGradient: "radial-gradient(79.43% 79.43% at 49.95% 64.07%, #024584 0%, #0B233D 100%)",
+    infoGradient: "radial-gradient(66.14% 66.14% at 49.95% 64.07%, #024584 0%, #0B233D 100%)",
     formElements: "#F2F8FE",
     resetButton: "#f1f1f5",
     resetButtonHover: "#e8e8f0",
     resetButtonActive: "#d9d9e6",
-    banner: '#71BFE6',
+    banner: "#71BFE6",
   },
   spacing: {
     small: "8px",
@@ -81,9 +77,9 @@ const theme: Theme = {
   },
   customShadows: {
     primaryShadow: "0 0 6px 0 rgba(17, 55, 96, .4)",
-    primaryBlue200: '#e0effe',
-    primaryBlue500: '#1e71be',
-    primaryBlue700: '#113760',
+    primaryBlue200: "#e0effe",
+    primaryBlue500: "#1e71be",
+    primaryBlue700: "#113760",
   },
 };
 
