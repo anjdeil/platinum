@@ -35,6 +35,7 @@ export default async function handler(
         break;
       case 'POST':
         response = await wpRestApi.post(slug, body, !v2 && v2, authorization);
+
         break;
       default:
         res.setHeader('Allow', ['POST', 'GET']);
