@@ -44,9 +44,11 @@ const theme: Theme = {
     primaryBlue200: '#e0effe',
     primaryBlue500: '#1e71be',
     primaryBlue700: '#113760',
+    success: '#28a745',
   },
   background: {
     secondary: '#f2f8fe',
+    main: '#063e7b',
     hover: '#063e7b',
     skeleton: 'linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%)',
     skeletonSecondary:

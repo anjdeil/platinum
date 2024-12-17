@@ -1,8 +1,9 @@
 import { FC, useEffect, useMemo, useState } from "react";
-import { CustomError, CustomInputContainer, CustomInputStyle, CustomInputWrapper, CustomRequired, Input, ShowPasswordImage } from "./styles";
+import { CustomError, CustomInputStyle, CustomInputContainer, CustomInputWrapper, CustomRequired, Input, ShowPasswordImage } from "./styles";
 import { CustomFormInputType } from "@/types/components/global/forms/customFormInput";
 import { PhoneInput } from 'react-international-phone';
 import 'react-international-phone/style.css';
+
 
 export const CustomFormInput: FC<CustomFormInputType> = (
     {
@@ -51,7 +52,6 @@ export const CustomFormInput: FC<CustomFormInputType> = (
                         {isRequire && <CustomRequired>*</CustomRequired>}
                     </span>
                 }
-
                 <CustomInputWrapper>
                     {inputType === 'phone' ?
                         <PhoneInput
