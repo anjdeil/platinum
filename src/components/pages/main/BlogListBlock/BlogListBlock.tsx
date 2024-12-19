@@ -29,7 +29,9 @@ const BlogListBlock: FC<BlogListBlockProps> = ({
   if (isError) {
     return (
       <BlogListBlockContainer>
-        <StyledText>We cannot get the products</StyledText>
+        <StyledText>
+          Sorry, something went wrong... We can't get the posts.
+        </StyledText>
       </BlogListBlockContainer>
     );
   }
@@ -37,7 +39,7 @@ const BlogListBlock: FC<BlogListBlockProps> = ({
   if (!posts || !posts.length) {
     return (
       <BlogListBlockContainer>
-        <StyledText>No products found</StyledText>
+        <StyledText>Sorry, no posts found.</StyledText>
       </BlogListBlockContainer>
     );
   }

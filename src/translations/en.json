@@ -170,7 +170,8 @@
   },
   "Breadcrumbs": {
     "homePage": "Home Page",
-    "benefitsPage": "Loyalty Program"
+    "benefitsPage": "Loyalty Program",
+    "blogPage": "Blog"
   },
   "NotFoundPage": {
     "notFound": "Page not found",
@@ -200,5 +201,11 @@
     "costsTitle": "Delivery costs are not included in the purchase calculation.",
     "freeCostsPoland": "Free delivery within Poland for orders over 200 PLN.",
     "freeCostsEurope": "Free delivery to Germany, Austria, Slovakia, Slovenia, Belgium, Hungary, Lithuania, Czech Republic, Denmark, Romania, and Estonia for orders over 150 EUR."
+  },
+  "BlogPostPage": {
+    "previousPost": "Previous",
+    "nextPost": "Next",
+    "blogPage": "Blog",
+    "blogSectionTitle": "Lasted articles"
   }
 }

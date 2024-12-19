@@ -1,11 +1,11 @@
-import Breadcrumbs from '@/components/global/Breadcrumbs/Breadcrumbs';
+import { BlogPageBreadcrumbs } from '@/components/pages/blog/blogPageBreadcrumbs';
 import BlogPagination from '@/components/pages/blog/blogPagination/BlogPagination';
+import { BlogTitle } from '@/components/pages/blog/blogTitle';
 import BlogListBlock from '@/components/pages/main/BlogListBlock/BlogListBlock';
 import {
   RecommendContainer,
   SectionContainer,
 } from '@/components/sections/styles';
-import { PagesNavigationWrapper } from '@/components/shop/Archive/styles';
 import { customRestApi } from '@/services/wpCustomApi';
 import { Container, StyledHeaderWrapper, Title } from '@/styles/components';
 import { BlogParsedItemType } from '@/types/pages/blog';
@@ -13,15 +13,13 @@ import { CustomDataPostsType } from '@/types/services';
 import { serverParseHTMLContent } from '@/utils/blog/serverParseHTMLContent';
 import { validateWpBlogPage } from '@/utils/zodValidators/validateWpBlogPage';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
-import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/router';
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
   const { locale, query } = context;
   const page = query.page ? parseInt(query.page as string, 10) : 1;
-  const PER_PAGE = 2;
+  const PER_PAGE = 6;
 
   try {
     const responseData = await customRestApi.get(`posts`, {
@@ -56,6 +54,7 @@ export const getServerSideProps: GetServerSideProps = async (
       props: {
         posts: postsData,
         totalPages,
+        page,
       },
     };
   } catch (error) {
@@ -72,39 +71,20 @@ export const getServerSideProps: GetServerSideProps = async (
 interface BlogProps {
   posts: BlogParsedItemType[];
   totalPages: number;
+  page: number;
 }
 
-const BlogPage: React.FC<BlogProps> = ({ posts, totalPages }) => {
-  const router = useRouter();
-  const t = useTranslations('Breadcrumbs');
-
-  const page = parseInt(router.query.page as string, 10) || 1;
-
-  const breadcrumbsLinks = [
-    {
-      name: t('homePage'),
-      url: '/',
-    },
-    {
-      name: 'Blog',
-      url: '',
-    },
-  ];
-
+const BlogPage: React.FC<BlogProps> = ({ posts, totalPages, page }) => {
   return (
     <Container>
       <StyledHeaderWrapper>
-        <Breadcrumbs links={breadcrumbsLinks} />
-        <Title as={'h1'} uppercase>
-          Blog
-        </Title>
+        <BlogPageBreadcrumbs />
+        <BlogTitle title={'blogPage'} />
       </StyledHeaderWrapper>
       <SectionContainer>
         <RecommendContainer>
           <BlogListBlock posts={posts} />
-          <PagesNavigationWrapper>
-            <BlogPagination page={page} count={totalPages} />
-          </PagesNavigationWrapper>
+          <BlogPagination page={page} count={totalPages} />
         </RecommendContainer>
       </SectionContainer>
     </Container>

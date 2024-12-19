@@ -79,11 +79,14 @@ const InstagramBlock = () => {
             >
               <InstagramPhoto
                 src={
-                  item.media_type === "VIDEO"
-                    ? item.thumbnail_url || ""
-                    : item.media_url || ""
+                  item.media_type === 'VIDEO'
+                    ? item.thumbnail_url || ''
+                    : item.media_url || ''
                 }
                 alt={item.username}
+                width={308}
+                height={306}
+                priority
               />
             </InstagramPhotoWrapper>
           ))}

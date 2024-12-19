@@ -1,5 +1,5 @@
-import { transformDate } from "@/services/transformers/transformDate";
-import { Title } from "@/styles/components";
+import { transformDate } from '@/services/transformers/transformDate';
+import { Title } from '@/styles/components';
 import { BlogItemUnionType } from '@/types/pages/blog';
 import { useTranslations } from 'next-intl';
 import { FC } from 'react';
@@ -15,6 +15,8 @@ import {
   TextContent,
 } from './styles';
 import { parseHtmlContent } from '@/utils/blog/parseHtmlContent';
+import { useRouter } from 'next/router';
+import { getPostUrl } from '@/utils/getPostUrl';
 import Link from 'next/link';
 
 interface BlogItemProps {
@@ -24,7 +26,7 @@ interface BlogItemProps {
 const BlogItem: FC<BlogItemProps> = ({ post }) => {
   const { title, thumbnail, slug, created } = post;
   const src = thumbnail?.src || '/assets/images/no-image.jpg';
-
+  const router = useRouter();
   const t = useTranslations('Product');
   const formatDate = transformDate(created);
 
@@ -33,12 +35,20 @@ const BlogItem: FC<BlogItemProps> = ({ post }) => {
       ? post.parsedContent
       : parseHtmlContent(post.content);
 
-  const POST_URL = `pages/blog/${slug}`;
+  const currentPath = router.pathname;
+  const POST_URL = getPostUrl(slug, currentPath);
+
   return (
     <BlogItemContainer>
       <ImageBlock>
         <Link href={POST_URL} passHref>
-          <StyledImage src={src} alt={title} width={728} height={390} />
+          <StyledImage
+            src={src}
+            alt={title}
+            width={632}
+            height={335}
+            priority
+          />
         </Link>
       </ImageBlock>
       <ContentBlock>
