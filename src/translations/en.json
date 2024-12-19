@@ -204,6 +204,8 @@
   },
   "BlogPostPage": {
     "previousPost": "Previous",
-    "nextPost": "Next"
+    "nextPost": "Next",
+    "blogPage": "Blog",
+    "blogSectionTitle": "Lasted articles"
   }
 }

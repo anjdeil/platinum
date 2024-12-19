@@ -205,6 +205,8 @@
   },
   "BlogPostPage": {
     "previousPost": "Предыдущий",
-    "nextPost": "Следующий"
+    "nextPost": "Следующий",
+    "blogPage": "Блог",
+    "blogSectionSubtitle": "Последние статьи"
   }
 }

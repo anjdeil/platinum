@@ -29,7 +29,7 @@ export const StyledFigcaption = styled.figcaption`
 
 export const StyledBlockquote = styled.blockquote`
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
-  border-left: 4px solid ${({ theme }) => theme.colors.primary};
+  border-left: 2px solid ${({ theme }) => theme.colors.primary};
   padding-left: 16px;
 `;
 

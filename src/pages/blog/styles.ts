@@ -23,6 +23,14 @@ export const StyledContainer = styled.div`
   }
 `;
 
+export const StyledHeaderWrapper = styled.header`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+`;
+
 export const StyledHeroImage = styled(Image)`
   width: 100%;
   height: 477px;

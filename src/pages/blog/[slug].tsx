@@ -1,14 +1,19 @@
 import { customRestApi } from '@/services/wpCustomApi';
-import { Container, StyledHeaderWrapper, Title } from '@/styles/components';
+import { Container, Title } from '@/styles/components';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { StyledError } from '@/components/sections/styles';
 import { BlogPostResponseType, BlogPostType } from '@/types/pages/blog';
-import { StyledContainer, StyledHeroImage } from './styles';
+import {
+  StyledContainer,
+  StyledHeaderWrapper,
+  StyledHeroImage,
+} from './styles';
 import { BlogPostContent } from '@/components/pages/blog/blogPostContent';
 import { BlogSection } from '@/components/sections/BlogSection';
 import { PostPageBreadcrumbs } from '@/components/pages/blog/postPageBreadcrumbs';
 import { BlogTitle } from '@/components/pages/blog/blogTitle';
 import { PostGroupNavigationButton } from '@/components/pages/blog/postGroupNavigationButton';
+import { BlogHeader } from '@/components/pages/blog/blogHeader';
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
@@ -83,6 +88,7 @@ const BlogPostPage = ({ post }: PageProps) => {
         />
       </StyledContainer>
       <Container>
+        <BlogHeader title={'blogSectionTitle'} subtitle={'blogPage'} />
         <BlogSection />
       </Container>
     </>

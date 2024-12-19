@@ -2,6 +2,9 @@ import styled from '@emotion/styled';
 
 export const StyledVideoContainer = styled.div`
   position: relative;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
   border-radius: 20px;
   background-color: white;
   overflow: hidden;
@@ -9,11 +12,13 @@ export const StyledVideoContainer = styled.div`
 
 export const StyledVideo = styled.video`
   display: block;
+  width: 100%;
   height: 477px;
+  object-fit: cover;
+  object-position: center;
   margin: 0 auto;
   border-radius: 20px;
   overflow: hidden;
-  object-fit: contain;
 
   @media ${({ theme }) => theme.media.large} {
     height: 291px;

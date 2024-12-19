@@ -48,11 +48,10 @@ export const StyledImage = styled(Image)`
   object-fit: cover;
   object-position: center;
   fill
-  transition: transform 0.3s ease, filter 0.5s ease;
+  transition: filter 0.3s ease-in-out;
 
   &:hover {
     filter: brightness(0.8);
-    transform: scale(1.03);
   }
 `;
 

@@ -198,6 +198,7 @@
   },
   "BlogPostPage": {
     "previousPost": "Zurück",
-    "nextPost": "Weiter"
+    "nextPost": "Weiter",
+    "blogSectionSubtitle": "Letzte artikel"
   }
 }
