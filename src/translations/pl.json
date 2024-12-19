@@ -166,12 +166,32 @@
     "successMessage": "Twoja wiadomość została wysłana pomyślnie!"
   },
   "Validation": {
-    "email": "Proszę wprowadzić poprawny adres e-mail.",
-    "minChar": "Musi mieć co najmniej {count} znaków."
+    "emailValidation": "Proszę wprowadzić poprawny adres e-mail.",
+    "minChar": "Musi mieć co najmniej {count} znaków.",
+    "RequiredField": "Pole wymagane",
+    "email": "E-mail",
+    "name": "Imię",
+    "lastName": "Nazwisko",
+    "address": "Adres",
+    "phoneNumber": "Numer telefonu",
+    "country": "Kraj",
+    "city": "Miasto",
+    "aboutYourself": "O sobie",
+    "preview": "Podgląd",
+    "clickToUpload": "Kliknij, aby przesłać",
+    "orDragAndDrop": "lub przeciągnij i upuść",
+    "or": "lub",
+    "max": "maks.",
+    "sending": "Wysyłanie...",
+    "sendButton": "Wyślij",
+    "InvalidPhoneNumber": "Nieprawidłowy numer telefonu",
+    "fileTooLarge": "zbyt duży plik"
   },
   "Breadcrumbs": {
-    "homePage": "Strona Główna",
-    "benefitsPage": "Lojalnościowy Program"
+    "homePage": "Strona Główna"
+  },
+  "Forms": {
+    "applicationForm": "Formularz zgłoszeniowy"
   },
   "NotFoundPage": {
     "notFound": "Strona nie znaleziona",
@@ -196,10 +216,5 @@
     "failedSubscribe": "Nie udało się wysłać e-maila",
     "successSubscribe": "Zapisano!",
     "userAlreadySubscribed": "Użytkownik jest już zapisany"
-  },
-  "Delivery": {
-    "costsTitle": "Koszty dostawy nie są uwzględnione w kalkulacji zakupu.",
-    "freeCostsPoland": "Darmowa dostawa w Polsce przy zamówieniach powyżej 200 PLN.",
-    "freeCostsEurope": "Darmowa dostawa do Niemiec, Austrii, Słowacji, Słowenii, Belgii, Węgier, Litwy, Czech, Danii, Rumunii i Estonii dla zamówień powyżej 150 EUR."
   }
 }

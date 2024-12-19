@@ -1,24 +1,29 @@
 import {
   ContactFormReqType,
   ContactFormResponseType,
-} from "@/types/services/contactForm7";
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+} from '@/types/services/contactForm7';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const contactForm7Api = createApi({
-  reducerPath: "contactForm7Api",
-  baseQuery: fetchBaseQuery({ baseUrl: "/api/contact-form" }),
+  reducerPath: 'contactForm7Api',
+  baseQuery: fetchBaseQuery({ baseUrl: '/api/contact-form' }),
   endpoints: (build) => ({
     sendAnEmail: build.mutation<ContactFormResponseType, ContactFormReqType>({
       query: ({ formId, formData }) => ({
-        headers: {
-          "Content-Type": "application/json",
-        },
         url: `/${formId}/feedback`,
-        method: "POST",
+        method: 'POST',
+        body: formData,
+      }),
+    }),
+    sendAmbassadorForm: build.mutation<ContactFormResponseType, any>({
+      query: ({ formId, formData }) => ({
+        url: `/${formId}/feedback`,
+        method: 'POST',
         body: formData,
       }),
     }),
   }),
 });
 
-export const { useSendAnEmailMutation } = contactForm7Api;
+export const { useSendAnEmailMutation, useSendAmbassadorFormMutation } =
+  contactForm7Api;
