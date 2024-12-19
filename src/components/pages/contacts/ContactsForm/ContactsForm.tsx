@@ -1,30 +1,31 @@
-import React from 'react'
+import React from 'react';
 import {
   ContactsStyledButton,
   ErrorMessage,
   FormWrapper,
   InputsWrapper,
   SuccessMessage,
-} from './style'
-import { useTranslations } from 'next-intl'
-import { useForm } from 'react-hook-form'
-import { CustomFormInput } from '@/components/global/forms/CustomFormInput'
+} from './style';
+import { useTranslations } from 'next-intl';
+import { useForm } from 'react-hook-form';
+import { CustomFormInput } from '@/components/global/forms/CustomFormInput';
 import {
   ContactsFormType,
   ContactsFormValidationSchema,
-} from '@/types/pages/contacts/ContactsForm'
-import { zodResolver } from '@hookform/resolvers/zod'
-import theme from '@/styles/theme'
-import { Title } from '@/styles/components'
-import { useSendAnEmailMutation } from '@/store/rtk-queries/contactFrom7/contactFromApi7'
+} from '@/types/pages/contacts/ContactsForm';
+import { zodResolver } from '@hookform/resolvers/zod';
+import theme from '@/styles/theme';
+import { Title } from '@/styles/components';
+import { useSendAnEmailMutation } from '@/store/rtk-queries/contactFrom7/contactFromApi7';
 
 const ContactsForm = () => {
-  const t = useTranslations('Contacts')
-  const tValidation = useTranslations('Validation')
-  const schema = ContactsFormValidationSchema(tValidation)
-  const [sendAnEmail, { isLoading, isError, isSuccess }] = useSendAnEmailMutation()
+  const t = useTranslations('Contacts');
+  const tValidation = useTranslations('Validation');
+  const schema = ContactsFormValidationSchema(tValidation);
+  const [sendAnEmail, { isLoading, isError, isSuccess }] =
+    useSendAnEmailMutation();
 
-  const SEND_EMAIL_FORM_ID = Number(process.env.NEXT_PUBLIC_CONTACT_FORM_ID)
+  const SEND_EMAIL_FORM_ID = 25798;
 
   const {
     register,
@@ -35,7 +36,7 @@ const ContactsForm = () => {
   } = useForm<ContactsFormType>({
     resolver: zodResolver(schema),
     mode: 'onBlur',
-  })
+  });
 
   const onSubmit = async (data: ContactsFormType) => {
     try {
@@ -47,15 +48,15 @@ const ContactsForm = () => {
           'your-email': data.email,
           'your-message': data.question,
         },
-      }
+      };
 
-      await sendAnEmail(formData).unwrap()
+      await sendAnEmail(formData).unwrap();
 
-      reset()
+      reset();
     } catch (err) {
-      console.error('Error send question form', err)
+      console.error('Error send question form', err);
     }
-  }
+  };
 
   return (
     <FormWrapper>
@@ -120,7 +121,7 @@ const ContactsForm = () => {
         )}
       </form>
     </FormWrapper>
-  )
-}
+  );
+};
 
-export default ContactsForm
+export default ContactsForm;
