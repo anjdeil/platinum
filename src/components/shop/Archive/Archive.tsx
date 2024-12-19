@@ -11,7 +11,7 @@ import {
   CatalogTopWrapper,
   CountProduct,
   FilterSortWrapper,
-  FIlterWrapper,
+  FilterWrapper,
   PagesNavigationWrapper,
 } from "./styles";
 import SideList from "@/components/global/SideList/SideList";
@@ -25,13 +25,7 @@ import { FC, useEffect, useMemo, useState } from "react";
 import router from "next/router";
 import { FilterPanel } from "../filtration/FilterPanel";
 import { ArchivePropsType } from "@/types/components/shop/archive";
-import {
-  FilterNCategoriesHead,
-  FilterNCategoriesMenu,
-  FilterOverlay,
-  GridBox,
-  SortPanel,
-} from "./styles";
+import { FilterNCategoriesHead, FilterNCategoriesMenu, FilterOverlay } from "./styles";
 import CloseIcon from "@/components/global/icons/CloseIcon/CloseIcon";
 import FilterIconButton from "@/components/global/buttons/FilterIconButton/FilterIconButton";
 import { ProductCardList } from "../ProductCardsList";
@@ -42,6 +36,8 @@ import SelectParentCategory from "../categories/SelectParentCategoryMobile/Selec
 import CategoriesMenu from "@/components/shop/categories/CategoriesMenu/CategoriesMenu";
 
 import { useAppSelector } from "@/store";
+import { log } from "console";
+import { Skeleton } from "@mui/material";
 
 const switchPage = (page: number, maxPage: number) => {
   if (maxPage < page) return;
@@ -72,6 +68,7 @@ export const switchCategory = (parentSlug: string, childSlug?: string) => {
     },
   });
 };
+
 export const Archive: FC<ArchivePropsType> = (props) => {
   const { products, categories, pagesCount, page, statistic, locale, categoriesSlugs } = props;
 
@@ -115,7 +112,17 @@ export const Archive: FC<ArchivePropsType> = (props) => {
   const [isMenuVisible, setMenuVisible] = useState(false);
   const { isMobile } = useResponsive();
   const toggleMenu = () => {
+    console.log(isMenuVisible);
+
     setMenuVisible(!isMenuVisible);
+
+    if (isMobile) {
+      if (!isMenuVisible) {
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "";
+      }
+    }
   };
 
   const [selectedCategories, setCategories] = useState<CategoryType[]>([]);
@@ -137,8 +144,10 @@ export const Archive: FC<ArchivePropsType> = (props) => {
     setCategories(filteredCategories);
   }, [categoriesData, categoriesSlugs]);
 
-  /* 
-        if (isLoading) return <div>categories loading</div> */
+  const handlePageChange = (_: any, newPage: number) => {
+    switchPage(newPage, pagesCount);
+  };
+
   return (
     <CatalogContainer>
       <CatalogTitleWrapper>
@@ -148,8 +157,8 @@ export const Archive: FC<ArchivePropsType> = (props) => {
         </Title>
       </CatalogTitleWrapper>
       <CatalogLayout>
-        <CatalogFilterBlock>
-          <FilterNCategoriesMenu visible={isMenuVisible}>
+        <CatalogFilterBlock visible={isMenuVisible}>
+          <>
             {isMenuVisible ? (
               <>
                 <FilterNCategoriesHead>
@@ -188,8 +197,8 @@ export const Archive: FC<ArchivePropsType> = (props) => {
                 switchCategory={switchCategory}
               />
             )}
-          </FilterNCategoriesMenu>
-          <FilterOverlay visible={isMenuVisible} onClick={toggleMenu} />
+          </>
+
           <Title as="h3" uppercase textalign="left" marginBottom="24px">
             Filters
           </Title>
@@ -199,12 +208,13 @@ export const Archive: FC<ArchivePropsType> = (props) => {
             minPrice={statistic.min_price || 0}
           />
         </CatalogFilterBlock>
+        <FilterOverlay visible={isMenuVisible} onClick={toggleMenu} />
         <CatalogRightWrapper>
           <CatalogTopWrapper>
             <FilterSortWrapper>
-              <FIlterWrapper>
-                <FilterButton />
-              </FIlterWrapper>
+              <FilterWrapper>
+                <FilterButton onClick={toggleMenu} />
+              </FilterWrapper>
               <CustomSortAccordion />
             </FilterSortWrapper>
             <CountProduct>{`${statistic.products_count} products`}</CountProduct>
@@ -216,14 +226,12 @@ export const Archive: FC<ArchivePropsType> = (props) => {
                 shape="rounded"
                 hidePrevButton
                 hideNextButton
-                onChange={(_, newPage) => {
-                  switchPage(newPage, pagesCount);
-                }}
+                onChange={handlePageChange}
               />
             </PagesNavigationWrapper>
           </CatalogTopWrapper>
           <CatalogListBlock>
-            {products.length && (
+            {products?.length && (
               <ProductCardList
                 products={products}
                 columns={{

@@ -102,7 +102,7 @@ export default function CustomSelect({
               allignItem={allignItem}
               paddingOptions={paddingOptions}
             >
-              {option.symbol}
+              {option.name}
             </MenuItem>
           ))}
         </StyledCollapse>

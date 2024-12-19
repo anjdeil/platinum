@@ -33,7 +33,7 @@ export const FilterSortWrapper = styled.div`
   }
 `;
 
-export const FIlterWrapper = styled.div`
+export const FilterWrapper = styled.div`
   display: none;
 
   @media ${({ theme }) => theme.media.large} {
@@ -61,11 +61,29 @@ export const CatalogLayout = styled.div`
   column-gap: 16px;
 `;
 
-export const CatalogFilterBlock = styled.div`
+export const CatalogFilterBlock = styled.div<{ visible: boolean }>`
   grid-column: span 3;
-
-  @media ${({ theme }) => theme.media.large} {
-    display: none;
+  box-sizing: border-box;
+  display: block;
+  @media ${({ theme }) => theme.media.middle} {
+    width: 350px;
+    position: absolute;
+    left: 0%;
+    top: 145px;
+    z-index: 12;
+    padding: 24px 32px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    display: ${({ visible }) => (visible ? "block" : "none")};
+    background-color: ${({ theme }) => theme.colors.white};
+  }
+  @media ${({ theme }) => theme.media.medium} {
+    overflow-y: auto;
+    width: 100%;
+    left: 0;
+    right: 0;
+    height: 100%;
+    top: 60px;
   }
 `;
 
@@ -88,14 +106,6 @@ export const CatalogListBlock = styled.div`
   }
 `;
 
-export const GridBox = styled.div`
-  display: grid;
-  grid-template-columns: 3fr 9fr;
-
-  @media ${({ theme }) => theme.media.middle} {
-    grid-template-columns: 1fr;
-  }
-`;
 export const SortPanel = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -123,9 +133,9 @@ export const FilterOverlay = styled.div<{ visible: boolean }>`
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 9;
+  z-index: 11;
 
-  @media ${({ theme }) => theme.media.middle} {
+  @media ${({ theme }) => theme.media.large} {
     display: ${({ visible }) => (visible ? "block" : "none")};
   }
 
@@ -133,26 +143,4 @@ export const FilterOverlay = styled.div<{ visible: boolean }>`
     display: none;
   }
 `;
-export const FilterNCategoriesMenu = styled.div<{ visible: boolean }>`
-  box-sizing: border-box;
-  display: block;
-  @media ${({ theme }) => theme.media.middle} {
-    width: 350px;
-    position: absolute;
-    left: 0%;
-    top: 145px;
-    z-index: 10;
-    padding: 24px 32px;
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
-    display: ${({ visible }) => (visible ? "block" : "none")};
-    background-color: ${({ theme }) => theme.colors.white};
-  }
-  @media ${({ theme }) => theme.media.medium} {
-    width: 100%;
-    left: 0;
-    right: 0;
-    height: 100%;
-    top: 60px;
-  }
-`;
+export const FilterNCategoriesMenu = styled.div``;

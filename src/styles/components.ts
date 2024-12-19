@@ -96,6 +96,7 @@ export const AccountInfoWrapper = styled.div<AccountInfoWrapperProps>`
 export const StyledButton = styled.button<StyledButtonProps>`
   box-sizing: border-box;
   width: ${({ width = "100%" }) => width};
+  height: ${({ height }) => height};
   min-width: ${({ minWidthDesktop = "auto" }) => minWidthDesktop};
   padding-inline: 16px;
   border-radius: 10px;

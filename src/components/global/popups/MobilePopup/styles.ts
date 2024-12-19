@@ -33,7 +33,7 @@ export const PopupContainer = styled.div<PopupContainerProps>`
 
 export const Header = styled.div<PopupContainerProps>`
   display: none;
-  padding: ${({ padding }) => (padding === "all" ? "0 37px" : " 0 17px")};
+  padding: ${({ padding }) => (padding === "all" ? "0 35px" : " 0 17px")};
 
   @media ${({ theme }) => theme.media.middle} {
     display: block;
@@ -41,7 +41,7 @@ export const Header = styled.div<PopupContainerProps>`
 `;
 
 export const Content = styled.div<PopupContainerProps>`
-  padding: ${({ padding }) => (padding === "all" ? "0 20px" : "0 20px 0 0")};
+  padding: ${({ padding }) => (padding === "all" ? "0 35px" : "0 20px 0 0")};
   height: auto;
   overflow: auto;
   position: relative;
