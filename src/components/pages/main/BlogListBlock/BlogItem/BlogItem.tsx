@@ -45,8 +45,8 @@ const BlogItem: FC<BlogItemProps> = ({ post }) => {
           <StyledImage
             src={src}
             alt={title}
-            width={728}
-            height={390}
+            width={632}
+            height={335}
             priority
           />
         </Link>
