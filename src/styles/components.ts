@@ -217,6 +217,7 @@ export const FormWrapper = styled.div`
 `;
 
 export const FormWrapperBottom = styled.div`
+  margin-top: 24px;
   display: flex;
   flex-direction: column;
   gap: 20px;

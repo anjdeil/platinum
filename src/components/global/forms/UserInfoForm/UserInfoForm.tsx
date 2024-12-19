@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import "react-international-phone/style.css";
 import { InfoCard, OptionButton, OptionButtonsContainer, ProofSelect } from "./styles";
-import { CustomForm, FormWrapper, FormWrapperBottom } from "@/styles/components";
+import { CustomForm, FormWrapper, FormWrapperBottom, StyledButton } from "@/styles/components";
 import { isAuthErrorResponseType } from "@/utils/isAuthErrorResponseType";
 import { UserInfoFormSchema } from "@/types/components/global/forms/userInfoForm";
 import { Title } from "@/styles/components";
@@ -13,11 +13,14 @@ import { CircularProgress } from "@mui/material";
 import CustomSelect from "../../selects/CustomSelect/CustomSelect";
 import { CustomFormInput } from "../CustomFormInput";
 import { CustomError } from "../CustomFormInput/styles";
+import { useTranslations } from "next-intl";
 
 const isUpdate = true;
 const isCheckout = false;
 
 export const UserInfoForm: FC = () => {
+  const tValidation = useTranslations("Validation");
+  const tForms = useTranslations("Forms");
   // auth route
   /*   const router = useRouter();
     useEffect(() =>
@@ -120,7 +123,7 @@ export const UserInfoForm: FC = () => {
     <CustomForm onSubmit={handleSubmit(onSubmit)} maxWidth="660px">
       <InfoCard>
         <Title as="h2" fontWeight={600} fontSize="24px" uppercase={true} marginBottom="16px">
-          User information
+          {tForms("UserInfo")}
         </Title>
         {isCustomerLoading && !customer ? (
           <CircularProgress />
@@ -128,7 +131,7 @@ export const UserInfoForm: FC = () => {
           <>
             <FormWrapper>
               <CustomFormInput
-                fieldName="Imię"
+                fieldName={tValidation("name")}
                 name="name"
                 inputTag={"input"}
                 inputType={"text"}
@@ -138,7 +141,7 @@ export const UserInfoForm: FC = () => {
                 setValue={setValue}
               />
               <CustomFormInput
-                fieldName="Nazwisko"
+                fieldName={tValidation("lastName")}
                 name="lastName"
                 register={register}
                 errors={errors}
@@ -148,7 +151,7 @@ export const UserInfoForm: FC = () => {
                 setValue={setValue}
               />
               <CustomFormInput
-                fieldName="Adres e-mail"
+                fieldName={tValidation("email")}
                 name="email"
                 register={register}
                 errors={errors}
@@ -158,7 +161,7 @@ export const UserInfoForm: FC = () => {
                 setValue={setValue}
               />
               <CustomFormInput
-                fieldName="phone number"
+                fieldName={tValidation("phoneNumber")}
                 name="phoneNumber"
                 register={register}
                 errors={errors}
@@ -168,7 +171,7 @@ export const UserInfoForm: FC = () => {
                 setValue={setValue}
               />
               <CustomFormInput
-                fieldName="Kraj / region"
+                fieldName={tValidation("country")}
                 name="country"
                 register={register}
                 errors={errors}
@@ -178,7 +181,7 @@ export const UserInfoForm: FC = () => {
                 setValue={setValue}
               />
               <CustomFormInput
-                fieldName="Miasto"
+                fieldName={tValidation("city")}
                 name="city"
                 register={register}
                 errors={errors}
@@ -188,7 +191,7 @@ export const UserInfoForm: FC = () => {
                 setValue={setValue}
               />
               <CustomFormInput
-                fieldName="Ulica"
+                fieldName={tValidation("street")}
                 name="address1"
                 register={register}
                 errors={errors}
@@ -198,7 +201,7 @@ export const UserInfoForm: FC = () => {
                 setValue={setValue}
               />
               <CustomFormInput
-                fieldName="Building number"
+                fieldName={tValidation("buildingNumber")}
                 name="address2"
                 register={register}
                 errors={errors}
@@ -208,7 +211,7 @@ export const UserInfoForm: FC = () => {
                 setValue={setValue}
               />
               <CustomFormInput
-                fieldName="№ apartment/office"
+                fieldName={tValidation("apartment/office")}
                 name="apartmentNumber"
                 register={register}
                 errors={errors}
@@ -218,7 +221,7 @@ export const UserInfoForm: FC = () => {
                             setValue={setValue} */
               />
               <CustomFormInput
-                fieldName="Kod pocztowy"
+                fieldName={tValidation("postCode")}
                 name="postCode"
                 register={register}
                 errors={errors}
@@ -230,7 +233,7 @@ export const UserInfoForm: FC = () => {
             </FormWrapper>
             <ProofSelect>
               <CustomSelect
-                label="Proof of purchase"
+                label={tValidation("proofOfPurchase")}
                 name="proofOfPurchase"
                 setValue={setValue}
                 register={register}
@@ -267,16 +270,17 @@ export const UserInfoForm: FC = () => {
       </InfoCard>
       <InfoCard>
         <Title as="h2" fontWeight={600} fontSize="24px" uppercase={true} marginBottom="16px">
-          Shipping information
+          {tForms("ShippingInfo")}
         </Title>
         <CustomFormInput
-          fieldName="The same address as on customer information"
+          fieldName={tValidation("theSameAddress")}
           name="IsShipping"
           onChange={(e) => setIsShipping(!e.target.checked)}
           register={register}
           errors={errors}
           inputTag={"input"}
           inputType={"checkbox"}
+          isRequire={false}
         />
         {isCustomerLoading && !customer ? (
           <CircularProgress />
@@ -286,7 +290,7 @@ export const UserInfoForm: FC = () => {
               <>
                 <FormWrapper>
                   <CustomFormInput
-                    fieldName="Kraj / region"
+                    fieldName={tValidation("country")}
                     name="countryShipping"
                     register={register}
                     errors={errors}
@@ -296,7 +300,7 @@ export const UserInfoForm: FC = () => {
                     setValue={setValue}
                   />
                   <CustomFormInput
-                    fieldName="Miasto"
+                    fieldName={tValidation("city")}
                     name="cityShipping"
                     register={register}
                     errors={errors}
@@ -306,7 +310,7 @@ export const UserInfoForm: FC = () => {
                     setValue={setValue}
                   />
                   <CustomFormInput
-                    fieldName="Ulica"
+                    fieldName={tValidation("street")}
                     name="address1Shipping"
                     register={register}
                     errors={errors}
@@ -316,7 +320,7 @@ export const UserInfoForm: FC = () => {
                     setValue={setValue}
                   />
                   <CustomFormInput
-                    fieldName="Building number"
+                    fieldName={tValidation("buildingNumber")}
                     name="address2Shipping"
                     register={register}
                     errors={errors}
@@ -326,7 +330,7 @@ export const UserInfoForm: FC = () => {
                     setValue={setValue}
                   />
                   <CustomFormInput
-                    fieldName="№ apartment/office"
+                    fieldName={tValidation("apartment/office")}
                     name="apartmentNumberShipping"
                     register={register}
                     errors={errors}
@@ -334,7 +338,7 @@ export const UserInfoForm: FC = () => {
                     inputType={"number"}
                   />
                   <CustomFormInput
-                    fieldName="Kod pocztowy"
+                    fieldName={tValidation("postCode")}
                     name="postCodeShipping"
                     register={register}
                     errors={errors}
@@ -351,17 +355,18 @@ export const UserInfoForm: FC = () => {
       </InfoCard>
 
       <CustomFormInput
-        fieldName="I agree to receiving information regarding news and changes to the stores offer"
+        fieldName={tValidation("agreentment")}
         name="terms"
         register={register}
         errors={errors}
         inputTag={"input"}
         inputType={"checkbox"}
+        width="100%"
       />
       <FormWrapperBottom>
-        <button type="submit" disabled={isSubmitting || !hasChanges}>
-          {isSubmitting ? "Saving..." : "Save changes"}
-        </button>
+        <StyledButton type="submit" disabled={isSubmitting || !hasChanges}>
+          {isSubmitting ? tValidation("saving") : tValidation("saveChanges")}
+        </StyledButton>
         {error && (
           <CustomError
             dangerouslySetInnerHTML={{ __html: isAuthErrorResponseType(error) }}

@@ -67,19 +67,13 @@ export const Input = styled.input<CustomInputProps>`
   height: ${({ isCheckbox, height = "100%" }) => (isCheckbox ? "24px" : height)};
 
   border: ${({ isCheckbox }) => (isCheckbox ? "1px solid #ccc" : "none")};
-  border-radius: 10px;
+  border-radius: ${({ isCheckbox }) => (isCheckbox ? "5px" : "10px")};
   font-size: 16px;
-
   outline: 1px solid
     ${({ theme, isError }) => (isError ? theme.colors.error : theme.background.formElements)};
-  background-color: ${({ theme, background = theme.background.formElements }) => background};
-  transition: outline-width 0.2s ease-in-out;
-
-  &:-webkit-autofill {
-    background-color: ${({ theme, background }) => background || theme.colors.white} !important;
-    color: ${({ theme }) => theme.colors.black} !important;
-    transition: background-color 5000s ease-in-out 0s;
-  }
+  background-color: ${({ theme, isCheckbox, background }) =>
+    isCheckbox ? "#f0f0f0" : background || theme.background.formElements};
+  transition: outline-width 0.1s ease-in-out, background-color 0.1s ease-in-out;
 
   &:focus {
     outline: 1px solid
@@ -91,21 +85,32 @@ export const Input = styled.input<CustomInputProps>`
     ${(props) => props.as === "textarea" && "text-align: start;"};
   }
 
-  &[type="number"]::-webkit-inner-spin-button,
-  &[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
-  &[type="number"] {
+  &[type="checkbox"] {
     appearance: none;
-    -moz-appearance: textfield;
-  }
+    display: inline-block;
+    background-color: transparent;
+    border: 2px solid ${({ theme }) => theme.colors.lightBorder};
+    border-radius: 4px;
+    position: relative;
+    cursor: pointer;
 
-  @media ${({ theme }) => theme.media.medium} {
-    width: ${({ isCheckbox }) => (isCheckbox ? "15px" : "100%")};
-    height: ${({ isCheckbox, height = "100%" }) => (isCheckbox ? "15px" : height)};
-    font-size: 14px;
+    &:checked {
+      background-color: ${({ theme }) => theme.colors.primary};
+      border-color: ${({ theme }) => theme.colors.primary};
+
+      &::after {
+        content: "";
+
+        position: absolute;
+        top: 45%;
+        left: 50%;
+        width: 10px;
+        height: 5px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: translate(-50%, -50%) scaleX(-1) rotate(45deg);
+      }
+    }
   }
 `;
 
@@ -141,7 +146,7 @@ export const CustomError = styled.p`
   }
 `;
 export const CustomInputContainer = styled.div<CustomInputContainerProps>`
-  width: ${({ isCheckbox, width = "100%" }) => (isCheckbox ? "18px" : width)};
+  width: ${({ isCheckbox, width = "100%" }) => (isCheckbox ? "100%" : width)};
 
   @media ${({ theme }) => theme.media.medium} {
     margin-top: 10px;

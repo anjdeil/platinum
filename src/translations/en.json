@@ -70,7 +70,13 @@
     "Search": "Search"
   },
   "Archive": {
-    "goHome": "Home"
+    "goHome": "Home",
+    "filters": "Filters",
+    "products": "products",
+    "stocks": "Sort by stock availability",
+    "new": "Sort by newest",
+    "cheapest": "Sort by cheapest",
+    "expensive": "Sort by most expensive"
   },
   "Product": {
     "addToBasket": "Add to basket",
@@ -165,12 +171,43 @@
     "successMessage": "Your message has been sent successfully!"
   },
   "Validation": {
-    "email": "Please enter a valid email.",
-    "minChar": "Must be at least {count} characters long."
+    "emailValidation": "Please enter a valid email.",
+    "minChar": "Must be at least {count} characters long.",
+    "RequiredField": "Required field",
+    "email": "Email",
+    "name": "Name",
+    "lastName": "Last name",
+    "address": "Address",
+    "phoneNumber": "Phone number",
+    "country": "Country",
+    "city": "City",
+    "street": "Street",
+    "postCode": "Post Code",
+    "apartment/office": "№ apartment/office",
+    "buildingNumber": "Building number",
+    "proofOfPurchase": "Proof of purchase",
+    "aboutYourself": "About yourself",
+    "preview": "Preview",
+    "clickToUpload": "Click to upload",
+    "orDragAndDrop": "or drag and drop",
+    "or": "or",
+    "max": "max",
+    "sending": "Sending...",
+    "sendButton": "Send",
+    "saving": "Saving...",
+    "saveChanges": "Save changes",
+    "InvalidPhoneNumber": "Invalid phone number",
+    "fileTooLarge": "file too large",
+    "agreentment": "I agree to receiving information regarding news and changes to the stores offer",
+    "theSameAddress": "The same address as on customer information"
+  },
+  "Forms": {
+    "applicationForm": "application form",
+    "UserInfo": "User information",
+    "ShippingInfo": "Shipping information"
   },
   "Breadcrumbs": {
-    "homePage": "Home Page",
-    "benefitsPage": "Loyalty Program"
+    "homePage": "Home Page"
   },
   "NotFoundPage": {
     "notFound": "Page not found",

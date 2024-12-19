@@ -14,29 +14,22 @@ import {
   FilterWrapper,
   PagesNavigationWrapper,
 } from "./styles";
-import SideList from "@/components/global/SideList/SideList";
 import transformCategoriesIntoLinks from "@/services/transformers/transformCategoriesIntoLinks";
 import { useTranslations } from "next-intl";
 import { CategoryType } from "@/types/pages/shop";
-import { useGetCategoriesQuery } from "@/store/rtk-queries/wpCustomApi";
-import transformSubcategoriesIntoLinks from "@/services/transformers/transformSubcategoriesIntoLinks";
-import { Container, FlexBox, PagesNavigation, Title } from "@/styles/components";
-import { FC, useEffect, useMemo, useState } from "react";
+import { PagesNavigation, Title } from "@/styles/components";
+import { FC, useEffect, useState } from "react";
 import router from "next/router";
 import { FilterPanel } from "../filtration/FilterPanel";
 import { ArchivePropsType } from "@/types/components/shop/archive";
-import { FilterNCategoriesHead, FilterNCategoriesMenu, FilterOverlay } from "./styles";
+import { FilterNCategoriesHead, FilterOverlay } from "./styles";
 import CloseIcon from "@/components/global/icons/CloseIcon/CloseIcon";
-import FilterIconButton from "@/components/global/buttons/FilterIconButton/FilterIconButton";
 import { ProductCardList } from "../ProductCardsList";
-import theme from "@/styles/theme";
 import { useResponsive } from "@/hooks/useResponsive";
 import MobileCategoriesMenu from "@/components/global/popups/MobileCategoriesMenu/MobileCategoriesMenu";
 import SelectParentCategory from "../categories/SelectParentCategoryMobile/SelectParentCategoryMobile";
 import CategoriesMenu from "@/components/shop/categories/CategoriesMenu/CategoriesMenu";
-
 import { useAppSelector } from "@/store";
-import { log } from "console";
 import { Skeleton } from "@mui/material";
 
 const switchPage = (page: number, maxPage: number) => {
@@ -93,21 +86,6 @@ export const Archive: FC<ArchivePropsType> = (props) => {
   /**
    * Formulate subcategories links for sidebar
    */
-  const { data: allCategoriesData } = useGetCategoriesQuery({ lang: locale });
-  const allCategories = allCategoriesData?.data?.items;
-
-  const parentCategoryId = currentCategory?.parent_id
-    ? currentCategory.parent_id
-    : currentCategory?.id;
-  const parentCategory = allCategories?.find(({ id }) => id === parentCategoryId);
-  const parentCategorySlug = parentCategory?.parent_id === 0 ? parentCategory?.slug : null;
-
-  const subcategories = allCategories?.filter(({ parent_id }) => parent_id === parentCategoryId);
-  const subcategoriesLinks = transformSubcategoriesIntoLinks(
-    subcategories || [],
-    parentCategorySlug,
-    currentCategory?.id
-  );
 
   const [isMenuVisible, setMenuVisible] = useState(false);
   const { isMobile } = useResponsive();
@@ -175,10 +153,16 @@ export const Archive: FC<ArchivePropsType> = (props) => {
                 ) : (
                   <>
                     {selectedCategories.length !== 0 ? (
-                      <SelectParentCategory
-                        selectedCategories={selectedCategories}
-                        switchCategory={switchCategory}
-                      />
+                      <>
+                        {isLoading ? (
+                          <Skeleton width="100%" height={48} variant="rounded" />
+                        ) : (
+                          <SelectParentCategory
+                            selectedCategories={selectedCategories}
+                            switchCategory={switchCategory}
+                          />
+                        )}
+                      </>
                     ) : (
                       <MobileCategoriesMenu
                         padding="all"
@@ -192,10 +176,16 @@ export const Archive: FC<ArchivePropsType> = (props) => {
                 )}
               </>
             ) : (
-              <SelectParentCategory
-                selectedCategories={selectedCategories}
-                switchCategory={switchCategory}
-              />
+              <>
+                {isLoading ? (
+                  <Skeleton width="100%" height={48} variant="rounded" />
+                ) : (
+                  <SelectParentCategory
+                    selectedCategories={selectedCategories}
+                    switchCategory={switchCategory}
+                  />
+                )}
+              </>
             )}
           </>
 
@@ -217,7 +207,9 @@ export const Archive: FC<ArchivePropsType> = (props) => {
               </FilterWrapper>
               <CustomSortAccordion />
             </FilterSortWrapper>
-            <CountProduct>{`${statistic.products_count} products`}</CountProduct>
+            <CountProduct>
+              {statistic.products_count}&nbsp;{t("products")}
+            </CountProduct>
             <PagesNavigationWrapper>
               <PagesNavigation
                 page={+page}

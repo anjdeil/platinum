@@ -40,6 +40,7 @@ const SelectParentCategory: FC<SelectParentCategoryMobileProps> = ({
               <List>
                 {children.map((childCategory) => (
                   <StyledListItem
+                    btnpadding="12px 16px"
                     key={childCategory.slug}
                     isActive={childCategory.id === selectedCategories[1]?.id}
                   >

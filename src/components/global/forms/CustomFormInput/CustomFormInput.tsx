@@ -96,6 +96,7 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
               {...registerProps}
               height={height}
               background={background}
+              isCheckbox={inputType === "checkbox"}
             />
           )}
           {inputType === "password" && (
