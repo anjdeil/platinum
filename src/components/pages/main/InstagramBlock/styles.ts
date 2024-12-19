@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { Skeleton } from '@mui/material';
+import Image from 'next/image';
 import Link from 'next/link';
 
 export const InstagramBlockContainer = styled.div`
@@ -71,7 +72,8 @@ export const InstagramPhotoWrapper = styled(Link)`
     opacity: 1;
   }
 `;
-export const InstagramPhoto = styled.img`
+export const InstagramPhoto = styled(Image)`
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
