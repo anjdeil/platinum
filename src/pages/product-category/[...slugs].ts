@@ -1,7 +1,7 @@
 import { Archive } from "@/components/shop/Archive";
 import { customRestApi } from "@/services/wpCustomApi";
-
-import { CategoryType, ProductType } from "@/types/pages/shop";
+import CategoryType from "@/types/components/shop/categories/categories";
+import { ProductType } from "@/types/pages/shop";
 import { CustomDataCategoriesType, ProductParamsType } from "@/types/services";
 import { findPageParam } from "@/utils/getCurrentPageNumber";
 import { sanitizeSearchParams } from "@/utils/sanitizeSearchParams";
@@ -139,7 +139,6 @@ export const getServerSideProps: GetServerSideProps = async ({
         page,
         categories,
         locale,
-        categoriesSlugs: categorySlugs,
         statistic: validatedProductsData?.data.statistic,
       },
     };

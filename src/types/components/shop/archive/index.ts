@@ -10,7 +10,6 @@ export const ArchivePropsSchema = z.object({
   categories: z.array(CategorySchema),
   statistic: CustomDataProductsStatisticSchema,
   locale: z.string(),
-  categoriesSlugs: z.array(z.string()),
 });
 
 export type ArchivePropsType = z.infer<typeof ArchivePropsSchema>;

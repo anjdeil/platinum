@@ -63,7 +63,7 @@ export const switchCategory = (parentSlug: string, childSlug?: string) => {
 };
 
 export const Archive: FC<ArchivePropsType> = (props) => {
-  const { products, categories, pagesCount, page, statistic, locale, categoriesSlugs } = props;
+  const { products, categories, pagesCount, page, statistic, locale } = props;
 
   const t = useTranslations("Archive");
 
@@ -102,25 +102,7 @@ export const Archive: FC<ArchivePropsType> = (props) => {
       }
     }
   };
-
-  const [selectedCategories, setCategories] = useState<CategoryType[]>([]);
-
-  const categoriesData: CategoryType[] | undefined = useAppSelector(
-    (state) => state.categoriesSlice.categories
-  );
-
   const isLoading: boolean | undefined = useAppSelector((state) => state.categoriesSlice.loading);
-
-  useEffect(() => {
-    if (!categoriesData || categoriesData.length === 0) {
-      setCategories([]);
-      return;
-    }
-    const filteredCategories = categoriesData.filter((category) =>
-      categoriesSlugs.includes(category.slug)
-    );
-    setCategories(filteredCategories);
-  }, [categoriesData, categoriesSlugs]);
 
   const handlePageChange = (_: any, newPage: number) => {
     switchPage(newPage, pagesCount);
@@ -146,19 +128,19 @@ export const Archive: FC<ArchivePropsType> = (props) => {
                 {!isMobile ? (
                   <CategoriesMenu
                     switchCategory={switchCategory}
-                    selectedCategories={selectedCategories}
+                    selectedCategories={categories}
                     shop={true}
                     isMenuVisible={isMenuVisible}
                   />
                 ) : (
                   <>
-                    {selectedCategories.length !== 0 ? (
+                    {categories.length !== 0 ? (
                       <>
                         {isLoading ? (
                           <Skeleton width="100%" height={48} variant="rounded" />
                         ) : (
                           <SelectParentCategory
-                            selectedCategories={selectedCategories}
+                            selectedCategories={categories}
                             switchCategory={switchCategory}
                           />
                         )}
@@ -181,7 +163,7 @@ export const Archive: FC<ArchivePropsType> = (props) => {
                   <Skeleton width="100%" height={48} variant="rounded" />
                 ) : (
                   <SelectParentCategory
-                    selectedCategories={selectedCategories}
+                    selectedCategories={categories}
                     switchCategory={switchCategory}
                   />
                 )}
