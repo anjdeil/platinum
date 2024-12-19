@@ -94,6 +94,7 @@ export const StyledSkeleton = styled(Skeleton)`
   width: 24%;
   height: auto;
   aspect-ratio: 1 / 1;
+  background: ${({ theme }) => theme.background.secondary};
 
   @media ${({ theme }) => theme.media.preSmall} {
     width: 46%;
