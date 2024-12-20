@@ -159,14 +159,34 @@
     "yourNamePlaceholder": "What is your name?",
     "emailPlaceholder": "Email",
     "yourQuestionPlaceholder": "Write your question",
-    "sending": "Sending...",
-    "sendButton": "Send",
+
     "errorMessage": "Something went wrong. Please try again.",
     "successMessage": "Your message has been sent successfully!"
   },
   "Validation": {
-    "email": "Please enter a valid email.",
-    "minChar": "Must be at least {count} characters long."
+    "emailValidation": "Please enter a valid email.",
+    "minChar": "Must be at least {count} characters long.",
+    "RequiredField": "Required field",
+    "email": "Email",
+    "name": "Name",
+    "lastName": "Last name",
+    "address": "Address",
+    "phoneNumber": "Phone number",
+    "country": "Country",
+    "city": "City",
+    "aboutYourself": "About yourself",
+    "preview": "Preview",
+    "clickToUpload": "Click to upload",
+    "orDragAndDrop": "or drag and drop",
+    "or": "or",
+    "max": "max",
+    "sending": "Sending...",
+    "sendButton": "Send",
+    "InvalidPhoneNumber": "Invalid phone number",
+    "fileTooLarge": "file too large"
+  },
+  "Forms": {
+    "applicationForm": "application form"
   },
   "Breadcrumbs": {
     "homePage": "Home Page",

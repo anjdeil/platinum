@@ -159,13 +159,34 @@
     "successMessage": "Ihre Nachricht wurde erfolgreich gesendet!"
   },
   "Validation": {
-    "email": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
-    "minChar": "Muss mindestens {count} Zeichen lang sein."
+    "emailValidation": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+    "minChar": "Muss mindestens {count} Zeichen lang sein.",
+    "RequiredField": "Pflichtfeld",
+    "email": "E-Mail",
+    "name": "Name",
+    "lastName": "Nachname",
+    "address": "Adresse",
+    "phoneNumber": "Telefonnummer",
+    "country": "Land",
+    "city": "Stadt",
+    "aboutYourself": "Über sich selbst",
+    "preview": "Vorschau",
+    "clickToUpload": "Klicken Sie, um hochzuladen",
+    "orDragAndDrop": "oder ziehen und ablegen",
+    "or": "oder",
+    "max": "max",
+    "sending": "Senden...",
+    "sendButton": "Senden",
+    "InvalidPhoneNumber": "Ungültige Rufnummer",
+    "fileTooLarge": "Datei zu groß"
   },
   "Breadcrumbs": {
     "homePage": "Startseite",
     "benefitsPage": "Vorteile",
     "blogPage": "Blog"
+  },
+  "Forms": {
+    "applicationForm": "Antragsformular"
   },
   "NotFoundPage": {
     "notFound": "Seite nicht gefunden",
