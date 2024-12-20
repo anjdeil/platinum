@@ -71,8 +71,22 @@ export const BlogListSkeletonPropsSchema = z.object({
   length: z.number(),
 });
 
+export const BlogPostSchema = BlogItemSchema.extend({
+  prev_post: z.string(),
+  next_post: z.string(),
+});
+
+export const BlogResponseTypeSchema = z.object({
+  success: z.boolean(),
+  data: z.object({
+    item: BlogPostSchema,
+  }),
+});
+
 export type BlogItemType = z.infer<typeof BlogItemSchema>;
 export type BlogListBlockProps = z.infer<typeof BlogListBlockPropsSchema>;
 export type BlogListSkeletonProps = z.infer<typeof BlogListSkeletonPropsSchema>;
 export type BlogParsedItemType = z.infer<typeof BlogParsedItemSchema>;
 export type BlogItemUnionType = z.infer<typeof BlogItemUnionSchema>;
+export type BlogPostType = z.infer<typeof BlogPostSchema>;
+export type BlogPostResponseType = z.infer<typeof BlogResponseTypeSchema>;

@@ -81,8 +81,8 @@ export const FeaturesSectionSchema = z.object({
 
 export const BlogSectionSchema = z.object({
   _type: z.literal('blog'),
-  subtitle: z.string(),
-  title: z.string(),
+  subtitle: z.string().optional(),
+  title: z.string().optional(),
 });
 
 export const LoyaltySectionSchema = z.object({

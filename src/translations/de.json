@@ -181,7 +181,9 @@
     "fileTooLarge": "Datei zu groß"
   },
   "Breadcrumbs": {
-    "homePage": "Startseite"
+    "homePage": "Startseite",
+    "benefitsPage": "Vorteile",
+    "blogPage": "Blog"
   },
   "Forms": {
     "applicationForm": "Antragsformular"
@@ -209,5 +211,15 @@
     "failedSubscribe": "Fehler beim Abonnieren",
     "successSubscribe": "Erfolgreich abonniert",
     "userAlreadySubscribed": "Du wurdest bereits bemalt"
+  },
+  "Delivery": {
+    "costsTitle": "Lieferkosten sind in der Kaufkalkulation nicht enthalten.",
+    "freeCostsPoland": "Kostenlose Lieferung innerhalb Polens bei Bestellungen über 200 PLN.",
+    "freeCostsEurope": "Kostenlose Lieferung nach Deutschland, Österreich, Slowakei, Slowenien, Belgien, Ungarn, Litauen, Tschechien, Dänemark, Rumänien und Estland bei einem Bestellwert von über 150 EUR."
+  },
+  "BlogPostPage": {
+    "previousPost": "Zurück",
+    "nextPost": "Weiter",
+    "blogSectionSubtitle": "Letzte artikel"
   }
 }

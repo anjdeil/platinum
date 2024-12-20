@@ -188,7 +188,9 @@
     "fileTooLarge": "слишком большой файл"
   },
   "Breadcrumbs": {
-    "homePage": "Главная"
+    "homePage": "Главная",
+    "benefitsPage": "Программа лояльности",
+    "blogPage": "Блог"
   },
   "Forms": {
     "applicationForm": "Форма заявки"
@@ -216,5 +218,16 @@
     "failedSubscribe": "Не удалось отправить письмо",
     "successSubscribe": "Подписались!",
     "userAlreadySubscribed": "Пользователь уже подписан"
+  },
+  "Delivery": {
+    "costsTitle": "Стоимость доставки не включена в стоимость покупки.",
+    "freeCostsPoland": "Бесплатная доставка по Польше для заказов от 200 PLN.",
+    "freeCostsEurope": "Бесплатная доставка в Германию, Австрию, Словакию, Словению, Бельгию, Венгрию, Литву, Чехию, Данию, Румынию и Эстонию при заказе свыше 150 евро."
+  },
+  "BlogPostPage": {
+    "previousPost": "Предыдущий",
+    "nextPost": "Следующий",
+    "blogPage": "Блог",
+    "blogSectionSubtitle": "Последние статьи"
   }
 }
