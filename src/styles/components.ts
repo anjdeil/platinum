@@ -4,24 +4,43 @@ import {
   LogoLinkProps,
   StyledButtonProps,
   TextProps,
-} from "@/types/styles/components";
-import styled from "@emotion/styled";
-import { Pagination } from "@mui/material";
-import Image from "next/image";
-import Link from "next/link";
+} from '@/types/styles/components';
+import styled from '@emotion/styled';
+import { Pagination } from '@mui/material';
+import Image from 'next/image';
+import Link from 'next/link';
+
+interface FlexBoxProps {
+  flexDirection?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
+  justifyContent?:
+    | 'flex-start'
+    | 'flex-end'
+    | 'center'
+    | 'space-between'
+    | 'space-around'
+    | 'space-evenly';
+  alignItems?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
+  flexWrap?: 'nowrap' | 'wrap' | 'wrap-reverse';
+  gap?: string;
+  padding?: string;
+  margin?: string;
+  width?: string;
+  height?: string;
+  bgColor?: string;
+}
 
 interface TitleProps {
-  as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+  as: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   fontWeight?: number;
   fontSize?: string;
   mobFontSize?: string;
-  textalign?: "center" | "left" | "right";
+  textalign?: 'center' | 'left' | 'right';
   uppercase?: boolean;
   marginTop?: string;
   marginBottom?: string;
   tabletMarginBottom?: number;
   mobMarginBottom?: number;
-};
+}
 
 /** Titles components */
 export const Title = styled.h1<TitleProps>`
@@ -29,10 +48,10 @@ export const Title = styled.h1<TitleProps>`
   font: ${({ theme }) => theme.fonts.titleH2SemiBold};
   font-size: ${({ fontSize }) => fontSize};
   font-weight: ${({ fontWeight }) => fontWeight};
-  text-transform: ${({ uppercase }) => (uppercase ? "uppercase" : "none")};
-  text-align: ${({ textalign = "center" }) => textalign};
-  margin-top: ${({ marginTop = "0" }) => marginTop};
-  margin-bottom: ${({ marginBottom = "0" }) => marginBottom};
+  text-transform: ${({ uppercase }) => (uppercase ? 'uppercase' : 'none')};
+  text-align: ${({ textalign = 'center' }) => textalign};
+  margin-top: ${({ marginTop = '0' }) => marginTop};
+  margin-bottom: ${({ marginBottom = '0' }) => marginBottom};
 
   @media ${({ theme }) => theme.media.large} {
     font: ${({ theme }) => theme.fonts.bodyMiddleSemiBold};
@@ -40,13 +59,12 @@ export const Title = styled.h1<TitleProps>`
     font-size: ${({ fontSize }) => fontSize};
   }
 
-
   @media ${({ theme }) => theme.media.small} {
     font-size: ${({ mobFontSize }) => mobFontSize};
   }
 `;
 
-export const AccountTitle = styled(Title) <TitleProps>`
+export const AccountTitle = styled(Title)<TitleProps>`
   margin-top: 24px;
   margin-bottom: ${({ marginBottom = 48 }) => marginBottom}px;
 
@@ -86,7 +104,7 @@ export const AccountInfoWrapper = styled.div<AccountInfoWrapperProps>`
 
   @media ${({ theme }) => theme.media.medium} {
     flex-direction: ${({ mobileReverse = false }) =>
-    mobileReverse ? "column-reverse" : "column"};
+      mobileReverse ? 'column-reverse' : 'column'};
     margin-bottom: 64px;
   }
 `;
@@ -97,8 +115,8 @@ export const AccountInfoWrapper = styled.div<AccountInfoWrapperProps>`
  */
 export const StyledButton = styled.button<StyledButtonProps>`
   box-sizing: border-box;
-  width: ${({ width = "100%" }) => width};
-  min-width: ${({ minWidthDesktop = "auto" }) => minWidthDesktop};
+  width: ${({ width = '100%' }) => width};
+  min-width: ${({ minWidthDesktop = 'auto' }) => minWidthDesktop};
   padding-inline: 16px;
   border-radius: 10px;
   color: ${({ theme, secondary = false }) =>
@@ -107,8 +125,8 @@ export const StyledButton = styled.button<StyledButtonProps>`
     notify
       ? theme.colors.secondary
       : secondary
-        ? "transparent"
-        : theme.colors.primary};
+      ? 'transparent'
+      : theme.colors.primary};
   padding-block: 16px;
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
   text-transform: none;
@@ -122,9 +140,9 @@ export const StyledButton = styled.button<StyledButtonProps>`
   &:hover {
     color: ${({ theme, hoverColor = theme.colors.white }) => hoverColor};
     background-color: ${({
-          theme,
-          hoverBackgroundColor = theme.background.hover,
-        }) => hoverBackgroundColor};
+      theme,
+      hoverBackgroundColor = theme.background.hover,
+    }) => hoverBackgroundColor};
   }
 
   &:disabled {
@@ -143,30 +161,30 @@ export const StyledButton = styled.button<StyledButtonProps>`
   }
 `;
 
-export const LogoLink = styled(Link) <LogoLinkProps>`
-    flex-shrink: 0;
-    display: flex;
-    position: relative;
-    width: ${({ desktopwidth = 92 }) => `${desktopwidth}px`};
-    height: ${({ desktopheight = 92 }) => `${desktopheight}px`};
-    
-    @media ${({ theme }) => theme.media.large} {
-        width: ${({ width = 44 }) => `${width}px`};
-        height: ${({ height = 44 }) => `${height}px`};
-    }
+export const LogoLink = styled(Link)<LogoLinkProps>`
+  flex-shrink: 0;
+  display: flex;
+  position: relative;
+  width: ${({ desktopwidth = 92 }) => `${desktopwidth}px`};
+  height: ${({ desktopheight = 92 }) => `${desktopheight}px`};
+
+  @media ${({ theme }) => theme.media.large} {
+    width: ${({ width = 44 }) => `${width}px`};
+    height: ${({ height = 44 }) => `${height}px`};
+  }
 `;
 
 export const PagesNavigation = styled(Pagination)(({ theme }) => ({
-  ".MuiPaginationItem-root": {
-    borderRadius: "10px",
-    padding: "6px 10px",
-    minWidth: "fit-content",
-    height: "fit-content",
+  '.MuiPaginationItem-root': {
+    borderRadius: '10px',
+    padding: '6px 10px',
+    minWidth: 'fit-content',
+    height: 'fit-content',
     font: theme.fonts.bodyMiddleReg,
     fontWeight: 500,
-    lineHeight: "1em",
+    lineHeight: '1em',
 
-    "&.Mui-selected": {
+    '&.Mui-selected': {
       backgroundColor: theme.background.secondary,
     },
   },
@@ -195,14 +213,14 @@ export const StyledIconWrapper = styled.div`
   }
 `;
 
-export const LogoLinkImage = styled(Image) <LogoLinkImageProps>`
+export const LogoLinkImage = styled(Image)<LogoLinkImageProps>`
   width: 100%;
   height: 100%;
 `;
 
 export const Text = styled.span<TextProps>`
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
-  text-align: ${({ textalign = "left" }) => textalign};
+  text-align: ${({ textalign = 'left' }) => textalign};
 `;
 
 export const VariationTitle = styled(Text)`
@@ -215,6 +233,20 @@ export const VariationTitle = styled(Text)`
 
 export const TinyText = styled.p`
   font: ${({ theme }) => theme.fonts.bodysmallReg};
+`;
+
+export const FlexBox = styled.div<FlexBoxProps>`
+  display: flex;
+  flex-direction: ${({ flexDirection = 'row' }) => flexDirection};
+  justify-content: ${({ justifyContent = 'flex-start' }) => justifyContent};
+  align-items: ${({ alignItems = 'stretch' }) => alignItems};
+  flex-wrap: ${({ flexWrap = 'nowrap' }) => flexWrap};
+  gap: ${({ gap = '0' }) => gap};
+  padding: ${({ padding = '0' }) => padding};
+  margin: ${({ margin = '0' }) => margin};
+  width: ${({ width = 'auto' }) => width};
+  height: ${({ height = 'auto' }) => height};
+  background-color: ${({ bgColor = 'transparent' }) => bgColor};
 `;
 
 export const StyledHeaderWrapper = styled.header`

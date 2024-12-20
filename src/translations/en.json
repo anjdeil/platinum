@@ -61,7 +61,17 @@
     "amount": "Amount",
     "paymentMethod": "Payment method",
     "total": "Total",
-    "action": "Action"
+    "action": "Action",
+    "login": "Login",
+    "log-In": "Log in",
+    "password": "Password",
+    "AlreadyHaveAnAccount": "Already have an account?",
+
+    "DontHaveAnAccount": "Don't have an account?",
+    "SignUpNow": "Sign up now!",
+    "register": "Register",
+    "registration": "Registration",
+    "AgreePersonalData": "I agree to the processing of personal data"
   },
   "TopBar": {
     "CallUs": "Call us"
@@ -170,7 +180,8 @@
   },
   "Breadcrumbs": {
     "homePage": "Home Page",
-    "benefitsPage": "Loyalty Program"
+    "benefitsPage": "Loyalty Program",
+    "myAccount": "My account"
   },
   "NotFoundPage": {
     "notFound": "Page not found",

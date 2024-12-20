@@ -3,7 +3,7 @@ import { CustomForm, FormWrapperBottom } from '../RegistrationForm/styles';
 import {
   LoginFormSchema,
   LoginFormType,
-} from '@/types/components/global/forms/loginForm';
+} from '@/types/components/global/forms/LoginForm';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -12,13 +12,15 @@ import {
 } from '@/store/rtk-queries/wpApi';
 import { CustomError, CustomSuccess } from '../CustomFormInput/styles';
 import { CustomFormInput } from '../CustomFormInput';
-import { FormWrapper } from './styles';
-import { StyledButton } from '@/styles/components';
+import { ActiveText, FormWrapper } from './styles';
+import { FlexBox, StyledButton, Title } from '@/styles/components';
 import theme from '@/styles/theme';
 import { useRouter } from 'next/router';
+import { useTranslations } from 'next-intl';
 
 export const LoginForm: FC = () => {
   const router = useRouter();
+  const t = useTranslations('MyAccount');
   const [customError, setCustomError] = useState<string>('');
 
   /** Form settings */
@@ -61,9 +63,12 @@ export const LoginForm: FC = () => {
 
   return (
     <CustomForm onSubmit={handleSubmit(onSubmit)}>
+      <Title as="h3" uppercase>
+        {t('log-In')}
+      </Title>
       <FormWrapper>
         <CustomFormInput
-          fieldName="Adres e-mail"
+          fieldName={t('email')}
           name="email"
           register={register}
           errors={errors}
@@ -71,7 +76,7 @@ export const LoginForm: FC = () => {
           inputType={'text'}
         />
         <CustomFormInput
-          fieldName="Hasło"
+          fieldName={t('password')}
           name="password"
           register={register}
           errors={errors}
@@ -81,23 +86,17 @@ export const LoginForm: FC = () => {
       </FormWrapper>
       <FormWrapperBottom>
         <StyledButton
-          backgroundColor={theme.background.hover}
           color={theme.colors.white}
           type="submit"
           disabled={isSubmitting}
         >
-          Login
+          {t('login')}
         </StyledButton>
-        <StyledButton
-          backgroundColor={'transparent'}
-          color={theme.colors.black}
-          disabled={isSubmitting}
-          onSubmit={() => {
-            router.push('/my-account');
-          }}
-        >
-          Register
-        </StyledButton>
+        <FlexBox justifyContent="space-between">
+          <div>Don't have an account?</div>
+          <ActiveText href="/my-account/registration">Sign up now!</ActiveText>
+        </FlexBox>
+
         {customError && <CustomError>{customError}</CustomError>}
         {isSubmitSuccessful && !customError && !isLoading && (
           <CustomSuccess>

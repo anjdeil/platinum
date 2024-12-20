@@ -10,7 +10,7 @@ import { CustomForm, FormWrapper, FormWrapperBottom } from './styles';
 import { isAuthErrorResponseType } from '@/utils/isAuthErrorResponseType';
 import { CustomFormInput } from '../CustomFormInput';
 import { CustomError, CustomSuccess } from '../CustomFormInput/styles';
-import { StyledButton, Title } from '@/styles/components';
+import { FlexBox, StyledButton, Title } from '@/styles/components';
 import theme from '@/styles/theme';
 import { validateWooCustomer } from '@/utils/zodValidators/validateWooCustomer';
 import {
@@ -18,11 +18,13 @@ import {
   useGetTokenMutation,
 } from '@/store/rtk-queries/wpApi';
 import { CustomFormCheckbox } from '../CustomFormCheckbox';
+import { useTranslations } from 'next-intl';
+import { ActiveText } from '../LoginForm/styles';
 
 export const RegistrationForm: FC = () => {
   const router = useRouter();
   const [customError, setCustomError] = useState<string>('');
-
+  const t = useTranslations('MyAccount');
   /** Form settings */
   const formSchema = useMemo(() => RegistrationFormSchema(false), []);
   type RegistrationFormType = z.infer<typeof formSchema>;
@@ -99,7 +101,7 @@ export const RegistrationForm: FC = () => {
   return (
     <CustomForm onSubmit={handleSubmit(onSubmit)}>
       <Title as={'h2'} uppercase={true} marginBottom={'24px'}>
-        Register
+        {t('register')}
       </Title>
       <FormWrapper>
         <CustomFormInput
@@ -207,7 +209,6 @@ export const RegistrationForm: FC = () => {
       />
       <FormWrapperBottom>
         <StyledButton
-          backgroundColor={theme.background.hover}
           color={theme.colors.white}
           type="submit"
           disabled={isSubmitting}
@@ -227,6 +228,10 @@ export const RegistrationForm: FC = () => {
           </CustomSuccess>
         )}
       </FormWrapperBottom>
+      <FlexBox gap="10px" justifyContent="flex-end" margin="16px 0 0 0">
+        <div>{t('AlreadyHaveAnAccount')} </div>
+        <ActiveText href="/my-account/login">{t('log-In')}!</ActiveText>
+      </FlexBox>
     </CustomForm>
   );
 };
