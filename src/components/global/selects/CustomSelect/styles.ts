@@ -79,8 +79,3 @@ export const MenuItem = styled.div<CustomSelectStyledProps>`
       background ? theme.colors.white : theme.background.secondary};
   }
 `;
-
-export const CustomLabel = styled.label`
-  padding-bottom: 4px;
-  font: ${({ theme }) => theme.fonts.bodyMiddleReg};
-`;
