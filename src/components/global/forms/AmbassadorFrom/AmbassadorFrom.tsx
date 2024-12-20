@@ -32,13 +32,6 @@ import {
 } from '@/types/components/global/forms/ambassadorFrom';
 
 export const AmbassadorForm: FC = () => {
-  // auth route
-  /*   const router = useRouter();
-    useEffect(() =>
-        {
-            if (isLoggedIn) router.push('/account');
-        }, [router, isLoggedIn]); */
-
   const [hasChanges, setHasChanges] = useState<boolean>(false);
 
   const [file, setFile] = useState<File | null>(null);
@@ -46,7 +39,6 @@ export const AmbassadorForm: FC = () => {
   const [preview, setPreview] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState<boolean>(false);
 
-  // hard fetch user
   const {
     data: customer,
     error: customerError,
@@ -79,7 +71,8 @@ export const AmbassadorForm: FC = () => {
     console.log('Form data:', data);
 
     const formData = {
-      _wpcf7_unit_tag: 'wpcf7-f26923-o1',
+      _wpcf7_unit_tag:
+        process.env.NEXT_PUBLIC_SEND_AMBASSADOR_FORM_WPCF7_UNIT_TAG,
       firstName: data.firstName,
       lastName: data.lastName,
       email: data.email,
@@ -101,6 +94,10 @@ export const AmbassadorForm: FC = () => {
             formId: SEND_AMBASSADOR_FORM_ID,
             formData,
           }).unwrap();
+          setValue('about', '');
+          setFile(null);
+          setPreview(null);
+          setHasChanges(false);
         } catch (err) {
           console.error('Error sending question form', err);
         }
@@ -110,6 +107,8 @@ export const AmbassadorForm: FC = () => {
       try {
         console.log('Sending form data...');
         await sendForm({ formId: SEND_AMBASSADOR_FORM_ID, formData }).unwrap();
+        setValue('about', '');
+        setHasChanges(false);
       } catch (err) {
         console.error('Error sending question form', err);
       }
@@ -251,6 +250,7 @@ export const AmbassadorForm: FC = () => {
               <CustomFormInput
                 fieldName={tValidation('aboutYourself')}
                 name="about"
+                placeholder="Text about yourself"
                 register={register}
                 errors={errors}
                 inputTag={'textarea'}
