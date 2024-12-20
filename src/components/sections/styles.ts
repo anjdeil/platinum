@@ -1,12 +1,16 @@
 import { Text } from '@/styles/components';
 import styled from '@emotion/styled';
 
-export const SectionContainer = styled.section`
+interface SectionContainerProps {
+  smallGaps?: boolean;
+}
+
+export const SectionContainer = styled.section<SectionContainerProps>`
   width: 100%;
-  margin-bottom: 72px;
+  margin-bottom: ${({ smallGaps }) => (smallGaps ? '32px' : '72px')};
 
   @media ${({ theme }) => theme.media.medium} {
-    margin-bottom: 64px;
+    margin-bottom: ${({ smallGaps }) => (smallGaps ? '32px' : '64px')};
   }
 `;
 
