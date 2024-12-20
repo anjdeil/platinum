@@ -163,7 +163,7 @@ export const AmbassadorForm: FC = () => {
   };
 
   return (
-    <CustomForm onSubmit={handleSubmit(onSubmit)} maxWidth="660px">
+    <CustomForm onSubmit={handleSubmit(onSubmit)} maxWidth="800px" fullWidth>
       <InfoCard>
         <Title
           as="h2"

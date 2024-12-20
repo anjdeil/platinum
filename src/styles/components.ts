@@ -247,10 +247,12 @@ export const StyledHeaderWrapper = styled.header`
 
 interface CustomFormProps {
   maxWidth?: string;
+  fullWidth?: boolean;
 }
 
 export const CustomForm = styled.form<CustomFormProps>`
   margin: 0 auto;
+  ${({ fullWidth }) => fullWidth && 'width: 100%;'}
   max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : '1100px')};
 `;
 export const FormWrapper = styled.div`

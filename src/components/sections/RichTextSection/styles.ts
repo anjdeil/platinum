@@ -1,13 +1,14 @@
 import styled from "@emotion/styled";
 
 export const StyledTitle = styled.h2`
-  font: ${({ theme }) => theme.fonts.titleH2Medium};
+  font: ${({ theme }) => theme.fonts.titleH2SemiBold};
   color: ${({ theme }) => theme.colors.black};
   text-transform: uppercase;
   margin-bottom: 24px;
 
-  @media ${({ theme }) => theme.media.largePlus} {
+  @media ${({ theme }) => theme.media.xl} {
     font: ${({ theme }) => theme.fonts.bodyMiddleMedium};
+    font-weight: 600;
     margin-bottom: 16px;
   }
 
@@ -18,13 +19,14 @@ export const StyledTitle = styled.h2`
 `;
 
 export const StyledSubtitle = styled.h3`
-  font: ${({ theme }) => theme.fonts.bodyMiddleReg};
+  font: ${({ theme }) => theme.fonts.bodyMiddleMedium};
   color: ${({ theme }) => theme.colors.black};
   text-transform: uppercase;
   margin-bottom: 16px;
 
-  @media ${({ theme }) => theme.media.largePlus} {
+  @media ${({ theme }) => theme.media.xl} {
     font: ${({ theme }) => theme.fonts.bodypresmallReg};
+    font-weight: 500;
     line-height: 1.5;
   }
 
