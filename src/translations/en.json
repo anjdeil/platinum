@@ -63,7 +63,8 @@
     "paymentMethod": "Payment method",
     "total": "Total",
     "action": "Action",
-    "EditUserInfo": "Update Your Profile"
+    "EditUserInfo": "Update Your Profile",
+    "successUpdate": "Your profile has been successfully updated"
   },
   "TopBar": {
     "CallUs": "Call us"

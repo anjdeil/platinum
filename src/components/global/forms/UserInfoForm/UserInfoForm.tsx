@@ -27,6 +27,7 @@ import CustomFormSelect from "../../selects/CustomFormSelect/CustomFormSelect";
 import theme from "@/styles/theme";
 import { useTranslations } from "next-intl";
 import { CustomFormInput } from "../CustomFormInput";
+import Notification from "../../Notification/Notification";
 
 export const UserInfoForm: FC = () => {
   const tValidation = useTranslations("Validation");
@@ -41,7 +42,7 @@ export const UserInfoForm: FC = () => {
     error: customerError,
     isLoading: isCustomerLoading,
   } = useFetchCustomerQuery({ customerId: "14408" });
-  const [UpdateCustomerMutation, { error, isLoading }] = useUpdateCustomerMutation();
+  const [UpdateCustomerMutation, { error, isLoading, isSuccess }] = useUpdateCustomerMutation();
 
   const formSchema = useMemo(() => UserInfoFormSchema(isShipping, tValidation), [isShipping]);
   type UserInfoFormType = z.infer<typeof formSchema>;
@@ -49,7 +50,7 @@ export const UserInfoForm: FC = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isSubmitted },
     setValue,
     watch,
     control,
@@ -193,6 +194,7 @@ export const UserInfoForm: FC = () => {
 
   return (
     <CustomForm onSubmit={handleSubmit(onSubmit)} maxWidth="660px">
+      {isSuccess && <Notification type="success">{tMyAccount("successUpdate")}</Notification>}
       <InfoCard>
         <Title as="h2" fontWeight={600} fontSize="24px" uppercase marginBottom="16px">
           {tForms("UserInfo")}
@@ -266,6 +268,7 @@ export const UserInfoForm: FC = () => {
         inputType={"checkbox"}
         width="100%"
       />
+
       <FormWrapperBottom>
         <StyledButton type="submit" disabled={isSubmitting || !hasChanges}>
           {isSubmitting ? tValidation("saving") : tValidation("saveChanges")}

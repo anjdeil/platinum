@@ -61,7 +61,10 @@
     "amount": "Betrag",
     "paymentMethod": "Zahlungsmethode",
     "total": "Gesamt",
-    "action": "Aktion"
+    "action": "Aktion",
+    "EditUserInfo": "Profil aktualisieren",
+    "apartmentNumber": "Wohnungsnumme",
+    "successUpdate": "Ihr Profil wurde erfolgreich aktualisiert"
   },
   "TopBar": {
     "CallUs": "Rufen Sie uns an"
@@ -193,6 +196,7 @@
     "saving": "Speichern...",
     "saveChanges": "Änderungen speichern",
     "agreentment": "Ich stimme zu, Informationen über Neuigkeiten und Änderungen im Angebot des Geschäfts zu erhalten",
+    "agreentmentTerms": "Sie müssen den Bedingungen zustimmen",
     "theSameAddress": "Die gleiche Adresse wie bei den Kundeninformationen"
   },
   "Breadcrumbs": {

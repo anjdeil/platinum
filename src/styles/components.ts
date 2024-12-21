@@ -239,6 +239,7 @@ export const FormWrapper = styled.div`
 
 export const FormWrapperBottom = styled.div`
   margin-top: 24px;
+  margin-bottom: 16px;
   display: flex;
   flex-direction: column;
   gap: 20px;
