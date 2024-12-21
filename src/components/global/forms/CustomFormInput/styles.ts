@@ -73,14 +73,14 @@ export const Input = styled.input<CustomInputProps>`
 
   outline: 1px solid
     ${({ theme, isError }) =>
-      isError ? theme.colors.error : theme.background.formElements};
+    isError ? theme.colors.error : theme.background.formElements};
   background-color: ${({ theme, background = theme.background.formElements }) =>
     background};
   transition: outline-width 0.2s ease-in-out;
 
   &:-webkit-autofill {
     background-color: ${({ theme, background }) =>
-      background || theme.colors.white} !important;
+    background || theme.colors.white} !important;
     color: ${({ theme }) => theme.colors.black} !important;
     transition: background-color 5000s ease-in-out 0s;
   }
@@ -88,7 +88,7 @@ export const Input = styled.input<CustomInputProps>`
   &:focus {
     outline: 1px solid
       ${({ theme, isError }) =>
-        isError ? theme.colors.error : theme.colors.primary};
+    isError ? theme.colors.error : theme.colors.primary};
     box-shadow: ${({ theme }) => theme.customShadows.primaryShadow};
   }
 
@@ -110,7 +110,7 @@ export const Input = styled.input<CustomInputProps>`
   @media ${({ theme }) => theme.media.medium} {
     width: ${({ isCheckbox }) => (isCheckbox ? '15px' : '100%')};
     height: ${({ isCheckbox, height = '100%' }) =>
-      isCheckbox ? '15px' : height};
+    isCheckbox ? '15px' : height};
     font-size: 14px;
   }
 `;
@@ -189,4 +189,8 @@ export const StyledPhoneInput = styled(PhoneInput)`
     width: 285px;
     border-radius: 10px;
   }
+`;
+
+export const CustomSuccess = styled(CustomError)`
+  color: ${({ theme }) => theme.colors.success};
 `;
