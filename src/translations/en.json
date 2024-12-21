@@ -49,19 +49,21 @@
     "first_name": "Name",
     "last_name": "Surname",
     "company": "Company",
-    "address_1": "Address 1",
-    "address_2": "Address 2",
+    "address_1": "Street",
+    "address_2": "Building Number",
     "city": "City",
     "state": "State",
     "postcode": "Postcode",
     "country": "Country",
+    "apartmentNumber": "Apartment number",
     "email": "E-mail",
     "phone": "Phone",
     "discountCode": "Discount code",
     "amount": "Amount",
     "paymentMethod": "Payment method",
     "total": "Total",
-    "action": "Action"
+    "action": "Action",
+    "EditUserInfo": "Update Your Profile"
   },
   "TopBar": {
     "CallUs": "Call us"
@@ -199,6 +201,7 @@
     "InvalidPhoneNumber": "Invalid phone number",
     "fileTooLarge": "file too large",
     "agreentment": "I agree to receiving information regarding news and changes to the stores offer",
+    "agreentmentTerms": "You must agree to the terms",
     "theSameAddress": "The same address as on customer information"
   },
   "Forms": {

@@ -8,6 +8,7 @@ export default function LanguageSelect() {
 
   function handleChange(evt: ChangeEvent<HTMLSelectElement>) {
     switchLanguage(evt.target.value);
+    console.log("change lang");
   }
 
   return <CustomSelect options={languageSymbols} value={locale} onChange={handleChange} />;

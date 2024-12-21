@@ -23,7 +23,6 @@ interface CustomInputProps {
   isError?: boolean;
 }
 
-// Styles with classes name are for international phone input from react-international-phone
 export const CustomInputStyle = styled.div<CustomInputStyleProps>`
   padding: ${({ padding = "5px" }) => padding};
   display: flex;

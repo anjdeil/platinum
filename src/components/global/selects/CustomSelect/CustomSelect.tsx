@@ -15,7 +15,7 @@ export default function CustomSelect({
   mobFontSize,
   mobPadding,
   tabletPadding,
-  allignItem,
+  alignItem,
   paddingOptions,
 }: CustomSelectProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -66,7 +66,7 @@ export default function CustomSelect({
             padding={padding}
             mobPadding={mobPadding}
             tabletPadding={tabletPadding}
-            allignItem={allignItem}
+            alignItem={alignItem}
             paddingOptions={paddingOptions}
           >
             {option.name}

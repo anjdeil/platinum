@@ -53,7 +53,7 @@ export const StyledCollapse = styled(Collapse)<CustomSelectStyledProps>`
 export const MenuItem = styled.div<CustomSelectStyledProps>`
   display: flex;
   justify-content: center;
-  justify-content: ${({ allignItem = "center" }) => allignItem};
+  justify-content: ${({ alignItem = "center" }) => alignItem};
   align-items: center;
   text-align: center;
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};

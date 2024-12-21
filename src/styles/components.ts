@@ -10,6 +10,26 @@ import { Pagination } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 
+interface FlexBoxProps {
+  flexDirection?: "row" | "row-reverse" | "column" | "column-reverse";
+  justifyContent?:
+    | "flex-start"
+    | "flex-end"
+    | "center"
+    | "space-between"
+    | "space-around"
+    | "space-evenly";
+  alignItems?: "flex-start" | "flex-end" | "center" | "stretch" | "baseline";
+  flexWrap?: "nowrap" | "wrap" | "wrap-reverse";
+  gap?: string;
+  padding?: string;
+  margin?: string;
+  width?: string;
+  height?: string;
+  bgColor?: string;
+  flex?: string;
+}
+
 interface TitleProps {
   as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
   fontWeight?: number;
@@ -103,6 +123,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
   color: ${({ theme, secondary = false }) => (secondary ? theme.colors.black : theme.colors.white)};
   background-color: ${({ notify = false, secondary = false, theme }) =>
     notify ? theme.colors.secondary : secondary ? "transparent" : theme.colors.primary};
+  background-color: ${({ disabled, theme }) => disabled && theme.colors.secondary};
   padding-block: 16px;
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
   text-transform: none;
@@ -222,10 +243,6 @@ export const FormWrapperBottom = styled.div`
   flex-direction: column;
   gap: 20px;
 `;
-export const FlexBox = styled.div`
-  display: flex;
-  align-items: center;
-`;
 
 export const Overlay = styled.div`
   position: fixed;
@@ -243,6 +260,21 @@ export const VariationTitle = styled(Text)`
 
 export const TinyText = styled.p`
   font: ${({ theme }) => theme.fonts.bodysmallReg};
+`;
+
+export const FlexBox = styled.div<FlexBoxProps>`
+  display: flex;
+  flex-direction: ${({ flexDirection = "row" }) => flexDirection};
+  justify-content: ${({ justifyContent = "flex-start" }) => justifyContent};
+  align-items: ${({ alignItems = "stretch" }) => alignItems};
+  flex-wrap: ${({ flexWrap = "nowrap" }) => flexWrap};
+  flex: ${({ flex }) => flex};
+  gap: ${({ gap = "0" }) => gap};
+  padding: ${({ padding = "0" }) => padding};
+  margin: ${({ margin = "0" }) => margin};
+  width: ${({ width = "auto" }) => width};
+  height: ${({ height = "auto" }) => height};
+  background-color: ${({ bgColor = "transparent" }) => bgColor};
 `;
 
 export const StyledHeaderWrapper = styled.header`

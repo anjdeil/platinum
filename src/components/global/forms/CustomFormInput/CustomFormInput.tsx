@@ -31,6 +31,8 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
   label = true,
   setValue,
   defaultValue,
+  list,
+  disabled,
 }) => {
   const registerProps = register ? { ...register(name) } : {};
 
@@ -97,6 +99,8 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
               height={height}
               background={background}
               isCheckbox={inputType === "checkbox"}
+              {...(name === "country" ? { list: list } : {})}
+              disabled={disabled}
             />
           )}
           {inputType === "password" && (
