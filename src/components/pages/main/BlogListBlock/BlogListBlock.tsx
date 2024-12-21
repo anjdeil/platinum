@@ -1,9 +1,15 @@
-import { BlogListBlockProps } from '@/types/pages/blog';
+import { BlogItemUnionType } from '@/types/pages/blog';
 import { FC } from 'react';
 import BlogItem from './BlogItem/BlogItem';
 import { BlogList, BlogListBlockContainer } from './styles';
 import { BlogListSkeleton } from './BlogListSkeleton';
 import { StyledText } from '@/components/sections/styles';
+
+interface BlogListBlockProps {
+  posts: BlogItemUnionType[];
+  isError?: boolean;
+  isLoading?: boolean;
+}
 
 const BlogListBlock: FC<BlogListBlockProps> = ({
   posts,
@@ -23,7 +29,17 @@ const BlogListBlock: FC<BlogListBlockProps> = ({
   if (isError) {
     return (
       <BlogListBlockContainer>
-        <StyledText>We cannot get the products</StyledText>
+        <StyledText>
+          Sorry, something went wrong... We can't get the posts.
+        </StyledText>
+      </BlogListBlockContainer>
+    );
+  }
+
+  if (!posts || !posts.length) {
+    return (
+      <BlogListBlockContainer>
+        <StyledText>Sorry, no posts found.</StyledText>
       </BlogListBlockContainer>
     );
   }

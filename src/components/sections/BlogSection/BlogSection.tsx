@@ -23,7 +23,9 @@ export const BlogSection: React.FC<BlogSectionProps> = ({
     data: postsData,
     error: postsError,
     isLoading: isPostsLoading,
+    isFetching: isPostsFetching,
   } = useGetPostsQuery(PARAMS);
+  const isComponentLoading = isPostsLoading || isPostsFetching;
 
   const posts: BlogItemType[] = postsData?.data?.items || [];
 
@@ -34,7 +36,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({
         <BlogListBlock
           posts={posts}
           isError={!!postsError}
-          isLoading={isPostsLoading}
+          isLoading={isComponentLoading}
         />
       </RecommendContainer>
     </SectionContainer>

@@ -42,7 +42,6 @@
     "price": "Preis",
     "quantity": "Menge",
     "summaryOrder": "Bestellübersicht",
-
     "customerData": "Kundendaten",
     "products": "Produkte",
     "delivery": "Lieferung",
@@ -128,7 +127,6 @@
     "CouponApply": "Coupon erfolgreich angewendet",
     "CouponApplyBtn": "Gutschein anwenden",
     "CouponInputPlaceholder": "Gutscheincode",
-
     "OrderComments": "KOMMENTARE ZUR BESTELLUNG",
     "OrderCommentPlaceholder": "Teilen Sie spezifische Details oder Anfragen zu Ihrer Bestellung...",
     "OrderCommentHint": "Fühlen Sie sich frei, zusätzliche Anweisungen oder Hinweise zu Ihrer Bestellung hier anzugeben.",
@@ -170,5 +168,15 @@
     "failedSubscribe": "Fehler beim Abonnieren",
     "successSubscribe": "Erfolgreich abonniert",
     "userAlreadySubscribed": "Du wurdest bereits bemalt"
+  },
+  "Delivery": {
+    "costsTitle": "Lieferkosten sind in der Kaufkalkulation nicht enthalten.",
+    "freeCostsPoland": "Kostenlose Lieferung innerhalb Polens bei Bestellungen über 200 PLN.",
+    "freeCostsEurope": "Kostenlose Lieferung nach Deutschland, Österreich, Slowakei, Slowenien, Belgien, Ungarn, Litauen, Tschechien, Dänemark, Rumänien und Estland bei einem Bestellwert von über 150 EUR."
+  },
+  "BlogPostPage": {
+    "previousPost": "Zurück",
+    "nextPost": "Weiter",
+    "blogSectionSubtitle": "Letzte artikel"
   }
 }

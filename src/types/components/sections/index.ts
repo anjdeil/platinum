@@ -81,8 +81,8 @@ export const FeaturesSectionSchema = z.object({
 
 export const BlogSectionSchema = z.object({
   _type: z.literal('blog'),
-  subtitle: z.string(),
-  title: z.string(),
+  subtitle: z.string().optional(),
+  title: z.string().optional(),
 });
 
 export const LoyaltySectionSchema = z.object({
@@ -109,20 +109,26 @@ const RichTextSectionSchema = z.object({
   text: z.string(),
 });
 
+const RichTextSectionPropsSchema = z.object({
+  title: z.string().optional(),
+  is_reverse: z.boolean().optional(),
+  text: z.string().optional(),
+});
+
 const ApplicationFormSectionSchema = z.object({
-  _type: z.literal('application_form'),
+  _type: z.literal("application_form"),
   application_form_separator: z.string().optional(),
 });
 
 const InnerSectionSchema = z.object({
-  _type: z.literal('inner_section'),
+  _type: z.literal("inner_section"),
   sections: z.array(
     z.union([RichTextSectionSchema, ApplicationFormSectionSchema])
   ),
 });
 
 export const SplitSectionSchema = z.object({
-  _type: z.literal('split'),
+  _type: z.literal("split"),
   split: z.array(InnerSectionSchema),
 });
 
@@ -158,10 +164,11 @@ export type BlogSectionData = z.infer<typeof BlogSectionSchema>;
 export type LoyaltySectionData = z.infer<typeof LoyaltySectionSchema>;
 export type ContactsSectionData = z.infer<typeof ContactsSectionSchema>;
 export type HeroSectionData = z.infer<typeof HeroSectionSchema>;
-//export type RichTextSection = z.infer<typeof RichTextSectionSchema>;
-// export type ApplicationFormSection = z.infer<
-//   typeof ApplicationFormSectionSchema
-// >;
-//export type InnerSection = z.infer<typeof InnerSectionSchema>;
+export type RichTextSectionData = z.infer<typeof RichTextSectionSchema>;
+export type RichTextSectionProps = z.infer<typeof RichTextSectionPropsSchema>;
+export type ApplicationFormSection = z.infer<
+  typeof ApplicationFormSectionSchema
+>;
+export type InnerSectionData = z.infer<typeof InnerSectionSchema>;
 export type SplitSectionData = z.infer<typeof SplitSectionSchema>;
 export type SectionsType = z.infer<typeof SectionsTypeSchema>;

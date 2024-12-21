@@ -1,47 +1,47 @@
-import { AccountInfoWrapperProps } from '@/types/pages/account'
+import { AccountInfoWrapperProps } from '@/types/pages/account';
 import {
   LogoLinkImageProps,
   LogoLinkProps,
   StyledButtonProps,
   TextProps,
-} from '@/types/styles/components'
-import styled from '@emotion/styled'
-import { Pagination } from '@mui/material'
-import Image from 'next/image'
-import Link from 'next/link'
+} from '@/types/styles/components';
+import styled from '@emotion/styled';
+import { Pagination } from '@mui/material';
+import Image from 'next/image';
+import Link from 'next/link';
 
 interface FlexBoxProps {
-  flexDirection?: 'row' | 'row-reverse' | 'column' | 'column-reverse'
+  flexDirection?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
   justifyContent?:
     | 'flex-start'
     | 'flex-end'
     | 'center'
     | 'space-between'
     | 'space-around'
-    | 'space-evenly'
-  alignItems?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline'
-  flexWrap?: 'nowrap' | 'wrap' | 'wrap-reverse'
-  gap?: string
-  padding?: string
-  margin?: string
-  width?: string
-  height?: string
-  bgColor?: string
-  flex?: string
+    | 'space-evenly';
+  alignItems?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
+  flexWrap?: 'nowrap' | 'wrap' | 'wrap-reverse';
+  gap?: string;
+  padding?: string;
+  margin?: string;
+  width?: string;
+  height?: string;
+  bgColor?: string;
+  flex?: string;
 }
 
 interface TitleProps {
-  as: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
-  fontWeight?: number
-  fontSize?: string
-  mobFontSize?: string
-  textalign?: 'center' | 'left' | 'right'
-  uppercase?: boolean
-  marginTop?: string
-  lowercase?: boolean
-  marginBottom?: string
-  tabletMarginBottom?: number
-  mobMarginBottom?: number
+  as: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  fontWeight?: number;
+  fontSize?: string;
+  mobFontSize?: string;
+  textalign?: 'center' | 'left' | 'right';
+  uppercase?: boolean;
+  marginTop?: string;
+  lowercase?: boolean;
+  marginBottom?: string;
+  tabletMarginBottom?: number;
+  mobMarginBottom?: number;
 }
 
 /** Titles components */
@@ -65,7 +65,7 @@ export const Title = styled.h1<TitleProps>`
   @media ${({ theme }) => theme.media.small} {
     font-size: ${({ mobFontSize }) => mobFontSize};
   }
-`
+`;
 
 export const AccountTitle = styled(Title)<TitleProps>`
   margin-top: 24px;
@@ -78,7 +78,7 @@ export const AccountTitle = styled(Title)<TitleProps>`
   @media ${({ theme }) => theme.media.medium} {
     margin-bottom: ${({ mobMarginBottom = 24 }) => mobMarginBottom}px;
   }
-`
+`;
 
 /** Containers */
 export const Container = styled.div`
@@ -91,7 +91,7 @@ export const Container = styled.div`
   @media ${({ theme }) => theme.media.medium} {
     padding: 0 20px;
   }
-`
+`;
 
 export const AccountInfoWrapper = styled.div<AccountInfoWrapperProps>`
   display: flex;
@@ -110,7 +110,7 @@ export const AccountInfoWrapper = styled.div<AccountInfoWrapperProps>`
       mobileReverse ? 'column-reverse' : 'column'};
     margin-bottom: 64px;
   }
-`
+`;
 
 /**
  * Buttons
@@ -127,7 +127,11 @@ export const StyledButton = styled.button<StyledButtonProps>`
   color: ${({ theme, secondary = false }) =>
     secondary ? theme.colors.black : theme.colors.white};
   background-color: ${({ notify = false, secondary = false, theme }) =>
-    notify ? theme.colors.secondary : secondary ? 'transparent' : theme.colors.primary};
+    notify
+      ? theme.colors.secondary
+      : secondary
+      ? 'transparent'
+      : theme.colors.primary};
 
   ${({ disabled, theme }) =>
     disabled &&
@@ -171,7 +175,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
   @media ${({ theme }) => theme.media.medium} {
     min-width: ${({ minWidthMobile = 'auto' }) => minWidthMobile};
   }
-`
+`;
 
 export const LogoLink = styled(Link)<LogoLinkProps>`
   display: flex;
@@ -183,7 +187,7 @@ export const LogoLink = styled(Link)<LogoLinkProps>`
     width: ${({ width = 44 }) => `${width}px`};
     height: ${({ height = 44 }) => `${height}px`};
   }
-`
+`;
 
 export const PagesNavigation = styled(Pagination)(({ theme }) => ({
   '.MuiPaginationItem-root': {
@@ -199,7 +203,7 @@ export const PagesNavigation = styled(Pagination)(({ theme }) => ({
       backgroundColor: theme.background.secondary,
     },
   },
-}))
+}));
 
 /**
  * icons
@@ -222,17 +226,17 @@ export const StyledIconWrapper = styled.div`
   @media ${({ theme }) => theme.media.medium} {
     width: 40px;
   }
-`
+`;
 
 export const LogoLinkImage = styled(Image)<LogoLinkImageProps>`
   width: 100%;
   height: 100%;
-`
+`;
 
 export const Text = styled.span<TextProps>`
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
   text-align: ${({ textalign = 'left' }) => textalign};
-`
+`;
 
 export const VariationTitle = styled(Text)`
   text-transform: uppercase;
@@ -240,11 +244,11 @@ export const VariationTitle = styled(Text)`
   @media ${({ theme }) => theme.media.large} {
     font-size: 14px;
   }
-`
+`;
 
 export const TinyText = styled.p`
   font: ${({ theme }) => theme.fonts.bodysmallReg};
-`
+`;
 
 export const FlexBox = styled.div<FlexBoxProps>`
   display: flex;
@@ -259,7 +263,7 @@ export const FlexBox = styled.div<FlexBoxProps>`
   width: ${({ width = 'auto' }) => width};
   height: ${({ height = 'auto' }) => height};
   background-color: ${({ bgColor = 'transparent' }) => bgColor};
-`
+`;
 
 export const StyledHeaderWrapper = styled.header`
   display: flex;
@@ -267,4 +271,4 @@ export const StyledHeaderWrapper = styled.header`
   align-items: center;
   gap: 8px;
   margin: 24px 0;
-`
+`;

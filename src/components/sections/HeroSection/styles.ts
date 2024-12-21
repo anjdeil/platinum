@@ -13,7 +13,11 @@ export const StyledWrapper = styled.div`
   align-items: center;
   gap: 125px;
 
-  @media ${({ theme }) => theme.media.largePlus} {
+  @media ${({ theme }) => theme.media.xl} {
+    gap: 16px;
+  }
+
+  @media ${({ theme }) => theme.media.middle} {
     align-items: flex-start;
     gap: 16px;
   }
@@ -26,17 +30,22 @@ export const StyledWrapper = styled.div`
 `;
 
 export const StyledImage = styled(Image)<StyledImageProps>`
-  object-fit: ${({ objectfitprop = "contain" }) => objectfitprop};
-  width: 524px;
+  width: 40%;
+  max-width: 524px;
   height: auto;
+  object-fit: ${({ objectfitprop = 'contain' }) => objectfitprop};
   aspect-ratio: 1;
 
-  @media ${({ theme }) => theme.media.large} {
-    width: 284px;
+  @media ${({ theme }) => theme.media.xl} {
+    width: 43%;
+  }
+
+  @media ${({ theme }) => theme.media.middle} {
+    width: 39%;
   }
 
   @media ${({ theme }) => theme.media.medium} {
-    width: 300px;
+    width: 100%;
   }
 `;
 
@@ -47,12 +56,16 @@ export const ContentWrapper = styled.div`
   justify-content: center;
   align-items: flex-start;
 
-  @media ${({ theme }) => theme.media.largePlus} {
+  @media ${({ theme }) => theme.media.xl} {
+    width: 54%;
+  }
+
+  @media ${({ theme }) => theme.media.middle} {
     width: 57%;
   }
 
   @media ${({ theme }) => theme.media.medium} {
-    width: 300px;
+    width: 100%;
     align-items: center;
   }
 `;

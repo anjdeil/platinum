@@ -173,17 +173,39 @@
     "yourNamePlaceholder": "What is your name?",
     "emailPlaceholder": "Email",
     "yourQuestionPlaceholder": "Write your question",
-    "sending": "Sending...",
-    "sendButton": "Send",
+
     "errorMessage": "Something went wrong. Please try again.",
     "successMessage": "Your message has been sent successfully!"
   },
   "Validation": {
-    "email": "Please enter a valid email.",
-    "minChar": "Must be at least {count} characters long."
+    "emailValidation": "Please enter a valid email.",
+    "minChar": "Must be at least {count} characters long.",
+    "RequiredField": "Required field",
+    "email": "Email",
+    "name": "Name",
+    "lastName": "Last name",
+    "address": "Address",
+    "phoneNumber": "Phone number",
+    "country": "Country",
+    "city": "City",
+    "aboutYourself": "About yourself",
+    "preview": "Preview",
+    "clickToUpload": "Click to upload",
+    "orDragAndDrop": "or drag and drop",
+    "or": "or",
+    "max": "max",
+    "sending": "Sending...",
+    "sendButton": "Send",
+    "InvalidPhoneNumber": "Invalid phone number",
+    "fileTooLarge": "file too large"
+  },
+  "Forms": {
+    "applicationForm": "application form"
   },
   "Breadcrumbs": {
-    "homePage": "Home Page"
+    "homePage": "Home Page",
+    "benefitsPage": "Loyalty Program",
+    "blogPage": "Blog"
   },
   "NotFoundPage": {
     "notFound": "Page not found",
@@ -208,5 +230,16 @@
     "failedSubscribe": "Failed to send email",
     "successSubscribe": "Subscribed!",
     "userAlreadySubscribed": "User already subscribed"
+  },
+  "Delivery": {
+    "costsTitle": "Delivery costs are not included in the purchase calculation.",
+    "freeCostsPoland": "Free delivery within Poland for orders over 200 PLN.",
+    "freeCostsEurope": "Free delivery to Germany, Austria, Slovakia, Slovenia, Belgium, Hungary, Lithuania, Czech Republic, Denmark, Romania, and Estonia for orders over 150 EUR."
+  },
+  "BlogPostPage": {
+    "previousPost": "Previous",
+    "nextPost": "Next",
+    "blogPage": "Blog",
+    "blogSectionTitle": "Lasted articles"
   }
 }

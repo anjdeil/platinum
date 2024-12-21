@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 
 export const Overlay = styled.div`
     position: fixed;
-    z-index: 1000;
+    z-index: 100;
     inset: 0;
 `;
 

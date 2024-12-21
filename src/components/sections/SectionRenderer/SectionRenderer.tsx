@@ -1,4 +1,3 @@
-import React from 'react';
 import { Container } from '@/styles/components';
 import { SliderSection } from '../SliderSection';
 import { ProductListSection } from '../ProductListSection';
@@ -13,10 +12,9 @@ import { HeroSection } from '../HeroSection';
 import { SplitSection } from '../SplitSection';
 import { LoyaltySection } from '../LoyaltySection';
 import { ContactsSection } from '../ContactsSection';
-
 import { SectionsType } from '@/types/components/sections';
 import { normalizeSlides } from '@/utils/normalizeSlides';
-import { useMediaQuery } from '@mui/material';
+import { IsMobileScreen } from '@/components/global/isMobileScreenWrapper';
 
 interface SectionRendererProps {
   sections: SectionsType[];
@@ -25,7 +23,14 @@ interface SectionRendererProps {
 export const SectionRenderer: React.FC<SectionRendererProps> = ({
   sections,
 }) => {
-  const isMobile = useMediaQuery('(max-width:768px)');
+
+  const countSplitSections = (sections: any[]): number => {
+    return sections.filter((section) => section._type === 'split').length;
+  };
+
+  const splitSectionCount = countSplitSections(sections);
+  const isMoreThen5SectionsSplit = splitSectionCount > 5;
+
   return (
     <>
       {sections.map((section, index) => {
@@ -76,18 +81,10 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
               </Container>
             );
           case 'newsletter':
-            return isMobile ? (
-              <NewsletterSection
-                key={index}
-                newsletter_separator={section.newsletter_separator}
-              />
-            ) : (
-              <Container key={index}>
-                <NewsletterSection
-                  key={index}
-                  newsletter_separator={section.newsletter_separator}
-                />
-              </Container>
+            return (
+              <IsMobileScreen key={index}>
+                <NewsletterSection />
+              </IsMobileScreen>
             );
           case 'about_platinum':
             return <AboutPlatinumSection key={index} />;
@@ -129,7 +126,10 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
           case 'split':
             return (
               <Container key={index}>
-                <SplitSection key={section._type} split={section.split} />
+                <SplitSection
+                  split={section.split}
+                  smallGaps={isMoreThen5SectionsSplit}
+                />
               </Container>
             );
           case 'loyalty':

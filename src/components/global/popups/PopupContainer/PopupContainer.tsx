@@ -1,13 +1,13 @@
-import HamburgerMenu from '@/components/global/popups/HamburgerMenu'
-import { useAppSelector } from '@/store'
-import { popupClosed } from '@/store/slices/PopupSlice'
-import { usePathname } from 'next/navigation'
-import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import CommentPopup from '../CommentPopup/CommentPopup'
-import MobileCategoriesMenu from '../MobileCategoriesMenu/MobileCategoriesMenu'
-import SwiperPopup from '../SwiperPopup/SwiperPopup'
-import MiniCart from '@/components/global/popups/MiniCart/MiniCart'
+import HamburgerMenu from '@/components/global/popups/HamburgerMenu';
+import { useAppSelector } from '@/store';
+import { popupClosed } from '@/store/slices/PopupSlice';
+import { usePathname } from 'next/navigation';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import CommentPopup from '../CommentPopup/CommentPopup';
+import MobileCategoriesMenu from '../MobileCategoriesMenu/MobileCategoriesMenu';
+import SwiperPopup from '../SwiperPopup/SwiperPopup';
+import MiniCart from '@/components/global/popups/MiniCart/MiniCart';
 
 const unscrollablePopups = [
   'mobile-search',
@@ -15,76 +15,76 @@ const unscrollablePopups = [
   'swiper-popup',
   'mobile-cart',
   'mobile-categories',
-]
+];
 
 const PopupContainer = () => {
-  const dispatch = useDispatch()
-  const pathname = usePathname()
+  const dispatch = useDispatch();
+  const pathname = usePathname();
 
-  const popup = useAppSelector((state) => state.popup)
+  const popup = useAppSelector((state) => state.popup);
 
   useEffect(() => {
-    dispatch(popupClosed())
+    dispatch(popupClosed());
 
-    let firstClick = true
+    let firstClick = true;
 
     const handleClick = (event: MouseEvent) => {
-      const somePopupOpen = Boolean(document.querySelector('.close-outside'))
+      const somePopupOpen = Boolean(document.querySelector('.close-outside'));
       if (!somePopupOpen) {
-        firstClick = true
-        return
+        firstClick = true;
+        return;
       }
 
       if (firstClick) {
-        firstClick = false
-        return
+        firstClick = false;
+        return;
       }
 
-      const target = event.target as HTMLElement
-      const targetPopup = target?.closest('.close-outside')
+      const target = event.target as HTMLElement;
+      const targetPopup = target?.closest('.close-outside');
       if (!targetPopup) {
-        firstClick = true
-        dispatch(popupClosed())
+        firstClick = true;
+        dispatch(popupClosed());
       }
-    }
+    };
 
-    document.addEventListener('click', handleClick)
+    document.addEventListener('click', handleClick);
 
     return () => {
-      document.removeEventListener('click', handleClick)
-    }
-  }, [pathname])
+      document.removeEventListener('click', handleClick);
+    };
+  }, [pathname]);
 
   useEffect(() => {
     if (unscrollablePopups.some((popupName) => popup === popupName)) {
-      document.body.style.overflow = 'hidden'
+      document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = 'auto'
+      document.body.style.overflow = 'auto';
     }
-  }, [popup])
+  }, [popup]);
 
   const closePopup = () => {
-    dispatch(popupClosed())
-    console.log('close popup')
-  }
+    dispatch(popupClosed());
+    console.log('close popup');
+  };
 
   switch (popup) {
     case 'hamburger-menu': {
-      return <HamburgerMenu onClose={closePopup} />
+      return <HamburgerMenu onClose={closePopup} />;
     }
     case 'mobile-categories': {
-      return <MobileCategoriesMenu onClose={closePopup} />
+      return <MobileCategoriesMenu onClose={closePopup} />;
     }
     case 'swiper-popup': {
-      return <SwiperPopup onClose={closePopup} />
+      return <SwiperPopup onClose={closePopup} />;
     }
     case 'add-comment': {
-      return <CommentPopup onClose={closePopup} />
+      return <CommentPopup onClose={closePopup} />;
     }
     case 'mini-cart': {
-      return <MiniCart onClose={closePopup} />
+      return <MiniCart onClose={closePopup} />;
     }
   }
-}
+};
 
-export default PopupContainer
+export default PopupContainer;

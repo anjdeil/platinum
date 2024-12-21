@@ -177,11 +177,34 @@
     "successMessage": "Ваше сообщение успешно отправлено!"
   },
   "Validation": {
-    "email": "Пожалуйста, введите правильный адрес электронной почты.",
-    "minChar": "Должно быть не менее {count} символов."
+    "emailValidation": "Пожалуйста, введите правильный адрес электронной почты.",
+    "minChar": "Должно быть не менее {count} символов.",
+    "RequiredField": "Обязательное поле",
+    "email": "Электронная почта",
+    "name": "Имя",
+    "lastName": "Фамилия",
+    "address": "Адрес",
+    "phoneNumber": "Номер телефона",
+    "country": "Страна",
+    "city": "Город",
+    "aboutYourself": "О себе",
+    "preview": "Предпросмотр",
+    "clickToUpload": "Нажмите, чтобы загрузить",
+    "orDragAndDrop": "или перетащите",
+    "or": "или",
+    "max": "макс.",
+    "sending": "Отправка...",
+    "sendButton": "Отправить",
+    "InvalidPhoneNumber": "Неправильный номер телефона",
+    "fileTooLarge": "слишком большой файл"
   },
   "Breadcrumbs": {
-    "homePage": "Главная"
+    "homePage": "Главная",
+    "benefitsPage": "Программа лояльности",
+    "blogPage": "Блог"
+  },
+  "Forms": {
+    "applicationForm": "Форма заявки"
   },
   "NotFoundPage": {
     "notFound": "Страница не найдена",
@@ -206,5 +229,16 @@
     "failedSubscribe": "Не удалось отправить письмо",
     "successSubscribe": "Подписались!",
     "userAlreadySubscribed": "Пользователь уже подписан"
+  },
+  "Delivery": {
+    "costsTitle": "Стоимость доставки не включена в стоимость покупки.",
+    "freeCostsPoland": "Бесплатная доставка по Польше для заказов от 200 PLN.",
+    "freeCostsEurope": "Бесплатная доставка в Германию, Австрию, Словакию, Словению, Бельгию, Венгрию, Литву, Чехию, Данию, Румынию и Эстонию при заказе свыше 150 евро."
+  },
+  "BlogPostPage": {
+    "previousPost": "Предыдущий",
+    "nextPost": "Следующий",
+    "blogPage": "Блог",
+    "blogSectionSubtitle": "Последние статьи"
   }
 }

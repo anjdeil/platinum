@@ -1,7 +1,7 @@
-import { LoginFormType } from '@/types/components/global/forms/LoginForm'
-import { JwtTokenResponseType } from '@/types/services'
-import { WpUserType } from '@/types/store/rtk-queries/wpApi'
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { LoginFormType } from '@/types/components/global/forms/LoginForm';
+import { JwtTokenResponseType } from '@/types/services';
+import { WpUserType } from '@/types/store/rtk-queries/wpApi';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const wpRtkApi = createApi({
   reducerPath: 'wpApi',
@@ -49,10 +49,10 @@ export const wpRtkApi = createApi({
       invalidatesTags: ['User'],
     }),
   }),
-})
+});
 
 export const {
   useGetTokenMutation,
   useLazyFetchUserDataQuery,
   useFetchUserUpdateByIdMutation,
-} = wpRtkApi
+} = wpRtkApi;
