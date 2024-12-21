@@ -1,31 +1,25 @@
-import { parseData } from "@/services/transformers/transformDataHeroSection";
-import { StyledItem, StyledList, StyledSubtitle, StyledTitle } from "./styles";
-import { RichTextSectionProps } from "@/types/components/sections";
+import { StyledRichTextSection } from './styles';
+import { RichTextSectionProps } from '@/types/components/sections';
+import parse from 'html-react-parser';
+import { StyledTitle } from '../AboutPlatinumSection/styles';
+import { StyledError } from '../styles';
 
 export const RichTextSection: React.FC<RichTextSectionProps> = ({
   title,
   is_reverse,
   text,
 }) => {
-  const { subtitle, listItems } = parseData(text || "");
-
-  if (!listItems && !title && !subtitle) {
-    return null;
+  if (!text) {
+    return <StyledError>Rich text section is empty</StyledError>;
   }
 
-  const list = is_reverse ? listItems.reverse() : listItems;
+  const cleanedContent = text.replace(/<br\s*\/?>/gi, '');
+  const content = parse(cleanedContent);
 
   return (
-    <>
-      {title && <StyledTitle>{title}</StyledTitle>}
-      {subtitle && <StyledSubtitle as={"h3"}>{subtitle}</StyledSubtitle>}
-      {list && list.length > 0 && (
-        <StyledList>
-          {list.map((item, index) => (
-            <StyledItem key={index}>{item}</StyledItem>
-          ))}
-        </StyledList>
-      )}
-    </>
+    <StyledRichTextSection is_reverse={is_reverse}>
+      {title && <StyledTitle as={'h1'}>{title}</StyledTitle>}
+      {content}
+    </StyledRichTextSection>
   );
 };
