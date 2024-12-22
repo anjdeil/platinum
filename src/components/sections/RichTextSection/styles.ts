@@ -80,6 +80,24 @@ export const StyledRichTextSection = styled.div<StyledRichTextSectionProps>`
     }
   }
 
+  a {
+    font: ${({ theme }) => theme.fonts.bodyMiddleReg};
+    color: ${({ theme }) => theme.colors.black};
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration: none;
+    }
+
+    &:visited {
+      color: ${({ theme }) => theme.colors.black};
+    }
+
+    @media ${({ theme }) => theme.media.medium} {
+      font: ${({ theme }) => theme.fonts.bodypresmallReg};
+    }
+  }
+
   ul {
     display: flex;
     flex-direction: column;

@@ -146,6 +146,7 @@ export const SectionsTypeSchema = z.union([
   ContactsSectionSchema,
   HeroSectionSchema,
   SplitSectionSchema,
+  RichTextSectionSchema,
 ]);
 
 // export type SliderItem = z.infer<typeof SliderItemSchema>;

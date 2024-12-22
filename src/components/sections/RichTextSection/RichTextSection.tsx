@@ -18,7 +18,7 @@ export const RichTextSection: React.FC<RichTextSectionProps> = ({
 
   return (
     <StyledRichTextSection is_reverse={is_reverse}>
-      {title && <StyledTitle as={'h1'}>{title}</StyledTitle>}
+      {title && <StyledTitle as={'h2'}>{title}</StyledTitle>}
       {content}
     </StyledRichTextSection>
   );
