@@ -1,14 +1,10 @@
-import { ContactsSectionData } from '@/types/components/sections/index';
+import { ContactsCards } from '@/components/pages/contacts/contactsCards';
+import { SectionContainer } from '../styles';
 
-type ContactsSectionProps = Omit<ContactsSectionData, '_type'>;
-
-export const ContactsSection: React.FC<ContactsSectionProps> = ({
-  contacts_separator,
-}) => {
+export const ContactsSection: React.FC = () => {
   return (
-    <div>
-      <h2>ContactsSection</h2>
-      <p>{contacts_separator}</p>
-    </div>
+    <SectionContainer>
+      <ContactsCards />
+    </SectionContainer>
   );
 };
