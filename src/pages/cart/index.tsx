@@ -1,105 +1,120 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { useCreateOrderMutation } from '@/store/rtk-queries/wooCustomApi'
-import { CreateOrderRequestType } from '@/types/services'
-import { useAppDispatch, useAppSelector } from '@/store'
-import checkCartConflict from '@/utils/cart/checkCartConflict'
-import { useGetProductsMinimizedMutation } from '@/store/rtk-queries/wpCustomApi'
-import CartTable from '@/components/pages/cart/CartTable/CartTable'
-import OrderBar from '@/components/pages/cart/OrderBar/OrderBar'
-import { Container, FlexBox, StyledButton } from '@/styles/components'
-import CartCouponBlock from '@/components/pages/cart/CartCouponBlock/CartCouponBlock'
-import { CartPageWrapper } from './style'
-import CartSummaryBlock from '@/components/pages/cart/CartSummaryBlock/CartSummaryBlock'
-import OrderProgress from '@/components/pages/cart/OrderProgress/OrderProgress'
-import getSubtotalByLineItems from '@/utils/cart/getSubtotalByLineItems'
-import { roundedPrice } from '@/utils/cart/roundedPrice'
-import { handleQuantityChange } from '@/utils/cart/handleQuantityChange'
-import BannerCart from '@/components/pages/cart/BannerCart/BannerCart'
-import { useLazyFetchUserDataQuery } from '@/store/rtk-queries/wpApi'
-import { CartLink } from '@/components/global/popups/MiniCart/style'
-import { useTranslations } from 'next-intl'
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCreateOrderMutation } from '@/store/rtk-queries/wooCustomApi';
+import { CreateOrderRequestType } from '@/types/services';
+import { useAppDispatch, useAppSelector } from '@/store';
+import checkCartConflict from '@/utils/cart/checkCartConflict';
+import { useGetProductsMinimizedMutation } from '@/store/rtk-queries/wpCustomApi';
+import CartTable from '@/components/pages/cart/CartTable/CartTable';
+import OrderBar from '@/components/pages/cart/OrderBar/OrderBar';
+import { Container, FlexBox, StyledButton } from '@/styles/components';
+import CartCouponBlock from '@/components/pages/cart/CartCouponBlock/CartCouponBlock';
+import { CartPageWrapper } from './style';
+import CartSummaryBlock from '@/components/pages/cart/CartSummaryBlock/CartSummaryBlock';
+import OrderProgress from '@/components/pages/cart/OrderProgress/OrderProgress';
+import getSubtotalByLineItems from '@/utils/cart/getSubtotalByLineItems';
+import { roundedPrice } from '@/utils/cart/roundedPrice';
+import { handleQuantityChange } from '@/utils/cart/handleQuantityChange';
+import BannerCart from '@/components/pages/cart/BannerCart/BannerCart';
+import { useLazyFetchUserDataQuery } from '@/store/rtk-queries/wpApi';
+import { CartLink } from '@/components/global/popups/MiniCart/style';
+import { useTranslations } from 'next-intl';
+import { useCookies } from 'react-cookie';
 
 const CartPage: React.FC = () => {
-  const { name: code } = useAppSelector((state) => state.currencySlice)
-  const status: CreateOrderRequestType['status'] = 'on-hold'
-  const [symbol, setSymbol] = useState<string>('')
-  const dispatch = useAppDispatch()
-  const [loadingItems, setLoadingItems] = useState<number[]>([])
-  const [preLoadingItem, setPreLoadingItem] = useState<number>()
-  const t = useTranslations('Cart')
+  const { name: code } = useAppSelector((state) => state.currencySlice);
+  const status: CreateOrderRequestType['status'] = 'on-hold';
+  const [symbol, setSymbol] = useState<string>('');
+  const dispatch = useAppDispatch();
+  const [loadingItems, setLoadingItems] = useState<number[]>([]);
+  const [preLoadingItem, setPreLoadingItem] = useState<number>();
+  const t = useTranslations('Cart');
 
   //USER
-  const [auth, setAuth] = useState<boolean>(false)
-  const [userLoyalityStatus, setUserLoyalityStatus] = useState<string | undefined>('')
+  const [auth, setAuth] = useState<boolean>(false);
+  const [userLoyalityStatus, setUserLoyalityStatus] = useState<
+    string | undefined
+  >('');
 
-  const USER_ID = 1
+  const [cookie] = useCookies(['userToken']);
+
   const [
     fetchUserData,
-    { data: userData, isLoading: isUserDataLoading, isFetching: isUserFetching },
-  ] = useLazyFetchUserDataQuery()
+    {
+      data: userData,
+      isLoading: isUserDataLoading,
+      isFetching: isUserFetching,
+    },
+  ] = useLazyFetchUserDataQuery();
 
   useEffect(() => {
-    fetchUserData({ id: USER_ID })
-    setAuth(true)
-    /* if ("userToken" in cookie) {
-            fetchUserData(cookie.userToken);
-        } */
-  }, [/* cookie, */ fetchUserData])
+    if ('userToken' in cookie) {
+      fetchUserData(cookie.userToken);
+      setAuth(true);
+    }
+  }, [cookie, fetchUserData]);
 
   // FETCH
   const [createOrder, { data: orderItems, isLoading: isLoadingOrder }] =
-    useCreateOrderMutation()
-  const { cartItems, couponCodes } = useAppSelector((state) => state.cartSlice)
+    useCreateOrderMutation();
+  const { cartItems, couponCodes } = useAppSelector((state) => state.cartSlice);
   const [
     getProductsMinimized,
-    { data: productsSpecsData, isLoading: isLoadingProductsMin, error: errorProductsMin },
-  ] = useGetProductsMinimizedMutation()
+    {
+      data: productsSpecsData,
+      isLoading: isLoadingProductsMin,
+      error: errorProductsMin,
+    },
+  ] = useGetProductsMinimizedMutation();
 
-  const [cachedOrderItems, setCachedOrderItems] = useState(orderItems)
+  const [cachedOrderItems, setCachedOrderItems] = useState(orderItems);
 
   const handleCreateOrder = async () => {
-    const userCoupons = userData?.meta?.loyalty ? [{ code: userData.meta.loyalty }] : []
-    const additionalCoupons = couponCodes.map((code: string) => ({ code }))
+    const userCoupons = userData?.meta?.loyalty
+      ? [{ code: userData.meta.loyalty }]
+      : [];
+    const additionalCoupons = couponCodes.map((code: string) => ({ code }));
     const combinedCoupons =
-      auth && userData ? [...userCoupons, ...additionalCoupons] : additionalCoupons
-    setUserLoyalityStatus(userData?.meta?.loyalty)
+      auth && userData
+        ? [...userCoupons, ...additionalCoupons]
+        : additionalCoupons;
+    setUserLoyalityStatus(userData?.meta?.loyalty);
 
     const requestData = {
       line_items: cartItems,
       status: status,
       coupon_lines: combinedCoupons,
       currency: code,
-    }
+    };
     if (preLoadingItem) {
-      setLoadingItems((prev) => [...prev, preLoadingItem])
+      setLoadingItems((prev) => [...prev, preLoadingItem]);
     }
     try {
-      await createOrder(requestData)
+      await createOrder(requestData);
     } finally {
-      setLoadingItems((prev) => prev.filter((id) => id !== preLoadingItem))
+      setLoadingItems((prev) => prev.filter((id) => id !== preLoadingItem));
     }
-  }
+  };
 
   useEffect(() => {
     const createOrderEffect = async () => {
-      await handleCreateOrder()
-    }
+      await handleCreateOrder();
+    };
 
-    createOrderEffect()
-  }, [cartItems, couponCodes, code, userData])
+    createOrderEffect();
+  }, [cartItems, couponCodes, code, userData]);
 
   useEffect(() => {
     if (cartItems.length > 0) {
-      getProductsMinimized(cartItems)
+      getProductsMinimized(cartItems);
     }
-  }, [getProductsMinimized, cartItems.length])
+  }, [getProductsMinimized, cartItems.length]);
 
   useEffect(() => {
     if (orderItems?.currency_symbol) {
-      setSymbol(orderItems.currency_symbol)
-      setCachedOrderItems(orderItems)
+      setSymbol(orderItems.currency_symbol);
+      setCachedOrderItems(orderItems);
     }
-  }, [orderItems])
+  }, [orderItems]);
 
   const handleChangeQuantity = useCallback(
     async (
@@ -108,7 +123,7 @@ const CartPage: React.FC = () => {
       variation_id?: number,
       newQuantity?: number | boolean
     ) => {
-      setPreLoadingItem(product_id)
+      setPreLoadingItem(product_id);
       handleQuantityChange(
         cartItems,
         dispatch,
@@ -116,34 +131,41 @@ const CartPage: React.FC = () => {
         action,
         variation_id,
         newQuantity
-      )
+      );
     },
     [cartItems, dispatch]
-  )
+  );
 
   const productsSpecs = useMemo(
     () => productsSpecsData?.data?.items || [],
     [productsSpecsData]
-  )
+  );
 
   const subtotal = useMemo(
-    () => (orderItems?.line_items ? getSubtotalByLineItems(orderItems.line_items) : 0),
+    () =>
+      orderItems?.line_items
+        ? getSubtotalByLineItems(orderItems.line_items)
+        : 0,
     [orderItems]
-  )
+  );
 
   // Conflict detection
-  const [hasConflict, setHasConflict] = useState(false)
+  const [hasConflict, setHasConflict] = useState(false);
 
   useEffect(() => {
-    setHasConflict(checkCartConflict(cartItems, productsSpecs))
-  }, [cartItems, productsSpecs])
+    setHasConflict(checkCartConflict(cartItems, productsSpecs));
+  }, [cartItems, productsSpecs]);
 
-  const currentOrderItems = orderItems ?? cachedOrderItems
+  const currentOrderItems = orderItems ?? cachedOrderItems;
 
   return (
     <>
       <OrderProgress />
-      <BannerCart slug="stove" image="bunnerDesktop.png" mobileImage="bunnerMobile.png" />
+      <BannerCart
+        slug="stove"
+        image="bunnerDesktop.png"
+        mobileImage="bunnerMobile.png"
+      />
       <Container>
         <CartPageWrapper>
           <div>
@@ -170,7 +192,11 @@ const CartPage: React.FC = () => {
               <>
                 <FlexBox justifyContent="center">
                   <CartLink href="/">
-                    <StyledButton height="58px" width="310px" minWidthMobile="100%">
+                    <StyledButton
+                      height="58px"
+                      width="310px"
+                      minWidthMobile="100%"
+                    >
                       {t('goToShop')}
                     </StyledButton>
                   </CartLink>
@@ -192,7 +218,7 @@ const CartPage: React.FC = () => {
         </CartPageWrapper>
       </Container>
     </>
-  )
-}
+  );
+};
 
-export default CartPage
+export default CartPage;

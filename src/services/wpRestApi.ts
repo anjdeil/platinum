@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { ParamsType, Method, AuthConfigType } from '@/types/services';
+import { ParamsType, Method } from '@/types/services';
+import { AuthConfigType } from '@/types/services/wpRestApi/auth';
 
 const authConfig: AuthConfigType = {
   username: process.env.WP_USER || '',

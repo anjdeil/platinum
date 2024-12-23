@@ -207,7 +207,7 @@ export const RegistrationForm: FC = () => {
       />
       <FormWrapperBottom>
         <StyledButton
-          backgroundColor={theme.background.hover}
+          secondary
           color={theme.colors.white}
           type="submit"
           disabled={isSubmitting}
