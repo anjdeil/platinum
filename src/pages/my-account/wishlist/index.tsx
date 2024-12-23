@@ -52,7 +52,7 @@ function Wishlist() {
 
   useEffect(() => {
     if (cookie.authToken) {
-      fetchUserData();
+      fetchUserData().then(() => setIsLoadingWishlist(false));
     }
   }, [cookie.authToken, fetchUserData]);
 
@@ -96,7 +96,6 @@ function Wishlist() {
   );
 
   const isLoading =
-    !productsSpecsData ||
     !userData ||
     isProductsLoading ||
     isUserDataLoading ||
@@ -127,7 +126,7 @@ function Wishlist() {
           onDelete={handleDelete}
         />
       )}
-      {isLoading && <Skeleton width="100%" height={150} />}
+      {isLoading && <Skeleton variant="rounded" height={130} />}
     </AccountLayout>
   );
 }
