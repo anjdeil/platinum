@@ -1,9 +1,6 @@
 import { FC, useState } from 'react';
 import { CustomForm, FormWrapperBottom } from '../RegistrationForm/styles';
-import {
-  LoginFormSchema,
-  LoginFormType,
-} from '@/types/components/global/forms/loginForm';
+
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -16,6 +13,10 @@ import { FormWrapper } from './styles';
 import { StyledButton } from '@/styles/components';
 import theme from '@/styles/theme';
 import { useRouter } from 'next/router';
+import {
+  LoginFormSchema,
+  LoginFormType,
+} from '@/types/components/global/forms/LoginForm';
 
 export const LoginForm: FC = () => {
   const router = useRouter();
@@ -47,6 +48,7 @@ export const LoginForm: FC = () => {
         username: formData.email,
       });
       if (!tokenResp.data) throw new Error('Auth token getting failed.');
+      console.log(tokenResp);
 
       /** Validate auth token */
       const isTokenValid = await checkToken({});
@@ -81,7 +83,6 @@ export const LoginForm: FC = () => {
       </FormWrapper>
       <FormWrapperBottom>
         <StyledButton
-          backgroundColor={theme.background.hover}
           color={theme.colors.white}
           type="submit"
           disabled={isSubmitting}
@@ -89,7 +90,6 @@ export const LoginForm: FC = () => {
           Login
         </StyledButton>
         <StyledButton
-          backgroundColor={'transparent'}
           color={theme.colors.black}
           disabled={isSubmitting}
           onSubmit={() => {
