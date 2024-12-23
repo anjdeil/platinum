@@ -1,4 +1,6 @@
 import wpRestApi from '@/services/wpRestApi';
+import { getCookieValue } from '@/utils/auth/getCookieValue';
+import { setAuthCookie } from '@/utils/auth/setAuthCookie';
 import { validateApiError } from '@/utils/validateApiError';
 import { NextApiRequest, NextApiResponse } from 'next';
 
@@ -18,9 +20,13 @@ export default async function handler(
   if (slug.includes('jwt-auth')) v2 = false;
 
   const { method, body, headers } = req;
-  const authorization =
-    'authorization' in headers ? headers.authorization : null;
+  let authorization = null;
   let response;
+
+  if (slug.includes('token/validate')) {
+    const authToken = getCookieValue(headers.cookie || '', 'authToken');
+    authorization = authToken && `Bearer ${authToken}`;
+  }
 
   try {
     switch (method) {
@@ -28,17 +34,21 @@ export default async function handler(
         response = await wpRestApi.get(slug, params, authorization);
         break;
       case 'POST':
-        response = await wpRestApi.post(slug, body, !v2 && v2);
+        response = await wpRestApi.post(slug, body, !v2 && v2, authorization);
         break;
       case 'PUT':
-        response = await wpRestApi.put(slug, body, true);
+        response = await wpRestApi.put(slug, body, authorization);
         break;
       default:
         res.setHeader('Allow', ['POST', 'GET', 'PUT']);
         return res.status(405).end(`Method ${method} Not Allowed`);
     }
 
-    if (response && response.data) return res.status(200).json(response?.data);
+    if (response && response.data) {
+      if ('token' in response.data) setAuthCookie(res, response.data.token);
+
+      return res.status(200).json(response?.data);
+    }
   } catch (error) {
     validateApiError(error, res);
   }

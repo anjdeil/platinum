@@ -16,7 +16,7 @@ export const getServerSideProps = async (
   const { res } = context;
   res.setHeader(
     'Set-Cookie',
-    'authToken=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly'
+    'authToken=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; '
   );
 
   return {

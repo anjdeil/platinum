@@ -1,19 +1,22 @@
-import { LoginFormType } from '@/types/components/global/forms/LoginForm';
-import { JwtTokenResponseType } from '@/types/services';
-import { WpUserType } from '@/types/store/rtk-queries/wpApi';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import {
-  AuthConfigType,
-  JwtTokenResType,
-} from '@/types/services/wpRestApi/auth';
+import { WishlistItem, WpUserType } from '@/types/store/rtk-queries/wpApi';
+import { JwtTokenResponseType } from '@/types/services';
+import { AuthConfigType } from '@/types/services/wpRestApi/auth';
+
+const getAuthTokenFromCookie = (cookies: string) => {
+  const match = cookies.match(/authToken=([^;]+)/);
+  return match ? match[1] : null;
+};
 
 export const wpRtkApi = createApi({
   reducerPath: 'wpApi',
-  baseQuery: fetchBaseQuery({ baseUrl: '/api/wp' }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: '/api/wp',
+  }),
   tagTypes: ['User'],
   endpoints: (builder) => ({
     getToken: builder.mutation<JwtTokenResponseType, AuthConfigType>({
-      query: (credentials: AuthConfigType) => ({
+      query: (credentials) => ({
         url: '/jwt-auth/v1/token',
         method: 'POST',
         body: credentials,
@@ -29,52 +32,48 @@ export const wpRtkApi = createApi({
       }),
     }),
 
+    fetchUserData: builder.query<WpUserType, void>({
+      query: () => ({
+        url: '/users/me',
+        prepareHeaders: (headers: any) => {
+          const token = getAuthTokenFromCookie(document.cookie);
+          if (token) {
+            headers.set('Authorization', `Bearer ${token}`);
+          }
+          return headers;
+        },
+      }),
+      providesTags: ['User'],
+    }),
+
+    fetchUserUpdate: builder.mutation({
+      query: (body) => ({
+        url: '/users/me',
+        method: 'PUT',
+        body: body,
+        prepareHeaders: (headers: any) => {
+          const token = getAuthTokenFromCookie(document.cookie);
+          if (token) {
+            headers.set('Authorization', `Bearer ${token}`);
+          }
+          return headers;
+        },
+      }),
+      invalidatesTags: ['User'],
+    }),
+
     fetchUserDataById: builder.query<WpUserType, { id: number }>({
       query: ({ id }) => ({
         url: `/users/${id}`,
       }),
       providesTags: ['User'],
     }),
-    fetchUserData: builder.query<
-      WpUserType,
-      { accessToken: string; id: number }
-    >({
-      query: ({ accessToken }) => ({
-        url: `/users/me`,
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }),
-      providesTags: ['User'],
-    }),
-    fetchUserUpdate: builder.mutation({
-      query: ({ accessToken, body }) => ({
-        url: '/users/me',
-        method: 'PUT',
-        body: body,
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }),
-      invalidatesTags: ['User'],
-    }),
-
-    fetchUserUpdateById: builder.mutation({
-      query: ({ id, body }) => ({
-        url: `/users/${id}`,
-        method: 'PUT',
-        body: body,
-      }),
-      invalidatesTags: ['User'],
-    }),
   }),
 });
 
 export const {
   useGetTokenMutation,
-  useLazyFetchUserDataByIdQuery,
+  useCheckTokenMutation,
   useLazyFetchUserDataQuery,
   useFetchUserUpdateMutation,
-  useFetchUserUpdateByIdMutation,
-  useCheckTokenMutation,
 } = wpRtkApi;

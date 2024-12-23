@@ -4,7 +4,7 @@ import ProductCard from '../product/ProductCard/ProductCard';
 import { ProductCardListSkeleton } from './ProductCardListSkeleton';
 import { StyledProductCardList } from './styles';
 import {
-  useFetchUserUpdateByIdMutation,
+  useFetchUserUpdateMutation,
   useLazyFetchUserDataQuery,
 } from '@/store/rtk-queries/wpApi';
 import { useCookies } from 'react-cookie';
@@ -18,25 +18,40 @@ export const ProductCardList: FC<ProductCardListProps> = ({
   columns,
   length,
 }) => {
-  const [cookie] = useCookies(['userToken']);
+  const [cookie] = useCookies(['authToken']);
+
+  console.log('authToken from useCookies:', cookie.authToken);
+
   const router = useRouter();
 
-  const [fetchUserData, { data: userData, isFetching: isUserFetching }] =
-    useLazyFetchUserDataQuery();
-  const [fetchUserUpdateById, { isLoading: userDataUpdateLoading }] =
-    useFetchUserUpdateByIdMutation();
+  const [
+    fetchUserData,
+    {
+      data: userData,
+      isLoading: isUserDataLoading,
+      isFetching: isUserFetching,
+    },
+  ] = useLazyFetchUserDataQuery();
+  const [fetchUserUpdate, { isLoading: userDataUpdateLoading }] =
+    useFetchUserUpdateMutation();
 
   const wishlist: WishlistItem[] = userData?.meta?.wishlist || [];
 
   useEffect(() => {
-    if ('userToken' in cookie) {
-      fetchUserData(cookie.userToken);
+    if (cookie.authToken) {
+      fetchUserData();
     }
   }, [cookie, fetchUserData]);
 
   const handleDisire = (productId: number, variationId?: number) => {
-    if (!userData?.meta?.wishlist || !cookie?.userToken) {
+    if (!userData?.meta?.wishlist) {
       router.push('/my-account/login');
+      console.log('!userData?.meta?.wishlist ');
+      return;
+    }
+
+    if (!cookie.authToken) {
+      console.log('!cookie?.authToken');
       return;
     }
 
@@ -48,7 +63,7 @@ export const ProductCardList: FC<ProductCardListProps> = ({
         (!variationId || item.variation_id === variationId)
     );
 
-    let updatedWishlist = null;
+    let updatedWishlist: WishlistItem[];
 
     if (index >= 0) {
       updatedWishlist = userWishlist.filter(
@@ -71,10 +86,7 @@ export const ProductCardList: FC<ProductCardListProps> = ({
     };
 
     if (userData?.id) {
-      fetchUserUpdateById({
-        id: userData.id,
-        body: userUpdateRequestBody,
-      });
+      fetchUserUpdate(userUpdateRequestBody);
     }
   };
 

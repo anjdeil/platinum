@@ -92,8 +92,8 @@ export class WpRestApi {
   async put(
     url: string,
     body: object,
-    v2?: boolean,
-    authorization?: string | null
+    authorization?: string | null,
+    v2?: boolean
   ) {
     const result = await this.getResource(
       url,
