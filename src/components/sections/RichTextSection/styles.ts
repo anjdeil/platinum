@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 type StyledRichTextSectionProps = {
   is_reverse?: boolean;
+  fullSize?: boolean;
 };
 
 export const StyledTitle = styled.h1`
@@ -21,6 +22,7 @@ export const StyledTitle = styled.h1`
 `;
 
 export const StyledRichTextSection = styled.div<StyledRichTextSectionProps>`
+  width: 100%;
   h1 {
     font: ${({ theme }) => theme.fonts.titleH2SemiBold};
     color: ${({ theme }) => theme.colors.black};
@@ -42,14 +44,11 @@ export const StyledRichTextSection = styled.div<StyledRichTextSectionProps>`
     font: ${({ theme }) => theme.fonts.titleH2SemiBold};
     color: ${({ theme }) => theme.colors.black};
     text-transform: uppercase;
+    ${({ fullSize }) => fullSize && 'text-align: center'};
     margin-bottom: 16px;
 
     @media ${({ theme }) => theme.media.xl} {
       font: ${({ theme }) => theme.fonts.bodyMiddleSemiBold};
-    }
-
-    @media ${({ theme }) => theme.media.medium} {
-      margin-bottom: 24px;
     }
   }
 
@@ -76,6 +75,7 @@ export const StyledRichTextSection = styled.div<StyledRichTextSectionProps>`
 
     @media ${({ theme }) => theme.media.medium} {
       font: ${({ theme }) => theme.fonts.bodypresmallReg};
+      line-height: 1.5;
       margin-bottom: 8px;
     }
   }
@@ -103,9 +103,9 @@ export const StyledRichTextSection = styled.div<StyledRichTextSectionProps>`
     flex-direction: column;
     gap: 16px;
     ${({ is_reverse }) => is_reverse && 'flex-direction: column-reverse;'}
-
     font: ${({ theme }) => theme.fonts.bodyMiddleReg};
     color: ${({ theme }) => theme.colors.black};
+    margin-bottom: 16px;
 
     @media ${({ theme }) => theme.media.largePlus} {
       font: ${({ theme }) => theme.fonts.bodypresmallReg};
@@ -133,6 +133,27 @@ export const StyledRichTextSection = styled.div<StyledRichTextSectionProps>`
         background-size: cover;
         background-repeat: no-repeat;
       }
+
+      @media ${({ theme }) => theme.media.largePlus} {
+        font: ${({ theme }) => theme.fonts.bodypresmallReg};
+        line-height: 1.5;
+      }
+    }
+  }
+
+  ol {
+    list-style-type: decimal;
+    padding-left: 20px;
+    margin-bottom: 16px;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    hyphens: auto;
+
+    li {
+      font: ${({ theme }) => theme.fonts.bodyMiddleReg};
+      line-height: 1.5;
+      color: ${({ theme }) => theme.colors.black};
+      margin-bottom: 8px;
 
       @media ${({ theme }) => theme.media.largePlus} {
         font: ${({ theme }) => theme.fonts.bodypresmallReg};

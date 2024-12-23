@@ -113,6 +113,7 @@ const RichTextSectionPropsSchema = z.object({
   title: z.string().optional(),
   is_reverse: z.boolean().optional(),
   text: z.string().optional(),
+  fullSize: z.boolean().optional(),
 });
 
 const ApplicationFormSectionSchema = z.object({
