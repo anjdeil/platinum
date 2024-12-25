@@ -45,6 +45,18 @@ export const wpRtkApi = createApi({
       }),
       providesTags: ['User'],
     }),
+    fetchUserDataById: builder.query<
+      WpUserType,
+      { accessToken: string; id: number }
+    >({
+      query: ({ accessToken, id }) => ({
+        url: `/users/me`,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }),
+      providesTags: ['User'],
+    }),
 
     fetchUserUpdate: builder.mutation({
       query: (body) => ({
@@ -61,13 +73,6 @@ export const wpRtkApi = createApi({
       }),
       invalidatesTags: ['User'],
     }),
-
-    fetchUserDataById: builder.query<WpUserType, { id: number }>({
-      query: ({ id }) => ({
-        url: `/users/${id}`,
-      }),
-      providesTags: ['User'],
-    }),
   }),
 });
 
@@ -76,4 +81,5 @@ export const {
   useCheckTokenMutation,
   useLazyFetchUserDataQuery,
   useFetchUserUpdateMutation,
+  useLazyFetchUserDataByIdQuery,
 } = wpRtkApi;

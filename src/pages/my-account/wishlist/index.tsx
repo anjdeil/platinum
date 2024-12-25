@@ -53,6 +53,8 @@ function Wishlist() {
   useEffect(() => {
     if (cookie.authToken) {
       fetchUserData().then(() => setIsLoadingWishlist(false));
+    } else {
+      router.push('/my-account/login');
     }
   }, [cookie.authToken, fetchUserData]);
 
