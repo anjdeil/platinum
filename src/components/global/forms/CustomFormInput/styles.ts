@@ -148,7 +148,7 @@ export const CustomError = styled.p`
   }
 `;
 export const CustomInputContainer = styled.div<CustomInputContainerProps>`
-  width: ${({ isCheckbox, width = '100%' }) => (isCheckbox ? '18px' : width)};
+  width: ${({ isCheckbox, width = '100%' }) => (isCheckbox ? '100%' : width)};
 
   @media ${({ theme }) => theme.media.medium} {
     margin-top: 10px;

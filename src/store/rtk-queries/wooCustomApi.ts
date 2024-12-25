@@ -1,3 +1,4 @@
+import { WooCustomerUpdateReqType } from '@/types/services';
 import {
   couponRespType,
   CreateOrderRequestType,
@@ -90,15 +91,6 @@ export const wooCustomRktApi = createApi({
       query: () => ({
         url: `/products/reviews`,
         method: 'GET',
-      }),
-    }),
-    fetchCustomer: builder.query<WooCustomerType, { customerId: string }>({
-      query: ({ customerId }) => ({
-        url: `/customers/${customerId}`,
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
       }),
     }),
   }),

@@ -1,21 +1,22 @@
 import { FC, useState } from 'react';
 import { CustomForm, FormWrapperBottom } from '../RegistrationForm/styles';
-import {
-  LoginFormSchema,
-  LoginFormType,
-} from '@/types/components/global/forms/loginForm';
+
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   useCheckTokenMutation,
   useGetTokenMutation,
 } from '@/store/rtk-queries/wpApi';
-import { CustomError, CustomSuccess } from '../CustomFormInput/styles';
+import { CustomError } from '../CustomFormInput/styles';
 import { CustomFormInput } from '../CustomFormInput';
 import { FormWrapper } from './styles';
 import { StyledButton } from '@/styles/components';
 import theme from '@/styles/theme';
 import { useRouter } from 'next/router';
+import {
+  LoginFormSchema,
+  LoginFormType,
+} from '@/types/components/global/forms/LoginForm';
 
 export const LoginForm: FC = () => {
   const router = useRouter();
@@ -81,7 +82,6 @@ export const LoginForm: FC = () => {
       </FormWrapper>
       <FormWrapperBottom>
         <StyledButton
-          backgroundColor={theme.background.hover}
           color={theme.colors.white}
           type="submit"
           disabled={isSubmitting}
@@ -89,7 +89,6 @@ export const LoginForm: FC = () => {
           Login
         </StyledButton>
         <StyledButton
-          backgroundColor={'transparent'}
           color={theme.colors.black}
           disabled={isSubmitting}
           onSubmit={() => {
@@ -100,9 +99,7 @@ export const LoginForm: FC = () => {
         </StyledButton>
         {customError && <CustomError>{customError}</CustomError>}
         {isSubmitSuccessful && !customError && !isLoading && (
-          <CustomSuccess>
-            Your account has been created successfully!
-          </CustomSuccess>
+          <p>Your account has been created successfully!</p>
         )}
       </FormWrapperBottom>
     </CustomForm>
