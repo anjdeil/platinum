@@ -1,170 +1,235 @@
-import AddToBasketButton from "@/components/global/buttons/AddToBasketButton/AddToBasketButton";
-import DetailsAccordion from "@/components/global/DetailsAccordeon/DetailsAccordion";
-import Rating from "@/components/global/Rating/Rating";
-import { useAppDispatch, useAppSelector } from "@/store";
-import { updateCart } from "@/store/slices/cartSlice";
-import { popupSet } from "@/store/slices/PopupSlice";
-import { setData } from "@/store/slices/ProductSlice";
-import { StyledButton, Title } from "@/styles/components";
-import { ProductCardPropsType } from "@/types/components/shop";
-import { ProductVariation } from "@/types/components/shop/product/products";
-import { ProductType } from "@/types/pages/shop";
-import { CartItem } from "@/types/store/reducers/сartSlice";
-import { getCurrentVariation } from "@/utils/getCurrentVariation";
+import AddToBasketButton from '@/components/global/buttons/AddToBasketButton/AddToBasketButton';
+import DetailsAccordion from '@/components/global/DetailsAccordeon/DetailsAccordion';
+import Rating from '@/components/global/Rating/Rating';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { updateCart } from '@/store/slices/cartSlice';
+import { popupSet } from '@/store/slices/PopupSlice';
+import { setData } from '@/store/slices/ProductSlice';
+import { StyledButton, Title } from '@/styles/components';
+import { ProductCardPropsType } from '@/types/components/shop';
+import { ProductVariation } from '@/types/components/shop/product/products';
+import { ProductType } from '@/types/pages/shop';
+import { CartItem } from '@/types/store/reducers/сartSlice';
+import { getCurrentVariation } from '@/utils/getCurrentVariation';
 import ReactHtmlParser from 'html-react-parser';
-import { useTranslations } from "next-intl";
-import { useRouter } from "next/router";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import PaymentList from "../PaymentList/PaymentList";
-import ProductAvailable from "../ProductAvailable/ProductAvailable";
-import { ProductOptionsPanel } from "../ProductOptionsPanel";
-import ProductPrice from "../ProductPrice/ProductPrice";
-import ProductPromotion from "../ProductPromotion/ProductPromotion";
-import ProductQuantity from "../ProductQuantity/ProductQuantity";
-import ProductSku from "../ProductSku/ProductSku";
-import ProductSwiper from "../ProductSwiper/ProductSwiper";
-import ProductViewing from "../ProductViewing/ProductViewing";
-import ShippingList from "../ShippingList/ShippingList";
-import { AddToBasketWrapper, ProductFlexWrapper, ProductImageWrapper, ProductInfoWrapper, ProductTitleWrapper, ProductWrapper } from "./styles";
-
-
+import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/router';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import PaymentList from '../PaymentList/PaymentList';
+import ProductAvailable from '../ProductAvailable/ProductAvailable';
+import { ProductOptionsPanel } from '../ProductOptionsPanel';
+import ProductPrice from '../ProductPrice/ProductPrice';
+import ProductPromotion from '../ProductPromotion/ProductPromotion';
+import ProductQuantity from '../ProductQuantity/ProductQuantity';
+import ProductSku from '../ProductSku/ProductSku';
+import ProductSwiper from '../ProductSwiper/ProductSwiper';
+import ProductViewing from '../ProductViewing/ProductViewing';
+import ShippingList from '../ShippingList/ShippingList';
+import {
+  AddToBasketWrapper,
+  ProductFlexWrapper,
+  ProductImageWrapper,
+  ProductInfoWrapper,
+  ProductTitleWrapper,
+  ProductWrapper,
+} from './styles';
 
 const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
-    const { name, stock_quantity, sku, min_price, max_price, images, variations } = product;
-    const t = useTranslations("Product");
+  const {
+    name,
+    stock_quantity,
+    sku,
+    min_price,
+    max_price,
+    images,
+    variations,
+  } = product;
+  const t = useTranslations('Product');
 
-    const dispatch = useAppDispatch();
-    const { cartItems } = useAppSelector(state => state.cartSlice);
+  const dispatch = useAppDispatch();
+  const { cartItems } = useAppSelector((state) => state.cartSlice);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    const sizeList = ['M', 'L', 'XL'];
-
-    const [quantity, setQuantity] = useState<number>(1);
-    const [currentSize, setCurrentSize] = useState<string>(sizeList[0]);
-    const lengthList = ['8-14mm', '0.05mm', '0.07mm', '2mm'];
-    const [currentLength, setCurrentLength] = useState<string>(lengthList[0]);
-    const colorList = ['red', 'white', 'green', 'grey'];
-    const [currentColor, setCurrentColor] = useState<string>(colorList[0]);
-    const [cartMatch, setCartMatch] = useState<CartItem>();
-
-    useEffect(() => {
-        const cartMatch = cartItems.find(({ product_id }) => product_id === product.id);
-        if (cartMatch) {
-            setCartMatch(cartMatch);
-            setQuantity(cartMatch.quantity);
-        }
-    }, [cartItems]);
-
-
-    /**
-     * Choosen variation
-     */
-    const [currentVariation, setCurrentVariation] = useState<ProductVariation>();
-
-    // Temporary code (whole useEffect) for assigning the current variation
-    useEffect(() => {
-        setCurrentVariation(product?.variations[0])
-    }, []);
-
-    function renderCartButtonInnerText() {
-        if (cartMatch) {
-            if (cartMatch.quantity === quantity) return t("viewCart");
-            return t("updateCart");
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const response = await axios.get('/api/auth/check');
+        if (response.data.isAuthenticated) {
+          setIsAuthenticated(true);
         } else {
-            return t("addToBasket");
+          setIsAuthenticated(false);
         }
-    }
-
-    function handleCartButtonClick() {
-        dispatch(updateCart({
-            product_id: product.id,
-            quantity,
-            ...(currentVariation && { variation_id: currentVariation.id })
-        }));
-    }
-
-    const testimages = Array.from({ length: 4 }).map((_, index) => images[0]);
-
-    const stockQuantity = useMemo(() => {
-        if (!currentVariation?.stock_quantity && !product.stock_quantity) return 0;
-        if (currentVariation?.stock_quantity) return currentVariation?.stock_quantity;
-        if (product?.stock_quantity) return product?.stock_quantity;
-        return 0;
-    }, [currentVariation, product]);
-
-    const router = useRouter();
-
-    useEffect(() => {
-        if (product) {
-            console.log('product:', product);
-        }
-    }, [product])
-
-    /** Set default attributes */
-    useEffect(() => {
-        if (product.type === 'variable') {
-            const variation = getCurrentVariation(product.variations, router.query);
-            if (variation) setCurrentVariation(variation);
-        }
-    }, [router.query]);
-
-    const updateProductState = useCallback((data: ProductType) => {
-        dispatch(setData(data));
-    }, [dispatch]);
-
-    const addComment = () => {
-        updateProductState(product);
-        dispatch(popupSet('add-comment'));
+      } catch (error) {
+        console.error('Authentication check failed:', error);
+        setIsAuthenticated(false);
+      }
     };
 
-    return (
-        <ProductWrapper>
-            <ProductImageWrapper>
-                <ProductSwiper data={testimages || []} />
-            </ProductImageWrapper>
-            <ProductTitleWrapper>
-                <Title as="h1" uppercase textalign="left">{currentVariation?.name || product.name}</Title>
-                <ProductFlexWrapper>
-                    <ProductAvailable count={stockQuantity} />
-                    <ProductViewing count={stockQuantity} />
-                </ProductFlexWrapper>
-                <ProductFlexWrapper>
-                    {currentVariation?.sku || product.sku &&
-                        <ProductSku sku={currentVariation?.sku || product.sku} />}
-                    <Rating rating={product.average_rating} />
-                </ProductFlexWrapper>
-                {currentVariation && <ProductPrice minPrice={currentVariation.price} />}
-                {!currentVariation && <ProductPrice minPrice={product.min_price} maxPrice={product.max_price} />}
-            </ProductTitleWrapper>
-            <ProductInfoWrapper>
+    checkAuth();
+  }, []);
 
-                {/* Options */}
-                {product.attributes && <ProductOptionsPanel
-                    attributes={product.attributes}
-                    defaultAttributes={product.default_attributes || []} />}
-                {/* Options END*/}
+  console.log('isAuthenticated...', isAuthenticated);
 
-                <ProductPromotion time={new Date("2024-10-30T00:00:00")} />
-                <AddToBasketWrapper>
-                    <ProductQuantity quantity={quantity} onChange={setQuantity} />
+  const sizeList = ['M', 'L', 'XL'];
 
-                    {(stock_quantity !== null && stock_quantity > 0)
-                        ? <AddToBasketButton maxWidth="309px" onClick={handleCartButtonClick}>
-                            {renderCartButtonInnerText()}
-                        </AddToBasketButton>
-                        : <StyledButton notify={true}>{t('notifyWhenAvailable')}</StyledButton>
-                    }
-                </AddToBasketWrapper>
-                <PaymentList />
-                <ShippingList />
-                <StyledButton onClick={addComment} secondary={true}>Leave a review about product</StyledButton>
-                <DetailsAccordion summary="Descriptions">
-                    <div dangerouslySetInnerHTML={{
-                        __html: ReactHtmlParser(currentVariation?.description || product.description)
-                    }}></div>
-                </DetailsAccordion>
-            </ProductInfoWrapper>
-        </ProductWrapper>
+  const [quantity, setQuantity] = useState<number>(1);
+  const [currentSize, setCurrentSize] = useState<string>(sizeList[0]);
+  const lengthList = ['8-14mm', '0.05mm', '0.07mm', '2mm'];
+  const [currentLength, setCurrentLength] = useState<string>(lengthList[0]);
+  const colorList = ['red', 'white', 'green', 'grey'];
+  const [currentColor, setCurrentColor] = useState<string>(colorList[0]);
+  const [cartMatch, setCartMatch] = useState<CartItem>();
+
+  useEffect(() => {
+    const cartMatch = cartItems.find(
+      ({ product_id }) => product_id === product.id
     );
-}
+    if (cartMatch) {
+      setCartMatch(cartMatch);
+      setQuantity(cartMatch.quantity);
+    }
+  }, [cartItems]);
+
+  /**
+   * Choosen variation
+   */
+  const [currentVariation, setCurrentVariation] = useState<ProductVariation>();
+
+  // Temporary code (whole useEffect) for assigning the current variation
+  useEffect(() => {
+    setCurrentVariation(product?.variations[0]);
+  }, []);
+
+  function renderCartButtonInnerText() {
+    if (cartMatch) {
+      if (cartMatch.quantity === quantity) return t('viewCart');
+      return t('updateCart');
+    } else {
+      return t('addToBasket');
+    }
+  }
+
+  function handleCartButtonClick() {
+    dispatch(
+      updateCart({
+        product_id: product.id,
+        quantity,
+        ...(currentVariation && { variation_id: currentVariation.id }),
+      })
+    );
+  }
+
+  const testimages = Array.from({ length: 4 }).map((_, index) => images[0]);
+
+  const stockQuantity = useMemo(() => {
+    if (!currentVariation?.stock_quantity && !product.stock_quantity) return 0;
+    if (currentVariation?.stock_quantity)
+      return currentVariation?.stock_quantity;
+    if (product?.stock_quantity) return product?.stock_quantity;
+    return 0;
+  }, [currentVariation, product]);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (product) {
+      console.log('product:', product);
+    }
+  }, [product]);
+
+  /** Set default attributes */
+  useEffect(() => {
+    if (product.type === 'variable') {
+      const variation = getCurrentVariation(product.variations, router.query);
+      if (variation) setCurrentVariation(variation);
+    }
+  }, [router.query]);
+
+  const updateProductState = useCallback(
+    (data: ProductType) => {
+      dispatch(setData(data));
+    },
+    [dispatch]
+  );
+
+  const addComment = () => {
+    updateProductState(product);
+    dispatch(popupSet('add-comment'));
+  };
+
+  return (
+    <ProductWrapper>
+      <ProductImageWrapper>
+        <ProductSwiper data={testimages || []} />
+      </ProductImageWrapper>
+      <ProductTitleWrapper>
+        <Title as="h1" uppercase textalign="left">
+          {currentVariation?.name || product.name}
+        </Title>
+        <ProductFlexWrapper>
+          <ProductAvailable count={stockQuantity} />
+          <ProductViewing count={stockQuantity} />
+        </ProductFlexWrapper>
+        <ProductFlexWrapper>
+          {currentVariation?.sku ||
+            (product.sku && (
+              <ProductSku sku={currentVariation?.sku || product.sku} />
+            ))}
+          <Rating rating={product.average_rating} />
+        </ProductFlexWrapper>
+        {currentVariation && <ProductPrice minPrice={currentVariation.price} />}
+        {!currentVariation && (
+          <ProductPrice
+            minPrice={product.min_price}
+            maxPrice={product.max_price}
+          />
+        )}
+      </ProductTitleWrapper>
+      <ProductInfoWrapper>
+        {/* Options */}
+        {product.attributes && (
+          <ProductOptionsPanel
+            attributes={product.attributes}
+            defaultAttributes={product.default_attributes || []}
+          />
+        )}
+        {/* Options END*/}
+
+        <ProductPromotion time={new Date('2024-10-30T00:00:00')} />
+        <AddToBasketWrapper>
+          <ProductQuantity quantity={quantity} onChange={setQuantity} />
+
+          {stock_quantity !== null && stock_quantity > 0 ? (
+            <AddToBasketButton maxWidth="309px" onClick={handleCartButtonClick}>
+              {renderCartButtonInnerText()}
+            </AddToBasketButton>
+          ) : (
+            <StyledButton notify={true}>
+              {t('notifyWhenAvailable')}
+            </StyledButton>
+          )}
+        </AddToBasketWrapper>
+        <PaymentList />
+        <ShippingList />
+        <StyledButton
+          onClick={addComment}
+          secondary={isAuthenticated}
+          isDisabled={!isAuthenticated}
+        >
+          Leave a review about product
+        </StyledButton>
+        <DetailsAccordion summary="Descriptions">
+          <div
+            dangerouslySetInnerHTML={{
+              __html: ReactHtmlParser(
+                currentVariation?.description || product.description
+              ),
+            }}
+          ></div>
+        </DetailsAccordion>
+      </ProductInfoWrapper>
+    </ProductWrapper>
+  );
+};
 
 export default ProductInfo;
