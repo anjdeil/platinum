@@ -134,7 +134,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
   padding-block: 16px;
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
   text-transform: none;
-  border: ${({ theme }) => `1px solid ${theme.colors.secondary}`};
+  border: ${({ isDisabled = false, theme }) => isDisabled ? 'none' : `1px solid ${theme.colors.secondary}`};
   transition: all 0.3s ease;
   cursor: pointer;
   display: flex;

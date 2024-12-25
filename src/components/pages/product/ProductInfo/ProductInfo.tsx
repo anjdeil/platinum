@@ -51,24 +51,19 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const response = await axios.get('/api/auth/check');
-        if (response.data.isAuthenticated) {
-          setIsAuthenticated(true);
-        } else {
-          setIsAuthenticated(false);
-        }
-      } catch (error) {
-        console.error('Authentication check failed:', error);
-        setIsAuthenticated(false);
-      }
+    const checkAuth = () => {
+      const cookies = document.cookie;
+
+      const authToken = cookies
+        .split('; ')
+        .find((row) => row.startsWith('authToken='))
+        ?.split('=')[1];
+
+      setIsAuthenticated(!!authToken);
     };
 
     checkAuth();
   }, []);
-
-  console.log('isAuthenticated...', isAuthenticated);
 
   const sizeList = ['M', 'L', 'XL'];
 
@@ -153,8 +148,10 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
   );
 
   const addComment = () => {
-    updateProductState(product);
-    dispatch(popupSet('add-comment'));
+    if (isAuthenticated) {
+      updateProductState(product);
+      dispatch(popupSet('add-comment'));
+    }
   };
 
   return (
