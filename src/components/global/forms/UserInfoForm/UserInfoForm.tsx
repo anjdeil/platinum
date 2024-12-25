@@ -130,7 +130,7 @@ export const UserInfoForm: FC = () => {
           (isShipping && formData.first_nameShipping) || formData.first_name,
         last_name:
           (isShipping && formData.last_nameShipping) || formData.last_name,
-        phone: formData.phone,
+        phone: (isShipping && formData.phoneShipping) || formData.phoneShipping,
         address_1:
           (isShipping && formData.address_1Shipping) || formData.address_1,
         address_2:
@@ -166,7 +166,7 @@ export const UserInfoForm: FC = () => {
   ) => (
     <>
       {prefix === 'Shipping' &&
-        ['first_name', 'last_name'].map((field) => (
+        ['first_name', 'last_name', 'phone'].map((field) => (
           <CustomFormInput
             key={field}
             fieldName={tMyAccount(field)}
@@ -174,7 +174,7 @@ export const UserInfoForm: FC = () => {
             register={register}
             errors={errors}
             inputTag="input"
-            inputType="text"
+            inputType={field === 'phone' ? 'phone' : 'text'}
             defaultValue={defaultValues[field] || ''}
             setValue={setValue}
           />
