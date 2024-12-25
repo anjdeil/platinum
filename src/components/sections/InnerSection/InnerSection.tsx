@@ -1,25 +1,27 @@
 import { InnerSectionData } from "@/types/components/sections/index";
 import { StyledInnerSection } from "./styles";
 import { RichTextSection } from "../RichTextSection";
+import { AmbassadorForm } from '@/components/global/forms/AmbassadorFrom';
 
-type InnerSectionProps = Omit<InnerSectionData, "_type">;
+type InnerSectionProps = Omit<InnerSectionData, '_type'> & {
+  isNarrow?: boolean;
+};
 
-export const InnerSection: React.FC<InnerSectionProps> = ({ sections }) => {
+export const InnerSection: React.FC<InnerSectionProps> = ({
+  sections,
+  isNarrow,
+}) => {
   return (
-    <StyledInnerSection>
+    <StyledInnerSection isNarrow={isNarrow}>
       {sections.map((section, idx) => {
-        if (section._type === "rich_text" && section.text) {
+        if (section._type === 'rich_text' && section.text) {
           return <RichTextSection key={idx} text={section.text} />;
         }
-        if (section._type === "application_form") {
-          return <h3 key={idx}>Application form</h3>;
+        if (section._type === 'application_form') {
+          return <AmbassadorForm key={idx} />;
         }
         return null;
       })}
     </StyledInnerSection>
   );
 };
-
-// if (section._type === "application_form") {
-//   return <ApplicationForm key={idx} />;
-// }

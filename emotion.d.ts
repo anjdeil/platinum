@@ -1,6 +1,6 @@
-import "@emotion/react";
+import '@emotion/react';
 
-declare module "@emotion/react" {
+declare module '@emotion/react' {
   export interface Theme {
     typography: {
       fontFamily: string;
@@ -22,6 +22,7 @@ declare module "@emotion/react" {
       platinum: string;
       shadow: string;
       error: string;
+      success: string;
       border: string;
       lightBorder: string;
       new: string;
@@ -39,6 +40,7 @@ declare module "@emotion/react" {
       primaryBlue700: string;
     };
     background: {
+      main: string;
       primaryGradient: string;
       infoGradient: string;
       secondary: string;
@@ -61,6 +63,7 @@ declare module "@emotion/react" {
     };
     media: {
       small: string;
+      preSmall: string;
       medium: string;
       mediumLarge: string;
       large: string;

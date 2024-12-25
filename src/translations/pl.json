@@ -208,12 +208,15 @@
     "theSameAddress": "Ten sam adres co w informacjach o kliencie"
   },
   "Breadcrumbs": {
-    "homePage": "Strona Główna"
+    "homePage": "Strona Główna",
+    "benefitsPage": "Lojalnościowy Program",
+    "blogPage": "Blog"
   },
   "Forms": {
     "applicationForm": "Formularz zgłoszeniowy",
     "UserInfo": "Informacje o użytkowniku",
-    "ShippingInfo": "Informacje o wysyłce"
+    "ShippingInfo": "Informacje o wysyłce",
+    "fileTooLarge": "zbyt duży plik"
   },
   "NotFoundPage": {
     "notFound": "Strona nie znaleziona",
@@ -243,5 +246,11 @@
     "costsTitle": "Koszty dostawy nie są uwzględnione w kalkulacji zakupu.",
     "freeCostsPoland": "Darmowa dostawa w Polsce przy zamówieniach powyżej 200 PLN.",
     "freeCostsEurope": "Darmowa dostawa do Niemiec, Austrii, Słowacji, Słowenii, Belgii, Węgier, Litwy, Czech, Danii, Rumunii i Estonii dla zamówień powyżej 150 EUR."
+  },
+  "BlogPostPage": {
+    "previousPost": "Poprzedni",
+    "nextPost": "Następny",
+    "blogPage": "Blog",
+    "blogSectionSubtitle": "Ostatnie artykuły"
   }
 }

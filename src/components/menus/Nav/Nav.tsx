@@ -1,9 +1,9 @@
-import { MenusContext } from "@/components/Layout/Layout";
-import { FC, useContext } from "react";
-import { MenuSkeleton } from "../MenuSkeleton";
-import { NavLink, NavList } from "./styles";
-import { menuItemsType } from "@/types/services/wpCustomApi/menus";
-import { wpMenuProps } from "@/types/menus/WpMenus";
+import { MenusContext } from '@/components/Layout/Layout';
+import { FC, useContext } from 'react';
+import { MenuSkeleton } from '../MenuSkeleton';
+import { NavLink, NavList } from './styles';
+import { menuItemsType } from '@/types/services/wpCustomApi/menus';
+import { wpMenuProps } from '@/types/menus/WpMenus';
 
 const Nav: FC<wpMenuProps> = ({
   menuId,
@@ -34,9 +34,27 @@ const Nav: FC<wpMenuProps> = ({
     );
   }
 
+  if (!menuItems && skeleton) {
+    return (
+      <MenuSkeleton
+        elements={skeleton.elements}
+        direction={skeleton.direction}
+        width={skeleton.width}
+        height={skeleton.height}
+        gap={skeleton.gap}
+      />
+    );
+  }
+
   return (
     <nav>
-      <NavList justify={justify} direction={direction} align={align} gap={gap} mobGap={mobGap}>
+      <NavList
+        justify={justify}
+        direction={direction}
+        align={align}
+        gap={gap}
+        mobGap={mobGap}
+      >
         {menuItems &&
           menuItems.map(({ title, url }) => (
             <li key={title}>

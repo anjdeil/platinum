@@ -8,11 +8,11 @@ import OrderProductList from "@/components/pages/order/OrderProductList/OrderPro
 import OrderTotals from "@/components/pages/order/OrderTotals/OrderTotals";
 import wooCommerceRestApi from "@/services/wooCommerceRestApi";
 import { AccountInfoWrapper } from "@/styles/components";
-import { OrderType } from "@/types/services";
 import areBillingAndShippingEqual from "@/utils/areBillingAndShippingEqual";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { useTranslations } from "next-intl";
 import { FC } from "react";
+import { OrderType } from "@/types/services/wooCustomApi/shop";
 
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) =>
 {

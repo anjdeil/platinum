@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo, useState } from "react";
+import { FC, useEffect, useMemo, useState } from 'react';
 import {
   CustomError,
   CustomInputContainer,
@@ -8,10 +8,9 @@ import {
   Input,
   ShowPasswordImage,
   StyledPhoneInput,
-} from "./styles";
-import { CustomFormInputType } from "@/types/components/global/forms/customFormInput";
-import { PhoneInput } from "react-international-phone";
-import "react-international-phone/style.css";
+} from './styles';
+import { CustomFormInputType } from '@/types/components/global/forms/customFormInput';
+import 'react-international-phone/style.css';
 
 export const CustomFormInput: FC<CustomFormInputType> = ({
   errors,
@@ -39,7 +38,8 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const togglePasswordVisibility = () => setPasswordVisible((prev) => !prev);
   const passwordImagePath = useMemo(
-    () => (isPasswordVisible ? "/images/show-pass.svg" : "/images/hidden-pass.svg"),
+    () =>
+      isPasswordVisible ? '/images/show-pass.svg' : '/images/hidden-pass.svg',
     [isPasswordVisible]
   );
 
@@ -55,19 +55,19 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
   }, [errors, name]);
 
   useEffect(() => {
-    if (defaultValue && defaultValue !== "" && setValue) {
+    if (defaultValue && defaultValue !== '' && setValue) {
       setValue(name, defaultValue, { shouldValidate: true });
     }
   }, [defaultValue, setValue, name]);
 
   return (
-    <CustomInputContainer isCheckbox={inputType === "checkbox"} width={width}>
+    <CustomInputContainer isCheckbox={inputType === 'checkbox'} width={width}>
       <CustomInputStyle
-        as={"label"}
+        as={'label'}
         isError={isError}
         isTextArea={false}
-        isCheckbox={inputType === "checkbox"}
-        isPhone={inputType === "phone"}
+        isCheckbox={inputType === 'checkbox'}
+        isPhone={inputType === 'phone'}
         padding={padding}
         font={font}
       >
@@ -79,7 +79,7 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
         )}
 
         <CustomInputWrapper>
-          {inputType === "phone" ? (
+          {inputType === 'phone' ? (
             <StyledPhoneInput
               defaultCountry="pl"
               value={value || defaultValue}
@@ -92,21 +92,21 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
           ) : (
             <Input
               as={inputTag}
-              placeholder={placeholder ? placeholder : ""}
+              placeholder={placeholder ? placeholder : ''}
               {...register(name)}
-              type={isPasswordVisible ? "text" : inputType}
+              type={isPasswordVisible ? 'text' : inputType}
               {...registerProps}
               height={height}
               background={background}
-              isCheckbox={inputType === "checkbox"}
-              {...(name === "country" ? { list: list } : {})}
+              isCheckbox={inputType === 'checkbox'}
+              {...(name === 'country' ? { list: list } : {})}
               disabled={disabled}
             />
           )}
-          {inputType === "password" && (
+          {inputType === 'password' && (
             <ShowPasswordImage
               src={passwordImagePath}
-              alt={"show or hidden password button"}
+              alt={'show or hidden password button'}
               width={24}
               height={24}
               onClick={togglePasswordVisibility}

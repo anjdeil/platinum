@@ -12,12 +12,15 @@ import {} from '../ReviewsSlider/styles';
 import { useMediaQuery } from '@mui/material';
 
 export const ReviewsSkeleton: React.FC = () => {
-  const isMediumScreen = useMediaQuery('(max-width: 767px)');
-  const isLargeScreen = useMediaQuery('(min-width: 768px)');
+  const isSmallScreen = useMediaQuery("(max-width: 500px)");
+  const isMediumScreen = useMediaQuery("(max-width: 767px)");
+  const isLargeScreen = useMediaQuery("(min-width: 768px)");
 
   let skeletonLength: number = 0;
-  if (isMediumScreen) {
+  if (isSmallScreen) {
     skeletonLength = 1;
+  } else if (isMediumScreen) {
+    skeletonLength = 2;
   } else if (isLargeScreen) {
     skeletonLength = 3;
   }

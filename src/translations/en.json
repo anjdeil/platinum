@@ -168,8 +168,7 @@
     "yourNamePlaceholder": "What is your name?",
     "emailPlaceholder": "Email",
     "yourQuestionPlaceholder": "Write your question",
-    "sending": "Sending...",
-    "sendButton": "Send",
+
     "errorMessage": "Something went wrong. Please try again.",
     "successMessage": "Your message has been sent successfully!"
   },
@@ -208,11 +207,16 @@
   "Forms": {
     "applicationForm": "application form",
     "UserInfo": "User information",
-    "ShippingInfo": "Shipping information"
+    "ShippingInfo": "Shipping information",
+    "InvalidPhoneNumber": "Invalid phone number",
+    "fileTooLarge": "file too large"
   },
   "Breadcrumbs": {
-    "homePage": "Home Page"
+    "homePage": "Home Page",
+    "benefitsPage": "Loyalty Program",
+    "blogPage": "Blog"
   },
+
   "NotFoundPage": {
     "notFound": "Page not found",
     "description": "Sorry, we can't seem to find the page you're looking for. It may have been moved, deleted, or never existed.",
@@ -241,5 +245,11 @@
     "costsTitle": "Delivery costs are not included in the purchase calculation.",
     "freeCostsPoland": "Free delivery within Poland for orders over 200 PLN.",
     "freeCostsEurope": "Free delivery to Germany, Austria, Slovakia, Slovenia, Belgium, Hungary, Lithuania, Czech Republic, Denmark, Romania, and Estonia for orders over 150 EUR."
+  },
+  "BlogPostPage": {
+    "previousPost": "Previous",
+    "nextPost": "Next",
+    "blogPage": "Blog",
+    "blogSectionTitle": "Lasted articles"
   }
 }

@@ -1,8 +1,8 @@
-import { LineItemSchema, ProductsMinimizedSchema } from "@/types/components/shop/product/products";
-import { lineOrderItemsSchema } from "@/types/store/reducers/сartSlice";
-import { z } from "zod";
+import { LineItemSchema } from '@/types/components/shop/product/products';
+import { lineOrderItemsSchema } from '@/types/store/reducers/сartSlice';
+import { z } from 'zod';
 
-const currencies: [string, ...string[]] = ["EUR", "USD", "PLN"];
+const currencies: [string, ...string[]] = ['EUR', 'USD', 'PLN'];
 
 export const WooCustomerSchema = z.object({
   id: z.number(),
@@ -259,13 +259,13 @@ const CreateOrderRequestSchema = z.object({
     )
     .optional(),
   status: z.enum([
-    "pending",
-    "processing",
-    "on-hold",
-    "completed",
-    "cancelled",
-    "refunded",
-    "failed",
+    'pending',
+    'processing',
+    'on-hold',
+    'completed',
+    'cancelled',
+    'refunded',
+    'failed',
   ]),
   currency: z.enum(currencies),
 });
@@ -293,13 +293,13 @@ const CreateOrderResponseSchema = z.object({
     )
     .optional(),
   status: z.enum([
-    "pending",
-    "processing",
-    "on-hold",
-    "completed",
-    "cancelled",
-    "refunded",
-    "failed",
+    'pending',
+    'processing',
+    'on-hold',
+    'completed',
+    'cancelled',
+    'refunded',
+    'failed',
   ]),
   currency: z.enum(currencies),
 });
@@ -377,4 +377,6 @@ export type couponRespType = z.infer<typeof couponRespSchema>;
 export type retrieveCouponQueryType = z.infer<typeof retrieveCouponQuerySchema>;
 export type ReviewRespType = z.infer<typeof ReviewRespSchema>;
 export type ReviewsRespType = z.infer<typeof ReviewsRespSchema>;
-export type WooCustomerUpdateReqType = z.infer<typeof WooCustomerUpdateReqSchema>;
+export type WooCustomerUpdateReqType = z.infer<
+  typeof WooCustomerUpdateReqSchema
+>;

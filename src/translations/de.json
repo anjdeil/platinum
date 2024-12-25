@@ -200,12 +200,15 @@
     "theSameAddress": "Die gleiche Adresse wie bei den Kundeninformationen"
   },
   "Breadcrumbs": {
-    "homePage": "Startseite"
+    "homePage": "Startseite",
+    "benefitsPage": "Vorteile",
+    "blogPage": "Blog"
   },
   "Forms": {
     "applicationForm": "Antragsformular",
     "UserInfo": "Benutzerinformationen",
-    "ShippingInfo": "Versandinformationen"
+    "ShippingInfo": "Versandinformationen",
+    "fileTooLarge": "Datei zu groß"
   },
   "NotFoundPage": {
     "notFound": "Seite nicht gefunden",
@@ -235,5 +238,10 @@
     "costsTitle": "Lieferkosten sind in der Kaufkalkulation nicht enthalten.",
     "freeCostsPoland": "Kostenlose Lieferung innerhalb Polens bei Bestellungen über 200 PLN.",
     "freeCostsEurope": "Kostenlose Lieferung nach Deutschland, Österreich, Slowakei, Slowenien, Belgien, Ungarn, Litauen, Tschechien, Dänemark, Rumänien und Estland bei einem Bestellwert von über 150 EUR."
+  },
+  "BlogPostPage": {
+    "previousPost": "Zurück",
+    "nextPost": "Weiter",
+    "blogSectionSubtitle": "Letzte artikel"
   }
 }

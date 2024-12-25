@@ -1,12 +1,17 @@
-import Breadcrumbs from '@/components/global/Breadcrumbs/Breadcrumbs';
+import { SlugPageBreadcrumbs } from '@/components/pages/slugPageBreadcrumbs';
+import { RichTextSection } from '@/components/sections/RichTextSection';
 import { SectionRenderer } from '@/components/sections/SectionRenderer';
 import { customRestApi } from '@/services/wpCustomApi';
-import { StyledHeaderWrapper, Title } from '@/styles/components';
+import {
+  Container,
+  StyledHeaderWrapper,
+  StyledSlugRichTextSection,
+  Title,
+} from '@/styles/components';
 import { SectionsType } from '@/types/components/sections';
 import { PageDataFullType, PageDataItemType } from '@/types/services';
 import { validateWpPage } from '@/utils/zodValidators/validateWpPage';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
-import { useTranslations } from "next-intl";
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
@@ -24,7 +29,7 @@ export const getServerSideProps: GetServerSideProps = async (
     }
 
     const isValidSectionsData = validateWpPage(responseData);
-    if (!isValidSectionsData) throw new Error("Invalid SectionsData data");
+    if (!isValidSectionsData) throw new Error('Invalid SectionsData data');
 
     if (responseData && responseData.data) {
       const pageResponseData = responseData.data as PageDataFullType;
@@ -36,7 +41,8 @@ export const getServerSideProps: GetServerSideProps = async (
 
       return {
         props: {
-          page: pageData,
+          pageTitle: pageData.title,
+          pageContent: pageData.content,
           sections: pageData.sections,
         },
       };
@@ -44,10 +50,10 @@ export const getServerSideProps: GetServerSideProps = async (
 
     return { notFound: true };
   } catch (error) {
-    console.error("Server Error:", error);
+    console.error('Server Error:', error);
     return {
       redirect: {
-        destination: "/500",
+        destination: '/500',
         permanent: false,
       },
     };
@@ -55,32 +61,35 @@ export const getServerSideProps: GetServerSideProps = async (
 };
 
 interface PageProps {
-  page: PageDataItemType;
+  pageTitle: string;
+  pageContent: string;
   sections: SectionsType[];
 }
 
-const SlugPage = ({ page, sections }: PageProps) => {
-  const t = useTranslations("Breadcrumbs");
-  const breadcrumbsLinks = [
-    {
-      name: t("homePage"),
-      url: "/",
-    },
-    {
-      name: page?.title,
-      url: "",
-    },
-  ];
+const isContentMain = (content: string, sections: any[]): boolean => {
+  return content.length > 500 || sections.length === 0;
+};
+
+const SlugPage = ({ pageTitle, pageContent, sections }: PageProps) => {
+  const isMainContent = isContentMain(pageContent, sections);
 
   return (
     <>
       <StyledHeaderWrapper>
-        <Breadcrumbs links={breadcrumbsLinks} />
-        <Title as={"h1"} uppercase>
-          {page?.title}
+        <SlugPageBreadcrumbs title={pageTitle} />
+        <Title as={'h1'} uppercase>
+          {pageTitle}
         </Title>
       </StyledHeaderWrapper>
-      {sections.length > 0 && <SectionRenderer sections={sections} />}
+      {isMainContent ? (
+        <Container>
+          <StyledSlugRichTextSection>
+            <RichTextSection text={pageContent} fullSize={isMainContent} />
+          </StyledSlugRichTextSection>
+        </Container>
+      ) : (
+        <SectionRenderer sections={sections} />
+      )}
     </>
   );
 };

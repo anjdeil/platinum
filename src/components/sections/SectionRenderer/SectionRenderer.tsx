@@ -15,6 +15,8 @@ import { ContactsSection } from '../ContactsSection';
 import { SectionsType } from '@/types/components/sections';
 import { normalizeSlides } from '@/utils/normalizeSlides';
 import { IsMobileScreen } from '@/components/global/isMobileScreenWrapper';
+import { RichTextSection } from '../RichTextSection';
+import { SectionContainer } from '../styles';
 
 interface SectionRendererProps {
   sections: SectionsType[];
@@ -23,6 +25,13 @@ interface SectionRendererProps {
 export const SectionRenderer: React.FC<SectionRendererProps> = ({
   sections,
 }) => {
+  const countSplitSections = (sections: any[]): number => {
+    return sections.filter((section) => section._type === 'split').length;
+  };
+
+  const splitSectionCount = countSplitSections(sections);
+  const isMoreThen5SectionsSplit = splitSectionCount > 5;
+
   return (
     <>
       {sections.map((section, index) => {
@@ -118,7 +127,18 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
           case 'split':
             return (
               <Container key={index}>
-                <SplitSection key={section._type} split={section.split} />
+                <SplitSection
+                  split={section.split}
+                  smallGaps={isMoreThen5SectionsSplit}
+                />
+              </Container>
+            );
+          case 'rich_text':
+            return (
+              <Container key={index}>
+                <SectionContainer smallGaps={true}>
+                  <RichTextSection text={section.text} />
+                </SectionContainer>
               </Container>
             );
           case 'loyalty':
@@ -130,10 +150,9 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
             );
           case 'contacts':
             return (
-              <ContactsSection
-                key={index}
-                contacts_separator={section.contacts_separator}
-              />
+              <Container key={index}>
+                <ContactsSection />
+              </Container>
             );
           default:
             return (

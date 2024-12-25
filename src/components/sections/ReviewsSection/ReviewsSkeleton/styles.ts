@@ -25,9 +25,13 @@ export const ReviewContainer = styled.div`
   border-radius: 8px;
   background-color: ${({ theme }) => theme.background.secondary};
   padding: 16px;
-  row-gap: 16px;
+  gap: 16px;
 
-  @media ${({ theme }) => theme.media.medium} {
+  @media (max-width: 768px) {
+    width: 48.5%;
+  }
+
+  @media (max-width: 500px) {
     width: 100%;
   }
 `;
@@ -44,7 +48,7 @@ export const FlexWrapper = styled.div`
 export const ReviewerWrapper = styled.div`
   width: 100%;
   display: flex;
-  jystify-content: flex-start;
+  justify-content: flex-start;
   align-items: center;
   gap: 16px;
 `;
