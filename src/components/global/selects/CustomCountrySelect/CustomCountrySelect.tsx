@@ -31,7 +31,7 @@ const CustomCountrySelect: React.FC<CustomSelectProps> = ({
 
   return (
     <CustomSelectInput>
-      <label htmlFor={name}>{label}</label>
+      <label>{label}</label>
       <CustomRequired>*</CustomRequired>
       <Controller
         name={name}

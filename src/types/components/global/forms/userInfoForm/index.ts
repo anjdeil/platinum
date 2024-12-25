@@ -24,10 +24,12 @@ export const UserInfoFormSchema = (isShipping: boolean, t: any) => {
     apartmentNumber: z.string().min(1, t("RequiredField")),
     postcode: z.string().min(5, t("RequiredField")),
     terms: termsSchema(t),
-    proofOfPurchase: z.string().min(1, t("RequiredField")),
-    address1Shipping: isShipping ? z.string().min(4, t("RequiredField")) : z.string().optional(),
-    address2Shipping: isShipping ? z.string().min(1, t("RequiredField")) : z.string().optional(),
-    postCodeShipping: isShipping ? z.string().min(5, t("RequiredField")) : z.string().optional(),
+    /*    proofOfPurchase: z.string().min(1, t("RequiredField")), */
+    first_nameShipping: isShipping ? z.string().min(3, t("RequiredField")) : z.string().optional(),
+    last_nameShipping: isShipping ? z.string().min(3, t("RequiredField")) : z.string().optional(),
+    address_1Shipping: isShipping ? z.string().min(4, t("RequiredField")) : z.string().optional(),
+    address_2Shipping: isShipping ? z.string().min(1, t("RequiredField")) : z.string().optional(),
+    postcodeShipping: isShipping ? z.string().min(5, t("RequiredField")) : z.string().optional(),
     cityShipping: isShipping ? z.string().min(1, t("RequiredField")) : z.string().optional(),
     countryShipping: isShipping ? z.string().min(1, t("RequiredField")) : z.string().optional(),
     apartmentNumberShipping: isShipping

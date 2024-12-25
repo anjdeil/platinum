@@ -67,11 +67,11 @@ export const UserInfoForm: FC = () => {
     return () => subscription.unsubscribe();
   }, [watch]);
 
-  const proofOfPurchaseOptions = [
+  /*   const proofOfPurchaseOptions = [
     { code: "Receipt", name: "Receipt" },
     { code: "VAT Invoice", name: "VAT Invoice" },
     { code: "Bank transfer receipt", name: "Bank transfer receipt" },
-  ];
+  ]; */
   const countryOptions = [
     { value: "DE", label: "Germany" },
     { value: "FR", label: "France" },
@@ -96,6 +96,12 @@ export const UserInfoForm: FC = () => {
   ];
 
   const onSubmit = async (formData: UserInfoFormType) => {
+    console.log("Form Data before submission:", formData);
+
+    if (Object.keys(errors).length > 0) {
+      console.error("Validation errors:", errors);
+      return;
+    }
     if (!customer) {
       console.error("Customer data is not available");
       return;
@@ -106,12 +112,12 @@ export const UserInfoForm: FC = () => {
       first_name: formData.first_name,
       last_name: formData.last_name,
       username: formData.email,
-      proofOfPurchase: formData.proofOfPurchase, //in process
+      /* proofOfPurchase: formData.proofOfPurchase, //in process */
       billing: {
         first_name: formData.first_name,
         last_name: formData.last_name,
         address_1: formData.address_1,
-        address_2: formData.address_2,
+        address_2: [formData.address_2, formData.apartmentNumber].filter(Boolean).join("/"),
         city: formData.city,
         postcode: formData.postcode,
         country: formData.country,
@@ -119,13 +125,18 @@ export const UserInfoForm: FC = () => {
         phone: formData.phone,
       },
       shipping: {
-        first_name: formData.first_name,
-        last_name: formData.last_name,
+        first_name: (isShipping && formData.first_nameShipping) || formData.first_name,
+        last_name: (isShipping && formData.last_nameShipping) || formData.last_name,
         phone: formData.phone,
-        address_1: (isShipping && formData.address1Shipping) || formData.address_1,
-        address_2: (isShipping && formData.address2Shipping) || formData.address_2,
+        address_1: (isShipping && formData.address_1Shipping) || formData.address_1,
+        address_2:
+          (isShipping &&
+            [formData.address_2Shipping, formData.apartmentNumberShipping]
+              .filter(Boolean)
+              .join("/")) ||
+          [formData.address_2, formData.apartmentNumber].filter(Boolean).join("/"),
         city: (isShipping && formData.cityShipping) || formData.city,
-        postcode: (isShipping && formData.postCodeShipping) || formData.postcode,
+        postcode: (isShipping && formData.postcodeShipping) || formData.postcode,
         country: (isShipping && formData.countryShipping) || formData.country,
       },
     };
@@ -138,12 +149,26 @@ export const UserInfoForm: FC = () => {
     }
   };
 
-  const proofOfPurchaseValue = watch("proofOfPurchase");
+  /* const proofOfPurchaseValue = watch("proofOfPurchase"); */
 
   const renderFormShippingFields = (prefix: string = "", defaultValues: any = {}) => (
     <>
+      {prefix === "Shipping" &&
+        ["first_name", "last_name"].map((field) => (
+          <CustomFormInput
+            key={field}
+            fieldName={tMyAccount(field)}
+            name={`${field}${prefix}`}
+            register={register}
+            errors={errors}
+            inputTag="input"
+            inputType="text"
+            defaultValue={defaultValues[field] || ""}
+            setValue={setValue}
+          />
+        ))}
       <CustomCountrySelect
-        name={`${prefix}country`}
+        name={`country${prefix}`}
         control={control}
         options={countryOptions}
         label={tMyAccount("country")}
@@ -152,21 +177,29 @@ export const UserInfoForm: FC = () => {
           prefix === "Shipping" ? customer?.shipping?.country : customer?.billing?.country
         }
       />
+
       {["city", "address_1", "address_2", "apartmentNumber", "postcode"].map((field) => (
         <CustomFormInput
           key={field}
           fieldName={tMyAccount(field)}
-          name={`${prefix}${field}`}
+          name={`${field}${prefix}`}
           register={register}
           errors={errors}
           inputTag="input"
           inputType={field === "postCode" ? "number" : "text"}
-          defaultValue={defaultValues[field] || ""}
+          defaultValue={
+            field === "address_2"
+              ? defaultValues.address_2?.split("/")[0] || ""
+              : field === "apartmentNumber"
+              ? defaultValues.address_2?.split("/")[1] || ""
+              : defaultValues[field] || ""
+          }
           setValue={setValue}
         />
       ))}
     </>
   );
+
   const renderFormInfoFields = (prefix: string = "", defaultValues: any = {}) => (
     <>
       {["first_name", "last_name", "email", "phone"].map((field) => (
@@ -193,8 +226,7 @@ export const UserInfoForm: FC = () => {
   }, [customer, setValue]);
 
   return (
-    <CustomForm onSubmit={handleSubmit(onSubmit)} maxWidth="660px">
-      {isSuccess && <Notification type="success">{tMyAccount("successUpdate")}</Notification>}
+    <CustomForm onSubmit={handleSubmit(onSubmit)} maxWidth="760px">
       <InfoCard>
         <Title as="h2" fontWeight={600} fontSize="24px" uppercase marginBottom="16px">
           {tForms("UserInfo")}
@@ -208,7 +240,7 @@ export const UserInfoForm: FC = () => {
             {renderFormInfoFields("", customer)} {renderFormShippingFields("", customer?.billing)}
           </FormWrapper>
         )}
-        <ProofSelect>
+        {/*   <ProofSelect>
           <CustomFormSelect
             label={tValidation("proofOfPurchase")}
             name="proofOfPurchase"
@@ -241,7 +273,7 @@ export const UserInfoForm: FC = () => {
               {option.name}
             </OptionButton>
           ))}
-        </OptionButtonsContainer>
+        </OptionButtonsContainer> */}
       </InfoCard>
       <InfoCard>
         <Title as="h2" fontWeight={600} fontSize="24px" uppercase marginBottom="16px">
@@ -274,6 +306,7 @@ export const UserInfoForm: FC = () => {
           {isSubmitting ? tValidation("saving") : tValidation("saveChanges")}
         </StyledButton>
         {error && <div>{isAuthErrorResponseType(error)}</div>}
+        {isSuccess && <Notification type="success">{tMyAccount("successUpdate")}</Notification>}
       </FormWrapperBottom>
     </CustomForm>
   );
