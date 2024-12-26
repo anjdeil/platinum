@@ -35,23 +35,38 @@ const CartPage: React.FC = () => {
     string | undefined
   >('');
 
-  const [cookie] = useCookies(['userToken']);
+  const [cookie] = useCookies(['authToken']);
 
-  const [
-    fetchUserData,
-    {
-      data: userData,
-      isLoading: isUserDataLoading,
-      isFetching: isUserFetching,
-    },
-  ] = useLazyFetchUserDataQuery();
+  const [fetchUserData, { data: userData, isLoading: isLoadingUser }] =
+    useLazyFetchUserDataQuery();
 
   useEffect(() => {
-    if ('userToken' in cookie) {
-      fetchUserData(cookie.userToken);
-      setAuth(true);
-    }
-  }, [cookie, fetchUserData]);
+    const authToken =
+      cookie.authToken ||
+      document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('authToken='))
+        ?.split('=')[1];
+
+    const fetchData = async () => {
+      if (authToken) {
+        try {
+          const result = await fetchUserData(authToken).unwrap();
+          setAuth(true);
+          if (result && result.meta && result.meta.loyalty) {
+            setUserLoyalityStatus(result.meta.loyalty);
+          }
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+          setAuth(false);
+        }
+      } else if (authToken === undefined) {
+        setAuth(false);
+      }
+    };
+
+    fetchData();
+  }, [cookie.authToken, fetchUserData]);
 
   // FETCH
   const [createOrder, { data: orderItems, isLoading: isLoadingOrder }] =
@@ -158,6 +173,20 @@ const CartPage: React.FC = () => {
 
   const currentOrderItems = orderItems ?? cachedOrderItems;
 
+  const isLoading = isLoadingOrder || isLoadingUser;
+  const isLoadingCart = isLoadingOrder || isLoadingProductsMin;
+
+  //fix  hydration
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+
+  if (!hydrated) {
+    return null;
+  }
+
   return (
     <>
       <OrderProgress />
@@ -173,8 +202,7 @@ const CartPage: React.FC = () => {
               symbol={symbol}
               cartItems={cartItems}
               order={currentOrderItems}
-              isLoadingOrder={isLoadingOrder}
-              isLoadingProductsMin={isLoadingProductsMin}
+              isLoadingOrder={isLoadingCart}
               productsSpecs={productsSpecs}
               roundedPrice={roundedPrice}
               hasConflict={hasConflict}
@@ -210,10 +238,11 @@ const CartPage: React.FC = () => {
             symbol={symbol}
           />
           <CartSummaryBlock
+            auth={auth}
             symbol={symbol}
             order={orderItems}
             cartItems={cartItems}
-            isLoading={isLoadingOrder}
+            isLoading={isLoading}
           />
         </CartPageWrapper>
       </Container>

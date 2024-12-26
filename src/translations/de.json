@@ -145,7 +145,8 @@
     "UserLoyalityStatus": "Sie haben einen {validStatus} status und erhalten",
     "nothingInTheCart": "Es ist nichts im Warenkorb...",
     "goToShop": "Zum Shop gehen",
-    "nothingInTheCartText": "Sehen Sie sich unsere neuen Produkte an oder nutzen Sie die Suche, wenn Sie etwas Bestimmtes suchen"
+    "nothingInTheCartText": "Sehen Sie sich unsere neuen Produkte an oder nutzen Sie die Suche, wenn Sie etwas Bestimmtes suchen",
+    "YouNeedToLoginForOrder": "Sie müssen sich anmelden, um eine Bestellung aufzugeben."
   },
   "NotFoundPage": {
     "notFound": "Seite nicht gefunden",

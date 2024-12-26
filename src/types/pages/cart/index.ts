@@ -1,12 +1,15 @@
-import { ProductsWithCartDataSchema } from '@/types/components/shop/product/products'
-import { OrderTypeSchema } from '@/types/services'
-import { CartItemSchema, lineOrderItemsSchema } from '@/types/store/reducers/сartSlice'
-import { z } from 'zod'
+import { ProductsWithCartDataSchema } from '@/types/components/shop/product/products';
+import { OrderTypeSchema } from '@/types/services';
+import {
+  CartItemSchema,
+  lineOrderItemsSchema,
+} from '@/types/store/reducers/сartSlice';
+import { z } from 'zod';
 
 export const CartProductWarningSchema = z.object({
   onUpdate: z.function().returns(z.void()),
   resolveCount: z.number(),
-})
+});
 export const QuantityComponentSchema = z.object({
   resolveCount: z.number().optional(),
   item: lineOrderItemsSchema || ProductsWithCartDataSchema,
@@ -21,28 +24,29 @@ export const QuantityComponentSchema = z.object({
       z.union([z.number(), z.boolean()]).optional() // newQuantity
     )
     .returns(z.void()),
-})
+});
 export const BannerCartSchema = z.object({
   slug: z.string(),
   image: z.string(),
   mobileImage: z.string(),
-})
+});
 export const CartCouponBlockSchema = z.object({
   symbol: z.string(),
   userLoyalityStatus: z.string().optional(),
   auth: z.boolean(),
-})
+});
 export const CartSummaryBlockSchema = z.object({
   symbol: z.string(),
   order: OrderTypeSchema.optional(),
   isLoading: z.boolean().optional(),
   cartItems: z.array(CartItemSchema),
-})
+  auth: z.boolean(),
+});
 export const CartTableSchema = z.object({
   symbol: z.string(),
   order: OrderTypeSchema.optional(),
   isLoadingOrder: z.boolean(),
-  isLoadingProductsMin: z.boolean(),
+  /*  isLoadingProductsMin: z.boolean(), */
   productsSpecs: z.array(z.any()),
   cartItems: z.array(z.any()),
   roundedPrice: z.function().args(z.number()).returns(z.number()),
@@ -57,31 +61,31 @@ export const CartTableSchema = z.object({
     )
     .returns(z.void()),
   loadingItems: z.array(z.number()),
-})
+});
 export const OrderBarSchema = z.object({
   cartSum: z.number(),
   symbol: z.string(),
   isLoadingOrder: z.boolean(),
   miniCart: z.boolean().optional(),
-})
+});
 export const OrderSummarySchema = z.object({
   order: OrderTypeSchema.nullable().optional(),
   symbol: z.string(),
   isLoading: z.boolean().optional(),
-})
+});
 
-export type OrderSummaryProps = z.infer<typeof OrderSummarySchema>
+export type OrderSummaryProps = z.infer<typeof OrderSummarySchema>;
 
-export type OrderBarProps = z.infer<typeof OrderBarSchema>
+export type OrderBarProps = z.infer<typeof OrderBarSchema>;
 
-export type CartTableProps = z.infer<typeof CartTableSchema>
+export type CartTableProps = z.infer<typeof CartTableSchema>;
 
-export type CartSummaryBlockProps = z.infer<typeof CartSummaryBlockSchema>
+export type CartSummaryBlockProps = z.infer<typeof CartSummaryBlockSchema>;
 
-export type CartCouponBlockProps = z.infer<typeof CartCouponBlockSchema>
+export type CartCouponBlockProps = z.infer<typeof CartCouponBlockSchema>;
 
-export type BannerCartProps = z.infer<typeof BannerCartSchema>
+export type BannerCartProps = z.infer<typeof BannerCartSchema>;
 
-export type QuantityComponentProps = z.infer<typeof QuantityComponentSchema>
+export type QuantityComponentProps = z.infer<typeof QuantityComponentSchema>;
 
-export type CartProductWarningProps = z.infer<typeof CartProductWarningSchema>
+export type CartProductWarningProps = z.infer<typeof CartProductWarningSchema>;

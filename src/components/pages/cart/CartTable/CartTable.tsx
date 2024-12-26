@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC } from 'react';
 import {
   CartTableGrid,
   GridHeader,
@@ -6,17 +6,17 @@ import {
   RowWrapper,
   TextCell,
   TextCellHeader,
-} from './style'
-import DeleteIcon from '@/components/global/icons/DeleteIcon/DeleteIcon'
-import { useResponsive } from '@/hooks/useResponsive'
-import CloseIcon from '@/components/global/icons/CloseIcon/CloseIcon'
-import checkProductAvailability from '@/utils/cart/checkProductAvailability'
-import CartProductWarning from '../CartProductWarning/CartProductWarning'
-import CartQuantity from '../CartQuantity/CartQuantity'
-import { MenuSkeleton } from '@/components/menus/MenuSkeleton'
-import theme from '@/styles/theme'
-import { useTranslations } from 'next-intl'
-import Notification from '@/components/global/Notification/Notification'
+} from './style';
+import DeleteIcon from '@/components/global/icons/DeleteIcon/DeleteIcon';
+import { useResponsive } from '@/hooks/useResponsive';
+import CloseIcon from '@/components/global/icons/CloseIcon/CloseIcon';
+import checkProductAvailability from '@/utils/cart/checkProductAvailability';
+import CartProductWarning from '../CartProductWarning/CartProductWarning';
+import CartQuantity from '../CartQuantity/CartQuantity';
+import { MenuSkeleton } from '@/components/menus/MenuSkeleton';
+import theme from '@/styles/theme';
+import { useTranslations } from 'next-intl';
+import Notification from '@/components/global/Notification/Notification';
 import {
   OnePrice,
   ProductPrice,
@@ -29,15 +29,15 @@ import {
   TextNameCell,
   CartCardAllWrapper,
   ProducTitle,
-} from '../styles'
-import { CartTableProps } from '@/types/pages/cart'
-import { FlexBox, Title } from '@/styles/components'
+} from '../styles';
+import { CartTableProps } from '@/types/pages/cart';
+import { FlexBox, Title } from '@/styles/components';
 
 const CartTable: FC<CartTableProps> = ({
   symbol,
   order,
   isLoadingOrder,
-  isLoadingProductsMin,
+
   productsSpecs,
   roundedPrice,
   hasConflict,
@@ -45,13 +45,12 @@ const CartTable: FC<CartTableProps> = ({
   handleChangeQuantity,
   loadingItems,
 }) => {
-  const t = useTranslations('Cart')
-  const { isMobile } = useResponsive()
-  console.log(order)
+  const t = useTranslations('Cart');
+  const { isMobile } = useResponsive();
 
   return (
     <CartTableWrapper>
-      {!(isLoadingOrder || isLoadingProductsMin) && hasConflict && (
+      {!isLoadingOrder && hasConflict && (
         <Notification type="warning">{t('cartConflict')}</Notification>
       )}
       {cartItems.length == 0 && (
@@ -81,9 +80,8 @@ const CartTable: FC<CartTableProps> = ({
                 const { resolveCount, isAvailable } = checkProductAvailability(
                   item,
                   productsSpecs
-                )
-                const isLoadingItem = loadingItems.includes(item.product_id)
-
+                );
+                const isLoadingItem = loadingItems.includes(item.product_id);
                 return (
                   <RowWrapper key={item.id} isLoadingItem={isLoadingItem}>
                     <GridRow>
@@ -102,7 +100,11 @@ const CartTable: FC<CartTableProps> = ({
                         </div>
                       </DeleteCell>
                       <CartImgWrapper>
-                        <CartItemImg src={item.image?.src} alt={item.name} width="50" />
+                        <CartItemImg
+                          src={item.image?.src}
+                          alt={item.name}
+                          width="50"
+                        />
                       </CartImgWrapper>
                       <TextNameCell>{item.name}</TextNameCell>
                       <TextCell>
@@ -116,7 +118,8 @@ const CartTable: FC<CartTableProps> = ({
                         />
                       </TextCell>
                       <TextCell>
-                        {roundedPrice(item.price * item.quantity)}&nbsp;{symbol}
+                        {roundedPrice(item.price * item.quantity)}&nbsp;
+                        {symbol}
                       </TextCell>
                     </GridRow>
                     {isAvailable === false && (
@@ -135,7 +138,7 @@ const CartTable: FC<CartTableProps> = ({
                       </GridRow>
                     )}
                   </RowWrapper>
-                )
+                );
               })}
             </CartTableGrid>
           )}
@@ -158,14 +161,18 @@ const CartTable: FC<CartTableProps> = ({
               const { resolveCount, isAvailable } = checkProductAvailability(
                 item,
                 productsSpecs
-              )
-              const isLoadingItem = loadingItems.includes(item.product_id)
+              );
+              const isLoadingItem = loadingItems.includes(item.product_id);
 
               return (
                 <CartCardAllWrapper key={item.id}>
                   <CartCardWrapper isLoadingItem={isLoadingItem}>
                     <CartImgWrapper>
-                      <CartItemImg src={item.image?.src} alt={item.name} width="50" />
+                      <CartItemImg
+                        src={item.image?.src}
+                        alt={item.name}
+                        width="50"
+                      />
                     </CartImgWrapper>
                     <CardContent>
                       <ProducTitle>
@@ -195,7 +202,8 @@ const CartTable: FC<CartTableProps> = ({
                       <ProductPrice>
                         <span>{t('summary')}</span>
                         <OnePrice>
-                          {roundedPrice(item.price * item.quantity)}&nbsp;{symbol}
+                          {roundedPrice(item.price * item.quantity)}&nbsp;
+                          {symbol}
                         </OnePrice>
                       </ProductPrice>
                     </CardContent>
@@ -214,7 +222,7 @@ const CartTable: FC<CartTableProps> = ({
                     />
                   )}
                 </CartCardAllWrapper>
-              )
+              );
             })}
           {!!(!order && cartItems.length !== 0) && (
             <MenuSkeleton
@@ -229,7 +237,7 @@ const CartTable: FC<CartTableProps> = ({
         </>
       )}
     </CartTableWrapper>
-  )
-}
+  );
+};
 
-export default CartTable
+export default CartTable;

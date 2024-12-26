@@ -1,7 +1,7 @@
-import { useAppDispatch } from '@/store'
-import { StyledButton, Title } from '@/styles/components'
-import { useTranslations } from 'next-intl'
-import React, { FC, useCallback, useState } from 'react'
+import { useAppDispatch } from '@/store';
+import { StyledButton, Title } from '@/styles/components';
+import { useTranslations } from 'next-intl';
+import React, { FC, useCallback, useState } from 'react';
 import {
   CartCommentHint,
   CartCommentInput,
@@ -11,35 +11,37 @@ import {
   CartSummaryCard,
   CartSummaryTitleWrapper,
   CartSummaryWrapper,
-} from './style'
-import theme from '@/styles/theme'
-import { debounce } from 'lodash'
-import { setCommentToOrder } from '@/store/slices/cartSlice'
-import OrderSummary from '../OrderSummary/OrderSummary'
-import { CartSummaryBlockProps } from '@/types/pages/cart'
+} from './style';
+import theme from '@/styles/theme';
+import { debounce } from 'lodash';
+import { setCommentToOrder } from '@/store/slices/cartSlice';
+import OrderSummary from '../OrderSummary/OrderSummary';
+import { CartSummaryBlockProps } from '@/types/pages/cart';
+import Notification from '@/components/global/Notification/Notification';
 
 const CartSummaryBlock: FC<CartSummaryBlockProps> = ({
   symbol,
   order,
   isLoading,
   cartItems,
+  auth,
 }) => {
-  const t = useTranslations('Cart')
-  const dispatch = useAppDispatch()
-  const [inputValue, setInputValue] = useState('')
+  const t = useTranslations('Cart');
+  const dispatch = useAppDispatch();
+  const [inputValue, setInputValue] = useState('');
 
   const debouncedChangeHandler = useCallback(
     debounce((value: string) => {
-      dispatch(setCommentToOrder(value))
+      dispatch(setCommentToOrder(value));
     }, 1300),
     [dispatch]
-  )
+  );
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const value = e.target.value
-    setInputValue(value)
-    debouncedChangeHandler(value)
-  }
+    const value = e.target.value;
+    setInputValue(value);
+    debouncedChangeHandler(value);
+  };
 
   return (
     <CartSummaryBlockWrapper>
@@ -64,19 +66,30 @@ const CartSummaryBlock: FC<CartSummaryBlockProps> = ({
         <CartSummaryCard>
           <OrderSummary symbol={symbol} order={order} isLoading={isLoading} />
         </CartSummaryCard>
-        <StyledButton
-          width="100%"
-          height="56px"
-          secondary={true}
-          hoverColor={theme.colors.white}
-          hoverBackgroundColor={theme.colors.primary}
-          disabled={isLoading || cartItems.length === 0}
-        >
-          {t('Continue')}
-        </StyledButton>
+
+        {!isLoading && (
+          <>
+            {auth ? (
+              <StyledButton
+                width="100%"
+                height="56px"
+                secondary={true}
+                hoverColor={theme.colors.white}
+                hoverBackgroundColor={theme.colors.primary}
+                disabled={isLoading || cartItems.length === 0}
+              >
+                {t('Continue')}
+              </StyledButton>
+            ) : (
+              <Notification type="info">
+                {t('YouNeedToLoginForOrder')}
+              </Notification>
+            )}
+          </>
+        )}
       </CartSummaryWrapper>
     </CartSummaryBlockWrapper>
-  )
-}
+  );
+};
 
-export default CartSummaryBlock
+export default CartSummaryBlock;

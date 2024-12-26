@@ -1,22 +1,22 @@
-import { ListWrapperProps } from "@/types/components/widgets/categoriesMenu";
-import styled from "@emotion/styled";
-import Link from "next/link";
+import { ListWrapperProps } from '@/types/components/widgets/categoriesMenu';
+import styled from '@emotion/styled';
+import Link from 'next/link';
 
 export const Categories = styled.div`
   position: absolute;
   display: flex;
-  top: 189px;  
+  top: 190px;
   z-index: 11;
   bottom: 0;
-  
+
   transition: transform 0.3s ease-in-out;
   transform: translateX(-105%);
   background-color: ${({ theme }) => theme.background.secondary};
   border-radius: 0 0 8px 0;
 
   @media ${({ theme }) => theme.media.large} {
-    top: 136px;
-    bottom: 19px;  
+    top: 146px;
+    bottom: 19px;
     border-radius: 0;
   }
 
@@ -39,16 +39,18 @@ export const ListWrapper = styled.div<ListWrapperProps>`
   padding-right: 16px;
   overflow-y: auto;
   transition: opacity 0.3s ease-in-out;
-  
+
   @media ${({ theme }) => theme.media.large} {
     min-width: 272px;
-    padding: ${({ isSubcategories }) => (isSubcategories ? '16px' : '16px 32px')};
+    padding: ${({ isSubcategories }) =>
+      isSubcategories ? '16px' : '16px 32px'};
   }
 
   opacity: ${({ isVisible = true }) => (isVisible ? 1 : 0)};
   display: ${({ isVisible = true }) => (isVisible ? 'block' : 'none')};
 
-  padding: ${({ isSubcategories }) => (isSubcategories ? '16px 32px' : '16px 16px')};
+  padding: ${({ isSubcategories }) =>
+    isSubcategories ? '16px 32px' : '16px 16px'};
 `;
 
 export const List = styled.ul`
@@ -57,7 +59,7 @@ export const List = styled.ul`
   transition: all 0.3s ease-in-out;
   display: flex;
   flex-direction: column;
-  row-gap: 0;  
+  row-gap: 0;
 
   @media ${({ theme }) => theme.media.large} {
     row-gap: 8px;
@@ -75,7 +77,7 @@ export const LinkWrapper = styled(Link)`
     box-sizing: border-box;
     width: 100%;
     display: inline-flex;
-    padding: 16px;    
+    padding: 16px;
     border-radius: 10px;
     color: ${({ theme }) => theme.colors.black};
     font-size: 16px;
