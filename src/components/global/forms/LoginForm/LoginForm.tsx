@@ -92,9 +92,14 @@ export const LoginForm: FC = () => {
         >
           {t('login')}
         </StyledButton>
-        <FlexBox justifyContent="space-between">
-          <div>Don't have an account?</div>
-          <ActiveText href="/my-account/registration">Sign up now!</ActiveText>
+        <FlexBox margin="10px 0 0 0" justifyContent="space-between">
+          <ActiveText href="/my-account/">Forgot your password?</ActiveText>
+          <FlexBox gap="5px">
+            <div>Don't have an account?</div>
+            <ActiveText href="/my-account/registration">
+              Sign up now!
+            </ActiveText>
+          </FlexBox>
         </FlexBox>
 
         {customError && <CustomError>{customError}</CustomError>}

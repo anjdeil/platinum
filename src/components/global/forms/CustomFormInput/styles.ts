@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import Image from 'next/image';
+import { PhoneInput } from 'react-international-phone';
 
 interface CustomInputStyleProps {
   isError: boolean;
@@ -22,7 +23,6 @@ interface CustomInputProps {
   isError?: boolean;
 }
 
-// Styles with classes name are for international phone input from react-international-phone
 export const CustomInputStyle = styled.div<CustomInputStyleProps>`
   padding: ${({ padding = '5px' }) => padding};
   display: flex;
@@ -57,9 +57,7 @@ export const CustomInputStyle = styled.div<CustomInputStyleProps>`
   input.react-international-phone-input {
     padding-left: ${({ isPhone }) => (isPhone ? '60px' : '15px')};
   }
-}
 `;
-
 export const Input = styled.input<CustomInputProps>`
   ${(props) => props.as === 'textarea' && 'min-height: 150px;'};
   margin-right: ${({ isCheckbox }) => (isCheckbox ? '15px' : '0')};
@@ -69,27 +67,19 @@ export const Input = styled.input<CustomInputProps>`
     isCheckbox ? '24px' : height};
 
   border: ${({ isCheckbox }) => (isCheckbox ? '1px solid #ccc' : 'none')};
-  border-radius: 10px;
+  border-radius: ${({ isCheckbox }) => (isCheckbox ? '5px' : '10px')};
   font-size: 16px;
-
   outline: 1px solid
     ${({ theme, isError }) =>
-    isError ? theme.colors.error : theme.background.formElements};
-  background-color: ${({ theme, background = theme.background.formElements }) =>
-    background};
-  transition: outline-width 0.2s ease-in-out;
-
-  &:-webkit-autofill {
-    background-color: ${({ theme, background }) =>
-    background || theme.colors.white} !important;
-    color: ${({ theme }) => theme.colors.black} !important;
-    transition: background-color 5000s ease-in-out 0s;
-  }
+      isError ? theme.colors.error : theme.background.formElements};
+  background-color: ${({ theme, isCheckbox, background }) =>
+    isCheckbox ? '#f0f0f0' : background || theme.background.formElements};
+  transition: outline-width 0.1s ease-in-out, background-color 0.1s ease-in-out;
 
   &:focus {
     outline: 1px solid
       ${({ theme, isError }) =>
-    isError ? theme.colors.error : theme.colors.primary};
+        isError ? theme.colors.error : theme.colors.primary};
     box-shadow: ${({ theme }) => theme.customShadows.primaryShadow};
   }
 
@@ -97,22 +87,32 @@ export const Input = styled.input<CustomInputProps>`
     ${(props) => props.as === 'textarea' && 'text-align: start;'};
   }
 
-  &[type='number']::-webkit-inner-spin-button,
-  &[type='number']::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
-  &[type='number'] {
+  &[type='checkbox'] {
     appearance: none;
-    -moz-appearance: textfield;
-  }
+    display: inline-block;
+    background-color: transparent;
+    border: 2px solid ${({ theme }) => theme.colors.lightBorder};
+    border-radius: 4px;
+    position: relative;
+    cursor: pointer;
 
-  @media ${({ theme }) => theme.media.medium} {
-    width: ${({ isCheckbox }) => (isCheckbox ? '15px' : '100%')};
-    height: ${({ isCheckbox, height = '100%' }) =>
-    isCheckbox ? '15px' : height};
-    font-size: 14px;
+    &:checked {
+      background-color: ${({ theme }) => theme.colors.primary};
+      border-color: ${({ theme }) => theme.colors.primary};
+
+      &::after {
+        content: '';
+
+        position: absolute;
+        top: 45%;
+        left: 50%;
+        width: 10px;
+        height: 5px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: translate(-50%, -50%) scaleX(-1) rotate(45deg);
+      }
+    }
   }
 `;
 
@@ -124,13 +124,10 @@ export const CustomInputWrapper = styled.div`
 `;
 
 export const CustomRequired = styled.span`
-  font-size: 16px;
-
-  @media ${({ theme }) => theme.media.medium} {
-    margin-left: 5px;
-    font-size: 21px;
-    color: ${({ theme }) => theme.colors.primary};
-  }
+  font-size: 20px;
+  font-weight: 500;
+  margin-left: 5px;
+  color: ${({ theme }) => theme.colors.primary};
 `;
 
 export const ShowPasswordImage = styled(Image)`
@@ -144,16 +141,57 @@ export const ShowPasswordImage = styled(Image)`
 export const CustomError = styled.p`
   margin-top: 5px;
   padding: 0 10px;
+
   color: ${({ theme }) => theme.colors.error};
   @media ${({ theme }) => theme.media.medium} {
     margin-top: 10px;
   }
 `;
-
-export const CustomInputContainer = styled.div<CustomInputContainerProps>`
-  width: ${({ isCheckbox, width = '100%' }) => (isCheckbox ? '18px' : width)};
-`;
-
 export const CustomSuccess = styled(CustomError)`
   color: ${({ theme }) => theme.colors.success};
+`;
+
+export const CustomInputContainer = styled.div<CustomInputContainerProps>`
+  width: ${({ isCheckbox, width = '100%' }) => (isCheckbox ? '100%' : width)};
+
+  @media ${({ theme }) => theme.media.medium} {
+    margin-top: 10px;
+  }
+`;
+
+export const StyledPhoneInput = styled(PhoneInput)`
+  && input {
+    display: flex;
+    align-items: center;
+    background-color: ${({ theme }) => theme.background.formElements};
+    border: none;
+    border-radius: 10px;
+    padding: 10px 15px;
+    font-size: 16px;
+
+    width: 100%;
+    height: 49px;
+    padding-left: 60px;
+
+    &:focus {
+      outline: 1px solid ${({ theme }) => theme.colors.primary};
+      box-shadow: ${({ theme }) => theme.customShadows.primaryShadow};
+    }
+  }
+
+  .react-international-phone-country-selector {
+    & button {
+      .react-international-phone-country-selector-button__button-content {
+        & img {
+          width: 24px;
+        }
+      }
+    }
+  }
+
+  .react-international-phone-country-selector-dropdown {
+    left: -10px;
+    width: 285px;
+    border-radius: 10px;
+  }
 `;

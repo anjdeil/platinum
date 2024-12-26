@@ -33,5 +33,5 @@ export const FormWrapper = styled.div`
 export const FormWrapperBottom = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 12px;
 `;

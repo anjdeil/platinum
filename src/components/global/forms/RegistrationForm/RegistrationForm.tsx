@@ -20,19 +20,51 @@ import {
 import { CustomFormCheckbox } from '../CustomFormCheckbox';
 import { useTranslations } from 'next-intl';
 import { ActiveText } from '../LoginForm/styles';
+import CustomCountrySelect from '../../selects/CustomCountrySelect/CustomCountrySelect';
+
+const countryOptions = [
+  { value: 'DE', label: 'Germany' },
+  { value: 'FR', label: 'France' },
+  { value: 'IT', label: 'Italy' },
+  { value: 'ES', label: 'Spain' },
+  { value: 'GB', label: 'United Kingdom' },
+  { value: 'RU', label: 'Russia' },
+  { value: 'PL', label: 'Poland' },
+  { value: 'NL', label: 'Netherlands' },
+  { value: 'BE', label: 'Belgium' },
+  { value: 'SE', label: 'Sweden' },
+  { value: 'NO', label: 'Norway' },
+  { value: 'AT', label: 'Austria' },
+  { value: 'CH', label: 'Switzerland' },
+  { value: 'DK', label: 'Denmark' },
+  { value: 'FI', label: 'Finland' },
+  { value: 'PT', label: 'Portugal' },
+  { value: 'GR', label: 'Greece' },
+  { value: 'CZ', label: 'Czech Republic' },
+  { value: 'HU', label: 'Hungary' },
+  { value: 'RO', label: 'Romania' },
+];
 
 export const RegistrationForm: FC = () => {
+  const tValidation = useTranslations('Validation');
+  const tMyAccount = useTranslations('MyAccount');
+  const tForms = useTranslations('Forms');
   const router = useRouter();
   const [customError, setCustomError] = useState<string>('');
-  const t = useTranslations('MyAccount');
+
   /** Form settings */
-  const formSchema = useMemo(() => RegistrationFormSchema(false), []);
+  const formSchema = useMemo(
+    () => RegistrationFormSchema(false, tValidation),
+    []
+  );
   type RegistrationFormType = z.infer<typeof formSchema>;
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isSubmitSuccessful },
     reset,
+    setValue,
+    control,
   } = useForm<RegistrationFormType>({
     resolver: zodResolver(formSchema),
   });
@@ -53,15 +85,17 @@ export const RegistrationForm: FC = () => {
       last_name: formData.lastName,
       password: formData.password,
       role: 'customer',
+
       username: formData.email,
       billing: {
         first_name: formData.name,
         last_name: formData.lastName,
-        // apartmentNumber
-        address_1: formData.address1,
-        address_2: formData.address2,
+        address_1: formData.address_1,
+        address_2: [formData.address_2, formData.apartmentNumber]
+          .filter(Boolean)
+          .join('/'),
         city: formData.city,
-        postcode: formData.postCode,
+        postcode: formData.postcode,
         country: formData.country,
         email: formData.email,
         phone: formData.phoneNumber,
@@ -98,109 +132,62 @@ export const RegistrationForm: FC = () => {
     }
   }
 
+  const renderFormFields = () => (
+    <>
+      {['first_name', 'last_name', 'email', 'phone'].map((field) => (
+        <CustomFormInput
+          key={field}
+          fieldName={tMyAccount(field)}
+          name={`${field}`}
+          register={register}
+          errors={errors}
+          inputTag="input"
+          inputType={field === 'phone' ? 'phone' : 'text'}
+          setValue={setValue}
+        />
+      ))}
+      <CustomCountrySelect
+        name={`country`}
+        control={control}
+        options={countryOptions}
+        label={tMyAccount('country')}
+        errors={errors}
+      />
+      {[
+        'city',
+        'address_1',
+        'address_2',
+        'apartmentNumber',
+        'postcode',
+        'password',
+        'confirmPassword',
+      ].map((field) => (
+        <CustomFormInput
+          key={field}
+          fieldName={tMyAccount(field)}
+          name={`${field}`}
+          register={register}
+          errors={errors}
+          inputTag="input"
+          inputType={
+            field === 'postCode'
+              ? 'number'
+              : field == 'password' || field == 'confirmPassword'
+              ? 'newpassword'
+              : 'text'
+          }
+          setValue={setValue}
+        />
+      ))}
+    </>
+  );
+
   return (
     <CustomForm onSubmit={handleSubmit(onSubmit)}>
       <Title as={'h2'} uppercase={true} marginBottom={'24px'}>
-        {t('register')}
+        {tMyAccount('register')}
       </Title>
-      <FormWrapper>
-        <CustomFormInput
-          fieldName="Imię"
-          name="name"
-          register={register}
-          errors={errors}
-          inputTag={'input'}
-          inputType={'text'}
-        />
-        <CustomFormInput
-          fieldName="Nazwisko"
-          name="lastName"
-          register={register}
-          errors={errors}
-          inputTag={'input'}
-          inputType={'text'}
-        />
-        <CustomFormInput
-          fieldName="Adres e-mail"
-          name="email"
-          register={register}
-          errors={errors}
-          inputTag={'input'}
-          inputType={'text'}
-        />
-        <CustomFormInput
-          fieldName="phone number"
-          name="phoneNumber"
-          register={register}
-          errors={errors}
-          inputTag={'input'}
-          inputType={'text'}
-        />
-        <CustomFormInput
-          fieldName="Kraj / region"
-          name="country"
-          register={register}
-          errors={errors}
-          inputTag={'input'}
-          inputType={'text'}
-        />
-        <CustomFormInput
-          fieldName="Miasto"
-          name="city"
-          register={register}
-          errors={errors}
-          inputTag={'input'}
-          inputType={'text'}
-        />
-        <CustomFormInput
-          fieldName="Ulica"
-          name="address1"
-          register={register}
-          errors={errors}
-          inputTag={'input'}
-          inputType={'text'}
-        />
-        <CustomFormInput
-          fieldName="Building number"
-          name="address2"
-          register={register}
-          errors={errors}
-          inputTag={'input'}
-          inputType={'number'}
-        />
-        <CustomFormInput
-          fieldName="№ apartment/office"
-          name="apartmentNumber"
-          register={register}
-          errors={errors}
-          inputTag={'input'}
-          inputType={'number'}
-        />
-        <CustomFormInput
-          fieldName="Kod pocztowy"
-          name="postCode"
-          register={register}
-          errors={errors}
-          inputTag={'input'}
-          inputType={'text'}
-        />
-        <CustomFormInput
-          fieldName="Hasło"
-          name="password"
-          register={register}
-          errors={errors}
-          inputTag={'input'}
-          inputType={'password'}
-        />
-        <CustomFormInput
-          fieldName="Powtórz hasło"
-          name="confirmPassword"
-          register={register}
-          errors={errors}
-          inputTag={'input'}
-          inputType={'password'}
-        />
-      </FormWrapper>
+      <FormWrapper>{renderFormFields()} </FormWrapper>
       <CustomFormCheckbox
         name={'terms'}
         register={register}
@@ -229,8 +216,10 @@ export const RegistrationForm: FC = () => {
         )}
       </FormWrapperBottom>
       <FlexBox gap="10px" justifyContent="flex-end" margin="16px 0 0 0">
-        <div>{t('AlreadyHaveAnAccount')} </div>
-        <ActiveText href="/my-account/login">{t('log-In')}!</ActiveText>
+        <div>{tMyAccount('AlreadyHaveAnAccount')} </div>
+        <ActiveText href="/my-account/login">
+          {tMyAccount('log-In')}!
+        </ActiveText>
       </FlexBox>
     </CustomForm>
   );

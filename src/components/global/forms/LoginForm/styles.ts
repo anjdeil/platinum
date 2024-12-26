@@ -14,4 +14,5 @@ export const FormWrapper = styled.div`
 `;
 export const ActiveText = styled(Link)`
   color: ${({ theme }) => ` ${theme.colors.active}`};
+  text-decoration: none;
 `;
