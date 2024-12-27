@@ -107,6 +107,13 @@ export const CustomDataCategoriesSchema = z.object({
   }),
 });
 
+export const CustomDataCategorySchema = z.object({
+  success: z.boolean(),
+  data: CustomDataSchema.extend({
+    item: CategorySchema,
+  }),
+});
+
 export const CustomDataMenusSchema = z.object({
   success: z.boolean(),
   data: z
@@ -180,6 +187,7 @@ export type PageDataType = z.infer<typeof PageDataSchema>;
 export type CustomDataCategoriesType = z.infer<
   typeof CustomDataCategoriesSchema
 >;
+export type CustomDataCategoryType = z.infer<typeof CustomDataCategorySchema>;
 export type CustomDataProductsType = z.infer<typeof CustomDataProductsSchema>;
 export type CustomDataProductType = z.infer<typeof CustomDataProductSchema>;
 export type CustomDataProductReviewsType = z.infer<

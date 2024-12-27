@@ -9,7 +9,7 @@ import { RegistrationFormSchema } from '@/types/components/global/forms/registra
 import { CustomForm, FormWrapper, FormWrapperBottom } from './styles';
 import { isAuthErrorResponseType } from '@/utils/isAuthErrorResponseType';
 import { CustomFormInput } from '../CustomFormInput';
-import { CustomError, CustomSuccess } from '../CustomFormInput/styles';
+import { CustomError } from '../CustomFormInput/styles';
 import { StyledButton, Title } from '@/styles/components';
 import theme from '@/styles/theme';
 import { validateWooCustomer } from '@/utils/zodValidators/validateWooCustomer';
@@ -207,7 +207,6 @@ export const RegistrationForm: FC = () => {
       />
       <FormWrapperBottom>
         <StyledButton
-          backgroundColor={theme.background.hover}
           color={theme.colors.white}
           type="submit"
           disabled={isSubmitting}
@@ -222,9 +221,7 @@ export const RegistrationForm: FC = () => {
           ></CustomError>
         )}
         {isSubmitSuccessful && !error && customError && (
-          <CustomSuccess>
-            Your account has been created successfully!
-          </CustomSuccess>
+          <p>Your account has been created successfully!</p>
         )}
       </FormWrapperBottom>
     </CustomForm>

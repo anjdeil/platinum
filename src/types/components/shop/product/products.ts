@@ -1,4 +1,5 @@
-import { z } from 'zod';
+import { ThumbnailSchema } from "@/types/pages/shop";
+import { z } from "zod";
 
 export const ProductCategorySchema = z.object({
   id: z.number(),
@@ -18,14 +19,14 @@ export const ProductImageSchema = z.object({
 export const ProductAttrOptionSchema = z.object({
   id: z.number(),
   slug: z.string(),
-  name: z.string()
-})
+  name: z.string(),
+});
 
 export const ProductAttributesSchema = z.object({
   id: z.number(),
   slug: z.string(),
   name: z.string(),
-  options: z.array(ProductAttrOptionSchema)
+  options: z.array(ProductAttrOptionSchema),
 });
 
 export const ProductDefaultAttributesSchema = z.object({
@@ -67,12 +68,13 @@ export const ProductSchema = z.object({
   stock_quantity: z.number().nullable(),
   min_price: z.number().nullable(),
   max_price: z.number().nullable(),
+  average_rating: z.number(),
   categories: z.array(ProductCategorySchema),
+  thumbnail: ThumbnailSchema.nullable(),
   images: z.array(ProductImageSchema),
   attributes: z.array(ProductAttributesSchema),
   default_attributes: z.array(ProductDefaultAttributesSchema),
   variations: z.array(ProductVariationSchema),
-  average_rating: z.number(),
 });
 
 export const ProductDataResponseSchema = z.object({

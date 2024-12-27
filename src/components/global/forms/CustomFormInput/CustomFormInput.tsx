@@ -10,7 +10,6 @@ import {
   StyledPhoneInput,
 } from './styles';
 import { CustomFormInputType } from '@/types/components/global/forms/customFormInput';
-import { PhoneInput } from 'react-international-phone';
 import 'react-international-phone/style.css';
 
 export const CustomFormInput: FC<CustomFormInputType> = ({
@@ -31,6 +30,8 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
   label = true,
   setValue,
   defaultValue,
+  list,
+  disabled,
 }) => {
   const registerProps = register ? { ...register(name) } : {};
 
@@ -97,6 +98,9 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
               {...registerProps}
               height={height}
               background={background}
+              isCheckbox={inputType === 'checkbox'}
+              {...(name === 'country' ? { list: list } : {})}
+              disabled={disabled}
             />
           )}
           {inputType === 'password' && (
