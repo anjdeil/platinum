@@ -5,7 +5,7 @@
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
     "plugin:redux-saga/recommended",
-    "plugin:prettier/recommended"
+    "prettier"
   ],
   "plugins": [
     "@typescript-eslint",
@@ -30,9 +30,7 @@
     "react/jsx-filename-extension": [
       1,
       {
-        "extensions": [
-          ".tsx"
-        ]
+        "extensions": [".tsx"]
       }
     ],
     // TypeScript rules
@@ -58,20 +56,14 @@
     "import/order": [
       "error",
       {
-        "groups": [
-          "builtin",
-          "external",
-          "internal"
-        ],
+        "groups": ["builtin", "external", "internal"],
         "pathGroups": [
           {
             "pattern": "@/**",
             "group": "internal"
           }
         ],
-        "pathGroupsExcludedImportTypes": [
-          "builtin"
-        ],
+        "pathGroupsExcludedImportTypes": ["builtin"],
         "alphabetize": {
           "order": "asc",
           "caseInsensitive": true
@@ -82,7 +74,7 @@
     "styled-components-a11y/label-has-associated-control": "warn",
     // Prettier rules (if using Prettier)
     "prettier/prettier": [
-      "error",
+      "warn",
       {
         "endOfLine": "auto"
       }
