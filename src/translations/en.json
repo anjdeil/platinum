@@ -50,7 +50,7 @@
     "last_name": "Surname",
     "company": "Company",
     "address_1": "Street",
-    "address_2": "Building Number",
+    "address_2": "Building number",
     "city": "City",
     "state": "State",
     "postcode": "Postcode",

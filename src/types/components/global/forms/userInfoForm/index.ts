@@ -23,7 +23,7 @@ export const UserInfoFormSchema = (isShipping: boolean, t: any) => {
     address_2: z.string().min(1, t('RequiredField')),
     apartmentNumber: z.string().min(1, t('RequiredField')),
     postcode: z.string().min(5, t('RequiredField')),
-    terms: termsSchema(t),
+    /*   terms: termsSchema(t), */
     /*    proofOfPurchase: z.string().min(1, t("RequiredField")), */
     first_nameShipping: isShipping
       ? z.string().min(3, t('RequiredField'))
@@ -33,7 +33,7 @@ export const UserInfoFormSchema = (isShipping: boolean, t: any) => {
       : z.string().optional(),
     phoneShipping: isShipping ? phoneSchema(t) : z.string().optional(),
     address_1Shipping: isShipping
-      ? z.string().min(4, t('RequiredField'))
+      ? z.string().min(2, t('RequiredField'))
       : z.string().optional(),
     address_2Shipping: isShipping
       ? z.string().min(1, t('RequiredField'))

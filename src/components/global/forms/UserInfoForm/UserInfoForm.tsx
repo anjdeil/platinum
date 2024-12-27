@@ -35,7 +35,7 @@ export const UserInfoForm: FC = () => {
   const tMyAccount = useTranslations('MyAccount');
   const tForms = useTranslations('Forms');
 
-  const [isShipping, setIsShipping] = useState(false);
+  const [isShipping, setIsShipping] = useState(true);
   const [hasChanges, setHasChanges] = useState(false);
 
   const {
@@ -43,6 +43,7 @@ export const UserInfoForm: FC = () => {
     error: customerError,
     isLoading: isCustomerLoading,
   } = useFetchCustomerQuery({ customerId: '14408' });
+
   const [UpdateCustomerMutation, { error, isLoading, isSuccess }] =
     useUpdateCustomerMutation();
 
@@ -72,6 +73,18 @@ export const UserInfoForm: FC = () => {
     return () => subscription.unsubscribe();
   }, [watch]);
 
+  useEffect(() => {
+    if (customer) {
+      const isShippingEmpty =
+        !customer.shipping?.first_name &&
+        !customer.shipping?.last_name &&
+        !customer.shipping?.address_1;
+      setIsShipping(!isShippingEmpty);
+      console.log('isShippingEmpty', isShippingEmpty);
+      console.log(isShipping);
+    }
+  }, [customer]);
+
   /*   const proofOfPurchaseOptions = [
     { code: "Receipt", name: "Receipt" },
     { code: "VAT Invoice", name: "VAT Invoice" },
@@ -100,11 +113,17 @@ export const UserInfoForm: FC = () => {
     { value: 'RO', label: 'Romania' },
   ];
 
+  const handleShippingCheckboxChange = () => {
+    setIsShipping((prev) => !prev);
+    setHasChanges(true);
+  };
+
   const onSubmit = async (formData: UserInfoFormType) => {
     if (!customer) {
       console.error('Customer data is not available');
       return;
     }
+    console.log(isShipping);
 
     const updatedData = {
       email: formData.email,
@@ -125,27 +144,41 @@ export const UserInfoForm: FC = () => {
         email: formData.email,
         phone: formData.phone,
       },
-      shipping: {
-        first_name:
-          (isShipping && formData.first_nameShipping) || formData.first_name,
-        last_name:
-          (isShipping && formData.last_nameShipping) || formData.last_name,
-        phone: (isShipping && formData.phoneShipping) || formData.phoneShipping,
-        address_1:
-          (isShipping && formData.address_1Shipping) || formData.address_1,
-        address_2:
-          (isShipping &&
-            [formData.address_2Shipping, formData.apartmentNumberShipping]
-              .filter(Boolean)
-              .join('/')) ||
-          [formData.address_2, formData.apartmentNumber]
-            .filter(Boolean)
-            .join('/'),
-        city: (isShipping && formData.cityShipping) || formData.city,
-        postcode:
-          (isShipping && formData.postcodeShipping) || formData.postcode,
-        country: (isShipping && formData.countryShipping) || formData.country,
-      },
+      shipping: isShipping
+        ? {
+            first_name:
+              (isShipping && formData.first_nameShipping) ||
+              formData.first_name,
+            last_name:
+              (isShipping && formData.last_nameShipping) || formData.last_name,
+            phone:
+              (isShipping && formData.phoneShipping) || formData.phoneShipping,
+            address_1:
+              (isShipping && formData.address_1Shipping) || formData.address_1,
+            address_2:
+              (isShipping &&
+                [formData.address_2Shipping, formData.apartmentNumberShipping]
+                  .filter(Boolean)
+                  .join('/')) ||
+              [formData.address_2, formData.apartmentNumber]
+                .filter(Boolean)
+                .join('/'),
+            city: (isShipping && formData.cityShipping) || formData.city,
+            postcode:
+              (isShipping && formData.postcodeShipping) || formData.postcode,
+            country:
+              (isShipping && formData.countryShipping) || formData.country,
+          }
+        : {
+            first_name: '',
+            last_name: '',
+            phone: '',
+            address_1: '',
+            address_2: '',
+            city: '',
+            postcode: '',
+            country: '',
+          },
     };
 
     try {
@@ -317,19 +350,19 @@ export const UserInfoForm: FC = () => {
         </Title>
         <FlexBox alignItems="center" margin="0 0 16px 0">
           <CustomFormCheckboxStyled
-            defaultChecked
+            checked={!isShipping}
             type="checkbox"
-            onChange={() => setIsShipping((prev) => !prev)}
+            onChange={() => handleShippingCheckboxChange()}
           />
           {tValidation('theSameAddress')}
         </FlexBox>
-        {isShipping && (
+        {customer && isShipping && (
           <FormWrapper>
             {renderFormShippingFields('Shipping', customer?.shipping)}
           </FormWrapper>
         )}
       </InfoCard>
-      <CustomFormInput
+      {/*   <CustomFormInput
         fieldName={tValidation('agreentment')}
         name="terms"
         register={register}
@@ -337,7 +370,7 @@ export const UserInfoForm: FC = () => {
         inputTag={'input'}
         inputType={'checkbox'}
         width="100%"
-      />
+      /> */}
 
       <FormWrapperBottom>
         <StyledButton type="submit" disabled={isSubmitting || !hasChanges}>
