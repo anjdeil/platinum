@@ -1,18 +1,14 @@
+import { WooCustomerReqType } from "@/types/services";
 import { createSlice } from "@reduxjs/toolkit";
 
-export interface UserType {
-    id: number;
-    first_name: string;
-    last_name: string;
-    email: string;
-}
-
 export interface UserSliceState {
-    user: UserType | null;
+    user: WooCustomerReqType | null;
 }
 
 const initialState: UserSliceState = {
-    user: null,
+    user: typeof window !== 'undefined'
+        ? JSON.parse(localStorage.getItem('user') || 'null')
+        : null,
 };
 
 const userSlice = createSlice({
@@ -24,6 +20,7 @@ const userSlice = createSlice({
         },
         clearUser: (state) => {
             state.user = null;
+            localStorage.removeItem('user');
         },
     },
 });

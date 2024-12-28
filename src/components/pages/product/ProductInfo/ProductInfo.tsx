@@ -10,6 +10,7 @@ import { ProductCardPropsType } from '@/types/components/shop';
 import { ProductVariation } from '@/types/components/shop/product/products';
 import { ProductType } from '@/types/pages/shop';
 import { CartItem } from '@/types/store/reducers/сartSlice';
+import { getCookieValue } from '@/utils/auth/getCookieValue';
 import { getCurrentVariation } from '@/utils/getCurrentVariation';
 import ReactHtmlParser from 'html-react-parser';
 import { useTranslations } from 'next-intl';
@@ -54,10 +55,7 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
     const checkAuth = () => {
       const cookies = document.cookie;
 
-      const authToken = cookies
-        .split('; ')
-        .find((row) => row.startsWith('authToken='))
-        ?.split('=')[1];
+      const authToken = getCookieValue(cookies || '', 'authToken');
 
       setIsAuthenticated(!!authToken);
     };

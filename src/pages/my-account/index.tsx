@@ -5,6 +5,7 @@ import { transformOrders } from '@/services/transformers/transformOrders';
 import { useFetchOrdersQuery } from '@/store/rtk-queries/wooCustomApi';
 import { setUser } from '@/store/slices/userSlice';
 import { AccountInfoWrapper } from '@/styles/components';
+import { saveUserToLocalStorage } from '@/utils/auth/userLocalStorage';
 import { accountLinkList } from '@/utils/consts';
 import axios from 'axios';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
@@ -64,14 +65,16 @@ const MyAccount: FC<MyAccountPropsType> = ({ user }) => {
 
   const dispatch = useDispatch();
 
-  dispatch(
-    setUser({
-      id: user.id,
-      first_name: user.first_name,
-      last_name: user.last_name,
-      email: user.email,
-    })
-  );
+  const userData = {
+    id: user.id,
+    first_name: user.first_name,
+    last_name: user.last_name,
+    email: user.email,
+  };
+
+  dispatch(setUser(userData));
+
+  saveUserToLocalStorage(userData);
 
   const { data: ordersData } = useFetchOrdersQuery({
     customer: user.id,
