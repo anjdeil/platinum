@@ -1,13 +1,13 @@
-import { useAppDispatch, useAppSelector } from '@/store';
+import { useAppDispatch } from '@/store';
 import { popupToggle } from '@/store/slices/PopupSlice';
-import { useTheme } from '@emotion/react';
 import { StyledFilterButton } from './styles';
 
-export default function FilterButton() {
-  const dispatch = useAppDispatch();
-  const popup = useAppSelector(state => state.popup);
-  const theme = useTheme();
+type FilterButtonProps = {
+  onClick?: () => void;
+};
 
+export default function FilterButton({ onClick }: FilterButtonProps) {
+  const dispatch = useAppDispatch();
   return (
     <StyledFilterButton onClick={() => dispatch(popupToggle('mobile-filters'))}>
       <svg

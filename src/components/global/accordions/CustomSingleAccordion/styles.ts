@@ -1,4 +1,5 @@
-import { Accordion, AccordionSummary, Checkbox } from '@mui/material';
+import { StyledAccordionDetailsProps } from '@/types/components/global/accordions/customSingleAccordion';
+import { Accordion, AccordionDetails, AccordionSummary, Checkbox } from '@mui/material';
 import styled from 'styled-components';
 
 export const StyledAccordion = styled(Accordion)`
@@ -23,4 +24,7 @@ export const StyledAccordionSummary = styled(AccordionSummary)`
   & .MuiAccordionSummary-content {
     margin: 0;
   }
+`;
+export const StyledAccordionDetails = styled(AccordionDetails)<StyledAccordionDetailsProps>`
+    padding: ${({ padding = '10px' }) => padding};
 `;

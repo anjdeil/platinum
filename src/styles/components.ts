@@ -29,6 +29,26 @@ interface FlexBoxProps {
   bgColor?: string;
 }
 
+interface FlexBoxProps {
+  flexDirection?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
+  justifyContent?:
+    | 'flex-start'
+    | 'flex-end'
+    | 'center'
+    | 'space-between'
+    | 'space-around'
+    | 'space-evenly';
+  alignItems?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
+  flexWrap?: 'nowrap' | 'wrap' | 'wrap-reverse';
+  gap?: string;
+  padding?: string;
+  margin?: string;
+  width?: string;
+  height?: string;
+  bgColor?: string;
+  flex?: string;
+}
+
 interface TitleProps {
   as: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   fontWeight?: number;
@@ -226,6 +246,44 @@ export const Text = styled.span<TextProps>`
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
   text-align: ${({ textalign = 'left' }) => textalign};
 `;
+//----------------------FORM
+
+interface CustomFormProps {
+  maxWidth?: string;
+}
+
+export const CustomForm = styled.form<CustomFormProps>`
+  margin: 0 auto;
+  max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : '1100px')};
+`;
+
+export const FormWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(49%, 1fr));
+  column-gap: 1%;
+  row-gap: 15px;
+  padding-bottom: 20px;
+
+  @media ${({ theme }) => theme.media.medium} {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+  }
+`;
+
+export const FormWrapperBottom = styled.div`
+  margin-top: 24px;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
+
+export const Overlay = styled.div`
+  position: fixed;
+  z-index: 90;
+  inset: 0;
+`;
 
 export const VariationTitle = styled(Text)`
   text-transform: uppercase;
@@ -239,51 +297,13 @@ export const TinyText = styled.p`
   font: ${({ theme }) => theme.fonts.bodysmallReg};
 `;
 
-export const StyledHeaderWrapper = styled.header`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  margin: 24px 0;
-`;
-
-//----------------------FORM
-
-interface CustomFormProps {
-  maxWidth?: string;
-  fullWidth?: boolean;
-}
-
-export const CustomForm = styled.form<CustomFormProps>`
-  margin: 0 auto;
-  ${({ fullWidth }) => fullWidth && 'width: 100%;'}
-  max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : '1100px')};
-`;
-export const FormWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(49%, 1fr));
-  column-gap: 2%;
-  row-gap: 15px;
-  padding-bottom: 20px;
-
-  @media ${({ theme }) => theme.media.medium} {
-    display: flex;
-    flex-direction: column;
-    row-gap: 10px;
-  }
-`;
-
-export const FormWrapperBottom = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-`;
 export const FlexBox = styled.div<FlexBoxProps>`
   display: flex;
   flex-direction: ${({ flexDirection = 'row' }) => flexDirection};
   justify-content: ${({ justifyContent = 'flex-start' }) => justifyContent};
   align-items: ${({ alignItems = 'stretch' }) => alignItems};
   flex-wrap: ${({ flexWrap = 'nowrap' }) => flexWrap};
+  flex: ${({ flex }) => flex};
   gap: ${({ gap = '0' }) => gap};
   padding: ${({ padding = '0' }) => padding};
   margin: ${({ margin = '0' }) => margin};
@@ -292,11 +312,10 @@ export const FlexBox = styled.div<FlexBoxProps>`
   background-color: ${({ bgColor = 'transparent' }) => bgColor};
 `;
 
-export const ErrorMessage = styled.div`
-  margin-top: 16px;
-  color: ${({ theme }) => theme.colors.error};
-`;
-export const SuccessMessage = styled.div`
-  margin-top: 16px;
-  color: ${({ theme }) => theme.colors.active};
+export const StyledHeaderWrapper = styled.header`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin: 24px 0;
 `;

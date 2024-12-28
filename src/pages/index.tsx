@@ -1,12 +1,12 @@
-import { SectionRenderer } from '@/components/sections/SectionRenderer';
-import { customRestApi } from '@/services/wpCustomApi';
-import { useAppDispatch, useAppSelector } from '@/store';
-import { popupToggle } from '@/store/slices/PopupSlice';
-import { Container, Title } from '@/styles/components';
-import { SectionsType } from '@/types/components/sections';
-import { GetServerSideProps, GetServerSidePropsContext } from 'next';
-import { validateWpPage } from '@/utils/zodValidators/validateWpPage';
-import { PageDataFullType, PageDataItemType } from '@/types/services';
+import { SectionRenderer } from "@/components/sections/SectionRenderer";
+import { customRestApi } from "@/services/wpCustomApi";
+import { useAppDispatch, useAppSelector } from "@/store";
+import { popupToggle } from "@/store/slices/PopupSlice";
+import { Container, Title } from "@/styles/components";
+import { SectionsType } from "@/types/components/sections";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
+import { validateWpPage } from "@/utils/zodValidators/validateWpPage";
+import { PageDataFullType, PageDataItemType } from "@/types/services";
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
@@ -25,7 +25,7 @@ export const getServerSideProps: GetServerSideProps = async (
     if (responseData) {
       const isValidSectionsData = validateWpPage(responseData);
       if (!isValidSectionsData) {
-        console.error('Invalid data format:');
+        console.error("Invalid data format:");
       }
     }
 
@@ -37,19 +37,18 @@ export const getServerSideProps: GetServerSideProps = async (
         return { notFound: true };
       }
 
-      const filteredSections = pageData.sections.filter(
-        (section: { _type: string }) =>
-          [
-            'slider',
-            'product_list',
-            'categories',
-            'instagram',
-            'reviews',
-            'newsletter',
-            'about_platinum',
-            'features',
-            'blog',
-          ].includes(section._type)
+      const filteredSections = pageData.sections.filter((section: { _type: string }) =>
+        [
+          "slider",
+          "product_list",
+          "categories",
+          "instagram",
+          "reviews",
+          "newsletter",
+          "about_platinum",
+          "features",
+          "blog",
+        ].includes(section._type)
       );
 
       return {
@@ -61,10 +60,10 @@ export const getServerSideProps: GetServerSideProps = async (
 
     return { notFound: true };
   } catch (error) {
-    console.error('Server Error:', error);
+    console.error("Server Error:", error);
     return {
       redirect: {
-        destination: '/500',
+        destination: "/500",
         permanent: false,
       },
     };
@@ -97,15 +96,13 @@ const Home: React.FC<HomeProps> = ({ sections }) => {
       <main>
         {/* <TestSelect /> */}
         <Container>
-          <Title as="h2" fontSize={'20px'}>
+          <Title as="h2" fontSize={"20px"}>
             Symbol of {currency.name} currency isQQ {currency.code}
           </Title>
-          <Title as="h2" fontSize={'20px'}>
+          <Title as="h2" fontSize={"20px"}>
             Symbol of {language.name} language isQQ {language.code}
           </Title>
-          <button onClick={() => dispatch(popupToggle('categories-menu'))}>
-            Categories
-          </button>
+          <button onClick={() => dispatch(popupToggle("categories-menu"))}>Categories</button>
         </Container>
       </main>
     </div>
