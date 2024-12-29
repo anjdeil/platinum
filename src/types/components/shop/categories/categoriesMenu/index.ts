@@ -28,8 +28,8 @@ export const ListWrapperPropsSchema = z.object({
 });
 
 export const LinkWrapperPropsSchema = z.object({
-    isactive: z.boolean().optional(),
-    isactivehover: z.boolean().optional(),
+    isactive: z.string().optional(),
+    isactivehover: z.string().optional(),
 });
 
 export const CategoriesMenuPropsSchema = z.object({

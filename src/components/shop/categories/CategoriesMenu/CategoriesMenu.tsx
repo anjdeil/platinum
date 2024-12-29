@@ -74,10 +74,10 @@ const CategoriesMenu: FC<CategoriesMenuPropsType> = ({
                   onClick={onLinkClick}
                   isactive={
                     selectedCategories?.some((selected) => selected.id === category.id)
-                      ? true
+                      ? 'true'
                       : undefined
                   }
-                  isactivehover={activeCategoryHover?.id === category.id ? true : undefined}
+                  isactivehover={activeCategoryHover?.id === category.id ? 'true' : undefined}
                 >
                   <span>
                     {category.subcategories && category.subcategories.length > 0 && (
@@ -99,7 +99,7 @@ const CategoriesMenu: FC<CategoriesMenuPropsType> = ({
                     href={subItem.url}
                     onClick={onLinkClick}
                     isactive={
-                      selectedCategories?.some((selected) => selected.id === subItem.id) || false
+                      selectedCategories?.some((selected) => selected.id === subItem.id) ? 'true': 'false'
                     }
                   >
                     <span>{subItem.categoryName}</span>

@@ -1,5 +1,3 @@
-import { useAppDispatch } from '@/store';
-import { popupToggle } from '@/store/slices/PopupSlice';
 import { StyledFilterButton } from './styles';
 
 type FilterButtonProps = {
@@ -7,9 +5,8 @@ type FilterButtonProps = {
 };
 
 export default function FilterButton({ onClick }: FilterButtonProps) {
-  const dispatch = useAppDispatch();
   return (
-    <StyledFilterButton onClick={() => dispatch(popupToggle('mobile-filters'))}>
+    <StyledFilterButton onClick={onClick}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
