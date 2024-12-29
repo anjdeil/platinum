@@ -1,5 +1,4 @@
-import { Container, Title } from '@/styles/components';
-
+import { Container } from '@/styles/components';
 import { GetServerSidePropsContext } from 'next';
 import wpRestApi from '@/services/wpRestApi';
 import { LoginForm } from '@/components/global/forms/LoginForm';

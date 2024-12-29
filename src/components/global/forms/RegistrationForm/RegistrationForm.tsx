@@ -81,15 +81,15 @@ export const RegistrationForm: FC = () => {
     setCustomError('');
     const reqBody = {
       email: formData.email,
-      first_name: formData.name,
-      last_name: formData.lastName,
+      first_name: formData.first_name,
+      last_name: formData.last_name,
       password: formData.password,
       role: 'customer',
 
       username: formData.email,
       billing: {
-        first_name: formData.name,
-        last_name: formData.lastName,
+        first_name: formData.first_name,
+        last_name: formData.last_name,
         address_1: formData.address_1,
         address_2: [formData.address_2, formData.apartmentNumber]
           .filter(Boolean)
@@ -98,7 +98,7 @@ export const RegistrationForm: FC = () => {
         postcode: formData.postcode,
         country: formData.country,
         email: formData.email,
-        phone: formData.phoneNumber,
+        phone: formData.phone,
       },
     };
 
@@ -134,7 +134,7 @@ export const RegistrationForm: FC = () => {
 
   const renderFormFields = () => (
     <>
-      {['first_name', 'last_name', 'email', 'phone'].map((field) => (
+      {['first_name', 'last_name', 'email', 'phone'].map(field => (
         <CustomFormInput
           key={field}
           fieldName={tMyAccount(field)}
@@ -161,7 +161,7 @@ export const RegistrationForm: FC = () => {
         'postcode',
         'password',
         'confirmPassword',
-      ].map((field) => (
+      ].map(field => (
         <CustomFormInput
           key={field}
           fieldName={tMyAccount(field)}
@@ -173,8 +173,8 @@ export const RegistrationForm: FC = () => {
             field === 'postCode'
               ? 'number'
               : field == 'password' || field == 'confirmPassword'
-              ? 'newpassword'
-              : 'text'
+                ? 'newpassword'
+                : 'text'
           }
           setValue={setValue}
         />
@@ -185,14 +185,14 @@ export const RegistrationForm: FC = () => {
   return (
     <CustomForm onSubmit={handleSubmit(onSubmit)}>
       <Title as={'h2'} uppercase={true} marginBottom={'24px'}>
-        {tMyAccount('register')}
+        {tMyAccount('registration')}
       </Title>
       <FormWrapper>{renderFormFields()} </FormWrapper>
       <CustomFormCheckbox
         name={'terms'}
         register={register}
         errors={errors}
-        label={'Wyrażam zgodę na przetwarzanie danych osobowych.'}
+        label={tMyAccount('agreePersonalData')}
       />
       <FormWrapperBottom>
         <StyledButton
@@ -200,7 +200,7 @@ export const RegistrationForm: FC = () => {
           type="submit"
           disabled={isSubmitting}
         >
-          Register
+          {tMyAccount('register')}
         </StyledButton>
         {error && customError && (
           <CustomError
@@ -210,7 +210,9 @@ export const RegistrationForm: FC = () => {
           ></CustomError>
         )}
         {isSubmitSuccessful && !error && customError && (
-          <p>Your account has been created successfully!</p>
+          <CustomSuccess>
+            {tMyAccount('Your account has been created successfully!')}
+          </CustomSuccess>
         )}
       </FormWrapperBottom>
       <FlexBox gap="10px" justifyContent="flex-end" margin="16px 0 0 0">

@@ -10,7 +10,7 @@ import {
   useCheckTokenMutation,
   useGetTokenMutation,
 } from '@/store/rtk-queries/wpApi';
-import { CustomError } from '../CustomFormInput/styles';
+import { CustomError, CustomSuccess } from '../CustomFormInput/styles';
 import { CustomFormInput } from '../CustomFormInput';
 import { ActiveText, FormWrapper } from './styles';
 import { FlexBox, StyledButton, Title } from '@/styles/components';
@@ -90,7 +90,7 @@ export const LoginForm: FC = () => {
           type="submit"
           disabled={isSubmitting}
         >
-        {t('login')}
+          {t('login')}
         </StyledButton>
         <StyledButton
           color={theme.colors.black}
@@ -99,21 +99,21 @@ export const LoginForm: FC = () => {
             router.push('/my-account');
           }}
         >
-          Register
+          {t('register')}
         </StyledButton>
         <FlexBox margin="10px 0 0 0" justifyContent="space-between">
-          <ActiveText href="/my-account/">Forgot your password?</ActiveText>
+          <ActiveText href="/my-account/">{t('ForgotYourPassword')}</ActiveText>
           <FlexBox gap="5px">
-            <div>Don't have an account?</div>
+            <div> {t('DontHaveAnAccount')}</div>
             <ActiveText href="/my-account/registration">
-              Sign up now!
+              {t('SignUpNow')}
             </ActiveText>
           </FlexBox>
         </FlexBox>
 
         {customError && <CustomError>{customError}</CustomError>}
         {isSubmitSuccessful && !customError && !isLoading && (
-          <p>Your account has been created successfully!</p>
+          <CustomSuccess>{t('SuccessfullyLoggedIn')}</CustomSuccess>
         )}
       </FormWrapperBottom>
     </CustomForm>

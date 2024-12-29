@@ -62,9 +62,22 @@
     "paymentMethod": "Спосіб оплати",
     "total": "Всього",
     "action": "Дія",
-    "EditUserInfo": "Оновіть свій профіль",
     "apartmentNumber": "Номер квартири",
-    "successUpdate": "Ваш профіль успішно оновлено"
+    "registration": "Реєстрація",
+    "login": "Увійти",
+    "log-In": "Увійти",
+    "password": "Пароль",
+    "confirmPassword": "Підтвердьте пароль",
+    "AlreadyHaveAnAccount": "Уже є акаунт?",
+    "DontHaveAnAccount": "Немає акаунта?",
+    "SignUpNow": "Зареєструйтесь зараз!",
+    "register": "Зареєструватися",
+    "agreePersonalData": "Згоден на обробку персональних даних",
+    "EditUserInfo": "Оновити профіль",
+    "successUpdate": "Ваш профіль був успішно оновлений",
+    "YourAccountHasBeenCreated": "Ваш акаунт успішно створено!",
+    "ForgotYourPassword": "Забули пароль?",
+    "SuccessfullyLoggedIn": "Успішно увійшли в систему!"
   },
   "TopBar": {
     "CallUs": "Зателефонуйте нам"
@@ -202,7 +215,12 @@
     "fileTooLarge": "файл занадто великий",
     "agreentment": "Я погоджуюсь на отримання інформації про новини та зміни в пропозиції магазину",
     "agreentmentTerms": "Ви повинні погодитися з умовами",
-    "theSameAddress": "Та сама адреса, що й у інформації про клієнта"
+    "theSameAddress": "Та сама адреса, що й у інформації про клієнта",
+    "PasswordCapitalLetter": "Пароль повинен містити хоча б одну велику літеру.",
+    "PasswordLowercaseLetter": "Пароль повинен містити хоча б одну малу літеру.",
+    "PasswordDigit": "Пароль повинен містити хоча б одну цифру.",
+    "PasswordSpecialChar": "Пароль повинен містити хоча б один спеціальний символ.",
+    "PasswordsDoNotMatch": "Паролі не збігаються"
   },
 
   "Forms": {
@@ -214,6 +232,8 @@
   "Breadcrumbs": {
     "homePage": "Головна",
     "benefitsPage": "Програма лояльності",
+    "myAccount": "Мій акаунт",
+    "registration": "Реєстрація",
     "blogPage": "Блог"
   },
 

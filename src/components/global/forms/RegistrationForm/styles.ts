@@ -34,4 +34,5 @@ export const FormWrapperBottom = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
+  margin-top: 8px;
 `;

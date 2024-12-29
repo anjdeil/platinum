@@ -45,8 +45,10 @@ const CustomCountrySelect: React.FC<CustomSelectProps> = ({
             {...field}
             id={name}
             options={options}
-            value={options.find((option) => option.value === field.value) || null}
-            onChange={(selectedOption: any) => field.onChange(selectedOption?.value)}
+            value={options.find(option => option.value === field.value) || null}
+            onChange={(selectedOption: any) =>
+              field.onChange(selectedOption?.value)
+            }
             placeholder=""
             styles={{
               control: (base, state) => ({
@@ -67,7 +69,7 @@ const CustomCountrySelect: React.FC<CustomSelectProps> = ({
                   ? theme.customShadows.primaryShadow
                   : 'none',
               }),
-              menu: (base) => ({
+              menu: base => ({
                 ...base,
                 borderRadius: '5px',
                 boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
@@ -84,7 +86,9 @@ const CustomCountrySelect: React.FC<CustomSelectProps> = ({
           />
         )}
       />
-      {errors[name] && <CustomError>{errors[name]?.message}</CustomError>}
+      {errors[name] && (
+        <CustomError>{tValidation('RequiredField')}</CustomError>
+      )}
     </CustomSelectInput>
   );
 };

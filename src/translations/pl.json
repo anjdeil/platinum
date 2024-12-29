@@ -62,9 +62,22 @@
     "paymentMethod": "Metoda płatności",
     "total": "Razem",
     "action": "Działanie",
-    "EditUserInfo": "Zaktualizuj swój profil",
     "apartmentNumber": "Numer mieszkania",
-    "successUpdate": "Twój profil został pomyślnie zaktualizowany"
+    "registration": "Rejestracja",
+    "login": "Zaloguj się",
+    "log-In": "Zaloguj się",
+    "password": "Hasło",
+    "confirmPassword": "Potwierdź hasło",
+    "AlreadyHaveAnAccount": "Masz już konto?",
+    "DontHaveAnAccount": "Nie masz konta?",
+    "SignUpNow": "Zarejestruj się teraz!",
+    "register": "Zarejestruj się",
+    "agreePersonalData": "Zgadzam się na przetwarzanie danych osobowych",
+    "EditUserInfo": "Zaktualizuj swój profil",
+    "successUpdate": "Twój profil został pomyślnie zaktualizowany",
+    "YourAccountHasBeenCreated": "Twoje konto zostało pomyślnie utworzone!",
+    "ForgotYourPassword": "Zapomniałeś hasła?",
+    "SuccessfullyLoggedIn": "Pomyślnie zalogowano!"
   },
   "TopBar": {
     "CallUs": "Zadzwoń do nas"
@@ -205,11 +218,18 @@
     "saveChanges": "Zapisz zmiany",
     "agreentment": "Zgadzam się na otrzymywanie informacji o nowościach i zmianach w ofercie sklepu",
     "agreentmentTerms": "Musisz zgodzić się z warunkami",
-    "theSameAddress": "Ten sam adres co w informacjach o kliencie"
+    "theSameAddress": "Ten sam adres co w informacjach o kliencie",
+    "PasswordCapitalLetter": "Hasło musi zawierać przynajmniej jedną wielką literę.",
+    "PasswordLowercaseLetter": "Hasło musi zawierać przynajmniej jedną małą literę.",
+    "PasswordDigit": "Hasło musi zawierać przynajmniej jedną cyfrę.",
+    "PasswordSpecialChar": "Hasło musi zawierać przynajmniej jeden znak specjalny.",
+    "PasswordsDoNotMatch": "Hasła nie są zgodne"
   },
   "Breadcrumbs": {
     "homePage": "Strona Główna",
     "benefitsPage": "Lojalnościowy Program",
+    "myAccount": "Moje konto",
+    "registration": "Rejestracja",
     "blogPage": "Blog"
   },
   "Forms": {
