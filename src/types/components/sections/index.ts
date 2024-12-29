@@ -81,8 +81,8 @@ export const FeaturesSectionSchema = z.object({
 
 export const BlogSectionSchema = z.object({
   _type: z.literal('blog'),
-  subtitle: z.string(),
-  title: z.string(),
+  subtitle: z.string().optional(),
+  title: z.string().optional(),
 });
 
 export const LoyaltySectionSchema = z.object({
@@ -113,6 +113,7 @@ const RichTextSectionPropsSchema = z.object({
   title: z.string().optional(),
   is_reverse: z.boolean().optional(),
   text: z.string().optional(),
+  fullSize: z.boolean().optional(),
 });
 
 const ApplicationFormSectionSchema = z.object({
@@ -146,6 +147,7 @@ export const SectionsTypeSchema = z.union([
   ContactsSectionSchema,
   HeroSectionSchema,
   SplitSectionSchema,
+  RichTextSectionSchema,
 ]);
 
 // export type SliderItem = z.infer<typeof SliderItemSchema>;

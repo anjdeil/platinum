@@ -45,12 +45,8 @@ const CustomCountrySelect: React.FC<CustomSelectProps> = ({
             {...field}
             id={name}
             options={options}
-            value={
-              options.find((option) => option.value === field.value) || null
-            }
-            onChange={(selectedOption: any) =>
-              field.onChange(selectedOption?.value)
-            }
+            value={options.find((option) => option.value === field.value) || null}
+            onChange={(selectedOption: any) => field.onChange(selectedOption?.value)}
             placeholder=""
             styles={{
               control: (base, state) => ({

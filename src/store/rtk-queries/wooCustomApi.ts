@@ -1,3 +1,4 @@
+import { WooCustomerUpdateReqType } from '@/types/services';
 import {
   couponRespType,
   CreateOrderRequestType,
@@ -27,48 +28,69 @@ export const wooCustomRktApi = createApi({
     fetchOrders: builder.query({
       query: (params: any) => ({
         url: `/orders?${new URLSearchParams(params).toString()}`,
-        method: "GET",
+        method: 'GET',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       }),
     }),
     createOrder: builder.mutation<OrderType, CreateOrderRequestType>({
       query: (credentials) => ({
         url: `/orders`,
-        method: "POST",
+        method: 'POST',
         body: credentials,
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       }),
     }),
+    fetchCustomer: builder.query<WooCustomerType, { customerId: string }>({
+      query: ({ customerId }) => ({
+        url: `/customers/${customerId}`,
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }),
+    }),
+    updateCustomer: builder.mutation<WooCustomerType, WooCustomerUpdateReqType>(
+      {
+        query: (credentials: WooCustomerUpdateReqType) => ({
+          url: `/customers/${credentials.id}`,
+          method: 'PUT',
+          body: credentials,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }),
+      }
+    ),
     retrieveCoupon: builder.query<couponRespType, retrieveCouponQueryType>({
       query: (params: retrieveCouponQueryType) => ({
         url: `/coupons/${params.id}`,
-        method: "GET",
+        method: 'GET',
       }),
     }),
     ListAllCoupons: builder.query<couponRespType[], void>({
       query: () => ({
         url: `/coupons`,
-        method: "GET",
+        method: 'GET',
       }),
     }),
     addComment: builder.mutation({
       query: (credentials: any) => ({
-        url: "/products/reviews",
-        method: "POST",
+        url: '/products/reviews',
+        method: 'POST',
         body: credentials,
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       }),
     }),
     getProductsReviews: builder.query<ReviewsRespType, void>({
       query: () => ({
         url: `/products/reviews`,
-        method: "GET",
+        method: 'GET',
       }),
     }),
   }),
@@ -81,4 +103,6 @@ export const {
   useListAllCouponsQuery,
   useAddCommentMutation,
   useGetProductsReviewsQuery,
+  useFetchCustomerQuery,
+  useUpdateCustomerMutation,
 } = wooCustomRktApi;

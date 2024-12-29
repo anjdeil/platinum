@@ -210,9 +210,7 @@ export const RegistrationForm: FC = () => {
           ></CustomError>
         )}
         {isSubmitSuccessful && !error && customError && (
-          <CustomSuccess>
-            Your account has been created successfully!
-          </CustomSuccess>
+          <p>Your account has been created successfully!</p>
         )}
       </FormWrapperBottom>
       <FlexBox gap="10px" justifyContent="flex-end" margin="16px 0 0 0">

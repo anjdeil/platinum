@@ -49,12 +49,13 @@
     "first_name": "Name",
     "last_name": "Surname",
     "company": "Company",
-    "address_1": "Address 1",
-    "address_2": "Address 2",
+    "address_1": "Street",
+    "address_2": "Building number",
     "city": "City",
     "state": "State",
     "postcode": "Postcode",
     "country": "Country",
+    "apartmentNumber": "Apartment number",
     "email": "E-mail",
     "phone": "Phone",
     "discountCode": "Discount code",
@@ -66,12 +67,13 @@
     "log-In": "Log in",
     "password": "Password",
     "AlreadyHaveAnAccount": "Already have an account?",
-
     "DontHaveAnAccount": "Don't have an account?",
     "SignUpNow": "Sign up now!",
     "register": "Register",
     "registration": "Registration",
-    "AgreePersonalData": "I agree to the processing of personal data"
+    "AgreePersonalData": "I agree to the processing of personal data",
+    "EditUserInfo": "Update Your Profile",
+    "successUpdate": "Your profile has been successfully updated"
   },
   "TopBar": {
     "CallUs": "Call us"
@@ -80,7 +82,13 @@
     "Search": "Search"
   },
   "Archive": {
-    "goHome": "Home"
+    "goHome": "Home",
+    "filters": "Filters",
+    "products": "products",
+    "stocks": "Sort by stock availability",
+    "new": "Sort by newest",
+    "cheapest": "Sort by cheapest",
+    "expensive": "Sort by most expensive"
   },
   "Product": {
     "addToBasket": "Add to basket",
@@ -169,20 +177,56 @@
     "yourNamePlaceholder": "What is your name?",
     "emailPlaceholder": "Email",
     "yourQuestionPlaceholder": "Write your question",
-    "sending": "Sending...",
-    "sendButton": "Send",
+
     "errorMessage": "Something went wrong. Please try again.",
     "successMessage": "Your message has been sent successfully!"
   },
   "Validation": {
-    "email": "Please enter a valid email.",
-    "minChar": "Must be at least {count} characters long."
+    "emailValidation": "Please enter a valid email.",
+    "minChar": "Must be at least {count} characters long.",
+    "RequiredField": "Required field",
+    "email": "Email",
+    "name": "Name",
+    "lastName": "Last name",
+    "address": "Address",
+    "phoneNumber": "Phone number",
+    "country": "Country",
+    "city": "City",
+    "street": "Street",
+    "postCode": "Post Code",
+    "apartment/office": "№ apartment/office",
+    "buildingNumber": "Building number",
+    "proofOfPurchase": "Proof of purchase",
+    "aboutYourself": "About yourself",
+    "preview": "Preview",
+    "clickToUpload": "Click to upload",
+    "orDragAndDrop": "or drag and drop",
+    "or": "or",
+    "max": "max",
+    "sending": "Sending...",
+    "sendButton": "Send",
+    "saving": "Saving...",
+    "saveChanges": "Save changes",
+    "InvalidPhoneNumber": "Invalid phone number",
+    "fileTooLarge": "file too large",
+    "agreentment": "I agree to receiving information regarding news and changes to the stores offer",
+    "agreentmentTerms": "You must agree to the terms",
+    "theSameAddress": "The same address as on customer information"
+  },
+  "Forms": {
+    "applicationForm": "application form",
+    "UserInfo": "User information",
+    "ShippingInfo": "Shipping information",
+    "InvalidPhoneNumber": "Invalid phone number",
+    "fileTooLarge": "file too large"
   },
   "Breadcrumbs": {
     "homePage": "Home Page",
     "benefitsPage": "Loyalty Program",
-    "myAccount": "My account"
+    "myAccount": "My account",
+    "blogPage": "Blog"
   },
+
   "NotFoundPage": {
     "notFound": "Page not found",
     "description": "Sorry, we can't seem to find the page you're looking for. It may have been moved, deleted, or never existed.",
@@ -211,5 +255,11 @@
     "costsTitle": "Delivery costs are not included in the purchase calculation.",
     "freeCostsPoland": "Free delivery within Poland for orders over 200 PLN.",
     "freeCostsEurope": "Free delivery to Germany, Austria, Slovakia, Slovenia, Belgium, Hungary, Lithuania, Czech Republic, Denmark, Romania, and Estonia for orders over 150 EUR."
+  },
+  "BlogPostPage": {
+    "previousPost": "Previous",
+    "nextPost": "Next",
+    "blogPage": "Blog",
+    "blogSectionTitle": "Lasted articles"
   }
 }

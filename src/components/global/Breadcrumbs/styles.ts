@@ -5,7 +5,7 @@ export const BreadcrumbsWrapper = styled.nav`
   display: flex;
   justify-content: center;
   align-items: center;
-`
+`;
 
 export const BreadcrumbsList = styled.ol`
   display: flex;
@@ -24,14 +24,14 @@ export const BreadcrumbsList = styled.ol`
   @media ${({ theme }) => theme.media.medium} {
     justify-content: center;
   }
-`
+`;
 
 export const BreadcrumbLinkWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 16px;
   margin-right: 16px;
-`
+`;
 
 export const BreadcrumbLink = styled(Link)`
   color: ${({ theme }) => theme.colors.black};
@@ -42,9 +42,13 @@ export const BreadcrumbLink = styled(Link)`
   &:hover {
     opacity: 0.7;
   }
-`
+`;
 
 export const BreadcrumbText = styled.span`
   color: ${({ theme }) => theme.colors.black};
   text-transform: uppercase;
-`
+
+  @media ${({ theme }) => theme.media.medium} {
+    text-align: center;
+  }
+`;

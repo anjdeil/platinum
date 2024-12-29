@@ -49,8 +49,8 @@
     "first_name": "Vorname",
     "last_name": "Nachname",
     "company": "Firma",
-    "address_1": "Adresse 1",
-    "address_2": "Adresse 2",
+    "address_1": "Straße",
+    "address_2": "Gebäudenummer",
     "city": "Stadt",
     "state": "Bundesland",
     "postcode": "Postleitzahl",
@@ -61,7 +61,10 @@
     "amount": "Betrag",
     "paymentMethod": "Zahlungsmethode",
     "total": "Gesamt",
-    "action": "Aktion"
+    "action": "Aktion",
+    "EditUserInfo": "Profil aktualisieren",
+    "apartmentNumber": "Wohnungsnumme",
+    "successUpdate": "Ihr Profil wurde erfolgreich aktualisiert"
   },
   "TopBar": {
     "CallUs": "Rufen Sie uns an"
@@ -70,7 +73,13 @@
     "Search": "Suche"
   },
   "Archive": {
-    "goHome": "Home"
+    "goHome": "Startseite",
+    "filters": "Filter",
+    "products": "Produkte",
+    "stocks": "Nach Lagerverfügbarkeit sortieren",
+    "new": "Nach Neuheiten sortieren",
+    "cheapest": "Nach günstigstem Preis sortieren",
+    "expensive": "Nach höchstem Preis sortieren"
   },
   "Product": {
     "addToBasket": "In den Warenkorb legen",
@@ -159,12 +168,47 @@
     "successMessage": "Ihre Nachricht wurde erfolgreich gesendet!"
   },
   "Validation": {
-    "email": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
-    "minChar": "Muss mindestens {count} Zeichen lang sein."
+    "emailValidation": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+    "minChar": "Muss mindestens {count} Zeichen lang sein.",
+    "RequiredField": "Pflichtfeld",
+    "email": "E-Mail",
+    "name": "Name",
+    "lastName": "Nachname",
+    "address": "Adresse",
+    "phoneNumber": "Telefonnummer",
+    "country": "Land",
+    "city": "Stadt",
+    "street": "Straße",
+    "postCode": "Postleitzahl",
+    "apartment/office": "Nr. Wohnung/Büro",
+    "buildingNumber": "Gebäudenummer",
+    "proofOfPurchase": "Kaufbeleg",
+    "aboutYourself": "Über sich selbst",
+    "preview": "Vorschau",
+    "clickToUpload": "Klicken Sie, um hochzuladen",
+    "orDragAndDrop": "oder ziehen und ablegen",
+    "or": "oder",
+    "max": "max",
+    "sending": "Senden...",
+    "sendButton": "Senden",
+    "InvalidPhoneNumber": "Ungültige Rufnummer",
+    "fileTooLarge": "Datei zu groß",
+    "saving": "Speichern...",
+    "saveChanges": "Änderungen speichern",
+    "agreentment": "Ich stimme zu, Informationen über Neuigkeiten und Änderungen im Angebot des Geschäfts zu erhalten",
+    "agreentmentTerms": "Sie müssen den Bedingungen zustimmen",
+    "theSameAddress": "Die gleiche Adresse wie bei den Kundeninformationen"
   },
   "Breadcrumbs": {
     "homePage": "Startseite",
-    "benefitsPage": "Vorteile"
+    "benefitsPage": "Vorteile",
+    "blogPage": "Blog"
+  },
+  "Forms": {
+    "applicationForm": "Antragsformular",
+    "UserInfo": "Benutzerinformationen",
+    "ShippingInfo": "Versandinformationen",
+    "fileTooLarge": "Datei zu groß"
   },
   "NotFoundPage": {
     "notFound": "Seite nicht gefunden",
@@ -194,5 +238,10 @@
     "costsTitle": "Lieferkosten sind in der Kaufkalkulation nicht enthalten.",
     "freeCostsPoland": "Kostenlose Lieferung innerhalb Polens bei Bestellungen über 200 PLN.",
     "freeCostsEurope": "Kostenlose Lieferung nach Deutschland, Österreich, Slowakei, Slowenien, Belgien, Ungarn, Litauen, Tschechien, Dänemark, Rumänien und Estland bei einem Bestellwert von über 150 EUR."
+  },
+  "BlogPostPage": {
+    "previousPost": "Zurück",
+    "nextPost": "Weiter",
+    "blogSectionSubtitle": "Letzte artikel"
   }
 }

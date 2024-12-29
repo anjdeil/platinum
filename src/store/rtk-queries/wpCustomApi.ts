@@ -8,13 +8,13 @@ import {
   CustomDataProductType,
   CustomDataThemeOptionsType,
   QueryParamsType,
-} from '@/types/services';
-import { CartItem } from '@/types/store/reducers/сartSlice';
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+} from "@/types/services";
+import { CartItem } from "@/types/store/reducers/сartSlice";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const wpCustomRtkApi = createApi({
-  reducerPath: 'wpCustomRtkApi',
-  baseQuery: fetchBaseQuery({ baseUrl: '/api/wp-custom' }),
+  reducerPath: "wpCustomRtkApi",
+  baseQuery: fetchBaseQuery({ baseUrl: "/api/wp-custom" }),
   endpoints: (builder) => ({
     getMenus: builder.query<CustomDataMenuResponseType, QueryParamsType>({
       query: (params: QueryParamsType) => ({
@@ -27,6 +27,7 @@ export const wpCustomRtkApi = createApi({
         url: `/categories`,
         params,
       }),
+      keepUnusedDataFor: 60 * 60,
     }),
     getProducts: builder.query<CustomDataProductsType, QueryParamsType>({
       query: (params: QueryParamsType) => ({
@@ -40,10 +41,7 @@ export const wpCustomRtkApi = createApi({
         params,
       }),
     }),
-    getProductReviews: builder.query<
-      CustomDataProductReviewsType,
-      QueryParamsType
-    >({
+    getProductReviews: builder.query<CustomDataProductReviewsType, QueryParamsType>({
       query: (params: QueryParamsType) => ({
         url: `/products/reviews/${params.slug}`,
         params,
@@ -54,13 +52,10 @@ export const wpCustomRtkApi = createApi({
         url: `/theme-options`,
       }),
     }),
-    getProductsMinimized: builder.mutation<
-      CustomDataProductsMinimizedResponseType,
-      CartItem[]
-    >({
+    getProductsMinimized: builder.mutation<CustomDataProductsMinimizedResponseType, CartItem[]>({
       query: (cartItems) => ({
         url: `/products/minimized`,
-        method: 'POST',
+        method: "POST",
         body: cartItems,
       }),
     }),
@@ -69,6 +64,7 @@ export const wpCustomRtkApi = createApi({
         url: `/posts`,
         params,
       }),
+      keepUnusedDataFor: 60 * 60,
     }),
   }),
 });

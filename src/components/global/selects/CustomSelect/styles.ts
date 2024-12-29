@@ -33,7 +33,7 @@ export const CustomSelectStyled = styled.div<CustomSelectStyledProps>`
   }
 `;
 
-export const StyledCollapse = styled(Collapse) <CustomSelectStyledProps>`
+export const StyledCollapse = styled(Collapse)<CustomSelectStyledProps>`
   position: absolute;
   top: 100%;
   left: 0;
@@ -42,7 +42,7 @@ export const StyledCollapse = styled(Collapse) <CustomSelectStyledProps>`
   z-index: 10000;
   border-radius: ${({ isOpen, borderRadius = "0" }) =>
     isOpen ? `0 0 ${borderRadius} ${borderRadius}` : borderRadius};
-    
+
   & .MuiCollapse-wrapperInner {
     border-radius: 6px;
     overflow: hidden;
@@ -53,7 +53,7 @@ export const StyledCollapse = styled(Collapse) <CustomSelectStyledProps>`
 export const MenuItem = styled.div<CustomSelectStyledProps>`
   display: flex;
   justify-content: center;
-  justify-content: ${({ allignItem = "center" }) => allignItem};
+  justify-content: ${({ alignItem = "center" }) => alignItem};
   align-items: center;
   text-align: center;
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
@@ -76,6 +76,6 @@ export const MenuItem = styled.div<CustomSelectStyledProps>`
 
   &:hover {
     background: ${({ theme, background }) =>
-    background ? theme.colors.white : theme.background.secondary};
+      background ? theme.colors.white : theme.background.secondary};
   }
 `;

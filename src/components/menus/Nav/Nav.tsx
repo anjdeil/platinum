@@ -2,8 +2,8 @@ import { MenusContext } from '@/components/Layout/Layout';
 import { FC, useContext } from 'react';
 import { MenuSkeleton } from '../MenuSkeleton';
 import { NavLink, NavList } from './styles';
-import { wpMenuProps } from '@/types/menus/WpMenus';
 import { menuItemsType } from '@/types/services/wpCustomApi/menus';
+import { wpMenuProps } from '@/types/menus/WpMenus';
 
 const Nav: FC<wpMenuProps> = ({
   menuId,
@@ -31,7 +31,7 @@ const Nav: FC<wpMenuProps> = ({
         height={skeleton.height}
         gap={skeleton.gap}
       />
-    )
+    );
   }
 
   if (!menuItems && skeleton) {

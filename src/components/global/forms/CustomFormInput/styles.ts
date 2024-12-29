@@ -149,7 +149,8 @@ export const CustomError = styled.p`
 `;
 export const CustomSuccess = styled(CustomError)`
   color: ${({ theme }) => theme.colors.success};
-`;
+  `;
+
 
 export const CustomInputContainer = styled.div<CustomInputContainerProps>`
   width: ${({ isCheckbox, width = '100%' }) => (isCheckbox ? '100%' : width)};

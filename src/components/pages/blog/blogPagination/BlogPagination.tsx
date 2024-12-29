@@ -21,6 +21,7 @@ const BlogPagination: React.FC<PaginationProps> = ({ page, count }) => {
           href={`/blog?page=${item.page}`}
           {...item}
           disabled={item.page === page}
+          style={{ backgroundColor: '#F2F8FE' }}
         />
       )}
     />

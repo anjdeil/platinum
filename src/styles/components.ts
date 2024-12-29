@@ -27,6 +27,7 @@ interface FlexBoxProps {
   width?: string;
   height?: string;
   bgColor?: string;
+  flex?: string;
 }
 
 interface TitleProps {
@@ -222,6 +223,44 @@ export const Text = styled.span<TextProps>`
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
   text-align: ${({ textalign = 'left' }) => textalign};
 `;
+//----------------------FORM
+
+interface CustomFormProps {
+  maxWidth?: string;
+}
+
+export const CustomForm = styled.form<CustomFormProps>`
+  margin: 0 auto;
+  max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : '1100px')};
+`;
+
+export const FormWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(49%, 1fr));
+  column-gap: 1%;
+  row-gap: 15px;
+  padding-bottom: 20px;
+
+  @media ${({ theme }) => theme.media.medium} {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+  }
+`;
+
+export const FormWrapperBottom = styled.div`
+  margin-top: 24px;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
+
+export const Overlay = styled.div`
+  position: fixed;
+  z-index: 90;
+  inset: 0;
+`;
 
 export const VariationTitle = styled(Text)`
   text-transform: uppercase;
@@ -241,6 +280,7 @@ export const FlexBox = styled.div<FlexBoxProps>`
   justify-content: ${({ justifyContent = 'flex-start' }) => justifyContent};
   align-items: ${({ alignItems = 'stretch' }) => alignItems};
   flex-wrap: ${({ flexWrap = 'nowrap' }) => flexWrap};
+  flex: ${({ flex }) => flex};
   gap: ${({ gap = '0' }) => gap};
   padding: ${({ padding = '0' }) => padding};
   margin: ${({ margin = '0' }) => margin};
