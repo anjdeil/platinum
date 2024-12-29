@@ -19,14 +19,16 @@ import { useLazyFetchUserDataQuery } from '@/store/rtk-queries/wpApi';
 import { CartLink } from '@/components/global/popups/MiniCart/style';
 import { useTranslations } from 'next-intl';
 import { useCookies } from 'react-cookie';
+import { debounce } from 'lodash';
 
 const CartPage: React.FC = () => {
   const { name: code } = useAppSelector((state) => state.currencySlice);
   const status: CreateOrderRequestType['status'] = 'on-hold';
   const [symbol, setSymbol] = useState<string>('');
   const dispatch = useAppDispatch();
-  const [loadingItems, setLoadingItems] = useState<number[]>([]);
-  const [preLoadingItem, setPreLoadingItem] = useState<number>();
+  const [firstLoad, setfirstLoad] = useState<boolean>(false);
+  /*   const [loadingItems, setLoadingItems] = useState<number[]>([]); */
+  /*   const [preLoadingItem, setPreLoadingItem] = useState<number>(); */
   const t = useTranslations('Cart');
 
   //USER
@@ -62,6 +64,7 @@ const CartPage: React.FC = () => {
         }
       } else if (authToken === undefined) {
         setAuth(false);
+        console.log('non token');
       }
     };
 
@@ -100,22 +103,27 @@ const CartPage: React.FC = () => {
       coupon_lines: combinedCoupons,
       currency: code,
     };
-    if (preLoadingItem) {
-      setLoadingItems((prev) => [...prev, preLoadingItem]);
-    }
+    /*     const productIds = cartItems.map(item => item.product_id);
+
+    setLoadingItems(productIds); */
+
     try {
       await createOrder(requestData);
     } finally {
-      setLoadingItems((prev) => prev.filter((id) => id !== preLoadingItem));
+      setfirstLoad(true);
+      /*   setLoadingItems((prev) => prev.filter((id) => id !== preLoadingItem)); */
     }
   };
 
   useEffect(() => {
-    const createOrderEffect = async () => {
+    const debouncedCreateOrder = debounce(async () => {
       await handleCreateOrder();
-    };
+    }, 900);
 
-    createOrderEffect();
+    debouncedCreateOrder();
+    return () => {
+      debouncedCreateOrder.cancel();
+    };
   }, [cartItems, couponCodes, code, userData]);
 
   useEffect(() => {
@@ -138,7 +146,7 @@ const CartPage: React.FC = () => {
       variation_id?: number,
       newQuantity?: number | boolean
     ) => {
-      setPreLoadingItem(product_id);
+      /* setPreLoadingItem(product_id); */
       handleQuantityChange(
         cartItems,
         dispatch,
@@ -169,7 +177,7 @@ const CartPage: React.FC = () => {
 
   useEffect(() => {
     setHasConflict(checkCartConflict(cartItems, productsSpecs));
-  }, [cartItems, productsSpecs]);
+  }, [productsSpecs]);
 
   const currentOrderItems = orderItems ?? cachedOrderItems;
 
@@ -207,7 +215,8 @@ const CartPage: React.FC = () => {
               roundedPrice={roundedPrice}
               hasConflict={hasConflict}
               handleChangeQuantity={handleChangeQuantity}
-              loadingItems={loadingItems}
+              /*      loadingItems={}  */
+              firstLoad={firstLoad}
             />
             {cartItems.length > 0 ? (
               <OrderBar

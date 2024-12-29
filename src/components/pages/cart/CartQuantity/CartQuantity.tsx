@@ -1,11 +1,13 @@
-import React, { useCallback, useState } from 'react'
-import { QuantityBlock, QuantityBtn, QuantityWrapper } from './style'
-import PlusIcon from '@/components/global/icons/PlusIcon/PlusIcon'
-import MinusIcon from '@/components/global/icons/MinusIcon/MinusIcon'
-import debounce from 'lodash/debounce'
-import { QuantityComponentProps } from '@/types/pages/cart'
+import React, { useCallback, useState } from 'react';
+import { QuantityBlock, QuantityBtn, QuantityWrapper } from './style';
+import PlusIcon from '@/components/global/icons/PlusIcon/PlusIcon';
+import MinusIcon from '@/components/global/icons/MinusIcon/MinusIcon';
+import debounce from 'lodash/debounce';
+import { QuantityComponentProps } from '@/types/pages/cart';
 
-export const adaptItemToCartQuantity = (item: any): QuantityComponentProps['item'] => {
+export const adaptItemToCartQuantity = (
+  item: any
+): QuantityComponentProps['item'] => {
   return {
     id: item.id,
     name: item.name,
@@ -23,8 +25,8 @@ export const adaptItemToCartQuantity = (item: any): QuantityComponentProps['item
     image: item.image ? { id: item.image.id, src: item.image.src } : undefined,
     sku: item.sku || '',
     price: item.price || 0,
-  }
-}
+  };
+};
 
 const CartQuantity: React.FC<QuantityComponentProps> = ({
   item,
@@ -33,42 +35,42 @@ const CartQuantity: React.FC<QuantityComponentProps> = ({
   inputWidth,
   inputHeight,
 }) => {
-  const maxCount = resolveCount ?? Infinity
+  const maxCount = resolveCount ?? Infinity;
 
-  const [inputValue, setInputValue] = useState(item.quantity)
+  const [inputValue, setInputValue] = useState(item.quantity);
 
   const debouncedChangeHandler = useCallback(
     debounce((product_id, newQuantity, variation_id) => {
-      handleChangeQuantity(product_id, 'value', variation_id, newQuantity)
-    }, 1500),
+      handleChangeQuantity(product_id, 'value', variation_id, newQuantity);
+    }, 1100),
     []
-  )
+  );
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Math.min(parseInt(e.target.value, 10), maxCount)
+    const value = Math.min(parseInt(e.target.value, 10), maxCount);
     if (!Number.isNaN(value) && value > 0) {
-      setInputValue(value)
-      debouncedChangeHandler(item.product_id, value, item.variation_id)
+      setInputValue(value);
+      debouncedChangeHandler(item.product_id, value, item.variation_id);
     } else if (value > maxCount) {
-      setInputValue(maxCount)
+      setInputValue(maxCount);
     }
-  }
+  };
 
   const handleIncrease = () => {
     if (inputValue < maxCount) {
-      const newValue = inputValue + 1
-      setInputValue(newValue)
-      handleChangeQuantity(item.product_id, 'inc', item.variation_id, false)
+      const newValue = inputValue + 1;
+      setInputValue(newValue);
+      handleChangeQuantity(item.product_id, 'inc', item.variation_id, false);
     }
-  }
+  };
 
   const handleDecrease = () => {
     if (inputValue > 1) {
-      const newValue = inputValue - 1
-      setInputValue(newValue)
-      handleChangeQuantity(item.product_id, 'dec', item.variation_id, false)
+      const newValue = inputValue - 1;
+      setInputValue(newValue);
+      handleChangeQuantity(item.product_id, 'dec', item.variation_id, false);
     }
-  }
+  };
 
   return (
     <QuantityWrapper>
@@ -88,7 +90,7 @@ const CartQuantity: React.FC<QuantityComponentProps> = ({
         <PlusIcon />
       </QuantityBtn>
     </QuantityWrapper>
-  )
-}
+  );
+};
 
-export default CartQuantity
+export default CartQuantity;

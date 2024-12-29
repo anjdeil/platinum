@@ -46,6 +46,7 @@ export const CartTableSchema = z.object({
   symbol: z.string(),
   order: OrderTypeSchema.optional(),
   isLoadingOrder: z.boolean(),
+  firstLoad: z.boolean(),
   /*  isLoadingProductsMin: z.boolean(), */
   productsSpecs: z.array(z.any()),
   cartItems: z.array(z.any()),
@@ -60,7 +61,7 @@ export const CartTableSchema = z.object({
       z.union([z.number(), z.boolean()]).optional() // newQuantity
     )
     .returns(z.void()),
-  loadingItems: z.array(z.number()),
+  loadingItems: z.array(z.number()).optional(),
 });
 export const OrderBarSchema = z.object({
   cartSum: z.number(),

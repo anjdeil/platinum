@@ -37,7 +37,7 @@ const CartTable: FC<CartTableProps> = ({
   symbol,
   order,
   isLoadingOrder,
-
+  firstLoad,
   productsSpecs,
   roundedPrice,
   hasConflict,
@@ -50,7 +50,7 @@ const CartTable: FC<CartTableProps> = ({
 
   return (
     <CartTableWrapper>
-      {!isLoadingOrder && hasConflict && (
+      {!!(!isLoadingOrder && hasConflict && firstLoad) && (
         <Notification type="warning">{t('cartConflict')}</Notification>
       )}
       {cartItems.length == 0 && (
@@ -81,9 +81,9 @@ const CartTable: FC<CartTableProps> = ({
                   item,
                   productsSpecs
                 );
-                const isLoadingItem = loadingItems.includes(item.product_id);
+                /*     const isLoadingItem = loadingItems.includes(item.product_id); */
                 return (
-                  <RowWrapper key={item.id} isLoadingItem={isLoadingItem}>
+                  <RowWrapper key={item.id} isLoadingItem={isLoadingOrder}>
                     <GridRow>
                       <DeleteCell>
                         <div>
@@ -162,11 +162,11 @@ const CartTable: FC<CartTableProps> = ({
                 item,
                 productsSpecs
               );
-              const isLoadingItem = loadingItems.includes(item.product_id);
+              /*     const isLoadingItem = loadingItems.includes(item.product_id); */
 
               return (
                 <CartCardAllWrapper key={item.id}>
-                  <CartCardWrapper isLoadingItem={isLoadingItem}>
+                  <CartCardWrapper isLoadingItem={isLoadingOrder}>
                     <CartImgWrapper>
                       <CartItemImg
                         src={item.image?.src}

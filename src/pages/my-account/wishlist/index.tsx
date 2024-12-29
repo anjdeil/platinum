@@ -51,9 +51,18 @@ function Wishlist() {
   >([]);
 
   useEffect(() => {
-    if (cookie.authToken) {
+    const authToken =
+      cookie.authToken ||
+      document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('authToken='))
+        ?.split('=')[1];
+
+    if (authToken) {
       fetchUserData().then(() => setIsLoadingWishlist(false));
     } else {
+      console.log('non token');
+
       router.push('/my-account/login');
     }
   }, [cookie.authToken, fetchUserData]);

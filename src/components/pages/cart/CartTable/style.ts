@@ -1,9 +1,9 @@
-import styled from '@emotion/styled'
-import { css } from '@emotion/react'
-import { blink } from '../styles'
+import styled from '@emotion/styled';
+import { css } from '@emotion/react';
+import { blink } from '../styles';
 
 interface GridRowFullProps {
-  padding?: string
+  padding?: string;
 }
 
 export const CartTableGrid = styled.div`
@@ -12,13 +12,13 @@ export const CartTableGrid = styled.div`
   border-radius: 8px;
   width: 100%;
   overflow: hidden;
-`
+`;
 export const GridHeader = styled.div`
   background: ${({ theme }) => theme.background.secondary};
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
   text-transform: uppercase;
   border: 1px solid ${({ theme }) => theme.background.secondary};
-`
+`;
 export const RowWrapper = styled.div<{ isLoadingItem: boolean }>`
   border: 1px solid ${({ theme }) => theme.colors.lightBorder};
   border-top: none;
@@ -29,9 +29,10 @@ export const RowWrapper = styled.div<{ isLoadingItem: boolean }>`
   ${({ isLoadingItem }) =>
     isLoadingItem &&
     css`
+      pointer-events: none;
       animation: ${blink} 1.2s ease-in-out infinite;
     `}
-`
+`;
 export const GridRow = styled.div<GridRowFullProps>`
   height: 100%;
   display: grid;
@@ -44,13 +45,13 @@ export const GridRow = styled.div<GridRowFullProps>`
   @media ${({ theme }) => theme.media.large} {
     grid-template-columns: 0.1fr 0.6fr 3fr 1.5fr 2fr 1.7fr;
   }
-`
+`;
 
 export const TextCell = styled.div`
   text-align: center;
-`
+`;
 
 export const TextCellHeader = styled.div`
   background: ${({ theme }) => theme.background.secondary};
   text-align: center;
-`
+`;
