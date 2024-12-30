@@ -32,6 +32,7 @@ export const StyledSubscribeInput = styled(Input)`
   }
 
   @media ${({ theme }) => theme.media.medium} {
+    width: 100%;
     padding: 13px 10px;
     margin-bottom: 16px;
   }
