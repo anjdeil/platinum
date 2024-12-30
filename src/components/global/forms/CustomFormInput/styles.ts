@@ -71,7 +71,7 @@ export const Input = styled.input<CustomInputProps>`
   font-size: 16px;
   outline: 1px solid
     ${({ theme, isError }) =>
-      isError ? theme.colors.error : theme.background.formElements};
+    isError ? theme.colors.error : theme.background.formElements};
   background-color: ${({ theme, isCheckbox, background }) =>
     isCheckbox ? '#f0f0f0' : background || theme.background.formElements};
   transition: outline-width 0.1s ease-in-out, background-color 0.1s ease-in-out;
@@ -79,7 +79,7 @@ export const Input = styled.input<CustomInputProps>`
   &:focus {
     outline: 1px solid
       ${({ theme, isError }) =>
-        isError ? theme.colors.error : theme.colors.primary};
+    isError ? theme.colors.error : theme.colors.primary};
     box-shadow: ${({ theme }) => theme.customShadows.primaryShadow};
   }
 
@@ -190,4 +190,8 @@ export const StyledPhoneInput = styled(PhoneInput)`
     width: 285px;
     border-radius: 10px;
   }
+`;
+
+export const CustomSuccess = styled(CustomError)`
+  color: ${({ theme }) => theme.colors.success};
 `;
