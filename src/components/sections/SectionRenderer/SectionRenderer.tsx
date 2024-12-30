@@ -15,6 +15,8 @@ import { ContactsSection } from '../ContactsSection';
 import { SectionsType } from '@/types/components/sections';
 import { normalizeSlides } from '@/utils/normalizeSlides';
 import { IsMobileScreen } from '@/components/global/isMobileScreenWrapper';
+import { RichTextSection } from '../RichTextSection';
+import { SectionContainer } from '../styles';
 
 interface SectionRendererProps {
   sections: SectionsType[];
@@ -23,7 +25,6 @@ interface SectionRendererProps {
 export const SectionRenderer: React.FC<SectionRendererProps> = ({
   sections,
 }) => {
-
   const countSplitSections = (sections: any[]): number => {
     return sections.filter((section) => section._type === 'split').length;
   };
@@ -132,6 +133,14 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
                 />
               </Container>
             );
+          case 'rich_text':
+            return (
+              <Container key={index}>
+                <SectionContainer smallGaps={true}>
+                  <RichTextSection text={section.text} />
+                </SectionContainer>
+              </Container>
+            );
           case 'loyalty':
             return (
               <LoyaltySection
@@ -141,10 +150,9 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
             );
           case 'contacts':
             return (
-              <ContactsSection
-                key={index}
-                contacts_separator={section.contacts_separator}
-              />
+              <Container key={index}>
+                <ContactsSection />
+              </Container>
             );
           default:
             return (

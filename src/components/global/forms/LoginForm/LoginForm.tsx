@@ -15,7 +15,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { CustomFormInput } from '../CustomFormInput';
-import { CustomError, CustomSuccess } from '../CustomFormInput/styles';
+import { CustomError } from '../CustomFormInput/styles';
 import { FormWrapper } from './styles';
 
 export const LoginForm: FC = () => {
@@ -89,7 +89,6 @@ export const LoginForm: FC = () => {
           Login
         </StyledButton>
         <StyledButton
-          secondary
           color={theme.colors.black}
           disabled={isSubmitting}
           onSubmit={() => {
@@ -100,9 +99,7 @@ export const LoginForm: FC = () => {
         </StyledButton>
         {customError && <CustomError>{customError}</CustomError>}
         {isSubmitSuccessful && !customError && !isLoading && (
-          <CustomSuccess>
-            Your account has been created successfully!
-          </CustomSuccess>
+          <p>Your account has been created successfully!</p>
         )}
       </FormWrapperBottom>
     </CustomForm>

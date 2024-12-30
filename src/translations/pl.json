@@ -49,8 +49,8 @@
     "first_name": "Imię",
     "last_name": "Nazwisko",
     "company": "Firma",
-    "address_1": "Adres 1",
-    "address_2": "Adres 2",
+    "address_1": "Ulica",
+    "address_2": "Numer domu",
     "city": "Miasto",
     "state": "Stan",
     "postcode": "Kod pocztowy",
@@ -61,7 +61,10 @@
     "amount": "Kwota",
     "paymentMethod": "Metoda płatności",
     "total": "Razem",
-    "action": "Działanie"
+    "action": "Działanie",
+    "EditUserInfo": "Zaktualizuj swój profil",
+    "apartmentNumber": "Numer mieszkania",
+    "successUpdate": "Twój profil został pomyślnie zaktualizowany"
   },
   "TopBar": {
     "CallUs": "Zadzwoń do nas"
@@ -70,7 +73,13 @@
     "Search": "Wyszukiwanie"
   },
   "Archive": {
-    "goHome": "Główna"
+    "goHome": "Główna",
+    "filters": "Filtry",
+    "products": "Produkty",
+    "stocks": "Sortuj według dostępności w magazynie",
+    "new": "Sortuj według najnowszych",
+    "cheapest": "Sortuj według najtańszych",
+    "expensive": "Sortuj według najdroższych"
   },
   "Product": {
     "addToBasket": "Dodaj do koszyka",
@@ -176,6 +185,12 @@
     "phoneNumber": "Numer telefonu",
     "country": "Kraj",
     "city": "Miasto",
+    "street": "Ulica",
+    "postCode": "Kod pocztowy",
+    "apartment/office": "Nr mieszkania/biura",
+    "buildingNumber": "Numer budynku",
+    "proofOfPurchase": "Dowód zakupu",
+
     "aboutYourself": "O sobie",
     "preview": "Podgląd",
     "clickToUpload": "Kliknij, aby przesłać",
@@ -185,7 +200,12 @@
     "sending": "Wysyłanie...",
     "sendButton": "Wyślij",
     "InvalidPhoneNumber": "Nieprawidłowy numer telefonu",
-    "fileTooLarge": "zbyt duży plik"
+    "fileTooLarge": "zbyt duży plik",
+    "saving": "Zapisywanie...",
+    "saveChanges": "Zapisz zmiany",
+    "agreentment": "Zgadzam się na otrzymywanie informacji o nowościach i zmianach w ofercie sklepu",
+    "agreentmentTerms": "Musisz zgodzić się z warunkami",
+    "theSameAddress": "Ten sam adres co w informacjach o kliencie"
   },
   "Breadcrumbs": {
     "homePage": "Strona Główna",
@@ -193,7 +213,10 @@
     "blogPage": "Blog"
   },
   "Forms": {
-    "applicationForm": "Formularz zgłoszeniowy"
+    "applicationForm": "Formularz zgłoszeniowy",
+    "UserInfo": "Informacje o użytkowniku",
+    "ShippingInfo": "Informacje o wysyłce",
+    "fileTooLarge": "zbyt duży plik"
   },
   "NotFoundPage": {
     "notFound": "Strona nie znaleziona",
