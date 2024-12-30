@@ -4,7 +4,9 @@ import AccountLinkBlockList from '@/components/pages/account/AccountLinkBlockLis
 import OrderTable from '@/components/pages/order/OrderTable/OrderTable';
 import { transformOrders } from '@/services/transformers/transformOrders';
 import wpRestApi from '@/services/wpRestApi';
+import { useAppSelector } from '@/store';
 import { useFetchOrdersQuery } from '@/store/rtk-queries/wooCustomApi';
+import { useGetCurrenciesQuery } from '@/store/rtk-queries/wpCustomApi';
 import { AccountInfoWrapper } from '@/styles/components';
 import { accountLinkList, redirectToLogin } from '@/utils/consts';
 import parseCookies from '@/utils/parseCookies';
@@ -55,10 +57,13 @@ interface MyAccountPropsType {
 
 const MyAccount: FC<MyAccountPropsType> = ({ user }) => {
   const t = useTranslations('MyAccount');
+  const { data: currencies, isLoading: isCurrenciesLoading } =
+    useGetCurrenciesQuery();
+  const selectedCurrency = useAppSelector(state => state.currencySlice.name);
 
   const { data: ordersData } = useFetchOrdersQuery({
     customer: user.id,
-    per_page: 5,
+    per_page: 100,
   });
 
   const translatedAccountLinkList = accountLinkList.map(
@@ -68,7 +73,10 @@ const MyAccount: FC<MyAccountPropsType> = ({ user }) => {
     })
   );
 
-  const { orderCount, totalAmount } = transformOrders(ordersData || []);
+  const { orderCount, totalAmountPLN, totalAmount } =
+    currencies && ordersData
+      ? transformOrders(ordersData, currencies, selectedCurrency)
+      : { orderCount: undefined, totalAmount: undefined };
 
   return (
     <AccountLayout title={t('clientPersonalAccount')}>

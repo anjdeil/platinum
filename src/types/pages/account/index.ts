@@ -4,7 +4,7 @@ import { z } from "zod";
 const AccountInfoBlockSchema = z.object({
     icon: z.any(),
     title: z.string(),
-    value: z.string(),
+    value: z.string().optional(),
     background: z.string().optional()
 });
 
@@ -25,6 +25,7 @@ const StyledTextPropsShema = z.object({
 
 const OrderSummarySchema = z.object({
     orderCount: z.number().optional(),
+    totalAmountPLN: z.number().optional(),
     totalAmount: z.number().optional(),
 });
 
