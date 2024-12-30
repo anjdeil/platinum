@@ -1,20 +1,22 @@
 import SwiperModal from '@/store/slices/SwiperModal';
+import saveCartSliceToLocalStorageMiddleware from '@/utils/cartSlice/saveCartSliceToLocalStorageMiddleware';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { contactForm7Api } from './rtk-queries/contactFrom7/contactFromApi7';
+import { instagramCustomRtkApi } from './rtk-queries/instagramMedia';
+import { mailpoetApi } from './rtk-queries/mailpoetApi';
 import { wooCustomRktApi } from './rtk-queries/wooCustomApi';
+import { wooCustomAuthRktApi } from './rtk-queries/wooCustomAuthApi';
+import { wpRtkApi } from './rtk-queries/wpApi';
 import { wpCustomRtkApi } from './rtk-queries/wpCustomApi';
+import cartSlice from './slices/cartSlice';
+import categoriesSlice from './slices/categoriesSlice';
 import currencySlice from './slices/currencySlice';
 import languageSlice from './slices/languageSlice';
 import MenuCategoriesSlice from './slices/MenuCategoriesSlice';
 import PopupSlice from './slices/PopupSlice';
-import { wpRtkApi } from './rtk-queries/wpApi';
+import ProductSlice from './slices/ProductSlice';
 import themeOptionsSlice from './slices/themeOptionsSlice';
-import cartSlice from './slices/cartSlice';
-import saveCartSliceToLocalStorageMiddleware from '@/utils/cartSlice/saveCartSliceToLocalStorageMiddleware';
-import { wooCustomAuthRktApi } from './rtk-queries/wooCustomAuthApi';
-import { contactForm7Api } from './rtk-queries/contactFrom7/contactFromApi7';
-import { mailpoetApi } from './rtk-queries/mailpoetApi';
-import { instagramCustomRtkApi } from './rtk-queries/instagramMedia';
-import categoriesSlice from './slices/categoriesSlice';
+import userSlice from './slices/userSlice';
 
 const rootReducer = combineReducers({
   [wpCustomRtkApi.reducerPath]: wpCustomRtkApi.reducer,
@@ -28,6 +30,8 @@ const rootReducer = combineReducers({
   languageSlice: languageSlice,
   currencySlice: currencySlice,
   categoriesSlice: categoriesSlice.reducer,
+  productSlice: ProductSlice,
+  userSlice: userSlice,
   themeOptions: themeOptionsSlice,
   popup: PopupSlice,
   MenuCategoriesSlice: MenuCategoriesSlice.reducer,

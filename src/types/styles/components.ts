@@ -19,6 +19,7 @@ export const StyledButtonPropsSchema = z.object({
   hoverBackgroundColor: z.string().optional(),
   notify: z.boolean().optional(),
   secondary: z.boolean().optional(),
+  isDisabled: z.boolean().optional(),
   /* backgroundColor:z.string().optional(), */
 });
 
