@@ -1,13 +1,19 @@
-import transformCategoriesMenu from "@/services/transformers/transformCategoriesMenu";
-import { useAppDispatch, useAppSelector } from "@/store";
-import MenuCategoriesSlice from "@/store/slices/MenuCategoriesSlice";
-import { FC, useCallback } from "react";
-import { Categories, ChildListWrapper, LinkWrapper, List, ListWrapper } from "./styles";
-import { Title } from "@/styles/components";
-import { MenuSkeleton } from "@/components/menus/MenuSkeleton";
-import ForwardArrow from "@/components/global/icons/ForwardArrow/ForwardArrow";
-import { CategoriesMenuPropsType } from "@/types/components/shop/categories/categoriesMenu";
-import CategoryType from "@/types/components/shop/categories/categories";
+import transformCategoriesMenu from '@/services/transformers/transformCategoriesMenu';
+import { useAppDispatch, useAppSelector } from '@/store';
+import MenuCategoriesSlice from '@/store/slices/MenuCategoriesSlice';
+import { FC, useCallback } from 'react';
+import {
+  Categories,
+  ChildListWrapper,
+  LinkWrapper,
+  List,
+  ListWrapper,
+} from './styles';
+import { Title } from '@/styles/components';
+import { MenuSkeleton } from '@/components/menus/MenuSkeleton';
+import ForwardArrow from '@/components/global/icons/ForwardArrow/ForwardArrow';
+import { CategoriesMenuPropsType } from '@/types/components/shop/categories/categoriesMenu';
+import CategoryType from '@/types/components/shop/categories/categories';
 
 const CategoriesMenu: FC<CategoriesMenuPropsType> = ({
   selectedCategories,
@@ -15,13 +21,15 @@ const CategoriesMenu: FC<CategoriesMenuPropsType> = ({
   isMenuVisible,
 }) => {
   const categoriesData: CategoryType[] | undefined = useAppSelector(
-    (state) => state.categoriesSlice.categories
+    state => state.categoriesSlice.categories
   );
   const categories = transformCategoriesMenu(categoriesData);
 
   const dispatch = useAppDispatch();
-  const popup = useAppSelector((state) => state.Popup);
-  const { isOpen, CategoryActiveHover } = useAppSelector((state) => state.MenuCategoriesSlice);
+  const popup = useAppSelector(state => state.Popup);
+  const { isOpen, CategoryActiveHover } = useAppSelector(
+    state => state.MenuCategoriesSlice
+  );
   const { setMenuOpen, setCategory } = MenuCategoriesSlice.actions;
 
   const onLinkClick = useCallback(() => {
@@ -36,13 +44,22 @@ const CategoriesMenu: FC<CategoriesMenuPropsType> = ({
   }, [dispatch]);
 
   const activeCategoryHover = CategoryActiveHover
-    ? categories.find((category) => category.id === CategoryActiveHover)
+    ? categories.find(category => category.id === CategoryActiveHover)
     : null;
   const hasSubcategories =
-    activeCategoryHover?.subcategories && activeCategoryHover.subcategories.length > 0;
+    activeCategoryHover?.subcategories &&
+    activeCategoryHover.subcategories.length > 0;
 
   if (!categories || categories.length === 0) {
-    return <MenuSkeleton elements={7} direction="column" width="100%" height="40px" gap="30px" />;
+    return (
+      <MenuSkeleton
+        elements={7}
+        direction="column"
+        width="100%"
+        height="40px"
+        gap="30px"
+      />
+    );
   }
 
   return (
@@ -62,27 +79,30 @@ const CategoriesMenu: FC<CategoriesMenuPropsType> = ({
       <Categories
         onMouseLeave={onMouseLeave}
         shop={shop}
-        className={popup === "categories-menu" ? "active close-outside" : ""}
+        className={popup === 'categories-menu' ? 'active close-outside' : ''}
       >
         <ListWrapper shop={shop}>
           <List>
-            {categories.map((category) => (
+            {categories.map(category => (
               <li key={category.id}>
                 <LinkWrapper
                   href={category.url}
                   onMouseEnter={() => dispatch(setCategory(category.id))}
                   onClick={onLinkClick}
                   isactive={
-                    selectedCategories?.some((selected) => selected.id === category.id)
-                      ? 'true'
+                    selectedCategories?.some(
+                      selected => selected.id === category.id
+                    )
+                      ? true
                       : undefined
                   }
-                  isactivehover={activeCategoryHover?.id === category.id ? 'true' : undefined}
+                  isactivehover={
+                    activeCategoryHover?.id === category.id ? true : undefined
+                  }
                 >
                   <span>
-                    {category.subcategories && category.subcategories.length > 0 && (
-                      <ForwardArrow />
-                    )}
+                    {category.subcategories &&
+                      category.subcategories.length > 0 && <ForwardArrow />}
                     {category.categoryName}
                   </span>
                 </LinkWrapper>
@@ -93,13 +113,15 @@ const CategoriesMenu: FC<CategoriesMenuPropsType> = ({
         {hasSubcategories && (
           <ChildListWrapper shop={shop} isVisible={true} isSubcategories={true}>
             <List>
-              {activeCategoryHover?.subcategories.map((subItem) => (
+              {activeCategoryHover?.subcategories.map(subItem => (
                 <li key={subItem.id}>
                   <LinkWrapper
                     href={subItem.url}
                     onClick={onLinkClick}
                     isactive={
-                      selectedCategories?.some((selected) => selected.id === subItem.id) ? 'true': 'false'
+                      selectedCategories?.some(
+                        selected => selected.id === subItem.id
+                      ) || false
                     }
                   >
                     <span>{subItem.categoryName}</span>

@@ -1,42 +1,46 @@
-import { z } from "zod";
-import { CategorySchema } from "../categories";
+import { z } from 'zod';
+import { CategorySchema } from '../categories';
 
 export const SubcategorySchema = z.object({
-    id: z.number(),
-    categoryName: z.string(),
-    url: z.string(),
+  id: z.number(),
+  categoryName: z.string(),
+  url: z.string(),
 });
 
 export const CategoriesMenuSchema = z.object({
-    id: z.number(),
-    categoryName: z.string(),
-    url: z.string(),
-    subcategories: z.array(SubcategorySchema),
+  id: z.number(),
+  categoryName: z.string(),
+  url: z.string(),
+  subcategories: z.array(SubcategorySchema),
 });
 
 export const CategoriesWrapperSchema = z.object({
-    shop: z.boolean(),
-    active: z.boolean().optional(),
-    backgroundColor:z.string().optional(),
-    top:  z.string().optional(),
+  shop: z.boolean(),
+  active: z.boolean().optional(),
+  backgroundColor: z.string().optional(),
+  top: z.string().optional(),
 });
 
 export const ListWrapperPropsSchema = z.object({
-    shop: z.boolean(),
-    isVisible: z.boolean().optional(),
-    isSubcategories: z.boolean().optional(),
+  shop: z.boolean(),
+  isVisible: z.boolean().optional(),
+  isSubcategories: z.boolean().optional(),
 });
 
 export const LinkWrapperPropsSchema = z.object({
-    isactive: z.string().optional(),
-    isactivehover: z.string().optional(),
+  isactive: z.boolean().optional(),
+  isactivehover: z.boolean().optional(),
 });
 
 export const CategoriesMenuPropsSchema = z.object({
-    isMenuVisible: z.boolean(),
-    shop: z.boolean(),
-    selectedCategories: z.array(CategorySchema).optional(),
-    switchCategory: z.function().args(z.string(), z.string().optional()).returns(z.void()).optional(),
+  isMenuVisible: z.boolean(),
+  shop: z.boolean(),
+  selectedCategories: z.array(CategorySchema).optional(),
+  switchCategory: z
+    .function()
+    .args(z.string(), z.string().optional())
+    .returns(z.void())
+    .optional(),
 });
 
 export type Category = z.infer<typeof CategoriesMenuSchema>;
