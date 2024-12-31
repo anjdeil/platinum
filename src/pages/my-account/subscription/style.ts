@@ -1,11 +1,19 @@
+import theme from '@/styles/theme';
 import styled from '@emotion/styled';
 import { Switch } from '@mui/material';
 
 export const SubscriptionWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 80px;
+  gap: 15px;
   margin-bottom: 80px;
+  @media ${({ theme }) => theme.media.medium} {
+    margin-top: 30px;
+  }
+`;
+export const SubscribeText = styled.p`
+  font: ${({ theme }) => theme.fonts.bodyMiddleReg};
+  font-size: 1.1rem;
 `;
 
 export const CustomSwitch = styled(Switch)(() => ({

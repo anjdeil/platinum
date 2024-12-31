@@ -7,11 +7,17 @@ import {
   useUnsubscribeMutation,
 } from '@/store/rtk-queries/mailpoetApi';
 import { useEffect, useState } from 'react';
-import { Switch, ToggleButton } from '@mui/material';
+import {
+  CircularProgress,
+  Skeleton,
+  Switch,
+  ToggleButton,
+} from '@mui/material';
 import { FlexBox } from '@/styles/components';
 import axios from 'axios';
-import { CustomSwitch } from './style';
+import { CustomSwitch, SubscribeText, SubscriptionWrapper } from './style';
 import Notification from '@/components/global/Notification/Notification';
+import { MenuSkeleton } from '@/components/menus/MenuSkeleton';
 
 interface SubscriptionProps {
   email: string;
@@ -36,35 +42,19 @@ export default function Subscription({ email }: SubscriptionProps) {
     }
   }, [data]);
 
-  const [isSubSucState, setIsSubSucState] = useState(false);
-  const [isUnSubSucState, setIsUnSubSucState] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
 
-  // Функция для показа уведомления
-  const showSuccessMessage = (type: string) => {
-    if (type === 'subscribe') {
-      setIsSubSucState(true);
-    } else if (type === 'unsubscribe') {
-      setIsUnSubSucState(true);
+  useEffect(() => {
+    if (isSubSuc || isUnSubSuc) {
+      setShowNotification(true);
+
+      const timer = setTimeout(() => {
+        setShowNotification(false);
+      }, 3000);
+
+      return () => clearTimeout(timer);
     }
-
-    setShowNotification(true);
-
-    // Убираем уведомление через 1.5 секунды
-    setTimeout(() => {
-      setShowNotification(false);
-      setIsSubSucState(false);
-      setIsUnSubSucState(false);
-    }, 3000);
-  };
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error fetching subscriber data</div>;
-  }
+  }, [isSubSuc, isUnSubSuc]);
 
   const handleSwitchChange = async (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -75,7 +65,6 @@ export default function Subscription({ email }: SubscriptionProps) {
       try {
         await subscribe({ email });
         setSubscriptions(prevSubscriptions => [...prevSubscriptions, id]);
-        showSuccessMessage('subscribe');
       } catch (error) {
         console.error('Error subscribing:', error);
       }
@@ -85,7 +74,6 @@ export default function Subscription({ email }: SubscriptionProps) {
         setSubscriptions(prevSubscriptions =>
           prevSubscriptions.filter(sub => sub !== id)
         );
-        showSuccessMessage('unsubscribe');
       } catch (error) {
         console.error('Error unsubscribing:', error);
       }
@@ -94,42 +82,63 @@ export default function Subscription({ email }: SubscriptionProps) {
 
   return (
     <AccountLayout title={t('subscription')}>
-      <FlexBox alignItems="center">
-        <CustomSwitch
-          checked={subscriptions.includes('13600')}
-          onChange={event =>
-            handleSwitchChange(event, event.target.checked, '13600')
-          }
+      {error && (
+        <Notification type="info"> Couldn't get subscription data</Notification>
+      )}
+      {isLoading ? (
+        <MenuSkeleton
+          elements={3}
+          direction="column"
+          width="100%"
+          height="33px"
+          gap="15px"
         />
-        <p>Subscribe to mail sent N 13600</p>
-      </FlexBox>
-      <FlexBox alignItems="center">
-        <CustomSwitch
-          checked={subscriptions.includes('13601')}
-          onChange={event =>
-            handleSwitchChange(event, event.target.checked, '13601')
-          }
-        />
-        <p>Subscribe to mail sent N 13601</p>
-      </FlexBox>
-      <FlexBox alignItems="center">
-        <CustomSwitch
-          checked={subscriptions.includes('13604')}
-          onChange={event =>
-            handleSwitchChange(event, event.target.checked, '13604')
-          }
-        />
-        <p>Subscribe to mail sent N 13604</p>
-      </FlexBox>
-      <FlexBox margin="20px 0 0 0">
-        {(isUnSubSucState || isSubSucState) && showNotification && (
-          <Notification type="success" show={showNotification}>
-            {isSubSucState
-              ? 'You have successfully subscribed to the newsletter'
-              : 'You have successfully unsubscribed from the newsletter'}
-          </Notification>
-        )}
-      </FlexBox>
+      ) : (
+        <SubscriptionWrapper>
+          <FlexBox alignItems="center" gap="10px">
+            <CustomSwitch
+              checked={subscriptions.includes('13600')}
+              onChange={event =>
+                handleSwitchChange(event, event.target.checked, '13600')
+              }
+            />
+            <SubscribeText>
+              Subscribe to mail sent N 13600 Subscribe to mail sent N 13600
+            </SubscribeText>
+          </FlexBox>
+          <FlexBox alignItems="center" gap="10px">
+            <CustomSwitch
+              checked={subscriptions.includes('13601')}
+              onChange={event =>
+                handleSwitchChange(event, event.target.checked, '13601')
+              }
+            />
+            <SubscribeText>
+              Subscribe to mail sent N 13601 Subscribe to mail sent N 13601
+            </SubscribeText>
+          </FlexBox>
+          <FlexBox alignItems="center" gap="10px">
+            <CustomSwitch
+              checked={subscriptions.includes('13604')}
+              onChange={event =>
+                handleSwitchChange(event, event.target.checked, '13604')
+              }
+            />
+            <SubscribeText>
+              Subscribe to mail sent N 13604 Subscribe to mail sent N 13604
+            </SubscribeText>
+          </FlexBox>
+          <FlexBox margin="20px 0 0 0">
+            {(isSubSuc || isUnSubSuc) && showNotification && (
+              <Notification type="success" show={showNotification}>
+                {isSubSuc
+                  ? 'You have successfully subscribed to the newsletter'
+                  : 'You have successfully unsubscribed from the newsletter'}
+              </Notification>
+            )}
+          </FlexBox>
+        </SubscriptionWrapper>
+      )}
     </AccountLayout>
   );
 }
