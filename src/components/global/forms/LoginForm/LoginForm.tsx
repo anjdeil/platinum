@@ -18,7 +18,11 @@ import {
   LoginFormType,
 } from '@/types/components/global/forms/LoginForm';
 
-export const LoginForm: FC = () => {
+interface LoginFormProps {
+  border?: boolean;
+}
+
+export const LoginForm: FC<LoginFormProps> = ({ border }) => {
   const router = useRouter();
   const [customError, setCustomError] = useState<string>('');
 
@@ -61,7 +65,7 @@ export const LoginForm: FC = () => {
   }
 
   return (
-    <CustomForm onSubmit={handleSubmit(onSubmit)}>
+    <CustomForm onSubmit={handleSubmit(onSubmit)} border={border}>
       <FormWrapper>
         <CustomFormInput
           fieldName="Adres e-mail"

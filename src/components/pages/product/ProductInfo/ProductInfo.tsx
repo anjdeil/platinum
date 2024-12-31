@@ -3,7 +3,7 @@ import DetailsAccordion from '@/components/global/DetailsAccordeon/DetailsAccord
 import Rating from '@/components/global/Rating/Rating';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { updateCart } from '@/store/slices/cartSlice';
-import { popupSet } from '@/store/slices/PopupSlice';
+import { popupSet, popupToggle } from '@/store/slices/PopupSlice';
 import { setData } from '@/store/slices/ProductSlice';
 import { StyledButton, Title } from '@/styles/components';
 import { ProductCardPropsType } from '@/types/components/shop';
@@ -48,7 +48,7 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
   const t = useTranslations('Product');
 
   const dispatch = useAppDispatch();
-  const { cartItems } = useAppSelector((state) => state.cartSlice);
+  const { cartItems } = useAppSelector(state => state.cartSlice);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
@@ -149,6 +149,8 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
     if (isAuthenticated) {
       updateProductState(product);
       dispatch(popupSet('add-comment'));
+    } else {
+      dispatch(popupToggle('login'));
     }
   };
 
@@ -208,8 +210,8 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
         <ShippingList />
         <StyledButton
           onClick={addComment}
-          secondary={isAuthenticated}
-          isDisabled={!isAuthenticated}
+          /*  secondary={isAuthenticated}
+          isDisabled={!isAuthenticated} */
         >
           Leave a review about product
         </StyledButton>
