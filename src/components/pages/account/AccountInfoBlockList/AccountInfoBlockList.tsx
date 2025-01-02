@@ -19,6 +19,11 @@ const AccountInfoBlockList: React.FC<AccountInfoBlockListProps> = ({
 
   const currency = useAppSelector(state => state.currencySlice);
 
+  const formatTotalAmount = (amount?: number, currencyCode?: string) => {
+    if (amount === undefined) return undefined;
+    return `${amount} ${currencyCode}`;
+  };
+
   return (
     <StyledListContainer>
       <AccountInfoBlock
@@ -30,7 +35,7 @@ const AccountInfoBlockList: React.FC<AccountInfoBlockListProps> = ({
       <AccountInfoBlock
         icon={MoneyBagIcon}
         title={t('totalOrderAmount')}
-        value={`${totalAmount?.toString()} ${currency.code}`}
+        value={formatTotalAmount(totalAmount, currency.code)}
         background={theme.background.infoGradient}
       />
       <AccountInfoBlock
