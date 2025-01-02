@@ -1,8 +1,10 @@
-import { ProductCardListProps } from "@/types/components/shop";
-import { FC } from "react";
-import ProductCard from "../product/ProductCard/ProductCard";
-import { ProductCardListSkeleton } from "./ProductCardListSkeleton";
-import { StyledProductCardList } from "./styles";
+import { ProductCardListProps } from '@/types/components/shop';
+import { FC, useEffect, useState } from 'react';
+import ProductCard from '../product/ProductCard/ProductCard';
+import { ProductCardListSkeleton } from './ProductCardListSkeleton';
+import { StyledProductCardList } from './styles';
+import { getCookieValue } from '@/utils/auth/getCookieValue';
+import { useAppSelector } from '@/store';
 
 export const ProductCardList: FC<ProductCardListProps> = ({
   isLoading = false,
@@ -11,6 +13,23 @@ export const ProductCardList: FC<ProductCardListProps> = ({
   columns,
   length,
 }) => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { isAuthenticated: isAuthSlice } = useAppSelector(
+    state => state.userSlice
+  );
+  useEffect(() => {
+    console.log(isAuthSlice);
+
+    const checkAuth = () => {
+      const cookies = document.cookie;
+
+      const authToken = getCookieValue(cookies || '', 'authToken');
+      setIsAuthenticated(!!authToken);
+    };
+
+    checkAuth();
+  }, [isAuthSlice]);
+
   if (isLoading) {
     return <ProductCardListSkeleton columns={columns} length={length} />;
   }
@@ -26,7 +45,11 @@ export const ProductCardList: FC<ProductCardListProps> = ({
       desktopColumns={columns?.desktopColumns}
     >
       {products?.map((product, i) => (
-        <ProductCard key={product.id} product={product} />
+        <ProductCard
+          key={product.id}
+          product={product}
+          isAuthenticated={isAuthenticated}
+        />
       ))}
     </StyledProductCardList>
   );

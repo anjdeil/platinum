@@ -17,7 +17,7 @@ const LoginPopup: React.FC<SwiperPopupProps> = ({ onClose }) => {
         <FlexBox justifyContent="flex-end" padding="0 32px">
           <CloseIcon onClick={onClose} />
         </FlexBox>
-        <LoginForm border={false} />
+        <LoginForm redirect={false} border={false} />
       </PopupBody>
     </PopupOverlay>
   );

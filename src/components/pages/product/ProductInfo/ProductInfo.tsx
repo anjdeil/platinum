@@ -50,18 +50,20 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
   const dispatch = useAppDispatch();
   const { cartItems } = useAppSelector(state => state.cartSlice);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { isAuthenticated: isAuthSlice } = useAppSelector(
+    state => state.userSlice
+  );
 
   useEffect(() => {
     const checkAuth = () => {
       const cookies = document.cookie;
 
       const authToken = getCookieValue(cookies || '', 'authToken');
-
       setIsAuthenticated(!!authToken);
     };
 
     checkAuth();
-  }, []);
+  }, [isAuthSlice]);
 
   const sizeList = ['M', 'L', 'XL'];
 
@@ -154,10 +156,23 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
     }
   };
 
+  function handleFavorite() {
+    if (isAuthenticated) {
+      console.log('Authenticated');
+
+      //from Cart-loyaliti (wishlist)
+    } else {
+      dispatch(popupToggle('login'));
+    }
+  }
+
   return (
     <ProductWrapper>
       <ProductImageWrapper>
-        <ProductSwiper data={testimages || []} />
+        <ProductSwiper
+          handleFavorite={handleFavorite}
+          data={testimages || []}
+        />
       </ProductImageWrapper>
       <ProductTitleWrapper>
         <Title as="h1" uppercase textalign="left">

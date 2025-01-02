@@ -17,15 +17,18 @@ import {
   LoginFormSchema,
   LoginFormType,
 } from '@/types/components/global/forms/LoginForm';
+import { setAuthState } from '@/store/slices/userSlice';
+import { useAppDispatch } from '@/store';
 
 interface LoginFormProps {
   border?: boolean;
+  redirect?: boolean;
 }
 
-export const LoginForm: FC<LoginFormProps> = ({ border }) => {
+export const LoginForm: FC<LoginFormProps> = ({ border, redirect = true }) => {
   const router = useRouter();
   const [customError, setCustomError] = useState<string>('');
-
+  const dispatch = useAppDispatch();
   /** Form settings */
   const {
     register,
@@ -56,7 +59,11 @@ export const LoginForm: FC<LoginFormProps> = ({ border }) => {
       /** Validate auth token */
       const isTokenValid = await checkToken({});
       if (!isTokenValid) throw new Error('Auth token validation failed.');
-      router.push('/my-account');
+      dispatch(setAuthState(true));
+
+      if (redirect) {
+        router.push('/my-account');
+      }
     } catch (err) {
       if (err instanceof Error) setCustomError(err.message);
     } finally {

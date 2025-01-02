@@ -1,9 +1,14 @@
-import styled from "@emotion/styled";
+import styled from '@emotion/styled';
 
-export const StyledIconButton = styled.button`
+interface StyledIconButtonProps {
+  marginLeft?: string;
+}
+
+export const StyledIconButton = styled.button<StyledIconButtonProps>`
   background-color: transparent;
   border: none;
   display: flex;
   cursor: pointer;
   position: relative;
+  margin-left: ${({ marginLeft = '0' }) => marginLeft};
 `;

@@ -1,5 +1,5 @@
-import { ProductSchema } from "@/types/pages/shop";
-import { z } from "zod";
+import { ProductSchema } from '@/types/pages/shop';
+import { boolean, z } from 'zod';
 
 export const CommonTextPropsSchema = z.object({
   fontSize: z.string().optional(),
@@ -12,6 +12,7 @@ export const CommonTextPropsSchema = z.object({
 
 export const ProductCardPropsTypeShema = z.object({
   product: ProductSchema,
+  isAuthenticated: z.boolean(),
 });
 
 export type CommonTextProps = z.infer<typeof CommonTextPropsSchema>;
