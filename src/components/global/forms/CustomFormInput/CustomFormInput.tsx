@@ -44,7 +44,7 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
   );
 
   const [isError, setError] = useState(false);
-
+  const [isTouched, setIsTouched] = useState(false);
   useEffect(() => {
     if (!errors || !name) {
       console.error("Either 'errors' or 'name' is undefined");
@@ -56,10 +56,18 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
 
   useEffect(() => {
     if (defaultValue && defaultValue !== '' && setValue) {
-      setValue(name, defaultValue, { shouldValidate: true });
+      setValue(name, defaultValue, { shouldValidate: false });
     }
   }, [defaultValue, setValue, name]);
 
+  const handleChange = (inputValue: any) => {
+    if (setValue) {
+      setValue(name, inputValue, { shouldValidate: isTouched });
+    }
+    if (!isTouched) {
+      setIsTouched(true);
+    }
+  };
   return (
     <CustomInputContainer isCheckbox={inputType === 'checkbox'} width={width}>
       <CustomInputStyle
@@ -83,11 +91,7 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
             <StyledPhoneInput
               defaultCountry="pl"
               value={value || defaultValue}
-              onChange={(phoneValue: any) => {
-                if (setValue) {
-                  setValue(name, phoneValue, { shouldValidate: false });
-                }
-              }}
+              onChange={handleChange}
             />
           ) : (
             <Input
