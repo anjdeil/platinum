@@ -36,9 +36,8 @@ export const getServerSideProps: GetServerSideProps = async ({
       const searchParamsString = sanitizeSearchParams(params);
       return {
         redirect: {
-          destination: `${locale === "en" ? "" : `/${locale}`}/product-category/${newPath}${
-            searchParamsString ? `?${searchParamsString}` : ""
-          }`,
+          destination: `${locale === "en" ? "" : `/${locale}`}/product-category/${newPath}${searchParamsString ? `?${searchParamsString}` : ""
+            }`,
           permanent: false,
         },
       };

@@ -1,4 +1,5 @@
 import {
+  CurrenciesResponseType,
   CustomDataCategoriesType,
   CustomDataMenuResponseType,
   CustomDataPostsType,
@@ -52,6 +53,11 @@ export const wpCustomRtkApi = createApi({
         url: `/theme-options`,
       }),
     }),
+    getCurrencies: builder.query<CurrenciesResponseType, void>({
+      query: () => ({
+        url: `/currencies`,
+      }),
+    }),
     getProductsMinimized: builder.mutation<CustomDataProductsMinimizedResponseType, CartItem[]>({
       query: (cartItems) => ({
         url: `/products/minimized`,
@@ -76,6 +82,7 @@ export const {
   useGetProductQuery,
   useGetProductReviewsQuery,
   useGetThemeOptionsQuery,
+  useGetCurrenciesQuery,
   useGetProductsMinimizedMutation,
   useGetPostsQuery,
 } = wpCustomRtkApi;
