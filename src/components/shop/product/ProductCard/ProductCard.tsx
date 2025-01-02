@@ -4,6 +4,7 @@ import Rating from '@/components/global/Rating/Rating';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { updateCart } from '@/store/slices/cartSlice';
 import { ProductCardPropsType } from '@/types/components/shop';
+import { CircularProgress } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -25,12 +26,16 @@ import { popupToggle } from '@/store/slices/PopupSlice';
 
 const ProductCard: React.FC<ProductCardPropsType> = ({
   product,
+  currency,
   isAuthenticated,
 }) => {
   const t = useTranslations('Product');
+
   const router = useRouter();
+
   const dispatch = useAppDispatch();
   const { cartItems } = useAppSelector(state => state.cartSlice);
+
   const [isCartMatch, setIsCartMatch] = useState(false);
 
   useEffect(() => {
@@ -86,10 +91,26 @@ const ProductCard: React.FC<ProductCardPropsType> = ({
             {product.name}
           </StyledLink>
           <PriceWrapper>
-            {product.min_price !== product.max_price && (
-              <ProductMaxPrice>{product.max_price} zl</ProductMaxPrice>
+            {currency.rate ? (
+              <>
+                {product.min_price !== null &&
+                  product.max_price !== null &&
+                  product.min_price !== product.max_price && (
+                    <ProductMaxPrice>
+                      {(product.max_price * currency.rate).toFixed(2)}{' '}
+                      {currency.code}
+                    </ProductMaxPrice>
+                  )}
+                {product.min_price !== null && (
+                  <ProductPrice>
+                    {(product.min_price * currency.rate).toFixed(2)}{' '}
+                    {currency.code}
+                  </ProductPrice>
+                )}
+              </>
+            ) : (
+              <CircularProgress size={20} />
             )}
-            <ProductPrice>{product.min_price} zl</ProductPrice>
           </PriceWrapper>
         </TitleWrapper>
         <ProductBadgeWrapper>

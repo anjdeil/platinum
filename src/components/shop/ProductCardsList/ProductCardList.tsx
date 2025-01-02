@@ -5,6 +5,7 @@ import { ProductCardListSkeleton } from './ProductCardListSkeleton';
 import { StyledProductCardList } from './styles';
 import { getCookieValue } from '@/utils/auth/getCookieValue';
 import { useAppSelector } from '@/store';
+import { useGetCurrenciesQuery } from '@/store/rtk-queries/wpCustomApi';
 
 export const ProductCardList: FC<ProductCardListProps> = ({
   isLoading = false,
@@ -38,6 +39,22 @@ export const ProductCardList: FC<ProductCardListProps> = ({
     return <p>We cannot get the products</p>;
   }
 
+  const { data: currencies, isLoading: isCurrenciesLoading } =
+    useGetCurrenciesQuery();
+  const selectedCurrency = useAppSelector(state => state.currencySlice);
+
+  const currentCurrency =
+    currencies && !isCurrenciesLoading
+      ? currencies?.data?.items.find(
+          currency => currency.code === selectedCurrency.name
+        )
+      : undefined;
+
+  const extendedCurrency = {
+    ...selectedCurrency,
+    rate: currentCurrency ? currentCurrency.rate || 1 : undefined,
+  };
+
   return (
     <StyledProductCardList
       mobileColumns={columns?.mobileColumns}
@@ -49,6 +66,7 @@ export const ProductCardList: FC<ProductCardListProps> = ({
           key={product.id}
           product={product}
           isAuthenticated={isAuthenticated}
+          currency={extendedCurrency}
         />
       ))}
     </StyledProductCardList>

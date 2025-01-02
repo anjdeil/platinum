@@ -3,10 +3,12 @@ import Reviews from '@/components/global/reviews/Reviews/Reviews';
 import CustomProductList from '@/components/pages/product/CustomProductList/CustomProductList';
 import ProductInfo from '@/components/pages/product/ProductInfo/ProductInfo';
 import { customRestApi } from '@/services/wpCustomApi';
+import { getCookieValue } from '@/utils/auth/getCookieValue';
+import { useAppSelector } from '@/store';
+import { useGetCurrenciesQuery } from '@/store/rtk-queries/wpCustomApi';
 import { Container } from '@/styles/components';
 import { BreadcrumbType } from '@/types/components/global/breadcrumbs';
 import { ProductPageType } from '@/types/pages/product';
-import { getCookieValue } from '@/utils/auth/getCookieValue';
 import { validateCustomSingleProduct } from '@/utils/zodValidators/validateCustomSingleProduct';
 import { Box } from '@mui/material';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
@@ -53,6 +55,23 @@ export default function ProductPage({ res }: ProductPageType) {
 
     checkAuth();
   }, []);
+
+  const { data: currencies, isLoading: isCurrenciesLoading } =
+    useGetCurrenciesQuery();
+  const selectedCurrency = useAppSelector(state => state.currencySlice);
+
+  const currentCurrency =
+    currencies && !isCurrenciesLoading
+      ? currencies?.data?.items.find(
+          currency => currency.code === selectedCurrency.name
+        )
+      : undefined;
+
+  const extendedCurrency = {
+    ...selectedCurrency,
+    rate: currentCurrency ? currentCurrency.rate || 1 : undefined,
+  };
+
   useEffect(() => {
     const links = product.categories.map(item => ({
       name: item.name,
@@ -85,7 +104,11 @@ export default function ProductPage({ res }: ProductPageType) {
           <Breadcrumbs links={breadcrumbsLinks} />
         </Box>
         {product && (
-          <ProductInfo isAuthenticated={isAuthenticated} product={product} />
+          <ProductInfo
+            isAuthenticated={isAuthenticated}
+            product={product}
+            currency={extendedCurrency}
+          />
         )}
         <CustomProductList
           title="recommendProduct"
