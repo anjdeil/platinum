@@ -1,8 +1,11 @@
 import AccountInfoBlockList from '@/components/pages/account/AccountInfoBlockList/AccountInfoBlockList';
 import AccountLayout from '@/components/pages/account/AccountLayout';
 import AccountLinkBlockList from '@/components/pages/account/AccountLinkBlockList/AccountLinkBlockList';
+import OrderTable from '@/components/pages/order/OrderTable/OrderTable';
 import { transformOrders } from '@/services/transformers/transformOrders';
+import { useAppSelector } from '@/store';
 import { useFetchOrdersQuery } from '@/store/rtk-queries/wooCustomApi';
+import { useGetCurrenciesQuery } from '@/store/rtk-queries/wpCustomApi';
 import { setUser } from '@/store/slices/userSlice';
 import { AccountInfoWrapper } from '@/styles/components';
 import { saveUserToLocalStorage } from '@/utils/auth/userLocalStorage';
@@ -62,6 +65,9 @@ interface MyAccountPropsType {
 
 const MyAccount: FC<MyAccountPropsType> = ({ user }) => {
   const t = useTranslations('MyAccount');
+  const { data: currencies, isLoading: isCurrenciesLoading } =
+    useGetCurrenciesQuery();
+  const selectedCurrency = useAppSelector(state => state.currencySlice.name);
 
   const dispatch = useDispatch();
 
@@ -78,7 +84,7 @@ const MyAccount: FC<MyAccountPropsType> = ({ user }) => {
 
   const { data: ordersData } = useFetchOrdersQuery({
     customer: user.id,
-    per_page: 5,
+    per_page: 100,
   });
 
   const translatedAccountLinkList = accountLinkList.map(
@@ -88,7 +94,10 @@ const MyAccount: FC<MyAccountPropsType> = ({ user }) => {
     })
   );
 
-  const { orderCount, totalAmount } = transformOrders(ordersData || []);
+  const { orderCount, totalAmountPLN, totalAmount } =
+    currencies && ordersData
+      ? transformOrders(ordersData, currencies, selectedCurrency)
+      : { orderCount: undefined, totalAmount: undefined };
 
   return (
     <AccountLayout title={t('clientPersonalAccount')}>
@@ -100,7 +109,7 @@ const MyAccount: FC<MyAccountPropsType> = ({ user }) => {
         />
         <AccountLinkBlockList list={translatedAccountLinkList} />
       </AccountInfoWrapper>
-      {/* <OrderTable orderList={ordersData} title={t("recentOrders")} /> */}
+      <OrderTable orderList={ordersData} title={t('recentOrders')} />
     </AccountLayout>
   );
 };

@@ -1,22 +1,22 @@
 import { FC, useState } from 'react';
 import { CustomForm, FormWrapperBottom } from '../RegistrationForm/styles';
 
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import {
   useCheckTokenMutation,
   useGetTokenMutation,
 } from '@/store/rtk-queries/wpApi';
-import { CustomError } from '../CustomFormInput/styles';
-import { CustomFormInput } from '../CustomFormInput';
-import { FormWrapper } from './styles';
 import { StyledButton } from '@/styles/components';
 import theme from '@/styles/theme';
-import { useRouter } from 'next/router';
 import {
   LoginFormSchema,
   LoginFormType,
 } from '@/types/components/global/forms/LoginForm';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/router';
+import { useForm } from 'react-hook-form';
+import { CustomFormInput } from '../CustomFormInput';
+import { CustomError } from '../CustomFormInput/styles';
+import { FormWrapper } from './styles';
 
 export const LoginForm: FC = () => {
   const router = useRouter();

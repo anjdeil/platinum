@@ -1,9 +1,9 @@
-import { Container } from '@/styles/components';
-import Head from 'next/head';
-import { GetServerSidePropsContext } from 'next';
-import wpRestApi from '@/services/wpRestApi';
 import { LoginForm } from '@/components/global/forms/LoginForm';
 import { FormContainer } from '@/components/pages/account/styles';
+import wpRestApi from '@/services/wpRestApi';
+import { Container } from '@/styles/components';
+import { GetServerSidePropsContext } from 'next';
+import Head from 'next/head';
 
 export default function Login() {
   return (

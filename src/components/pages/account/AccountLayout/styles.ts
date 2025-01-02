@@ -2,10 +2,11 @@ import { Container } from "@/styles/components";
 import styled from "@emotion/styled";
 
 export const AccountContainer = styled(Container)`
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 16px;
-  margin-top: 24px;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+    margin-bottom: 24px;
 
   @media ${({ theme }) => theme.media.medium} {
     grid-template-columns: 1fr;
