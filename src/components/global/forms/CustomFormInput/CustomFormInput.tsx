@@ -56,7 +56,7 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
 
   useEffect(() => {
     if (defaultValue && defaultValue !== '' && setValue) {
-      setValue(name, defaultValue, { shouldValidate: false });
+      setValue(name, defaultValue, { shouldValidate: true });
     }
   }, [defaultValue, setValue, name]);
 
