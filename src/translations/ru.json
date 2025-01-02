@@ -77,7 +77,8 @@
     "successUpdate": "Ваш профиль был успешно обновлён",
     "YourAccountHasBeenCreated": "Ваш аккаунт успешно создан!",
     "ForgotYourPassword": "Забыли пароль?",
-    "SuccessfullyLoggedIn": "Успешно вошли в систему!"
+    "SuccessfullyLoggedIn": "Успешно вошли в систему!",
+    "ErrorLoggedIn": "Неправильная электронная почта или пароль. Пожалуйста, попробуйте снова."
   },
   "TopBar": {
     "CallUs": "Позвоните нам"

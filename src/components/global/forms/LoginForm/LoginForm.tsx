@@ -17,6 +17,7 @@ import { FlexBox, StyledButton, Title } from '@/styles/components';
 import theme from '@/styles/theme';
 import { useRouter } from 'next/router';
 import { useTranslations } from 'next-intl';
+import Notification from '../../Notification/Notification';
 
 export const LoginForm: FC = () => {
   const router = useRouter();
@@ -92,15 +93,7 @@ export const LoginForm: FC = () => {
         >
           {t('login')}
         </StyledButton>
-        <StyledButton
-          color={theme.colors.black}
-          disabled={isSubmitting}
-          onSubmit={() => {
-            router.push('/my-account');
-          }}
-        >
-          {t('register')}
-        </StyledButton>
+
         <FlexBox margin="10px 0 0 0" justifyContent="space-between">
           <ActiveText href="/my-account/">{t('ForgotYourPassword')}</ActiveText>
           <FlexBox gap="5px">
@@ -111,7 +104,11 @@ export const LoginForm: FC = () => {
           </FlexBox>
         </FlexBox>
 
-        {customError && <CustomError>{customError}</CustomError>}
+        {customError && (
+          <Notification marginBottom="0" type="warning">
+            {t('ErrorLoggedIn')}
+          </Notification>
+        )}
         {isSubmitSuccessful && !customError && !isLoading && (
           <CustomSuccess>{t('SuccessfullyLoggedIn')}</CustomSuccess>
         )}

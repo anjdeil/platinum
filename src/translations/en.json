@@ -77,7 +77,8 @@
     "successUpdate": "Your profile has been successfully updated",
     "YourAccountHasBeenCreated": "Your account has been created successfully!",
     "ForgotYourPassword": "Forgot your password?",
-    "SuccessfullyLoggedIn": "Successfully logged in!"
+    "SuccessfullyLoggedIn": "Successfully logged in!",
+    "ErrorLoggedIn": "Incorrect email or password. Please try again."
   },
   "TopBar": {
     "CallUs": "Call us"

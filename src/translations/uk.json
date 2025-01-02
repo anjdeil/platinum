@@ -77,7 +77,8 @@
     "successUpdate": "Ваш профіль був успішно оновлений",
     "YourAccountHasBeenCreated": "Ваш акаунт успішно створено!",
     "ForgotYourPassword": "Забули пароль?",
-    "SuccessfullyLoggedIn": "Успішно увійшли в систему!"
+    "SuccessfullyLoggedIn": "Успішно увійшли в систему!",
+    "ErrorLoggedIn": "Неправильна електронна пошта або пароль. Будь ласка, спробуйте ще раз."
   },
   "TopBar": {
     "CallUs": "Зателефонуйте нам"

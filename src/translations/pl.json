@@ -77,7 +77,8 @@
     "successUpdate": "Twój profil został pomyślnie zaktualizowany",
     "YourAccountHasBeenCreated": "Twoje konto zostało pomyślnie utworzone!",
     "ForgotYourPassword": "Zapomniałeś hasła?",
-    "SuccessfullyLoggedIn": "Pomyślnie zalogowano!"
+    "SuccessfullyLoggedIn": "Pomyślnie zalogowano!",
+    "ErrorLoggedIn": "Nieprawidłowy e-mail lub hasło. Spróbuj ponownie."
   },
   "TopBar": {
     "CallUs": "Zadzwoń do nas"

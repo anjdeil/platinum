@@ -36,7 +36,7 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
   const registerProps = register ? { ...register(name) } : {};
 
   const [isPasswordVisible, setPasswordVisible] = useState(false);
-  const togglePasswordVisibility = () => setPasswordVisible((prev) => !prev);
+  const togglePasswordVisibility = () => setPasswordVisible(prev => !prev);
   const passwordImagePath = useMemo(
     () =>
       isPasswordVisible ? '/images/show-pass.svg' : '/images/hidden-pass.svg',
@@ -85,7 +85,7 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
               value={value || defaultValue}
               onChange={(phoneValue: any) => {
                 if (setValue) {
-                  setValue(name, phoneValue, { shouldValidate: true });
+                  setValue(name, phoneValue, { shouldValidate: false });
                 }
               }}
             />
@@ -98,8 +98,8 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
                 isPasswordVisible
                   ? 'text'
                   : inputType === 'newpassword'
-                  ? 'password'
-                  : inputType
+                    ? 'password'
+                    : inputType
               }
               {...registerProps}
               height={height}
@@ -110,16 +110,17 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
               disabled={disabled}
             />
           )}
-          {inputType === 'password' && (
-            <ShowPasswordImage
-              src={passwordImagePath}
-              alt={'show or hidden password button'}
-              width={24}
-              height={24}
-              onClick={togglePasswordVisibility}
-              unoptimized={true}
-            />
-          )}
+          {inputType === 'password' ||
+            (inputType === 'newpassword' && (
+              <ShowPasswordImage
+                src={passwordImagePath}
+                alt={'show or hidden password button'}
+                width={24}
+                height={24}
+                onClick={togglePasswordVisibility}
+                unoptimized={true}
+              />
+            ))}
         </CustomInputWrapper>
       </CustomInputStyle>
       {isError && name && <CustomError>{errors[name]?.message}</CustomError>}
