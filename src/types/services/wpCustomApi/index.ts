@@ -82,7 +82,7 @@ export const CurrenciesResponseSchema = z.object({
   data: z.object({
     items: z.array(CurrencyItemSchema),
   }),
-});
+})
 
 export const CustomDataProductsStatisticSchema = z.object({
   products_count: z.number(),

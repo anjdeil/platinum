@@ -12,6 +12,7 @@ import { ProductType } from '@/types/pages/shop';
 import { CartItem } from '@/types/store/reducers/сartSlice';
 import { getCookieValue } from '@/utils/auth/getCookieValue';
 import { getCurrentVariation } from '@/utils/getCurrentVariation';
+import { CircularProgress } from '@mui/material';
 import ReactHtmlParser from 'html-react-parser';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
@@ -35,7 +36,7 @@ import {
   ProductWrapper,
 } from './styles';
 
-const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
+const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
   const {
     name,
     stock_quantity,
@@ -48,7 +49,7 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
   const t = useTranslations('Product');
 
   const dispatch = useAppDispatch();
-  const { cartItems } = useAppSelector((state) => state.cartSlice);
+  const { cartItems } = useAppSelector(state => state.cartSlice);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
@@ -172,12 +173,26 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
             ))}
           <Rating rating={product.average_rating} />
         </ProductFlexWrapper>
-        {currentVariation && <ProductPrice minPrice={currentVariation.price} />}
-        {!currentVariation && (
-          <ProductPrice
-            minPrice={product.min_price}
-            maxPrice={product.max_price}
-          />
+        {currency.rate ? (
+          currentVariation ? (
+            currentVariation.price !== null && (
+              <ProductPrice
+                currency={currency}
+                minPrice={currentVariation.price * currency.rate}
+              />
+            )
+          ) : (
+            product.min_price !== null &&
+            product.max_price !== null && (
+              <ProductPrice
+                currency={currency}
+                minPrice={product.min_price * currency.rate}
+                maxPrice={product.max_price * currency.rate}
+              />
+            )
+          )
+        ) : (
+          <CircularProgress size={20} />
         )}
       </ProductTitleWrapper>
       <ProductInfoWrapper>
@@ -194,7 +209,7 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
         <AddToBasketWrapper>
           <ProductQuantity quantity={quantity} onChange={setQuantity} />
 
-          {stock_quantity !== null && stock_quantity > 0 ? (
+          {stockQuantity !== null && stockQuantity > 0 ? (
             <AddToBasketButton maxWidth="309px" onClick={handleCartButtonClick}>
               {renderCartButtonInnerText()}
             </AddToBasketButton>
