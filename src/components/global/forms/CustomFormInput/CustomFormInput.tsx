@@ -44,7 +44,7 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
   );
 
   const [isError, setError] = useState(false);
-  const [isTouched, setIsTouched] = useState(false);
+
   useEffect(() => {
     if (!errors || !name) {
       console.error("Either 'errors' or 'name' is undefined");
@@ -62,10 +62,13 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
 
   const handleChange = (inputValue: any) => {
     if (setValue) {
-      setValue(name, inputValue, { shouldValidate: isTouched });
+      setValue(name, inputValue, { shouldValidate: false });
     }
-    if (!isTouched) {
-      setIsTouched(true);
+  };
+
+  const handleBlur = (inputValue: any) => {
+    if (setValue) {
+      setValue(name, inputValue, { shouldValidate: true });
     }
   };
   return (
@@ -92,6 +95,7 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
               defaultCountry="pl"
               value={value || defaultValue}
               onChange={handleChange}
+              onBlur={e => handleBlur(e.target.value)}
             />
           ) : (
             <Input
@@ -109,7 +113,9 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
               height={height}
               background={background}
               isCheckbox={inputType === 'checkbox'}
-              autoComplete={inputType === 'newpassword' && 'new-password'}
+              autoComplete={
+                inputType === 'newpassword' ? 'new-password' : undefined
+              }
               {...(name === 'country' ? { list: list } : {})}
               disabled={disabled}
             />

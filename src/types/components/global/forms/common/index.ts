@@ -11,12 +11,22 @@ export const postSchemaOptional = (t: any) =>
 export const phoneNumberValidation = (t: any) =>
   z
     .string()
-    .refine(value => !value || value.trim().length >= 7, {
-      message: t('minChar', { count: 7 }),
-    })
-    .refine(value => !value || /^[+]?[0-9]+$/.test(value), {
-      message: t('InvalidPhoneNumber'),
-    });
+    .refine(
+      value => {
+        return !value || value.trim().length >= 13;
+      },
+      {
+        message: t('InvalidPhoneNumber'),
+      }
+    )
+    .refine(
+      value => {
+        return !value || /^[+]?[0-9\s-]{9,15}$/.test(value.trim());
+      },
+      {
+        message: t('InvalidPhoneNumber'),
+      }
+    );
 
 export const optionalPhoneNumberValidation = (t: any, message: string) =>
   z

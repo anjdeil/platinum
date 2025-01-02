@@ -1,7 +1,6 @@
 import React from 'react';
 import { Controller, Control } from 'react-hook-form';
-import Select from 'react-select';
-
+import dynamic from 'next/dynamic';
 import theme from '@/styles/theme';
 import { useTranslations } from 'next-intl';
 import { CustomSelectInput } from './styles';
@@ -20,6 +19,8 @@ interface CustomSelectProps {
   defaultValue?: string;
 }
 
+const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
+
 const CustomCountrySelect: React.FC<CustomSelectProps> = ({
   name,
   control,
@@ -30,18 +31,20 @@ const CustomCountrySelect: React.FC<CustomSelectProps> = ({
   defaultValue,
 }) => {
   const tValidation = useTranslations('Validation');
-
+  if (typeof window !== 'undefined') {
+  }
   return (
     <CustomSelectInput>
       <label>{label}</label>
       <CustomRequired>*</CustomRequired>
+
       <Controller
         name={name}
         control={control}
         rules={rules}
         defaultValue={defaultValue}
         render={({ field }) => (
-          <Select
+          <DynamicSelect
             {...field}
             id={name}
             options={options}
