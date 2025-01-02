@@ -1,6 +1,7 @@
 import LoyaltyIcon from '@/components/global/icons/LoyaltyIcon/LoyaltyIcon';
 import MoneyBagIcon from '@/components/global/icons/MoneyBagIcon/MoneyBagIcon';
 import OrderIcon from '@/components/global/icons/OrderIcon/OrderIcon';
+import { useAppSelector } from '@/store';
 import { AccountInfoBlockListProps } from '@/types/pages/account';
 import { MIN_TOTAL_TO_SILVER } from '@/utils/consts';
 import { useTheme } from '@emotion/react';
@@ -16,6 +17,8 @@ const AccountInfoBlockList: React.FC<AccountInfoBlockListProps> = ({
   const t = useTranslations('MyAccount');
   const theme = useTheme();
 
+  const currency = useAppSelector(state => state.currencySlice);
+
   return (
     <StyledListContainer>
       <AccountInfoBlock
@@ -27,7 +30,7 @@ const AccountInfoBlockList: React.FC<AccountInfoBlockListProps> = ({
       <AccountInfoBlock
         icon={MoneyBagIcon}
         title={t('totalOrderAmount')}
-        value={totalAmount?.toString()}
+        value={`${totalAmount?.toString()} ${currency.code}`}
         background={theme.background.infoGradient}
       />
       <AccountInfoBlock
