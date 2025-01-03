@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CustomFormInput } from '../CustomFormInput';
@@ -15,19 +15,19 @@ import {
   ChangeShippingFormSchema,
   ChangeShippingFormType,
 } from '@/types/components/global/forms/changeShippingForm';
+import { z } from 'zod';
+import { ChangePasswordFormSchema } from '@/types/components/global/forms/changePasswordForm';
+import { useTranslations } from 'next-intl';
 
 export const ChangePasswordForm: FC = () => {
   const [customError, setCustomError] = useState<string>('');
+  const tValidation = useTranslations('Validation');
 
-  /** API
-   * Update customer info
-   */
   const [updateCustomerMutation, { error }] = useUpdateCustomerInfoMutation();
 
-  /**
-   * Form settings
-   * Add default values
-   */
+  const formSchema = useMemo(() => ChangePasswordFormSchema(tValidation), []);
+  type ChangePasswordFormType = z.infer<typeof formSchema>;
+
   const {
     register,
     handleSubmit,
@@ -78,7 +78,6 @@ export const ChangePasswordForm: FC = () => {
       </FormWrapper>
       <FormWrapperBottom>
         <StyledButton
-          backgroundColor={theme.background.main}
           hoverBackgroundColor={theme.background.hover}
           color={theme.colors.white}
           type="submit"
