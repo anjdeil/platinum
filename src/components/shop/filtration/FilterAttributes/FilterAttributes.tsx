@@ -15,17 +15,13 @@ export const FilterAttributes: FC<FilterAttributesPropsType> = ({
       <FilterAttributesWrap>
         {attribute.options.map((option, i) => {
           return (
-            <>
-              <FilterButton
-                key={option.id + i}
-                onClick={() =>
-                  onParamsChange(attribute.slug, option.slug, true)
-                }
-                active={currentAttribute.includes(option.slug)}
-              >
-                {option.name}
-              </FilterButton>
-            </>
+            <FilterButton
+              key={option.id + i}
+              onClick={() => onParamsChange(attribute.slug, option.slug, true)}
+              active={currentAttribute.includes(option.slug)}
+            >
+              {option.name}
+            </FilterButton>
           );
         })}
       </FilterAttributesWrap>

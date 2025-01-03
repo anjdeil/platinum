@@ -79,15 +79,24 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
     const url = new URL(router.asPath, window.location.origin);
     const params = new URLSearchParams(url.search);
 
-    for (let param of params.keys()) {
-      const value = params.get(param);
+    params.forEach((value, key) => {
       const valuesArray = value
         ? value.split(',').map(item => item.trim())
         : [];
       updateChosenAttributes({
-        key: param,
+        key,
         paramValue: valuesArray,
         isPrefix: false,
+      });
+    });
+
+    // Инициализация priceRange из URL
+    const minPriceParam = params.get('min_price');
+    const maxPriceParam = params.get('max_price');
+    if (minPriceParam && maxPriceParam) {
+      setPriceRange({
+        min: parseFloat(minPriceParam),
+        max: parseFloat(maxPriceParam),
       });
     }
   }, []);
@@ -157,93 +166,8 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
       query: { slugs },
     });
     setChosenAttributes(new Map());
-  }, [chosenAttributes]);
-
-  /** Reset color params */
-  // const onResetColor = useCallback(() => {
-  //   const { slugs, ...params } = router.query;
-  //   const newQuery: Record<string, string | string[]> = slugs ? { slugs } : {};
-
-  //   Object.keys(params).forEach(key => {
-  //     if (!key.startsWith('pa_colour')) {
-  //       if (params[key] !== undefined) {
-  //         newQuery[key] = params[key];
-  //       }
-  //     }
-  //   });
-
-  //   router.replace({
-  //     pathname: router.pathname,
-  //     query: newQuery,
-  //   });
-
-  //   const newChosenAttributes = new Map(chosenAttributes);
-  //   newChosenAttributes.delete('pa_colour');
-  //   setChosenAttributes(newChosenAttributes);
-  // }, [chosenAttributes, router.query]);
-
-  const updateMinPrice = useCallback(
-    (newValue: number) => {
-      if (
-        newValue !== priceRange.min &&
-        newValue >= 0 &&
-        newValue <= maxPrice &&
-        newValue <= priceRange.max // Убедимся, что min <= max
-      ) {
-        setPriceRange(prev => ({ ...prev, min: newValue }));
-        setChosenAttributes(prev => {
-          const updatedAttributes = new Map(prev);
-          updatedAttributes.set('min_price', new Set([newValue.toString()]));
-          return updatedAttributes;
-        });
-      }
-    },
-    [priceRange, maxPrice]
-  );
-
-  const updateMaxPrice = useCallback(
-    (newValue: number) => {
-      if (
-        newValue !== priceRange.max &&
-        newValue >= 0 &&
-        newValue <= maxPrice &&
-        newValue >= priceRange.min // Убедимся, что max >= min
-      ) {
-        setPriceRange(prev => ({ ...prev, max: newValue }));
-        setChosenAttributes(prev => {
-          const updatedAttributes = new Map(prev);
-          updatedAttributes.set('max_price', new Set([newValue.toString()]));
-          return updatedAttributes;
-        });
-      }
-    },
-    [priceRange, maxPrice]
-  );
-
-  // /** Reset price params */
-  // const onResetPrice = useCallback(() => {
-  //   const { slugs, ...params } = router.query;
-  //   const newQuery: Record<string, string | string[]> = slugs ? { slugs } : {};
-
-  //   // Remove price parameters
-  //   Object.keys(params).forEach(key => {
-  //     if (key !== 'min_price' && key !== 'max_price') {
-  //       if (params[key] !== undefined) {
-  //         newQuery[key] = params[key];
-  //       }
-  //     }
-  //   });
-
-  //   router.replace({
-  //     pathname: router.pathname,
-  //     query: newQuery,
-  //   });
-
-  //   // Resetting the price values ​​in the state
-  //   setPriceRange({ min: minPrice, max: maxPrice });
-  //   updateCurrentParams('min_price', minPrice, false);
-  //   updateCurrentParams('max_price', maxPrice, false);
-  // }, [minPrice, maxPrice, router.query, updateCurrentParams]);
+    setPriceRange({ min: minPrice, max: maxPrice });
+  }, [router.query, minPrice, maxPrice]);
 
   /** Reset specific params */
   const onResetParams = useCallback(
@@ -308,68 +232,45 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
     },
     [chosenAttributes, router.query, minPrice, maxPrice, updateCurrentParams]
   );
-  // const onResetParams = useCallback(
-  //   (type: 'color' | 'price' | 'attributes') => {
-  //     const { slugs, ...params } = router.query;
-  //     const newQuery: Record<string, string | string[]> = slugs
-  //       ? { slugs }
-  //       : {};
 
-  //     // Remove parameters depending on the type
-  //     Object.keys(params).forEach(key => {
-  //       if (type === 'color' && !key.startsWith('pa_colour')) {
-  //         if (params[key] !== undefined) {
-  //           newQuery[key] = params[key];
-  //         }
-  //       } else if (
-  //         type === 'price' &&
-  //         key !== 'min_price' &&
-  //         key !== 'max_price'
-  //       ) {
-  //         if (params[key] !== undefined) {
-  //           newQuery[key] = params[key];
-  //         }
-  //       } else if (
-  //         type === 'attributes' &&
-  //         key.startsWith('pa_') &&
-  //         key !== 'pa_colour'
-  //       ) {
-  //         if (params[key] !== undefined) {
-  //           newQuery[key] = params[key];
-  //         }
-  //       }
-  //     });
+  const updateMinPrice = useCallback(
+    (newValue: number) => {
+      if (
+        newValue !== priceRange.min &&
+        newValue >= 0 &&
+        newValue <= maxPrice &&
+        newValue <= priceRange.max // Убедимся, что min <= max
+      ) {
+        setPriceRange(prev => ({ ...prev, min: newValue }));
+        setChosenAttributes(prev => {
+          const updatedAttributes = new Map(prev);
+          updatedAttributes.set('min_price', new Set([newValue.toString()]));
+          return updatedAttributes;
+        });
+      }
+    },
+    [priceRange, maxPrice]
+  );
 
-  //     router.replace({
-  //       pathname: router.pathname,
-  //       query: newQuery,
-  //     });
+  const updateMaxPrice = useCallback(
+    (newValue: number) => {
+      if (
+        newValue !== priceRange.max &&
+        newValue >= 0 &&
+        newValue <= maxPrice &&
+        newValue >= priceRange.min // Убедимся, что max >= min
+      ) {
+        setPriceRange(prev => ({ ...prev, max: newValue }));
+        setChosenAttributes(prev => {
+          const updatedAttributes = new Map(prev);
+          updatedAttributes.set('max_price', new Set([newValue.toString()]));
+          return updatedAttributes;
+        });
+      }
+    },
+    [priceRange, maxPrice]
+  );
 
-  //     // Remove parameters from the state
-  //     const newChosenAttributes = new Map(chosenAttributes);
-  //     if (type === 'color') {
-  //       newChosenAttributes.delete('pa_colour');
-  //     } else if (type === 'price') {
-  //       updateCurrentParams('min_price', minPrice, false);
-  //       updateCurrentParams('max_price', maxPrice, false);
-  //     } else if (type === 'attributes') {
-  //       Array.from(newChosenAttributes.keys()).forEach(key => {
-  //         if (key.startsWith('pa_') && key !== 'pa_colour') {
-  //           newChosenAttributes.delete(key);
-  //         }
-  //       });
-  //     }
-  //     setChosenAttributes(newChosenAttributes);
-
-  //     // Reset price values ​​in state if type is 'price'
-  //     if (type === 'price') {
-  //       setPriceRange({ min: minPrice, max: maxPrice });
-  //     }
-  //   },
-  //   [chosenAttributes, router.query, minPrice, maxPrice, updateCurrentParams]
-  // );
-
-  console.log(chosenAttributes);
   return (
     <FilterPanelWrap>
       <FilterPanelWrap>
