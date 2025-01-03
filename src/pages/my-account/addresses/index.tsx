@@ -4,18 +4,21 @@ import { FormContainer } from '@/components/pages/account/styles';
 import axios from 'axios';
 import { WooCustomerReqType } from '@/types/services/wooCustomApi/customer';
 import { ChangeShippingForm } from '@/components/global/forms/ChangeShippingForm';
+import AccountLayout from '@/components/pages/account/AccountLayout';
+import { useTranslations } from 'next-intl';
 
 interface Props {
   defaultCustomerData: WooCustomerReqType;
 }
 
 export default function Addresses({ defaultCustomerData }: Props) {
+  const t = useTranslations('MyAccount');
   return (
     <>
       <Container>
-        <FormContainer>
+        <AccountLayout title={t('Addresses')}>
           <ChangeShippingForm defaultCustomerData={defaultCustomerData} />
-        </FormContainer>
+        </AccountLayout>
       </Container>
     </>
   );

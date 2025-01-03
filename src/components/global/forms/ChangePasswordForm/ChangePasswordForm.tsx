@@ -9,12 +9,16 @@ import {
   FormWrapper,
   FormWrapperBottom,
 } from '../RegistrationForm/styles';
-import { useUpdateCustomerInfoMutation } from '@/store/rtk-queries/wooCustomAuthApi';
+import {
+  useFetchCustomerInfoQuery,
+  useUpdateCustomerInfoMutation,
+} from '@/store/rtk-queries/wooCustomAuthApi';
 
 import { z } from 'zod';
 import { ChangePasswordFormSchema } from '@/types/components/global/forms/changePasswordForm';
 import { useTranslations } from 'next-intl';
 import { passwordSchema } from '@/types/components/global/forms/common';
+import Notification from '../../Notification/Notification';
 
 export const ChangePasswordForm: FC = () => {
   const [customError, setCustomError] = useState<string>('');
@@ -39,13 +43,7 @@ export const ChangePasswordForm: FC = () => {
   async function onSubmit(formData: ChangePasswordFormType) {
     setCustomError('');
     const reqBody = {
-      password: formData.password,
-      billing: {
-        first_name: 'James',
-      },
-      shipping: {
-        first_name: 'James',
-      },
+      password: 'new_password',
     };
 
     try {
@@ -88,16 +86,12 @@ export const ChangePasswordForm: FC = () => {
           {isSubmitting ? tValidation('saving') : tValidation('saveChanges')}
         </StyledButton>
         {error && customError && (
-          <CustomError
-            dangerouslySetInnerHTML={{
-              __html: error,
-            }}
-          ></CustomError>
+          <Notification type="warning">
+            {tMyAccount('passwordChangeError')}
+          </Notification>
         )}
         {isSubmitSuccessful && !error && !customError && (
-          <CustomSuccess>
-            The shipping information has been successfully updated.
-          </CustomSuccess>
+          <CustomSuccess>{tMyAccount('passwordChanged')}</CustomSuccess>
         )}
       </FormWrapperBottom>
     </CustomForm>

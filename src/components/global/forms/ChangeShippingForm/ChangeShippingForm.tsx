@@ -3,7 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import 'react-international-phone/style.css';
-import { CustomFormCheckboxStyled, InfoCard } from './styles';
+
 import {
   CustomForm,
   FlexBox,
@@ -14,24 +14,22 @@ import {
 import { isAuthErrorResponseType } from '@/utils/isAuthErrorResponseType';
 import { UserInfoFormSchema } from '@/types/components/global/forms/userInfoForm';
 import { Title } from '@/styles/components';
-import { CircularProgress } from '@mui/material';
+
 import CustomCountrySelect from '../../selects/CustomCountrySelect/CustomCountrySelect';
 import { useTranslations } from 'next-intl';
 import Notification from '../../Notification/Notification';
 import { CustomFormInput } from '../CustomFormInput';
-import { useUpdateCustomerInfoMutation } from '@/store/rtk-queries/wooCustomAuthApi';
-import { WooCustomerReqType } from '@/types/services/wooCustomApi/customer';
 import { countryOptions } from '@/utils/mockdata/countryOptions';
+import { InfoCard } from '../UserInfoForm/styles';
+import { WooCustomerReqType } from '@/types/services/wooCustomApi/customer';
+import { useUpdateCustomerInfoMutation } from '@/store/rtk-queries/wooCustomAuthApi';
 
-interface UserInfoFormProps {
+interface ChangeShippingFormProps {
   defaultCustomerData: WooCustomerReqType;
 }
-
-export const UserInfoForm: FC<UserInfoFormProps> = ({
+export const ChangeShippingForm: FC<ChangeShippingFormProps> = ({
   defaultCustomerData: customer,
 }) => {
-  console.log(customer);
-
   const tValidation = useTranslations('Validation');
   const tMyAccount = useTranslations('MyAccount');
   const tForms = useTranslations('Forms');
@@ -39,7 +37,6 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
   const [isShipping, setIsShipping] = useState(true);
   const [hasChanges, setHasChanges] = useState(false);
 
-  //wooAuth
   const [UpdateCustomerMutation, { error, isLoading, isSuccess }] =
     useUpdateCustomerInfoMutation();
 
@@ -69,23 +66,6 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
     return () => subscription.unsubscribe();
   }, [watch]);
 
-  useEffect(() => {
-    if (customer) {
-      const isShippingEmpty =
-        !customer.shipping?.first_name &&
-        !customer.shipping?.last_name &&
-        !customer.shipping?.address_1;
-      setIsShipping(!isShippingEmpty);
-      console.log('isShippingEmpty', isShippingEmpty);
-      console.log(isShipping);
-    }
-  }, [customer]);
-
-  const handleShippingCheckboxChange = () => {
-    setIsShipping(prev => !prev);
-    setHasChanges(true);
-  };
-
   const onSubmit = async (formData: UserInfoFormType) => {
     if (!customer) {
       console.error('Customer data is not available');
@@ -93,58 +73,27 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
     }
 
     const updatedData = {
-      email: formData.email,
-      first_name: formData.first_name,
-      last_name: formData.last_name,
-      username: formData.email,
-      billing: {
-        first_name: formData.first_name,
-        last_name: formData.last_name,
-        address_1: formData.address_1,
-        address_2: [formData.address_2, formData.apartmentNumber]
-          .filter(Boolean)
-          .join('/'),
-        city: formData.city,
-        postcode: formData.postcode,
-        country: formData.country,
-        email: formData.email,
-        phone: formData.phone,
+      shipping: {
+        first_name:
+          (isShipping && formData.first_nameShipping) || formData.first_name,
+        last_name:
+          (isShipping && formData.last_nameShipping) || formData.last_name,
+        phone: (isShipping && formData.phoneShipping) || formData.phoneShipping,
+        address_1:
+          (isShipping && formData.address_1Shipping) || formData.address_1,
+        address_2:
+          (isShipping &&
+            [formData.address_2Shipping, formData.apartmentNumberShipping]
+              .filter(Boolean)
+              .join('/')) ||
+          [formData.address_2, formData.apartmentNumber]
+            .filter(Boolean)
+            .join('/'),
+        city: (isShipping && formData.cityShipping) || formData.city,
+        postcode:
+          (isShipping && formData.postcodeShipping) || formData.postcode,
+        country: (isShipping && formData.countryShipping) || formData.country,
       },
-      shipping: isShipping
-        ? {
-            first_name:
-              (isShipping && formData.first_nameShipping) ||
-              formData.first_name,
-            last_name:
-              (isShipping && formData.last_nameShipping) || formData.last_name,
-            phone:
-              (isShipping && formData.phoneShipping) || formData.phoneShipping,
-            address_1:
-              (isShipping && formData.address_1Shipping) || formData.address_1,
-            address_2:
-              (isShipping &&
-                [formData.address_2Shipping, formData.apartmentNumberShipping]
-                  .filter(Boolean)
-                  .join('/')) ||
-              [formData.address_2, formData.apartmentNumber]
-                .filter(Boolean)
-                .join('/'),
-            city: (isShipping && formData.cityShipping) || formData.city,
-            postcode:
-              (isShipping && formData.postcodeShipping) || formData.postcode,
-            country:
-              (isShipping && formData.countryShipping) || formData.country,
-          }
-        : {
-            first_name: '',
-            last_name: '',
-            phone: '',
-            address_1: '',
-            address_2: '',
-            city: '',
-            postcode: '',
-            country: '',
-          },
     };
 
     try {
@@ -212,31 +161,6 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
     </>
   );
 
-  const renderFormInfoFields = (
-    prefix: string = '',
-    defaultValues: any = {}
-  ) => (
-    <>
-      {['first_name', 'last_name', 'email', 'phone'].map(field => (
-        <CustomFormInput
-          key={field}
-          fieldName={tMyAccount(field)}
-          name={`${prefix}${field}`}
-          register={register}
-          errors={errors}
-          inputTag="input"
-          inputType={field === 'phone' ? 'phone' : 'text'}
-          defaultValue={
-            field === 'phone'
-              ? customer?.billing?.phone
-              : defaultValues[field] || ''
-          }
-          setValue={setValue}
-        />
-      ))}
-    </>
-  );
-
   useEffect(() => {
     if (customer) {
       setValue('country', customer.billing?.country || '');
@@ -254,38 +178,10 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
           uppercase
           marginBottom="16px"
         >
-          {tForms('UserInfo')}
-        </Title>
-        {!customer ? (
-          <FlexBox justifyContent="center" margin="40px 0">
-            <CircularProgress />
-          </FlexBox>
-        ) : (
-          <FormWrapper>
-            {renderFormInfoFields('', customer)}{' '}
-            {renderFormShippingFields('', customer?.billing)}
-          </FormWrapper>
-        )}
-      </InfoCard>
-      <InfoCard>
-        <Title
-          as="h2"
-          fontWeight={600}
-          fontSize="24px"
-          uppercase
-          marginBottom="16px"
-        >
           {tForms('ShippingInfo')}
         </Title>
-        <FlexBox alignItems="center" margin="0 0 16px 0">
-          <CustomFormCheckboxStyled
-            checked={!isShipping}
-            type="checkbox"
-            onChange={() => handleShippingCheckboxChange()}
-          />
-          {tValidation('theSameAddress')}
-        </FlexBox>
-        {customer && isShipping && (
+
+        {customer && (
           <FormWrapper>
             {renderFormShippingFields('Shipping', customer?.shipping)}
           </FormWrapper>

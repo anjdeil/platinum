@@ -79,7 +79,9 @@
     "ForgotYourPassword": "Forgot your password?",
     "SuccessfullyLoggedIn": "Successfully logged in!",
     "ErrorLoggedIn": "Incorrect email or password. Please try again.",
-    "newpassword": "New password"
+    "newpassword": "New password",
+    "passwordChanged": "Password successfully changed",
+    "passwordChangeError": "There was an error when changing the password, please try again"
   },
   "TopBar": {
     "CallUs": "Call us"
