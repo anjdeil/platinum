@@ -73,33 +73,46 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
     },
     [chosenAttributes, setChosenAttributes]
   );
-
   /** Updates chosen with url params */
   useEffect(() => {
-    const url = new URL(router.asPath, window.location.origin);
-    const params = new URLSearchParams(url.search);
+    const updateFromUrl = (url?: string) => {
+      const currentUrl = url
+        ? new URL(url, window.location.origin)
+        : new URL(window.location.href);
+      const params = new URLSearchParams(currentUrl.search);
 
-    params.forEach((value, key) => {
-      const valuesArray = value
-        ? value.split(',').map(item => item.trim())
-        : [];
-      updateChosenAttributes({
-        key,
-        paramValue: valuesArray,
-        isPrefix: false,
+      // Updating selected attributes
+      const newChosenAttributes = new Map<string, Set<string | number>>();
+      params.forEach((value, key) => {
+        const valuesArray = value.split(',').map(item => item.trim());
+        newChosenAttributes.set(key, new Set(valuesArray));
       });
-    });
 
-    // Инициализация priceRange из URL
-    const minPriceParam = params.get('min_price');
-    const maxPriceParam = params.get('max_price');
-    if (minPriceParam && maxPriceParam) {
+      setChosenAttributes(newChosenAttributes);
+
+      // Updating the price range
+      const minPriceParam = params.get('min_price');
+      const maxPriceParam = params.get('max_price');
       setPriceRange({
-        min: parseFloat(minPriceParam),
-        max: parseFloat(maxPriceParam),
+        min: minPriceParam ? parseFloat(minPriceParam) : minPrice,
+        max: maxPriceParam ? parseFloat(maxPriceParam) : maxPrice,
       });
-    }
-  }, []);
+    };
+
+    // Initialization on page load
+    updateFromUrl();
+
+    // Update when changing route
+    const handleRouteChange = (url: string) => {
+      updateFromUrl(url);
+    };
+
+    router.events.on('routeChangeComplete', handleRouteChange);
+
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange);
+    };
+  }, [router]);
 
   /** Updates chosen by click on attribute */
   const updateCurrentParams = useCallback(
@@ -132,6 +145,14 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
       ...router.query,
       ...params,
     };
+
+    if (priceRange.min !== minPrice) {
+      newQuery.min_price = priceRange.min.toString();
+    }
+
+    if (priceRange.max !== maxPrice) {
+      newQuery.max_price = priceRange.max.toString();
+    }
 
     // Remove empty parameters from newQuery
     Object.keys(newQuery).forEach(key => {
@@ -177,7 +198,7 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
         ? { slugs }
         : {};
 
-      // Удаляем параметры в зависимости от типа или ключа
+      // Remove parameters depending on the type or key
       Object.keys(params).forEach(paramKey => {
         if (type && params[paramKey] !== undefined) {
           if (type === 'color' && !paramKey.startsWith('pa_colour')) {
@@ -205,7 +226,7 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
         query: newQuery,
       });
 
-      // Удаляем параметры из состояния
+      // Remove parameters from the state
       const newChosenAttributes = new Map(chosenAttributes);
       if (type) {
         if (type === 'color') {
@@ -225,7 +246,7 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
       }
       setChosenAttributes(newChosenAttributes);
 
-      // Сбрасываем значения цены в состоянии, если тип 'price'
+      // Reset price values ​​in state if type is 'price'
       if (type === 'price') {
         setPriceRange({ min: minPrice, max: maxPrice });
       }
@@ -239,7 +260,7 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
         newValue !== priceRange.min &&
         newValue >= 0 &&
         newValue <= maxPrice &&
-        newValue <= priceRange.max // Убедимся, что min <= max
+        newValue <= priceRange.max
       ) {
         setPriceRange(prev => ({ ...prev, min: newValue }));
         setChosenAttributes(prev => {
@@ -258,7 +279,7 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
         newValue !== priceRange.max &&
         newValue >= 0 &&
         newValue <= maxPrice &&
-        newValue >= priceRange.min // Убедимся, что max >= min
+        newValue >= priceRange.min
       ) {
         setPriceRange(prev => ({ ...prev, max: newValue }));
         setChosenAttributes(prev => {
