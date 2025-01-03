@@ -1,25 +1,27 @@
 import { FC, useState } from 'react';
 import { CustomForm, FormWrapperBottom } from '../RegistrationForm/styles';
-
-import {
-  useCheckTokenMutation,
-  useGetTokenMutation,
-} from '@/store/rtk-queries/wpApi';
-import { StyledButton } from '@/styles/components';
-import theme from '@/styles/theme';
 import {
   LoginFormSchema,
   LoginFormType,
 } from '@/types/components/global/forms/LoginForm';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import {
+  useCheckTokenMutation,
+  useGetTokenMutation,
+} from '@/store/rtk-queries/wpApi';
+import { CustomError, CustomSuccess } from '../CustomFormInput/styles';
 import { CustomFormInput } from '../CustomFormInput';
-import { CustomError } from '../CustomFormInput/styles';
-import { FormWrapper } from './styles';
+import { ActiveText, FormWrapper } from './styles';
+import { FlexBox, StyledButton, Title } from '@/styles/components';
+import theme from '@/styles/theme';
+import { useRouter } from 'next/router';
+import { useTranslations } from 'next-intl';
+import Notification from '../../Notification/Notification';
 
 export const LoginForm: FC = () => {
   const router = useRouter();
+  const t = useTranslations('MyAccount');
   const [customError, setCustomError] = useState<string>('');
 
   /** Form settings */
@@ -62,9 +64,12 @@ export const LoginForm: FC = () => {
 
   return (
     <CustomForm onSubmit={handleSubmit(onSubmit)}>
+      <Title as="h3" uppercase>
+        {t('log-In')}
+      </Title>
       <FormWrapper>
         <CustomFormInput
-          fieldName="Adres e-mail"
+          fieldName={t('email')}
           name="email"
           register={register}
           errors={errors}
@@ -72,7 +77,7 @@ export const LoginForm: FC = () => {
           inputType={'text'}
         />
         <CustomFormInput
-          fieldName="Hasło"
+          fieldName={t('password')}
           name="password"
           register={register}
           errors={errors}
@@ -86,20 +91,26 @@ export const LoginForm: FC = () => {
           type="submit"
           disabled={isSubmitting}
         >
-          Login
+          {t('login')}
         </StyledButton>
-        <StyledButton
-          color={theme.colors.black}
-          disabled={isSubmitting}
-          onSubmit={() => {
-            router.push('/my-account');
-          }}
-        >
-          Register
-        </StyledButton>
-        {customError && <CustomError>{customError}</CustomError>}
+
+        <FlexBox margin="10px 0 0 0" justifyContent="space-between">
+          <ActiveText href="/my-account/">{t('ForgotYourPassword')}</ActiveText>
+          <FlexBox gap="5px">
+            <div> {t('DontHaveAnAccount')}</div>
+            <ActiveText href="/my-account/registration">
+              {t('SignUpNow')}
+            </ActiveText>
+          </FlexBox>
+        </FlexBox>
+
+        {customError && (
+          <Notification marginBottom="0" type="warning">
+            {t('ErrorLoggedIn')}
+          </Notification>
+        )}
         {isSubmitSuccessful && !customError && !isLoading && (
-          <p>Your account has been created successfully!</p>
+          <CustomSuccess>{t('SuccessfullyLoggedIn')}</CustomSuccess>
         )}
       </FormWrapperBottom>
     </CustomForm>

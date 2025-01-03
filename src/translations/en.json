@@ -63,8 +63,22 @@
     "paymentMethod": "Payment method",
     "total": "Total",
     "action": "Action",
+    "login": "Login",
+    "log-In": "Log in",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "AlreadyHaveAnAccount": "Already have an account?",
+    "DontHaveAnAccount": "Don't have an account?",
+    "SignUpNow": "Sign up now!",
+    "register": "Register",
+    "registration": "Registration",
+    "agreePersonalData": "I agree to the processing of personal data",
     "EditUserInfo": "Update Your Profile",
-    "successUpdate": "Your profile has been successfully updated"
+    "successUpdate": "Your profile has been successfully updated",
+    "YourAccountHasBeenCreated": "Your account has been created successfully!",
+    "ForgotYourPassword": "Forgot your password?",
+    "SuccessfullyLoggedIn": "Successfully logged in!",
+    "ErrorLoggedIn": "Incorrect email or password. Please try again."
   },
   "TopBar": {
     "CallUs": "Call us"
@@ -202,7 +216,12 @@
     "fileTooLarge": "file too large",
     "agreentment": "I agree to receiving information regarding news and changes to the stores offer",
     "agreentmentTerms": "You must agree to the terms",
-    "theSameAddress": "The same address as on customer information"
+    "theSameAddress": "The same address as on customer information",
+    "PasswordCapitalLetter": "Password must contain at least one uppercase letter.",
+    "PasswordLowercaseLetter": "Password must contain at least one lowercase letter.",
+    "PasswordDigit": "Password must contain at least one digit.",
+    "PasswordSpecialChar": "Password must contain at least one special character.",
+    "PasswordsDoNotMatch": "Passwords do not match"
   },
   "Forms": {
     "applicationForm": "application form",
@@ -214,6 +233,8 @@
   "Breadcrumbs": {
     "homePage": "Home Page",
     "benefitsPage": "Loyalty Program",
+    "myAccount": "My account",
+    "registration": "Registration",
     "blogPage": "Blog"
   },
 
