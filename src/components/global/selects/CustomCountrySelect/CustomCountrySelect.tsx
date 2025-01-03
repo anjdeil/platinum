@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Controller, Control } from 'react-hook-form';
 import dynamic from 'next/dynamic';
 import theme from '@/styles/theme';
@@ -18,7 +18,6 @@ interface CustomSelectProps {
   rules?: any;
   defaultValue?: string;
 }
-
 const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
 
 const CustomCountrySelect: React.FC<CustomSelectProps> = ({
@@ -31,6 +30,7 @@ const CustomCountrySelect: React.FC<CustomSelectProps> = ({
   defaultValue,
 }) => {
   const tValidation = useTranslations('Validation');
+  const selectRef = useRef<any>(null);
   if (typeof window !== 'undefined') {
   }
   return (
@@ -53,6 +53,7 @@ const CustomCountrySelect: React.FC<CustomSelectProps> = ({
               field.onChange(selectedOption?.value)
             }
             placeholder=""
+            ref={selectRef}
             styles={{
               control: (base, state) => ({
                 ...base,
