@@ -5,11 +5,12 @@ interface CustomFormProps {
 }
 
 export const CustomForm = styled.form<CustomFormProps>`
+  margin: 0 auto;
   padding: 32px;
   border: ${({ theme }) => `1px solid ${theme.colors.lightBorder}`};
   border-radius: 10px;
-
-  @media ${({ theme }) => theme.media.middle} {
+  max-width: ${({ maxWidth = '700px' }) => maxWidth};
+  @media ${({ theme }) => theme.media.medium} {
     padding: 0;
     border: none;
   }
@@ -32,5 +33,6 @@ export const FormWrapper = styled.div`
 export const FormWrapperBottom = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 12px;
+  margin-top: 8px;
 `;

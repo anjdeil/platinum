@@ -27,25 +27,6 @@ interface FlexBoxProps {
   width?: string;
   height?: string;
   bgColor?: string;
-}
-
-interface FlexBoxProps {
-  flexDirection?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
-  justifyContent?:
-    | 'flex-start'
-    | 'flex-end'
-    | 'center'
-    | 'space-between'
-    | 'space-around'
-    | 'space-evenly';
-  alignItems?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
-  flexWrap?: 'nowrap' | 'wrap' | 'wrap-reverse';
-  gap?: string;
-  padding?: string;
-  margin?: string;
-  width?: string;
-  height?: string;
-  bgColor?: string;
   flex?: string;
 }
 

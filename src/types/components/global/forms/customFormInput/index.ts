@@ -9,6 +9,7 @@ export const CustomFormInputSchema = z.object({
     z.literal('password'),
     z.literal('number'),
     z.literal('phone'),
+    z.literal('newpassword'),
   ]),
   name: z.string().optional(),
   register: z.any().optional(),

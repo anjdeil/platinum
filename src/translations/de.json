@@ -62,9 +62,23 @@
     "paymentMethod": "Zahlungsmethode",
     "total": "Gesamt",
     "action": "Aktion",
-    "EditUserInfo": "Profil aktualisieren",
     "apartmentNumber": "Wohnungsnumme",
-    "successUpdate": "Ihr Profil wurde erfolgreich aktualisiert"
+    "login": "Zaloguj się",
+    "log-In": "Zaloguj się",
+    "password": "Hasło",
+    "confirmPassword": "Potwierdź hasło",
+    "AlreadyHaveAnAccount": "Masz już konto?",
+    "DontHaveAnAccount": "Nie masz konta?",
+    "SignUpNow": "Zarejestruj się teraz!",
+    "register": "Zarejestruj się",
+    "registration": "Rejestracja",
+    "agreePersonalData": "Zgadzam się na przetwarzanie danych osobowych",
+    "EditUserInfo": "Zaktualizuj swój profil",
+    "successUpdate": "Twój profil został pomyślnie zaktualizowany",
+    "YourAccountHasBeenCreated": "Twoje konto zostało pomyślnie utworzone!",
+    "ForgotYourPassword": "Haben Sie Ihr Passwort vergessen?",
+    "SuccessfullyLoggedIn": "Erfolgreich eingeloggt!",
+    "ErrorLoggedIn": "Falsche E-Mail-Adresse oder falsches Passwort. Bitte versuchen Sie es erneut."
   },
   "TopBar": {
     "CallUs": "Rufen Sie uns an"
@@ -197,11 +211,19 @@
     "saveChanges": "Änderungen speichern",
     "agreentment": "Ich stimme zu, Informationen über Neuigkeiten und Änderungen im Angebot des Geschäfts zu erhalten",
     "agreentmentTerms": "Sie müssen den Bedingungen zustimmen",
-    "theSameAddress": "Die gleiche Adresse wie bei den Kundeninformationen"
+    "theSameAddress": "Die gleiche Adresse wie bei den Kundeninformationen",
+    "PasswordCapitalLetter": "Das Passwort muss mindestens einen Großbuchstaben enthalten.",
+    "PasswordLowercaseLetter": "Das Passwort muss mindestens einen Kleinbuchstaben enthalten.",
+    "PasswordDigit": "Das Passwort muss mindestens eine Ziffer enthalten.",
+    "PasswordSpecialChar": "Das Passwort muss mindestens ein Sonderzeichen enthalten.",
+    "PasswordsDoNotMatch": "Passwörter stimmen nicht überein"
   },
   "Breadcrumbs": {
     "homePage": "Startseite",
     "benefitsPage": "Vorteile",
+    "myAccount": "Moje konto",
+    "registration": "Rejestracja",
+
     "blogPage": "Blog"
   },
   "Forms": {
