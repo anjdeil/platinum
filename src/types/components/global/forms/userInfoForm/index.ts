@@ -1,22 +1,22 @@
 import { parsePhoneNumber } from 'awesome-phonenumber';
 import { z } from 'zod';
-
-const termsSchema = (t: any) =>
+import { phoneNumberValidation } from '../common';
+/* const termsSchema = (t: any) =>
   z.boolean().refine((value) => value === true, {
     message: t('agreentmentTerms'),
-  });
+  }); */
 
-const phoneSchema = (t: any) =>
+/* const phoneSchema = (t: any) =>
   z.string().refine((value) => parsePhoneNumber(value).valid, {
     message: t('InvalidPhoneNumber'),
-  });
+  }); */
 
 export const UserInfoFormSchema = (isShipping: boolean, t: any) => {
   const schema = z.object({
     first_name: z.string().min(3, t('RequiredField')),
     last_name: z.string().min(3, t('RequiredField')),
     email: z.string().email(t('emailValidation')),
-    phone: phoneSchema(t),
+    phone: phoneNumberValidation(t),
     country: z.string().min(1, t('RequiredField')),
     city: z.string().min(1, t('RequiredField')),
     address_1: z.string().min(4, t('RequiredField')),
@@ -31,7 +31,9 @@ export const UserInfoFormSchema = (isShipping: boolean, t: any) => {
     last_nameShipping: isShipping
       ? z.string().min(3, t('RequiredField'))
       : z.string().optional(),
-    phoneShipping: isShipping ? phoneSchema(t) : z.string().optional(),
+    phoneShipping: isShipping
+      ? phoneNumberValidation(t)
+      : z.string().optional(),
     address_1Shipping: isShipping
       ? z.string().min(2, t('RequiredField'))
       : z.string().optional(),

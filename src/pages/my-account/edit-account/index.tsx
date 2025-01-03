@@ -1,33 +1,14 @@
-import { ChangeInfoForm } from '@/components/global/forms/ChangeInfoForm';
-import { FormContainer } from '@/components/pages/account/styles';
-import { useAppDispatch } from '@/store';
-import { Container } from '@/styles/components';
-import { WooCustomerReqType } from '@/types/services/wooCustomApi/customer';
-import { updateUserData } from '@/utils/auth/userLocalStorage';
+import { UserInfoForm } from '@/components/global/forms/UserInfoForm';
+import AccountLayout from '@/components/pages/account/AccountLayout';
+import { useTranslations } from 'next-intl';
 
-interface Props {
-  defaultCustomerData: WooCustomerReqType;
-}
-
-export default function UserInfo({ defaultCustomerData }: Props) {
-  console.log('userInfo...', defaultCustomerData);
-
-  const dispatch = useAppDispatch();
-
-  const handleUpdateUser = (newUserData: WooCustomerReqType) => {
-    updateUserData(dispatch, newUserData);
-  };
-
+export default function UserInformation() {
+  const t = useTranslations('MyAccount');
   return (
     <>
-      <Container>
-        <FormContainer>
-          <ChangeInfoForm
-            defaultCustomerData={defaultCustomerData}
-            onUserUpdate={handleUpdateUser}
-          />
-        </FormContainer>
-      </Container>
+      <AccountLayout title={t('EditUserInfo')}>
+        <UserInfoForm />
+      </AccountLayout>
     </>
   );
 }

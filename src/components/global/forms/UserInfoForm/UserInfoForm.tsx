@@ -114,7 +114,7 @@ export const UserInfoForm: FC = () => {
   ];
 
   const handleShippingCheckboxChange = () => {
-    setIsShipping((prev) => !prev);
+    setIsShipping(prev => !prev);
     setHasChanges(true);
   };
 
@@ -123,7 +123,6 @@ export const UserInfoForm: FC = () => {
       console.error('Customer data is not available');
       return;
     }
-    console.log(isShipping);
 
     const updatedData = {
       email: formData.email,
@@ -199,7 +198,7 @@ export const UserInfoForm: FC = () => {
   ) => (
     <>
       {prefix === 'Shipping' &&
-        ['first_name', 'last_name', 'phone'].map((field) => (
+        ['first_name', 'last_name', 'phone'].map(field => (
           <CustomFormInput
             key={field}
             fieldName={tMyAccount(field)}
@@ -226,7 +225,7 @@ export const UserInfoForm: FC = () => {
       />
 
       {['city', 'address_1', 'address_2', 'apartmentNumber', 'postcode'].map(
-        (field) => (
+        field => (
           <CustomFormInput
             key={field}
             fieldName={tMyAccount(field)}
@@ -239,8 +238,8 @@ export const UserInfoForm: FC = () => {
               field === 'address_2'
                 ? defaultValues.address_2?.split('/')[0] || ''
                 : field === 'apartmentNumber'
-                ? defaultValues.address_2?.split('/')[1] || ''
-                : defaultValues[field] || ''
+                  ? defaultValues.address_2?.split('/')[1] || ''
+                  : defaultValues[field] || ''
             }
             setValue={setValue}
           />
@@ -254,7 +253,7 @@ export const UserInfoForm: FC = () => {
     defaultValues: any = {}
   ) => (
     <>
-      {['first_name', 'last_name', 'email', 'phone'].map((field) => (
+      {['first_name', 'last_name', 'email', 'phone'].map(field => (
         <CustomFormInput
           key={field}
           fieldName={tMyAccount(field)}

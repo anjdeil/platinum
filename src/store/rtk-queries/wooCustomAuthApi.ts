@@ -8,14 +8,14 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const wooCustomAuthRktApi = createApi({
   reducerPath: 'wooCustomAuthRktApi',
   baseQuery: fetchBaseQuery({ baseUrl: '/api/wooAuth' }),
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     updateCustomerInfo: builder.mutation<
       WooCustomerType,
       WooCustomerUpdateType
     >({
       query: (credentials: WooCustomerUpdateType) => ({
         url: `/customers`,
-        method: 'POST',
+        method: 'PUT',
         body: credentials,
         headers: {
           'Content-Type': 'application/json',

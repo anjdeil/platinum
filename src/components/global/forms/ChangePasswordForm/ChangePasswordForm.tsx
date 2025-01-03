@@ -4,28 +4,27 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { CustomFormInput } from '../CustomFormInput';
 import { CustomError, CustomSuccess } from '../CustomFormInput/styles';
 import { StyledButton, Title } from '@/styles/components';
-import theme from '@/styles/theme';
 import {
   CustomForm,
   FormWrapper,
   FormWrapperBottom,
 } from '../RegistrationForm/styles';
 import { useUpdateCustomerInfoMutation } from '@/store/rtk-queries/wooCustomAuthApi';
-import {
-  ChangeShippingFormSchema,
-  ChangeShippingFormType,
-} from '@/types/components/global/forms/changeShippingForm';
+
 import { z } from 'zod';
 import { ChangePasswordFormSchema } from '@/types/components/global/forms/changePasswordForm';
 import { useTranslations } from 'next-intl';
+import { passwordSchema } from '@/types/components/global/forms/common';
 
 export const ChangePasswordForm: FC = () => {
   const [customError, setCustomError] = useState<string>('');
   const tValidation = useTranslations('Validation');
+  const tMyAccount = useTranslations('MyAccount');
 
   const [updateCustomerMutation, { error }] = useUpdateCustomerInfoMutation();
 
   const formSchema = useMemo(() => ChangePasswordFormSchema(tValidation), []);
+
   type ChangePasswordFormType = z.infer<typeof formSchema>;
 
   const {
@@ -33,13 +32,21 @@ export const ChangePasswordForm: FC = () => {
     handleSubmit,
     formState: { errors, isSubmitting, isSubmitSuccessful },
     reset,
-  } = useForm<ChangeShippingFormType>({
-    resolver: zodResolver(ChangeShippingFormSchema),
+  } = useForm<ChangePasswordFormType>({
+    resolver: zodResolver(formSchema),
   });
 
-  async function onSubmit(formData: ChangeShippingFormType) {
+  async function onSubmit(formData: ChangePasswordFormType) {
     setCustomError('');
-    const reqBody = {};
+    const reqBody = {
+      password: formData.password,
+      billing: {
+        first_name: 'James',
+      },
+      shipping: {
+        first_name: 'James',
+      },
+    };
 
     try {
       /** Update customer info */
@@ -56,34 +63,29 @@ export const ChangePasswordForm: FC = () => {
   return (
     <CustomForm onSubmit={handleSubmit(onSubmit)}>
       <Title as={'h1'} uppercase={true} marginBottom={'24px'}>
-        User information
+        {tMyAccount('changePassword')}
       </Title>
       <FormWrapper>
         <CustomFormInput
-          fieldName="Hasło"
+          fieldName={tMyAccount('newpassword')}
           name="password"
           register={register}
           errors={errors}
           inputTag={'input'}
-          inputType={'password'}
+          inputType={'newpassword'}
         />
         <CustomFormInput
-          fieldName="Powtórz hasło"
+          fieldName={tMyAccount('confirmPassword')}
           name="confirmPassword"
           register={register}
           errors={errors}
           inputTag={'input'}
-          inputType={'password'}
+          inputType={'newpassword'}
         />
       </FormWrapper>
       <FormWrapperBottom>
-        <StyledButton
-          hoverBackgroundColor={theme.background.hover}
-          color={theme.colors.white}
-          type="submit"
-          disabled={isSubmitting}
-        >
-          {isSubmitting ? 'Wait...' : ' Save changes'}
+        <StyledButton type="submit" disabled={isSubmitting}>
+          {isSubmitting ? tValidation('saving') : tValidation('saveChanges')}
         </StyledButton>
         {error && customError && (
           <CustomError
