@@ -1,5 +1,5 @@
 import { BreadcrumbType } from "@/types/components/global/breadcrumbs";
-import CategoryType from "@/types/components/shop/categories";
+import CategoryType from "@/types/components/shop/categories/categories";
 
 export default function transformCategoriesIntoLinks(categories: CategoryType[]): BreadcrumbType[] {
     return categories.map(({ name, slug, language_code, parent_id }) => {

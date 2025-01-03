@@ -93,7 +93,9 @@
     "stocks": "Nach Lagerverfügbarkeit sortieren",
     "new": "Nach Neuheiten sortieren",
     "cheapest": "Nach günstigstem Preis sortieren",
-    "expensive": "Nach höchstem Preis sortieren"
+    "expensive": "Nach höchstem Preis sortieren",
+    "searchResults": "Suchergebnisse",
+    "phraseSought": "Gesuchte Phrase"
   },
   "Product": {
     "addToBasket": "In den Warenkorb legen",
@@ -223,7 +225,6 @@
     "benefitsPage": "Vorteile",
     "myAccount": "Moje konto",
     "registration": "Rejestracja",
-
     "blogPage": "Blog"
   },
   "Forms": {

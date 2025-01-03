@@ -93,7 +93,9 @@
     "stocks": "Сортировать по наличию на складе",
     "new": "Сортировать по новизне",
     "cheapest": "Сортировать по цене: от дешёвых",
-    "expensive": "Сортировать по цене: от дорогих"
+    "expensive": "Сортировать по цене: от дорогих",
+    "searchResults": "Результаты поиска",
+    "phraseSought": "Искомая фраза"
   },
   "Product": {
     "addToBasket": "Добавить в корзину",
@@ -147,22 +149,18 @@
     "CouponApply": "Купон успешно применен",
     "CouponApplyBtn": "Применить купон",
     "CouponInputPlaceholder": "Код купона",
-
     "OrderComments": "КОММЕНТАРИИ К ЗАКАЗУ",
     "OrderCommentPlaceholder": "Поделитесь любыми подробностями или пожеланиями по поводу вашего заказа...",
     "OrderCommentHint": "Не стесняйтесь указывать здесь любые дополнительные инструкции или примечания к вашему заказу.",
     "OrderSummary": "Сводка заказа",
     "Continue": "Продолжить",
     "OrderSummaryTotal": "Итого к оплате",
-
     "products": "Товары",
     "coupon": "Купон",
     "paymentMethod": "Способ оплаты",
-
     "Basket": "Корзина",
     "PersonalInformation": "Личная информация",
     "Confirmation": "Подтверждение",
-
     "welcomeToPlatinumShop": "Добро пожаловать в Platinum Shop",
     "theBest": "Лучший",
     "productForYou": "Продукт для вас"
@@ -225,7 +223,6 @@
     "PasswordSpecialChar": "Пароль должен содержать хотя бы один специальный символ.",
     "PasswordsDoNotMatch": "Пароли не совпадают"
   },
-
   "Forms": {
     "applicationForm": "Форма заявки",
     "UserInfo": "Информация о пользователе",
@@ -239,7 +236,6 @@
     "registration": "Регистрация",
     "blogPage": "Блог"
   },
-
   "NotFoundPage": {
     "notFound": "Страница не найдена",
     "description": "К сожалению, мы не можем найти страницу, которую вы ищете. Возможно, она была перемещена, удалена или никогда не существовала.",
