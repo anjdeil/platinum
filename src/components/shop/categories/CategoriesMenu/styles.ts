@@ -2,23 +2,23 @@ import {
   CategoriesWrapperProps,
   LinkWrapperProps,
   ListWrapperProps,
-} from "@/types/components/shop/categories/categoriesMenu";
-import styled from "@emotion/styled";
-import Link from "next/link";
+} from '@/types/components/shop/categories/categoriesMenu';
+import styled from '@emotion/styled';
+import Link from 'next/link';
 
 export const Categories = styled.div<CategoriesWrapperProps>`
-  position: ${({ shop }) => (shop ? "relative" : "absolute")};
+  position: ${({ shop }) => (shop ? 'relative' : 'absolute')};
   display: flex;
-  top: ${({ shop }) => (shop ? "0" : "190px")};
+  top: ${({ shop }) => (shop ? '0' : '190px')};
   z-index: 11;
   bottom: 0;
   transition: transform 0.3s ease-in-out;
-  transform: ${({ shop }) => (shop ? "0" : "translateX(-200%)")};
+  transform: ${({ shop }) => (shop ? '0' : 'translateX(-200%)')};
   border-radius: 8px;
 
   margin-bottom: 15px;
   @media ${({ theme }) => theme.media.large} {
-    top: ${({ shop }) => (shop ? "0" : "146px")};
+    top: ${({ shop }) => (shop ? '0' : '146px')};
     bottom: 19px;
     border-radius: 0;
   }
@@ -36,22 +36,23 @@ export const Categories = styled.div<CategoriesWrapperProps>`
 
 export const ListWrapper = styled.div<ListWrapperProps>`
   height: 588px;
-  border-radius: ${({ shop }) => (shop ? "8px" : "0")};
+  border-radius: ${({ shop }) => (shop ? '8px' : '0')};
   width: 388px;
-  padding: ${({ shop }) => (shop ? "16px" : "30px")};
+  padding: ${({ shop }) => (shop ? '16px' : '30px')};
   overflow-y: auto;
   transition: opacity 0.3s ease-in-out;
   background-color: ${({ theme, shop }) =>
     shop ? theme.background.secondary : theme.background.secondary};
   @media ${({ theme }) => theme.media.large} {
-    padding: ${({ isSubcategories }) => (isSubcategories ? "16px" : "16px 32px")};
+    padding: ${({ isSubcategories }) =>
+      isSubcategories ? '16px' : '16px 32px'};
   }
   @media ${({ theme }) => theme.media.middle} {
     width: 350px;
     padding-inline: 20px;
   }
   opacity: ${({ isVisible = true }) => (isVisible ? 1 : 0)};
-  display: ${({ isVisible = true }) => (isVisible ? "block" : "none")};
+  display: ${({ isVisible = true }) => (isVisible ? 'block' : 'none')};
 `;
 export const ChildListWrapper = styled(ListWrapper)<ListWrapperProps>`
   position: absolute;
@@ -79,7 +80,9 @@ export const List = styled.ul`
   }
 `;
 
-export const LinkWrapper = styled(Link)<LinkWrapperProps>`
+export const LinkWrapper = styled(Link, {
+  shouldForwardProp: prop => !['isactive', 'isactivehover'].includes(prop),
+})<LinkWrapperProps>`
   display: block;
 
   span {
@@ -96,7 +99,7 @@ export const LinkWrapper = styled(Link)<LinkWrapperProps>`
     text-transform: uppercase;
     transition: all 0.1s ease-in-out;
     background-color: ${({ theme, isactive, isactivehover }) =>
-      isactive || isactivehover ? theme.colors.primary : "transparent"};
+      isactive || isactivehover ? theme.colors.primary : 'transparent'};
     color: ${({ theme, isactive, isactivehover }) =>
       isactive || isactivehover ? theme.colors.white : theme.colors.black};
 
