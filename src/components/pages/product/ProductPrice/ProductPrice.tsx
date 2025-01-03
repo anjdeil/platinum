@@ -1,27 +1,27 @@
-import { useAppSelector } from "@/store";
-import { ProductPriceOldStyled, ProductPriceStyled } from "./styles";
+import { CurrencyType } from '@/types/components/shop';
+import { ProductPriceOldStyled, ProductPriceStyled } from './styles';
 
 interface ProductPriceProps {
-    minPrice?: number | null;
-    maxPrice?: number | null;
+  currency?: CurrencyType;
+  minPrice?: number | null;
+  maxPrice?: number | null;
 }
 
-const ProductPrice: React.FC<ProductPriceProps> = ({ minPrice, maxPrice }) =>
-{
-    const currency = useAppSelector((state) => state.currencySlice);
-
-    return (
-        <>
-            {maxPrice && maxPrice !== minPrice && (
-                <ProductPriceOldStyled>
-                    {maxPrice}
-                </ProductPriceOldStyled>
-            )}
-            <ProductPriceStyled>
-                {`${minPrice}  ${currency.symbol}`}
-            </ProductPriceStyled>
-        </>
-    );
+const ProductPrice: React.FC<ProductPriceProps> = ({
+  currency,
+  minPrice,
+  maxPrice,
+}) => {
+  return (
+    <>
+      {maxPrice && maxPrice !== minPrice && (
+        <ProductPriceOldStyled>{maxPrice.toFixed(2)}</ProductPriceOldStyled>
+      )}
+      {minPrice && (
+        <ProductPriceStyled>{`${minPrice.toFixed(2)}  ${currency ? currency.code : 'zl'}`}</ProductPriceStyled>
+      )}
+    </>
+  );
 };
 
 export default ProductPrice;

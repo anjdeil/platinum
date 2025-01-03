@@ -1,6 +1,5 @@
-import Head from 'next/head';
 import { GetServerSidePropsContext } from 'next';
-import wpRestApi from '@/services/wpRestApi';
+import Head from 'next/head';
 
 export default function Logout() {
   return (

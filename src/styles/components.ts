@@ -13,12 +13,12 @@ import Link from 'next/link';
 interface FlexBoxProps {
   flexDirection?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
   justifyContent?:
-    | 'flex-start'
-    | 'flex-end'
-    | 'center'
-    | 'space-between'
-    | 'space-around'
-    | 'space-evenly';
+  | 'flex-start'
+  | 'flex-end'
+  | 'center'
+  | 'space-between'
+  | 'space-around'
+  | 'space-evenly';
   alignItems?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
   flexWrap?: 'nowrap' | 'wrap' | 'wrap-reverse';
   gap?: string;
@@ -65,7 +65,7 @@ export const Title = styled.h1<TitleProps>`
   }
 `;
 
-export const AccountTitle = styled(Title)<TitleProps>`
+export const AccountTitle = styled(Title) <TitleProps>`
   margin-top: 24px;
   margin-bottom: ${({ marginBottom = 48 }) => marginBottom}px;
 
@@ -105,7 +105,7 @@ export const AccountInfoWrapper = styled.div<AccountInfoWrapperProps>`
 
   @media ${({ theme }) => theme.media.medium} {
     flex-direction: ${({ mobileReverse = false }) =>
-      mobileReverse ? 'column-reverse' : 'column'};
+    mobileReverse ? 'column-reverse' : 'column'};
     margin-bottom: 64px;
   }
 `;
@@ -120,18 +120,22 @@ export const StyledButton = styled.button<StyledButtonProps>`
   min-width: ${({ minWidthDesktop = 'auto' }) => minWidthDesktop};
   padding-inline: 16px;
   border-radius: 10px;
-  color: ${({ theme, secondary = false }) =>
-    secondary ? theme.colors.black : theme.colors.white};
-  background-color: ${({ notify = false, secondary = false, theme }) =>
+  color: ${({ theme, isDisabled = false, secondary = false }) =>
+    secondary ? theme.colors.black :
+      isDisabled ? theme.colors.black
+        : theme.colors.white};
+  background-color: ${({ isDisabled = false, notify = false, secondary = false, theme }) =>
     notify
       ? theme.colors.secondary
       : secondary
-      ? 'transparent'
-      : theme.colors.primary};
+        ? 'transparent'
+        : isDisabled
+          ? theme.colors.grey
+          : theme.colors.primary};
   padding-block: 16px;
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
   text-transform: none;
-  border: ${({ theme }) => `1px solid ${theme.colors.secondary}`};
+  border: ${({ isDisabled = false, theme }) => isDisabled ? 'none' : `1px solid ${theme.colors.secondary}`};
   transition: all 0.3s ease;
   cursor: pointer;
   display: flex;
@@ -139,11 +143,11 @@ export const StyledButton = styled.button<StyledButtonProps>`
   align-items: center;
 
   &:hover {
-    color: ${({ theme, hoverColor = theme.colors.white }) => hoverColor};
+    color: ${({ isDisabled, theme, hoverColor = theme.colors.white }) => !isDisabled && hoverColor};
     background-color: ${({
-      theme,
-      hoverBackgroundColor = theme.background.hover,
-    }) => hoverBackgroundColor};
+            isDisabled, theme,
+            hoverBackgroundColor = theme.background.hover,
+          }) => !isDisabled && hoverBackgroundColor};
   }
 
   &:disabled {
@@ -162,7 +166,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
   }
 `;
 
-export const LogoLink = styled(Link)<LogoLinkProps>`
+export const LogoLink = styled(Link) <LogoLinkProps>`
   flex-shrink: 0;
   display: flex;
   position: relative;
@@ -214,7 +218,7 @@ export const StyledIconWrapper = styled.div`
   }
 `;
 
-export const LogoLinkImage = styled(Image)<LogoLinkImageProps>`
+export const LogoLinkImage = styled(Image) <LogoLinkImageProps>`
   width: 100%;
   height: 100%;
 `;

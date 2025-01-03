@@ -1,13 +1,14 @@
-import IconButton from "@/components/global/buttons/IconButton/IconButton";
-import AccountIcon from "@/components/global/icons/AccountIcon/AccountIcon";
-import CartIcon from "@/components/global/icons/CartIcon/CartIcon";
-import FindIcon from "@/components/global/icons/FindIcon/FindIcon";
-import HeartIcon from "@/components/global/icons/HeartIcon/HeartIcon";
-import SearchBar from "@/components/global/SearchBar/SearchBar";
-import { useAppDispatch, useAppSelector } from "@/store";
-import { popupToggle } from "@/store/slices/PopupSlice";
-import React, { useEffect, useState } from "react";
-import Nav from "../../menus/Nav/Nav";
+import IconButton from '@/components/global/buttons/IconButton/IconButton';
+import AccountIcon from '@/components/global/icons/AccountIcon/AccountIcon';
+import CartIcon from '@/components/global/icons/CartIcon/CartIcon';
+import FindIcon from '@/components/global/icons/FindIcon/FindIcon';
+import HeartIcon from '@/components/global/icons/HeartIcon/HeartIcon';
+import SearchBar from '@/components/global/SearchBar/SearchBar';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { popupToggle } from '@/store/slices/PopupSlice';
+import { fetchUser } from '@/utils/auth/authService';
+import React, { useEffect, useState } from 'react';
+import Nav from '../../menus/Nav/Nav';
 import {
   CategoriesButton,
   HeaderContainer,
@@ -15,7 +16,7 @@ import {
   HeaderIcons,
   HeaderWrapper,
   MenuWrapper,
-} from "./styles";
+} from './styles';
 
 const Header: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -27,21 +28,27 @@ const Header: React.FC = () => {
     setCartCount(cartItems.length);
   }, [cartItems]);
 
+  useEffect(() => {
+    fetchUser(dispatch);
+  }, [dispatch]);
+
   return (
     <HeaderWrapper>
       <HeaderContainer>
         {!displayedSearchBar ? (
           <MenuWrapper>
-            <CategoriesButton onClick={() => dispatch(popupToggle("categories-menu"))}>
+            <CategoriesButton
+              onClick={() => dispatch(popupToggle('categories-menu'))}
+            >
               All Shop
             </CategoriesButton>
             <Nav
               menuId={344}
               skeleton={{
                 elements: 3,
-                width: "80px",
-                height: "24px",
-                gap: "48px",
+                width: '80px',
+                height: '24px',
+                gap: '48px',
               }}
               texttransform="uppercase"
               justify="space-between"
@@ -53,11 +60,18 @@ const Header: React.FC = () => {
         <HeaderContent>
           <HeaderIcons>
             {!displayedSearchBar && (
-              <IconButton onClick={() => setDisplayedSearchBar(true)} IconComponent={FindIcon} />
+              <IconButton
+                onClick={() => setDisplayedSearchBar(true)}
+                IconComponent={FindIcon}
+              />
             )}
             <IconButton href="/my-account" IconComponent={AccountIcon} />
             <IconButton count={2} IconComponent={HeartIcon} />
-            <IconButton href="/cart" count={cartCount} IconComponent={CartIcon} />
+            <IconButton
+              href="/cart"
+              count={cartCount}
+              IconComponent={CartIcon}
+            />
           </HeaderIcons>
         </HeaderContent>
       </HeaderContainer>
@@ -66,3 +80,4 @@ const Header: React.FC = () => {
 };
 
 export default Header;
+

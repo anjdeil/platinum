@@ -1,27 +1,31 @@
-import { FC, useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { CustomFormInput } from '../CustomFormInput';
-import { CustomError, CustomSuccess } from '../CustomFormInput/styles';
+import { useUpdateCustomerInfoMutation } from '@/store/rtk-queries/wooCustomAuthApi';
 import { StyledButton, Title } from '@/styles/components';
 import theme from '@/styles/theme';
+import {
+  ChangeFormSchema,
+  ChangeFormType,
+} from '@/types/components/global/forms/changeInfoForm';
+import { WooCustomerReqType } from '@/types/services/wooCustomApi/customer';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { FC, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { CustomFormInput } from '../CustomFormInput';
+import { CustomError, CustomSuccess } from '../CustomFormInput/styles';
 import {
   CustomForm,
   FormWrapper,
   FormWrapperBottom,
 } from '../RegistrationForm/styles';
-import { WooCustomerReqType } from '@/types/services/wooCustomApi/customer';
-import {
-  ChangeFormSchema,
-  ChangeFormType,
-} from '@/types/components/global/forms/changeInfoForm';
-import { useUpdateCustomerInfoMutation } from '@/store/rtk-queries/wooCustomAuthApi';
 
 interface Props {
   defaultCustomerData: WooCustomerReqType;
+  onUserUpdate: (newUserData: WooCustomerReqType) => void;
 }
 
-export const ChangeInfoForm: FC<Props> = ({ defaultCustomerData }) => {
+export const ChangeInfoForm: FC<Props> = ({
+  defaultCustomerData,
+  onUserUpdate,
+}) => {
   const [customError, setCustomError] = useState<string>('');
   const [customerInfo, setCustomerInfo] =
     useState<WooCustomerReqType>(defaultCustomerData);
@@ -80,6 +84,7 @@ export const ChangeInfoForm: FC<Props> = ({ defaultCustomerData }) => {
       const resp = await updateCustomerMutation(reqBody);
       if (!resp.data) throw new Error('Invalid customer response.');
       setCustomerInfo(resp.data);
+      onUserUpdate(resp.data);
     } catch (err) {
       setCustomError(
         'Oops! Something went wrong with the server. Please try again or contact support.'
