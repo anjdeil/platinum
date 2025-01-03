@@ -59,7 +59,7 @@ export const CustomInputStyle = styled.div<CustomInputStyleProps>`
   }
 `;
 export const Input = styled.input<CustomInputProps>`
-  ${(props) => props.as === 'textarea' && 'min-height: 150px;'};
+  ${props => props.as === 'textarea' && 'min-height: 150px;'};
   margin-right: ${({ isCheckbox }) => (isCheckbox ? '15px' : '0')};
   padding: ${({ isCheckbox }) => (isCheckbox ? '0' : '15px')};
   width: ${({ isCheckbox }) => (isCheckbox ? '24px' : '100%')};
@@ -71,20 +71,22 @@ export const Input = styled.input<CustomInputProps>`
   font-size: 16px;
   outline: 1px solid
     ${({ theme, isError }) =>
-    isError ? theme.colors.error : theme.background.formElements};
+      isError ? theme.colors.error : theme.background.formElements};
   background-color: ${({ theme, isCheckbox, background }) =>
     isCheckbox ? '#f0f0f0' : background || theme.background.formElements};
-  transition: outline-width 0.1s ease-in-out, background-color 0.1s ease-in-out;
+  transition:
+    outline-width 0.1s ease-in-out,
+    background-color 0.1s ease-in-out;
 
   &:focus {
     outline: 1px solid
       ${({ theme, isError }) =>
-    isError ? theme.colors.error : theme.colors.primary};
+        isError ? theme.colors.error : theme.colors.primary};
     box-shadow: ${({ theme }) => theme.customShadows.primaryShadow};
   }
 
   &::placeholder {
-    ${(props) => props.as === 'textarea' && 'text-align: start;'};
+    ${props => props.as === 'textarea' && 'text-align: start;'};
   }
 
   &[type='checkbox'] {
@@ -149,8 +151,7 @@ export const CustomError = styled.p`
 `;
 export const CustomSuccess = styled(CustomError)`
   color: ${({ theme }) => theme.colors.success};
-  `;
-
+`;
 
 export const CustomInputContainer = styled.div<CustomInputContainerProps>`
   width: ${({ isCheckbox, width = '100%' }) => (isCheckbox ? '100%' : width)};
@@ -195,8 +196,4 @@ export const StyledPhoneInput = styled(PhoneInput)`
     width: 285px;
     border-radius: 10px;
   }
-`;
-
-export const CustomSuccess = styled(CustomError)`
-  color: ${({ theme }) => theme.colors.success};
 `;
