@@ -1,12 +1,10 @@
 import { RegistrationForm } from '@/components/global/forms/RegistrationForm';
-import { Container, Title } from '@/styles/components';
-import Head from 'next/head';
+import { Container, FormPageWrapper, Title } from '@/styles/components';
 import { GetServerSidePropsContext } from 'next';
 import wpRestApi from '@/services/wpRestApi';
 import { FormContainer } from '@/components/pages/account/styles';
 import { useTranslations } from 'next-intl';
 import Breadcrumbs from '@/components/global/Breadcrumbs/Breadcrumbs';
-import { LoginRegPageWrapper } from '../login/styles';
 
 export default function Registration() {
   const t = useTranslations('MyAccount');
@@ -19,14 +17,14 @@ export default function Registration() {
   ];
 
   return (
-    <LoginRegPageWrapper>
+    <FormPageWrapper>
       <Breadcrumbs links={breadcrumbsLinks} />
       <Container>
         <FormContainer>
           <RegistrationForm />
         </FormContainer>
       </Container>
-    </LoginRegPageWrapper>
+    </FormPageWrapper>
   );
 }
 

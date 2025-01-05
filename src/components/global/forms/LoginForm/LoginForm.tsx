@@ -10,7 +10,7 @@ import {
   useCheckTokenMutation,
   useGetTokenMutation,
 } from '@/store/rtk-queries/wpApi';
-import { CustomError, CustomSuccess } from '../CustomFormInput/styles';
+import { CustomSuccess } from '../CustomFormInput/styles';
 import { CustomFormInput } from '../CustomFormInput';
 import { ActiveText, FormWrapper } from './styles';
 import { FlexBox, StyledButton, Title } from '@/styles/components';
@@ -95,7 +95,9 @@ export const LoginForm: FC = () => {
         </StyledButton>
 
         <FlexBox margin="10px 0 0 0" justifyContent="space-between">
-          <ActiveText href="/my-account/">{t('ForgotYourPassword')}</ActiveText>
+          <ActiveText href="/my-account/reset-password">
+            {t('ForgotYourPassword')}
+          </ActiveText>
           <FlexBox gap="5px">
             <div> {t('DontHaveAnAccount')}</div>
             <ActiveText href="/my-account/registration">

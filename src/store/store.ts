@@ -17,6 +17,7 @@ import PopupSlice from './slices/PopupSlice';
 import ProductSlice from './slices/ProductSlice';
 import themeOptionsSlice from './slices/themeOptionsSlice';
 import userSlice from './slices/userSlice';
+import { passwordResetApi } from './rtk-queries/passwordResetApi';
 
 const rootReducer = combineReducers({
   [wpCustomRtkApi.reducerPath]: wpCustomRtkApi.reducer,
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   [mailpoetApi.reducerPath]: mailpoetApi.reducer,
   [wooCustomAuthRktApi.reducerPath]: wooCustomAuthRktApi.reducer,
   [instagramCustomRtkApi.reducerPath]: instagramCustomRtkApi.reducer,
+  [passwordResetApi.reducerPath]: passwordResetApi.reducer,
   cartSlice,
   languageSlice: languageSlice,
   currencySlice: currencySlice,
@@ -43,7 +45,7 @@ const rootReducer = combineReducers({
 export const setupStore = () => {
   return configureStore({
     reducer: rootReducer,
-    middleware: (getDefaultMiddleware) =>
+    middleware: getDefaultMiddleware =>
       getDefaultMiddleware()
         .concat(wpCustomRtkApi.middleware)
         .concat(wooCustomRktApi.middleware)
@@ -52,7 +54,8 @@ export const setupStore = () => {
         .concat(saveCartSliceToLocalStorageMiddleware)
         .concat(mailpoetApi.middleware)
         .concat(wooCustomAuthRktApi.middleware)
-        .concat(instagramCustomRtkApi.middleware),
+        .concat(instagramCustomRtkApi.middleware)
+        .concat(passwordResetApi.middleware),
   });
 };
 

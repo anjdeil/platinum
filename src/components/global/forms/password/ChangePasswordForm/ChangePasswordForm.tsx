@@ -1,24 +1,24 @@
 import { FC, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { CustomFormInput } from '../CustomFormInput';
-import { CustomError, CustomSuccess } from '../CustomFormInput/styles';
+import { CustomFormInput } from '../../CustomFormInput';
+import { CustomError, CustomSuccess } from '../../CustomFormInput/styles';
 import { StyledButton, Title } from '@/styles/components';
 import {
   CustomForm,
   FormWrapper,
   FormWrapperBottom,
-} from '../RegistrationForm/styles';
-import {
-  useFetchCustomerInfoQuery,
-  useUpdateCustomerInfoMutation,
-} from '@/store/rtk-queries/wooCustomAuthApi';
-
+} from '../../RegistrationForm/styles';
+import { useUpdateCustomerInfoMutation } from '@/store/rtk-queries/wooCustomAuthApi';
 import { z } from 'zod';
-import { ChangePasswordFormSchema } from '@/types/components/global/forms/changePasswordForm';
+
 import { useTranslations } from 'next-intl';
-import { passwordSchema } from '@/types/components/global/forms/common';
-import Notification from '../../Notification/Notification';
+import Notification from '../../../Notification/Notification';
+import { ChangePasswordFormSchema } from '@/types/components/global/forms/changePassword';
+
+//
+//changing the password for an authorized user
+//
 
 export const ChangePasswordForm: FC = () => {
   const [customError, setCustomError] = useState<string>('');
@@ -65,6 +65,7 @@ export const ChangePasswordForm: FC = () => {
       </Title>
       <FormWrapper>
         <CustomFormInput
+          width="100%"
           fieldName={tMyAccount('newpassword')}
           name="password"
           register={register}

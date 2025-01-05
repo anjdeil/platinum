@@ -47,6 +47,7 @@ export const CustomFormInputSchema = z.object({
   background: z.string().optional(),
   list: z.any(),
   disabled: z.boolean().optional(),
+  autoComplete: z.boolean().optional(),
 });
 
 export type CustomFormInputType = z.infer<typeof CustomFormInputSchema>;

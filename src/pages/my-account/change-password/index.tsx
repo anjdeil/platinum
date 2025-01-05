@@ -3,7 +3,7 @@ import { GetServerSidePropsContext } from 'next';
 import { FormContainer } from '@/components/pages/account/styles';
 import { WooCustomerReqType } from '@/types/services/wooCustomApi/customer';
 import wpRestApi from '@/services/wpRestApi';
-import { ChangePasswordForm } from '@/components/global/forms/ChangePasswordForm';
+import { ChangePasswordForm } from '@/components/global/forms/password/ChangePasswordForm';
 import { useTranslations } from 'next-intl';
 import AccountLayout from '@/components/pages/account/AccountLayout';
 

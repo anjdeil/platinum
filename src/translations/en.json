@@ -81,7 +81,13 @@
     "ErrorLoggedIn": "Incorrect email or password. Please try again.",
     "newpassword": "New password",
     "passwordChanged": "Password successfully changed",
-    "passwordChangeError": "There was an error when changing the password, please try again"
+    "passwordChangeError": "There was an error when changing the password, please try again",
+    "resetPassword": "Reset Password",
+    "codeSendError": "The code was not sent, it is possible that the account with this mail does not exist",
+    "codeSent": "The code has been sent, check your email",
+    "codeSentToEmail": "The code was sent to the {email}, check your email",
+    "code": "Code",
+    "setNewPassword": "Set new password"
   },
   "TopBar": {
     "CallUs": "Call us"

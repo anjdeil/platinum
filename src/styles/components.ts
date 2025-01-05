@@ -13,12 +13,12 @@ import Link from 'next/link';
 interface FlexBoxProps {
   flexDirection?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
   justifyContent?:
-  | 'flex-start'
-  | 'flex-end'
-  | 'center'
-  | 'space-between'
-  | 'space-around'
-  | 'space-evenly';
+    | 'flex-start'
+    | 'flex-end'
+    | 'center'
+    | 'space-between'
+    | 'space-around'
+    | 'space-evenly';
   alignItems?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
   flexWrap?: 'nowrap' | 'wrap' | 'wrap-reverse';
   gap?: string;
@@ -65,7 +65,7 @@ export const Title = styled.h1<TitleProps>`
   }
 `;
 
-export const AccountTitle = styled(Title) <TitleProps>`
+export const AccountTitle = styled(Title)<TitleProps>`
   margin-top: 24px;
   margin-bottom: ${({ marginBottom = 48 }) => marginBottom}px;
 
@@ -105,7 +105,7 @@ export const AccountInfoWrapper = styled.div<AccountInfoWrapperProps>`
 
   @media ${({ theme }) => theme.media.medium} {
     flex-direction: ${({ mobileReverse = false }) =>
-    mobileReverse ? 'column-reverse' : 'column'};
+      mobileReverse ? 'column-reverse' : 'column'};
     margin-bottom: 64px;
   }
 `;
@@ -121,10 +121,17 @@ export const StyledButton = styled.button<StyledButtonProps>`
   padding-inline: 16px;
   border-radius: 10px;
   color: ${({ theme, isDisabled = false, secondary = false }) =>
-    secondary ? theme.colors.black :
-      isDisabled ? theme.colors.black
+    secondary
+      ? theme.colors.black
+      : isDisabled
+        ? theme.colors.black
         : theme.colors.white};
-  background-color: ${({ isDisabled = false, notify = false, secondary = false, theme }) =>
+  background-color: ${({
+    isDisabled = false,
+    notify = false,
+    secondary = false,
+    theme,
+  }) =>
     notify
       ? theme.colors.secondary
       : secondary
@@ -135,7 +142,8 @@ export const StyledButton = styled.button<StyledButtonProps>`
   padding-block: 16px;
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
   text-transform: none;
-  border: ${({ isDisabled = false, theme }) => isDisabled ? 'none' : `1px solid ${theme.colors.secondary}`};
+  border: ${({ isDisabled = false, theme }) =>
+    isDisabled ? 'none' : `1px solid ${theme.colors.secondary}`};
   transition: all 0.3s ease;
   cursor: pointer;
   display: flex;
@@ -143,11 +151,13 @@ export const StyledButton = styled.button<StyledButtonProps>`
   align-items: center;
 
   &:hover {
-    color: ${({ isDisabled, theme, hoverColor = theme.colors.white }) => !isDisabled && hoverColor};
+    color: ${({ isDisabled, theme, hoverColor = theme.colors.white }) =>
+      !isDisabled && hoverColor};
     background-color: ${({
-            isDisabled, theme,
-            hoverBackgroundColor = theme.background.hover,
-          }) => !isDisabled && hoverBackgroundColor};
+      isDisabled,
+      theme,
+      hoverBackgroundColor = theme.background.hover,
+    }) => !isDisabled && hoverBackgroundColor};
   }
 
   &:disabled {
@@ -166,7 +176,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
   }
 `;
 
-export const LogoLink = styled(Link) <LogoLinkProps>`
+export const LogoLink = styled(Link)<LogoLinkProps>`
   flex-shrink: 0;
   display: flex;
   position: relative;
@@ -218,7 +228,7 @@ export const StyledIconWrapper = styled.div`
   }
 `;
 
-export const LogoLinkImage = styled(Image) <LogoLinkImageProps>`
+export const LogoLinkImage = styled(Image)<LogoLinkImageProps>`
   width: 100%;
   height: 100%;
 `;
@@ -299,4 +309,8 @@ export const StyledHeaderWrapper = styled.header`
   align-items: center;
   gap: 8px;
   margin: 24px 0;
+`;
+export const FormPageWrapper = styled.header`
+  min-height: 85vh;
+  padding: 24px 0;
 `;

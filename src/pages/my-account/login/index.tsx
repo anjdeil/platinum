@@ -1,4 +1,4 @@
-import { Container } from '@/styles/components';
+import { Container, FormPageWrapper } from '@/styles/components';
 import { GetServerSidePropsContext } from 'next';
 import wpRestApi from '@/services/wpRestApi';
 import { LoginForm } from '@/components/global/forms/LoginForm';
@@ -18,14 +18,14 @@ export default function Login() {
   ];
 
   return (
-    <LoginRegPageWrapper>
+    <FormPageWrapper>
       <Breadcrumbs links={breadcrumbsLinks} />
       <Container>
         <FormContainer>
           <LoginForm />
         </FormContainer>
       </Container>
-    </LoginRegPageWrapper>
+    </FormPageWrapper>
   );
 }
 
