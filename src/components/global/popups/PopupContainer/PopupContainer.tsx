@@ -6,8 +6,10 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import CommentPopup from '../CommentPopup/CommentPopup';
 import MobileCategoriesMenu from '../MobileCategoriesMenu/MobileCategoriesMenu';
+import MobileSearchPopup from '../MobileSearchPopup/MobileSearchPopup';
+import { switchCategory } from '@/components/shop/Archive';
 import SwiperPopup from '../SwiperPopup/SwiperPopup';
-import MiniCart from '@/components/global/popups/MiniCart/MiniCart';
+import MiniCart from '../MiniCart/MiniCart';
 
 const unscrollablePopups = [
   'mobile-search',
@@ -21,7 +23,7 @@ const PopupContainer = () => {
   const dispatch = useDispatch();
   const pathname = usePathname();
 
-  const popup = useAppSelector((state) => state.popup);
+  const popup = useAppSelector(state => state.popup);
 
   useEffect(() => {
     dispatch(popupClosed());
@@ -56,7 +58,7 @@ const PopupContainer = () => {
   }, [pathname]);
 
   useEffect(() => {
-    if (unscrollablePopups.some((popupName) => popup === popupName)) {
+    if (unscrollablePopups.some(popupName => popup === popupName)) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'auto';
@@ -65,7 +67,6 @@ const PopupContainer = () => {
 
   const closePopup = () => {
     dispatch(popupClosed());
-    console.log('close popup');
   };
 
   switch (popup) {
@@ -73,13 +74,24 @@ const PopupContainer = () => {
       return <HamburgerMenu onClose={closePopup} />;
     }
     case 'mobile-categories': {
-      return <MobileCategoriesMenu onClose={closePopup} />;
+      return (
+        <MobileCategoriesMenu
+          padding="all"
+          switchCategory={switchCategory}
+          width="100%"
+          height="90%"
+          onClose={closePopup}
+        />
+      );
     }
     case 'swiper-popup': {
       return <SwiperPopup onClose={closePopup} />;
     }
     case 'add-comment': {
       return <CommentPopup onClose={closePopup} />;
+    }
+    case 'mobile-search': {
+      return <MobileSearchPopup onClose={closePopup} />;
     }
     case 'mini-cart': {
       return <MiniCart onClose={closePopup} />;

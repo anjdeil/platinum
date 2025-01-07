@@ -1,7 +1,13 @@
 import { SlugPageBreadcrumbs } from '@/components/pages/slugPageBreadcrumbs';
+import { RichTextSection } from '@/components/sections/RichTextSection';
 import { SectionRenderer } from '@/components/sections/SectionRenderer';
 import { customRestApi } from '@/services/wpCustomApi';
-import { StyledHeaderWrapper, Title } from '@/styles/components';
+import {
+  Container,
+  StyledHeaderWrapper,
+  StyledSlugRichTextSection,
+  Title,
+} from '@/styles/components';
 import { SectionsType } from '@/types/components/sections';
 import { PageDataFullType, PageDataItemType } from '@/types/services';
 import { validateWpPage } from '@/utils/zodValidators/validateWpPage';
@@ -35,7 +41,8 @@ export const getServerSideProps: GetServerSideProps = async (
 
       return {
         props: {
-          page: pageData,
+          pageTitle: pageData.title,
+          pageContent: pageData.content,
           sections: pageData.sections,
         },
       };
@@ -54,20 +61,35 @@ export const getServerSideProps: GetServerSideProps = async (
 };
 
 interface PageProps {
-  page: PageDataItemType;
+  pageTitle: string;
+  pageContent: string;
   sections: SectionsType[];
 }
 
-const SlugPage = ({ page, sections }: PageProps) => {
+const isContentMain = (content: string, sections: any[]): boolean => {
+  return content.length > 500 || sections.length === 0;
+};
+
+const SlugPage = ({ pageTitle, pageContent, sections }: PageProps) => {
+  const isMainContent = isContentMain(pageContent, sections);
+
   return (
     <>
       <StyledHeaderWrapper>
-        <SlugPageBreadcrumbs title={page.title} />
+        <SlugPageBreadcrumbs title={pageTitle} />
         <Title as={'h1'} uppercase>
-          {page?.title}
+          {pageTitle}
         </Title>
       </StyledHeaderWrapper>
-      {sections.length > 0 && <SectionRenderer sections={sections} />}
+      {isMainContent ? (
+        <Container>
+          <StyledSlugRichTextSection>
+            <RichTextSection text={pageContent} fullSize={isMainContent} />
+          </StyledSlugRichTextSection>
+        </Container>
+      ) : (
+        <SectionRenderer sections={sections} />
+      )}
     </>
   );
 };

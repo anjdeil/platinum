@@ -50,8 +50,8 @@
     "first_name": "Imię",
     "last_name": "Nazwisko",
     "company": "Firma",
-    "address_1": "Adres 1",
-    "address_2": "Adres 2",
+    "address_1": "Ulica",
+    "address_2": "Numer domu",
     "city": "Miasto",
     "state": "Stan",
     "postcode": "Kod pocztowy",
@@ -64,7 +64,24 @@
     "total": "Razem",
     "action": "Działanie",
     "availablePcs": "Dostępne {quantity} szt",
-    "nothingInTheWishlist": "Na liście życzeń nie ma nic..."
+    "nothingInTheWishlist": "Na liście życzeń nie ma nic...",
+    "apartmentNumber": "Numer mieszkania",
+    "registration": "Rejestracja",
+    "login": "Zaloguj się",
+    "log-In": "Zaloguj się",
+    "password": "Hasło",
+    "confirmPassword": "Potwierdź hasło",
+    "AlreadyHaveAnAccount": "Masz już konto?",
+    "DontHaveAnAccount": "Nie masz konta?",
+    "SignUpNow": "Zarejestruj się teraz!",
+    "register": "Zarejestruj się",
+    "agreePersonalData": "Zgadzam się na przetwarzanie danych osobowych",
+    "EditUserInfo": "Zaktualizuj swój profil",
+    "successUpdate": "Twój profil został pomyślnie zaktualizowany",
+    "YourAccountHasBeenCreated": "Twoje konto zostało pomyślnie utworzone!",
+    "ForgotYourPassword": "Zapomniałeś hasła?",
+    "SuccessfullyLoggedIn": "Pomyślnie zalogowano!",
+    "ErrorLoggedIn": "Nieprawidłowy e-mail lub hasło. Spróbuj ponownie."
   },
   "TopBar": {
     "CallUs": "Zadzwoń do nas"
@@ -73,7 +90,13 @@
     "Search": "Wyszukiwanie"
   },
   "Archive": {
-    "goHome": "Główna"
+    "goHome": "Główna",
+    "filters": "Filtry",
+    "products": "Produkty",
+    "stocks": "Sortuj według dostępności w magazynie",
+    "new": "Sortuj według najnowszych",
+    "cheapest": "Sortuj według najtańszych",
+    "expensive": "Sortuj według najdroższych"
   },
   "Product": {
     "addToBasket": "Dodaj do koszyka",
@@ -189,6 +212,12 @@
     "phoneNumber": "Numer telefonu",
     "country": "Kraj",
     "city": "Miasto",
+    "street": "Ulica",
+    "postCode": "Kod pocztowy",
+    "apartment/office": "Nr mieszkania/biura",
+    "buildingNumber": "Numer budynku",
+    "proofOfPurchase": "Dowód zakupu",
+
     "aboutYourself": "O sobie",
     "preview": "Podgląd",
     "clickToUpload": "Kliknij, aby przesłać",
@@ -198,15 +227,30 @@
     "sending": "Wysyłanie...",
     "sendButton": "Wyślij",
     "InvalidPhoneNumber": "Nieprawidłowy numer telefonu",
-    "fileTooLarge": "zbyt duży plik"
+    "fileTooLarge": "zbyt duży plik",
+    "saving": "Zapisywanie...",
+    "saveChanges": "Zapisz zmiany",
+    "agreentment": "Zgadzam się na otrzymywanie informacji o nowościach i zmianach w ofercie sklepu",
+    "agreentmentTerms": "Musisz zgodzić się z warunkami",
+    "theSameAddress": "Ten sam adres co w informacjach o kliencie",
+    "PasswordCapitalLetter": "Hasło musi zawierać przynajmniej jedną wielką literę.",
+    "PasswordLowercaseLetter": "Hasło musi zawierać przynajmniej jedną małą literę.",
+    "PasswordDigit": "Hasło musi zawierać przynajmniej jedną cyfrę.",
+    "PasswordSpecialChar": "Hasło musi zawierać przynajmniej jeden znak specjalny.",
+    "PasswordsDoNotMatch": "Hasła nie są zgodne"
   },
   "Breadcrumbs": {
     "homePage": "Strona Główna",
     "benefitsPage": "Lojalnościowy Program",
+    "myAccount": "Moje konto",
+    "registration": "Rejestracja",
     "blogPage": "Blog"
   },
   "Forms": {
-    "applicationForm": "Formularz zgłoszeniowy"
+    "applicationForm": "Formularz zgłoszeniowy",
+    "UserInfo": "Informacje o użytkowniku",
+    "ShippingInfo": "Informacje o wysyłce",
+    "fileTooLarge": "zbyt duży plik"
   },
   "NotFoundPage": {
     "notFound": "Strona nie znaleziona",

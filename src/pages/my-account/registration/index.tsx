@@ -4,19 +4,29 @@ import Head from 'next/head';
 import { GetServerSidePropsContext } from 'next';
 import wpRestApi from '@/services/wpRestApi';
 import { FormContainer } from '@/components/pages/account/styles';
+import { useTranslations } from 'next-intl';
+import Breadcrumbs from '@/components/global/Breadcrumbs/Breadcrumbs';
+import { LoginRegPageWrapper } from '../login/styles';
 
 export default function Registration() {
+  const t = useTranslations('MyAccount');
+  const tBreadcrumbs = useTranslations('Breadcrumbs');
+
+  const breadcrumbsLinks = [
+    { name: tBreadcrumbs('homePage'), url: '/' },
+    { name: tBreadcrumbs('myAccount'), url: '/my-account' },
+    { name: t('registration'), url: '/my-account/registration' },
+  ];
+
   return (
-    <>
-      <Head>
-        <title>My account registration</title>
-      </Head>
+    <LoginRegPageWrapper>
+      <Breadcrumbs links={breadcrumbsLinks} />
       <Container>
         <FormContainer>
           <RegistrationForm />
         </FormContainer>
       </Container>
-    </>
+    </LoginRegPageWrapper>
   );
 }
 

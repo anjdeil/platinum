@@ -9,6 +9,7 @@ export const CustomFormInputSchema = z.object({
     z.literal('password'),
     z.literal('number'),
     z.literal('phone'),
+    z.literal('newpassword'),
   ]),
   name: z.string().optional(),
   register: z.any().optional(),
@@ -44,6 +45,8 @@ export const CustomFormInputSchema = z.object({
   height: z.string().optional(),
   width: z.string().optional(),
   background: z.string().optional(),
+  list: z.any(),
+  disabled: z.boolean().optional(),
 });
 
 export type CustomFormInputType = z.infer<typeof CustomFormInputSchema>;

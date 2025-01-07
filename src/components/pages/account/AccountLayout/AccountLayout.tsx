@@ -7,41 +7,31 @@ import { ReactNode } from "react";
 import { AccountContainer, AccountContent, SideListContainer } from "./styles";
 import accountLinks from "./accountLinks";
 
-export default function AccountLayout({
-    title,
-    children
-}: {
-    title: string,
-    children: ReactNode
-}) {
-    const t = useTranslations("MyAccount");
-    const router = useRouter();
-    const activeLink = router.pathname;
+export default function AccountLayout({ title, children }: { title: string; children: ReactNode }) {
+  const t = useTranslations("MyAccount");
+  const router = useRouter();
+  const activeLink = router.pathname;
 
-    const translatedAccountLinks = accountLinks.map(({ name, ...props }) => ({
-        name: t(name),
-        ...props
-    }))
+  const translatedAccountLinks = accountLinks.map(({ name, ...props }) => ({
+    name: t(name),
+    ...props,
+  }));
 
-    return (
-        <>
-            <Head>
-                <title>{title}</title>
-            </Head>
+  return (
+    <>
+      <Head>
+        <title>{title}</title>
+      </Head>
 
-            <AccountTitle as={"h1"} textalign="center" uppercase>{title}</AccountTitle>
-            <AccountContainer>
-                <SideListContainer>
-                    <SideList
-                        links={translatedAccountLinks}
-                        activeLink={activeLink}
-                        borderRadius="10px"
-                    />
-                </SideListContainer>
-                <AccountContent>
-                    {children}
-                </AccountContent>
-            </AccountContainer>
-        </>
-    );
+      <AccountTitle as={"h1"} textalign="center" uppercase>
+        {title}
+      </AccountTitle>
+      <AccountContainer>
+        <SideListContainer>
+          <SideList links={translatedAccountLinks} activeLink={activeLink} borderRadius="10px" />
+        </SideListContainer>
+        <AccountContent>{children}</AccountContent>
+      </AccountContainer>
+    </>
+  );
 }

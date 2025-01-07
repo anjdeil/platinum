@@ -50,12 +50,13 @@
     "first_name": "Name",
     "last_name": "Surname",
     "company": "Company",
-    "address_1": "Address 1",
-    "address_2": "Address 2",
+    "address_1": "Street",
+    "address_2": "Building number",
     "city": "City",
     "state": "State",
     "postcode": "Postcode",
     "country": "Country",
+    "apartmentNumber": "Apartment number",
     "email": "E-mail",
     "phone": "Phone",
     "discountCode": "Discount code",
@@ -63,9 +64,24 @@
     "paymentMethod": "Payment method",
     "total": "Total",
     "action": "Action",
-
     "availablePcs": "Available {quantity} pcs",
-    "nothingInTheWishlist": "There's nothing in the wishlist..."
+    "nothingInTheWishlist": "There's nothing in the wishlist...",
+    "login": "Login",
+    "log-In": "Log in",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "AlreadyHaveAnAccount": "Already have an account?",
+    "DontHaveAnAccount": "Don't have an account?",
+    "SignUpNow": "Sign up now!",
+    "register": "Register",
+    "registration": "Registration",
+    "agreePersonalData": "I agree to the processing of personal data",
+    "EditUserInfo": "Update Your Profile",
+    "successUpdate": "Your profile has been successfully updated",
+    "YourAccountHasBeenCreated": "Your account has been created successfully!",
+    "ForgotYourPassword": "Forgot your password?",
+    "SuccessfullyLoggedIn": "Successfully logged in!",
+    "ErrorLoggedIn": "Incorrect email or password. Please try again."
   },
   "TopBar": {
     "CallUs": "Call us"
@@ -74,7 +90,13 @@
     "Search": "Search"
   },
   "Archive": {
-    "goHome": "Home"
+    "goHome": "Home",
+    "filters": "Filters",
+    "products": "products",
+    "stocks": "Sort by stock availability",
+    "new": "Sort by newest",
+    "cheapest": "Sort by cheapest",
+    "expensive": "Sort by most expensive"
   },
   "Product": {
     "addToBasket": "Add to basket",
@@ -189,6 +211,11 @@
     "phoneNumber": "Phone number",
     "country": "Country",
     "city": "City",
+    "street": "Street",
+    "postCode": "Post Code",
+    "apartment/office": "№ apartment/office",
+    "buildingNumber": "Building number",
+    "proofOfPurchase": "Proof of purchase",
     "aboutYourself": "About yourself",
     "preview": "Preview",
     "clickToUpload": "Click to upload",
@@ -197,17 +224,34 @@
     "max": "max",
     "sending": "Sending...",
     "sendButton": "Send",
+    "saving": "Saving...",
+    "saveChanges": "Save changes",
     "InvalidPhoneNumber": "Invalid phone number",
-    "fileTooLarge": "file too large"
+    "fileTooLarge": "file too large",
+    "agreentment": "I agree to receiving information regarding news and changes to the stores offer",
+    "agreentmentTerms": "You must agree to the terms",
+    "theSameAddress": "The same address as on customer information",
+    "PasswordCapitalLetter": "Password must contain at least one uppercase letter.",
+    "PasswordLowercaseLetter": "Password must contain at least one lowercase letter.",
+    "PasswordDigit": "Password must contain at least one digit.",
+    "PasswordSpecialChar": "Password must contain at least one special character.",
+    "PasswordsDoNotMatch": "Passwords do not match"
   },
   "Forms": {
-    "applicationForm": "application form"
+    "applicationForm": "application form",
+    "UserInfo": "User information",
+    "ShippingInfo": "Shipping information",
+    "InvalidPhoneNumber": "Invalid phone number",
+    "fileTooLarge": "file too large"
   },
   "Breadcrumbs": {
     "homePage": "Home Page",
     "benefitsPage": "Loyalty Program",
+    "myAccount": "My account",
+    "registration": "Registration",
     "blogPage": "Blog"
   },
+
   "NotFoundPage": {
     "notFound": "Page not found",
     "description": "Sorry, we can't seem to find the page you're looking for. It may have been moved, deleted, or never existed.",

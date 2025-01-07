@@ -2,12 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface MenuCatState {
     isOpen: boolean;
-    isCategoryActive: number | null;
+    CategoryActiveHover: number | null;
 }
 
 const initialState: MenuCatState = {
     isOpen: false,
-    isCategoryActive: null,
+    CategoryActiveHover: null,
 }
 
 export const MenuCategoriesSlice = createSlice({
@@ -15,7 +15,7 @@ export const MenuCategoriesSlice = createSlice({
     initialState,
     reducers: {
         setCategory: (state, action) => {
-            state.isCategoryActive = action.payload;
+            state.CategoryActiveHover = action.payload;
         },
         setMenuOpen: (state, action) => {
             state.isOpen = action.payload;

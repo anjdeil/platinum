@@ -10,6 +10,8 @@ import {
 import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/router';
 import { WishlistItem } from '@/types/store/rtk-queries/wpApi';
+import { useGetCurrenciesQuery } from '@/store/rtk-queries/wpCustomApi';
+import { useAppSelector } from '@/store';
 
 export const ProductCardList: FC<ProductCardListProps> = ({
   isLoading = false,
@@ -96,6 +98,21 @@ export const ProductCardList: FC<ProductCardListProps> = ({
   }
 
   isLoading = userDataUpdateLoading || isUserFetching;
+  const { data: currencies, isLoading: isCurrenciesLoading } =
+    useGetCurrenciesQuery();
+  const selectedCurrency = useAppSelector(state => state.currencySlice);
+
+  const currentCurrency =
+    currencies && !isCurrenciesLoading
+      ? currencies?.data?.items.find(
+          currency => currency.code === selectedCurrency.name
+        )
+      : undefined;
+
+  const extendedCurrency = {
+    ...selectedCurrency,
+    rate: currentCurrency ? currentCurrency.rate || 1 : undefined,
+  };
 
   return (
     <StyledProductCardList
@@ -110,6 +127,7 @@ export const ProductCardList: FC<ProductCardListProps> = ({
           product={product}
           handleDisire={handleDisire}
           isLoading={isLoading}
+          currency={extendedCurrency}
         />
       ))}
     </StyledProductCardList>

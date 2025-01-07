@@ -123,28 +123,30 @@ export const StyledButton = styled.button<StyledButtonProps>`
   min-width: ${({ minWidthDesktop = 'auto' }) => minWidthDesktop};
   padding-inline: 16px;
   border-radius: 10px;
-
-  color: ${({ theme, secondary = false }) =>
-    secondary ? theme.colors.black : theme.colors.white};
-  background-color: ${({ notify = false, secondary = false, theme }) =>
+  color: ${({ theme, isDisabled = false, secondary = false }) =>
+    secondary
+      ? theme.colors.black
+      : isDisabled
+        ? theme.colors.black
+        : theme.colors.white};
+  background-color: ${({
+    isDisabled = false,
+    notify = false,
+    secondary = false,
+    theme,
+  }) =>
     notify
       ? theme.colors.secondary
       : secondary
-      ? 'transparent'
-      : theme.colors.primary};
-
-  ${({ disabled, theme }) =>
-    disabled &&
-    `
-      background-color: ${theme.colors.secondary};
-      cursor: not-allowed;
-      pointer-events: none;
-    `}
-
+        ? 'transparent'
+        : isDisabled
+          ? theme.colors.grey
+          : theme.colors.primary};
   padding-block: 16px;
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
   text-transform: none;
-  border: ${({ theme }) => `1px solid ${theme.colors.secondary}`};
+  border: ${({ isDisabled = false, theme }) =>
+    isDisabled ? 'none' : `1px solid ${theme.colors.secondary}`};
   transition: all 0.3s ease;
   cursor: pointer;
   display: flex;
@@ -153,17 +155,18 @@ export const StyledButton = styled.button<StyledButtonProps>`
   text-decoration: ${({ textDecoration = 'none' }) => textDecoration};
 
   &:hover {
-    ${({
-      disabled,
+    color: ${({ isDisabled, theme, hoverColor = theme.colors.white }) =>
+      !isDisabled && hoverColor};
+    background-color: ${({
+      isDisabled,
       theme,
-      hoverColor = theme.colors.white,
       hoverBackgroundColor = theme.background.hover,
-    }) =>
-      !disabled &&
-      `
-        color: ${hoverColor};
-        background-color: ${hoverBackgroundColor};
-      `}
+    }) => !isDisabled && hoverBackgroundColor};
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
   }
 
   @media ${({ theme }) => theme.media.large} {
@@ -178,6 +181,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
 `;
 
 export const LogoLink = styled(Link)<LogoLinkProps>`
+  flex-shrink: 0;
   display: flex;
   position: relative;
   width: ${({ desktopwidth = 92 }) => `${desktopwidth}px`};
@@ -236,6 +240,44 @@ export const LogoLinkImage = styled(Image)<LogoLinkImageProps>`
 export const Text = styled.span<TextProps>`
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
   text-align: ${({ textalign = 'left' }) => textalign};
+`;
+//----------------------FORM
+
+interface CustomFormProps {
+  maxWidth?: string;
+}
+
+export const CustomForm = styled.form<CustomFormProps>`
+  margin: 0 auto;
+  max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : '1100px')};
+`;
+
+export const FormWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(49%, 1fr));
+  column-gap: 1%;
+  row-gap: 15px;
+  padding-bottom: 20px;
+
+  @media ${({ theme }) => theme.media.medium} {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+  }
+`;
+
+export const FormWrapperBottom = styled.div`
+  margin-top: 24px;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
+
+export const Overlay = styled.div`
+  position: fixed;
+  z-index: 90;
+  inset: 0;
 `;
 
 export const VariationTitle = styled(Text)`

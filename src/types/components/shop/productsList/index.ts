@@ -1,16 +1,17 @@
-import { ProductSchema } from "@/types/pages/shop";
+import { CustomDataProductsSchema } from "@/types/services";
 import { z } from "zod";
+import { ProductSchema } from "../product/products";
 
 export const ColumnsPropsSchema = z.object({
-    mobileColumns: z.number().optional(),
-    tabletColumns: z.number().optional(),
-    desktopColumns: z.number().optional(),
-})
+  mobileColumns: z.number().optional(),
+  tabletColumns: z.number().optional(),
+  desktopColumns: z.number().optional(),
+});
 
 const StyledProductCardListPropsSchema = z.object({
-    ...ColumnsPropsSchema.shape,
-    gap: z.string().optional(),
-    mobGap: z.string().optional(),
+  ...ColumnsPropsSchema.shape,
+  gap: z.string().optional(),
+  mobGap: z.string().optional(),
 });
 
 export const ProductCardListPropsSchema = z.object({
@@ -27,8 +28,8 @@ const ProductCardListSkeletonPropsSchema = z.object({
 });
 
 const CustomProductListPropsSchema = z.object({
-    title: z.string(),
-    productIds: z.array(z.number()),
+  title: z.string(),
+  productIds: z.array(z.number()),
 });
 
 export type ProductCardListSkeletonProps = z.infer<typeof ProductCardListSkeletonPropsSchema>;

@@ -49,8 +49,8 @@
     "first_name": "Ім'я",
     "last_name": "Прізвище",
     "company": "Компанія",
-    "address_1": "Адреса 1",
-    "address_2": "Адреса 2",
+    "address_1": "Вулиця",
+    "address_2": "Номер будівлі",
     "city": "Місто",
     "state": "Область",
     "postcode": "Поштовий індекс",
@@ -63,7 +63,24 @@
     "total": "Всього",
     "action": "Дія",
     "availablePcs": "У наявності {quantity} шт",
-    "nothingInTheWishlist": "У списку бажань нічого немає..."
+    "nothingInTheWishlist": "У списку бажань нічого немає...",
+    "apartmentNumber": "Номер квартири",
+    "registration": "Реєстрація",
+    "login": "Увійти",
+    "log-In": "Увійти",
+    "password": "Пароль",
+    "confirmPassword": "Підтвердьте пароль",
+    "AlreadyHaveAnAccount": "Уже є акаунт?",
+    "DontHaveAnAccount": "Немає акаунта?",
+    "SignUpNow": "Зареєструйтесь зараз!",
+    "register": "Зареєструватися",
+    "agreePersonalData": "Згоден на обробку персональних даних",
+    "EditUserInfo": "Оновити профіль",
+    "successUpdate": "Ваш профіль був успішно оновлений",
+    "YourAccountHasBeenCreated": "Ваш акаунт успішно створено!",
+    "ForgotYourPassword": "Забули пароль?",
+    "SuccessfullyLoggedIn": "Успішно увійшли в систему!",
+    "ErrorLoggedIn": "Неправильна електронна пошта або пароль. Будь ласка, спробуйте ще раз."
   },
   "TopBar": {
     "CallUs": "Зателефонуйте нам"
@@ -72,7 +89,13 @@
     "Search": "Пошук"
   },
   "Archive": {
-    "goHome": "Головна"
+    "goHome": "Головна",
+    "filters": "Фільтри",
+    "products": "Товари",
+    "stocks": "Сортувати за наявністю на складі",
+    "new": "Сортувати за новизною",
+    "cheapest": "Сортувати за ціною: від найдешевших",
+    "expensive": "Сортувати за ціною: від найдорожчих"
   },
   "Product": {
     "addToBasket": "Додати до кошика",
@@ -188,6 +211,11 @@
     "phoneNumber": "Номер телефону",
     "country": "Країна",
     "city": "Місто",
+    "street": "Вулиця",
+    "postCode": "Поштовий індекс",
+    "apartment/office": "№ квартири/офісу",
+    "buildingNumber": "Номер будинку",
+    "proofOfPurchase": "Підтвердження покупки",
     "aboutYourself": "Про себе",
     "preview": "Попередній перегляд",
     "clickToUpload": "Натисніть, щоб завантажити",
@@ -197,16 +225,31 @@
     "sending": "Відправка...",
     "sendButton": "Надіслати",
     "InvalidPhoneNumber": "Неправильний номер телефону",
+    "fileTooLarge": "файл занадто великий",
+    "agreentment": "Я погоджуюсь на отримання інформації про новини та зміни в пропозиції магазину",
+    "agreentmentTerms": "Ви повинні погодитися з умовами",
+    "theSameAddress": "Та сама адреса, що й у інформації про клієнта",
+    "PasswordCapitalLetter": "Пароль повинен містити хоча б одну велику літеру.",
+    "PasswordLowercaseLetter": "Пароль повинен містити хоча б одну малу літеру.",
+    "PasswordDigit": "Пароль повинен містити хоча б одну цифру.",
+    "PasswordSpecialChar": "Пароль повинен містити хоча б один спеціальний символ.",
+    "PasswordsDoNotMatch": "Паролі не збігаються"
+  },
+
+  "Forms": {
+    "applicationForm": "форма заявки",
+    "UserInfo": "Інформація про користувача",
+    "ShippingInfo": "Інформація про доставку",
     "fileTooLarge": "файл занадто великий"
   },
   "Breadcrumbs": {
     "homePage": "Головна",
     "benefitsPage": "Програма лояльності",
+    "myAccount": "Мій акаунт",
+    "registration": "Реєстрація",
     "blogPage": "Блог"
   },
-  "Forms": {
-    "applicationForm": "форма заявки"
-  },
+
   "NotFoundPage": {
     "notFound": "Сторінка не знайдена",
     "description": "На жаль, ми не можемо знайти сторінку, яку ви шукаєте. Можливо, її було переміщено, видалено або вона ніколи не існувала.",

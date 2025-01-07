@@ -49,8 +49,8 @@
     "first_name": "Vorname",
     "last_name": "Nachname",
     "company": "Firma",
-    "address_1": "Adresse 1",
-    "address_2": "Adresse 2",
+    "address_1": "Straße",
+    "address_2": "Gebäudenummer",
     "city": "Stadt",
     "state": "Bundesland",
     "postcode": "Postleitzahl",
@@ -63,13 +63,39 @@
     "total": "Gesamt",
     "action": "Aktion",
     "availablePcs": "Verfügbar {quantity} Stk",
-    "nothingInTheWishlist": "Auf der Wunschliste steht nichts..."
+    "nothingInTheWishlist": "Auf der Wunschliste steht nichts...",
+    "apartmentNumber": "Wohnungsnumme",
+    "login": "Zaloguj się",
+    "log-In": "Zaloguj się",
+    "password": "Hasło",
+    "confirmPassword": "Potwierdź hasło",
+    "AlreadyHaveAnAccount": "Masz już konto?",
+    "DontHaveAnAccount": "Nie masz konta?",
+    "SignUpNow": "Zarejestruj się teraz!",
+    "register": "Zarejestruj się",
+    "registration": "Rejestracja",
+    "agreePersonalData": "Zgadzam się na przetwarzanie danych osobowych",
+    "EditUserInfo": "Zaktualizuj swój profil",
+    "successUpdate": "Twój profil został pomyślnie zaktualizowany",
+    "YourAccountHasBeenCreated": "Twoje konto zostało pomyślnie utworzone!",
+    "ForgotYourPassword": "Haben Sie Ihr Passwort vergessen?",
+    "SuccessfullyLoggedIn": "Erfolgreich eingeloggt!",
+    "ErrorLoggedIn": "Falsche E-Mail-Adresse oder falsches Passwort. Bitte versuchen Sie es erneut."
   },
   "TopBar": {
     "CallUs": "Rufen Sie uns an"
   },
   "Search": {
     "Search": "Suche"
+  },
+  "Archive": {
+    "goHome": "Startseite",
+    "filters": "Filter",
+    "products": "Produkte",
+    "stocks": "Nach Lagerverfügbarkeit sortieren",
+    "new": "Nach Neuheiten sortieren",
+    "cheapest": "Nach günstigstem Preis sortieren",
+    "expensive": "Nach höchstem Preis sortieren"
   },
   "Product": {
     "addToBasket": "In den Warenkorb legen",

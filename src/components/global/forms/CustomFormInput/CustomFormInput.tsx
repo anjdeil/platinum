@@ -10,7 +10,6 @@ import {
   StyledPhoneInput,
 } from './styles';
 import { CustomFormInputType } from '@/types/components/global/forms/customFormInput';
-import { PhoneInput } from 'react-international-phone';
 import 'react-international-phone/style.css';
 
 export const CustomFormInput: FC<CustomFormInputType> = ({
@@ -31,11 +30,13 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
   label = true,
   setValue,
   defaultValue,
+  list,
+  disabled,
 }) => {
   const registerProps = register ? { ...register(name) } : {};
 
   const [isPasswordVisible, setPasswordVisible] = useState(false);
-  const togglePasswordVisibility = () => setPasswordVisible((prev) => !prev);
+  const togglePasswordVisibility = () => setPasswordVisible(prev => !prev);
   const passwordImagePath = useMemo(
     () =>
       isPasswordVisible ? '/images/show-pass.svg' : '/images/hidden-pass.svg',
@@ -59,6 +60,17 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
     }
   }, [defaultValue, setValue, name]);
 
+  const handleChange = (inputValue: any) => {
+    if (setValue) {
+      setValue(name, inputValue, { shouldValidate: false });
+    }
+  };
+
+  const handleBlur = (inputValue: any) => {
+    if (setValue) {
+      setValue(name, inputValue, { shouldValidate: true });
+    }
+  };
   return (
     <CustomInputContainer isCheckbox={inputType === 'checkbox'} width={width}>
       <CustomInputStyle
@@ -82,33 +94,43 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
             <StyledPhoneInput
               defaultCountry="pl"
               value={value || defaultValue}
-              onChange={(phoneValue) => {
-                if (setValue) {
-                  setValue(name, phoneValue, { shouldValidate: true });
-                }
-              }}
+              onChange={handleChange}
+              onBlur={e => handleBlur(e.target.value)}
             />
           ) : (
             <Input
               as={inputTag}
               placeholder={placeholder ? placeholder : ''}
               {...register(name)}
-              type={isPasswordVisible ? 'text' : inputType}
+              type={
+                isPasswordVisible
+                  ? 'text'
+                  : inputType === 'newpassword'
+                    ? 'password'
+                    : inputType
+              }
               {...registerProps}
               height={height}
               background={background}
+              isCheckbox={inputType === 'checkbox'}
+              autoComplete={
+                inputType === 'newpassword' ? 'new-password' : undefined
+              }
+              {...(name === 'country' ? { list: list } : {})}
+              disabled={disabled}
             />
           )}
-          {inputType === 'password' && (
-            <ShowPasswordImage
-              src={passwordImagePath}
-              alt={'show or hidden password button'}
-              width={24}
-              height={24}
-              onClick={togglePasswordVisibility}
-              unoptimized={true}
-            />
-          )}
+          {inputType === 'password' ||
+            (inputType === 'newpassword' && (
+              <ShowPasswordImage
+                src={passwordImagePath}
+                alt={'show or hidden password button'}
+                width={24}
+                height={24}
+                onClick={togglePasswordVisibility}
+                unoptimized={true}
+              />
+            ))}
         </CustomInputWrapper>
       </CustomInputStyle>
       {isError && name && <CustomError>{errors[name]?.message}</CustomError>}
