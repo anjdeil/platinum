@@ -89,7 +89,7 @@ export const CustomSortAccordion = () => {
 
       switch (sort) {
         case "new":
-          newSortParams = { order_by: "created", order: "asc" };
+          newSortParams = { order_by: 'created', order: 'desc' };
           break;
         case "cheapest":
           newSortParams = { order_by: "min_price", order: "asc" };

@@ -130,19 +130,18 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
   const updateUrlParams = useCallback(() => {
     const params = Object.fromEntries(
       Array.from(chosenAttributes.entries())
-        .filter(([key, set]) => set.size > 0) // Удаляем пустые параметры
+        .filter(([key, set]) => set.size > 0) // Remove empty parameters
         .map(([key, set]) => [key, Array.from(set).join(',')])
     );
 
     if (!Array.isArray(router?.query?.slugs)) return;
 
-    const newSlugs = router?.query?.slugs?.filter(
+    const newSlugs = router.query.slugs.filter(
       slug => slug !== 'page' && Number.isNaN(+slug)
     );
 
     const newQuery: Record<string, string | string[]> = {
       slugs: newSlugs,
-      ...router.query,
       ...params,
     };
 

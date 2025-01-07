@@ -47,6 +47,12 @@ export const PagesNavigationWrapper = styled.div`
   }
 `;
 
+export const PagesNavigationFooterWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+`;
+  
 export const CountProduct = styled.span`
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
 

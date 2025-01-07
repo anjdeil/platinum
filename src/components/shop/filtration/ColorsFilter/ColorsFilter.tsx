@@ -10,7 +10,6 @@ const ColorsFilter: FC<FilterAttributesPropsType> = ({
   onReset,
   onApply,
 }) => {
-  console.log(currentAttribute, 'currentAttribute');
   return (
     <div>
       <StyledButtonGroup>

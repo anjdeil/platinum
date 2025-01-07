@@ -12,33 +12,34 @@ import {
   CountProduct,
   FilterSortWrapper,
   FilterWrapper,
+  PagesNavigationFooterWrapper,
   PagesNavigationWrapper,
-} from "./styles";
-import transformCategoriesIntoLinks from "@/services/transformers/transformCategoriesIntoLinks";
-import { useTranslations } from "next-intl";
-import { CategoryType } from "@/types/pages/shop";
-import { PagesNavigation, Title } from "@/styles/components";
-import { FC, useEffect, useState } from "react";
-import router from "next/router";
-import { FilterPanel } from "../filtration/FilterPanel";
-import { ArchivePropsType } from "@/types/components/shop/archive";
-import { FilterNCategoriesHead, FilterOverlay } from "./styles";
-import CloseIcon from "@/components/global/icons/CloseIcon/CloseIcon";
-import { ProductCardList } from "../ProductCardsList";
-import { useResponsive } from "@/hooks/useResponsive";
-import MobileCategoriesMenu from "@/components/global/popups/MobileCategoriesMenu/MobileCategoriesMenu";
-import SelectParentCategory from "../categories/SelectParentCategoryMobile/SelectParentCategoryMobile";
-import CategoriesMenu from "@/components/shop/categories/CategoriesMenu/CategoriesMenu";
-import { useAppSelector } from "@/store";
-import { Skeleton } from "@mui/material";
+} from './styles';
+import transformCategoriesIntoLinks from '@/services/transformers/transformCategoriesIntoLinks';
+import { useTranslations } from 'next-intl';
+import { CategoryType } from '@/types/pages/shop';
+import { PagesNavigation, Title } from '@/styles/components';
+import { FC, useEffect, useState } from 'react';
+import router from 'next/router';
+import { FilterPanel } from '../filtration/FilterPanel';
+import { ArchivePropsType } from '@/types/components/shop/archive';
+import { FilterNCategoriesHead, FilterOverlay } from './styles';
+import CloseIcon from '@/components/global/icons/CloseIcon/CloseIcon';
+import { ProductCardList } from '../ProductCardsList';
+import { useResponsive } from '@/hooks/useResponsive';
+import MobileCategoriesMenu from '@/components/global/popups/MobileCategoriesMenu/MobileCategoriesMenu';
+import SelectParentCategory from '../categories/SelectParentCategoryMobile/SelectParentCategoryMobile';
+import CategoriesMenu from '@/components/shop/categories/CategoriesMenu/CategoriesMenu';
+import { useAppSelector } from '@/store';
+import { Skeleton } from '@mui/material';
 
 const switchPage = (page: number, maxPage: number) => {
   if (maxPage < page) return;
   const { slugs, ...params } = router.query;
   if (!Array.isArray(slugs)) return;
 
-  const newSlugs = slugs.filter((slug) => slug !== "page" && Number.isNaN(+slug));
-  if (page !== 1) newSlugs.push("page", String(page));
+  const newSlugs = slugs.filter(slug => slug !== 'page' && Number.isNaN(+slug));
+  if (page !== 1) newSlugs.push('page', String(page));
 
   router.push({
     pathname: router.pathname,
@@ -60,10 +61,10 @@ export const switchCategory = (parentSlug: string, childSlug?: string) => {
   });
 };
 
-export const Archive: FC<ArchivePropsType> = (props) => {
+export const Archive: FC<ArchivePropsType> = props => {
   const { products, categories, pagesCount, page, statistic, locale } = props;
 
-  const t = useTranslations("Archive");
+  const t = useTranslations('Archive');
 
   const currentCategory = Array.isArray(categories)
     ? (categories[categories.length - 1] as CategoryType)
@@ -72,11 +73,13 @@ export const Archive: FC<ArchivePropsType> = (props) => {
   /**
    * Formulate categories links for breadcrumbs
    */
-  const categoriesBreadcrumbsLinks = transformCategoriesIntoLinks(categories || []);
+  const categoriesBreadcrumbsLinks = transformCategoriesIntoLinks(
+    categories || []
+  );
   const breadcrumbsLinks = [
     {
-      name: t("goHome"),
-      url: locale === "en" ? "/" : `/${locale}`,
+      name: t('goHome'),
+      url: locale === 'en' ? '/' : `/${locale}`,
     },
     ...categoriesBreadcrumbsLinks,
   ];
@@ -88,19 +91,19 @@ export const Archive: FC<ArchivePropsType> = (props) => {
   const [isMenuVisible, setMenuVisible] = useState(false);
   const { isMobile } = useResponsive();
   const toggleMenu = () => {
-    console.log(isMenuVisible);
-
     setMenuVisible(!isMenuVisible);
 
     if (isMobile) {
       if (!isMenuVisible) {
-        document.body.style.overflow = "hidden";
+        document.body.style.overflow = 'hidden';
       } else {
-        document.body.style.overflow = "";
+        document.body.style.overflow = '';
       }
     }
   };
-  const isLoading: boolean | undefined = useAppSelector((state) => state.categoriesSlice.loading);
+  const isLoading: boolean | undefined = useAppSelector(
+    state => state.categoriesSlice.loading
+  );
 
   const handlePageChange = (_: any, newPage: number) => {
     switchPage(newPage, pagesCount);
@@ -135,7 +138,11 @@ export const Archive: FC<ArchivePropsType> = (props) => {
                     {categories.length !== 0 ? (
                       <>
                         {isLoading ? (
-                          <Skeleton width="100%" height={48} variant="rounded" />
+                          <Skeleton
+                            width="100%"
+                            height={48}
+                            variant="rounded"
+                          />
                         ) : (
                           <SelectParentCategory
                             selectedCategories={categories}
@@ -188,13 +195,13 @@ export const Archive: FC<ArchivePropsType> = (props) => {
               <CustomSortAccordion />
             </FilterSortWrapper>
             <CountProduct>
-              {statistic.products_count}&nbsp;{t("products")}
+              {statistic.products_count}&nbsp;{t('products')}
             </CountProduct>
             <PagesNavigationWrapper>
               <PagesNavigation
                 page={+page}
                 count={pagesCount}
-                siblingCount={1}
+                siblingCount={0}
                 shape="rounded"
                 hidePrevButton
                 hideNextButton
@@ -214,6 +221,17 @@ export const Archive: FC<ArchivePropsType> = (props) => {
               />
             )}
           </CatalogListBlock>
+          <PagesNavigationFooterWrapper>
+            <PagesNavigation
+              page={+page}
+              count={pagesCount}
+              siblingCount={0}
+              shape="rounded"
+              hidePrevButton
+              hideNextButton
+              onChange={handlePageChange}
+            />
+          </PagesNavigationFooterWrapper>
         </CatalogRightWrapper>
       </CatalogLayout>
     </CatalogContainer>
