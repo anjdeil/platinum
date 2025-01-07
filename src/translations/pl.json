@@ -96,7 +96,10 @@
     "stocks": "Sortuj według dostępności w magazynie",
     "new": "Sortuj według najnowszych",
     "cheapest": "Sortuj według najtańszych",
-    "expensive": "Sortuj według najdroższych"
+    "expensive": "Sortuj według najdroższych",
+    "clearFilters": "Wyczyść filtry",
+    "clearFilter": "Wyczyść",
+    "applyFilter": "Zastosuj"
   },
   "Product": {
     "addToBasket": "Dodaj do koszyka",

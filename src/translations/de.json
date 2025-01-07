@@ -95,7 +95,10 @@
     "stocks": "Nach Lagerverfügbarkeit sortieren",
     "new": "Nach Neuheiten sortieren",
     "cheapest": "Nach günstigstem Preis sortieren",
-    "expensive": "Nach höchstem Preis sortieren"
+    "expensive": "Nach höchstem Preis sortieren",
+    "clearFilters": "Alle löschen",
+    "clearFilter": "Löschen",
+    "applyFilter": "Anwenden"
   },
   "Product": {
     "addToBasket": "In den Warenkorb legen",

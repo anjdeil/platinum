@@ -96,7 +96,10 @@
     "stocks": "Sort by stock availability",
     "new": "Sort by newest",
     "cheapest": "Sort by cheapest",
-    "expensive": "Sort by most expensive"
+    "expensive": "Sort by most expensive",
+    "clearFilters": "Clear All",
+    "clearFilter": "Clear",
+    "applyFilter": "Apply"
   },
   "Product": {
     "addToBasket": "Add to basket",
