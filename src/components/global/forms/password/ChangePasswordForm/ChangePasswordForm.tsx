@@ -2,7 +2,7 @@ import { FC, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CustomFormInput } from '../../CustomFormInput';
-import { CustomError, CustomSuccess } from '../../CustomFormInput/styles';
+import { CustomSuccess } from '../../CustomFormInput/styles';
 import { StyledButton, Title } from '@/styles/components';
 import {
   CustomForm,
@@ -47,7 +47,6 @@ export const ChangePasswordForm: FC = () => {
     };
 
     try {
-      /** Update customer info */
       const resp = await updateCustomerMutation(reqBody);
       if (!resp.data) throw new Error('Invalid customer response.');
     } catch (err) {

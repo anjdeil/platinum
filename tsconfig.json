@@ -19,13 +19,20 @@
     },
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["custom-axios-types.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "custom-axios-types.d.ts",
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
   "exclude": ["node_modules"],
-  "types": ["@types/node", 
-  "@types/react", 
-  "@types/react-dom", 
-  "@types/axios", 
-  "@types/react-redux", 
-  "@types/react-router-dom", 
-  "@types/redux-toolkit"]
+  "types": [
+    "@types/node",
+    "@types/react",
+    "@types/react-dom",
+    /*   "@types/axios",  */
+    "@types/react-redux",
+    "@types/react-router-dom",
+    "@types/redux-toolkit"
+  ]
 }

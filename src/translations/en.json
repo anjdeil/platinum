@@ -87,7 +87,12 @@
     "codeSent": "The code has been sent, check your email",
     "codeSentToEmail": "The code was sent to the {email}, check your email",
     "code": "Code",
-    "setNewPassword": "Set new password"
+    "setNewPassword": "Set new password",
+    "resetCodeAttemptsTwo": "The reset code provided is not valid. You have 2 attempts remaining.",
+    "resetCodeAttemptsOne": "The reset code provided is not valid. You have 1 attempt remaining.",
+    "passwordResetRequired": "You must request a password reset code before you try to set a new password.",
+    "maxAttemptsExceeded": "The reset code provided is not valid. You have used the maximum number of attempts allowed. You must request a new code",
+    "codeProvidedHasExpired": "The reset code provided has expired."
   },
   "TopBar": {
     "CallUs": "Call us"

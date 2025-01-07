@@ -18,6 +18,32 @@ import { clearUser } from '@/store/slices/userSlice';
 import { useRouter } from 'next/router';
 import { CustomSuccess } from '../../CustomFormInput/styles';
 
+const errorsCode = [
+  {
+    message:
+      'The reset code provided is not valid. You have 2 attempts remaining.',
+    errorKey: 'resetCodeAttemptsTwo',
+  },
+  {
+    message:
+      'The reset code provided is not valid. You have 1 attempt remaining.',
+    errorKey: 'resetCodeAttemptsOne',
+  },
+  {
+    message:
+      'You must request a password reset code before you try to set a new password.',
+    errorKey: 'passwordResetRequired',
+  },
+  {
+    message:
+      'The reset code provided is not valid. You have used the maximum number of attempts allowed. You must request a new code',
+    errorKey: 'maxAttemptsExceeded',
+  },
+  {
+    message: 'The reset code provided has expired.',
+    errorKey: 'codeProvidedHasExpired',
+  },
+];
 export const NewPasswordForm: FC = () => {
   const [customError, setCustomError] = useState<string>('');
   const tValidation = useTranslations('Validation');
@@ -26,9 +52,30 @@ export const NewPasswordForm: FC = () => {
   const dispatch = useAppDispatch();
 
   const userEmail = useAppSelector(state => state.userSlice.user?.email);
-
-  const [setPassword, { error, isLoading, isSuccess }] =
+  const [emailToShow, setEmailToShow] = useState<string | null>(null);
+  const [setPassword, { error: PasswordErr, isLoading, isSuccess }] =
     useSetPasswordMutation();
+
+  useEffect(() => {
+    if (userEmail) {
+      setEmailToShow(userEmail);
+    }
+  }, [userEmail]);
+
+  useEffect(() => {
+    if (PasswordErr) {
+      const error = errorsCode.find(
+        //@ts-ignore
+        err => err.message === PasswordErr.data?.message
+      );
+
+      if (error) {
+        setCustomError(error.errorKey);
+      } else {
+        setCustomError('unknow');
+      }
+    }
+  }, [PasswordErr]);
 
   const formSchema = useMemo(
     () => NewPasswordFormSchema(tValidation),
@@ -50,6 +97,7 @@ export const NewPasswordForm: FC = () => {
 
   async function onSubmit(formData: NewPasswordFormType) {
     setCustomError('');
+
     const reqBody = {
       email: formData.email,
       password: formData.password,
@@ -58,12 +106,12 @@ export const NewPasswordForm: FC = () => {
 
     try {
       const resp = await setPassword(reqBody);
+
       if (!resp.data) throw new Error('Invalid server response.');
 
       dispatch(clearUser());
       router.push('/my-account/login');
     } catch (err) {
-      setCustomError(tMyAccount('passwordChangeError'));
       reset();
     }
   }
@@ -73,9 +121,11 @@ export const NewPasswordForm: FC = () => {
       <Title as="h1" uppercase marginBottom="24px">
         {tMyAccount('setNewPassword')}
       </Title>
+
       <Notification>
-        {tMyAccount('codeSentToEmail', { email: userEmail })}
+        {emailToShow && tMyAccount('codeSentToEmail', { email: userEmail })}
       </Notification>
+
       <FormWrapper>
         <CustomFormInput
           fieldName={tMyAccount('email')}
@@ -120,7 +170,11 @@ export const NewPasswordForm: FC = () => {
             : tValidation('sendButton')}
         </StyledButton>
         {customError && (
-          <Notification type="warning">{customError}</Notification>
+          <Notification marginBottom="0" type="warning">
+            {customError !== 'unknow'
+              ? tMyAccount(customError)
+              : tMyAccount('passwordChangeError')}
+          </Notification>
         )}
         {isSubmitSuccessful && isSuccess && (
           <CustomSuccess>{tValidation('passwordChanged')}</CustomSuccess>

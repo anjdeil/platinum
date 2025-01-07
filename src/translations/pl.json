@@ -78,7 +78,21 @@
     "YourAccountHasBeenCreated": "Twoje konto zostało pomyślnie utworzone!",
     "ForgotYourPassword": "Zapomniałeś hasła?",
     "SuccessfullyLoggedIn": "Pomyślnie zalogowano!",
-    "ErrorLoggedIn": "Nieprawidłowy e-mail lub hasło. Spróbuj ponownie."
+    "ErrorLoggedIn": "Nieprawidłowy e-mail lub hasło. Spróbuj ponownie.",
+    "newpassword": "Nowe hasło",
+    "passwordChanged": "Hasło zostało pomyślnie zmienione",
+    "passwordChangeError": "Wystąpił błąd podczas zmiany hasła, spróbuj ponownie",
+    "resetPassword": "Zresetuj hasło",
+    "codeSendError": "Kod nie został wysłany, możliwe, że konto z tym adresem e-mail nie istnieje",
+    "codeSent": "Kod został wysłany, sprawdź swoją pocztę",
+    "codeSentToEmail": "Kod został wysłany na {email}, sprawdź swoją pocztę",
+    "code": "Kod",
+    "setNewPassword": "Ustaw nowe hasło",
+    "resetCodeAttemptsTwo": "Podany kod resetowania jest nieprawidłowy. Pozostały 2 próby.",
+    "resetCodeAttemptsOne": "Podany kod resetowania jest nieprawidłowy. Pozostała 1 próba.",
+    "passwordResetRequired": "Musisz poprosić o kod resetowania hasła, zanim spróbujesz ustawić nowe hasło.",
+    "maxAttemptsExceeded": "Podany kod resetowania jest nieprawidłowy. Wykorzystałeś maksymalną liczbę dozwolonych prób. Musisz poprosić o nowy kod.",
+    "codeProvidedHasExpired": "Dostarczony kod resetowania wygasł."
   },
   "TopBar": {
     "CallUs": "Zadzwoń do nas"

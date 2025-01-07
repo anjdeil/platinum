@@ -2,23 +2,17 @@ import { FC, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CustomFormInput } from '../../CustomFormInput';
-import { CustomError, CustomSuccess } from '../../CustomFormInput/styles';
+import { CustomSuccess } from '../../CustomFormInput/styles';
 import { FlexBox, StyledButton, Title } from '@/styles/components';
-import {
-  CustomForm,
-  FormWrapper,
-  FormWrapperBottom,
-} from '../../RegistrationForm/styles';
-
+import { CustomForm, FormWrapperBottom } from '../../RegistrationForm/styles';
 import { useTranslations } from 'next-intl';
 import { useResetPasswordMutation } from '@/store/rtk-queries/passwordResetApi';
 import { useRouter } from 'next/router';
-
 import { ResetPasswordFormSchema } from '@/types/components/global/forms/changePassword';
 import Notification from '../../../Notification/Notification';
 import { z } from 'zod';
 import { useAppDispatch } from '@/store';
-import { setUser } from '@/store/slices/userSlice';
+import { saveUserToLocalStorage } from '@/utils/auth/userLocalStorage';
 
 const ResetPasswordForm: FC = () => {
   const tValidation = useTranslations('Validation');
@@ -55,7 +49,7 @@ const ResetPasswordForm: FC = () => {
     try {
       const response = await resetPassword({ email: formData.email });
       if (!response) throw new Error('Invalid server response.');
-      dispatch(setUser({ email: formData.email }));
+      saveUserToLocalStorage({ email: formData.email });
     } catch (err) {
       console.error(err);
       setCustomError(tMyAccount('codeSendError'));

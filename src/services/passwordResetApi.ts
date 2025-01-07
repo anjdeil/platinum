@@ -34,14 +34,22 @@ class PasswordResetApi {
       });
 
       if (response.status !== 200) {
-        throw new Error(
-          `Request to ${fullUrl} failed with status ${response.status}`
-        );
+        const errorMessage =
+          response.data?.message ||
+          `Request to ${fullUrl} failed with status ${response.status}`;
+        throw new Error(errorMessage);
       }
 
       return response;
     } catch (error: unknown) {
       console.error('Error in API call:', error);
+
+      if (axios.isAxiosError(error) && error.response?.status === 500) {
+        const errorMessage =
+          error.response.data?.message || 'Internal Server Error';
+        throw new Error(errorMessage);
+      }
+
       throw new Error(
         `Failed to perform API call to ${fullUrl}: ${
           error instanceof Error ? error.message : 'Unknown error'
