@@ -48,7 +48,6 @@ export const LoginForm: FC = () => {
         username: formData.email,
       });
       if (!tokenResp.data) throw new Error('Auth token getting failed.');
-      console.log(tokenResp);
 
       /** Validate auth token */
       const isTokenValid = await checkToken({});

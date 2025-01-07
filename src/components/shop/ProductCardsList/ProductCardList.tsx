@@ -20,8 +20,6 @@ export const ProductCardList: FC<ProductCardListProps> = ({
 }) => {
   const [cookie] = useCookies(['authToken']);
 
-  console.log('authToken from useCookies:', cookie.authToken);
-
   const router = useRouter();
 
   const [
@@ -46,12 +44,11 @@ export const ProductCardList: FC<ProductCardListProps> = ({
   const handleDisire = (productId: number, variationId?: number) => {
     if (!userData?.meta?.wishlist) {
       router.push('/my-account/login');
-      console.log('!userData?.meta?.wishlist ');
+
       return;
     }
 
     if (!cookie.authToken) {
-      console.log('!cookie?.authToken');
       return;
     }
 

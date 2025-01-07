@@ -64,7 +64,6 @@ const CartPage: React.FC = () => {
         }
       } else if (authToken === undefined) {
         setAuth(false);
-        console.log('non token');
       }
     };
 

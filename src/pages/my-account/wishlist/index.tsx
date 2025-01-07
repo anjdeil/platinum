@@ -61,8 +61,6 @@ function Wishlist() {
     if (authToken) {
       fetchUserData().then(() => setIsLoadingWishlist(false));
     } else {
-      console.log('non token');
-
       router.push('/my-account/login');
     }
   }, [cookie.authToken, fetchUserData]);
