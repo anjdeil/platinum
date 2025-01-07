@@ -43,7 +43,7 @@ const WishListTable: FC<WishListTableProps> = ({
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const { cartItems } = useAppSelector((state) => state.cartSlice);
+  const { cartItems } = useAppSelector(state => state.cartSlice);
 
   const checkCartMatch = (cartItems: CartItem[], productId: number) => {
     return cartItems.some(({ product_id }) => product_id === productId);
@@ -53,6 +53,12 @@ const WishListTable: FC<WishListTableProps> = ({
     product: ProductsMinimizedType,
     isCartMatch: boolean
   ) {
+    if (product?.attributes.length > 0) {
+      router.push(
+        `/${router.locale === 'en' ? '' : router.locale}/product/${product.slug}`
+      );
+    }
+
     if (product.parent_id !== 0) {
       router.push(
         `/${router.locale === 'en' ? '' : router.locale}/product/${
@@ -79,7 +85,7 @@ const WishListTable: FC<WishListTableProps> = ({
         {!isTablet && !isMobile ? (
           <>
             {!isLoading &&
-              wishlist?.map((item) => {
+              wishlist?.map(item => {
                 const isCartMatch = checkCartMatch(cartItems, item.id);
 
                 return (
@@ -113,8 +119,8 @@ const WishListTable: FC<WishListTableProps> = ({
                       {item.parent_id !== 0
                         ? tProduct('chooseOptions')
                         : isCartMatch
-                        ? tProduct('viewCart')
-                        : tProduct('addToBasket')}
+                          ? tProduct('viewCart')
+                          : tProduct('addToBasket')}
                     </AddToBasketButton>
                   </WishlistCardAllWrapper>
                 );
@@ -123,7 +129,7 @@ const WishListTable: FC<WishListTableProps> = ({
         ) : (
           <>
             {!isLoading &&
-              wishlist?.map((item) => {
+              wishlist?.map(item => {
                 const isCartMatch = checkCartMatch(cartItems, item.id);
                 return (
                   <CartCardAllWrapper key={item.id} padding="16px">
@@ -164,8 +170,8 @@ const WishListTable: FC<WishListTableProps> = ({
                       {item.parent_id !== 0
                         ? tProduct('chooseOptions')
                         : isCartMatch
-                        ? tProduct('viewCart')
-                        : tProduct('addToBasket')}
+                          ? tProduct('viewCart')
+                          : tProduct('addToBasket')}
                     </AddToBasketButton>
                   </CartCardAllWrapper>
                 );
