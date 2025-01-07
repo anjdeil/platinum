@@ -42,6 +42,7 @@
     "price": "Cena",
     "quantity": "Ilość",
     "summaryOrder": "Podsumowanie zamówienia",
+
     "customerData": "Dane klienta",
     "products": "Produkty",
     "delivery": "Dostawa",
@@ -62,6 +63,8 @@
     "paymentMethod": "Metoda płatności",
     "total": "Razem",
     "action": "Działanie",
+    "availablePcs": "Dostępne {quantity} szt",
+    "nothingInTheWishlist": "Na liście życzeń nie ma nic...",
     "apartmentNumber": "Numer mieszkania",
     "registration": "Rejestracja",
     "login": "Zaloguj się",
@@ -126,6 +129,10 @@
     "lastedArticles": "Najnowsze artykuły"
   },
   "Cart": {
+    "cart": "Koszyk",
+    "psc": "szt",
+    "placeAnOrder": "Złóż zamówienie",
+    "goToCart": "Przejdź do koszyka",
     "productName": "Nazwa",
     "price": "Cena",
     "quantity": "Ilość",
@@ -153,6 +160,7 @@
     "OrderCommentPlaceholder": "Podziel się konkretnymi szczegółami lub prośbami dotyczącymi zamówienia...",
     "OrderCommentHint": "W tym miejscu można podać wszelkie dodatkowe instrukcje lub uwagi dotyczące zamówienia.",
     "OrderSummary": "Podsumowanie zamówienia",
+    "summary": "Suma",
     "Continue": "Kontynuuj",
     "OrderSummaryTotal": "całkowita kwota do zapłaty",
 
@@ -165,7 +173,12 @@
     "Confirmation": "Potwierdzenie",
 
     "theBest": "Najlepszy",
-    "productForYou": "Produkt dla Ciebie"
+    "productForYou": "Produkt dla Ciebie",
+    "UserLoyalityStatus": "Masz status {validStatus} i otrzymujesz",
+    "nothingInTheCart": "Nie ma nic w koszyku...",
+    "goToShop": "Przejdź do sklepu",
+    "nothingInTheCartText": "Sprawdź nasze nowe produkty lub skorzystaj z wyszukiwarki, jeśli szukasz czegoś konkretnego",
+    "YouNeedToLoginForOrder": "Musisz się zalogować, aby złożyć zamówienie."
   },
   "Contacts": {
     "contacts": "Kontakty",

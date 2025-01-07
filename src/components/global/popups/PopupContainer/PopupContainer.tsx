@@ -1,28 +1,29 @@
-import HamburgerMenu from "@/components/global/popups/HamburgerMenu";
-import { useAppSelector } from "@/store";
-import { popupClosed } from "@/store/slices/PopupSlice";
-import { usePathname } from "next/navigation";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import CommentPopup from "../CommentPopup/CommentPopup";
-import MobileCategoriesMenu from "../MobileCategoriesMenu/MobileCategoriesMenu";
-import MobileSearchPopup from "../MobileSearchPopup/MobileSearchPopup";
-import { switchCategory } from "@/components/shop/Archive";
-import SwiperPopup from "../SwiperPopup/SwiperPopup";
+import HamburgerMenu from '@/components/global/popups/HamburgerMenu';
+import { useAppSelector } from '@/store';
+import { popupClosed } from '@/store/slices/PopupSlice';
+import { usePathname } from 'next/navigation';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import CommentPopup from '../CommentPopup/CommentPopup';
+import MobileCategoriesMenu from '../MobileCategoriesMenu/MobileCategoriesMenu';
+import MobileSearchPopup from '../MobileSearchPopup/MobileSearchPopup';
+import { switchCategory } from '@/components/shop/Archive';
+import SwiperPopup from '../SwiperPopup/SwiperPopup';
+import MiniCart from '../MiniCart/MiniCart';
 
 const unscrollablePopups = [
-  "mobile-search",
-  "hamburger-menu",
-  "swiper-popup",
-  "mobile-cart",
-  "mobile-categories",
+  'mobile-search',
+  'hamburger-menu',
+  'swiper-popup',
+  'mobile-cart',
+  'mobile-categories',
 ];
 
 const PopupContainer = () => {
   const dispatch = useDispatch();
   const pathname = usePathname();
 
-  const popup = useAppSelector((state) => state.popup);
+  const popup = useAppSelector(state => state.popup);
 
   useEffect(() => {
     dispatch(popupClosed());
@@ -30,7 +31,7 @@ const PopupContainer = () => {
     let firstClick = true;
 
     const handleClick = (event: MouseEvent) => {
-      const somePopupOpen = Boolean(document.querySelector(".close-outside"));
+      const somePopupOpen = Boolean(document.querySelector('.close-outside'));
       if (!somePopupOpen) {
         firstClick = true;
         return;
@@ -42,25 +43,25 @@ const PopupContainer = () => {
       }
 
       const target = event.target as HTMLElement;
-      const targetPopup = target?.closest(".close-outside");
+      const targetPopup = target?.closest('.close-outside');
       if (!targetPopup) {
         firstClick = true;
         dispatch(popupClosed());
       }
     };
 
-    document.addEventListener("click", handleClick);
+    document.addEventListener('click', handleClick);
 
     return () => {
-      document.removeEventListener("click", handleClick);
+      document.removeEventListener('click', handleClick);
     };
   }, [pathname]);
 
   useEffect(() => {
-    if (unscrollablePopups.some((popupName) => popup === popupName)) {
-      document.body.style.overflow = "hidden";
+    if (unscrollablePopups.some(popupName => popup === popupName)) {
+      document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = 'auto';
     }
   }, [popup]);
 
@@ -69,10 +70,10 @@ const PopupContainer = () => {
   };
 
   switch (popup) {
-    case "hamburger-menu": {
+    case 'hamburger-menu': {
       return <HamburgerMenu onClose={closePopup} />;
     }
-    case "mobile-categories": {
+    case 'mobile-categories': {
       return (
         <MobileCategoriesMenu
           padding="all"
@@ -83,14 +84,17 @@ const PopupContainer = () => {
         />
       );
     }
-    case "swiper-popup": {
+    case 'swiper-popup': {
       return <SwiperPopup onClose={closePopup} />;
     }
-    case "add-comment": {
+    case 'add-comment': {
       return <CommentPopup onClose={closePopup} />;
     }
-    case "mobile-search": {
+    case 'mobile-search': {
       return <MobileSearchPopup onClose={closePopup} />;
+    }
+    case 'mini-cart': {
+      return <MiniCart onClose={closePopup} />;
     }
   }
 };

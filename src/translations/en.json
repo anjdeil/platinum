@@ -42,6 +42,7 @@
     "price": "Price",
     "quantity": "Quantity",
     "summaryOrder": "Summary Order",
+
     "customerData": "Customer Data",
     "products": "Products",
     "delivery": "Delivery",
@@ -63,6 +64,8 @@
     "paymentMethod": "Payment method",
     "total": "Total",
     "action": "Action",
+    "availablePcs": "Available {quantity} pcs",
+    "nothingInTheWishlist": "There's nothing in the wishlist...",
     "login": "Login",
     "log-In": "Log in",
     "password": "Password",
@@ -126,6 +129,11 @@
     "lastedArticles": "Lasted Articles"
   },
   "Cart": {
+    "cart": "Cart",
+    "psc": "psc",
+    "placeAnOrder": "Place an order",
+    "goToCart": "Go to cart",
+
     "productName": "Name",
     "price": "Price",
     "quantity": "Quantity",
@@ -164,7 +172,13 @@
     "Confirmation": "Confirmation",
     "welcomeToPlatinumShop": "Welcome to Platinum Shop",
     "theBest": "The best",
-    "productForYou": "Product for you"
+    "productForYou": "Product for you",
+    "summary": "Summary",
+    "UserLoyalityStatus": "You have a {validStatus} status and get",
+    "nothingInTheCart": "There's nothing in the cart...",
+    "goToShop": "Go to shop",
+    "nothingInTheCartText": "Check out our new products or use the search, if you're looking for something specific",
+    "YouNeedToLoginForOrder": "You need to log in to place an order."
   },
   "Contacts": {
     "contacts": "Contacts",
