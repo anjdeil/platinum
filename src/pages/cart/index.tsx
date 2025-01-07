@@ -22,13 +22,11 @@ import { useCookies } from 'react-cookie';
 import { debounce } from 'lodash';
 
 const CartPage: React.FC = () => {
-  const { name: code } = useAppSelector((state) => state.currencySlice);
+  const { name: code } = useAppSelector(state => state.currencySlice);
   const status: CreateOrderRequestType['status'] = 'on-hold';
   const [symbol, setSymbol] = useState<string>('');
   const dispatch = useAppDispatch();
   const [firstLoad, setfirstLoad] = useState<boolean>(false);
-  /*   const [loadingItems, setLoadingItems] = useState<number[]>([]); */
-  /*   const [preLoadingItem, setPreLoadingItem] = useState<number>(); */
   const t = useTranslations('Cart');
 
   //USER
@@ -47,7 +45,7 @@ const CartPage: React.FC = () => {
       cookie.authToken ||
       document.cookie
         .split('; ')
-        .find((row) => row.startsWith('authToken='))
+        .find(row => row.startsWith('authToken='))
         ?.split('=')[1];
 
     const fetchData = async () => {
@@ -73,7 +71,7 @@ const CartPage: React.FC = () => {
   // FETCH
   const [createOrder, { data: orderItems, isLoading: isLoadingOrder }] =
     useCreateOrderMutation();
-  const { cartItems, couponCodes } = useAppSelector((state) => state.cartSlice);
+  const { cartItems, couponCodes } = useAppSelector(state => state.cartSlice);
   const [
     getProductsMinimized,
     {
@@ -102,15 +100,10 @@ const CartPage: React.FC = () => {
       coupon_lines: combinedCoupons,
       currency: code,
     };
-    /*     const productIds = cartItems.map(item => item.product_id);
-
-    setLoadingItems(productIds); */
-
     try {
       await createOrder(requestData);
     } finally {
       setfirstLoad(true);
-      /*   setLoadingItems((prev) => prev.filter((id) => id !== preLoadingItem)); */
     }
   };
 
@@ -145,7 +138,6 @@ const CartPage: React.FC = () => {
       variation_id?: number,
       newQuantity?: number | boolean
     ) => {
-      /* setPreLoadingItem(product_id); */
       handleQuantityChange(
         cartItems,
         dispatch,
@@ -214,7 +206,6 @@ const CartPage: React.FC = () => {
               roundedPrice={roundedPrice}
               hasConflict={hasConflict}
               handleChangeQuantity={handleChangeQuantity}
-              /*      loadingItems={}  */
               firstLoad={firstLoad}
             />
             {cartItems.length > 0 ? (

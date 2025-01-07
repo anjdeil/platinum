@@ -11,14 +11,15 @@ import { useAppSelector } from '@/store';
 import { useGetProductsMinimizedMutation } from '@/store/rtk-queries/wpCustomApi';
 import { ProductsMinimizedType } from '@/types/components/shop/product/products';
 import { useTranslations } from 'next-intl';
-import { WishlistItem } from '@/types/store/rtk-queries/wpApi';
+
 import { StyledButton, Title } from '@/styles/components';
 import { CartLink } from '@/components/global/popups/MiniCart/style';
 import Notification from '@/components/global/Notification/Notification';
 import { Skeleton } from '@mui/material';
+import { WishlistItem } from '@/types/store/rtk-queries/wpApi';
 
 function Wishlist() {
-  const { code: symbol } = useAppSelector((state) => state.currencySlice);
+  const { code: symbol } = useAppSelector(state => state.currencySlice);
   const router = useRouter();
   const tMyAccount = useTranslations('MyAccount');
   const tCart = useTranslations('Cart');
@@ -55,7 +56,7 @@ function Wishlist() {
       cookie.authToken ||
       document.cookie
         .split('; ')
-        .find((row) => row.startsWith('authToken='))
+        .find(row => row.startsWith('authToken='))
         ?.split('=')[1];
 
     if (authToken) {
@@ -85,7 +86,7 @@ function Wishlist() {
   const handleDelete = useCallback(
     ({ product_id, variation_id }: WishlistItem) => {
       const updatedWishlist = wishlist.filter(
-        (item) =>
+        item =>
           !(
             item.product_id === product_id &&
             (!variation_id || item.variation_id === variation_id)

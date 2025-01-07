@@ -197,6 +197,3 @@ export const StyledPhoneInput = styled(PhoneInput)`
     border-radius: 10px;
   }
 `;
-export const CustomSuccess = styled(CustomError)`
-  color: ${({ theme }) => theme.colors.success};
-`;

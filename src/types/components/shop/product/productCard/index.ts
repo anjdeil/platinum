@@ -1,6 +1,6 @@
-import { ProductSchema } from '@/types/pages/shop';
 import { WishlistItemSchema } from '@/types/store/rtk-queries/wpApi';
 import { z } from 'zod';
+import { ProductSchema } from '../products';
 
 export const CurrencySchema = z.object({
   name: z.string(),
@@ -25,6 +25,7 @@ export const ProductCardPropsTypeShema = z.object({
     .returns(z.void()),
   wishlist: z.array(WishlistItemSchema),
   isLoading: z.boolean(),
+  currency: CurrencySchema,
 });
 
 export type CommonTextProps = z.infer<typeof CommonTextPropsSchema>;

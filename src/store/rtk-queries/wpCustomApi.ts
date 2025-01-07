@@ -10,7 +10,7 @@ import {
   CustomDataThemeOptionsType,
   QueryParamsType,
 } from '@/types/services';
-import { CartItem } from '@/types/store/reducers/сartSlice';
+import { CartItem, ProductMinReq } from '@/types/store/reducers/сartSlice';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const wpCustomRtkApi = createApi({
@@ -63,7 +63,7 @@ export const wpCustomRtkApi = createApi({
     }),
     getProductsMinimized: builder.mutation<
       CustomDataProductsMinimizedResponseType,
-      CartItem[]
+      ProductMinReq[]
     >({
       query: cartItems => ({
         url: `/products/minimized`,
