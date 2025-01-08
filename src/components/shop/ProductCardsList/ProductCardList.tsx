@@ -36,6 +36,21 @@ export const ProductCardList: FC<ProductCardListProps> = ({
     useFetchUserUpdateMutation();
 
   const wishlist: WishlistItem[] = userData?.meta?.wishlist || [];
+  const { data: currencies, isLoading: isCurrenciesLoading } =
+    useGetCurrenciesQuery();
+  const selectedCurrency = useAppSelector(state => state.currencySlice);
+
+  const currentCurrency =
+    currencies && !isCurrenciesLoading
+      ? currencies?.data?.items.find(
+          currency => currency.code === selectedCurrency.name
+        )
+      : undefined;
+
+  const extendedCurrency = {
+    ...selectedCurrency,
+    rate: currentCurrency ? currentCurrency.rate || 1 : undefined,
+  };
 
   useEffect(() => {
     if (cookie.authToken) {
@@ -98,21 +113,6 @@ export const ProductCardList: FC<ProductCardListProps> = ({
   }
 
   isLoading = userDataUpdateLoading || isUserFetching;
-  const { data: currencies, isLoading: isCurrenciesLoading } =
-    useGetCurrenciesQuery();
-  const selectedCurrency = useAppSelector(state => state.currencySlice);
-
-  const currentCurrency =
-    currencies && !isCurrenciesLoading
-      ? currencies?.data?.items.find(
-          currency => currency.code === selectedCurrency.name
-        )
-      : undefined;
-
-  const extendedCurrency = {
-    ...selectedCurrency,
-    rate: currentCurrency ? currentCurrency.rate || 1 : undefined,
-  };
 
   return (
     <StyledProductCardList
