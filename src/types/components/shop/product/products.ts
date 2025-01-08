@@ -1,5 +1,5 @@
-import { ThumbnailSchema } from "@/types/pages/shop";
-import { z } from "zod";
+import { ThumbnailSchema } from '@/types/pages/shop';
+import { z } from 'zod';
 
 export const ProductCategorySchema = z.object({
   id: z.number(),
@@ -44,15 +44,20 @@ export const ProductVariationSchema = z.object({
   description: z.string(),
   created: z.string(),
   modified: z.string(),
-  stock_quantity: z.number().nullable(),
-  price: z.number().nullable(),
-  image: z.string().nullable(),
+  stock_quantity: z.number().optional(),
+  price: z.number().optional(),
+  image: ProductImageSchema,
   attributes: z.array(ProductDefaultAttributesSchema),
 });
 
 export const ProductsMinimizedSchema = ProductVariationSchema.extend({
   language_code: z.string().optional(),
   average_rating: z.number(),
+});
+
+export const ProductsWithCartDataSchema = ProductsMinimizedSchema.extend({
+  quantity: z.number().optional(),
+  variation: z.number().optional(),
 });
 
 export const ProductSchema = z.object({
@@ -107,8 +112,13 @@ export const LineItemSchema = z.object({
 export type ProductType = z.infer<typeof ProductSchema>;
 export type ProductVariation = z.infer<typeof ProductVariationSchema>;
 export type ProductDataResponseType = z.infer<typeof ProductDataResponseSchema>;
-export type defaultAttributesType = z.infer<typeof ProductDefaultAttributesSchema>;
+export type defaultAttributesType = z.infer<
+  typeof ProductDefaultAttributesSchema
+>;
 export type ProductImageType = z.infer<typeof ProductImageSchema>;
 export type ProductVariationType = z.infer<typeof ProductVariationSchema>;
 export type ProductsMinimizedType = z.infer<typeof ProductsMinimizedSchema>;
 export type LineItemType = z.infer<typeof LineItemSchema>;
+export type ProductsWithCartDataType = z.infer<
+  typeof ProductsWithCartDataSchema
+>;

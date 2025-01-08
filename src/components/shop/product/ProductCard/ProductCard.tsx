@@ -4,7 +4,6 @@ import Rating from '@/components/global/Rating/Rating';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { updateCart } from '@/store/slices/cartSlice';
 import { ProductCardPropsType } from '@/types/components/shop';
-import { CircularProgress } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -23,7 +22,17 @@ import {
   TitleWrapper,
 } from './styles';
 
-const ProductCard: React.FC<ProductCardPropsType> = ({ product, currency }) => {
+import { popupToggle } from '@/store/slices/PopupSlice';
+import { CircularProgress } from '@mui/material';
+import { WishlistItem } from '@/types/store/rtk-queries/wpApi';
+
+const ProductCard: React.FC<ProductCardPropsType> = ({
+  product,
+  handleDisire,
+  wishlist,
+  isLoading,
+  currency,
+}) => {
   const t = useTranslations('Product');
 
   const router = useRouter();
@@ -54,10 +63,19 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product, currency }) => {
           quantity: 1,
         })
       );
+      dispatch(popupToggle('mini-cart'));
     } else {
       router.push(`/${router.locale === 'en' ? '' : router.locale}/cart`);
     }
   }
+
+  const checkDesired = () =>
+    Boolean(
+      wishlist?.find(
+        (item: WishlistItem) => item.product_id === product.id /* &&
+          (!choosenVariation || item.variation_id === choosenVariation.id) */
+      )
+    );
 
   return (
     <StyledProductCard>
@@ -105,7 +123,12 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product, currency }) => {
           {product.min_price !== product.max_price && (
             <ProductBadge type="sale" />
           )}
-          <FavoriteButton active={false} />
+          <FavoriteButton
+            onClick={() => handleDisire(product.id, undefined)}
+            marginLeft="auto"
+            active={checkDesired()}
+            isLoading={isLoading}
+          />
         </ProductBadgeWrapper>
       </ProductWrapper>
       <>

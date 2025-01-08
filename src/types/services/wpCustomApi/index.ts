@@ -94,7 +94,7 @@ export const CustomDataProductsStatisticSchema = z.object({
 export const CustomDataProductsSchema = z.object({
   success: z.boolean(),
   data: z.object({
-    statistic: CustomDataProductsStatisticSchema.optional(),
+    statistic: CustomDataProductsStatisticSchema,
     items: z.array(ProductSchema),
   }),
 });

@@ -15,6 +15,7 @@ import { useTranslations } from 'next-intl';
 import router from 'next/router';
 import { FC, useState } from 'react';
 import SelectParentCategory from '../categories/SelectParentCategoryMobile/SelectParentCategoryMobile';
+import { FilterPanel } from '../filtration/FilterPanel';
 import { ProductCardList } from '../ProductCardsList';
 import {
   CatalogContainer,
@@ -29,6 +30,7 @@ import {
   FilterOverlay,
   FilterSortWrapper,
   FilterWrapper,
+  PagesNavigationFooterWrapper,
   PagesNavigationWrapper,
 } from './styles';
 
@@ -102,8 +104,6 @@ export const Archive: FC<ArchivePropsType> = props => {
   const [isMenuVisible, setMenuVisible] = useState(false);
   const { isMobile } = useResponsive();
   const toggleMenu = () => {
-    console.log(isMenuVisible);
-
     setMenuVisible(!isMenuVisible);
 
     if (isMobile) {
@@ -194,11 +194,11 @@ export const Archive: FC<ArchivePropsType> = props => {
           <Title as="h3" uppercase textalign="left" marginBottom="24px">
             Filters
           </Title>
-          {/* <FilterPanel
-            attributes={statistic?.attributes}
-            maxPrice={statistic?.max_price || 0}
-            minPrice={statistic?.min_price || 0}
-          /> */}
+          <FilterPanel
+            attributes={statistic.attributes}
+            maxPrice={statistic.max_price || 0}
+            minPrice={statistic.min_price || 0}
+          />
         </CatalogFilterBlock>
         <FilterOverlay visible={isMenuVisible} onClick={toggleMenu} />
         <CatalogRightWrapper>
@@ -210,13 +210,13 @@ export const Archive: FC<ArchivePropsType> = props => {
               <CustomSortAccordion />
             </FilterSortWrapper>
             <CountProduct>
-              {statistic?.products_count}&nbsp;{t('products')}
+              {statistic.products_count}&nbsp;{t('products')}
             </CountProduct>
             <PagesNavigationWrapper>
               <PagesNavigation
                 page={+page}
                 count={pagesCount}
-                siblingCount={1}
+                siblingCount={0}
                 shape="rounded"
                 hidePrevButton
                 hideNextButton
@@ -236,6 +236,17 @@ export const Archive: FC<ArchivePropsType> = props => {
               />
             )}
           </CatalogListBlock>
+          <PagesNavigationFooterWrapper>
+            <PagesNavigation
+              page={+page}
+              count={pagesCount}
+              siblingCount={0}
+              shape="rounded"
+              hidePrevButton
+              hideNextButton
+              onChange={handlePageChange}
+            />
+          </PagesNavigationFooterWrapper>
         </CatalogRightWrapper>
       </CatalogLayout>
     </CatalogContainer>

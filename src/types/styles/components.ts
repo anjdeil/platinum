@@ -1,7 +1,7 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 export interface TitleProps {
-  as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+  as: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   fontWeight?: number;
   fontSize: number;
 }
@@ -19,6 +19,7 @@ export const StyledButtonPropsSchema = z.object({
   hoverBackgroundColor: z.string().optional(),
   notify: z.boolean().optional(),
   secondary: z.boolean().optional(),
+  textDecoration: z.string().optional(),
   isDisabled: z.boolean().optional(),
   /* backgroundColor:z.string().optional(), */
 });
