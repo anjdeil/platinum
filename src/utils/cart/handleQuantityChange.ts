@@ -1,5 +1,5 @@
-import { updateCart } from '@/store/slices/cartSlice'
-import { CartItem } from '@/types/store/reducers/сartSlice'
+import { updateCart } from '@/store/slices/cartSlice';
+import { CartItem } from '@/types/store/reducers/сartSlice';
 
 export const handleQuantityChange = (
   cartItems: CartItem[],
@@ -13,25 +13,25 @@ export const handleQuantityChange = (
     (item: CartItem) =>
       item.product_id === product_id &&
       (!variation_id || item.variation_id === variation_id)
-  )
+  );
 
   if (updatedItem) {
-    let quantityToUpdate = updatedItem.quantity
+    let quantityToUpdate = updatedItem.quantity;
 
     switch (action) {
       case 'inc':
-        quantityToUpdate += 1
-        break
+        quantityToUpdate += 1;
+        break;
       case 'dec':
-        quantityToUpdate -= 1
-        break
+        quantityToUpdate -= 1;
+        break;
       case 'value':
         if (typeof newQuantity === 'number' && !isNaN(newQuantity)) {
-          quantityToUpdate = newQuantity
+          quantityToUpdate = newQuantity;
         }
-        break
+        break;
       default:
-        return
+        return;
     }
 
     if (quantityToUpdate >= 0) {
@@ -41,7 +41,8 @@ export const handleQuantityChange = (
           variation_id,
           quantity: quantityToUpdate,
         })
-      )
+      );
+      console.log('disp');
     }
   }
-}
+};

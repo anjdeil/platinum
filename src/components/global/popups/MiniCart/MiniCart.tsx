@@ -79,6 +79,7 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
 
       return {
         ...product,
+        id: cartItem.product_id,
         quantity,
         variation,
         totalPrice,
@@ -98,6 +99,7 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
       variation_id?: number,
       newQuantity?: number | boolean
     ) => {
+      console.log(product_id, newQuantity, variation_id, newQuantity);
       handleQuantityChange(
         cartItems,
         dispatch,

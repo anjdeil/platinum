@@ -54,6 +54,7 @@ const ProductCard: React.FC<ProductCardPropsType> = ({
       router.push(
         `/${router.locale === 'en' ? '' : router.locale}/product/${product.slug}`
       );
+      return;
     }
 
     if (!isCartMatch) {
