@@ -156,7 +156,6 @@
     "CouponApply": "Купон успішно застосований",
     "CouponApplyBtn": "Применить купон",
     "CouponInputPlaceholder": "Код купона",
-
     "OrderComments": "КОМЕНТАРІ ДО ЗАМОВЛЕННЯ",
     "OrderCommentPlaceholder": "Поділіться будь-якими конкретними деталями або запитами щодо вашого замовлення...",
     "OrderCommentHint": "Не соромтеся надавати будь-які додаткові інструкції або нотатки до вашого замовлення тут.",
@@ -164,15 +163,12 @@
     "summary": "Сума",
     "Continue": "Продовжити",
     "OrderSummaryTotal": "загальна сума до сплати",
-
     "products": "Товари",
     "coupon": "Купон",
     "paymentMethod": "Спосіб оплати",
-
     "Basket": "Кошик",
     "PersonalInformation": "Особиста інформація",
     "Confirmation": "Підтвердження",
-
     "welcomeToPlatinumShop": "Ласкаво просимо до Platinum Shop",
     "theBest": "Найкращий",
     "productForYou": "Продукт для вас",
@@ -227,6 +223,8 @@
     "max": "макс.",
     "sending": "Відправка...",
     "sendButton": "Надіслати",
+    "saving": "Збереження...",
+    "saveChanges": "Зберегти зміни",
     "InvalidPhoneNumber": "Неправильний номер телефону",
     "fileTooLarge": "файл занадто великий",
     "agreentment": "Я погоджуюсь на отримання інформації про новини та зміни в пропозиції магазину",
@@ -238,11 +236,11 @@
     "PasswordSpecialChar": "Пароль повинен містити хоча б один спеціальний символ.",
     "PasswordsDoNotMatch": "Паролі не збігаються"
   },
-
   "Forms": {
     "applicationForm": "форма заявки",
     "UserInfo": "Інформація про користувача",
     "ShippingInfo": "Інформація про доставку",
+    "InvalidPhoneNumber": "Неправильний номер телефону",
     "fileTooLarge": "файл занадто великий"
   },
   "Breadcrumbs": {
@@ -252,7 +250,6 @@
     "registration": "Реєстрація",
     "blogPage": "Блог"
   },
-
   "NotFoundPage": {
     "notFound": "Сторінка не знайдена",
     "description": "На жаль, ми не можемо знайти сторінку, яку ви шукаєте. Можливо, її було переміщено, видалено або вона ніколи не існувала.",

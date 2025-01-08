@@ -17,6 +17,8 @@ import { normalizeSlides } from '@/utils/normalizeSlides';
 import { IsMobileScreen } from '@/components/global/isMobileScreenWrapper';
 import { RichTextSection } from '../RichTextSection';
 import { SectionContainer } from '../styles';
+import { QuestionFormSection } from '../QuestionFormSection';
+import { NetworksSection } from '../NetworksSection';
 
 interface SectionRendererProps {
   sections: SectionsType[];
@@ -26,7 +28,7 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
   sections,
 }) => {
   const countSplitSections = (sections: any[]): number => {
-    return sections.filter((section) => section._type === 'split').length;
+    return sections.filter(section => section._type === 'split').length;
   };
 
   const splitSectionCount = countSplitSections(sections);
@@ -152,6 +154,21 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
             return (
               <Container key={index}>
                 <ContactsSection />
+              </Container>
+            );
+          case 'question_form':
+            return (
+              <Container key={index}>
+                <QuestionFormSection />
+              </Container>
+            );
+          case 'networks':
+            return (
+              <Container key={index}>
+                <NetworksSection
+                  subtitle={section.subtitle}
+                  title={section.title}
+                />
               </Container>
             );
           default:
