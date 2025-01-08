@@ -29,6 +29,11 @@ export const ContactCard = styled.div`
   & svg {
     margin-bottom: 26px;
   }
+
+  @media ${({ theme }) => theme.media.medium} {
+    max-width: 500px;
+    margin: 0 auto;
+  }
 `;
 
 export const ContactCardText = styled.div`
@@ -42,6 +47,10 @@ export const ContactCardText = styled.div`
 
   & div {
     margin-top: 16px;
+  }
+
+  @media ${({ theme }) => theme.media.medium} {
+    word-break: break-all;
   }
 `;
 

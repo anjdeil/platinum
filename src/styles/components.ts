@@ -314,3 +314,20 @@ export const StyledHeaderWrapper = styled.header`
   gap: 8px;
   margin: 24px 0;
 `;
+
+// ------------------RICH TEXT SLUG PAGE
+
+export const StyledSlugRichTextSection = styled.div`
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  margin-bottom: 72px;
+  @media ${({ theme }) => theme.media.medium} {
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-bottom: '64px';
+  }
+`;
