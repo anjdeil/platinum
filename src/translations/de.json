@@ -98,7 +98,9 @@
     "expensive": "Nach höchstem Preis sortieren",
     "clearFilters": "Alle löschen",
     "clearFilter": "Löschen",
-    "applyFilter": "Anwenden"
+    "applyFilter": "Anwenden",
+    "searchResults": "Suchergebnisse",
+    "phraseSought": "Gesuchte Phrase"
   },
   "Product": {
     "addToBasket": "In den Warenkorb legen",
@@ -128,7 +130,8 @@
     "addComment": "Kommentar hinzufügen",
     "submitting": "Einreichen",
     "commentText1": "Haben Sie unser Produkt getestet? Teilen Sie Ihre Meinung mit;",
-    "commentText2": "- Wir versuchen, das Beste für Sie zu sein, und Ihre Meinung wird uns sehr helfen!"
+    "commentText2": "- Wir versuchen, das Beste für Sie zu sein, und Ihre Meinung wird uns sehr helfen!",
+    "lastedArticles": "Neueste Artikel"
   },
   "Cart": {
     "cart": "Warenkorb",
