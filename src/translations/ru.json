@@ -98,7 +98,9 @@
     "expensive": "Сортировать по цене: от дорогих",
     "clearFilters": "Очистить все",
     "clearFilter": "Очистить",
-    "applyFilter": "Применить"
+    "applyFilter": "Применить",
+    "searchResults": "Результаты поиска",
+    "phraseSought": "Искомая фраза"
   },
   "Product": {
     "addToBasket": "Добавить в корзину",

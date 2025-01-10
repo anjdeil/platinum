@@ -98,7 +98,9 @@
     "expensive": "Sort by most expensive",
     "clearFilters": "Clear All",
     "clearFilter": "Clear",
-    "applyFilter": "Apply"
+    "applyFilter": "Apply",
+    "searchResults": "Search Results",
+    "phraseSought": "Phrase Sought"
   },
   "Product": {
     "addToBasket": "Add to basket",

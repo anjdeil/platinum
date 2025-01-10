@@ -98,7 +98,9 @@
     "expensive": "Sortuj według najdroższych",
     "clearFilters": "Wyczyść filtry",
     "clearFilter": "Wyczyść",
-    "applyFilter": "Zastosuj"
+    "applyFilter": "Zastosuj",
+    "searchResults": "Wyniki wyszukiwania",
+    "phraseSought": "Poszukiwana fraza"
   },
   "Product": {
     "addToBasket": "Dodaj do koszyka",

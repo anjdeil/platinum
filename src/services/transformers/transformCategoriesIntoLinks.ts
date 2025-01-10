@@ -1,5 +1,5 @@
-import CategoryType from '../../types/components/shop/categories/categories';
-import { BreadcrumbType } from '../../types/components/global/breadcrumbs';
+import { BreadcrumbType } from "@/types/components/global/breadcrumbs";
+import CategoryType from "@/types/components/shop/categories/categories";
 
 export default function transformCategoriesIntoLinks(
   categories: CategoryType[]

@@ -98,7 +98,9 @@
     "expensive": "Сортувати за ціною: від найдорожчих",
     "clearFilters": "Очистити всі",
     "clearFilter": "Очистити",
-    "applyFilter": "Застосувати"
+    "applyFilter": "Застосувати",
+    "searchResults": "Результати пошуку",
+    "phraseSought": "Шукана фраза"
   },
   "Product": {
     "addToBasket": "Додати до кошика",
