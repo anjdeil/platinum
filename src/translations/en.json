@@ -197,7 +197,9 @@
     "emailPlaceholder": "Email",
     "yourQuestionPlaceholder": "Write your question",
     "errorMessage": "Something went wrong. Please try again.",
-    "successMessage": "Your message has been sent successfully!"
+    "successMessage": "Your message has been sent successfully!",
+    "sending": "Sending...",
+    "sendButton": "Send"
   },
   "Validation": {
     "emailValidation": "Please enter a valid email.",
@@ -241,7 +243,7 @@
     "UserInfo": "User information",
     "ShippingInfo": "Shipping information",
     "InvalidPhoneNumber": "Invalid phone number",
-    "fileTooLarge": "file too large"
+    "fileTooLarge": "File too large"
   },
   "Breadcrumbs": {
     "homePage": "Home Page",

@@ -242,6 +242,7 @@
     "applicationForm": "Форма заявки",
     "UserInfo": "Информация о пользователе",
     "ShippingInfo": "Информация о доставке",
+    "InvalidPhoneNumber": "Неправильный номер телефона",
     "fileTooLarge": "слишком большой файл"
   },
   "Breadcrumbs": {

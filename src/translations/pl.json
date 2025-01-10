@@ -238,18 +238,19 @@
     "PasswordSpecialChar": "Hasło musi zawierać przynajmniej jeden znak specjalny.",
     "PasswordsDoNotMatch": "Hasła nie są zgodne"
   },
+  "Forms": {
+    "applicationForm": "Formularz zgłoszeniowy",
+    "UserInfo": "Informacje o użytkowniku",
+    "ShippingInfo": "Informacje o wysyłce",
+    "InvalidPhoneNumber": "Nieprawidłowy numer telefonu",
+    "fileTooLarge": "Zbyt duży plik"
+  },
   "Breadcrumbs": {
     "homePage": "Strona Główna",
     "benefitsPage": "Lojalnościowy Program",
     "myAccount": "Moje konto",
     "registration": "Rejestracja",
     "blogPage": "Blog"
-  },
-  "Forms": {
-    "applicationForm": "Formularz zgłoszeniowy",
-    "UserInfo": "Informacje o użytkowniku",
-    "ShippingInfo": "Informacje o wysyłce",
-    "fileTooLarge": "zbyt duży plik"
   },
   "NotFoundPage": {
     "notFound": "Strona nie znaleziona",
