@@ -62,6 +62,8 @@
     "paymentMethod": "Metoda płatności",
     "total": "Razem",
     "action": "Działanie",
+    "availablePcs": "Dostępne {quantity} szt",
+    "nothingInTheWishlist": "Na liście życzeń nie ma nic...",
     "apartmentNumber": "Numer mieszkania",
     "registration": "Rejestracja",
     "login": "Zaloguj się",
@@ -107,7 +109,12 @@
     "stocks": "Sortuj według dostępności w magazynie",
     "new": "Sortuj według najnowszych",
     "cheapest": "Sortuj według najtańszych",
-    "expensive": "Sortuj według najdroższych"
+    "expensive": "Sortuj według najdroższych",
+    "clearFilters": "Wyczyść filtry",
+    "clearFilter": "Wyczyść",
+    "applyFilter": "Zastosuj",
+    "searchResults": "Wyniki wyszukiwania",
+    "phraseSought": "Poszukiwana fraza"
   },
   "Product": {
     "addToBasket": "Dodaj do koszyka",
@@ -140,6 +147,10 @@
     "lastedArticles": "Najnowsze artykuły"
   },
   "Cart": {
+    "cart": "Koszyk",
+    "psc": "szt",
+    "placeAnOrder": "Złóż zamówienie",
+    "goToCart": "Przejdź do koszyka",
     "productName": "Nazwa",
     "price": "Cena",
     "quantity": "Ilość",
@@ -162,24 +173,26 @@
     "CouponApply": "Kupon został pomyślnie zastosowany",
     "CouponApplyBtn": "Zastosuj kupon",
     "CouponInputPlaceholder": "Kod kuponu",
-
     "OrderComments": "KOMENTARZE DO ZAMÓWIENIA",
     "OrderCommentPlaceholder": "Podziel się konkretnymi szczegółami lub prośbami dotyczącymi zamówienia...",
     "OrderCommentHint": "W tym miejscu można podać wszelkie dodatkowe instrukcje lub uwagi dotyczące zamówienia.",
     "OrderSummary": "Podsumowanie zamówienia",
+    "summary": "Suma",
     "Continue": "Kontynuuj",
     "OrderSummaryTotal": "całkowita kwota do zapłaty",
-
     "products": "Towary",
     "coupon": "Kupon",
     "paymentMethod": "Metoda płatności",
-
     "Basket": "Koszyk",
     "PersonalInformation": "Informacje osobiste",
     "Confirmation": "Potwierdzenie",
-
     "theBest": "Najlepszy",
-    "productForYou": "Produkt dla Ciebie"
+    "productForYou": "Produkt dla Ciebie",
+    "UserLoyalityStatus": "Masz status {validStatus} i otrzymujesz",
+    "nothingInTheCart": "Nie ma nic w koszyku...",
+    "goToShop": "Przejdź do sklepu",
+    "nothingInTheCartText": "Sprawdź nasze nowe produkty lub skorzystaj z wyszukiwarki, jeśli szukasz czegoś konkretnego",
+    "YouNeedToLoginForOrder": "Musisz się zalogować, aby złożyć zamówienie."
   },
   "Contacts": {
     "contacts": "Kontakty",
@@ -218,7 +231,6 @@
     "apartment/office": "Nr mieszkania/biura",
     "buildingNumber": "Numer budynku",
     "proofOfPurchase": "Dowód zakupu",
-
     "aboutYourself": "O sobie",
     "preview": "Podgląd",
     "clickToUpload": "Kliknij, aby przesłać",
@@ -240,18 +252,19 @@
     "PasswordSpecialChar": "Hasło musi zawierać przynajmniej jeden znak specjalny.",
     "PasswordsDoNotMatch": "Hasła nie są zgodne"
   },
+  "Forms": {
+    "applicationForm": "Formularz zgłoszeniowy",
+    "UserInfo": "Informacje o użytkowniku",
+    "ShippingInfo": "Informacje o wysyłce",
+    "InvalidPhoneNumber": "Nieprawidłowy numer telefonu",
+    "fileTooLarge": "Zbyt duży plik"
+  },
   "Breadcrumbs": {
     "homePage": "Strona Główna",
     "benefitsPage": "Lojalnościowy Program",
     "myAccount": "Moje konto",
     "registration": "Rejestracja",
     "blogPage": "Blog"
-  },
-  "Forms": {
-    "applicationForm": "Formularz zgłoszeniowy",
-    "UserInfo": "Informacje o użytkowniku",
-    "ShippingInfo": "Informacje o wysyłce",
-    "fileTooLarge": "zbyt duży plik"
   },
   "NotFoundPage": {
     "notFound": "Strona nie znaleziona",

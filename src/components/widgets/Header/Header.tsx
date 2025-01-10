@@ -21,7 +21,7 @@ import {
 const Header: React.FC = () => {
   const dispatch = useAppDispatch();
   const [displayedSearchBar, setDisplayedSearchBar] = useState(false);
-  const { cartItems } = useAppSelector((state) => state.cartSlice);
+  const { cartItems } = useAppSelector(state => state.cartSlice);
   const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
@@ -66,9 +66,9 @@ const Header: React.FC = () => {
               />
             )}
             <IconButton href="/my-account" IconComponent={AccountIcon} />
-            <IconButton count={2} IconComponent={HeartIcon} />
+            <IconButton href="/my-account/wishlist" IconComponent={HeartIcon} />
             <IconButton
-              href="/cart"
+              onClick={() => dispatch(popupToggle('mini-cart'))}
               count={cartCount}
               IconComponent={CartIcon}
             />
@@ -80,4 +80,3 @@ const Header: React.FC = () => {
 };
 
 export default Header;
-

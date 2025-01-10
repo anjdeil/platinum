@@ -105,6 +105,7 @@ export const StyledLink = styled(Link)`
   align-items: center;
   justify-content: center;
   background-color: ${({ theme }) => theme.background.success};
+  background-color: #17aa40;
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
   text-decoration: none;
   color: ${({ theme }) => theme.colors.white};

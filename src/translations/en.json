@@ -63,6 +63,8 @@
     "paymentMethod": "Payment method",
     "total": "Total",
     "action": "Action",
+    "availablePcs": "Available {quantity} pcs",
+    "nothingInTheWishlist": "There's nothing in the wishlist...",
     "login": "Login",
     "log-In": "Log in",
     "password": "Password",
@@ -107,7 +109,12 @@
     "stocks": "Sort by stock availability",
     "new": "Sort by newest",
     "cheapest": "Sort by cheapest",
-    "expensive": "Sort by most expensive"
+    "expensive": "Sort by most expensive",
+    "clearFilters": "Clear All",
+    "clearFilter": "Clear",
+    "applyFilter": "Apply",
+    "searchResults": "Search Results",
+    "phraseSought": "Phrase Sought"
   },
   "Product": {
     "addToBasket": "Add to basket",
@@ -140,6 +147,10 @@
     "lastedArticles": "Lasted Articles"
   },
   "Cart": {
+    "cart": "Cart",
+    "psc": "psc",
+    "placeAnOrder": "Place an order",
+    "goToCart": "Go to cart",
     "productName": "Name",
     "price": "Price",
     "quantity": "Quantity",
@@ -151,7 +162,6 @@
     "delete": "Delete",
     "updateTo": "Update to",
     "priceToDelivery": "To get free delivery, you need to add items totaling {locale}",
-
     "discountText": "LOG IN AND TAKE ADVANTAGE OF {discounts}",
     "CouponText": "IF YOU HAVE A DISCOUNT COUPON, USE IT AND GET A DISCOUNT!",
     "ChooseCouponText": "Choose if you have a discount code or reward points you want to use or would like to estimate your delivery cost.",
@@ -162,14 +172,12 @@
     "ErrorCoupon": "This coupon doesn't exist.",
     "CouponApplyBtn": "Apply coupon",
     "CouponInputPlaceholder": "Code coupon",
-
     "OrderComments": "COMMENTS ON THE ORDER",
     "OrderCommentPlaceholder": "Share any specific details or requests about your order...",
     "OrderCommentHint": "Feel free to provide any additional instructions or notes for your order here.",
     "OrderSummary": "Order Summary",
     "Continue": "Continue",
     "OrderSummaryTotal": "total to pay",
-
     "products": "Products",
     "сoupon": "Сoupon",
     "paymentMethod": "Payment method",
@@ -178,7 +186,13 @@
     "Confirmation": "Confirmation",
     "welcomeToPlatinumShop": "Welcome to Platinum Shop",
     "theBest": "The best",
-    "productForYou": "Product for you"
+    "productForYou": "Product for you",
+    "summary": "Summary",
+    "UserLoyalityStatus": "You have a {validStatus} status and get",
+    "nothingInTheCart": "There's nothing in the cart...",
+    "goToShop": "Go to shop",
+    "nothingInTheCartText": "Check out our new products or use the search, if you're looking for something specific",
+    "YouNeedToLoginForOrder": "You need to log in to place an order."
   },
   "Contacts": {
     "contacts": "Contacts",
@@ -196,9 +210,10 @@
     "yourNamePlaceholder": "What is your name?",
     "emailPlaceholder": "Email",
     "yourQuestionPlaceholder": "Write your question",
-
     "errorMessage": "Something went wrong. Please try again.",
-    "successMessage": "Your message has been sent successfully!"
+    "successMessage": "Your message has been sent successfully!",
+    "sending": "Sending...",
+    "sendButton": "Send"
   },
   "Validation": {
     "emailValidation": "Please enter a valid email.",
@@ -242,7 +257,7 @@
     "UserInfo": "User information",
     "ShippingInfo": "Shipping information",
     "InvalidPhoneNumber": "Invalid phone number",
-    "fileTooLarge": "file too large"
+    "fileTooLarge": "File too large"
   },
   "Breadcrumbs": {
     "homePage": "Home Page",
@@ -251,7 +266,6 @@
     "registration": "Registration",
     "blogPage": "Blog"
   },
-
   "NotFoundPage": {
     "notFound": "Page not found",
     "description": "Sorry, we can't seem to find the page you're looking for. It may have been moved, deleted, or never existed.",

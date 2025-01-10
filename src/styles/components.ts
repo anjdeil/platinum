@@ -38,6 +38,7 @@ interface TitleProps {
   textalign?: 'center' | 'left' | 'right';
   uppercase?: boolean;
   marginTop?: string;
+  lowercase?: boolean;
   marginBottom?: string;
   tabletMarginBottom?: number;
   mobMarginBottom?: number;
@@ -49,7 +50,8 @@ export const Title = styled.h1<TitleProps>`
   font: ${({ theme }) => theme.fonts.titleH2SemiBold};
   font-size: ${({ fontSize }) => fontSize};
   font-weight: ${({ fontWeight }) => fontWeight};
-  text-transform: ${({ uppercase }) => (uppercase ? 'uppercase' : 'none')};
+  text-transform: ${({ uppercase, lowercase }) =>
+    uppercase ? 'uppercase' : lowercase ? 'lowercase' : 'none'};
   text-align: ${({ textalign = 'center' }) => textalign};
   margin-top: ${({ marginTop = '0' }) => marginTop};
   margin-bottom: ${({ marginBottom = '0' }) => marginBottom};
@@ -117,6 +119,7 @@ export const AccountInfoWrapper = styled.div<AccountInfoWrapperProps>`
 export const StyledButton = styled.button<StyledButtonProps>`
   box-sizing: border-box;
   width: ${({ width = '100%' }) => width};
+  height: ${({ height = '100%' }) => height};
   min-width: ${({ minWidthDesktop = 'auto' }) => minWidthDesktop};
   padding-inline: 16px;
   border-radius: 10px;
@@ -149,6 +152,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
   display: flex;
   justify-content: center;
   align-items: center;
+  text-decoration: ${({ textDecoration = 'none' }) => textDecoration};
 
   &:hover {
     color: ${({ isDisabled, theme, hoverColor = theme.colors.white }) =>
@@ -313,4 +317,21 @@ export const StyledHeaderWrapper = styled.header`
 export const FormPageWrapper = styled.header`
   min-height: 85vh;
   padding: 24px 0;
+`;
+
+// ------------------RICH TEXT SLUG PAGE
+
+export const StyledSlugRichTextSection = styled.div`
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  margin-bottom: 72px;
+  @media ${({ theme }) => theme.media.medium} {
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-bottom: '64px';
+  }
 `;
