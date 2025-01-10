@@ -17,7 +17,7 @@ import Notification from '../../../Notification/Notification';
 import { ChangePasswordFormSchema } from '@/types/components/global/forms/changePassword';
 
 //
-//changing the password for an authorized user
+//changing the password for an authorized user (!!on pause, the desired endpoint is missing!!)
 //
 
 export const ChangePasswordForm: FC = () => {

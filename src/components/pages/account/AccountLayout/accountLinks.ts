@@ -34,11 +34,11 @@ const accountLinks = [
     url: '/my-account/loyalty',
     isActive: false,
   },
-  {
+  /*  {
     name: 'changePassword',
     url: '/my-account/change-password',
     isActive: false,
-  },
+  }, */
   {
     name: 'logout',
     url: '/my-account/logout',
