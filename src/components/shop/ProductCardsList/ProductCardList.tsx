@@ -52,8 +52,6 @@ export const ProductCardList: FC<ProductCardListProps> = ({
     rate: currentCurrency ? currentCurrency.rate || 1 : undefined,
   };
 
-    const wishlist: WishlistItem[] = userData?.meta?.wishlist || [];
-
     useEffect(() => {
       if (cookie.authToken) {
         fetchUserData();
@@ -115,18 +113,6 @@ export const ProductCardList: FC<ProductCardListProps> = ({
     }
 
     isLoading = userDataUpdateLoading || isUserFetching;
-
-  const currentCurrency =
-    currencies && !isCurrenciesLoading
-      ? currencies?.data?.items.find(
-          currency => currency.code === selectedCurrency.name
-        )
-      : undefined;
-
-  const extendedCurrency = {
-    ...selectedCurrency,
-    rate: currentCurrency ? currentCurrency.rate || 1 : undefined,
-  };
   
   return (
     <StyledProductCardList
