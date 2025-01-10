@@ -30,7 +30,7 @@ const BlogListBlock: FC<BlogListBlockProps> = ({
     return (
       <BlogListBlockContainer>
         <StyledText>
-          Sorry, something went wrong... We can't get the posts.
+          Sorry, something went wrong... We can&apos;t get the posts.
         </StyledText>
       </BlogListBlockContainer>
     );

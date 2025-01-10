@@ -41,8 +41,10 @@ export const ProductVariationSchema = z.object({
     description: z.string(),
     created: z.string(),
     modified: z.string(),
-    stock_quantity: z.number().nullable(),
-    price: z.number().nullable(),
+    // stock_quantity: z.number().nullable(),
+    stock_quantity: z.number().optional(),
+    // price: z.number().nullable(),
+    price: z.number().optional(),
     image: z.string().nullable(),
     attributes: z.array(ProductDefaultAttributesSchema),
 })

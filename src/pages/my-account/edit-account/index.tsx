@@ -1,4 +1,3 @@
-import { ChangeInfoForm } from '@/components/global/forms/ChangeInfoForm';
 import { FormContainer } from '@/components/pages/account/styles';
 import { useAppDispatch } from '@/store';
 import { Container } from '@/styles/components';
@@ -22,10 +21,10 @@ export default function UserInfo({ defaultCustomerData }: Props) {
     <>
       <Container>
         <FormContainer>
-          <ChangeInfoForm
+          {/* <ChangeInfoForm
             defaultCustomerData={defaultCustomerData}
             onUserUpdate={handleUpdateUser}
-          />
+          /> */}
         </FormContainer>
       </Container>
     </>

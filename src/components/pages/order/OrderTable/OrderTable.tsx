@@ -19,7 +19,7 @@ const OrderTable: React.FC<TableProps> = ({ orderList, title }) =>
                     as={"h2"}
                     textalign="center"
                     uppercase
-                    marginBottom={24}
+                    marginBottom='24'
                     tabletMarginBottom={16}
                     mobMarginBottom={16}
                 >

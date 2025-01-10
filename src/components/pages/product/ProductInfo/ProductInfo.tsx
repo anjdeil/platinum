@@ -6,7 +6,7 @@ import { updateCart } from '@/store/slices/cartSlice';
 import { popupSet } from '@/store/slices/PopupSlice';
 import { setData } from '@/store/slices/ProductSlice';
 import { StyledButton, Title } from '@/styles/components';
-import { ProductCardPropsType } from '@/types/components/shop';
+import { CurrencyType } from '@/types/components/shop';
 import { ProductVariation } from '@/types/components/shop/product/products';
 import { ProductType } from '@/types/pages/shop';
 import { CartItem } from '@/types/store/reducers/сartSlice';
@@ -36,16 +36,23 @@ import {
   ProductWrapper,
 } from './styles';
 
+//TODO ProductCardPropsType
+// product: ProductSchema,
+//   handleDisire: z
+//     .function()
+//     .args(z.number(), z.number().optional())
+//     .returns(z.void()),
+//   wishlist: z.array(WishlistItemSchema),
+//   isLoading: z.boolean(),
+//   currency: CurrencySchema,
+
+type ProductCardPropsType = {
+  product: ProductType;
+  currency: CurrencyType;
+};
+
 const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
-  const {
-    name,
-    stock_quantity,
-    sku,
-    min_price,
-    max_price,
-    images,
-    variations,
-  } = product;
+  const { images, thumbnail } = product;
   const t = useTranslations('Product');
 
   const dispatch = useAppDispatch();
@@ -64,14 +71,7 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
     checkAuth();
   }, []);
 
-  const sizeList = ['M', 'L', 'XL'];
-
   const [quantity, setQuantity] = useState<number>(1);
-  const [currentSize, setCurrentSize] = useState<string>(sizeList[0]);
-  const lengthList = ['8-14mm', '0.05mm', '0.07mm', '2mm'];
-  const [currentLength, setCurrentLength] = useState<string>(lengthList[0]);
-  const colorList = ['red', 'white', 'green', 'grey'];
-  const [currentColor, setCurrentColor] = useState<string>(colorList[0]);
   const [cartMatch, setCartMatch] = useState<CartItem>();
 
   useEffect(() => {
@@ -113,8 +113,6 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
     );
   }
 
-  const testimages = Array.from({ length: 4 }).map((_, index) => images[0]);
-
   const stockQuantity = useMemo(() => {
     if (!currentVariation?.stock_quantity && !product.stock_quantity) return 0;
     if (currentVariation?.stock_quantity)
@@ -153,10 +151,18 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
     }
   };
 
+  const galleryImages =
+    thumbnail?.id && thumbnail?.name && thumbnail?.src
+      ? [
+          { id: thumbnail.id, name: thumbnail.name, src: thumbnail.src },
+          ...images,
+        ]
+      : [...images];
+
   return (
     <ProductWrapper>
       <ProductImageWrapper>
-        <ProductSwiper data={testimages || []} />
+        <ProductSwiper data={galleryImages} />
       </ProductImageWrapper>
       <ProductTitleWrapper>
         <Title as="h1" uppercase textalign="left">
@@ -178,7 +184,7 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
             currentVariation.price !== null && (
               <ProductPrice
                 currency={currency}
-                minPrice={currentVariation.price * currency.rate}
+                minPrice={(currentVariation.price ?? 0) * currency.rate}
               />
             )
           ) : (

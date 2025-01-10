@@ -1,4 +1,3 @@
-import { transformDate } from '@/services/transformers/transformDate';
 import { Title } from '@/styles/components';
 import { BlogItemUnionType } from '@/types/pages/blog';
 import { useTranslations } from 'next-intl';
@@ -18,6 +17,7 @@ import { parseHtmlContent } from '@/utils/blog/parseHtmlContent';
 import { useRouter } from 'next/router';
 import { getPostUrl } from '@/utils/getPostUrl';
 import Link from 'next/link';
+import { useTransformDate } from '@/hooks/useTransformDate';
 
 interface BlogItemProps {
   post: BlogItemUnionType;
@@ -28,7 +28,7 @@ const BlogItem: FC<BlogItemProps> = ({ post }) => {
   const src = thumbnail?.src || '/assets/images/no-image.jpg';
   const router = useRouter();
   const t = useTranslations('Product');
-  const formatDate = transformDate(created);
+  const formatDate = useTransformDate(created);
 
   const displayContent =
     'parsedContent' in post
