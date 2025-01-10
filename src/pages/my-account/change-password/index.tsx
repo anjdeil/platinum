@@ -1,7 +1,6 @@
 import { Container } from '@/styles/components';
 import { GetServerSidePropsContext } from 'next';
 import { FormContainer } from '@/components/pages/account/styles';
-import { ChangeInfoForm } from '@/components/global/forms/ChangeInfoForm';
 import { WooCustomerReqType } from '@/types/services/wooCustomApi/customer';
 import wpRestApi from '@/services/wpRestApi';
 
@@ -13,9 +12,7 @@ export default function ResetPassword({ defaultCustomerData }: Props) {
   return (
     <>
       <Container>
-        <FormContainer>
-          {/* <ChangeInfoForm defaultCustomerData={defaultCustomerData} /> */}
-        </FormContainer>
+        <FormContainer></FormContainer>
       </Container>
     </>
   );

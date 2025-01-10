@@ -6,7 +6,7 @@ import wpRestApi from '@/services/wpRestApi';
 import { FormContainer } from '@/components/pages/account/styles';
 import { useTranslations } from 'next-intl';
 import Breadcrumbs from '@/components/global/Breadcrumbs/Breadcrumbs';
-import { LoginRegPageWrapper } from '../login/styles';
+import { LoginRegPageWrapper } from '@/styles/login/styles';
 
 export default function Registration() {
   const t = useTranslations('MyAccount');

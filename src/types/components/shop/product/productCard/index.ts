@@ -30,3 +30,4 @@ export const ProductCardPropsTypeShema = z.object({
 
 export type CommonTextProps = z.infer<typeof CommonTextPropsSchema>;
 export type ProductCardPropsType = z.infer<typeof ProductCardPropsTypeShema>;
+export type CurrencyType = z.infer<typeof CurrencySchema>;

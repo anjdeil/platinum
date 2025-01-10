@@ -15,13 +15,16 @@ export const StyledButtonPropsSchema = z.object({
   minWidthMobile: z.string().optional(),
   minWidthTablet: z.string().optional(),
   minWidthDesktop: z.string().optional(),
+  color: z.string().optional(),
+  backgroundColor: z.string().optional(),
   hoverColor: z.string().optional(),
   hoverBackgroundColor: z.string().optional(),
   notify: z.boolean().optional(),
   secondary: z.boolean().optional(),
   textDecoration: z.string().optional(),
   isDisabled: z.boolean().optional(),
-  /* backgroundColor:z.string().optional(), */
+  padding: z.string().optional(),
+  onClick: z.function().optional(),
 });
 
 export const LogoLinkImagePropsSchema = z.object({

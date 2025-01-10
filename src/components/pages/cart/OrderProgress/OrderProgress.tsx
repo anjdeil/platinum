@@ -1,14 +1,14 @@
 import { useTranslations } from 'next-intl';
 import React, { FC } from 'react';
 import { useRouter } from 'next/router';
-import ForwardArrow from '@/components/global/icons/ForwardArrow/ForwardArrow';
 import {
-    OrderProgressContainer,
-    OrderProgressWrapper,
-    OrderStepNum,
-    OrderStepWrapper,
-    OrderStepWrapperLink
+  OrderProgressContainer,
+  OrderProgressWrapper,
+  OrderStepNum,
+  OrderStepWrapper,
+  OrderStepWrapperLink,
 } from './style';
+import ForwardArrow from '@/components/global/icons/ForwardArrow/ForwardArrow';
 
 interface OrderProgressLink {
     name: string;

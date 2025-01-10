@@ -10,13 +10,13 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { PaymentListContainer } from "./styles";
 
 const paymentIcons = [
-    <PayPalIcon />,
-    <GPayIcon />,
-    <MasterCardIcon />,
-    <BlikIcon />,
-    <PrzelewyIcon />,
-    <ApplePayIcon />,
-    <VisaIcon />,
+  <PayPalIcon key="paypal" />,
+  <GPayIcon key="gpay" />,
+  <MasterCardIcon key="mastercard" />,
+  <BlikIcon key="blik" />,
+  <PrzelewyIcon key="przelewy" />,
+  <ApplePayIcon key="applepay" />,
+  <VisaIcon key="visa" />,
 ];
 
 const PaymentList = () =>

@@ -13,8 +13,7 @@ import {
   FlexBox,
   FormWrapper,
   FormWrapperBottom,
-  StyledButton,
-  SuccessMessage,
+  StyledButton
 } from '@/styles/components';
 import { isAuthErrorResponseType } from '@/utils/isAuthErrorResponseType';
 import { Title } from '@/styles/components';
@@ -30,6 +29,7 @@ import {
   AmbassadorFormType,
   AmbassadorFormValidationSchema,
 } from '@/types/components/global/forms/ambassadorFrom';
+import { SuccessMessage } from '@/components/pages/contacts/ContactsForm/style';
 
 export const AmbassadorForm: FC = () => {
   const [hasChanges, setHasChanges] = useState<boolean>(false);
@@ -163,7 +163,7 @@ export const AmbassadorForm: FC = () => {
   };
 
   return (
-    <CustomForm onSubmit={handleSubmit(onSubmit)} maxWidth="800px" fullWidth>
+    <CustomForm onSubmit={handleSubmit(onSubmit)} maxWidth="800px">
       <InfoCard>
         <Title
           as="h2"

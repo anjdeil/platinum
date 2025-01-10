@@ -35,72 +35,73 @@ export const ProductCardList: FC<ProductCardListProps> = ({
   const [fetchUserUpdate, { isLoading: userDataUpdateLoading }] =
     useFetchUserUpdateMutation();
 
-  const wishlist: WishlistItem[] = userData?.meta?.wishlist || [];
+    const { data: currencies, isLoading: isCurrenciesLoading } =
+      useGetCurrenciesQuery();
+    const selectedCurrency = useAppSelector(state => state.currencySlice);
 
-  useEffect(() => {
-    if (cookie.authToken) {
-      fetchUserData();
-    }
-  }, [cookie, fetchUserData]);
+    const wishlist: WishlistItem[] = userData?.meta?.wishlist || [];
 
-  const handleDisire = (productId: number, variationId?: number) => {
-    if (!userData?.meta?.wishlist) {
-      router.push('/my-account/login');
+    useEffect(() => {
+      if (cookie.authToken) {
+        fetchUserData();
+      }
+    }, [cookie, fetchUserData]);
 
-      return;
-    }
+    const handleDisire = (productId: number, variationId?: number) => {
+      if (!userData?.meta?.wishlist) {
+        router.push('/my-account/login');
 
-    if (!cookie.authToken) {
-      return;
-    }
+        return;
+      }
 
-    const userWishlist = userData?.meta.wishlist || [];
+      if (!cookie.authToken) {
+        return;
+      }
 
-    const index = userWishlist.findIndex(
-      (item: WishlistItem) =>
-        item.product_id === productId &&
-        (!variationId || item.variation_id === variationId)
-    );
+      const userWishlist = userData?.meta.wishlist || [];
 
-    let updatedWishlist: WishlistItem[];
-
-    if (index >= 0) {
-      updatedWishlist = userWishlist.filter(
-        (_: WishlistItem, index2: number) => index2 !== index
+      const index = userWishlist.findIndex(
+        (item: WishlistItem) =>
+          item.product_id === productId &&
+          (!variationId || item.variation_id === variationId)
       );
-    } else {
-      updatedWishlist = [
-        ...userWishlist,
-        {
-          product_id: productId,
-          ...(variationId && { variation_id: variationId }),
-        },
-      ];
-    }
 
-    const userUpdateRequestBody = {
-      meta: {
-        wishlist: updatedWishlist,
-      },
+      let updatedWishlist: WishlistItem[];
+
+      if (index >= 0) {
+        updatedWishlist = userWishlist.filter(
+          (_: WishlistItem, index2: number) => index2 !== index
+        );
+      } else {
+        updatedWishlist = [
+          ...userWishlist,
+          {
+            product_id: productId,
+            ...(variationId && { variation_id: variationId }),
+          },
+        ];
+      }
+
+      const userUpdateRequestBody = {
+        meta: {
+          wishlist: updatedWishlist,
+        },
+      };
+
+      if (userData?.id) {
+        fetchUserUpdate(userUpdateRequestBody);
+      }
     };
 
-    if (userData?.id) {
-      fetchUserUpdate(userUpdateRequestBody);
+    if (isLoading) {
+      return <ProductCardListSkeleton columns={columns} length={length} />;
     }
-  };
 
-  if (isLoading) {
-    return <ProductCardListSkeleton columns={columns} length={length} />;
-  }
+    if (isError) {
+      return <p>We cannot get the products</p>;
+    }
 
-  if (isError) {
-    return <p>We cannot get the products</p>;
-  }
-
-  isLoading = userDataUpdateLoading || isUserFetching;
-  const { data: currencies, isLoading: isCurrenciesLoading } =
-    useGetCurrenciesQuery();
-  const selectedCurrency = useAppSelector(state => state.currencySlice);
+    isLoading = userDataUpdateLoading || isUserFetching;
 
   const currentCurrency =
     currencies && !isCurrenciesLoading
