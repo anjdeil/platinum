@@ -30,6 +30,7 @@ import AddToBasketButton from '@/components/global/buttons/AddToBasketButton/Add
 import { useRouter } from 'next/router';
 import { updateCart } from '@/store/slices/cartSlice';
 import { WishListTableProps } from '@/types/components/pages/myAccount/wishlist';
+import { LinkWrapper } from '@/styles/components';
 
 const WishListTable: FC<WishListTableProps> = ({
   symbol,
@@ -42,42 +43,49 @@ const WishListTable: FC<WishListTableProps> = ({
   const { isMobile, isTablet } = useResponsive();
   const router = useRouter();
   const dispatch = useAppDispatch();
-
   const { cartItems } = useAppSelector(state => state.cartSlice);
 
-  const checkCartMatch = (cartItems: CartItem[], productId: number) => {
-    return cartItems.some(({ product_id }) => product_id === productId);
+  const checkCartMatch = (
+    cartItems: CartItem[],
+    product: ProductsMinimizedType
+  ): boolean => {
+    const { id, parent_id } = product;
+
+    return parent_id === 0
+      ? cartItems.some(({ product_id }) => product_id === id)
+      : cartItems.some(
+          ({ product_id, variation_id }) =>
+            product_id === parent_id && variation_id === id
+        );
   };
 
   function handleCartButtonClick(
     product: ProductsMinimizedType,
     isCartMatch: boolean
   ) {
-    if (product?.attributes.length > 0) {
-      router.push(
-        `/${router.locale === 'en' ? '' : router.locale}/product/${product.slug}`
-      );
-    }
+    const { id, parent_id } = product;
 
-    if (product.parent_id !== 0) {
-      router.push(
-        `/${router.locale === 'en' ? '' : router.locale}/product/${
-          product.slug
-        }`
+    if (!isCartMatch) {
+      dispatch(
+        updateCart({
+          product_id: parent_id === 0 ? id : parent_id,
+          variation_id: parent_id === 0 ? undefined : id,
+          quantity: 1,
+        })
       );
     } else {
-      if (!isCartMatch) {
-        dispatch(
-          updateCart({
-            product_id: product.id,
-            quantity: 1,
-          })
-        );
-      } else {
-        router.push(`/${router.locale === 'en' ? '' : router.locale}/cart`);
-      }
+      router.push(`/${router.locale === 'en' ? '' : router.locale}/cart`);
     }
   }
+
+  const handleDelete = (item: ProductsMinimizedType) => {
+    const { id, parent_id } = item;
+    if (parent_id === 0) {
+      onDelete({ product_id: id });
+    } else {
+      onDelete({ product_id: parent_id, variation_id: id });
+    }
+  };
 
   return (
     <CartTableWrapper>
@@ -86,14 +94,12 @@ const WishListTable: FC<WishListTableProps> = ({
           <>
             {!isLoading &&
               wishlist?.map(item => {
-                const isCartMatch = checkCartMatch(cartItems, item.id);
+                const isCartMatch = checkCartMatch(cartItems, item);
 
                 return (
                   <WishlistCardAllWrapper key={item.id} padding="16px">
                     <DeleteCell>
-                      <TrashIcon
-                        onClick={() => onDelete({ product_id: item.id })}
-                      />
+                      <TrashIcon onClick={() => handleDelete(item)} />
                     </DeleteCell>
                     <WishlistImgWrapper maxHeight="100px" maxWidth="100px">
                       <CartItemImg
@@ -103,7 +109,11 @@ const WishListTable: FC<WishListTableProps> = ({
                       />
                     </WishlistImgWrapper>
                     <CardContent gap="12px">
-                      <TextNameCell>{item.name}</TextNameCell>
+                      <TextNameCell>
+                        <LinkWrapper href={`/product/${item.slug}`}>
+                          {item.name}
+                        </LinkWrapper>
+                      </TextNameCell>
                       <QuantityRow>
                         <Circle />
                         {item.stock_quantity}
@@ -116,11 +126,9 @@ const WishListTable: FC<WishListTableProps> = ({
                       active={isCartMatch}
                       onClick={() => handleCartButtonClick(item, isCartMatch)}
                     >
-                      {item.parent_id !== 0
-                        ? tProduct('chooseOptions')
-                        : isCartMatch
-                          ? tProduct('viewCart')
-                          : tProduct('addToBasket')}
+                      {isCartMatch
+                        ? tProduct('viewCart')
+                        : tProduct('addToBasket')}
                     </AddToBasketButton>
                   </WishlistCardAllWrapper>
                 );
@@ -130,7 +138,7 @@ const WishListTable: FC<WishListTableProps> = ({
           <>
             {!isLoading &&
               wishlist?.map(item => {
-                const isCartMatch = checkCartMatch(cartItems, item.id);
+                const isCartMatch = checkCartMatch(cartItems, item);
                 return (
                   <CartCardAllWrapper key={item.id} padding="16px">
                     <CartCardWrapper>
@@ -143,10 +151,12 @@ const WishListTable: FC<WishListTableProps> = ({
                       </WishlistImgWrapper>
                       <CardContent gap="8px" padding="0 0 4px 0">
                         <ProducTitle>
-                          <p>{item.name}</p>
+                          <LinkWrapper href={`/product/${item.slug}`}>
+                            {item.name}
+                          </LinkWrapper>
                           <TrashIcon
                             padding="0 10px 0 0"
-                            onClick={() => onDelete({ product_id: item.id })}
+                            onClick={() => handleDelete(item)}
                           />
                         </ProducTitle>
                         <QuantityRow>
@@ -167,11 +177,9 @@ const WishListTable: FC<WishListTableProps> = ({
                       active={isCartMatch}
                       onClick={() => handleCartButtonClick(item, isCartMatch)}
                     >
-                      {item.parent_id !== 0
-                        ? tProduct('chooseOptions')
-                        : isCartMatch
-                          ? tProduct('viewCart')
-                          : tProduct('addToBasket')}
+                      {isCartMatch
+                        ? tProduct('viewCart')
+                        : tProduct('addToBasket')}
                     </AddToBasketButton>
                   </CartCardAllWrapper>
                 );

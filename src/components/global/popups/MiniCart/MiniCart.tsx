@@ -19,7 +19,7 @@ import CartQuantity, {
 import { useTranslations } from 'next-intl';
 import { PopupOverlay } from '@/components/global/popups/SwiperPopup/styles';
 import { CartLink, MiniCartContainer } from './style';
-import { FlexBox, StyledButton, Title } from '@/styles/components';
+import { FlexBox, LinkWrapper, StyledButton, Title } from '@/styles/components';
 import { Skeleton } from '@mui/material';
 import TrashIcon from '@/components/global/icons/TrashIcon/TrashIcon';
 import { OrderBarDesc } from '@/components/pages/cart/OrderBar/style';
@@ -48,15 +48,10 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
     { data: productsSpecsData, isLoading: isLoadingProducts, isSuccess },
   ] = useGetProductsMinimizedMutation();
 
-  const productsSpecs = useMemo(
-    () => productsSpecsData?.data?.items || [],
-    [productsSpecsData]
-  );
   const productsWithCartData = useMemo(() => {
     if (!productsSpecsData?.data?.items || !cartItems) {
       return [];
     }
-
     const cartItemsMap = cartItems.reduce(
       (acc, cartItem) => {
         acc[cartItem.product_id] = cartItem;
@@ -67,26 +62,28 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
 
     return productsSpecsData.data.items.map(product => {
       const cartItem =
-        product.parent_id !== 0
-          ? cartItemsMap[product.parent_id]
-          : cartItemsMap[product.id];
+        product.parent_id === 0
+          ? cartItemsMap[product.id]
+          : cartItemsMap[product.parent_id] || {};
 
-      const variation = product.id;
-
-      const quantity = cartItem.quantity ?? 0;
-      const price = product.price ?? 0;
+      const quantity = cartItem ? cartItem.quantity || 0 : 0;
+      const price = product.price || 0;
       const totalPrice = price * quantity;
 
       return {
         ...product,
-        id: cartItem.product_id,
         quantity,
-        variation,
+        variation: cartItem.variation_id || undefined,
+        product_id: cartItem.product_id,
         totalPrice,
       };
     });
   }, [productsSpecsData, cartItems]);
 
+  const productsSpecs = useMemo(
+    () => productsSpecsData?.data?.items || [],
+    [productsSpecsData]
+  );
   const totalCartPrice = useMemo(
     () => productsWithCartData.reduce((sum, item) => sum + item.totalPrice, 0),
     [productsWithCartData]
@@ -99,7 +96,6 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
       variation_id?: number,
       newQuantity?: number | boolean
     ) => {
-      console.log(product_id, newQuantity, variation_id, newQuantity);
       handleQuantityChange(
         cartItems,
         dispatch,
@@ -129,9 +125,7 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
     if (productsSpecs.length > 0) {
       setHasConflict(checkCartConflict(cartItems, productsSpecs));
     }
-    console.log('cartItems', cartItems);
-    console.log('productsSpecs', productsSpecs);
-    console.log('productsWithCartData', productsWithCartData);
+    console.log(productsSpecs);
   }, [cartItems, productsSpecs]);
 
   return (
@@ -192,12 +186,14 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
                 </CartImgWrapper>
                 <CardContent padding="8px 0" gap="1px">
                   <ProducTitle>
-                    <p>{item.name}</p>
+                    <LinkWrapper href={`/product/${item.slug}`}>
+                      {item.name}
+                    </LinkWrapper>
                     <TrashIcon
                       padding="0"
                       onClick={() =>
                         handleChangeQuantity(
-                          item.id,
+                          item.product_id,
                           'value',
                           item.variation,
                           0

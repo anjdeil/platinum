@@ -12,7 +12,7 @@ export const adaptItemToCartQuantity = (
     id: item.id,
     name: item.name,
     parent_name: item.parent_name || '',
-    product_id: item.product_id || item.id,
+    product_id: item.product_id,
     variation_id: item.variation_id || item.variation || 0,
     quantity: item.quantity,
     tax_class: item.tax_class || '',

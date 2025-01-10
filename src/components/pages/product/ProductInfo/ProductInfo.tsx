@@ -153,10 +153,14 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
     }
   };
 
+  function handleFavorite() {}
   return (
     <ProductWrapper>
       <ProductImageWrapper>
-        <ProductSwiper data={testimages || []} />
+        <ProductSwiper
+          handleFavorite={handleFavorite}
+          data={testimages || []}
+        />
       </ProductImageWrapper>
       <ProductTitleWrapper>
         <Title as="h1" uppercase textalign="left">

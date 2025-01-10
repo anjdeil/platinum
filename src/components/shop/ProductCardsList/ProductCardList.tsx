@@ -12,6 +12,7 @@ import { useRouter } from 'next/router';
 import { WishlistItem } from '@/types/store/rtk-queries/wpApi';
 import { useGetCurrenciesQuery } from '@/store/rtk-queries/wpCustomApi';
 import { useAppSelector } from '@/store';
+import { ProductType } from '@/types/components/shop/product/products';
 
 export const ProductCardList: FC<ProductCardListProps> = ({
   isLoading = false,
@@ -32,10 +33,27 @@ export const ProductCardList: FC<ProductCardListProps> = ({
       isFetching: isUserFetching,
     },
   ] = useLazyFetchUserDataQuery();
+
   const [fetchUserUpdate, { isLoading: userDataUpdateLoading }] =
     useFetchUserUpdateMutation();
 
   const wishlist: WishlistItem[] = userData?.meta?.wishlist || [];
+
+  const { data: currencies, isLoading: isCurrenciesLoading } =
+    useGetCurrenciesQuery();
+  const selectedCurrency = useAppSelector(state => state.currencySlice);
+
+  const currentCurrency =
+    currencies && !isCurrenciesLoading
+      ? currencies?.data?.items.find(
+          currency => currency.code === selectedCurrency.name
+        )
+      : undefined;
+
+  const extendedCurrency = {
+    ...selectedCurrency,
+    rate: currentCurrency ? currentCurrency.rate || 1 : undefined,
+  };
 
   useEffect(() => {
     if (cookie.authToken) {
@@ -43,23 +61,21 @@ export const ProductCardList: FC<ProductCardListProps> = ({
     }
   }, [cookie, fetchUserData]);
 
-  const handleDisire = (productId: number, variationId?: number) => {
+  const handleDisire = (product: ProductType) => {
     if (!userData?.meta?.wishlist) {
       router.push('/my-account/login');
-
       return;
     }
-
     if (!cookie.authToken) {
       return;
     }
-
     const userWishlist = userData?.meta.wishlist || [];
 
     const index = userWishlist.findIndex(
       (item: WishlistItem) =>
-        item.product_id === productId &&
-        (!variationId || item.variation_id === variationId)
+        item.product_id === product.id &&
+        (!product.variations.length ||
+          item.variation_id === product.variations[0].id)
     );
 
     let updatedWishlist: WishlistItem[];
@@ -72,8 +88,10 @@ export const ProductCardList: FC<ProductCardListProps> = ({
       updatedWishlist = [
         ...userWishlist,
         {
-          product_id: productId,
-          ...(variationId && { variation_id: variationId }),
+          product_id: product.id,
+          ...(product.variations.length && {
+            variation_id: product.variations[0].id,
+          }),
         },
       ];
     }
@@ -98,21 +116,6 @@ export const ProductCardList: FC<ProductCardListProps> = ({
   }
 
   isLoading = userDataUpdateLoading || isUserFetching;
-  const { data: currencies, isLoading: isCurrenciesLoading } =
-    useGetCurrenciesQuery();
-  const selectedCurrency = useAppSelector(state => state.currencySlice);
-
-  const currentCurrency =
-    currencies && !isCurrenciesLoading
-      ? currencies?.data?.items.find(
-          currency => currency.code === selectedCurrency.name
-        )
-      : undefined;
-
-  const extendedCurrency = {
-    ...selectedCurrency,
-    rate: currentCurrency ? currentCurrency.rate || 1 : undefined,
-  };
 
   return (
     <StyledProductCardList

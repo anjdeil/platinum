@@ -73,8 +73,8 @@ const ProductCard: React.FC<ProductCardPropsType> = ({
   const checkDesired = () =>
     Boolean(
       wishlist?.find(
-        (item: WishlistItem) => item.product_id === product.id /* &&
-          (!choosenVariation || item.variation_id === choosenVariation.id) */
+        (item: WishlistItem) => item.product_id === product.id /*  &&
+          (!choosenVariation || item.variation_id === choosenVariation.id)  */
       )
     );
 
@@ -125,7 +125,7 @@ const ProductCard: React.FC<ProductCardPropsType> = ({
             <ProductBadge type="sale" />
           )}
           <FavoriteButton
-            onClick={() => handleDisire(product.id, undefined)}
+            onClick={() => handleDisire(product)}
             marginLeft="auto"
             active={checkDesired()}
             isLoading={isLoading}

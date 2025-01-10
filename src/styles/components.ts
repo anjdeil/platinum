@@ -314,3 +314,7 @@ export const StyledHeaderWrapper = styled.header`
   gap: 8px;
   margin: 24px 0;
 `;
+export const LinkWrapper = styled(Link)`
+  text-decoration: none;
+  color: ${({ theme }) => theme.colors.black};
+`;

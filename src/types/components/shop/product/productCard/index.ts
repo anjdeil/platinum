@@ -19,10 +19,7 @@ export const CommonTextPropsSchema = z.object({
 
 export const ProductCardPropsTypeShema = z.object({
   product: ProductSchema,
-  handleDisire: z
-    .function()
-    .args(z.number(), z.number().optional())
-    .returns(z.void()),
+  handleDisire: z.function().args(ProductSchema).returns(z.void()),
   wishlist: z.array(WishlistItemSchema),
   isLoading: z.boolean(),
   currency: CurrencySchema,
