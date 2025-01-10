@@ -1,8 +1,6 @@
 import { SectionRenderer } from "@/components/sections/SectionRenderer";
 import { customRestApi } from "@/services/wpCustomApi";
 import { useAppDispatch, useAppSelector } from "@/store";
-import { popupToggle } from "@/store/slices/PopupSlice";
-import { Container, Title } from "@/styles/components";
 import { SectionsType } from "@/types/components/sections";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { validateWpPage } from "@/utils/zodValidators/validateWpPage";
