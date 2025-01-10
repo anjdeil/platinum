@@ -80,31 +80,9 @@ const Home: React.FC<HomeProps> = ({ sections }) => {
 
   const dispatch = useAppDispatch();
 
-  // const { data: categoriesData } = useGetCategoriesQuery({});
-  // const { isMobile } = useResponsive();
-
-  // const categories = categoriesData?.data
-  //   ? categoriesData?.data?.items.filter((category) => category.parent_id === 0)
-  //   : [];
-
-  // const visibleCategoriesCount = isMobile ? 2 : 6;
-  // const displayedCategories = categories.slice(0, visibleCategoriesCount);
-
   return (
     <div className="homepage">
       <SectionRenderer sections={sections} />
-      <main>
-        {/* <TestSelect /> */}
-        <Container>
-          <Title as="h2" fontSize={"20px"}>
-            Symbol of {currency.name} currency isQQ {currency.code}
-          </Title>
-          <Title as="h2" fontSize={"20px"}>
-            Symbol of {language.name} language isQQ {language.code}
-          </Title>
-          <button onClick={() => dispatch(popupToggle("categories-menu"))}>Categories</button>
-        </Container>
-      </main>
     </div>
   );
 };
