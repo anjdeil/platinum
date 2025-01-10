@@ -125,7 +125,7 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
     if (productsSpecs.length > 0) {
       setHasConflict(checkCartConflict(cartItems, productsSpecs));
     }
-    console.log(productsSpecs);
+    /*  console.log(productsSpecs); */
   }, [cartItems, productsSpecs]);
 
   return (

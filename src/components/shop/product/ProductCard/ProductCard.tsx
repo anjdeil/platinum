@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react';
 import ProductBadge from '../ProductBadge/ProductBadge';
 import ProductBadgeWrapper from '../ProductBadgeWrapper/ProductBadgeWrapper';
 import {
+  FavoriteButtonWrapper,
   PriceWrapper,
   ProductImageWrapper,
   ProductMaxPrice,
@@ -124,12 +125,14 @@ const ProductCard: React.FC<ProductCardPropsType> = ({
           {product.min_price !== product.max_price && (
             <ProductBadge type="sale" />
           )}
-          <FavoriteButton
-            onClick={() => handleDisire(product)}
-            marginLeft="auto"
-            active={checkDesired()}
-            isLoading={isLoading}
-          />
+          <FavoriteButtonWrapper className="favorite-button-wr">
+            <FavoriteButton
+              onClick={() => handleDisire(product)}
+              marginLeft="auto"
+              active={checkDesired()}
+              isLoading={isLoading}
+            />
+          </FavoriteButtonWrapper>
         </ProductBadgeWrapper>
       </ProductWrapper>
       <>

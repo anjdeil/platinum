@@ -42,7 +42,6 @@ export const handleQuantityChange = (
           quantity: quantityToUpdate,
         })
       );
-      console.log('disp');
     }
   }
 };
