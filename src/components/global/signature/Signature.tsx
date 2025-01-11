@@ -9,7 +9,7 @@ const Signature = () => {
     <StyledSignaure>
       <StyledSignatureText>
         Developed by{' '}
-        <StyledSignatureLink href="https://www.digiway.dev/">
+        <StyledSignatureLink href="https://www.digiway.dev/" target="_blank">
           DIGIway
         </StyledSignatureLink>{' '}
         media with ♥.
