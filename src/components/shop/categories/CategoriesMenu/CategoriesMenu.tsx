@@ -11,9 +11,9 @@ import {
 } from './styles';
 import { Title } from '@/styles/components';
 import { MenuSkeleton } from '@/components/menus/MenuSkeleton';
-import ForwardArrow from '@/components/global/icons/ForwardArrow/ForwardArrow';
 import { CategoriesMenuPropsType } from '@/types/components/shop/categories/categoriesMenu';
 import CategoryType from '@/types/components/shop/categories/categories';
+import ForwardArrow from '@/components/global/icons/ForwardArrow/ForwardArrow';
 
 const CategoriesMenu: FC<CategoriesMenuPropsType> = ({
   selectedCategories,

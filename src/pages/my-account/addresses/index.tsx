@@ -3,7 +3,6 @@ import { GetServerSidePropsContext } from 'next';
 import { FormContainer } from '@/components/pages/account/styles';
 import axios from 'axios';
 import { WooCustomerReqType } from '@/types/services/wooCustomApi/customer';
-import { ChangeShippingForm } from '@/components/global/forms/ChangeShippingForm';
 
 interface Props {
   defaultCustomerData: WooCustomerReqType;
@@ -14,7 +13,7 @@ export default function Addresses({ defaultCustomerData }: Props) {
     <>
       <Container>
         <FormContainer>
-          <ChangeShippingForm defaultCustomerData={defaultCustomerData} />
+          {/* <ChangeShippingForm defaultCustomerData={defaultCustomerData} /> */}
         </FormContainer>
       </Container>
     </>

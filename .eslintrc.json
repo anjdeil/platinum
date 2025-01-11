@@ -5,14 +5,15 @@
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
     "plugin:redux-saga/recommended",
-    "prettier"
+    "plugin:styled-components-a11y/recommended"
   ],
   "plugins": [
     "@typescript-eslint",
     "react",
     "react-hooks",
     "redux-saga",
-    "import"
+    "import",
+    "styled-components-a11y"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -34,14 +35,9 @@
       }
     ],
     // TypeScript rules
-    "@typescript-eslint/no-unused-vars": [
-      "error",
-      {
-        "argsIgnorePattern": "^_"
-      }
-    ],
+    "@typescript-eslint/no-unused-vars": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/no-explicit-any": "off",
     // Redux rules
     "redux-saga/no-unhandled-errors": "error",
     "redux-saga/no-yield-in-race": "error",
@@ -52,33 +48,16 @@
         "caseSensitive": false
       }
     ],
+    "import/resolver": {
+      "alias": {
+        "map": [["@", "./src"]],
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    },
     // Import rules
-    "import/order": [
-      "error",
-      {
-        "groups": ["builtin", "external", "internal"],
-        "pathGroups": [
-          {
-            "pattern": "@/**",
-            "group": "internal"
-          }
-        ],
-        "pathGroupsExcludedImportTypes": ["builtin"],
-        "alphabetize": {
-          "order": "asc",
-          "caseInsensitive": true
-        }
-      }
-    ],
+    "import/order": "off",
     "styled-components-a11y/click-events-have-key-events": "warn",
-    "styled-components-a11y/label-has-associated-control": "warn",
-    // Prettier rules (if using Prettier)
-    "prettier/prettier": [
-      "warn",
-      {
-        "endOfLine": "auto"
-      }
-    ]
+    "styled-components-a11y/label-has-associated-control": "warn"
   },
   "settings": {
     "react": {

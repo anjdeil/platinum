@@ -1,7 +1,7 @@
 // MenuSkeleton.tsx
 import { FC } from "react";
 import { SkeletonContainer, SkeletonElement } from "./styles";
-import { MenuSkeletonProps } from "@/types/menus/skeletons";
+import { MenuSkeletonProps } from '@/types/menus/Skeletons';
 
 export const MenuSkeleton: FC<MenuSkeletonProps> = ({
   elements,

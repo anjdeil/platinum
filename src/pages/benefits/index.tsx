@@ -9,7 +9,7 @@ import { SectionContainer } from '@/components/sections/styles';
 import { IsMobileScreen } from '@/components/global/isMobileScreenWrapper';
 import { NewsletterSection } from '@/components/sections/NewsletterSection';
 
-export default function benefits() {
+export default function Benefits() {
   const t = useTranslations('Breadcrumbs');
   const breadcrumbsLinks = [
     {

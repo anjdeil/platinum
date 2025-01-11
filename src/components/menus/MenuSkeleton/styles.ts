@@ -1,7 +1,7 @@
 import {
   SkeletonContainerProps,
   SkeletonElementProps,
-} from "@/types/menus/skeletons";
+} from '@/types/menus/Skeletons';
 import { keyframes } from "@emotion/react";
 import styled from "@emotion/styled";
 

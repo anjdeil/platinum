@@ -94,7 +94,7 @@ const MyAccount: FC<MyAccountPropsType> = ({ user }) => {
     })
   );
 
-  const { orderCount, totalAmountPLN, totalAmount } =
+  const { orderCount, totalAmount } =
     currencies && ordersData
       ? transformOrders(ordersData, currencies, selectedCurrency)
       : { orderCount: undefined, totalAmount: undefined };

@@ -38,9 +38,9 @@ export const optionalPhoneNumberValidation = (t: any, message: string) =>
     .refine(value => !value || /^[+]?[0-9]+$/.test(value), { message });
 
 export const optionalNumericStringMinLength = (
-  t: any,
   min: number,
-  message: string
+  message: string,
+  t?: any
 ) =>
   z
     .string()
@@ -72,7 +72,7 @@ export const addressValidation = (t: any) =>
       message: t('AddressInvalid'),
     });
 
-export const optionalEmailValidation = (t: any, message: string) =>
+export const optionalEmailValidation = (message: string) =>
   z
     .string()
     .optional()
