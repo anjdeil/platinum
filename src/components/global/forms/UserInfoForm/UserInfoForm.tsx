@@ -3,13 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import 'react-international-phone/style.css';
-import {
-  CustomFormCheckboxStyled,
-  InfoCard,
-  OptionButton,
-  OptionButtonsContainer,
-  ProofSelect,
-} from './styles';
+import { CustomFormCheckboxStyled, InfoCard } from './styles';
 import {
   CustomForm,
   FlexBox,
@@ -38,13 +32,10 @@ export const UserInfoForm: FC = () => {
   const [isShipping, setIsShipping] = useState(true);
   const [hasChanges, setHasChanges] = useState(false);
 
-  const {
-    data: customer,
-    error: customerError,
-    isLoading: isCustomerLoading,
-  } = useFetchCustomerQuery({ customerId: '14408' });
+  const { data: customer, isLoading: isCustomerLoading } =
+    useFetchCustomerQuery({ customerId: '14408' });
 
-  const [UpdateCustomerMutation, { error, isLoading, isSuccess }] =
+  const [UpdateCustomerMutation, { error, isSuccess }] =
     useUpdateCustomerMutation();
 
   const formSchema = useMemo(
@@ -56,7 +47,7 @@ export const UserInfoForm: FC = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting, isSubmitted },
+    formState: { errors, isSubmitting },
     setValue,
     watch,
     control,
@@ -114,7 +105,7 @@ export const UserInfoForm: FC = () => {
   ];
 
   const handleShippingCheckboxChange = () => {
-    setIsShipping((prev) => !prev);
+    setIsShipping(prev => !prev);
     setHasChanges(true);
   };
 
@@ -182,7 +173,7 @@ export const UserInfoForm: FC = () => {
     };
 
     try {
-      const response = await UpdateCustomerMutation({
+      await UpdateCustomerMutation({
         id: customer.id,
         ...updatedData,
       });
@@ -199,7 +190,7 @@ export const UserInfoForm: FC = () => {
   ) => (
     <>
       {prefix === 'Shipping' &&
-        ['first_name', 'last_name', 'phone'].map((field) => (
+        ['first_name', 'last_name', 'phone'].map(field => (
           <CustomFormInput
             key={field}
             fieldName={tMyAccount(field)}
@@ -226,7 +217,7 @@ export const UserInfoForm: FC = () => {
       />
 
       {['city', 'address_1', 'address_2', 'apartmentNumber', 'postcode'].map(
-        (field) => (
+        field => (
           <CustomFormInput
             key={field}
             fieldName={tMyAccount(field)}
@@ -254,7 +245,7 @@ export const UserInfoForm: FC = () => {
     defaultValues: any = {}
   ) => (
     <>
-      {['first_name', 'last_name', 'email', 'phone'].map((field) => (
+      {['first_name', 'last_name', 'email', 'phone'].map(field => (
         <CustomFormInput
           key={field}
           fieldName={tMyAccount(field)}

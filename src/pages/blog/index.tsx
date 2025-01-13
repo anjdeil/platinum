@@ -7,7 +7,7 @@ import {
   SectionContainer,
 } from '@/components/sections/styles';
 import { customRestApi } from '@/services/wpCustomApi';
-import { Container, StyledHeaderWrapper, Title } from '@/styles/components';
+import { Container, StyledHeaderWrapper } from '@/styles/components';
 import { BlogParsedItemType } from '@/types/pages/blog';
 import { CustomDataPostsType } from '@/types/services';
 import { serverParseHTMLContent } from '@/utils/blog/serverParseHTMLContent';

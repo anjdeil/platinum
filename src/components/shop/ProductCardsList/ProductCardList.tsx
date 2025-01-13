@@ -24,14 +24,8 @@ export const ProductCardList: FC<ProductCardListProps> = ({
 
   const router = useRouter();
 
-  const [
-    fetchUserData,
-    {
-      data: userData,
-      isLoading: isUserDataLoading,
-      isFetching: isUserFetching,
-    },
-  ] = useLazyFetchUserDataQuery();
+  const [fetchUserData, { data: userData, isFetching: isUserFetching }] =
+    useLazyFetchUserDataQuery();
   const [fetchUserUpdate, { isLoading: userDataUpdateLoading }] =
     useFetchUserUpdateMutation();
 

@@ -65,8 +65,7 @@ interface MyAccountPropsType {
 
 const MyAccount: FC<MyAccountPropsType> = ({ user }) => {
   const t = useTranslations('MyAccount');
-  const { data: currencies, isLoading: isCurrenciesLoading } =
-    useGetCurrenciesQuery();
+  const { data: currencies } = useGetCurrenciesQuery();
   const selectedCurrency = useAppSelector(state => state.currencySlice.name);
 
   const dispatch = useDispatch();

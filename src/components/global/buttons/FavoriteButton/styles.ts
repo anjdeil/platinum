@@ -1,6 +1,5 @@
 import { FavoriteButtonProps } from '@/types/components/global/buttons/favoriteButton'
-import styled from '@emotion/styled'
-import { keyframes } from '@emotion/react'
+import styled from '@emotion/styled';
 
 export const Heart = styled.svg<FavoriteButtonProps>`
   width: 24px;
