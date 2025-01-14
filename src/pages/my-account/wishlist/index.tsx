@@ -1,22 +1,22 @@
-import React, { useEffect, useState, useMemo, useCallback } from 'react';
-import { useRouter } from 'next/router';
-import { useCookies } from 'react-cookie';
 import AccountLayout from '@/components/pages/account/AccountLayout';
 import WishListTable from '@/components/pages/account/WishListTable/WishListTable';
+import { useAppSelector } from '@/store';
 import {
   useFetchUserUpdateMutation,
   useLazyFetchUserDataQuery,
 } from '@/store/rtk-queries/wpApi';
-import { useAppSelector } from '@/store';
 import { useGetProductsMinimizedMutation } from '@/store/rtk-queries/wpCustomApi';
 import { ProductsMinimizedType } from '@/types/components/shop/product/products';
 import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/router';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCookies } from 'react-cookie';
 
-import { StyledButton, Title } from '@/styles/components';
-import { CartLink } from '@/components/global/popups/MiniCart/style';
 import Notification from '@/components/global/Notification/Notification';
-import { Skeleton } from '@mui/material';
+import { CartLink } from '@/components/global/popups/MiniCart/style';
+import { StyledButton } from '@/styles/components';
 import { WishlistItem } from '@/types/store/rtk-queries/wpApi';
+import { Skeleton } from '@mui/material';
 
 function Wishlist() {
   const { code: symbol } = useAppSelector(state => state.currencySlice);
@@ -46,6 +46,8 @@ function Wishlist() {
     () => userData?.meta?.wishlist || [],
     [userData]
   );
+
+  console.log('userData...', userData);
 
   const [wishListProducts, setWishListProducts] = useState<
     ProductsMinimizedType[]

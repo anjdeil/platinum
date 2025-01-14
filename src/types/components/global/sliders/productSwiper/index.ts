@@ -1,3 +1,4 @@
+import { WishlistItemSchema } from "@/types/store/rtk-queries/wpApi";
 import { z } from "zod";
 
 export const SwiperSchema = z.object({
@@ -8,10 +9,17 @@ export const SwiperSchema = z.object({
 
 export const SwiperPropsSchema = z.object({
     data: z.array(SwiperSchema),
+
 });
 
 export const SwiperPopupPropsSchema = z.object({
-    onClose: z.function()
+    onClose: z.function(),
+    handleDisire: z
+        .function()
+        .args(z.number(), z.number().optional())
+        .returns(z.void()),
+    wishlist: z.array(WishlistItemSchema),
+    isLoading: z.boolean(),
 });
 
 export type SwiperType = z.infer<typeof SwiperSchema>;

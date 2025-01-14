@@ -1,12 +1,16 @@
 import AddToBasketButton from '@/components/global/buttons/AddToBasketButton/AddToBasketButton';
+import FavoriteButton from '@/components/global/buttons/FavoriteButton/FavoriteButton';
 import DetailsAccordion from '@/components/global/DetailsAccordeon/DetailsAccordion';
 import Rating from '@/components/global/Rating/Rating';
+import ProductBadge from '@/components/shop/product/ProductBadge/ProductBadge';
+import ProductBadgeWrapper from '@/components/shop/product/ProductBadgeWrapper/ProductBadgeWrapper';
+import { useWishlist } from '@/hooks/useWishlist';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { updateCart } from '@/store/slices/cartSlice';
 import { popupSet } from '@/store/slices/PopupSlice';
 import { setData } from '@/store/slices/ProductSlice';
 import { StyledButton, Title } from '@/styles/components';
-import { CurrencyType } from '@/types/components/shop';
+import { ProductCardPropsType } from '@/types/components/shop';
 import { ProductVariation } from '@/types/components/shop/product/products';
 import { ProductType } from '@/types/pages/shop';
 import { CartItem } from '@/types/store/reducers/сartSlice';
@@ -36,21 +40,6 @@ import {
   ProductWrapper,
 } from './styles';
 
-//TODO ProductCardPropsType
-// product: ProductSchema,
-//   handleDisire: z
-//     .function()
-//     .args(z.number(), z.number().optional())
-//     .returns(z.void()),
-//   wishlist: z.array(WishlistItemSchema),
-//   isLoading: z.boolean(),
-//   currency: CurrencySchema,
-
-type ProductCardPropsType = {
-  product: ProductType;
-  currency: CurrencyType;
-};
-
 const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
   const { images, thumbnail } = product;
   const t = useTranslations('Product');
@@ -58,6 +47,13 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
   const dispatch = useAppDispatch();
   const { cartItems } = useAppSelector(state => state.cartSlice);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const {
+    handleWishlistToggle,
+    isFetchingWishlist,
+    isUpdatingWishlist,
+    checkDesired,
+  } = useWishlist();
 
   useEffect(() => {
     const checkAuth = () => {
@@ -163,6 +159,17 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
     <ProductWrapper>
       <ProductImageWrapper>
         <ProductSwiper data={galleryImages} />
+        <ProductBadgeWrapper>
+          {product.min_price !== product.max_price && (
+            <ProductBadge type="sale" />
+          )}
+          <FavoriteButton
+            onClick={() => handleWishlistToggle(product.id, undefined)}
+            marginLeft="auto"
+            active={checkDesired(product.id)}
+            isLoading={isUpdatingWishlist || isFetchingWishlist}
+          />
+        </ProductBadgeWrapper>
       </ProductImageWrapper>
       <ProductTitleWrapper>
         <Title as="h1" uppercase textalign="left">
