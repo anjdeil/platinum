@@ -1,15 +1,15 @@
 import HamburgerMenu from '@/components/global/popups/HamburgerMenu';
+import { switchCategory } from '@/components/shop/Archive';
 import { useAppSelector } from '@/store';
 import { popupClosed } from '@/store/slices/PopupSlice';
 import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import CommentPopup from '../CommentPopup/CommentPopup';
+import MiniCart from '../MiniCart/MiniCart';
 import MobileCategoriesMenu from '../MobileCategoriesMenu/MobileCategoriesMenu';
 import MobileSearchPopup from '../MobileSearchPopup/MobileSearchPopup';
-import { switchCategory } from '@/components/shop/Archive';
 import SwiperPopup from '../SwiperPopup/SwiperPopup';
-import MiniCart from '../MiniCart/MiniCart';
 
 const unscrollablePopups = [
   'mobile-search',
