@@ -52,7 +52,7 @@ const switchPage = (page: number, maxPage: number) => {
 };
 
 export const switchCategory = (parentSlug: string, childSlug?: string) => {
-  const { slugs, ...params } = router.query;
+  const { ...params } = router.query;
   const newSlugs = childSlug ? [parentSlug, childSlug] : [parentSlug];
 
   router.push({

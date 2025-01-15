@@ -1,10 +1,9 @@
 import { SectionRenderer } from "@/components/sections/SectionRenderer";
-import { customRestApi } from "@/services/wpCustomApi";
-import { useAppDispatch, useAppSelector } from "@/store";
-import { SectionsType } from "@/types/components/sections";
-import { GetServerSideProps, GetServerSidePropsContext } from "next";
-import { validateWpPage } from "@/utils/zodValidators/validateWpPage";
-import { PageDataFullType, PageDataItemType } from "@/types/services";
+import { customRestApi } from '@/services/wpCustomApi';
+import { SectionsType } from '@/types/components/sections';
+import { GetServerSideProps, GetServerSidePropsContext } from 'next';
+import { validateWpPage } from '@/utils/zodValidators/validateWpPage';
+import { PageDataFullType, PageDataItemType } from '@/types/services';
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
@@ -23,7 +22,7 @@ export const getServerSideProps: GetServerSideProps = async (
     if (responseData) {
       const isValidSectionsData = validateWpPage(responseData);
       if (!isValidSectionsData) {
-        console.error("Invalid data format:");
+        console.error('Invalid data format:');
       }
     }
 
@@ -35,18 +34,19 @@ export const getServerSideProps: GetServerSideProps = async (
         return { notFound: true };
       }
 
-      const filteredSections = pageData.sections.filter((section: { _type: string }) =>
-        [
-          "slider",
-          "product_list",
-          "categories",
-          "instagram",
-          "reviews",
-          "newsletter",
-          "about_platinum",
-          "features",
-          "blog",
-        ].includes(section._type)
+      const filteredSections = pageData.sections.filter(
+        (section: { _type: string }) =>
+          [
+            'slider',
+            'product_list',
+            'categories',
+            'instagram',
+            'reviews',
+            'newsletter',
+            'about_platinum',
+            'features',
+            'blog',
+          ].includes(section._type)
       );
 
       return {
@@ -58,10 +58,10 @@ export const getServerSideProps: GetServerSideProps = async (
 
     return { notFound: true };
   } catch (error) {
-    console.error("Server Error:", error);
+    console.error('Server Error:', error);
     return {
       redirect: {
-        destination: "/500",
+        destination: '/500',
         permanent: false,
       },
     };
@@ -73,11 +73,6 @@ interface HomeProps {
 }
 
 const Home: React.FC<HomeProps> = ({ sections }) => {
-  const currency = useAppSelector((state) => state.currencySlice);
-  const language = useAppSelector((state) => state.languageSlice);
-
-  const dispatch = useAppDispatch();
-
   return (
     <div className="homepage">
       <SectionRenderer sections={sections} />

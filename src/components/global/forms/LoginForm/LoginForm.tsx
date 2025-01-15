@@ -10,7 +10,7 @@ import {
   useCheckTokenMutation,
   useGetTokenMutation,
 } from '@/store/rtk-queries/wpApi';
-import { CustomError, CustomSuccess } from '../CustomFormInput/styles';
+import { CustomSuccess } from '../CustomFormInput/styles';
 import { CustomFormInput } from '../CustomFormInput';
 import { ActiveText, FormWrapper } from './styles';
 import { FlexBox, StyledButton, Title } from '@/styles/components';

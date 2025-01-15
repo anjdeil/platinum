@@ -74,11 +74,7 @@ const CartPage: React.FC = () => {
   const { cartItems, couponCodes } = useAppSelector(state => state.cartSlice);
   const [
     getProductsMinimized,
-    {
-      data: productsSpecsData,
-      isLoading: isLoadingProductsMin,
-      error: errorProductsMin,
-    },
+    { data: productsSpecsData, isLoading: isLoadingProductsMin },
   ] = useGetProductsMinimizedMutation();
 
   const [cachedOrderItems, setCachedOrderItems] = useState(orderItems);

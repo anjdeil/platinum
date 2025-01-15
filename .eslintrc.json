@@ -13,7 +13,8 @@
     "react-hooks",
     "redux-saga",
     "import",
-    "styled-components-a11y"
+    "styled-components-a11y",
+    "unused-imports"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -28,10 +29,21 @@
     "react/react-in-jsx-scope": "off",
     "react/jsx-uses-react": "off",
     "react/prop-types": "off",
+    "no-unused-vars": [
+      "error",
+      {
+        "vars": "all",
+        "args": "none",
+        "ignoreRestSiblings": false,
+        "argsIgnorePattern": "^_"
+      }
+    ],
+    "unused-imports/no-unused-imports": "error",
+    "unused-imports/no-unused-vars": "off",
     "react/jsx-filename-extension": [
       1,
       {
-        "extensions": [".tsx"]
+        "extensions": [".js", ".jsx", ".json", ".ts", ".tsx"]
       }
     ],
     // TypeScript rules
@@ -48,12 +60,6 @@
         "caseSensitive": false
       }
     ],
-    "import/resolver": {
-      "alias": {
-        "map": [["@", "./src"]],
-        "extensions": [".js", ".jsx", ".ts", ".tsx"]
-      }
-    },
     // Import rules
     "import/order": "off",
     "styled-components-a11y/click-events-have-key-events": "warn",
@@ -62,6 +68,12 @@
   "settings": {
     "react": {
       "version": "detect"
+    },
+    "import/resolver": {
+      "alias": {
+        "map": [["@", "./src"]],
+        "extensions": [".js", ".jsx", ".json", ".ts", ".tsx"]
+      }
     }
   }
 }

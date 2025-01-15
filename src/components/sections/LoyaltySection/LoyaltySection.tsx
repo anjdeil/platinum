@@ -8,7 +8,6 @@ export const LoyaltySection: React.FC<LoyaltySectionProps> = ({
   return (
     <div>
       <h2>LoyaltySection</h2>
-      <p>{loyalty_separator}</p>
     </div>
   );
 };

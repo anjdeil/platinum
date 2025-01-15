@@ -1,10 +1,10 @@
 import { parsePhoneNumber } from 'awesome-phonenumber';
 import { z } from 'zod';
 
-const termsSchema = (t: any) =>
-  z.boolean().refine((value) => value === true, {
-    message: t('agreentmentTerms'),
-  });
+// const termsSchema = (t: any) =>
+//   z.boolean().refine((value) => value === true, {
+//     message: t('agreentmentTerms'),
+//   });
 
 const phoneSchema = (t: any) =>
   z.string().refine((value) => parsePhoneNumber(value).valid, {
