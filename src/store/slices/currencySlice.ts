@@ -17,7 +17,7 @@ const initialState: CurrencyState = {
 };
 
 const currencySlice = createSlice({
-    name: 'currency',
+    name: 'currencySlice',
     initialState,
     reducers: {
         setCurrentCurrency: (state, action: PayloadAction<{ code: string }>) => {
@@ -25,6 +25,7 @@ const currencySlice = createSlice({
             const currency = currencySymbols.find((curr) => curr.code === code);
 
             if (currency) {
+                console.log("Currency state updated:", currency);
                 state.name = currency.name;
                 state.code = currency.code;
             } else {
