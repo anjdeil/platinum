@@ -73,7 +73,7 @@ export const CustomSortAccordion = () => {
 
   const handleSortChange = useCallback(
     (sort: string) => {
-      const { slugs, order_by, order, ...params } = router.query;
+      const { slugs, ...params } = router.query;
       if (!Array.isArray(slugs)) return;
 
       if (sort === "stocks") {

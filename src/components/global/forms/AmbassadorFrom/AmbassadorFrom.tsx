@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import 'react-international-phone/style.css';
@@ -13,7 +13,7 @@ import {
   FlexBox,
   FormWrapper,
   FormWrapperBottom,
-  StyledButton
+  StyledButton,
 } from '@/styles/components';
 import { isAuthErrorResponseType } from '@/utils/isAuthErrorResponseType';
 import { Title } from '@/styles/components';
@@ -39,11 +39,8 @@ export const AmbassadorForm: FC = () => {
   const [preview, setPreview] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState<boolean>(false);
 
-  const {
-    data: customer,
-    error: customerError,
-    isLoading: isCustomerLoading,
-  } = useFetchCustomerQuery({ customerId: '14408' });
+  const { data: customer, isLoading: isCustomerLoading } =
+    useFetchCustomerQuery({ customerId: '14408' });
 
   const t = useTranslations('Contacts');
   const tForms = useTranslations('Forms');
@@ -60,7 +57,6 @@ export const AmbassadorForm: FC = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
     setValue,
-    reset,
     watch,
   } = useForm<AmbassadorFormType>({
     resolver: zodResolver(schema),

@@ -31,23 +31,20 @@ const CommentPopup: React.FC<SwiperPopupProps> = ({ onClose }) => {
   const t = useTranslations('Product');
   const [rating, setRating] = useState<number>(0);
 
-  const [AddCommentMutation, { data, error, isLoading }] =
-    useAddCommentMutation();
+  const [AddCommentMutation] = useAddCommentMutation();
 
   const product = useAppSelector(
-    useMemo(() => (state) => state.productSlice.data, [])
+    useMemo(() => state => state.productSlice.data, [])
   );
 
-  const user = useAppSelector((state) => state.userSlice.user);
+  const user = useAppSelector(state => state.userSlice.user);
 
   console.log('user...', user);
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting, isSubmitSuccessful },
-    setValue,
-    reset,
+    formState: { errors, isSubmitting },
   } = useForm<CommentFormType>({
     resolver: zodResolver(CommentFormSchema),
   });
