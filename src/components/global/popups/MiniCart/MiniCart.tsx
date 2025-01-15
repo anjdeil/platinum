@@ -59,7 +59,7 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
   // FETCH
   const [
     getProductsMinimized,
-    { data: productsSpecsData, isLoading: isLoadingProducts, isSuccess },
+    { data: productsSpecsData, isLoading: isLoadingProducts },
   ] = useGetProductsMinimizedMutation();
 
   const productsWithCartData = useMemo(() => {
