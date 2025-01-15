@@ -1,8 +1,8 @@
-import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
-import styled from "@emotion/styled";
 import { FooterContainerProps } from "@/types/components/widgets/footer";
-import Link from "next/link";
+import styled from "@emotion/styled";
+import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 import Image from "next/image";
+import Link from "next/link";
 
 //---------------TITLES-------------
 export const FooterTitle = styled.h3`
@@ -159,5 +159,3 @@ export const ContactLink = styled(Link)`
   color:  ${({ theme }) => theme.colors.white} ;
   text-decoration: none;
 `;
-
-
