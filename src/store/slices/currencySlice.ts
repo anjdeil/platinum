@@ -25,7 +25,6 @@ const currencySlice = createSlice({
             const currency = currencySymbols.find((curr) => curr.code === code);
 
             if (currency) {
-                console.log("Currency state updated:", currency);
                 state.name = currency.name;
                 state.code = currency.code;
             } else {
