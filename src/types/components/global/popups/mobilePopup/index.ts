@@ -17,7 +17,7 @@ export const mobilePopupPropsSchema = z.object({
     children: z.any(),
     ...PopupPropsSchema.shape,
     closeButton: z.boolean().optional(),
-   
+
 });
 
 export const mobileCategoriesMenuPropsSchema = z.object({

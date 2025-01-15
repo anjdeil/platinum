@@ -6,17 +6,18 @@ export const NavList = styled.ul<NavListProps>`
   display: flex;
   flex-direction: ${({ direction = 'row' }) => direction};
   padding: 0;
-  gap: ${({ gap = '75px' }) => gap};
+  column-gap: ${({ gap = '75px' }) => gap};
+  row-gap: 24px;
   justify-content: ${({ justify = 'center' }) => justify};
   list-style: none;
   align-items: ${({ align = 'center' }) => align};
 
   @media ${({ theme }) => theme.media.large} {
-    gap: ${({ mobGap = '48px' }) => mobGap};
+    column-gap: ${({ mobGap = '48px' }) => mobGap};
   }
 `;
 
-export const NavLink = styled(Link)<NavLinkProps>`
+export const NavLink = styled(Link) <NavLinkProps>`
   display: inline-block;
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
   font-size: ${({ fontSize }) => fontSize};
