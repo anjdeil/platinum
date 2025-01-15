@@ -43,7 +43,6 @@ const rootReducer = combineReducers({
   themeOptions: themeOptionsSlice,
   popup: PopupSlice,
   MenuCategoriesSlice: MenuCategoriesSlice.reducer,
-  Popup: PopupSlice,
   swiperModal: SwiperModal,
 });
 
@@ -53,7 +52,11 @@ export const setupStore = () => {
   const store = configureStore({
     reducer: persistedReducer,
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(
+      getDefaultMiddleware({
+        serializableCheck: {
+          ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],
+        },
+      }).concat(
         wpCustomRtkApi.middleware,
         wooCustomRktApi.middleware,
         wpRtkApi.middleware,
