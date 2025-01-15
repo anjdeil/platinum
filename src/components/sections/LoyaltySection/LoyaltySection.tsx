@@ -1,13 +1,5 @@
-import { LoyaltySectionData } from '@/types/components/sections/index';
+import { BenefitsAccordion } from '@/components/pages/benefits/BenefitsAccordion';
 
-type LoyaltySectionProps = Omit<LoyaltySectionData, '_type'>;
-
-export const LoyaltySection: React.FC<LoyaltySectionProps> = ({
-  loyalty_separator,
-}) => {
-  return (
-    <div>
-      <h2>LoyaltySection</h2>
-    </div>
-  );
+export const LoyaltySection: React.FC = () => {
+  return <BenefitsAccordion />;
 };

@@ -145,10 +145,11 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
             );
           case 'loyalty':
             return (
-              <LoyaltySection
-                key={index}
-                loyalty_separator={section.loyalty_separator}
-              />
+              <Container key={index}>
+                <SectionContainer>
+                  <LoyaltySection key={index} />
+                </SectionContainer>
+              </Container>
             );
           case 'contacts':
             return (
