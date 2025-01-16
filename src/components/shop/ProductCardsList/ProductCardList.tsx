@@ -24,7 +24,7 @@ export const ProductCardList: FC<ProductCardListProps> = ({
 
   const router = useRouter();
 
-  const [fetchUserData, { data: userData, isFetching: isUserFetching }] =
+  const [fetchUserData, { data: userData, isFetching: isUserFetching = true }] =
     useLazyFetchUserDataQuery();
   const [fetchUserUpdate, { isLoading: userDataUpdateLoading }] =
     useFetchUserUpdateMutation();
@@ -46,57 +46,57 @@ export const ProductCardList: FC<ProductCardListProps> = ({
     rate: currentCurrency ? currentCurrency.rate || 1 : undefined,
   };
 
-    useEffect(() => {
-      if (cookie.authToken) {
-        fetchUserData();
-      }
-    }, [cookie, fetchUserData]);
+  useEffect(() => {
+    if (cookie.authToken) {
+      fetchUserData();
+    }
+  }, [cookie, fetchUserData]);
 
-    const handleDisire = (productId: number, variationId?: number) => {
-      if (!userData?.meta?.wishlist) {
-        router.push('/my-account/login');
+  const handleDisire = (productId: number, variationId?: number) => {
+    if (!userData?.meta?.wishlist) {
+      router.push('/my-account/login');
 
-        return;
-      }
+      return;
+    }
 
-      if (!cookie.authToken) {
-        return;
-      }
+    if (!cookie.authToken) {
+      return;
+    }
 
-      const userWishlist = userData?.meta.wishlist || [];
+    const userWishlist = userData?.meta.wishlist || [];
 
-      const index = userWishlist.findIndex(
-        (item: WishlistItem) =>
-          item.product_id === productId &&
-          (!variationId || item.variation_id === variationId)
+    const index = userWishlist.findIndex(
+      (item: WishlistItem) =>
+        item.product_id === productId &&
+        (!variationId || item.variation_id === variationId)
+    );
+
+    let updatedWishlist: WishlistItem[];
+
+    if (index >= 0) {
+      updatedWishlist = userWishlist.filter(
+        (_: WishlistItem, index2: number) => index2 !== index
       );
-
-      let updatedWishlist: WishlistItem[];
-
-      if (index >= 0) {
-        updatedWishlist = userWishlist.filter(
-          (_: WishlistItem, index2: number) => index2 !== index
-        );
-      } else {
-        updatedWishlist = [
-          ...userWishlist,
-          {
-            product_id: productId,
-            ...(variationId && { variation_id: variationId }),
-          },
-        ];
-      }
-
-      const userUpdateRequestBody = {
-        meta: {
-          wishlist: updatedWishlist,
+    } else {
+      updatedWishlist = [
+        ...userWishlist,
+        {
+          product_id: productId,
+          ...(variationId && { variation_id: variationId }),
         },
-      };
+      ];
+    }
 
-      if (userData?.id) {
-        fetchUserUpdate(userUpdateRequestBody);
-      }
+    const userUpdateRequestBody = {
+      meta: {
+        wishlist: updatedWishlist,
+      },
     };
+
+    if (userData?.id) {
+      fetchUserUpdate(userUpdateRequestBody);
+    }
+  };
 
     if (isLoading) {
       return <ProductCardListSkeleton columns={columns} length={length} />;
