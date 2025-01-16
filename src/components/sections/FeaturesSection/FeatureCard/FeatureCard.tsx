@@ -16,8 +16,6 @@ type FeaturesCardProps = {
 export const FeatureCard: FC<FeaturesCardProps> = ({ item }) => {
   const { image, contrast_bg, title, text, link_text, link_url } = item;
 
-  console.log('image...', image);
-
   return (
     <StyledCardContainer contrastBg={contrast_bg}>
       <StyledWrapper>

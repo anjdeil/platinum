@@ -9,7 +9,6 @@ type StyledProps = {
 export const StyledCardContainer = styled('div', {
   shouldForwardProp: (propName) => propName !== 'contrastBg',
 }) <StyledProps>`
-  position: relative;
   width: 33%;
   display: flex;
   flex-direction: column;
@@ -18,30 +17,12 @@ export const StyledCardContainer = styled('div', {
   gap: 16px;
   padding: 24px;
   border-radius: 20px;
-  background: ${({ theme }) => theme.background.secondary};
-  color: ${({ theme }) => theme.colors.black};
-  transition: color 0.3s ease;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: ${({ theme }) => theme.background.primaryGradient};
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: 0;
-    border-radius: inherit;
-  }
+  background: ${({ contrastBg, theme }) =>
+    contrastBg ? theme.background.primaryGradient : theme.background.secondary};
+  transition: filter 0.2s ease;
 
   &:hover {
-    color: ${({ theme }) => theme.colors.white};
-  }
-
-  &:hover::before {
-    opacity: 1;
+    filter: brightness(0.9);
   }
 
   @media ${({ theme }) => theme.media.large} {
@@ -88,8 +69,8 @@ export const StyledTitle = styled('h2', {
   line-height: 32px;
   text-transform: uppercase;
   text-align: center;
-  color: inherit;
-  z-index: 1;
+  color: ${({ contrastBg, theme }) =>
+    contrastBg ? theme.colors.white : theme.colors.black};
 
   @media ${({ theme }) => theme.media.largePlus} {
     font-size: 18px;
@@ -109,8 +90,8 @@ export const StyledDescription = styled('p', {
   line-height: 24px;
   font-weight: 400;
   text-align: center;
-  color: inherit;
-  z-index: 1;
+  color: ${({ contrastBg, theme }) =>
+    contrastBg ? theme.colors.white : theme.colors.black};
 
   @media ${({ theme }) => theme.media.largePlus} {
     font-size: 14px;
@@ -134,13 +115,13 @@ export const StyledLink = styled(Link, {
   font-weight: 400;
   text-align: center;
   text-decoration: underline;
-  color: inherit;
-  z-index: 1;
+  color: ${({ contrastBg, theme }) =>
+    contrastBg ? theme.colors.white : theme.colors.black};
   transition: opacity 0.2s ease;
 
   &:hover {
     opacity: 0.7;
-  }  
+  }
 
   @media ${({ theme }) => theme.media.large} {
     font-size: 12px;
