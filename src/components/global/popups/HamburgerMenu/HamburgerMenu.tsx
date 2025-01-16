@@ -1,13 +1,13 @@
 import CurrencySelect from '@/components/global/selects/CurrencySelect/CurrencySelect';
 import Nav from '@/components/menus/Nav/Nav';
-import { PopupType } from '@/types/components/global/popups/popupType';
+import { MobilePopupPropsType } from '@/types/components/global/popups/mobilePopup';
 import { useTheme } from '@emotion/react';
 import { FC } from 'react';
 import LanguageSelect from '../../selects/LanguageSelect/LanguageSelect';
 import MobilePopup from '../MobilePopup/MobilePopup';
 import { NavWrap, SelectWrapper } from './styles';
 
-const HamburgerMenu: FC<PopupType> = ({ onClose }) => {
+const HamburgerMenu: FC<MobilePopupPropsType> = ({ onClose }) => {
   const theme = useTheme();
   const scrollTop = window.scrollY;
   return (
