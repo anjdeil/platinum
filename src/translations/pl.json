@@ -205,7 +205,7 @@
     "emailValidation": "Proszę wprowadzić poprawny adres e-mail.",
     "minChar": "Musi mieć co najmniej {count} znaków.",
     "RequiredField": "Pole wymagane",
-    "email": "E-mail",
+    "email": "Proszę wpisać poprawny adres e-mail",
     "name": "Imię",
     "lastName": "Nazwisko",
     "address": "Adres",
