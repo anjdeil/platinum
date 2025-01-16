@@ -9,7 +9,11 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({
   isLoading,
 }) => {
   return (
-    <StyledIconButton onClick={onClick} marginLeft={marginLeft}>
+    <StyledIconButton
+      onClick={onClick}
+      marginLeft={marginLeft}
+      className="heart-button"
+    >
       <Heart
         isLoading={isLoading}
         active={active}
@@ -24,7 +28,7 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({
         />
       </Heart>
     </StyledIconButton>
-  )
+  );
 }
 
 export default FavoriteButton

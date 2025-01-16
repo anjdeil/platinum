@@ -75,17 +75,31 @@ export const StyledLink = styled(Link)`
         opacity: 0.7;
     }
 `;
+type ProductWrapperProps = {
+  isFavorite?: boolean;
+};
 
-export const ProductWrapper = styled.div`
-    width: 100%;
-    display: flex;
-    flex-grow: 1;
-    flex-direction: column;
-    row-gap: 16px;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-`
+export const ProductWrapper = styled.div<ProductWrapperProps>`
+  width: 100%;
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  row-gap: 16px;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+
+  .heart-button {
+    visibility: ${({ isFavorite }) => (isFavorite ? 'visible' : 'hidden')};
+    opacity: ${({ isFavorite }) => (isFavorite ? 1 : 0)};
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  &:hover .heart-button {
+    visibility: visible;
+    opacity: 1;
+  }
+`;
 
 export const ProductImageWrapper = styled.div`
     position: relative;
