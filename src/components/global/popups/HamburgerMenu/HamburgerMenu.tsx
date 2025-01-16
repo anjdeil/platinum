@@ -11,7 +11,7 @@ const HamburgerMenu: FC<PopupType> = ({ onClose }) => {
   const theme = useTheme();
   const scrollTop = window.scrollY;
   return (
-    <MobilePopup onClose={onClose} scroll={scrollTop}>
+    <MobilePopup onClose={onClose} scroll={scrollTop} closeButton={true}>
       <NavWrap>
         <Nav
           menuId={335}

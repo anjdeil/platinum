@@ -35,10 +35,11 @@ const MobilePopup: FC<MobilePopupPropsType> = ({
             rowGap={rowGap}
             title={title}
             disableOverlay={false}
+            closeButton={closeButton}
           >
             {title ||
               (closeButton && (
-                <Header padding={padding}>
+                <Header padding={padding} closeButton={closeButton}>
                   <>{title}</>
                   {closeButton && <CloseIcon onClick={onClose} />}
                 </Header>

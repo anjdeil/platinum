@@ -10,13 +10,13 @@ export const PopupPropsSchema = z.object({
     rowGap: z.string().optional(),
     title: z.union([z.string(), z.any()]).optional(),
     disableOverlay: z.boolean().optional(),
+    closeButton: z.boolean().optional(),
 });
 
 export const mobilePopupPropsSchema = z.object({
     onClose: z.function().args().returns(z.void()),
     children: z.any(),
     ...PopupPropsSchema.shape,
-    closeButton: z.boolean().optional(),
 
 });
 
