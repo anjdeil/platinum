@@ -74,7 +74,7 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product, currency }) => {
 
   return (
     <StyledProductCard>
-      <ProductWrapper isFavorite={checkDesired()}>
+      <ProductWrapper isFavorite={checkDesired(product.id)}>
         <ProductImageWrapper>
           <Link href={`/product/${product.slug}`}>
             <Image
