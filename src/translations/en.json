@@ -205,7 +205,7 @@
     "emailValidation": "Please enter a valid email.",
     "minChar": "Must be at least {count} characters long.",
     "RequiredField": "Required field",
-    "email": "Email",
+    "email": "Please, type valid email",
     "name": "Name",
     "lastName": "Last name",
     "address": "Address",

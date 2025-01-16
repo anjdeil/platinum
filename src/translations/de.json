@@ -206,7 +206,7 @@
     "emailValidation": "Geben Sie eine gültige E-Mail-Adresse ein",
     "minChar": "Muss mindestens {count} Zeichen lang sein.",
     "RequiredField": "Pflichtfeld",
-    "email": "E-Mail",
+    "email": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
     "name": "Name",
     "lastName": "Nachname",
     "address": "Adresse",
