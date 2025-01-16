@@ -8,10 +8,10 @@ import { ProductCardListProps } from '@/types/components/shop';
 import { WishlistItem } from '@/types/store/rtk-queries/wpApi';
 import { useRouter } from 'next/router';
 import { FC, useEffect } from 'react';
-import { useCookies } from 'react-cookie';
 import ProductCard from '../product/ProductCard/ProductCard';
 import { ProductCardListSkeleton } from './ProductCardListSkeleton';
 import { StyledProductCardList } from './styles';
+import useGetAuthToken from '@/hooks/useGetAuthToken';
 
 export const ProductCardList: FC<ProductCardListProps> = ({
   isLoading = false,
@@ -20,8 +20,7 @@ export const ProductCardList: FC<ProductCardListProps> = ({
   columns,
   length,
 }) => {
-  const [cookie] = useCookies(['authToken']);
-
+  const authToken = useGetAuthToken();
   const router = useRouter();
 
   const [fetchUserData, { data: userData, isFetching: isUserFetching = true }] =
@@ -47,19 +46,20 @@ export const ProductCardList: FC<ProductCardListProps> = ({
   };
 
   useEffect(() => {
-    if (cookie.authToken) {
+    if (authToken) {
       fetchUserData();
     }
-  }, [cookie, fetchUserData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authToken]);
 
   const handleDisire = (productId: number, variationId?: number) => {
-    if (!userData?.meta?.wishlist) {
+    if (!userData?.meta?.wishlist.length) {
       router.push('/my-account/login');
 
       return;
     }
 
-    if (!cookie.authToken) {
+    if (!authToken) {
       return;
     }
 
@@ -98,16 +98,16 @@ export const ProductCardList: FC<ProductCardListProps> = ({
     }
   };
 
-    if (isLoading) {
-      return <ProductCardListSkeleton columns={columns} length={length} />;
-    }
+  if (isLoading) {
+    return <ProductCardListSkeleton columns={columns} length={length} />;
+  }
 
-    if (isError) {
-      return <p>We cannot get the products</p>;
-    }
+  if (isError) {
+    return <p>We cannot get the products</p>;
+  }
 
-    isLoading = userDataUpdateLoading || isUserFetching;
-  
+  isLoading = userDataUpdateLoading || isUserFetching;
+
   return (
     <StyledProductCardList
       mobileColumns={columns?.mobileColumns}
