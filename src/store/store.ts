@@ -53,6 +53,8 @@ export const setupStore = () => {
     reducer: persistedReducer,
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
+        // Ця конфігурація запобігає помилкам перевірки серіалізованості, які можуть виникнути
+        // під час використання redux-persist, забезпечуючи коректну роботу middlewares.
         serializableCheck: {
           ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],
         },
