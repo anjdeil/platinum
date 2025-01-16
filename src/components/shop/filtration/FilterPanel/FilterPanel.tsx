@@ -1,5 +1,5 @@
 import { CustomSingleAccordion } from "@/components/global/accordions/CustomSingleAccordion"
-import { FC, useCallback, useEffect, useMemo, useState } from "react"
+import { FC, useCallback, useEffect, useState } from 'react';
 import { PriceFilter } from "../PriceFilter"
 import { useRouter } from "next/router";
 import { FilterPanelPropsType } from "@/types/components/shop/filters";

@@ -1,5 +1,4 @@
 import { ReviewsRespType } from '@/types/services';
-import { useTranslations } from 'next-intl';
 import { FC, useState } from 'react';
 import { CustomSwiper, ReviewsContainer } from './styles';
 import { Pagination } from 'swiper/modules';
@@ -12,7 +11,6 @@ type ReviewsPropsType = {
 };
 
 export const ReviewsSlider: FC<ReviewsPropsType> = ({ reviews }) => {
-  const t = useTranslations('Product');
   const [opened, setOpened] = useState<number | null>(null);
 
   return (
@@ -40,8 +38,8 @@ export const ReviewsSlider: FC<ReviewsPropsType> = ({ reviews }) => {
           },
         }}
       >
-        {reviews.map((review) => (
-          <SwiperSlide key={review.id} style={{ height: "100%" }}>
+        {reviews.map(review => (
+          <SwiperSlide key={review.id} style={{ height: '100%' }}>
             <ReviewsCard
               review={review}
               isOpen={opened === review.id}

@@ -26,3 +26,10 @@ export const updateUserData = (dispatch: AppDispatch, userData: any) => {
     saveUserToLocalStorage(userData);
     dispatch(setUser(userData));
 };
+
+export const removeUserFromLocalStorage = () => {
+  console.log('removeUserFromLocalStorage');
+  if (typeof window !== 'undefined') {
+    localStorage.removeItem('user');
+  }
+};

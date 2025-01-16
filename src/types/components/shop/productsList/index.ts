@@ -1,6 +1,5 @@
-import { CustomDataProductsSchema } from "@/types/services";
-import { z } from "zod";
-import { ProductSchema } from "../product/products";
+import { z } from 'zod';
+import { ProductSchema } from '../product/products';
 
 export const ColumnsPropsSchema = z.object({
   mobileColumns: z.number().optional(),
@@ -32,8 +31,14 @@ const CustomProductListPropsSchema = z.object({
   productIds: z.array(z.number()),
 });
 
-export type ProductCardListSkeletonProps = z.infer<typeof ProductCardListSkeletonPropsSchema>;
+export type ProductCardListSkeletonProps = z.infer<
+  typeof ProductCardListSkeletonPropsSchema
+>;
 export type ColumnsProps = z.infer<typeof ColumnsPropsSchema>;
-export type StyledProductCardListProps = z.infer<typeof StyledProductCardListPropsSchema>;
+export type StyledProductCardListProps = z.infer<
+  typeof StyledProductCardListPropsSchema
+>;
 export type ProductCardListProps = z.infer<typeof ProductCardListPropsSchema>;
-export type CustomProductListProps = z.infer<typeof CustomProductListPropsSchema>;
+export type CustomProductListProps = z.infer<
+  typeof CustomProductListPropsSchema
+>;

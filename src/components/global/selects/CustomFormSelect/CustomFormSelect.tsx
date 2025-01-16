@@ -1,12 +1,17 @@
-import { CustomFormSelectProps, CustomSelectProps } from "@/types/components/global/selects";
+import { CustomFormSelectProps } from '@/types/components/global/selects';
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { CustomLabel, CustomSelectStyled, MenuItem, StyledCollapse } from "./styles";
+import {
+  CustomLabel,
+  CustomSelectStyled,
+  MenuItem,
+  StyledCollapse,
+} from './styles';
 
-import ArrowIcon from "../../icons/ArrowIcon/ArrowIcon";
+import ArrowIcon from '../../icons/ArrowIcon/ArrowIcon';
 
-import { CustomError } from "../../forms/CustomFormInput/styles";
+import { CustomError } from '../../forms/CustomFormInput/styles';
 
 export default function CustomFormSelect({
   options,
@@ -28,27 +33,30 @@ export default function CustomFormSelect({
 }: CustomFormSelectProps) {
   const [isError, setError] = useState(false);
 
-  const [selectedValue, setSelectedValue] = useState(defaultValue || "");
+  const [selectedValue, setSelectedValue] = useState(defaultValue || '');
 
   const [isOpen, setIsOpen] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
 
   const handleToggle = useCallback(() => {
-    setIsOpen((prev) => !prev);
+    setIsOpen(prev => !prev);
   }, []);
 
   const handleClickOutside = useCallback((event: MouseEvent) => {
-    if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+    if (
+      containerRef.current &&
+      !containerRef.current.contains(event.target as Node)
+    ) {
       setIsOpen(false);
     }
   }, []);
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
@@ -62,7 +70,7 @@ export default function CustomFormSelect({
   }, [errors, name]);
 
   useEffect(() => {
-    if (defaultValue && defaultValue !== "" && setValue) {
+    if (defaultValue && defaultValue !== '' && setValue) {
       setValue(name, defaultValue, { shouldValidate: true });
 
       setSelectedValue(defaultValue);
@@ -79,7 +87,7 @@ export default function CustomFormSelect({
 
   return (
     <>
-      {label && <CustomLabel htmlFor={name}>{label}</CustomLabel>}{" "}
+      {label && <CustomLabel htmlFor={name}>{label}</CustomLabel>}{' '}
       <CustomSelectStyled
         ref={containerRef}
         onClick={handleToggle}
@@ -96,7 +104,7 @@ export default function CustomFormSelect({
         {selectedValue}
         <ArrowIcon isOpen={isOpen} />
         <StyledCollapse id={name} in={isOpen} timeout="auto">
-          {options.map((option) => (
+          {options.map(option => (
             <MenuItem
               key={option.code}
               onClick={() => handleOptionClick(option.code)}

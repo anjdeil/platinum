@@ -59,4 +59,9 @@ export const ContactLink = styled(Link)`
   align-items: end;
   flex-grow: 1;
   color: ${({ theme }) => theme.colors.black};
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.7;
+  }
 `;

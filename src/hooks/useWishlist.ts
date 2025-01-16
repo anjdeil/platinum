@@ -2,10 +2,10 @@ import { useFetchUserUpdateMutation, useLazyFetchUserDataQuery } from '@/store/r
 import { WishlistItem } from '@/types/store/rtk-queries/wpApi';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { useCookies } from 'react-cookie';
+import useGetAuthToken from './useGetAuthToken';
 
 export const useWishlist = () => {
-    const [cookie] = useCookies(['authToken']);
+    const authToken = useGetAuthToken();
     const router = useRouter();
     const [fetchUserData, { data: userData, isFetching: isUserFetching }] = useLazyFetchUserDataQuery();
     const [fetchUserUpdate, { isLoading: isUpdatingWishlist }] = useFetchUserUpdateMutation();
@@ -13,18 +13,15 @@ export const useWishlist = () => {
     const wishlist: WishlistItem[] = userData?.meta?.wishlist || [];
 
     useEffect(() => {
-        if (cookie.authToken) {
+        if (authToken) {
             fetchUserData();
         }
-    }, [cookie.authToken, fetchUserData]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [authToken]);
 
     const handleWishlistToggle = (productId: number, variationId?: number) => {
-        if (!userData?.meta?.wishlist) {
+        if (!authToken) {
             router.push('/my-account/login');
-            return;
-        }
-
-        if (!cookie.authToken) {
             return;
         }
 

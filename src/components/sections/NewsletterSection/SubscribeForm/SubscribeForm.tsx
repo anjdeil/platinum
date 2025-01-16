@@ -60,15 +60,15 @@ export const SubscribeForm: FC<SubscriptionFormProps> = ({}) => {
     }
   };
 
-  const isError = errorMessage || errors;
+  const isError = !!errorMessage || !!errors;
   return (
     <StyledSubscribeForm onSubmit={handleSubmit(submitForm)}>
       <StyledSubscribeInput
-        type='email'
-        placeholder='name@gmail.com'
+        type="email"
+        placeholder="name@gmail.com"
         {...register('email')}
         required
-        isError
+        isError={isError}
       />
       {errors.email && <StyledError>{t('typeValidEmail')}</StyledError>}
       {errorMessage && <StyledError>{errorMessage}</StyledError>}
@@ -76,7 +76,7 @@ export const SubscribeForm: FC<SubscriptionFormProps> = ({}) => {
         <StyledSuccessMessage>{successMessage}</StyledSuccessMessage>
       )}
       <StyledSubscribeButton
-        type='submit'
+        type="submit"
         disabled={!isValid || isSubmitting || isLoading}
       >
         {isSubmitting || isLoading ? t('sending') : t('subscribe')}

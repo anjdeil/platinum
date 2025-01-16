@@ -1,5 +1,5 @@
 import { StyledAccordionDetailsProps } from '@/types/components/global/accordions/customSingleAccordion';
-import { Accordion, AccordionDetails, AccordionSummary, Checkbox } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import styled from 'styled-components';
 
 export const StyledAccordion = styled(Accordion)`

@@ -10,10 +10,10 @@ import { ProductsMinimizedType } from '@/types/components/shop/product/products'
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useCookies } from 'react-cookie';
 
 import Notification from '@/components/global/Notification/Notification';
 import { CartLink } from '@/components/global/popups/MiniCart/style';
+import useGetAuthToken from '@/hooks/useGetAuthToken';
 import { StyledButton } from '@/styles/components';
 import { WishlistItem } from '@/types/store/rtk-queries/wpApi';
 import { Skeleton } from '@mui/material';
@@ -23,7 +23,7 @@ function Wishlist() {
   const router = useRouter();
   const tMyAccount = useTranslations('MyAccount');
   const tCart = useTranslations('Cart');
-  const [cookie] = useCookies(['authToken']);
+  const authToken = useGetAuthToken();
 
   const [isLoadingWishlist, setIsLoadingWishlist] = useState(true);
 
@@ -47,26 +47,18 @@ function Wishlist() {
     [userData]
   );
 
-  console.log('userData...', userData);
-
   const [wishListProducts, setWishListProducts] = useState<
     ProductsMinimizedType[]
   >([]);
 
   useEffect(() => {
-    const authToken =
-      cookie.authToken ||
-      document.cookie
-        .split('; ')
-        .find(row => row.startsWith('authToken='))
-        ?.split('=')[1];
-
     if (authToken) {
       fetchUserData().then(() => setIsLoadingWishlist(false));
     } else {
       router.push('/my-account/login');
     }
-  }, [cookie.authToken, fetchUserData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authToken]);
 
   useEffect(() => {
     if (wishlist.length > 0) {

@@ -48,7 +48,6 @@ const countryOptions = [
 export const RegistrationForm: FC = () => {
   const tValidation = useTranslations('Validation');
   const tMyAccount = useTranslations('MyAccount');
-  const tForms = useTranslations('Forms');
   const router = useRouter();
   const [customError, setCustomError] = useState<string>('');
 

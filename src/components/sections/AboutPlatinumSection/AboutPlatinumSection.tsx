@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { useTranslations } from 'next-intl';
 import { useAppSelector } from '@/store';
 import { AboutPLangSchema } from '@/types/components/sections';
 import {
@@ -15,8 +14,7 @@ import {
 import { SectionContainer } from '../styles';
 
 export const AboutPlatinumSection: React.FC = ({}) => {
-  const themeOptions = useAppSelector((state) => state.themeOptions);
-  const t = useTranslations('HomePage');
+  const themeOptions = useAppSelector(state => state.themeOptions);
 
   const aboutSectionData = themeOptions.data.item.about_platinum;
 
@@ -39,8 +37,8 @@ export const AboutPlatinumSection: React.FC = ({}) => {
       <AboutContainer>
         <ImageWrapper>
           <StyledImage
-            src='/assets/images/about-section-1.5.png'
-            alt='About Platinum'
+            src="/assets/images/about-section-1.5.png"
+            alt="About Platinum"
             width={641}
             height={637}
             priority
@@ -48,8 +46,8 @@ export const AboutPlatinumSection: React.FC = ({}) => {
         </ImageWrapper>
         <ContentWrapper>
           <StyledLogoImage
-            src='/assets/images/about-logo.svg'
-            alt='Platinum Logo'
+            src="/assets/images/about-logo.svg"
+            alt="Platinum Logo"
             width={416}
             height={80}
             priority

@@ -1,9 +1,9 @@
+import useGetAuthToken from '@/hooks/useGetAuthToken';
 import { useAppSelector } from '@/store';
 import { useLazyFetchUserDataQuery } from '@/store/rtk-queries/wpApi';
 import { useGetCurrenciesQuery } from '@/store/rtk-queries/wpCustomApi';
 import { ProductCardListProps } from '@/types/components/shop';
 import { FC, useEffect } from 'react';
-import { useCookies } from 'react-cookie';
 import ProductCard from '../product/ProductCard/ProductCard';
 import { ProductCardListSkeleton } from './ProductCardListSkeleton';
 import { StyledProductCardList } from './styles';
@@ -15,7 +15,7 @@ export const ProductCardList: FC<ProductCardListProps> = ({
   columns,
   length,
 }) => {
-  const [cookie] = useCookies(['authToken']);
+  const authToken = useGetAuthToken();
 
   const [fetchUserData] = useLazyFetchUserDataQuery();
 
@@ -36,10 +36,11 @@ export const ProductCardList: FC<ProductCardListProps> = ({
   };
 
   useEffect(() => {
-    if (cookie.authToken) {
+    if (authToken) {
       fetchUserData();
     }
-  }, [cookie, fetchUserData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authToken]);
 
   if (isLoading) {
     return <ProductCardListSkeleton columns={columns} length={length} />;
