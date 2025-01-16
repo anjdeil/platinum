@@ -17,7 +17,7 @@ export const NavList = styled.ul<NavListProps>`
   }
 `;
 
-export const NavLink = styled(Link) <NavLinkProps>`
+export const NavLink = styled(Link)<NavLinkProps>`
   display: inline-block;
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
   font-size: ${({ fontSize }) => fontSize};
