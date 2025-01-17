@@ -6,7 +6,6 @@ import {
 import { useGetCurrenciesQuery } from '@/store/rtk-queries/wpCustomApi';
 import { ProductCardListProps } from '@/types/components/shop';
 import { WishlistItem } from '@/types/store/rtk-queries/wpApi';
-import { useRouter } from 'next/router';
 import { FC, useEffect } from 'react';
 import ProductCard from '../product/ProductCard/ProductCard';
 import { ProductCardListSkeleton } from './ProductCardListSkeleton';
@@ -22,7 +21,6 @@ export const ProductCardList: FC<ProductCardListProps> = ({
   length,
 }) => {
   const authToken = useGetAuthToken();
-  const router = useRouter();
   const dispatch = useAppDispatch();
 
   const [fetchUserData, { data: userData, isFetching: isUserFetching = true }] =
