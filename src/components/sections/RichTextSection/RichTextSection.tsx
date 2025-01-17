@@ -18,7 +18,6 @@ export const RichTextSection: React.FC<RichTextSectionProps> = ({
   // .replace(/\s*t\s*/g, '');
   const content = parse(cleanedContent);
 
-  console.log(content, 'content');
   return (
     <StyledRichTextSection is_reverse={is_reverse} fullSize={fullSize}>
       {title && <StyledTitle as={'h2'}>{title}</StyledTitle>}
