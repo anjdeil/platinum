@@ -17,12 +17,14 @@ import {
   HeaderWrapper,
   MenuWrapper,
 } from './styles';
+import { useTranslations } from 'next-intl';
 
 const Header: React.FC = () => {
   const dispatch = useAppDispatch();
   const [displayedSearchBar, setDisplayedSearchBar] = useState(false);
   const { cartItems } = useAppSelector(state => state.cartSlice);
   const [cartCount, setCartCount] = useState(0);
+  const t = useTranslations('HomePage');
 
   useEffect(() => {
     setCartCount(cartItems.length);
@@ -40,7 +42,7 @@ const Header: React.FC = () => {
             <CategoriesButton
               onClick={() => dispatch(popupToggle('categories-menu'))}
             >
-              All Shop
+              {t('allShop')}
             </CategoriesButton>
             <Nav
               menuId={344}
