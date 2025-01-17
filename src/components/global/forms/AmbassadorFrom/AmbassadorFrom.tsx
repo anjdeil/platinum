@@ -30,6 +30,8 @@ import {
   AmbassadorFormValidationSchema,
 } from '@/types/components/global/forms/ambassadorFrom';
 import { SuccessMessage } from '@/components/pages/contacts/ContactsForm/style';
+import { useCookies } from 'react-cookie';
+import { useLazyFetchUserDataQuery } from '@/store/rtk-queries/wpApi';
 
 export const AmbassadorForm: FC = () => {
   const [hasChanges, setHasChanges] = useState<boolean>(false);
@@ -39,12 +41,33 @@ export const AmbassadorForm: FC = () => {
   const [preview, setPreview] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState<boolean>(false);
 
-  const { data: customer, isLoading: isCustomerLoading } =
-    useFetchCustomerQuery({ customerId: '14408' });
-
   const t = useTranslations('Contacts');
   const tForms = useTranslations('Forms');
   const tValidation = useTranslations('Validation');
+  const [cookie] = useCookies(['authToken']);
+  const [isAuth, setIsAuth] = useState<boolean>(false);
+
+  const [
+    fetchUserData,
+    {
+      data: userData,
+      isLoading: isUserDataLoading,
+      isFetching: isUserFetching,
+    },
+  ] = useLazyFetchUserDataQuery();
+ 
+   useEffect(() => {
+      const authToken =
+        cookie.authToken ||
+        document.cookie
+          .split('; ')
+          .find(row => row.startsWith('authToken='))
+          ?.split('=')[1];
+  
+      if (authToken) {
+        fetchUserData().then(() => setIsAuth(true))
+      } 
+    }, [cookie.authToken, fetchUserData]);
 
   const schema = AmbassadorFormValidationSchema(tValidation);
   const [sendForm, { isLoading, isError, isSuccess }] =
@@ -170,7 +193,7 @@ export const AmbassadorForm: FC = () => {
         >
           {tForms('applicationForm')}
         </Title>
-        {isCustomerLoading && !customer ? (
+        {isUserDataLoading ? (
           <FlexBox
             justifyContent="center"
             alignItems="center"
@@ -188,7 +211,7 @@ export const AmbassadorForm: FC = () => {
                 inputType={'text'}
                 register={register}
                 errors={errors}
-                defaultValue={customer?.first_name || ''}
+                defaultValue={userData? || ''}
                 setValue={setValue}
               />
               <CustomFormInput
