@@ -266,7 +266,8 @@
     "subscribeToOurNewsletter": "Zapisz się do naszego newslettera!",
     "newArrivals": "Bądź pierwszy, który dowie się o nowościach, ekskluzywnych zniżkach i ofertach specjalnych.",
     "joinToWhatsApp": "Dołącz do nas na WhatsApp",
-    "subscribe": "Zapisz się"
+    "subscribe": "Zapisz się",
+    "allShop": "Wszystkie produkty"
   },
   "SubscriptionForm": {
     "subscribe": "Zapisz się",
@@ -286,5 +287,13 @@
     "nextPost": "Następny",
     "blogPage": "Blog",
     "blogSectionSubtitle": "Ostatnie artykuły"
+  },
+  "Footer": {
+    "myAccount": "Moje konto",
+    "categories": "Kategorie",
+    "information": "Informacja",
+    "contacts": "Kontakty",
+    "delivery": "Dostawa",
+    "payments": "Płatności"
   }
 }

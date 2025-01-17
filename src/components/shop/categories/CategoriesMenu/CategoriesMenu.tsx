@@ -79,7 +79,9 @@ const CategoriesMenu: FC<CategoriesMenuPropsType> = ({
       <Categories
         onMouseLeave={onMouseLeave}
         shop={shop}
-        className={popup === 'categories-menu' ? 'active close-outside' : ''}
+        className={
+          popup === 'categories-menu' ? 'active hover close-outside' : ''
+        }
       >
         <ListWrapper shop={shop}>
           <List>

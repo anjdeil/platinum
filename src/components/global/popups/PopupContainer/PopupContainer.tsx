@@ -1,15 +1,15 @@
 import HamburgerMenu from '@/components/global/popups/HamburgerMenu';
+import { switchCategory } from '@/components/shop/Archive';
 import { useAppSelector } from '@/store';
 import { popupClosed } from '@/store/slices/PopupSlice';
 import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import CommentPopup from '../CommentPopup/CommentPopup';
+import MiniCart from '../MiniCart/MiniCart';
 import MobileCategoriesMenu from '../MobileCategoriesMenu/MobileCategoriesMenu';
 import MobileSearchPopup from '../MobileSearchPopup/MobileSearchPopup';
-import { switchCategory } from '@/components/shop/Archive';
 import SwiperPopup from '../SwiperPopup/SwiperPopup';
-import MiniCart from '../MiniCart/MiniCart';
 import LoginPopup from '../LoginPopup/LoginPopup';
 
 const unscrollablePopups = [
@@ -39,12 +39,18 @@ const PopupContainer = () => {
         return;
       }
 
+      const target = event.target as HTMLElement;
+      const targetHoverPopup = target?.closest('.hover.close-outside');
+      if (!targetHoverPopup) {
+        firstClick = true;
+        dispatch(popupClosed());
+      }
+
       if (firstClick) {
         firstClick = false;
         return;
       }
 
-      const target = event.target as HTMLElement;
       const targetPopup = target?.closest('.close-outside');
       if (!targetPopup) {
         firstClick = true;

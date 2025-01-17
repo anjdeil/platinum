@@ -17,7 +17,8 @@ export const BannerWrapper = styled.div<BannerWrapperProps>`
   }
 
   @media ${({ theme }) => theme.media.medium} {
-    aspect-ratio: ${({ mobileProportion = 0.7 }) => mobileProportion};
+    aspect-ratio: unset;
+    height: calc(100vh - 120px);
     margin: auto;
     padding-top: ${({ isMainPage }) => (isMainPage ? '0px' : '20px')};
   }
