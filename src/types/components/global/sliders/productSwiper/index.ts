@@ -1,17 +1,18 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 export const SwiperSchema = z.object({
-    id: z.number(),
-    name: z.string(),
-    src: z.string().url(),
+  id: z.number(),
+  name: z.string(),
+  src: z.string().url(),
 });
 
 export const SwiperPropsSchema = z.object({
-    data: z.array(SwiperSchema),
+  data: z.array(SwiperSchema),
+  handleFavorite: z.function().optional(),
 });
 
 export const SwiperPopupPropsSchema = z.object({
-    onClose: z.function()
+  onClose: z.function(),
 });
 
 export type SwiperType = z.infer<typeof SwiperSchema>;

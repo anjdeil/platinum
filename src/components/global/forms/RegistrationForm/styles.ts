@@ -2,15 +2,17 @@ import styled from '@emotion/styled';
 
 interface CustomFormProps {
   maxWidth?: string;
+  border?: boolean;
 }
 
 export const CustomForm = styled.form<CustomFormProps>`
-  margin: 0 auto;
   padding: 32px;
-  border: ${({ theme }) => `1px solid ${theme.colors.lightBorder}`};
+  border: ${({ theme, border }) =>
+    border ? `1px solid ${theme.colors.lightBorder}` : 'none'};
   border-radius: 10px;
-  max-width: ${({ maxWidth = '700px' }) => maxWidth};
-  @media ${({ theme }) => theme.media.medium} {
+  max-width: 800px;
+  margin: 0 auto;
+  @media ${({ theme }) => theme.media.middle} {
     padding: 0;
     border: none;
   }

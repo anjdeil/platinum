@@ -10,6 +10,7 @@ import MobileSearchPopup from '../MobileSearchPopup/MobileSearchPopup';
 import { switchCategory } from '@/components/shop/Archive';
 import SwiperPopup from '../SwiperPopup/SwiperPopup';
 import MiniCart from '../MiniCart/MiniCart';
+import LoginPopup from '../LoginPopup/LoginPopup';
 
 const unscrollablePopups = [
   'mobile-search',
@@ -17,6 +18,7 @@ const unscrollablePopups = [
   'swiper-popup',
   'mobile-cart',
   'mobile-categories',
+  'login',
 ];
 
 const PopupContainer = () => {
@@ -95,6 +97,9 @@ const PopupContainer = () => {
     }
     case 'mini-cart': {
       return <MiniCart onClose={closePopup} />;
+    }
+    case 'login': {
+      return <LoginPopup onClose={closePopup} />;
     }
   }
 };

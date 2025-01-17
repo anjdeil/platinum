@@ -1,4 +1,4 @@
-import { useAppSelector } from '@/store';
+import { useAppDispatch, useAppSelector } from '@/store';
 import {
   useFetchUserUpdateMutation,
   useLazyFetchUserDataQuery,
@@ -12,6 +12,7 @@ import ProductCard from '../product/ProductCard/ProductCard';
 import { ProductCardListSkeleton } from './ProductCardListSkeleton';
 import { StyledProductCardList } from './styles';
 import useGetAuthToken from '@/hooks/useGetAuthToken';
+import { popupToggle } from '@/store/slices/PopupSlice';
 
 export const ProductCardList: FC<ProductCardListProps> = ({
   isLoading = false,
@@ -22,6 +23,7 @@ export const ProductCardList: FC<ProductCardListProps> = ({
 }) => {
   const authToken = useGetAuthToken();
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const [fetchUserData, { data: userData, isFetching: isUserFetching = true }] =
     useLazyFetchUserDataQuery();
@@ -54,7 +56,7 @@ export const ProductCardList: FC<ProductCardListProps> = ({
 
   const handleDisire = (productId: number, variationId?: number) => {
     if (!userData?.meta?.wishlist.length) {
-      router.push('/my-account/login');
+      dispatch(popupToggle('login'));
 
       return;
     }
