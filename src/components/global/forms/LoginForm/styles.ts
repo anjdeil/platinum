@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import Link from 'next/link';
 
-export const FormWrapper = styled.div`
+export const LoginFormWrapper = styled.div`
   display: flex;
   flex-direction: column;
   column-gap: 1%;

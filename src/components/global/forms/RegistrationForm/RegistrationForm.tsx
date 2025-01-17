@@ -6,11 +6,17 @@ import 'react-international-phone/style.css';
 import { useRegisterCustomerMutation } from '@/store/rtk-queries/wooCustomApi';
 import { useRouter } from 'next/router';
 import { RegistrationFormSchema } from '@/types/components/global/forms/registrationForm';
-import { CustomForm, FormWrapper, FormWrapperBottom } from './styles';
 import { isAuthErrorResponseType } from '@/utils/isAuthErrorResponseType';
 import { CustomFormInput } from '../CustomFormInput';
 import { CustomError, CustomSuccess } from '../CustomFormInput/styles';
-import { FlexBox, StyledButton, Title } from '@/styles/components';
+import {
+  CustomForm,
+  FlexBox,
+  FormWrapper,
+  FormWrapperBottom,
+  StyledButton,
+  Title,
+} from '@/styles/components';
 import theme from '@/styles/theme';
 import { validateWooCustomer } from '@/utils/zodValidators/validateWooCustomer';
 import {
@@ -21,29 +27,7 @@ import { CustomFormCheckbox } from '../CustomFormCheckbox';
 import { useTranslations } from 'next-intl';
 import { ActiveText } from '../LoginForm/styles';
 import CustomCountrySelect from '../../selects/CustomCountrySelect/CustomCountrySelect';
-
-const countryOptions = [
-  { value: 'DE', label: 'Germany' },
-  { value: 'FR', label: 'France' },
-  { value: 'IT', label: 'Italy' },
-  { value: 'ES', label: 'Spain' },
-  { value: 'GB', label: 'United Kingdom' },
-  { value: 'RU', label: 'Russia' },
-  { value: 'PL', label: 'Poland' },
-  { value: 'NL', label: 'Netherlands' },
-  { value: 'BE', label: 'Belgium' },
-  { value: 'SE', label: 'Sweden' },
-  { value: 'NO', label: 'Norway' },
-  { value: 'AT', label: 'Austria' },
-  { value: 'CH', label: 'Switzerland' },
-  { value: 'DK', label: 'Denmark' },
-  { value: 'FI', label: 'Finland' },
-  { value: 'PT', label: 'Portugal' },
-  { value: 'GR', label: 'Greece' },
-  { value: 'CZ', label: 'Czech Republic' },
-  { value: 'HU', label: 'Hungary' },
-  { value: 'RO', label: 'Romania' },
-];
+import { countryOptions } from '@/utils/mockdata/countryOptions';
 
 export const RegistrationForm: FC = () => {
   const tValidation = useTranslations('Validation');
@@ -172,8 +156,8 @@ export const RegistrationForm: FC = () => {
             field === 'postCode'
               ? 'number'
               : field == 'password' || field == 'confirmPassword'
-                ? 'newpassword'
-                : 'text'
+              ? 'newpassword'
+              : 'text'
           }
           setValue={setValue}
         />

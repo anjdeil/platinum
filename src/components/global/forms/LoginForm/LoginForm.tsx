@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { CustomForm, FormWrapperBottom } from '../RegistrationForm/styles';
+
 import {
   LoginFormSchema,
   LoginFormType,
@@ -12,8 +12,14 @@ import {
 } from '@/store/rtk-queries/wpApi';
 import { CustomSuccess } from '../CustomFormInput/styles';
 import { CustomFormInput } from '../CustomFormInput';
-import { ActiveText, FormWrapper } from './styles';
-import { FlexBox, StyledButton, Title } from '@/styles/components';
+import { ActiveText, LoginFormWrapper } from './styles';
+import {
+  CustomForm,
+  FlexBox,
+  FormWrapperBottom,
+  StyledButton,
+  Title,
+} from '@/styles/components';
 import theme from '@/styles/theme';
 import { useRouter } from 'next/router';
 import { useTranslations } from 'next-intl';
@@ -63,11 +69,11 @@ export const LoginForm: FC = () => {
   }
 
   return (
-    <CustomForm onSubmit={handleSubmit(onSubmit)}>
+    <CustomForm onSubmit={handleSubmit(onSubmit)} maxWidth="700px">
       <Title as="h3" uppercase>
         {t('log-In')}
       </Title>
-      <FormWrapper>
+      <LoginFormWrapper>
         <CustomFormInput
           fieldName={t('email')}
           name="email"
@@ -84,7 +90,7 @@ export const LoginForm: FC = () => {
           inputTag={'input'}
           inputType={'password'}
         />
-      </FormWrapper>
+      </LoginFormWrapper>
       <FormWrapperBottom>
         <StyledButton
           color={theme.colors.white}
