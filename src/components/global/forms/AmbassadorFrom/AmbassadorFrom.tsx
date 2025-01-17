@@ -32,10 +32,11 @@ import {
 import { SuccessMessage } from '@/components/pages/contacts/ContactsForm/style';
 import { useCookies } from 'react-cookie';
 import { useLazyFetchUserDataQuery } from '@/store/rtk-queries/wpApi';
+import { getUserFromLocalStorage } from '@/utils/auth/userLocalStorage';
 
 export const AmbassadorForm: FC = () => {
   const [hasChanges, setHasChanges] = useState<boolean>(false);
-
+  const [userId, setUserId] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [fileErr, setFileErr] = useState<string>();
   const [preview, setPreview] = useState<string | null>(null);
@@ -44,30 +45,13 @@ export const AmbassadorForm: FC = () => {
   const t = useTranslations('Contacts');
   const tForms = useTranslations('Forms');
   const tValidation = useTranslations('Validation');
-  const [cookie] = useCookies(['authToken']);
-  const [isAuth, setIsAuth] = useState<boolean>(false);
 
-  const [
-    fetchUserData,
-    {
-      data: userData,
-      isLoading: isUserDataLoading,
-      isFetching: isUserFetching,
-    },
-  ] = useLazyFetchUserDataQuery();
- 
-   useEffect(() => {
-      const authToken =
-        cookie.authToken ||
-        document.cookie
-          .split('; ')
-          .find(row => row.startsWith('authToken='))
-          ?.split('=')[1];
-  
-      if (authToken) {
-        fetchUserData().then(() => setIsAuth(true))
-      } 
-    }, [cookie.authToken, fetchUserData]);
+  useEffect(() => {
+    const user = getUserFromLocalStorage();
+    if (user?.id) {
+      setUserId(user.id);
+    }
+  }, []);
 
   const schema = AmbassadorFormValidationSchema(tValidation);
   const [sendForm, { isLoading, isError, isSuccess }] =
@@ -86,6 +70,9 @@ export const AmbassadorForm: FC = () => {
     mode: 'onBlur',
   });
 
+  const { data: customer, isLoading: isCustomerLoading } =
+    useFetchCustomerQuery({ customerId: userId || '' }, { skip: !userId });
+
   const onSubmit = async (data: AmbassadorFormType) => {
     console.log('Form data:', data);
 
@@ -95,7 +82,7 @@ export const AmbassadorForm: FC = () => {
       firstName: data.firstName,
       lastName: data.lastName,
       email: data.email,
-      phone: data.phoneNumber,
+      phone: data.phone,
       country: data.country,
       city: data.city,
       about: data.about,
@@ -108,7 +95,6 @@ export const AmbassadorForm: FC = () => {
         const base64File = reader.result as string;
         formData.file = base64File;
         try {
-          console.log('Sending form data...');
           await sendForm({
             formId: SEND_AMBASSADOR_FORM_ID,
             formData,
@@ -193,7 +179,7 @@ export const AmbassadorForm: FC = () => {
         >
           {tForms('applicationForm')}
         </Title>
-        {isUserDataLoading ? (
+        {isCustomerLoading ? (
           <FlexBox
             justifyContent="center"
             alignItems="center"
@@ -211,7 +197,7 @@ export const AmbassadorForm: FC = () => {
                 inputType={'text'}
                 register={register}
                 errors={errors}
-                defaultValue={userData? || ''}
+                defaultValue={customer?.first_name || ''}
                 setValue={setValue}
               />
               <CustomFormInput

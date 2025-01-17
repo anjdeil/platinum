@@ -64,6 +64,7 @@ export const WooCustomerSchema = z.object({
 });
 
 export const WooCustomerReqSchema = z.object({
+  id: z.string().optional(),
   email: z.string(),
   first_name: z.string().optional(),
   last_name: z.string().optional(),
