@@ -12,7 +12,7 @@ export default function Logout() {
 export const getServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
-  const { res } = context;
+  const { res, locale } = context;
   res.setHeader(
     'Set-Cookie',
     'authToken=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; '
@@ -20,7 +20,7 @@ export const getServerSideProps = async (
 
   return {
     redirect: {
-      destination: '/my-account/login',
+      destination: `/${locale}/my-account/login`,
       permanent: false,
     },
   };

@@ -28,6 +28,7 @@ interface UserType {
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
+  const { locale } = context;
   const cookies = context.req.cookies;
   const reqUrl =
     process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3000';
@@ -52,7 +53,7 @@ export const getServerSideProps: GetServerSideProps = async (
     console.error(err);
     return {
       redirect: {
-        destination: '/my-account/login',
+        destination: `/${locale}/my-account/login`,
         permanent: false,
       },
     };
