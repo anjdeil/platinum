@@ -1,5 +1,6 @@
 import { Container } from "@/styles/components";
 import styled from "@emotion/styled";
+import Link from "next/link";
 
 export const TopBarWrapper = styled(Container)`
     overflow: visible;
@@ -38,8 +39,9 @@ export const SelectsWrapper = styled.div`
     }    
 `;
 
-export const ButtonWrapper = styled.div`
+export const ButtonWrapper = styled(Link)`
     max-width: fit-content;
+    text-decoration: none;
 `;
 
 export const BurgerButtonWrapper = styled.div`

@@ -68,7 +68,7 @@ const TopBar: React.FC = () => {
             }
           />
         </BurgerButtonWrapper>
-        <ButtonWrapper>
+        <ButtonWrapper href={'tel:+4800000000'}>
           <StyledButton
             secondary={true}
             minWidthTablet="104px"
