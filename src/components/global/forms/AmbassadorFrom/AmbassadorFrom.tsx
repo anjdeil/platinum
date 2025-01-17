@@ -22,7 +22,6 @@ import { CircularProgress } from '@mui/material';
 import { CustomFormInput } from '../CustomFormInput';
 import { CustomError } from '../CustomFormInput/styles';
 import { useTranslations } from 'next-intl';
-
 import { useSendAmbassadorFormMutation } from '@/store/rtk-queries/contactFrom7/contactFromApi7';
 import UploadIcon from '../../icons/UploadIcon/UploadIcon';
 import {
@@ -30,8 +29,6 @@ import {
   AmbassadorFormValidationSchema,
 } from '@/types/components/global/forms/ambassadorFrom';
 import { SuccessMessage } from '@/components/pages/contacts/ContactsForm/style';
-import { useCookies } from 'react-cookie';
-import { useLazyFetchUserDataQuery } from '@/store/rtk-queries/wpApi';
 import { getUserFromLocalStorage } from '@/utils/auth/userLocalStorage';
 
 export const AmbassadorForm: FC = () => {
