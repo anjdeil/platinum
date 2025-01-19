@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import 'react-international-phone/style.css';
@@ -14,7 +14,6 @@ import {
   FormWrapper,
   FormWrapperBottom,
   StyledButton,
-  SuccessMessage,
 } from '@/styles/components';
 import { isAuthErrorResponseType } from '@/utils/isAuthErrorResponseType';
 import { Title } from '@/styles/components';
@@ -30,6 +29,7 @@ import {
   AmbassadorFormType,
   AmbassadorFormValidationSchema,
 } from '@/types/components/global/forms/ambassadorFrom';
+import { SuccessMessage } from '@/components/pages/contacts/ContactsForm/style';
 
 export const AmbassadorForm: FC = () => {
   const [hasChanges, setHasChanges] = useState<boolean>(false);
@@ -39,11 +39,8 @@ export const AmbassadorForm: FC = () => {
   const [preview, setPreview] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState<boolean>(false);
 
-  const {
-    data: customer,
-    error: customerError,
-    isLoading: isCustomerLoading,
-  } = useFetchCustomerQuery({ customerId: '14408' });
+  const { data: customer, isLoading: isCustomerLoading } =
+    useFetchCustomerQuery({ customerId: '14408' });
 
   const t = useTranslations('Contacts');
   const tForms = useTranslations('Forms');
@@ -60,7 +57,6 @@ export const AmbassadorForm: FC = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
     setValue,
-    reset,
     watch,
   } = useForm<AmbassadorFormType>({
     resolver: zodResolver(schema),
@@ -163,7 +159,7 @@ export const AmbassadorForm: FC = () => {
   };
 
   return (
-    <CustomForm onSubmit={handleSubmit(onSubmit)} maxWidth="800px" fullWidth>
+    <CustomForm onSubmit={handleSubmit(onSubmit)} maxWidth="800px">
       <InfoCard>
         <Title
           as="h2"

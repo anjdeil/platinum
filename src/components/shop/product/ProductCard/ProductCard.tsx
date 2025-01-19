@@ -79,7 +79,7 @@ const ProductCard: React.FC<ProductCardPropsType> = ({
 
   return (
     <StyledProductCard>
-      <ProductWrapper>
+      <ProductWrapper isFavorite={checkDesired()}>
         <ProductImageWrapper>
           <Link href={`/product/${product.slug}`}>
             <Image

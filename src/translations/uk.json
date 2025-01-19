@@ -219,7 +219,7 @@
     "emailValidation": "Будь ласка, введіть правильну електронну адресу.",
     "minChar": "Має бути не менше {count} символів.",
     "RequiredField": "Обов'язкове поле",
-    "email": "Електронна пошта",
+    "email": "Будь ласка, введіть дійсну електронну адресу",
     "name": "Ім'я",
     "lastName": "Прізвище",
     "address": "Адреса",
@@ -280,7 +280,8 @@
     "subscribeToOurNewsletter": "Підпишіться на нашу розсилку!",
     "newArrivals": "Дізнавайтеся першими про новинки, ексклюзивні знижки та спеціальні пропозиції.",
     "joinToWhatsApp": "Приєднуйтесь до WhatsApp",
-    "subscribe": "Підписатися"
+    "subscribe": "Підписатися",
+    "allShop": "Весь магазин"
   },
   "SubscriptionForm": {
     "subscribe": "Підписатися",
@@ -300,5 +301,13 @@
     "nextPost": "Наступний",
     "blogSectionSubtitle": "Останні статті",
     "blogPage": "Блог"
+  },
+  "Footer": {
+    "myAccount": "Мій акаунт",
+    "categories": "Категорії",
+    "information": "Інформація",
+    "contacts": "Контакти",
+    "delivery": "Доставка",
+    "payments": "Оплата"
   }
 }

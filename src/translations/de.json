@@ -220,7 +220,7 @@
     "emailValidation": "Geben Sie eine gültige E-Mail-Adresse ein",
     "minChar": "Muss mindestens {count} Zeichen lang sein.",
     "RequiredField": "Pflichtfeld",
-    "email": "E-Mail",
+    "email": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
     "name": "Name",
     "lastName": "Nachname",
     "address": "Adresse",
@@ -281,7 +281,8 @@
     "subscribeToOurNewsletter": "Abonnieren Sie unseren Newsletter!",
     "newArrivals": "Seien Sie der Erste, der über Neuzugänge, exklusive Rabatte und Sonderangebote informiert wird.",
     "joinToWhatsApp": "Beitritt zu WhatsAp",
-    "subscribe": "Subscribe"
+    "subscribe": "Subscribe",
+    "allShop": "Alle Geschäfte"
   },
   "SubscriptionForm": {
     "subscribe": "Abonnieren",
@@ -301,5 +302,13 @@
     "nextPost": "Weiter",
     "blogPage": "Blog",
     "blogSectionSubtitle": "Letzte artikel"
+  },
+  "Footer": {
+    "myAccount": "Mein Konto",
+    "categories": "Kategorien",
+    "information": "Informationen",
+    "contacts": "Kontakte",
+    "delivery": "Lieferung",
+    "payments": "Zahlungen"
   }
 }

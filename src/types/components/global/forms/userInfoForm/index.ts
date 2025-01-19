@@ -1,15 +1,5 @@
-import { parsePhoneNumber } from 'awesome-phonenumber';
 import { z } from 'zod';
 import { phoneNumberValidation } from '../common';
-/* const termsSchema = (t: any) =>
-  z.boolean().refine((value) => value === true, {
-    message: t('agreentmentTerms'),
-  }); */
-
-/* const phoneSchema = (t: any) =>
-  z.string().refine((value) => parsePhoneNumber(value).valid, {
-    message: t('InvalidPhoneNumber'),
-  }); */
 
 export const UserInfoFormSchema = (isShipping: boolean, t: any) => {
   const schema = z.object({
@@ -23,8 +13,6 @@ export const UserInfoFormSchema = (isShipping: boolean, t: any) => {
     address_2: z.string().min(1, t('RequiredField')),
     apartmentNumber: z.string().min(1, t('RequiredField')),
     postcode: z.string().min(5, t('RequiredField')),
-    /*   terms: termsSchema(t), */
-    /*    proofOfPurchase: z.string().min(1, t("RequiredField")), */
     first_nameShipping: isShipping
       ? z.string().min(3, t('RequiredField'))
       : z.string().optional(),

@@ -1,6 +1,6 @@
 import { GetServerSidePropsContext } from "next";
-import axios from "axios";
-import parseCookies from "./parseCookies";
+import axios, { isAxiosError } from 'axios';
+import parseCookies from './parseCookies';
 
 export type CookieRowsType = {
   [key: string]: string;
@@ -28,39 +28,42 @@ export async function checkUserTokenInServerSide(
   if (!(cookieName in cookieRows)) return { redirect: redirect };
 
   try {
-    const userResponse = await axios.get(`${process.env.SITE_URL}/wp-json/wp/v2/users/me`, {
-      headers: {
-        Authorization: `Bearer ${cookieRows[cookieName]}`,
-      },
-    });
+    const userResponse = await axios.get(
+      `${process.env.SITE_URL}/wp-json/wp/v2/users/me`,
+      {
+        headers: {
+          Authorization: `Bearer ${cookieRows[cookieName]}`,
+        },
+      }
+    );
 
-    const userData: UserData = userResponse.data;
+    const userData: UserData = userResponse.data as UserData;
 
     if (userData && userData.id) {
       return userData;
     } else {
       // Если токен невалидный, удаляем куку и перенаправляем
       context.res.setHeader(
-        "Set-Cookie",
+        'Set-Cookie',
         `${cookieName}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT`
       );
       return { redirect: redirect };
     }
   } catch (err) {
     // Преобразуем err в правильный тип для проверки ошибки Axios
-    if (axios.isAxiosError(err)) {
+    if (isAxiosError(err)) {
       const response = err.response;
-      if (response?.data?.code === "jwt_auth_invalid_token") {
+      if (response?.data?.code === 'jwt_auth_invalid_token') {
         // Если токен невалидный, удаляем куку и перенаправляем
         context.res.setHeader(
-          "Set-Cookie",
+          'Set-Cookie',
           `${cookieName}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT`
         );
       }
     }
     // В случае других ошибок также удаляем куку и перенаправляем
     context.res.setHeader(
-      "Set-Cookie",
+      'Set-Cookie',
       `${cookieName}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT`
     );
     return { redirect: redirect };

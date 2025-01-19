@@ -1,7 +1,7 @@
-import { FC, useCallback, useState } from "react";
-import { CustomInput } from "@/components/global/forms/CustomInput";
-import { Slider } from "@mui/material";
-import { Divider, PriceFilterContainer } from "./styles";
+import { FC, useCallback } from 'react';
+import { CustomInput } from '@/components/global/forms/CustomInput';
+import { Slider } from '@mui/material';
+import { Divider, PriceFilterContainer } from './styles';
 import { FilterActionButtons } from '../filterActionButtons';
 
 interface PriceFilter {
@@ -57,4 +57,4 @@ export const PriceFilter: FC<PriceFilter> = props => {
       <FilterActionButtons onReset={onReset} onApply={onApply} isApply={true} />
     </>
   );
-};  
+};

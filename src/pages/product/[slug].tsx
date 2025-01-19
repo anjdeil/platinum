@@ -12,7 +12,7 @@ import { validateCustomSingleProduct } from '@/utils/zodValidators/validateCusto
 import { Box } from '@mui/material';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // vinyl-gloves/
 // https://platinum.digiway-dev.online/wp-admin/edit.php?post_type=product&page=product_attributes
@@ -37,7 +37,7 @@ import { useEffect, useMemo, useState } from 'react';
 // Variations FOR attributes FOR check slug and option
 
 export default function ProductPage({ res }: ProductPageType) {
-  const product = useMemo(() => res.data.item, [res]);
+  const product = res.data.item;
   const [breadcrumbsLinks, setBreadcrumbsLinks] = useState<BreadcrumbType[]>(
     []
   );

@@ -13,7 +13,7 @@ export const PopupContainer = styled.div<PopupContainerProps>`
   @media ${({ theme }) => theme.media.large} {
     position: fixed;
     background-color: ${({ theme, backgroundColor = theme.background.secondary }) =>
-      backgroundColor};
+    backgroundColor};
     width: ${({ width = "70%" }) => width};
     padding-top: ${({ paddingTop = "0" }) => paddingTop};
     top: ${({ scroll = 0 }) => (scroll ? Math.max(0, 146 - scroll) : 146)}px;
@@ -23,25 +23,31 @@ export const PopupContainer = styled.div<PopupContainerProps>`
     z-index: 100;
   }
 
-  @media ${({ theme }) => theme.media.middle} {
-    top: ${({ scroll = 0 }) => (scroll ? Math.max(0, 60 - scroll) : 60)}px;
+  @media ${({ theme }) => theme.media.large} {
     bottom: 80px;
-    grid-template-rows: ${({ title }) => (title === "" ? "1fr" : "90px 1fr")};
+    grid-template-rows: ${({ title, closeButton = false }) => (closeButton ? "auto 1fr" : title === '' && "1fr")};
     overflow: auto;
+  }
+
+  @media ${({ theme }) => theme.media.medium} {
+    top: ${({ scroll = 0 }) => (scroll ? Math.max(0, 60 - scroll) : 60)}px;
+    bottom: 60px;
   }
 `;
 
 export const Header = styled.div<PopupContainerProps>`
   display: none;
   padding: ${({ padding }) => (padding === "all" ? "0 35px" : " 0 17px")};
-
+  
   @media ${({ theme }) => theme.media.middle} {
-    display: block;
+    display: flex;
+    padding-top: ${({ closeButton = false }) => (closeButton ? "16px" : " 0")};
+    justify-content: ${({ closeButton = false }) => (closeButton ? "flex-end" : " flex-start")};
   }
 `;
 
 export const Content = styled.div<PopupContainerProps>`
-  padding: ${({ padding }) => (padding === "all" ? "0 35px" : "0 20px 0 0")};
+  padding: ${({ padding }) => (padding === "all" ? "0 20px" : "0 20px 0 0")};
   height: auto;
   overflow: auto;
   position: relative;

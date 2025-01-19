@@ -1,6 +1,11 @@
+import ForwardArrow from '@/components/global/icons/ForwardArrow/ForwardArrow';
+import { MenuSkeleton } from '@/components/menus/MenuSkeleton';
 import transformCategoriesMenu from '@/services/transformers/transformCategoriesMenu';
 import { useAppDispatch, useAppSelector } from '@/store';
 import MenuCategoriesSlice from '@/store/slices/MenuCategoriesSlice';
+import { Title } from '@/styles/components';
+import CategoryType from '@/types/components/shop/categories/categories';
+import { CategoriesMenuPropsType } from '@/types/components/shop/categories/categoriesMenu';
 import { FC, useCallback } from 'react';
 import {
   Categories,
@@ -9,11 +14,6 @@ import {
   List,
   ListWrapper,
 } from './styles';
-import { Title } from '@/styles/components';
-import { MenuSkeleton } from '@/components/menus/MenuSkeleton';
-import ForwardArrow from '@/components/global/icons/ForwardArrow/ForwardArrow';
-import { CategoriesMenuPropsType } from '@/types/components/shop/categories/categoriesMenu';
-import CategoryType from '@/types/components/shop/categories/categories';
 
 const CategoriesMenu: FC<CategoriesMenuPropsType> = ({
   selectedCategories,
@@ -26,7 +26,7 @@ const CategoriesMenu: FC<CategoriesMenuPropsType> = ({
   const categories = transformCategoriesMenu(categoriesData);
 
   const dispatch = useAppDispatch();
-  const popup = useAppSelector(state => state.Popup);
+  const popup = useAppSelector(state => state.popup);
   const { isOpen, CategoryActiveHover } = useAppSelector(
     state => state.MenuCategoriesSlice
   );
@@ -79,7 +79,9 @@ const CategoriesMenu: FC<CategoriesMenuPropsType> = ({
       <Categories
         onMouseLeave={onMouseLeave}
         shop={shop}
-        className={popup === 'categories-menu' ? 'active close-outside' : ''}
+        className={
+          popup === 'categories-menu' ? 'active hover close-outside' : ''
+        }
       >
         <ListWrapper shop={shop}>
           <List>

@@ -1,4 +1,4 @@
-import styled from '@emotion/styled'
+import styled from '@emotion/styled';
 
 export const CartPageWrapper = styled.div`
   display: flex;
@@ -6,4 +6,4 @@ export const CartPageWrapper = styled.div`
   gap: 80px;
   margin-bottom: 80px;
   margin-top: 24px;
-`
+`;

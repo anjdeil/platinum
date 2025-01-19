@@ -1,6 +1,8 @@
 import SwiperModal from '@/store/slices/SwiperModal';
 import saveCartSliceToLocalStorageMiddleware from '@/utils/cartSlice/saveCartSliceToLocalStorageMiddleware';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import { contactForm7Api } from './rtk-queries/contactFrom7/contactFromApi7';
 import { instagramCustomRtkApi } from './rtk-queries/instagramMedia';
 import { mailpoetApi } from './rtk-queries/mailpoetApi';
@@ -18,6 +20,12 @@ import ProductSlice from './slices/ProductSlice';
 import themeOptionsSlice from './slices/themeOptionsSlice';
 import userSlice from './slices/userSlice';
 import { passwordResetApi } from './rtk-queries/passwordResetApi';
+
+const persistConfig = {
+  key: 'root',
+  storage,
+  whitelist: ['currencySlice'],
+};
 
 const rootReducer = combineReducers({
   [wpCustomRtkApi.reducerPath]: wpCustomRtkApi.reducer,
@@ -37,28 +45,38 @@ const rootReducer = combineReducers({
   themeOptions: themeOptionsSlice,
   popup: PopupSlice,
   MenuCategoriesSlice: MenuCategoriesSlice.reducer,
-  currentCurrency: currencySlice,
-  Popup: PopupSlice,
   swiperModal: SwiperModal,
 });
 
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
 export const setupStore = () => {
-  return configureStore({
-    reducer: rootReducer,
+  const store = configureStore({
+    reducer: persistedReducer,
     middleware: getDefaultMiddleware =>
-      getDefaultMiddleware()
-        .concat(wpCustomRtkApi.middleware)
-        .concat(wooCustomRktApi.middleware)
-        .concat(wpRtkApi.middleware)
-        .concat(contactForm7Api.middleware)
-        .concat(saveCartSliceToLocalStorageMiddleware)
-        .concat(mailpoetApi.middleware)
-        .concat(wooCustomAuthRktApi.middleware)
-        .concat(instagramCustomRtkApi.middleware)
-        .concat(passwordResetApi.middleware),
+      getDefaultMiddleware({
+        // Ця конфігурація запобігає помилкам перевірки серіалізованості, які можуть виникнути
+        // під час використання redux-persist, забезпечуючи коректну роботу middlewares.
+        serializableCheck: {
+          ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],
+        },
+      }).concat(
+        wpCustomRtkApi.middleware,
+        wooCustomRktApi.middleware,
+        wpRtkApi.middleware,
+        contactForm7Api.middleware,
+        saveCartSliceToLocalStorageMiddleware,
+        mailpoetApi.middleware,
+        wooCustomAuthRktApi.middleware,
+        instagramCustomRtkApi.middleware,
+        passwordResetApi.middleware
+      ),
   });
+
+  const persistor = persistStore(store);
+  return { store, persistor };
 };
 
 export type RootState = ReturnType<typeof rootReducer>;
-export type AppStore = ReturnType<typeof setupStore>;
+export type AppStore = ReturnType<typeof setupStore>['store'];
 export type AppDispatch = AppStore['dispatch'];

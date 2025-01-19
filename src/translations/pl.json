@@ -219,7 +219,7 @@
     "emailValidation": "Proszę wprowadzić poprawny adres e-mail.",
     "minChar": "Musi mieć co najmniej {count} znaków.",
     "RequiredField": "Pole wymagane",
-    "email": "E-mail",
+    "email": "Proszę wpisać poprawny adres e-mail",
     "name": "Imię",
     "lastName": "Nazwisko",
     "address": "Adres",
@@ -280,7 +280,8 @@
     "subscribeToOurNewsletter": "Zapisz się do naszego newslettera!",
     "newArrivals": "Bądź pierwszy, który dowie się o nowościach, ekskluzywnych zniżkach i ofertach specjalnych.",
     "joinToWhatsApp": "Dołącz do nas na WhatsApp",
-    "subscribe": "Zapisz się"
+    "subscribe": "Zapisz się",
+    "allShop": "Wszystkie produkty"
   },
   "SubscriptionForm": {
     "subscribe": "Zapisz się",
@@ -300,5 +301,13 @@
     "nextPost": "Następny",
     "blogPage": "Blog",
     "blogSectionSubtitle": "Ostatnie artykuły"
+  },
+  "Footer": {
+    "myAccount": "Moje konto",
+    "categories": "Kategorie",
+    "information": "Informacja",
+    "contacts": "Kontakty",
+    "delivery": "Dostawa",
+    "payments": "Płatności"
   }
 }

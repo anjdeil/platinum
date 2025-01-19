@@ -46,13 +46,26 @@ export const ProductVariationSchema = z.object({
   modified: z.string(),
   stock_quantity: z.number().optional(),
   price: z.number().optional(),
-  image: ProductImageSchema,
+  image: z.string().nullable(),
   attributes: z.array(ProductDefaultAttributesSchema),
 });
-
-export const ProductsMinimizedSchema = ProductVariationSchema.extend({
+             
+export const ProductsMinimizedSchema = z.object({
+  id: z.number(),
+  parent_id: z.number(),
+  sku: z.string().nullable(),
+  slug: z.string(),
+  name: z.string(),
   language_code: z.string().optional(),
+  stock_quantity: z.number().optional(),
   average_rating: z.number(),
+  price: z.number().optional(),
+  image: z.object({
+    id: z.number(),
+    name: z.string(),
+    src: z.string(),
+  }),
+  attributes: z.array(ProductDefaultAttributesSchema),
 });
 
 export const ProductsWithCartDataSchema = ProductsMinimizedSchema.extend({

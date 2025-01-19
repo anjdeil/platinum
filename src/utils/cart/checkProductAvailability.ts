@@ -1,6 +1,5 @@
 import { ProductsMinimizedType } from '@/types/components/shop/product/products'
-import { CartItem } from '@/types/store/reducers/сartSlice'
-import { log } from 'console'
+import { CartItem } from '@/types/store/reducers/сartSlice';
 
 export default function checkProductAvailability(
   item: CartItem,

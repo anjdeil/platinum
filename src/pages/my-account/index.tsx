@@ -65,8 +65,7 @@ interface MyAccountPropsType {
 
 const MyAccount: FC<MyAccountPropsType> = ({ user }) => {
   const t = useTranslations('MyAccount');
-  const { data: currencies, isLoading: isCurrenciesLoading } =
-    useGetCurrenciesQuery();
+  const { data: currencies } = useGetCurrenciesQuery();
   const selectedCurrency = useAppSelector(state => state.currencySlice.name);
 
   const dispatch = useDispatch();
@@ -94,7 +93,7 @@ const MyAccount: FC<MyAccountPropsType> = ({ user }) => {
     })
   );
 
-  const { orderCount, totalAmountPLN, totalAmount } =
+  const { orderCount, totalAmount } =
     currencies && ordersData
       ? transformOrders(ordersData, currencies, selectedCurrency)
       : { orderCount: undefined, totalAmount: undefined };

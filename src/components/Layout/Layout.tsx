@@ -21,7 +21,6 @@ import { setCategories, setLoading } from '@/store/slices/categoriesSlice';
 import CategoriesMenu from '../shop/categories/CategoriesMenu/CategoriesMenu';
 
 export const MenusContext = createContext<WpMenuResponseType[] | []>([]);
-const currency = 'USD';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const dispatch = useDispatch();
@@ -32,14 +31,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const langParamStr = locale ? locale : '';
   const [menus, setMenus] = useState<WpMenuResponseType[] | []>([]);
 
-  const { data: menusResp, error, isLoading } = useGetMenusQuery(langParam);
-  const { data: themeOptions, error: themeOptionsError } =
-    useGetThemeOptionsQuery();
-  const {
-    data: categoriesResp,
-    isLoading: isCategoriesLoading,
-    refetch: refetchCategories,
-  } = useGetCategoriesQuery(langParam);
+  const { data: menusResp } = useGetMenusQuery(langParam);
+  const { data: themeOptions } = useGetThemeOptionsQuery();
+  const { data: categoriesResp, isLoading: isCategoriesLoading } =
+    useGetCategoriesQuery(langParam);
 
   useEffect(() => {
     if (menusResp && menusResp.data && menusResp.data.items) {

@@ -8,7 +8,6 @@ import CartTable from '@/components/pages/cart/CartTable/CartTable';
 import OrderBar from '@/components/pages/cart/OrderBar/OrderBar';
 import { Container, FlexBox, StyledButton } from '@/styles/components';
 import CartCouponBlock from '@/components/pages/cart/CartCouponBlock/CartCouponBlock';
-import { CartPageWrapper } from './style';
 import CartSummaryBlock from '@/components/pages/cart/CartSummaryBlock/CartSummaryBlock';
 import OrderProgress from '@/components/pages/cart/OrderProgress/OrderProgress';
 import getSubtotalByLineItems from '@/utils/cart/getSubtotalByLineItems';
@@ -20,6 +19,7 @@ import { CartLink } from '@/components/global/popups/MiniCart/style';
 import { useTranslations } from 'next-intl';
 import { useCookies } from 'react-cookie';
 import { debounce } from 'lodash';
+import { CartPageWrapper } from '@/styles/cart/style';
 
 const CartPage: React.FC = () => {
   const { name: code } = useAppSelector(state => state.currencySlice);
@@ -74,11 +74,7 @@ const CartPage: React.FC = () => {
   const { cartItems, couponCodes } = useAppSelector(state => state.cartSlice);
   const [
     getProductsMinimized,
-    {
-      data: productsSpecsData,
-      isLoading: isLoadingProductsMin,
-      error: errorProductsMin,
-    },
+    { data: productsSpecsData, isLoading: isLoadingProductsMin },
   ] = useGetProductsMinimizedMutation();
 
   const [cachedOrderItems, setCachedOrderItems] = useState(orderItems);

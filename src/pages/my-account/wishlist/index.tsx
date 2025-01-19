@@ -12,7 +12,7 @@ import { useGetProductsMinimizedMutation } from '@/store/rtk-queries/wpCustomApi
 import { ProductsMinimizedType } from '@/types/components/shop/product/products';
 import { useTranslations } from 'next-intl';
 
-import { StyledButton, Title } from '@/styles/components';
+import { StyledButton } from '@/styles/components';
 import { CartLink } from '@/components/global/popups/MiniCart/style';
 import Notification from '@/components/global/Notification/Notification';
 import { Skeleton } from '@mui/material';

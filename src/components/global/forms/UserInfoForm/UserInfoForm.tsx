@@ -52,7 +52,7 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting, isSubmitted },
+    formState: { errors, isSubmitting },
     setValue,
     watch,
     control,
@@ -202,8 +202,8 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
               field === 'address_2'
                 ? defaultValues.address_2?.split('/')[0] || ''
                 : field === 'apartmentNumber'
-                  ? defaultValues.address_2?.split('/')[1] || ''
-                  : defaultValues[field] || ''
+                ? defaultValues.address_2?.split('/')[1] || ''
+                : defaultValues[field] || ''
             }
             setValue={setValue}
           />
