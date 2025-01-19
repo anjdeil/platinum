@@ -166,7 +166,7 @@ export const RegistrationForm: FC = () => {
   );
 
   return (
-    <CustomForm onSubmit={handleSubmit(onSubmit)}>
+    <CustomForm onSubmit={handleSubmit(onSubmit)} maxWidth="850px">
       <Title as={'h2'} uppercase={true} marginBottom={'24px'}>
         {tMyAccount('registration')}
       </Title>

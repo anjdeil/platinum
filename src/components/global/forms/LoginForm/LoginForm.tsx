@@ -12,7 +12,7 @@ import {
 } from '@/store/rtk-queries/wpApi';
 import { CustomSuccess } from '../CustomFormInput/styles';
 import { CustomFormInput } from '../CustomFormInput';
-import { ActiveText, LoginFormWrapper } from './styles';
+import { ActiveText, BottomWrapper, LoginFormWrapper } from './styles';
 import {
   CustomForm,
   FlexBox,
@@ -69,7 +69,7 @@ export const LoginForm: FC = () => {
   }
 
   return (
-    <CustomForm onSubmit={handleSubmit(onSubmit)} maxWidth="700px">
+    <CustomForm onSubmit={handleSubmit(onSubmit)} maxWidth="550px">
       <Title as="h3" uppercase>
         {t('log-In')}
       </Title>
@@ -100,7 +100,7 @@ export const LoginForm: FC = () => {
           {t('login')}
         </StyledButton>
 
-        <FlexBox margin="10px 0 0 0" justifyContent="space-between">
+        <BottomWrapper>
           <ActiveText href="/my-account/">{t('ForgotYourPassword')}</ActiveText>
           <FlexBox gap="5px">
             <div> {t('DontHaveAnAccount')}</div>
@@ -108,7 +108,7 @@ export const LoginForm: FC = () => {
               {t('SignUpNow')}
             </ActiveText>
           </FlexBox>
-        </FlexBox>
+        </BottomWrapper>
 
         {customError && (
           <Notification marginBottom="0" type="warning">

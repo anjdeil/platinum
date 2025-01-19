@@ -31,8 +31,6 @@ interface UserInfoFormProps {
 export const UserInfoForm: FC<UserInfoFormProps> = ({
   defaultCustomerData: customer,
 }) => {
-  console.log(customer);
-
   const tValidation = useTranslations('Validation');
   const tMyAccount = useTranslations('MyAccount');
   const tForms = useTranslations('Forms');
@@ -40,20 +38,20 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
   const [isShipping, setIsShipping] = useState(true);
   const [hasChanges, setHasChanges] = useState(false);
 
-  //wooAuth
-  const [UpdateCustomerMutation, { error, isLoading, isSuccess }] =
+  const [UpdateCustomerMutation, { error, isSuccess }] =
     useUpdateCustomerInfoMutation();
 
   const formSchema = useMemo(
     () => UserInfoFormSchema(isShipping, tValidation),
     [isShipping]
   );
+
   type UserInfoFormType = z.infer<typeof formSchema>;
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting, isSubmitted },
+    formState: { errors, isSubmitting },
     setValue,
     watch,
     control,
@@ -77,8 +75,6 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
         !customer.shipping?.last_name &&
         !customer.shipping?.address_1;
       setIsShipping(!isShippingEmpty);
-      console.log('isShippingEmpty', isShippingEmpty);
-      console.log(isShipping);
     }
   }, [customer]);
 
@@ -149,7 +145,7 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
     };
 
     try {
-      const response = await UpdateCustomerMutation({
+      await UpdateCustomerMutation({
         ...updatedData,
       });
     } catch (error) {
