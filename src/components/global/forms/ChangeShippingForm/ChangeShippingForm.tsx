@@ -3,10 +3,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import 'react-international-phone/style.css';
-
 import {
   CustomForm,
-  FlexBox,
   FormWrapper,
   FormWrapperBottom,
   StyledButton,
@@ -14,7 +12,6 @@ import {
 import { isAuthErrorResponseType } from '@/utils/isAuthErrorResponseType';
 import { UserInfoFormSchema } from '@/types/components/global/forms/userInfoForm';
 import { Title } from '@/styles/components';
-
 import CustomCountrySelect from '../../selects/CustomCountrySelect/CustomCountrySelect';
 import { useTranslations } from 'next-intl';
 import Notification from '../../Notification/Notification';
@@ -27,6 +24,8 @@ import { useUpdateCustomerInfoMutation } from '@/store/rtk-queries/wooCustomAuth
 interface ChangeShippingFormProps {
   defaultCustomerData: WooCustomerReqType;
 }
+const isShipping = true;
+
 export const ChangeShippingForm: FC<ChangeShippingFormProps> = ({
   defaultCustomerData: customer,
 }) => {
@@ -34,22 +33,21 @@ export const ChangeShippingForm: FC<ChangeShippingFormProps> = ({
   const tMyAccount = useTranslations('MyAccount');
   const tForms = useTranslations('Forms');
 
-  const [isShipping, setIsShipping] = useState(true);
   const [hasChanges, setHasChanges] = useState(false);
 
-  const [UpdateCustomerMutation, { error, isLoading, isSuccess }] =
+  const [UpdateCustomerMutation, { error, isSuccess }] =
     useUpdateCustomerInfoMutation();
 
   const formSchema = useMemo(
     () => UserInfoFormSchema(isShipping, tValidation),
-    [isShipping]
+    [isShipping, tValidation]
   );
   type UserInfoFormType = z.infer<typeof formSchema>;
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting, isSubmitted },
+    formState: { errors, isSubmitting },
     setValue,
     watch,
     control,
@@ -97,7 +95,7 @@ export const ChangeShippingForm: FC<ChangeShippingFormProps> = ({
     };
 
     try {
-      const response = await UpdateCustomerMutation({
+      await UpdateCustomerMutation({
         ...updatedData,
       });
     } catch (error) {
@@ -151,8 +149,8 @@ export const ChangeShippingForm: FC<ChangeShippingFormProps> = ({
               field === 'address_2'
                 ? defaultValues.address_2?.split('/')[0] || ''
                 : field === 'apartmentNumber'
-                  ? defaultValues.address_2?.split('/')[1] || ''
-                  : defaultValues[field] || ''
+                ? defaultValues.address_2?.split('/')[1] || ''
+                : defaultValues[field] || ''
             }
             setValue={setValue}
           />

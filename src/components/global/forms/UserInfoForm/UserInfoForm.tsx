@@ -40,7 +40,7 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
   const [hasChanges, setHasChanges] = useState(false);
 
   //wooAuth
-  const [UpdateCustomerMutation, { error, isLoading, isSuccess }] =
+  const [UpdateCustomerMutation, { error, isSuccess }] =
     useUpdateCustomerInfoMutation();
 
   const formSchema = useMemo(
@@ -148,7 +148,7 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
     };
 
     try {
-      const response = await UpdateCustomerMutation({
+      await UpdateCustomerMutation({
         ...updatedData,
       });
     } catch (error) {

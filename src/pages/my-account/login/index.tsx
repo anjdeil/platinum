@@ -5,7 +5,6 @@ import { LoginForm } from '@/components/global/forms/LoginForm';
 import { FormContainer } from '@/components/pages/account/styles';
 import { useTranslations } from 'next-intl';
 import Breadcrumbs from '@/components/global/Breadcrumbs/Breadcrumbs';
-import { LoginRegPageWrapper } from '@/styles/login/styles';
 import { removeUserFromLocalStorage } from '@/utils/auth/userLocalStorage';
 
 export default function Login() {

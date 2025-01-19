@@ -1,6 +1,5 @@
 import { Container } from '@/styles/components';
 import { GetServerSidePropsContext } from 'next';
-import { FormContainer } from '@/components/pages/account/styles';
 import { WooCustomerReqType } from '@/types/services/wooCustomApi/customer';
 import wpRestApi from '@/services/wpRestApi';
 import { ChangePasswordForm } from '@/components/global/forms/password/ChangePasswordForm';

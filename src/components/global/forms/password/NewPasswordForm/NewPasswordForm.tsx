@@ -65,7 +65,7 @@ export const NewPasswordForm: FC = () => {
   useEffect(() => {
     if (PasswordErr) {
       const error = errorsCode.find(
-        //@ts-ignore
+        // @ts-expect-error: PasswordErr.data might not have the expected structure
         err => err.message === PasswordErr.data?.message
       );
 

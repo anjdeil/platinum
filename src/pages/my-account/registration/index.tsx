@@ -1,5 +1,5 @@
 import { RegistrationForm } from '@/components/global/forms/RegistrationForm';
-import { Container, FormPageWrapper, Title } from '@/styles/components';
+import { Container, FormPageWrapper } from '@/styles/components';
 import { GetServerSidePropsContext } from 'next';
 import wpRestApi from '@/services/wpRestApi';
 import { FormContainer } from '@/components/pages/account/styles';

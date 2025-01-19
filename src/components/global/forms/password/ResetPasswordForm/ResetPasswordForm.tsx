@@ -11,14 +11,12 @@ import { useRouter } from 'next/router';
 import { ResetPasswordFormSchema } from '@/types/components/global/forms/changePassword';
 import Notification from '../../../Notification/Notification';
 import { z } from 'zod';
-import { useAppDispatch } from '@/store';
 import { saveUserToLocalStorage } from '@/utils/auth/userLocalStorage';
 
 const ResetPasswordForm: FC = () => {
   const tValidation = useTranslations('Validation');
   const tMyAccount = useTranslations('MyAccount');
   const router = useRouter();
-  const dispatch = useAppDispatch();
   const [customError, setCustomError] = useState<string | null>(null);
   const [resetPassword, { error, isLoading, isSuccess }] =
     useResetPasswordMutation();
