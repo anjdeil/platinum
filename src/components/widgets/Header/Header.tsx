@@ -5,7 +5,7 @@ import FindIcon from '@/components/global/icons/FindIcon/FindIcon';
 import HeartIcon from '@/components/global/icons/HeartIcon/HeartIcon';
 import SearchBar from '@/components/global/SearchBar/SearchBar';
 import { useAppDispatch, useAppSelector } from '@/store';
-import { popupToggle } from '@/store/slices/PopupSlice';
+import { popupSet, popupToggle } from '@/store/slices/PopupSlice';
 import { fetchUser } from '@/utils/auth/authService';
 import React, { useEffect, useState } from 'react';
 import Nav from '../../menus/Nav/Nav';
@@ -17,12 +17,14 @@ import {
   HeaderWrapper,
   MenuWrapper,
 } from './styles';
+import { useTranslations } from 'next-intl';
 
 const Header: React.FC = () => {
   const dispatch = useAppDispatch();
   const [displayedSearchBar, setDisplayedSearchBar] = useState(false);
   const { cartItems } = useAppSelector(state => state.cartSlice);
   const [cartCount, setCartCount] = useState(0);
+  const t = useTranslations('HomePage');
 
   useEffect(() => {
     setCartCount(cartItems.length);
@@ -38,9 +40,10 @@ const Header: React.FC = () => {
         {!displayedSearchBar ? (
           <MenuWrapper>
             <CategoriesButton
-              onClick={() => dispatch(popupToggle('categories-menu'))}
+              onMouseEnter={() => dispatch(popupSet('categories-menu'))}
+              // onClick={() => dispatch(popupToggle('categories-menu'))}
             >
-              All Shop
+              {t('allShop')}
             </CategoriesButton>
             <Nav
               menuId={344}
