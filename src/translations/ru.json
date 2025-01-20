@@ -266,7 +266,8 @@
     "subscribeToOurNewsletter": "Подпишитесь на нашу рассылку!",
     "newArrivals": "Узнавайте первыми о новых поступлениях, эксклюзивных скидках и специальных предложениях.",
     "joinToWhatsApp": "Присоединяйтесь к WhatsApp",
-    "subscribe": "Подписаться"
+    "subscribe": "Подписаться",
+    "allShop": "Весь магазин"
   },
   "SubscriptionForm": {
     "subscribe": "Подписаться",
@@ -286,5 +287,13 @@
     "nextPost": "Следующий",
     "blogPage": "Блог",
     "blogSectionSubtitle": "Последние статьи"
+  },
+  "Footer": {
+    "myAccount": "Мой аккаунт",
+    "categories": "Категории",
+    "information": "Информация",
+    "contacts": "Контакты",
+    "delivery": "Доставка",
+    "payments": "Оплата"
   }
 }

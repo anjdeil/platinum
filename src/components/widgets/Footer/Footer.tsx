@@ -26,8 +26,10 @@ import {
   PaymentAndDeliveryMethods,
   PaymentAndDeliveryMethodsContainer,
 } from './styles';
+import { useTranslations } from 'next-intl';
 
 export const Footer: FC = () => {
+  const t = useTranslations('Footer');
   const isMobile = useMediaQuery('(max-width: 768px)');
 
   const [expanded, setExpanded] = useState<string | false>(
@@ -63,7 +65,7 @@ export const Footer: FC = () => {
                   aria-controls="panel1a-content"
                   id="panel1a-header"
                 >
-                  <FooterTitle>My account</FooterTitle>
+                  <FooterTitle>{t('myAccount')}</FooterTitle>
                 </AccordionSummaryCustom>
                 <AccordionDetails>
                   <Nav
@@ -74,10 +76,11 @@ export const Footer: FC = () => {
                       height: '24px',
                       gap: '10px',
                     }}
-                    menuId={335}
+                    menuId={19409}
                     direction="column"
                     gap="16px"
                     align="flex-start"
+                    textalign="left"
                   ></Nav>
                 </AccordionDetails>
               </FooterAccordion>
@@ -92,11 +95,11 @@ export const Footer: FC = () => {
                   aria-controls="panel2a-content"
                   id="panel2a-header"
                 >
-                  <FooterTitle>Categories</FooterTitle>
+                  <FooterTitle>{t('categories')}</FooterTitle>
                 </AccordionSummaryCustom>
                 <AccordionDetailsSlider>
                   <VerticalSlider
-                    menuId={335}
+                    menuId={344}
                     skeleton={{
                       direction: 'column',
                       elements: 4,
@@ -118,11 +121,11 @@ export const Footer: FC = () => {
                   aria-controls={`"panel3a-content"`}
                   id="panel3a-header"
                 >
-                  <FooterTitle>Information</FooterTitle>
+                  <FooterTitle>{t('information')}</FooterTitle>
                 </AccordionSummaryCustom>
                 <AccordionDetails>
                   <Nav
-                    menuId={335}
+                    menuId={19450}
                     skeleton={{
                       direction: 'column',
                       elements: 4,
@@ -147,7 +150,7 @@ export const Footer: FC = () => {
                   aria-controls={`"panel4a-content"`}
                   id="panel4a-header"
                 >
-                  <FooterTitle>Contacts</FooterTitle>
+                  <FooterTitle>{t('contacts')}</FooterTitle>
                 </AccordionSummaryCustom>
                 <AccordionDetails>
                   <Contact>
@@ -161,6 +164,7 @@ export const Footer: FC = () => {
                     <ContactLink
                       href="https://www.google.com/maps?q=Poland,+Warsaw,+Kolejowa+45,+location+U6"
                       passHref
+                      target="_blank"
                     >
                       Poland, Warsaw, Kolejowa 45, location U6
                     </ContactLink>
@@ -218,7 +222,7 @@ export const Footer: FC = () => {
         </FooterMainContentWrapper>
         <PaymentAndDeliveryMethodsContainer>
           <PaymentAndDeliveryMethods>
-            <FooterSecondTitle>DELIVERY</FooterSecondTitle>
+            <FooterSecondTitle>{t('delivery')}</FooterSecondTitle>
             <Image
               src="/assets/icons/del_inpost-logo.svg"
               alt="Logo"
@@ -242,7 +246,7 @@ export const Footer: FC = () => {
             />
           </PaymentAndDeliveryMethods>
           <PaymentAndDeliveryMethods>
-            <FooterSecondTitle>Payments</FooterSecondTitle>
+            <FooterSecondTitle>{t('payments')}</FooterSecondTitle>
             <Image
               src="/assets/icons/pay_blik-logo.svg"
               alt="Logo"

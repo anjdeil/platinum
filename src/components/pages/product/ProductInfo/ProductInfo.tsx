@@ -7,7 +7,7 @@ import ProductBadgeWrapper from '@/components/shop/product/ProductBadgeWrapper/P
 import { useWishlist } from '@/hooks/useWishlist';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { updateCart } from '@/store/slices/cartSlice';
-import { popupSet } from '@/store/slices/PopupSlice';
+import { popupSet, popupToggle } from '@/store/slices/PopupSlice';
 import { setData } from '@/store/slices/ProductSlice';
 import { StyledButton, Title } from '@/styles/components';
 import { ProductCardPropsType } from '@/types/components/shop';
@@ -144,6 +144,8 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
     if (isAuthenticated) {
       updateProductState(product);
       dispatch(popupSet('add-comment'));
+    } else {
+      dispatch(popupToggle('login'));
     }
   };
 
@@ -155,10 +157,19 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
         ]
       : [...images];
 
+  function handleFavorite() {
+    if (isAuthenticated) {
+      console.log('Authenticated');
+      //proc
+    } else {
+      dispatch(popupToggle('login'));
+    }
+  }
+
   return (
     <ProductWrapper>
       <ProductImageWrapper>
-        <ProductSwiper data={galleryImages} />
+        <ProductSwiper handleFavorite={handleFavorite} data={galleryImages} />
         <ProductBadgeWrapper>
           {product.min_price !== product.max_price && (
             <ProductBadge type="sale" />
@@ -234,11 +245,7 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
         </AddToBasketWrapper>
         <PaymentList />
         <ShippingList />
-        <StyledButton
-          onClick={addComment}
-          secondary={isAuthenticated}
-          isDisabled={!isAuthenticated}
-        >
+        <StyledButton onClick={addComment}>
           Leave a review about product
         </StyledButton>
         <DetailsAccordion summary="Descriptions">

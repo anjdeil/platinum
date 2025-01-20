@@ -1,11 +1,11 @@
 import { FeatureItem } from '@/types/components/sections';
 import { FC } from 'react';
 import {
-  StyledDescription,
   StyledCardContainer,
+  StyledDescription,
   StyledImage,
-  StyledTitle,
   StyledLink,
+  StyledTitle,
   StyledWrapper,
 } from './styles';
 
@@ -19,7 +19,7 @@ export const FeatureCard: FC<FeaturesCardProps> = ({ item }) => {
     <StyledCardContainer contrastBg={contrast_bg}>
       <StyledWrapper>
         <StyledImage src={image} alt={title} width={40} height={40} priority />
-        <StyledTitle as='h2' contrastBg={contrast_bg}>
+        <StyledTitle as="h2" contrastBg={contrast_bg}>
           {title}
         </StyledTitle>
       </StyledWrapper>

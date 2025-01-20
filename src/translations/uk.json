@@ -266,7 +266,8 @@
     "subscribeToOurNewsletter": "Підпишіться на нашу розсилку!",
     "newArrivals": "Дізнавайтеся першими про новинки, ексклюзивні знижки та спеціальні пропозиції.",
     "joinToWhatsApp": "Приєднуйтесь до WhatsApp",
-    "subscribe": "Підписатися"
+    "subscribe": "Підписатися",
+    "allShop": "Весь магазин"
   },
   "SubscriptionForm": {
     "subscribe": "Підписатися",
@@ -286,5 +287,13 @@
     "nextPost": "Наступний",
     "blogSectionSubtitle": "Останні статті",
     "blogPage": "Блог"
+  },
+  "Footer": {
+    "myAccount": "Мій акаунт",
+    "categories": "Категорії",
+    "information": "Інформація",
+    "contacts": "Контакти",
+    "delivery": "Доставка",
+    "payments": "Оплата"
   }
 }
