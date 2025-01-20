@@ -7,7 +7,6 @@ import { FC, useEffect } from 'react';
 import ProductCard from '../product/ProductCard/ProductCard';
 import { ProductCardListSkeleton } from './ProductCardListSkeleton';
 import { StyledProductCardList } from './styles';
-import { popupToggle } from '@/store/slices/PopupSlice';
 
 export const ProductCardList: FC<ProductCardListProps> = ({
   isLoading = false,
@@ -17,8 +16,6 @@ export const ProductCardList: FC<ProductCardListProps> = ({
   length,
 }) => {
   const authToken = useGetAuthToken();
-
-  const dispatch = useAppDispatch();
 
   const [fetchUserData] = useLazyFetchUserDataQuery();
 
