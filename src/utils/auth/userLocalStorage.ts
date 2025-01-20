@@ -1,5 +1,5 @@
-import { AppDispatch } from "@/store";
-import { setUser } from "@/store/slices/userSlice";
+import { AppDispatch } from '@/store';
+import { setUser } from '@/store/slices/userSlice';
 import type { WooCustomerReqType } from '@/types/services';
 
 export const saveUserToLocalStorage = (user: WooCustomerReqType | object) => {
@@ -10,25 +10,24 @@ export const saveUserToLocalStorage = (user: WooCustomerReqType | object) => {
 };
 
 export const getUserFromLocalStorage = (): WooCustomerReqType | undefined => {
-    if (typeof window !== 'undefined') {
-        const userJSON = localStorage.getItem('user');
+  if (typeof window !== 'undefined') {
+    const userJSON = localStorage.getItem('user');
 
-        if (!userJSON) return undefined;
+    if (!userJSON) return undefined;
 
-        const user = JSON.parse(userJSON);
-        return user;
-    }
+    const user = JSON.parse(userJSON);
+    return user;
+  }
 
-    return undefined;
+  return undefined;
 };
 
 export const updateUserData = (dispatch: AppDispatch, userData: any) => {
-    saveUserToLocalStorage(userData);
-    dispatch(setUser(userData));
+  saveUserToLocalStorage(userData);
+  dispatch(setUser(userData));
 };
 
 export const removeUserFromLocalStorage = () => {
-  console.log('removeUserFromLocalStorage');
   if (typeof window !== 'undefined') {
     localStorage.removeItem('user');
   }

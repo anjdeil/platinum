@@ -106,8 +106,8 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
                 isPasswordVisible
                   ? 'text'
                   : inputType === 'newpassword'
-                    ? 'password'
-                    : inputType
+                  ? 'password'
+                  : inputType
               }
               {...registerProps}
               height={height}
@@ -120,17 +120,16 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
               disabled={disabled}
             />
           )}
-          {inputType === 'password' ||
-            (inputType === 'newpassword' && (
-              <ShowPasswordImage
-                src={passwordImagePath}
-                alt={'show or hidden password button'}
-                width={24}
-                height={24}
-                onClick={togglePasswordVisibility}
-                unoptimized={true}
-              />
-            ))}
+          {(inputType === 'password' || inputType === 'newpassword') && (
+            <ShowPasswordImage
+              src={passwordImagePath}
+              alt="show or hidden password button"
+              width={24}
+              height={24}
+              onClick={togglePasswordVisibility}
+              unoptimized={true}
+            />
+          )}
         </CustomInputWrapper>
       </CustomInputStyle>
       {isError && name && <CustomError>{errors[name]?.message}</CustomError>}

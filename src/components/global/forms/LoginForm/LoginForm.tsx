@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { CustomForm, FormWrapperBottom } from '../RegistrationForm/styles';
+
 import {
   LoginFormSchema,
   LoginFormType,
@@ -12,8 +12,14 @@ import {
 } from '@/store/rtk-queries/wpApi';
 import { CustomSuccess } from '../CustomFormInput/styles';
 import { CustomFormInput } from '../CustomFormInput';
-import { ActiveText, FormWrapper } from './styles';
-import { FlexBox, StyledButton, Title } from '@/styles/components';
+import { ActiveText, BottomWrapper, LoginFormWrapper } from './styles';
+import {
+  CustomForm,
+  FlexBox,
+  FormWrapperBottom,
+  StyledButton,
+  Title,
+} from '@/styles/components';
 import theme from '@/styles/theme';
 import { useRouter } from 'next/router';
 import { useTranslations } from 'next-intl';
@@ -80,11 +86,11 @@ export const LoginForm: FC<LoginFormProps> = ({
   }
 
   return (
-    <CustomForm onSubmit={handleSubmit(onSubmit)} border={border}>
+    <CustomForm onSubmit={handleSubmit(onSubmit)} maxWidth="550px">
       <Title as="h3" uppercase>
         {t('log-In')}
       </Title>
-      <FormWrapper>
+      <LoginFormWrapper>
         <CustomFormInput
           fieldName={t('email')}
           name="email"
@@ -101,7 +107,7 @@ export const LoginForm: FC<LoginFormProps> = ({
           inputTag={'input'}
           inputType={'password'}
         />
-      </FormWrapper>
+      </LoginFormWrapper>
       <FormWrapperBottom>
         <StyledButton
           color={theme.colors.white}
@@ -111,7 +117,7 @@ export const LoginForm: FC<LoginFormProps> = ({
           {t('login')}
         </StyledButton>
 
-        <FlexBox margin="10px 0 0 0" justifyContent="space-between">
+        <BottomWrapper>
           <ActiveText href="/my-account/">{t('ForgotYourPassword')}</ActiveText>
           <FlexBox gap="5px">
             <div> {t('DontHaveAnAccount')}</div>
@@ -119,7 +125,7 @@ export const LoginForm: FC<LoginFormProps> = ({
               {t('SignUpNow')}
             </ActiveText>
           </FlexBox>
-        </FlexBox>
+        </BottomWrapper>
 
         {customError && (
           <Notification marginBottom="0" type="warning">
