@@ -1,4 +1,4 @@
-import { useAppSelector } from '@/store';
+import { useAppDispatch, useAppSelector } from '@/store';
 import {
   useFetchUserUpdateMutation,
   useLazyFetchUserDataQuery,
@@ -6,12 +6,12 @@ import {
 import { useGetCurrenciesQuery } from '@/store/rtk-queries/wpCustomApi';
 import { ProductCardListProps } from '@/types/components/shop';
 import { WishlistItem } from '@/types/store/rtk-queries/wpApi';
-import { useRouter } from 'next/router';
 import { FC, useEffect } from 'react';
 import ProductCard from '../product/ProductCard/ProductCard';
 import { ProductCardListSkeleton } from './ProductCardListSkeleton';
 import { StyledProductCardList } from './styles';
 import useGetAuthToken from '@/hooks/useGetAuthToken';
+import { popupToggle } from '@/store/slices/PopupSlice';
 
 export const ProductCardList: FC<ProductCardListProps> = ({
   isLoading = false,
@@ -21,7 +21,7 @@ export const ProductCardList: FC<ProductCardListProps> = ({
   length,
 }) => {
   const authToken = useGetAuthToken();
-  const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const [fetchUserData, { data: userData, isFetching: isUserFetching = true }] =
     useLazyFetchUserDataQuery();
@@ -54,7 +54,7 @@ export const ProductCardList: FC<ProductCardListProps> = ({
 
   const handleDisire = (productId: number, variationId?: number) => {
     if (!userData?.meta?.wishlist.length) {
-      router.push('/my-account/login');
+      dispatch(popupToggle('login'));
 
       return;
     }

@@ -19,7 +19,17 @@ import { useRouter } from 'next/router';
 import { useTranslations } from 'next-intl';
 import Notification from '../../Notification/Notification';
 
-export const LoginForm: FC = () => {
+interface LoginFormProps {
+  border?: boolean;
+  redirect?: boolean;
+  onClose?: () => void;
+}
+
+export const LoginForm: FC<LoginFormProps> = ({
+  onClose,
+  border,
+  redirect = true,
+}) => {
   const router = useRouter();
   const t = useTranslations('MyAccount');
   const [customError, setCustomError] = useState<string>('');
@@ -54,7 +64,14 @@ export const LoginForm: FC = () => {
       /** Validate auth token */
       const isTokenValid = await checkToken({});
       if (!isTokenValid) throw new Error('Auth token validation failed.');
-      router.push('/my-account');
+      if (redirect) {
+        router.push('/my-account');
+      }
+      if (onClose) {
+        setTimeout(() => {
+          onClose();
+        }, 800);
+      }
     } catch (err) {
       if (err instanceof Error) setCustomError(err.message);
     } finally {
@@ -63,7 +80,7 @@ export const LoginForm: FC = () => {
   }
 
   return (
-    <CustomForm onSubmit={handleSubmit(onSubmit)}>
+    <CustomForm onSubmit={handleSubmit(onSubmit)} border={border}>
       <Title as="h3" uppercase>
         {t('log-In')}
       </Title>
