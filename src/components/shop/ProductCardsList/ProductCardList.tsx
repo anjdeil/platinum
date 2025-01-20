@@ -1,5 +1,5 @@
 import useGetAuthToken from '@/hooks/useGetAuthToken';
-import { useAppDispatch, useAppSelector } from '@/store';
+import { useAppSelector } from '@/store';
 import { useLazyFetchUserDataQuery } from '@/store/rtk-queries/wpApi';
 import { useGetCurrenciesQuery } from '@/store/rtk-queries/wpCustomApi';
 import { ProductCardListProps } from '@/types/components/shop';
