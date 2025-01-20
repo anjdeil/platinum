@@ -23,6 +23,7 @@ import {
 } from './styles';
 import ProductBadgeWrapper from '@/components/shop/product/ProductBadgeWrapper/ProductBadgeWrapper';
 import ProductBadge from '@/components/shop/product/ProductBadge/ProductBadge';
+import FavoriteButton from '@/components/global/buttons/FavoriteButton/FavoriteButton';
 
 const ProductSwiper: React.FC<SwiperProps> = ({ data, handleFavorite }) => {
   const {

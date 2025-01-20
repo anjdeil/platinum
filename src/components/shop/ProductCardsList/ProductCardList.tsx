@@ -7,7 +7,6 @@ import { FC, useEffect } from 'react';
 import ProductCard from '../product/ProductCard/ProductCard';
 import { ProductCardListSkeleton } from './ProductCardListSkeleton';
 import { StyledProductCardList } from './styles';
-import useGetAuthToken from '@/hooks/useGetAuthToken';
 import { popupToggle } from '@/store/slices/PopupSlice';
 
 export const ProductCardList: FC<ProductCardListProps> = ({
@@ -46,51 +45,51 @@ export const ProductCardList: FC<ProductCardListProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authToken]);
 
-  const handleDisire = (productId: number, variationId?: number) => {
-    if (!userData?.meta?.wishlist.length) {
-      dispatch(popupToggle('login'));
+  // const handleDisire = (productId: number, variationId?: number) => {
+  //   if (!userData?.meta?.wishlist.length) {
+  //     dispatch(popupToggle('login'));
 
-      return;
-    }
+  //     return;
+  //   }
 
-    if (!authToken) {
-      return;
-    }
+  //   if (!authToken) {
+  //     return;
+  //   }
 
-    const userWishlist = userData?.meta.wishlist || [];
+  //   const userWishlist = userData?.meta.wishlist || [];
 
-    const index = userWishlist.findIndex(
-      (item: WishlistItem) =>
-        item.product_id === productId &&
-        (!variationId || item.variation_id === variationId)
-    );
+  //   const index = userWishlist.findIndex(
+  //     (item: WishlistItem) =>
+  //       item.product_id === productId &&
+  //       (!variationId || item.variation_id === variationId)
+  //   );
 
-    let updatedWishlist: WishlistItem[];
+  //   let updatedWishlist: WishlistItem[];
 
-    if (index >= 0) {
-      updatedWishlist = userWishlist.filter(
-        (_: WishlistItem, index2: number) => index2 !== index
-      );
-    } else {
-      updatedWishlist = [
-        ...userWishlist,
-        {
-          product_id: productId,
-          ...(variationId && { variation_id: variationId }),
-        },
-      ];
-    }
+  //   if (index >= 0) {
+  //     updatedWishlist = userWishlist.filter(
+  //       (_: WishlistItem, index2: number) => index2 !== index
+  //     );
+  //   } else {
+  //     updatedWishlist = [
+  //       ...userWishlist,
+  //       {
+  //         product_id: productId,
+  //         ...(variationId && { variation_id: variationId }),
+  //       },
+  //     ];
+  //   }
 
-    const userUpdateRequestBody = {
-      meta: {
-        wishlist: updatedWishlist,
-      },
-    };
+  //   const userUpdateRequestBody = {
+  //     meta: {
+  //       wishlist: updatedWishlist,
+  //     },
+  //   };
 
-    if (userData?.id) {
-      fetchUserUpdate(userUpdateRequestBody);
-    }
-  };
+  //   if (userData?.id) {
+  //     fetchUserUpdate(userUpdateRequestBody);
+  //   }
+  // };
 
   if (isLoading) {
     return <ProductCardListSkeleton columns={columns} length={length} />;
