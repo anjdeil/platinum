@@ -1,5 +1,5 @@
 import { FavoriteButtonProps } from '@/types/components/global/buttons/favoriteButton'
-import styled from '@emotion/styled';
+import styled from '@emotion/styled'
 
 export const Heart = styled.svg<FavoriteButtonProps>`
   width: 24px;
@@ -9,5 +9,5 @@ export const Heart = styled.svg<FavoriteButtonProps>`
   fill: ${({ isLoading, theme }) => isLoading && theme.colors.border};
   stroke: ${({ active, theme }) => (active ? theme.colors.best : theme.colors.primary)};
   stroke: ${({ isLoading, theme }) => isLoading && theme.colors.lightBorder};
-  cursor: pointer;
+  cursor: ${({ isLoading = false }) => (isLoading ? 'auto' : 'pointer')};
 `

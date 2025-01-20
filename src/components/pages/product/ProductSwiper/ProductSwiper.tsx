@@ -2,7 +2,6 @@ import React from 'react';
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 import { SwiperSlide } from 'swiper/react';
 
-import FavoriteButton from '@/components/global/buttons/FavoriteButton/FavoriteButton';
 import BackArrow from '@/components/global/icons/BackArrow/BackArrow';
 import ForwardArrow from '@/components/global/icons/ForwardArrow/ForwardArrow';
 import useProductSwiper from '@/hooks/useProductSwiper';
@@ -24,6 +23,7 @@ import {
 } from './styles';
 import ProductBadgeWrapper from '@/components/shop/product/ProductBadgeWrapper/ProductBadgeWrapper';
 import ProductBadge from '@/components/shop/product/ProductBadge/ProductBadge';
+import FavoriteButton from '@/components/global/buttons/FavoriteButton/FavoriteButton';
 
 const ProductSwiper: React.FC<SwiperProps> = ({ data, handleFavorite }) => {
   const {

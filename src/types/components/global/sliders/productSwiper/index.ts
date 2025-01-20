@@ -7,8 +7,9 @@ export const SwiperSchema = z.object({
 });
 
 export const SwiperPropsSchema = z.object({
-  data: z.array(SwiperSchema),
-  handleFavorite: z.function().optional(),
+    data: z.array(SwiperSchema),
+    handleFavorite: z.function().optional(),
+
 });
 
 export const SwiperPopupPropsSchema = z.object({
