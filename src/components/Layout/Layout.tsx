@@ -4,6 +4,7 @@ import {
   useGetMenusQuery,
   useGetThemeOptionsQuery,
 } from '@/store/rtk-queries/wpCustomApi';
+import { setCategories, setLoading } from '@/store/slices/categoriesSlice';
 import { setThemeOptions } from '@/store/slices/themeOptionsSlice';
 import { WpMenuResponseType } from '@/types/menus/WpMenus';
 import { LangParamType } from '@/types/services/wpCustomApi';
@@ -11,14 +12,14 @@ import Box from '@mui/material/Box';
 import { useRouter } from 'next/router';
 import { createContext, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import WhatsAppButton from '../global/buttons/WhatsAppButton/WhatsAppButton';
 import PopupContainer from '../global/popups/PopupContainer/PopupContainer';
+import CategoriesMenu from '../shop/categories/CategoriesMenu/CategoriesMenu';
 import BottomMenu from '../widgets/BottomMenu';
 import { Footer } from '../widgets/Footer';
 import Header from '../widgets/Header/Header';
 import MobileHeader from '../widgets/MobileHeader/MobileHeader';
 import TopBar from '../widgets/TopBar/TopBar';
-import { setCategories, setLoading } from '@/store/slices/categoriesSlice';
-import CategoriesMenu from '../shop/categories/CategoriesMenu/CategoriesMenu';
 
 export const MenusContext = createContext<WpMenuResponseType[] | []>([]);
 
@@ -65,6 +66,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         {children}
         <Footer />
         <CategoriesMenu isMenuVisible={true} shop={false} />
+        <WhatsAppButton />
       </MenusContext.Provider>
     </Box>
   );
