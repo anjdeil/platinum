@@ -7,6 +7,7 @@ import {
   CustomForm,
   FormWrapper,
   FormWrapperBottom,
+  InfoCard,
   StyledButton,
 } from '@/styles/components';
 import { isAuthErrorResponseType } from '@/utils/isAuthErrorResponseType';
@@ -17,7 +18,6 @@ import { useTranslations } from 'next-intl';
 import Notification from '../../Notification/Notification';
 import { CustomFormInput } from '../CustomFormInput';
 import { countryOptions } from '@/utils/mockdata/countryOptions';
-import { InfoCard } from '../UserInfoForm/styles';
 import { WooCustomerReqType } from '@/types/services/wooCustomApi/customer';
 import { useUpdateCustomerInfoMutation } from '@/store/rtk-queries/wooCustomAuthApi';
 
