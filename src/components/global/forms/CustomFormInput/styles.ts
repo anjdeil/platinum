@@ -74,9 +74,7 @@ export const Input = styled.input<CustomInputProps>`
       isError ? theme.colors.error : theme.background.formElements};
   background-color: ${({ theme, isCheckbox, background }) =>
     isCheckbox ? '#f0f0f0' : background || theme.background.formElements};
-  transition:
-    outline-width 0.1s ease-in-out,
-    background-color 0.1s ease-in-out;
+  transition: outline-width 0.1s ease-in-out, background-color 0.1s ease-in-out;
 
   &:focus {
     outline: 1px solid
@@ -142,7 +140,6 @@ export const ShowPasswordImage = styled(Image)`
 
 export const CustomError = styled.p`
   margin-top: 5px;
-  padding: 0 10px;
 
   color: ${({ theme }) => theme.colors.error};
   @media ${({ theme }) => theme.media.medium} {

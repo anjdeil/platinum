@@ -3,12 +3,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import 'react-international-phone/style.css';
-import { CustomFormCheckboxStyled, InfoCard } from './styles';
+import { CustomFormCheckboxStyled } from './styles';
 import {
   CustomForm,
   FlexBox,
   FormWrapper,
   FormWrapperBottom,
+  InfoCard,
   StyledButton,
 } from '@/styles/components';
 import { isAuthErrorResponseType } from '@/utils/isAuthErrorResponseType';
@@ -30,8 +31,6 @@ interface UserInfoFormProps {
 export const UserInfoForm: FC<UserInfoFormProps> = ({
   defaultCustomerData: customer,
 }) => {
-  console.log(customer);
-
   const tValidation = useTranslations('Validation');
   const tMyAccount = useTranslations('MyAccount');
   const tForms = useTranslations('Forms');
@@ -39,7 +38,6 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
   const [isShipping, setIsShipping] = useState(true);
   const [hasChanges, setHasChanges] = useState(false);
 
-  //wooAuth
   const [UpdateCustomerMutation, { error, isSuccess }] =
     useUpdateCustomerInfoMutation();
 
@@ -47,6 +45,7 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
     () => UserInfoFormSchema(isShipping, tValidation),
     [isShipping]
   );
+
   type UserInfoFormType = z.infer<typeof formSchema>;
 
   const {
@@ -76,8 +75,6 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
         !customer.shipping?.last_name &&
         !customer.shipping?.address_1;
       setIsShipping(!isShippingEmpty);
-      console.log('isShippingEmpty', isShippingEmpty);
-      console.log(isShipping);
     }
   }, [customer]);
 

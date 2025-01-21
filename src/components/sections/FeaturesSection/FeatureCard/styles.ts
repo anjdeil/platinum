@@ -8,7 +8,7 @@ type StyledProps = {
 
 export const StyledCardContainer = styled('div', {
   shouldForwardProp: (propName) => propName !== 'contrastBg',
-})<StyledProps>`
+}) <StyledProps>`
   width: 33%;
   display: flex;
   flex-direction: column;
@@ -19,6 +19,11 @@ export const StyledCardContainer = styled('div', {
   border-radius: 20px;
   background: ${({ contrastBg, theme }) =>
     contrastBg ? theme.background.primaryGradient : theme.background.secondary};
+  transition: filter 0.2s ease;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
 
   @media ${({ theme }) => theme.media.large} {
     border-radius: 8px;
@@ -59,7 +64,7 @@ export const StyledImage = styled(Image)`
 
 export const StyledTitle = styled('h2', {
   shouldForwardProp: (propName) => propName !== 'contrastBg',
-})<StyledProps>`
+}) <StyledProps>`
   font-size: 24px;
   line-height: 32px;
   text-transform: uppercase;
@@ -80,7 +85,7 @@ export const StyledTitle = styled('h2', {
 
 export const StyledDescription = styled('p', {
   shouldForwardProp: (propName) => propName !== 'contrastBg',
-})<StyledProps>`
+}) <StyledProps>`
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;
@@ -103,7 +108,7 @@ export const StyledDescription = styled('p', {
 
 export const StyledLink = styled(Link, {
   shouldForwardProp: (propName) => propName !== 'contrastBg',
-})<StyledProps>`
+}) <StyledProps>`
   justify-self: flex-end;
   font-size: 16px;
   line-height: 1.5;
@@ -112,6 +117,11 @@ export const StyledLink = styled(Link, {
   text-decoration: underline;
   color: ${({ contrastBg, theme }) =>
     contrastBg ? theme.colors.white : theme.colors.black};
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.7;
+  }
 
   @media ${({ theme }) => theme.media.large} {
     font-size: 12px;

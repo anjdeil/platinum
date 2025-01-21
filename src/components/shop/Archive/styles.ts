@@ -52,7 +52,7 @@ export const PagesNavigationFooterWrapper = styled.div`
   justify-content: center;
   margin-bottom: 24px;
 `;
-  
+
 export const CountProduct = styled.span`
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
 
@@ -71,7 +71,7 @@ export const CatalogFilterBlock = styled.div<{ visible: boolean }>`
   grid-column: span 3;
   box-sizing: border-box;
   display: block;
-  @media ${({ theme }) => theme.media.middle} {
+  @media ${({ theme }) => theme.media.large} {
     width: 350px;
     position: absolute;
     left: 0%;

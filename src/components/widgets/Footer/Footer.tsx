@@ -136,6 +136,7 @@ export const Footer: FC = () => {
                     direction="column"
                     gap="16px"
                     align="flex-start"
+                    textalign="left"
                   ></Nav>
                 </AccordionDetails>
               </FooterAccordion>

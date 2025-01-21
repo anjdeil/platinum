@@ -11,11 +11,9 @@ interface Props {
 export default function UserInformation({ defaultCustomerData }: Props) {
   const t = useTranslations('MyAccount');
   return (
-    <>
-      <AccountLayout title={t('EditUserInfo')}>
-        <UserInfoForm defaultCustomerData={defaultCustomerData} />
-      </AccountLayout>
-    </>
+    <AccountLayout title={t('EditUserInfo')}>
+      <UserInfoForm defaultCustomerData={defaultCustomerData} />
+    </AccountLayout>
   );
 }
 

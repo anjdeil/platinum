@@ -2,12 +2,13 @@ import { FC, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CustomFormInput } from '../../CustomFormInput';
-import { StyledButton, Title } from '@/styles/components';
 import {
   CustomForm,
   FormWrapper,
   FormWrapperBottom,
-} from '../../RegistrationForm/styles';
+  StyledButton,
+  Title,
+} from '@/styles/components';
 import { z } from 'zod';
 import { useTranslations } from 'next-intl';
 import Notification from '../../../Notification/Notification';
@@ -118,7 +119,7 @@ export const NewPasswordForm: FC = () => {
   }
 
   return (
-    <CustomForm onSubmit={handleSubmit(onSubmit)}>
+    <CustomForm onSubmit={handleSubmit(onSubmit)} maxWidth="600px">
       <Title as="h1" uppercase marginBottom="24px">
         {tMyAccount('setNewPassword')}
       </Title>

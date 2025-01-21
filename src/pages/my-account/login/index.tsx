@@ -32,6 +32,7 @@ export default function Login() {
 export const getServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
+  const { locale } = context;
   const cookies = context.req.cookies;
   if (!cookies?.authToken) return { props: {} };
 
@@ -46,7 +47,7 @@ export const getServerSideProps = async (
 
     return {
       redirect: {
-        destination: '/my-account',
+        destination: `/${locale}/my-account`,
         permanent: false,
       },
     };

@@ -6,13 +6,13 @@ import {
   FileUploadLabel,
   FileUploadPreview,
   FileUploadWrapper,
-  InfoCard,
 } from './styles';
 import {
   CustomForm,
   FlexBox,
   FormWrapper,
   FormWrapperBottom,
+  InfoCard,
   StyledButton,
 } from '@/styles/components';
 import { isAuthErrorResponseType } from '@/utils/isAuthErrorResponseType';
@@ -22,7 +22,6 @@ import { CircularProgress } from '@mui/material';
 import { CustomFormInput } from '../CustomFormInput';
 import { CustomError } from '../CustomFormInput/styles';
 import { useTranslations } from 'next-intl';
-
 import { useSendAmbassadorFormMutation } from '@/store/rtk-queries/contactFrom7/contactFromApi7';
 import UploadIcon from '../../icons/UploadIcon/UploadIcon';
 import {

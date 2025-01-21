@@ -119,8 +119,8 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
                 isPasswordVisible
                   ? 'text'
                   : inputType === 'newpassword'
-                    ? 'password'
-                    : inputType
+                  ? 'password'
+                  : inputType
               }
               {...registerProps}
               height={height}

@@ -3,8 +3,13 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CustomFormInput } from '../../CustomFormInput';
 import { CustomSuccess } from '../../CustomFormInput/styles';
-import { FlexBox, StyledButton, Title } from '@/styles/components';
-import { CustomForm, FormWrapperBottom } from '../../RegistrationForm/styles';
+import {
+  CustomForm,
+  FlexBox,
+  FormWrapperBottom,
+  StyledButton,
+  Title,
+} from '@/styles/components';
 import { useTranslations } from 'next-intl';
 import { useResetPasswordMutation } from '@/store/rtk-queries/passwordResetApi';
 import { useRouter } from 'next/router';
@@ -59,7 +64,7 @@ const ResetPasswordForm: FC = () => {
   };
 
   return (
-    <CustomForm onSubmit={handleSubmit(onSubmit)}>
+    <CustomForm onSubmit={handleSubmit(onSubmit)} maxWidth="600px">
       <Title as="h1" uppercase marginBottom="24px">
         {tMyAccount('resetPassword')}
       </Title>
