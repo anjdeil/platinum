@@ -336,6 +336,10 @@ export const StyledHeaderWrapper = styled.header`
   gap: 8px;
   margin: 24px 0;
 `;
+export const FormPageWrapper = styled.header`
+  min-height: 85vh;
+  padding: 24px 0;
+`;
 
 // ------------------RICH TEXT SLUG PAGE
 

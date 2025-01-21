@@ -1,8 +1,8 @@
-import { LineItemSchema } from "@/types/components/shop/product/products";
-import { lineOrderItemsSchema } from "@/types/store/reducers/сartSlice";
-import { z } from "zod";
+import { LineItemSchema } from '@/types/components/shop/product/products';
+import { lineOrderItemsSchema } from '@/types/store/reducers/сartSlice';
+import { z } from 'zod';
 
-const currencies: [string, ...string[]] = ["EUR", "USD", "PLN"];
+const currencies: [string, ...string[]] = ['EUR', 'USD', 'PLN'];
 
 export const WooCustomerSchema = z.object({
   id: z.number(),
@@ -64,7 +64,7 @@ export const WooCustomerSchema = z.object({
 });
 
 export const WooCustomerReqSchema = z.object({
-  email: z.string(),
+  email: z.string().optional(),
   first_name: z.string().optional(),
   last_name: z.string().optional(),
   role: z.string().optional(),
@@ -259,13 +259,13 @@ const CreateOrderRequestSchema = z.object({
     )
     .optional(),
   status: z.enum([
-    "pending",
-    "processing",
-    "on-hold",
-    "completed",
-    "cancelled",
-    "refunded",
-    "failed",
+    'pending',
+    'processing',
+    'on-hold',
+    'completed',
+    'cancelled',
+    'refunded',
+    'failed',
   ]),
   currency: z.enum(currencies),
 });
@@ -288,13 +288,13 @@ const CreateOrderResponseSchema = z.object({
     )
     .optional(),
   status: z.enum([
-    "pending",
-    "processing",
-    "on-hold",
-    "completed",
-    "cancelled",
-    "refunded",
-    "failed",
+    'pending',
+    'processing',
+    'on-hold',
+    'completed',
+    'cancelled',
+    'refunded',
+    'failed',
   ]),
   currency: z.enum(currencies),
 });
@@ -369,6 +369,7 @@ export const WooCustomerUpdateSchema = z.object({
       phone: z.string().optional(),
     })
     .optional(),
+  password: z.string().optional(),
 });
 
 export const ReviewRespSchema = z.object({

@@ -1,18 +1,23 @@
 import { Container } from '@/styles/components';
 import { GetServerSidePropsContext } from 'next';
-import { FormContainer } from '@/components/pages/account/styles';
 import { WooCustomerReqType } from '@/types/services/wooCustomApi/customer';
 import wpRestApi from '@/services/wpRestApi';
+import { ChangePasswordForm } from '@/components/global/forms/password/ChangePasswordForm';
+import { useTranslations } from 'next-intl';
+import AccountLayout from '@/components/pages/account/AccountLayout';
 
 interface Props {
   defaultCustomerData: WooCustomerReqType;
 }
 
 export default function ResetPassword({ defaultCustomerData }: Props) {
+  const t = useTranslations('MyAccount');
   return (
     <>
       <Container>
-        <FormContainer></FormContainer>
+        <AccountLayout title={t('EditUserInfo')}>
+          <ChangePasswordForm />
+        </AccountLayout>
       </Container>
     </>
   );

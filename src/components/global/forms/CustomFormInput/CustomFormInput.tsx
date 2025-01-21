@@ -32,6 +32,7 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
   defaultValue,
   list,
   disabled,
+  autoComplete,
 }) => {
   const registerProps = register ? { ...register(name) } : {};
 
@@ -71,6 +72,18 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
       setValue(name, inputValue, { shouldValidate: true });
     }
   };
+
+  const getAutoCompleteValue = () => {
+    switch (true) {
+      case name === 'code':
+        return 'one-time-code';
+      case inputType === 'newpassword':
+        return 'new-password';
+      default:
+        return undefined;
+    }
+  };
+
   return (
     <CustomInputContainer isCheckbox={inputType === 'checkbox'} width={width}>
       <CustomInputStyle
@@ -113,9 +126,7 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
               height={height}
               background={background}
               isCheckbox={inputType === 'checkbox'}
-              autoComplete={
-                inputType === 'newpassword' ? 'new-password' : undefined
-              }
+              autoComplete={getAutoCompleteValue()}
               {...(name === 'country' ? { list: list } : {})}
               disabled={disabled}
             />

@@ -118,7 +118,9 @@ export const LoginForm: FC<LoginFormProps> = ({
         </StyledButton>
 
         <BottomWrapper>
-          <ActiveText href="/my-account/">{t('ForgotYourPassword')}</ActiveText>
+          <ActiveText href="/my-account/reset-password">
+            {t('ForgotYourPassword')}
+          </ActiveText>
           <FlexBox gap="5px">
             <div> {t('DontHaveAnAccount')}</div>
             <ActiveText href="/my-account/registration">

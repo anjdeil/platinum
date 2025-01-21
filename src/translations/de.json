@@ -80,7 +80,21 @@
     "YourAccountHasBeenCreated": "Twoje konto zostało pomyślnie utworzone!",
     "ForgotYourPassword": "Haben Sie Ihr Passwort vergessen?",
     "SuccessfullyLoggedIn": "Erfolgreich eingeloggt!",
-    "ErrorLoggedIn": "Falsche E-Mail-Adresse oder falsches Passwort. Bitte versuchen Sie es erneut."
+    "ErrorLoggedIn": "Falsche E-Mail-Adresse oder falsches Passwort. Bitte versuchen Sie es erneut.",
+    "newpassword": "Neues Passwort",
+    "passwordChanged": "Passwort erfolgreich geändert",
+    "passwordChangeError": "Beim Ändern des Passworts ist ein Fehler aufgetreten, bitte versuchen Sie es erneut",
+    "resetPassword": "Passwort zurücksetzen",
+    "codeSendError": "Der Code wurde nicht gesendet, es ist möglich, dass das Konto mit dieser E-Mail nicht existiert",
+    "codeSent": "Der Code wurde gesendet, überprüfen Sie Ihre E-Mails",
+    "codeSentToEmail": "Der Code wurde an {email} gesendet, überprüfen Sie Ihre E-Mails",
+    "code": "Code",
+    "setNewPassword": "Neues Passwort festlegen",
+    "resetCodeAttemptsTwo": "Der bereitgestellte Reset-Code ist ungültig. Sie haben noch 2 Versuche.",
+    "resetCodeAttemptsOne": "Der bereitgestellte Reset-Code ist ungültig. Sie haben noch 1 Versuch.",
+    "passwordResetRequired": "Sie müssen einen Passwort-Reset-Code anfordern, bevor Sie versuchen, ein neues Passwort festzulegen.",
+    "maxAttemptsExceeded": "Der bereitgestellte Reset-Code ist ungültig. Sie haben die maximal zulässige Anzahl von Versuchen überschritten. Sie müssen einen neuen Code anfordern.",
+    "codeProvidedHasExpired": "Der angegebene Rücksetzungscode ist abgelaufen."
   },
   "TopBar": {
     "CallUs": "Rufen Sie uns an"

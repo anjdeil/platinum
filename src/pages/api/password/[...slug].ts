@@ -1,21 +1,17 @@
-import CF7RestApi from '@/services/contactForm7RestApi';
+import passwordReset from '@/services/passwordResetApi';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  let slug = req.query.slug;
+  const { slug } = req.query;
 
   if (!slug || slug.length === 0) {
     return res.status(400).json({ error: 'Slug parameter is missing' });
   }
 
-  if (Array.isArray(slug)) {
-    slug = slug.join('/');
-  }
-
-  CF7RestApi.sendAnEmail(slug, req.body)
+  passwordReset
+    .post(slug, req.body)
     .then(response => res.status(200).json(response.data))
     .catch(error => {
-      console.log(error.message);
-      return res.status(500).json(error.message);
+      return res.status(500).json({ message: error.message });
     });
 }

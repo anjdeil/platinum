@@ -52,12 +52,18 @@ export default async function handler(
 
     const customerId = payload.data.user.id;
     slug += `/${customerId}`;
+
+    // Лог для проверки значения slug
+    console.log('Slug with customer ID:', slug); // Добавляем лог с слагом
   } catch (err) {
-    console.log(err);
+    console.log('Error during token validation:', err);
     return res
       .status(401)
       .json({ error: 'Invalid or missing authentication token' });
   }
+
+  // Лог для проверки полного URL запроса
+  console.log('Final URL for request:', slug); // Логируем финальный URL перед отправкой запроса
 
   if (method !== 'GET')
     await fetchData(method, body, headers as Record<string, string>);
@@ -79,6 +85,9 @@ export default async function handler(
             response = await wooCommerceRestApi.post(slug, body);
             break;
           case 'PUT':
+            // Логируем URL и тело запроса для PUT
+            console.log('Sending PUT request to:', slug);
+            console.log('Request body:', body); // Логируем тело запроса
             response = await wooCommerceRestApi.put(slug, body);
             break;
           case 'DELETE':
