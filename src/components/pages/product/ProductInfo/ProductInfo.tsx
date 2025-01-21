@@ -107,6 +107,7 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
         ...(currentVariation && { variation_id: currentVariation.id }),
       })
     );
+    dispatch(popupToggle('mini-cart'));
   }
 
   const stockQuantity = useMemo(() => {
@@ -175,7 +176,7 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
             <ProductBadge type="sale" />
           )}
           <FavoriteButton
-            onClick={() => handleWishlistToggle(product.id, undefined)}
+            onClick={() => handleWishlistToggle(product)}
             marginLeft="auto"
             active={checkDesired(product.id)}
             isLoading={isUpdatingWishlist || isFetchingWishlist}

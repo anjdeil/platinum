@@ -43,7 +43,6 @@ const CartTable: FC<CartTableProps> = ({
   hasConflict,
   cartItems,
   handleChangeQuantity,
-  loadingItems,
 }) => {
   const t = useTranslations('Cart');
   const { isMobile } = useResponsive();
@@ -76,12 +75,11 @@ const CartTable: FC<CartTableProps> = ({
                 </GridRow>
               </GridHeader>
 
-              {order?.line_items.map((item) => {
+              {order?.line_items.map(item => {
                 const { resolveCount, isAvailable } = checkProductAvailability(
                   item,
                   productsSpecs
                 );
-                /*     const isLoadingItem = loadingItems.includes(item.product_id); */
                 return (
                   <RowWrapper key={item.id} isLoadingItem={isLoadingOrder}>
                     <GridRow>
@@ -157,13 +155,11 @@ const CartTable: FC<CartTableProps> = ({
       ) : (
         <>
           {cartItems.length !== 0 &&
-            order?.line_items.map((item) => {
+            order?.line_items.map(item => {
               const { resolveCount, isAvailable } = checkProductAvailability(
                 item,
                 productsSpecs
               );
-              /*     const isLoadingItem = loadingItems.includes(item.product_id); */
-
               return (
                 <CartCardAllWrapper key={item.id}>
                   <CartCardWrapper isLoadingItem={isLoadingOrder}>

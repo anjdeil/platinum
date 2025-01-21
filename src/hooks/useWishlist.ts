@@ -6,6 +6,7 @@ import { WishlistItem } from '@/types/store/rtk-queries/wpApi';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import useGetAuthToken from './useGetAuthToken';
+import { ProductType } from '@/types/components/shop/product/products';
 
 export const useWishlist = () => {
   const authToken = useGetAuthToken();
@@ -24,7 +25,7 @@ export const useWishlist = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authToken]);
 
-  const handleWishlistToggle = (productId: number, variationId?: number) => {
+  const handleWishlistToggle = (product: ProductType) => {
     if (!authToken) {
       router.push('/my-account/login');
       return;
@@ -33,10 +34,10 @@ export const useWishlist = () => {
     const userWishlist = userData?.meta.wishlist || [];
     const index = userWishlist.findIndex(
       (item: WishlistItem) =>
-        item.product_id === productId &&
-        (!variationId || item.variation_id === variationId)
+        item.product_id === product.id &&
+        (!product.variations.length ||
+          item.variation_id === product.variations[0].id)
     );
-
     let updatedWishlist: WishlistItem[];
 
     if (index >= 0) {
@@ -47,8 +48,10 @@ export const useWishlist = () => {
       updatedWishlist = [
         ...userWishlist,
         {
-          product_id: productId,
-          ...(variationId && { variation_id: variationId }),
+          product_id: product.id,
+          ...(product.variations.length && {
+            variation_id: product.variations[0].id,
+          }),
         },
       ];
     }

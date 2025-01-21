@@ -357,3 +357,8 @@ export const StyledSlugRichTextSection = styled.div`
     margin-bottom: '64px';
   }
 `;
+
+export const LinkWrapper = styled(Link)`
+  text-decoration: none;
+  color: ${({ theme }) => theme.colors.black};
+`;
