@@ -17,6 +17,7 @@ import { useAppDispatch, useAppSelector } from '@/store';
 import { clearUser } from '@/store/slices/userSlice';
 import { useRouter } from 'next/router';
 import { CustomSuccess } from '../../CustomFormInput/styles';
+import { getUserFromLocalStorage } from '@/utils/auth/userLocalStorage';
 
 const errorsCode = [
   {
@@ -51,7 +52,7 @@ export const NewPasswordForm: FC = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const userEmail = useAppSelector(state => state.userSlice.user?.email);
+  const userEmail = getUserFromLocalStorage()?.email;
   const [emailToShow, setEmailToShow] = useState<string | null>(null);
   const [setPassword, { error: PasswordErr, isLoading, isSuccess }] =
     useSetPasswordMutation();

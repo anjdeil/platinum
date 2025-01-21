@@ -11,13 +11,16 @@ import { useRouter } from 'next/router';
 import { ResetPasswordFormSchema } from '@/types/components/global/forms/changePassword';
 import Notification from '../../../Notification/Notification';
 import { z } from 'zod';
-import { saveUserToLocalStorage } from '@/utils/auth/userLocalStorage';
+import {
+  removeUserFromLocalStorage,
+  saveUserToLocalStorage,
+} from '@/utils/auth/userLocalStorage';
 
 const ResetPasswordForm: FC = () => {
   const tValidation = useTranslations('Validation');
   const tMyAccount = useTranslations('MyAccount');
   const router = useRouter();
-  const [customError, setCustomError] = useState<string | null>(null);
+
   const [resetPassword, { error, isLoading, isSuccess }] =
     useResetPasswordMutation();
 
@@ -43,14 +46,14 @@ const ResetPasswordForm: FC = () => {
   }, [isSuccess, router]);
 
   const onSubmit = async (formData: ResetPasswordFormType) => {
-    setCustomError(null);
     try {
       const response = await resetPassword({ email: formData.email });
       if (!response) throw new Error('Invalid server response.');
+      removeUserFromLocalStorage();
       saveUserToLocalStorage({ email: formData.email });
     } catch (err) {
       console.error(err);
-      setCustomError(tMyAccount('codeSendError'));
+
       reset();
     }
   };
@@ -76,10 +79,12 @@ const ResetPasswordForm: FC = () => {
             ? tValidation('sending')
             : tValidation('sendButton')}
         </StyledButton>
-        {customError && (
-          <Notification type="warning">{customError}</Notification>
+        {error && (
+          <Notification type="warning">
+            {tMyAccount('codeSendError')}
+          </Notification>
         )}
-        {isSubmitSuccessful && isSuccess && !error && !customError && (
+        {isSubmitSuccessful && isSuccess && !error && (
           <CustomSuccess>{tMyAccount('codeSent')}</CustomSuccess>
         )}
       </FormWrapperBottom>
