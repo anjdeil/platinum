@@ -13,7 +13,7 @@ import { useTranslations } from 'next-intl';
 import Notification from '../../../Notification/Notification';
 import { NewPasswordFormSchema } from '@/types/components/global/forms/changePassword';
 import { useSetPasswordMutation } from '@/store/rtk-queries/passwordResetApi';
-import { useAppDispatch, useAppSelector } from '@/store';
+import { useAppDispatch } from '@/store';
 import { clearUser } from '@/store/slices/userSlice';
 import { useRouter } from 'next/router';
 import { CustomSuccess } from '../../CustomFormInput/styles';
