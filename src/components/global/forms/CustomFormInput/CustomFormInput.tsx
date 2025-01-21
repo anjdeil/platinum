@@ -92,6 +92,8 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
         <CustomInputWrapper>
           {inputType === 'phone' ? (
             <StyledPhoneInput
+              {...registerProps}
+              {...register(name)}
               defaultCountry="pl"
               value={value || defaultValue}
               onChange={handleChange}

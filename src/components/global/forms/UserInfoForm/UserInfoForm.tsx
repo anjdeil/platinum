@@ -34,9 +34,9 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
   const tValidation = useTranslations('Validation');
   const tMyAccount = useTranslations('MyAccount');
   const tForms = useTranslations('Forms');
-
+  const [initialData, setInitialData] = useState<any>(null);
   const [isShipping, setIsShipping] = useState(true);
-  const [hasChanges, setHasChanges] = useState(false);
+  const [isDataUnchanged, setIsDataUnchanged] = useState(false);
 
   const [UpdateCustomerMutation, { error, isSuccess }] =
     useUpdateCustomerInfoMutation();
@@ -45,7 +45,6 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
     () => UserInfoFormSchema(isShipping, tValidation),
     [isShipping]
   );
-
   type UserInfoFormType = z.infer<typeof formSchema>;
 
   const {
@@ -53,20 +52,14 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
     handleSubmit,
     formState: { errors, isSubmitting },
     setValue,
-    watch,
     control,
   } = useForm<UserInfoFormType>({
     resolver: zodResolver(formSchema),
   });
 
-  useEffect(() => {
-    const subscription = watch((values, { type }) => {
-      if (type === 'change') {
-        setHasChanges(true);
-      }
-    });
-    return () => subscription.unsubscribe();
-  }, [watch]);
+  const handleShippingCheckboxChange = () => {
+    setIsShipping(prev => !prev);
+  };
 
   useEffect(() => {
     if (customer) {
@@ -74,14 +67,50 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
         !customer.shipping?.first_name &&
         !customer.shipping?.last_name &&
         !customer.shipping?.address_1;
+
       setIsShipping(!isShippingEmpty);
+
+      setInitialData({
+        email: customer.email || '',
+        first_name: customer.first_name || '',
+        last_name: customer.last_name || '',
+        username: customer.email || '',
+        billing: {
+          first_name: customer.billing?.first_name || '',
+          last_name: customer.billing?.last_name || '',
+          address_1: customer.billing?.address_1 || '',
+          address_2: customer.billing?.address_2 || '',
+          city: customer.billing?.city || '',
+          postcode: customer.billing?.postcode || '',
+          country: customer.billing?.country || '',
+          email: customer.email || '',
+          phone: customer.billing?.phone || '',
+        },
+        shipping: isShipping
+          ? {
+              first_name: customer.shipping?.first_name || '',
+              last_name: customer.shipping?.last_name || '',
+              phone: customer.shipping?.phone || '',
+              address_1: customer.shipping?.address_1 || '',
+              address_2: customer.shipping?.address_2 || '',
+              city: customer.shipping?.city || '',
+              postcode: customer.shipping?.postcode || '',
+              country: customer.shipping?.country || '',
+            }
+          : {
+              first_name: '',
+              last_name: '',
+              phone: '',
+              address_1: '',
+              address_2: '',
+              city: '',
+              postcode: '',
+              country: '',
+              apartmentNumber: '',
+            },
+      });
     }
   }, [customer]);
-
-  const handleShippingCheckboxChange = () => {
-    setIsShipping(prev => !prev);
-    setHasChanges(true);
-  };
 
   const onSubmit = async (formData: UserInfoFormType) => {
     if (!customer) {
@@ -144,6 +173,34 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
           },
     };
 
+    // Сравниваем initialData с updatedData
+    const hasFormChanges = Object.keys(updatedData || {}).some(key => {
+      const initialValue = initialData?.[key as keyof typeof initialData];
+      const updatedValue = updatedData[key as keyof typeof updatedData];
+
+      const normalizeString = (str: string) => {
+        return str
+          .trim()
+          .replace(/\u200B/g, '')
+          .replace(/\s+/g, ' ');
+      };
+
+      if (
+        normalizeString(JSON.stringify(initialValue)) !==
+        normalizeString(JSON.stringify(updatedValue))
+      ) {
+        return true;
+      }
+
+      return false;
+    });
+
+    if (!hasFormChanges) {
+      setIsDataUnchanged(true);
+      return;
+    } else {
+      setIsDataUnchanged(false);
+    }
     try {
       await UpdateCustomerMutation({
         ...updatedData,
@@ -259,7 +316,7 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
           </FlexBox>
         ) : (
           <FormWrapper>
-            {renderFormInfoFields('', customer)}{' '}
+            {renderFormInfoFields('', customer)}
             {renderFormShippingFields('', customer?.billing)}
           </FormWrapper>
         )}
@@ -289,7 +346,10 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
         )}
       </InfoCard>
       <FormWrapperBottom>
-        <StyledButton type="submit" disabled={isSubmitting || !hasChanges}>
+        {isDataUnchanged && (
+          <Notification type="info">{tValidation('noChanges')}</Notification>
+        )}
+        <StyledButton type="submit" disabled={isSubmitting}>
           {isSubmitting ? tValidation('saving') : tValidation('saveChanges')}
         </StyledButton>
         {error && <div>{isAuthErrorResponseType(error)}</div>}

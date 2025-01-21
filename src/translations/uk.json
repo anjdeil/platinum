@@ -236,7 +236,8 @@
     "PasswordLowercaseLetter": "Пароль повинен містити хоча б одну малу літеру.",
     "PasswordDigit": "Пароль повинен містити хоча б одну цифру.",
     "PasswordSpecialChar": "Пароль повинен містити хоча б один спеціальний символ.",
-    "PasswordsDoNotMatch": "Паролі не збігаються"
+    "PasswordsDoNotMatch": "Паролі не збігаються",
+    "noChanges": "Ваші дані не змінилися"
   },
   "Forms": {
     "applicationForm": "форма заявки",

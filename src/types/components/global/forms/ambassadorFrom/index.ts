@@ -6,8 +6,8 @@ export const AmbassadorFormValidationSchema = (
 ) =>
   z.object({
     email: z.string().email(t('email')),
-    firstName: z.string().min(2, t('minChar', { count: 2 })),
-    lastName: z.string().min(2, t('minChar', { count: 2 })),
+    first_name: z.string().min(3, t('RequiredField')),
+    last_name: z.string().min(3, t('RequiredField')),
     phone: phoneNumberValidation(t),
     country: z.string().min(1, t('RequiredField')),
     city: z.string().min(1, t('RequiredField')),

@@ -130,8 +130,7 @@
     "addComment": "Kommentar hinzufügen",
     "submitting": "Einreichen",
     "commentText1": "Haben Sie unser Produkt getestet? Teilen Sie Ihre Meinung mit;",
-    "commentText2": "- Wir versuchen, das Beste für Sie zu sein, und Ihre Meinung wird uns sehr helfen!",
-    "lastedArticles": "Neueste Artikel"
+    "commentText2": "- Wir versuchen, das Beste für Sie zu sein, und Ihre Meinung wird uns sehr helfen!"
   },
   "Cart": {
     "cart": "Warenkorb",
@@ -237,7 +236,8 @@
     "PasswordLowercaseLetter": "Das Passwort muss mindestens einen Kleinbuchstaben enthalten.",
     "PasswordDigit": "Das Passwort muss mindestens eine Ziffer enthalten.",
     "PasswordSpecialChar": "Das Passwort muss mindestens ein Sonderzeichen enthalten.",
-    "PasswordsDoNotMatch": "Passwörter stimmen nicht überein"
+    "PasswordsDoNotMatch": "Passwörter stimmen nicht überein",
+    "noChanges": "Ihre Daten haben sich nicht geändert"
   },
   "Forms": {
     "applicationForm": "application form",

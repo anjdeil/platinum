@@ -248,8 +248,12 @@ interface CustomFormProps {
 }
 
 export const CustomForm = styled.form<CustomFormProps>`
+  width: 100%;
   margin: 0 auto;
   max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : '1000px')};
+  @media ${({ theme }) => theme.media.middle} {
+    margin: 0 auto;
+  }
 `;
 
 interface CustomFormProps {
