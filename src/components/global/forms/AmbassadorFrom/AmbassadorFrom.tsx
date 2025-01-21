@@ -6,13 +6,13 @@ import {
   FileUploadLabel,
   FileUploadPreview,
   FileUploadWrapper,
-  InfoCard,
 } from './styles';
 import {
   CustomForm,
   FlexBox,
   FormWrapper,
   FormWrapperBottom,
+  InfoCard,
   StyledButton,
 } from '@/styles/components';
 import { isAuthErrorResponseType } from '@/utils/isAuthErrorResponseType';

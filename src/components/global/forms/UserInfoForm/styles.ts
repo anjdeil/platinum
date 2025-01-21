@@ -1,19 +1,5 @@
-import styled from "@emotion/styled";
+import styled from '@emotion/styled';
 
-interface InfoCardProps {
-  marginBottom?: string;
-  marginTop?: string;
-}
-
-export const InfoCard = styled.div<InfoCardProps>`
-  margin: 0 auto;
-  margin-bottom: ${({ marginBottom = "24px" }) => marginBottom};
-
-  border-radius: 8px;
-  border: 1px solid ${({ theme }) => theme.colors.lightBorder};
-
-  padding: 32px;
-`;
 export const ProofSelect = styled.div`
   height: 96px;
 `;
@@ -41,7 +27,7 @@ export const CustomFormCheckboxStyled = styled.input`
     background-color: ${({ theme }) => theme.colors.primary};
     border-color: ${({ theme }) => theme.colors.primary};
     &::after {
-      content: "";
+      content: '';
       position: absolute;
       top: 45%;
       left: 50%;

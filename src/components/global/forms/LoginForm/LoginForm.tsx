@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { CustomForm, FormWrapperBottom } from '../RegistrationForm/styles';
+
 import {
   LoginFormSchema,
   LoginFormType,
@@ -12,14 +12,30 @@ import {
 } from '@/store/rtk-queries/wpApi';
 import { CustomSuccess } from '../CustomFormInput/styles';
 import { CustomFormInput } from '../CustomFormInput';
-import { ActiveText, FormWrapper } from './styles';
-import { FlexBox, StyledButton, Title } from '@/styles/components';
+import { ActiveText, BottomWrapper, LoginFormWrapper } from './styles';
+import {
+  CustomForm,
+  FlexBox,
+  FormWrapperBottom,
+  StyledButton,
+  Title,
+} from '@/styles/components';
 import theme from '@/styles/theme';
 import { useRouter } from 'next/router';
 import { useTranslations } from 'next-intl';
 import Notification from '../../Notification/Notification';
 
-export const LoginForm: FC = () => {
+interface LoginFormProps {
+  border?: boolean;
+  redirect?: boolean;
+  onClose?: () => void;
+}
+
+export const LoginForm: FC<LoginFormProps> = ({
+  onClose,
+  border,
+  redirect = true,
+}) => {
   const router = useRouter();
   const t = useTranslations('MyAccount');
   const [customError, setCustomError] = useState<string>('');
@@ -54,7 +70,14 @@ export const LoginForm: FC = () => {
       /** Validate auth token */
       const isTokenValid = await checkToken({});
       if (!isTokenValid) throw new Error('Auth token validation failed.');
-      router.push('/my-account');
+      if (redirect) {
+        router.push('/my-account');
+      }
+      if (onClose) {
+        setTimeout(() => {
+          onClose();
+        }, 800);
+      }
     } catch (err) {
       if (err instanceof Error) setCustomError(err.message);
     } finally {
@@ -63,11 +86,11 @@ export const LoginForm: FC = () => {
   }
 
   return (
-    <CustomForm onSubmit={handleSubmit(onSubmit)}>
+    <CustomForm onSubmit={handleSubmit(onSubmit)} maxWidth="550px">
       <Title as="h3" uppercase>
         {t('log-In')}
       </Title>
-      <FormWrapper>
+      <LoginFormWrapper>
         <CustomFormInput
           fieldName={t('email')}
           name="email"
@@ -84,7 +107,7 @@ export const LoginForm: FC = () => {
           inputTag={'input'}
           inputType={'password'}
         />
-      </FormWrapper>
+      </LoginFormWrapper>
       <FormWrapperBottom>
         <StyledButton
           color={theme.colors.white}
@@ -94,7 +117,7 @@ export const LoginForm: FC = () => {
           {t('login')}
         </StyledButton>
 
-        <FlexBox margin="10px 0 0 0" justifyContent="space-between">
+        <BottomWrapper>
           <ActiveText href="/my-account/">{t('ForgotYourPassword')}</ActiveText>
           <FlexBox gap="5px">
             <div> {t('DontHaveAnAccount')}</div>
@@ -102,7 +125,7 @@ export const LoginForm: FC = () => {
               {t('SignUpNow')}
             </ActiveText>
           </FlexBox>
-        </FlexBox>
+        </BottomWrapper>
 
         {customError && (
           <Notification marginBottom="0" type="warning">

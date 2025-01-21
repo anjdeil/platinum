@@ -36,6 +36,7 @@ export const ProductImageWrapper = styled.div`
     grid-column: span 5;
     grid-row: 1 / 3;
     margin-top: 57px;
+    position: relative;
 
     @media ${({ theme }) => theme.media.large} {        
         margin-top: 0;
