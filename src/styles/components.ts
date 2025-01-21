@@ -6,7 +6,7 @@ import {
   TextProps,
 } from '@/types/styles/components';
 import styled from '@emotion/styled';
-import { Pagination } from '@mui/material';
+import { Pagination, Skeleton } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -359,5 +359,19 @@ export const StyledSlugRichTextSection = styled.div`
     align-items: flex-start;
     justify-content: flex-start;
     margin-bottom: '64px';
+  }
+`;
+
+export const SkeletonWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`;
+
+export const SkeletonItem = styled(Skeleton)`
+  height: 130px;
+
+  @media ${({ theme }) => theme.media.large} {
+    height: 240px;
   }
 `;

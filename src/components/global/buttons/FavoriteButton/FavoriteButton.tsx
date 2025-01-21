@@ -14,6 +14,7 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({
       isLoading={isLoading}
       onClick={onClick}
       marginLeft={marginLeft}
+      className="heart-button"
     >
       <Heart
         isLoading={isLoading}

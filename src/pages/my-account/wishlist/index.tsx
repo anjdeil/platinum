@@ -14,9 +14,12 @@ import { useCookies } from 'react-cookie';
 
 import Notification from '@/components/global/Notification/Notification';
 import { CartLink } from '@/components/global/popups/MiniCart/style';
-import { StyledButton } from '@/styles/components';
+import {
+  SkeletonItem,
+  SkeletonWrapper,
+  StyledButton,
+} from '@/styles/components';
 import { WishlistItem } from '@/types/store/rtk-queries/wpApi';
-import { Skeleton } from '@mui/material';
 
 function Wishlist() {
   const { code: symbol } = useAppSelector(state => state.currencySlice);
@@ -137,7 +140,13 @@ function Wishlist() {
           onDelete={handleDelete}
         />
       )}
-      {isLoading && <Skeleton variant="rounded" height={130} />}
+      {isLoading && (
+        <SkeletonWrapper>
+          {wishListProducts.map((_, index) => (
+            <SkeletonItem key={index} variant="rounded" />
+          ))}
+        </SkeletonWrapper>
+      )}
     </AccountLayout>
   );
 }
