@@ -35,6 +35,7 @@ function Wishlist() {
       isFetching: isUserFetching,
     },
   ] = useLazyFetchUserDataQuery();
+
   const [fetchUserUpdate, { isLoading: isUserUpdateLoading }] =
     useFetchUserUpdateMutation();
   const [

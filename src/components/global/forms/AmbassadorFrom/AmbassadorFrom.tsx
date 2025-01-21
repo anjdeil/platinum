@@ -29,21 +29,29 @@ import {
   AmbassadorFormValidationSchema,
 } from '@/types/components/global/forms/ambassadorFrom';
 import { SuccessMessage } from '@/components/pages/contacts/ContactsForm/style';
+import { getUserFromLocalStorage } from '@/utils/auth/userLocalStorage';
+import CustomCountrySelect from '../../selects/CustomCountrySelect/CustomCountrySelect';
+import { countryOptions } from '@/utils/mockdata/countryOptions';
 
 export const AmbassadorForm: FC = () => {
   const [hasChanges, setHasChanges] = useState<boolean>(false);
-
+  const [userId, setUserId] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [fileErr, setFileErr] = useState<string>();
   const [preview, setPreview] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState<boolean>(false);
 
-  const { data: customer, isLoading: isCustomerLoading } =
-    useFetchCustomerQuery({ customerId: '14408' });
-
   const t = useTranslations('Contacts');
   const tForms = useTranslations('Forms');
   const tValidation = useTranslations('Validation');
+  const tMyAccount = useTranslations('MyAccount');
+
+  useEffect(() => {
+    const user = getUserFromLocalStorage();
+    if (user?.id) {
+      setUserId(user.id);
+    }
+  }, []);
 
   const schema = AmbassadorFormValidationSchema(tValidation);
   const [sendForm, { isLoading, isError, isSuccess }] =
@@ -57,21 +65,23 @@ export const AmbassadorForm: FC = () => {
     formState: { errors, isSubmitting },
     setValue,
     watch,
+    control,
   } = useForm<AmbassadorFormType>({
     resolver: zodResolver(schema),
     mode: 'onBlur',
   });
 
-  const onSubmit = async (data: AmbassadorFormType) => {
-    console.log('Form data:', data);
+  const { data: customer, isLoading: isCustomerLoading } =
+    useFetchCustomerQuery({ customerId: userId || '' }, { skip: !userId });
 
+  const onSubmit = async (data: AmbassadorFormType) => {
     const formData = {
       _wpcf7_unit_tag:
         process.env.NEXT_PUBLIC_SEND_AMBASSADOR_FORM_WPCF7_UNIT_TAG,
-      firstName: data.firstName,
-      lastName: data.lastName,
+      firstName: data.first_name,
+      lastName: data.last_name,
       email: data.email,
-      phone: data.phoneNumber,
+      phone: data.phone,
       country: data.country,
       city: data.city,
       about: data.about,
@@ -84,7 +94,6 @@ export const AmbassadorForm: FC = () => {
         const base64File = reader.result as string;
         formData.file = base64File;
         try {
-          console.log('Sending form data...');
           await sendForm({
             formId: SEND_AMBASSADOR_FORM_ID,
             formData,
@@ -100,7 +109,6 @@ export const AmbassadorForm: FC = () => {
       reader.readAsDataURL(file);
     } else {
       try {
-        console.log('Sending form data...');
         await sendForm({ formId: SEND_AMBASSADOR_FORM_ID, formData }).unwrap();
         setValue('about', '');
         setHasChanges(false);
@@ -114,11 +122,16 @@ export const AmbassadorForm: FC = () => {
     const subscription = watch((value, { name, type }) => {
       if (type === 'change') {
         setHasChanges(true);
-        console.log('hasChanges:', hasChanges);
       }
     });
     return () => subscription.unsubscribe();
   }, [watch]);
+
+  useEffect(() => {
+    if (customer) {
+      setValue('country', customer?.billing?.country);
+    }
+  }, [customer, setValue]);
 
   const MAX_FILE_SIZE = 3 * 1024 * 1024;
 
@@ -157,6 +170,53 @@ export const AmbassadorForm: FC = () => {
     validateAndSetFile(uploadedFile);
   };
 
+  const renderFormInfoFields = (
+    prefix: string = '',
+    defaultValues: any = {}
+  ) => (
+    <>
+      {['first_name', 'last_name', 'email', 'phone'].map(field => (
+        <CustomFormInput
+          key={field}
+          fieldName={tMyAccount(field)}
+          name={`${prefix}${field}`}
+          register={register}
+          errors={errors}
+          inputTag="input"
+          inputType={field === 'phone' ? 'phone' : 'text'}
+          defaultValue={
+            field === 'phone'
+              ? customer?.billing?.phone
+              : defaultValues[field] || ''
+          }
+          setValue={setValue}
+        />
+      ))}
+      <CustomCountrySelect
+        name={`country${prefix}`}
+        control={control}
+        options={countryOptions}
+        label={tMyAccount('country')}
+        errors={errors}
+        defaultValue={
+          prefix === 'Shipping'
+            ? customer?.shipping?.country
+            : customer?.billing?.country
+        }
+      />
+      <CustomFormInput
+        fieldName={tValidation('city')}
+        name="city"
+        register={register}
+        errors={errors}
+        inputTag={'input'}
+        inputType={'text'}
+        defaultValue={customer?.billing.city || ''}
+        setValue={setValue}
+      />
+    </>
+  );
+
   return (
     <CustomForm onSubmit={handleSubmit(onSubmit)} maxWidth="800px">
       <InfoCard>
@@ -169,7 +229,7 @@ export const AmbassadorForm: FC = () => {
         >
           {tForms('applicationForm')}
         </Title>
-        {isCustomerLoading && !customer ? (
+        {isCustomerLoading ? (
           <FlexBox
             justifyContent="center"
             alignItems="center"
@@ -179,68 +239,7 @@ export const AmbassadorForm: FC = () => {
           </FlexBox>
         ) : (
           <>
-            <FormWrapper>
-              <CustomFormInput
-                fieldName={tValidation('name')}
-                name="firstName"
-                inputTag={'input'}
-                inputType={'text'}
-                register={register}
-                errors={errors}
-                defaultValue={customer?.first_name || ''}
-                setValue={setValue}
-              />
-              <CustomFormInput
-                fieldName={tValidation('lastName')}
-                name="lastName"
-                register={register}
-                errors={errors}
-                inputTag={'input'}
-                inputType={'text'}
-                defaultValue={customer?.last_name || ''}
-                setValue={setValue}
-              />
-              <CustomFormInput
-                fieldName={tValidation('email')}
-                name="email"
-                register={register}
-                errors={errors}
-                inputTag={'input'}
-                inputType={'text'}
-                defaultValue={customer?.email || ''}
-                setValue={setValue}
-              />
-              <CustomFormInput
-                fieldName={tValidation('phoneNumber')}
-                name="phoneNumber"
-                register={register}
-                errors={errors}
-                inputTag={'input'}
-                inputType={'phone'}
-                defaultValue={customer?.billing.phone || ''}
-                setValue={setValue}
-              />
-              <CustomFormInput
-                fieldName={tValidation('country')}
-                name="country"
-                register={register}
-                errors={errors}
-                inputTag={'input'}
-                inputType={'text'}
-                defaultValue={customer?.billing.country || ''}
-                setValue={setValue}
-              />
-              <CustomFormInput
-                fieldName={tValidation('city')}
-                name="city"
-                register={register}
-                errors={errors}
-                inputTag={'input'}
-                inputType={'text'}
-                defaultValue={customer?.billing.city || ''}
-                setValue={setValue}
-              />
-            </FormWrapper>
+            <FormWrapper>{renderFormInfoFields('', customer)}</FormWrapper>
             <FlexBox flexDirection="column" gap="16px">
               <CustomFormInput
                 fieldName={tValidation('aboutYourself')}
@@ -252,7 +251,6 @@ export const AmbassadorForm: FC = () => {
                 inputType={'text'}
                 setValue={setValue}
               />
-
               <FileUploadWrapper
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}

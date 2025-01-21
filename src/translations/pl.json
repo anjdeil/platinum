@@ -250,7 +250,8 @@
     "PasswordLowercaseLetter": "Hasło musi zawierać przynajmniej jedną małą literę.",
     "PasswordDigit": "Hasło musi zawierać przynajmniej jedną cyfrę.",
     "PasswordSpecialChar": "Hasło musi zawierać przynajmniej jeden znak specjalny.",
-    "PasswordsDoNotMatch": "Hasła nie są zgodne"
+    "PasswordsDoNotMatch": "Hasła nie są zgodne",
+    "noChanges": "Dane nie uległy zmianie"
   },
   "Forms": {
     "applicationForm": "Formularz zgłoszeniowy",

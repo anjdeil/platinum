@@ -250,7 +250,8 @@
     "PasswordLowercaseLetter": "Password must contain at least one lowercase letter.",
     "PasswordDigit": "Password must contain at least one digit.",
     "PasswordSpecialChar": "Password must contain at least one special character.",
-    "PasswordsDoNotMatch": "Passwords do not match"
+    "PasswordsDoNotMatch": "Passwords do not match",
+    "noChanges": "There's no change in your data"
   },
   "Forms": {
     "applicationForm": "application form",
