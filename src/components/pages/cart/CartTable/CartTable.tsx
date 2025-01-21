@@ -31,7 +31,7 @@ import {
   ProducTitle,
 } from '../styles';
 import { CartTableProps } from '@/types/pages/cart';
-import { FlexBox, Title } from '@/styles/components';
+import { FlexBox, LinkWrapper, Title } from '@/styles/components';
 
 const CartTable: FC<CartTableProps> = ({
   symbol,
@@ -80,6 +80,15 @@ const CartTable: FC<CartTableProps> = ({
                   item,
                   productsSpecs
                 );
+
+                const productSpec = productsSpecs.find(product => {
+                  if (product.parent_id === 0) {
+                    return product.id === item.product_id;
+                  } else {
+                    return product.parent_id === item.product_id;
+                  }
+                });
+
                 return (
                   <RowWrapper key={item.id} isLoadingItem={isLoadingOrder}>
                     <GridRow>
@@ -104,7 +113,11 @@ const CartTable: FC<CartTableProps> = ({
                           width="50"
                         />
                       </CartImgWrapper>
-                      <TextNameCell>{item.name}</TextNameCell>
+                      <TextNameCell>
+                        <LinkWrapper href={`/product/${productSpec?.slug}`}>
+                          {item.name}
+                        </LinkWrapper>
+                      </TextNameCell>
                       <TextCell>
                         {roundedPrice(item.price)}&nbsp;{symbol}
                       </TextCell>

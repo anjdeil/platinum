@@ -1,4 +1,7 @@
-import { ProductsWithCartDataSchema } from '@/types/components/shop/product/products';
+import {
+  ProductsMinimizedSchema,
+  ProductsWithCartDataSchema,
+} from '@/types/components/shop/product/products';
 import { OrderTypeSchema } from '@/types/services';
 import {
   CartItemSchema,
@@ -48,7 +51,7 @@ export const CartTableSchema = z.object({
   isLoadingOrder: z.boolean(),
   firstLoad: z.boolean(),
   /*  isLoadingProductsMin: z.boolean(), */
-  productsSpecs: z.array(z.any()),
+  productsSpecs: z.array(ProductsMinimizedSchema),
   cartItems: z.array(z.any()),
   roundedPrice: z.function().args(z.number()).returns(z.number()),
   hasConflict: z.boolean(),
