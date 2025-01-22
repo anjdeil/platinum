@@ -57,6 +57,7 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product, currency }) => {
           product.slug
         }`
       );
+      return;
     }
 
     if (!isCartMatch) {
@@ -119,7 +120,7 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product, currency }) => {
             <ProductBadge type="sale" />
           )}
           <FavoriteButton
-            onClick={() => handleWishlistToggle(product.id, undefined)}
+            onClick={() => handleWishlistToggle(product)}
             marginLeft="auto"
             active={checkDesired(product.id)}
             isLoading={isUpdatingWishlist || isFetchingWishlist}
