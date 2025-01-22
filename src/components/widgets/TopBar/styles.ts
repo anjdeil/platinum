@@ -15,10 +15,10 @@ export const Stack = styled.div`
 `;
 
 export const NavWrapper = styled.div`
-    grid-column: span 7;
     display: flex;
     justify-content: space-evenly;
-    align-items: center;     
+    align-items: center;
+    flex-grow: 1;
 
     @media ${({ theme }) => theme.media.large} {
         display: none;  
@@ -27,7 +27,6 @@ export const NavWrapper = styled.div`
 
 export const SelectsWrapper = styled.div`
     gap: 52px;
-    grid-column: span 2;
     display: flex;
 
     @media ${({ theme }) => theme.media.xl} {

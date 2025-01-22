@@ -9,6 +9,7 @@ export const HeaderWrapper = styled.div<HeaderWrapperProps>`
   align-items: center;
   background: ${({ theme, backgroundColor = theme.background.primaryGradient }) => backgroundColor};
   position: relative;
+  overflow: hidden;
 
   @media ${({ theme }) => theme.media.large} {
     padding-block: 16px;
@@ -22,6 +23,10 @@ export const MenuWrapper = styled.div`
   @media ${({ theme }) => theme.media.large} {
     gap: 48px;
   }
+
+  @media ${({ theme }) => theme.media.mediumLarge} {
+    gap: 16px;
+  }
 `;
 
 export const CategoriesButton = styled.button`
@@ -33,6 +38,7 @@ export const CategoriesButton = styled.button`
   background-color: transparent;
   border: none;
   cursor: pointer;
+  white-space: nowrap;
 
   &.active {
     font-weight: 600;
@@ -42,18 +48,26 @@ export const CategoriesButton = styled.button`
     opacity: 0.7;
   }
 
+  @media ${({ theme }) => theme.media.xl} {
+    white-space: unset;
+  }
+
   @media ${({ theme }) => theme.media.large} {
     font-size: 16px;
   }
 `;
 
-export const HeaderContainer = styled(Container)<HeaderContainerProps>`
+export const HeaderContainer = styled(Container) <HeaderContainerProps>`
   display: flex;
   justify-content: space-between;
   gap: ${({ gap = "30px" }) => gap};
   align-items: center;
   overflow: visible;
   width: 93%;
+
+  @media ${({ theme }) => theme.media.mediumLarge} {
+    gap: 16px;
+  }
 `;
 
 export const HeaderContent = styled.div`
