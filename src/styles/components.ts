@@ -6,7 +6,7 @@ import {
   TextProps,
 } from '@/types/styles/components';
 import styled from '@emotion/styled';
-import { Pagination } from '@mui/material';
+import { Pagination, Skeleton } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -365,4 +365,18 @@ export const StyledSlugRichTextSection = styled.div`
 export const LinkWrapper = styled(Link)`
   text-decoration: none;
   color: ${({ theme }) => theme.colors.black};
+`;
+
+export const SkeletonWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`;
+
+export const SkeletonItem = styled(Skeleton)`
+  height: 130px;
+
+  @media ${({ theme }) => theme.media.large} {
+    height: 240px;
+  }
 `;

@@ -14,9 +14,12 @@ import { useCookies } from 'react-cookie';
 
 import Notification from '@/components/global/Notification/Notification';
 import { CartLink } from '@/components/global/popups/MiniCart/style';
-import { StyledButton } from '@/styles/components';
+import {
+  SkeletonItem,
+  SkeletonWrapper,
+  StyledButton,
+} from '@/styles/components';
 import { WishlistItem } from '@/types/store/rtk-queries/wpApi';
-import { Skeleton } from '@mui/material';
 
 function Wishlist() {
   const { code: symbol } = useAppSelector(state => state.currencySlice);
@@ -114,8 +117,25 @@ function Wishlist() {
     isUserFetching ||
     isLoadingWishlist;
 
+  const skeletonsCount = wishListProducts.length || 2;
+  const Skeletons = Array.from({ length: skeletonsCount }, (_, index) => (
+    <SkeletonItem key={index} variant="rounded" />
+  ));
+
   return (
     <AccountLayout title={tMyAccount('wishlist')}>
+      {isLoading && <SkeletonWrapper>{Skeletons}</SkeletonWrapper>}
+
+      {!isLoading && (
+        <WishListTable
+          symbol={symbol}
+          wishlist={wishListProducts}
+          wishlistMinElements={wishlist}
+          isLoading={isLoading}
+          onDelete={handleDelete}
+        />
+      )}
+
       {!!(!isLoading && wishListProducts && wishListProducts.length === 0) && (
         <>
           <Notification type="info">
@@ -128,16 +148,6 @@ function Wishlist() {
           </CartLink>
         </>
       )}
-      {!isLoading && (
-        <WishListTable
-          symbol={symbol}
-          wishlist={wishListProducts}
-          wishlistMinElements={wishlist}
-          isLoading={isLoading}
-          onDelete={handleDelete}
-        />
-      )}
-      {isLoading && <Skeleton variant="rounded" height={130} />}
     </AccountLayout>
   );
 }
