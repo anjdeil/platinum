@@ -1,36 +1,33 @@
-import CloseIcon from '@/components/global/icons/CloseIcon/CloseIcon';
-import TrashIcon from '@/components/global/icons/TrashIcon/TrashIcon';
-import Notification from '@/components/global/Notification/Notification';
-import { PopupOverlay } from '@/components/global/popups/SwiperPopup/styles';
-import { MenuSkeleton } from '@/components/menus/MenuSkeleton';
-import CartQuantity, {
-  adaptItemToCartQuantity,
-} from '@/components/pages/cart/CartQuantity/CartQuantity';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
+import { useAppDispatch, useAppSelector } from '@/store';
+import checkCartConflict from '@/utils/cart/checkCartConflict';
+import { useGetProductsMinimizedMutation } from '@/store/rtk-queries/wpCustomApi';
 import OrderBar from '@/components/pages/cart/OrderBar/OrderBar';
-import { OrderBarDesc } from '@/components/pages/cart/OrderBar/style';
 import {
-  CardContent,
   CartCardWrapper,
   CartImgWrapper,
   CartItemImg,
   OnePrice,
   ProducTitle,
   ProductPrice,
+  CardContent,
 } from '@/components/pages/cart/styles/index';
-import { useAppDispatch, useAppSelector } from '@/store';
-import {
-  useGetCurrenciesQuery,
-  useGetProductsMinimizedMutation,
-} from '@/store/rtk-queries/wpCustomApi';
-import { FlexBox, StyledButton, Title } from '@/styles/components';
-import theme from '@/styles/theme';
-import checkCartConflict from '@/utils/cart/checkCartConflict';
+import CloseIcon from '@/components/global/icons/CloseIcon/CloseIcon';
+import CartQuantity, {
+  adaptItemToCartQuantity,
+} from '@/components/pages/cart/CartQuantity/CartQuantity';
+import { useTranslations } from 'next-intl';
+import { PopupOverlay } from '@/components/global/popups/SwiperPopup/styles';
+import { CartLink, MiniCartContainer } from './style';
+import { FlexBox, LinkWrapper, StyledButton, Title } from '@/styles/components';
+import { Skeleton } from '@mui/material';
+import TrashIcon from '@/components/global/icons/TrashIcon/TrashIcon';
+import { OrderBarDesc } from '@/components/pages/cart/OrderBar/style';
+import Notification from '@/components/global/Notification/Notification';
 import { handleQuantityChange } from '@/utils/cart/handleQuantityChange';
 import { roundedPrice } from '@/utils/cart/roundedPrice';
-import { Skeleton } from '@mui/material';
-import { useTranslations } from 'next-intl';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { CartLink, MiniCartContainer } from './style';
+import { MenuSkeleton } from '@/components/menus/MenuSkeleton';
+import theme from '@/styles/theme';
 
 interface MiniCartProps {
   onClose: () => void;
@@ -38,23 +35,12 @@ interface MiniCartProps {
 
 const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
   const dispatch = useAppDispatch();
+  const { code: symbol } = useAppSelector(state => state.currencySlice);
   const { cartItems } = useAppSelector(state => state.cartSlice);
   const t = useTranslations('Cart');
 
   const [hasConflict, setHasConflict] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-
-  // Currency
-  const { data: currencies, isLoading: isCurrenciesLoading } =
-    useGetCurrenciesQuery();
-  const selectedCurrency = useAppSelector(state => state.currencySlice);
-
-  const currentCurrency =
-    currencies && !isCurrenciesLoading
-      ? currencies?.data?.items.find(
-          currency => currency.code === selectedCurrency.name
-        )
-      : undefined;
 
   // FETCH
   const [
@@ -72,15 +58,20 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
     }, {} as Record<number, (typeof cartItems)[0]>);
 
     return productsSpecsData.data.items.map(product => {
-      const cartItem = cartItemsMap[product.id] || {};
-      const quantity = cartItem.quantity || 0;
+      const cartItem =
+        product.parent_id === 0
+          ? cartItemsMap[product.id]
+          : cartItemsMap[product.parent_id] || {};
+
+      const quantity = cartItem ? cartItem.quantity || 0 : 0;
       const price = product.price || 0;
-      const totalPrice = price * (currentCurrency?.rate || 1) * quantity;
+      const totalPrice = price * quantity;
 
       return {
         ...product,
         quantity,
         variation: cartItem.variation_id || undefined,
+        product_id: cartItem.product_id,
         totalPrice,
       };
     });
@@ -191,12 +182,14 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
                 </CartImgWrapper>
                 <CardContent padding="8px 0" gap="1px">
                   <ProducTitle>
-                    <p>{item.name}</p>
+                    <LinkWrapper href={`/product/${item.slug}`}>
+                      {item.name}
+                    </LinkWrapper>
                     <TrashIcon
                       padding="0"
                       onClick={() =>
                         handleChangeQuantity(
-                          item.id,
+                          item.product_id,
                           'value',
                           item.variation,
                           0
@@ -207,8 +200,7 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
                   <FlexBox justifyContent="space-between" margin="0 0 16px 0">
                     <ProductPrice>
                       <p>
-                        {item.price && roundedPrice(item.price)}&nbsp;
-                        {selectedCurrency.code}
+                        {item.price && roundedPrice(item.price)}&nbsp;{symbol}
                       </p>
                     </ProductPrice>
                     <CartQuantity
@@ -222,8 +214,7 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
                   <ProductPrice>
                     <span>{t('summary')}</span>
                     <OnePrice fontSize="1.2em">
-                      {roundedPrice(item.totalPrice)}&nbsp;
-                      {selectedCurrency.code}
+                      {roundedPrice(item.totalPrice)}&nbsp;{symbol}
                     </OnePrice>
                   </ProductPrice>
                 </CardContent>
@@ -244,7 +235,7 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
         <OrderBar
           isLoadingOrder={isLoadingProducts}
           cartSum={totalCartPrice}
-          symbol={selectedCurrency.code}
+          symbol={symbol}
           miniCart
         />
 

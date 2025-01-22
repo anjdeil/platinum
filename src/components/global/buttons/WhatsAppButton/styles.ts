@@ -15,4 +15,8 @@ export const StyledButtonLink = styled(Link)`
             filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3));
         }
     }
+
+    @media ${({ theme }) => theme.media.medium} {
+        bottom: 80px;
+    }
 `;
