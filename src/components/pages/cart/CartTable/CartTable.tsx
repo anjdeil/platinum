@@ -114,7 +114,9 @@ const CartTable: FC<CartTableProps> = ({
                         />
                       </CartImgWrapper>
                       <TextNameCell>
-                        <LinkWrapper href={`/product/${productSpec?.slug}`}>
+                        <LinkWrapper
+                          href={`/product/${productSpec?.parent_slug}`}
+                        >
                           {item.name}
                         </LinkWrapper>
                       </TextNameCell>

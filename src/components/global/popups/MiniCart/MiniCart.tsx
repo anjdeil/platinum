@@ -1,7 +1,10 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store';
 import checkCartConflict from '@/utils/cart/checkCartConflict';
-import { useGetProductsMinimizedMutation } from '@/store/rtk-queries/wpCustomApi';
+import {
+  useGetCurrenciesQuery,
+  useGetProductsMinimizedMutation,
+} from '@/store/rtk-queries/wpCustomApi';
 import OrderBar from '@/components/pages/cart/OrderBar/OrderBar';
 import {
   CartCardWrapper,
@@ -20,7 +23,7 @@ import { useTranslations } from 'next-intl';
 import { PopupOverlay } from '@/components/global/popups/SwiperPopup/styles';
 import { CartLink, MiniCartContainer } from './style';
 import { FlexBox, LinkWrapper, StyledButton, Title } from '@/styles/components';
-import { Skeleton } from '@mui/material';
+import { CircularProgress, Skeleton } from '@mui/material';
 import TrashIcon from '@/components/global/icons/TrashIcon/TrashIcon';
 import { OrderBarDesc } from '@/components/pages/cart/OrderBar/style';
 import Notification from '@/components/global/Notification/Notification';
@@ -35,7 +38,7 @@ interface MiniCartProps {
 
 const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
   const dispatch = useAppDispatch();
-  const { code: symbol } = useAppSelector(state => state.currencySlice);
+  /*  const { code: symbol } = useAppSelector(state => state.currencySlice); */
   const { cartItems } = useAppSelector(state => state.cartSlice);
   const t = useTranslations('Cart');
 
@@ -43,6 +46,23 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   // FETCH
+
+  const { data: currencies, isLoading: isCurrenciesLoading } =
+    useGetCurrenciesQuery();
+  const selectedCurrency = useAppSelector(state => state.currencySlice);
+
+  const currentCurrency =
+    currencies && !isCurrenciesLoading
+      ? currencies?.data?.items.find(
+          currency => currency.code === selectedCurrency.name
+        )
+      : undefined;
+
+  const extendedCurrency = {
+    ...selectedCurrency,
+    rate: currentCurrency ? currentCurrency.rate || 1 : undefined,
+  };
+
   const [
     getProductsMinimized,
     { data: productsSpecsData, isLoading: isLoadingProducts },
@@ -182,7 +202,7 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
                 </CartImgWrapper>
                 <CardContent padding="8px 0" gap="1px">
                   <ProducTitle>
-                    <LinkWrapper href={`/product/${item.slug}`}>
+                    <LinkWrapper href={`/product/${item.parent_slug}`}>
                       {item.name}
                     </LinkWrapper>
                     <TrashIcon
@@ -199,9 +219,16 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
                   </ProducTitle>
                   <FlexBox justifyContent="space-between" margin="0 0 16px 0">
                     <ProductPrice>
-                      <p>
-                        {item.price && roundedPrice(item.price)}&nbsp;{symbol}
-                      </p>
+                      {extendedCurrency.rate ? (
+                        <p>
+                          {item.price &&
+                            roundedPrice(item.price * extendedCurrency.rate)}
+                          &nbsp;
+                          {extendedCurrency.code}
+                        </p>
+                      ) : (
+                        <CircularProgress size={20} />
+                      )}
                     </ProductPrice>
                     <CartQuantity
                       resolveCount={resolveCount}
@@ -213,9 +240,17 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
                   </FlexBox>
                   <ProductPrice>
                     <span>{t('summary')}</span>
-                    <OnePrice fontSize="1.2em">
-                      {roundedPrice(item.totalPrice)}&nbsp;{symbol}
-                    </OnePrice>
+
+                    {extendedCurrency.rate ? (
+                      <OnePrice fontSize="1.2em">
+                        {item.price &&
+                          roundedPrice(item.totalPrice * extendedCurrency.rate)}
+                        &nbsp;
+                        {extendedCurrency.code}
+                      </OnePrice>
+                    ) : (
+                      <CircularProgress size={20} />
+                    )}
                   </ProductPrice>
                 </CardContent>
               </CartCardWrapper>
@@ -234,8 +269,12 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
 
         <OrderBar
           isLoadingOrder={isLoadingProducts}
-          cartSum={totalCartPrice}
-          symbol={symbol}
+          cartSum={
+            extendedCurrency?.rate !== undefined
+              ? totalCartPrice * extendedCurrency.rate
+              : undefined
+          }
+          symbol={extendedCurrency.code}
           miniCart
         />
 
