@@ -287,5 +287,15 @@
     "nextPost": "Weiter",
     "blogPage": "Blog",
     "blogSectionSubtitle": "Letzte artikel"
+  },
+  "ShippingMethodSelector": {
+    "delivery": "Lieferung",
+    "change": "Ändern",
+    "parcelLocker": "Paketstation",
+    "selectParcelLocker": "Paketstation auswählen",
+    "deliveryUnavailable": "Für die ausgewählte Region sind keine Liefermethoden verfügbar. Bitte überprüfen Sie Ihr Land."
+  },
+  "InPostGeowidget": {
+    "close": "Schließen"
   }
 }

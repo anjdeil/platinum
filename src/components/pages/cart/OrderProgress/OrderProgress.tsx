@@ -17,7 +17,7 @@ interface OrderProgressLink {
 
 const steps: OrderProgressLink[] = [
     { name: 'Basket', url: '/cart' },
-    { name: 'PersonalInformation', url: '/cart/userInfo' },
+    { name: 'PersonalInformation', url: '/checkout' },
     { name: 'Confirmation', url: '/cart/order' }
 ];
 

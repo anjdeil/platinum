@@ -1,3 +1,4 @@
+import { ShippingLocationSchema, ShippingMethodSchema, ShippingZoneSchema } from "@/types/services";
 import { z } from "zod";
 
 const userDetailsSchema = z.object({
@@ -54,6 +55,22 @@ const registrationUserDataSchema = userDataSchema.extend({
     avatar_url: z.string().optional(),
 });
 
+const ShippingsSchema = ShippingZoneSchema.extend({
+    methods: z.array(ShippingMethodSchema),
+    locations: z.array(ShippingLocationSchema)
+});
+
+const ParcelMachineSchema = z.object({
+    methodId: z.string(),
+    choosenParcelMachine: z.object({
+        name: z.string(),
+        address: z.string(),
+        description: z.string().optional()
+    })
+});
+
+export type ShippingsType = z.infer<typeof ShippingsSchema>;
+export type ParcelMachineType = z.infer<typeof ParcelMachineSchema>;
 export type userFieldsType = z.infer<typeof userDataSchema>;
 export type CheckoutProps = z.infer<typeof CheckoutPropsSchema>;
 export type registrationUserDataType = z.infer<typeof registrationUserDataSchema>;

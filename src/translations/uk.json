@@ -286,5 +286,15 @@
     "nextPost": "Наступний",
     "blogSectionSubtitle": "Останні статті",
     "blogPage": "Блог"
+  },
+  "ShippingMethodSelector": {
+    "delivery": "Доставка",
+    "change": "Змінити",
+    "parcelLocker": "Поштомат",
+    "selectParcelLocker": "Вибрати поштомат",
+    "deliveryUnavailable": "Способи доставки недоступні для обраного регіону. Будь ласка, перевірте свою країну."
+  },
+  "InPostGeowidget": {
+    "close": "Закрити"
   }
 }

@@ -1,4 +1,4 @@
-import { WooCustomerUpdateReqType } from '@/types/services';
+import { ShippingLocationType, ShippingMethodType, ShippingZoneType, WooCustomerUpdateReqType } from '@/types/services';
 import {
   couponRespType,
   CreateOrderRequestType,
@@ -93,6 +93,24 @@ export const wooCustomRktApi = createApi({
         method: 'GET',
       }),
     }),
+    getShippingZones: builder.query<ShippingZoneType[], void>({
+      query: () => ({
+        url: `/shipping/zones`,
+        method: 'GET',
+      }),
+    }),
+    getShippingZoneMethods: builder.query<ShippingMethodType[], number>({
+      query: (zoneId: number) => ({
+        url: `/shipping/zones/${zoneId}/methods`,
+        method: 'GET',
+      }),
+    }),
+    getShippingZoneLocations: builder.query<ShippingLocationType[], number>({
+      query: (zoneId: number) => ({
+        url: `/shipping/zones/${zoneId}/locations`,
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
@@ -105,4 +123,7 @@ export const {
   useGetProductsReviewsQuery,
   useFetchCustomerQuery,
   useUpdateCustomerMutation,
+  useGetShippingZonesQuery,
+  useLazyGetShippingZoneMethodsQuery,
+  useLazyGetShippingZoneLocationsQuery
 } = wooCustomRktApi;

@@ -286,5 +286,15 @@
     "nextPost": "Следующий",
     "blogPage": "Блог",
     "blogSectionSubtitle": "Последние статьи"
+  },
+  "ShippingMethodSelector": {
+    "delivery": "Доставка",
+    "change": "Изменить",
+    "parcelLocker": "Почтомат",
+    "selectParcelLocker": "Выбрать почтомат",
+    "deliveryUnavailable": "Способы доставки недоступны для выбранного региона. Пожалуйста, проверьте свою страну."
+  },
+  "InPostGeowidget": {
+    "close": "Закрыть"
   }
 }

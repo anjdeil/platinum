@@ -286,5 +286,15 @@
     "nextPost": "Następny",
     "blogPage": "Blog",
     "blogSectionSubtitle": "Ostatnie artykuły"
+  },
+  "ShippingMethodSelector": {
+    "delivery": "Dostawa",
+    "change": "Zmień",
+    "parcelLocker": "Paczkomat",
+    "selectParcelLocker": "Wybierz paczkomat",
+    "deliveryUnavailable": "Metody dostawy nie są dostępne dla wybranego regionu. Sprawdź swój kraj."
+  },
+  "InPostGeowidget": {
+    "close": "Zamknij"
   }
 }
