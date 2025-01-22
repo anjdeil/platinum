@@ -30,6 +30,7 @@ import {
   WishlistCardAllWrapper,
   WishlistImgWrapper,
 } from './style';
+import { LinkWrapper } from '@/styles/components';
 
 const WishListTable: FC<WishListTableProps> = ({
   symbol,
@@ -73,6 +74,15 @@ const WishListTable: FC<WishListTableProps> = ({
     }
   }
 
+  const handleDelete = (item: ProductsMinimizedType) => {
+    const { id, parent_id } = item;
+    if (parent_id === 0) {
+      onDelete({ product_id: id });
+    } else {
+      onDelete({ product_id: parent_id, variation_id: id });
+    }
+  };
+
   return (
     <CartTableWrapper>
       <>
@@ -85,9 +95,7 @@ const WishListTable: FC<WishListTableProps> = ({
                 return (
                   <WishlistCardAllWrapper key={item.id} padding="16px">
                     <DeleteCell>
-                      <TrashIcon
-                        onClick={() => onDelete({ product_id: item.id })}
-                      />
+                      <TrashIcon onClick={() => handleDelete(item)} />
                     </DeleteCell>
                     <WishlistImgWrapper maxHeight="100px" maxWidth="100px">
                       <CartItemImg
@@ -99,7 +107,11 @@ const WishListTable: FC<WishListTableProps> = ({
                       />
                     </WishlistImgWrapper>
                     <CardContent gap="12px">
-                      <TextNameCell>{item.name}</TextNameCell>
+                      <TextNameCell>
+                        <LinkWrapper href={`/product/${item.slug}`}>
+                          {item.name}
+                        </LinkWrapper>
+                      </TextNameCell>
                       <QuantityRow>
                         <Circle />
                         {item.stock_quantity}
@@ -139,10 +151,12 @@ const WishListTable: FC<WishListTableProps> = ({
                       </WishlistImgWrapper>
                       <CardContent gap="8px" padding="0 0 4px 0">
                         <ProducTitle>
-                          <p>{item.name}</p>
+                          <LinkWrapper href={`/product/${item.slug}`}>
+                            {item.name}
+                          </LinkWrapper>
                           <TrashIcon
                             padding="0 10px 0 0"
-                            onClick={() => onDelete({ product_id: item.id })}
+                            onClick={() => handleDelete(item)}
                           />
                         </ProducTitle>
                         <QuantityRow>

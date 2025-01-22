@@ -29,7 +29,6 @@ const CartPage: React.FC = () => {
   const [firstLoad, setfirstLoad] = useState<boolean>(false);
   const t = useTranslations('Cart');
 
-  //USER
   const [auth, setAuth] = useState<boolean>(false);
   const [userLoyalityStatus, setUserLoyalityStatus] = useState<
     string | undefined
@@ -62,7 +61,6 @@ const CartPage: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authToken]);
 
-  // FETCH
   const [createOrder, { data: orderItems, isLoading: isLoadingOrder }] =
     useCreateOrderMutation();
   const { cartItems, couponCodes } = useAppSelector(state => state.cartSlice);
@@ -157,13 +155,17 @@ const CartPage: React.FC = () => {
   const [hasConflict, setHasConflict] = useState(false);
 
   useEffect(() => {
-    setHasConflict(checkCartConflict(cartItems, productsSpecs));
+    const timeoutId = setTimeout(() => {
+      setHasConflict(checkCartConflict(cartItems, productsSpecs));
+    }, 100);
+
+    return () => clearTimeout(timeoutId);
   }, [productsSpecs]);
 
   const currentOrderItems = orderItems ?? cachedOrderItems;
 
   const isLoading = isLoadingOrder || isLoadingUser;
-  const isLoadingCart = isLoadingOrder || isLoadingProductsMin;
+  const isLoadingCart = isLoadingOrder || isLoadingProductsMin || isLoadingUser;
 
   //fix  hydration
   const [hydrated, setHydrated] = useState(false);
