@@ -117,8 +117,25 @@ function Wishlist() {
     isUserFetching ||
     isLoadingWishlist;
 
+  const skeletonsCount = wishListProducts.length || 2;
+  const Skeletons = Array.from({ length: skeletonsCount }, (_, index) => (
+    <SkeletonItem key={index} variant="rounded" />
+  ));
+
   return (
     <AccountLayout title={tMyAccount('wishlist')}>
+      {isLoading && <SkeletonWrapper>{Skeletons}</SkeletonWrapper>}
+
+      {!isLoading && (
+        <WishListTable
+          symbol={symbol}
+          wishlist={wishListProducts}
+          wishlistMinElements={wishlist}
+          isLoading={isLoading}
+          onDelete={handleDelete}
+        />
+      )}
+
       {!!(!isLoading && wishListProducts && wishListProducts.length === 0) && (
         <>
           <Notification type="info">
@@ -130,22 +147,6 @@ function Wishlist() {
             </StyledButton>
           </CartLink>
         </>
-      )}
-      {!isLoading && (
-        <WishListTable
-          symbol={symbol}
-          wishlist={wishListProducts}
-          wishlistMinElements={wishlist}
-          isLoading={isLoading}
-          onDelete={handleDelete}
-        />
-      )}
-      {isLoading && (
-        <SkeletonWrapper>
-          {wishListProducts.map((_, index) => (
-            <SkeletonItem key={index} variant="rounded" />
-          ))}
-        </SkeletonWrapper>
       )}
     </AccountLayout>
   );
