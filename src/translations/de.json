@@ -114,12 +114,13 @@
     "clearFilter": "Löschen",
     "applyFilter": "Anwenden",
     "searchResults": "Suchergebnisse",
-    "phraseSought": "Gesuchte Phrase"
+    "phraseSought": "Gesuchte Phrase",
+    "productsNotFound": "Artikel nicht gefunden"
   },
   "Product": {
-    "addToBasket": "In den Warenkorb legen",
+    "addToBasket": "In den Korb",
     "viewCart": "Warenkorb anzeigen",
-    "chooseOptions": "Wählen Sie eine Option",
+    "chooseOptions": "Option wählen",
     "updateCart": "Menge aktualisieren",
     "sortBy": "Sortieren nach",
     "productList": "Produktliste",

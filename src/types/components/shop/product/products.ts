@@ -46,10 +46,11 @@ export const ProductVariationSchema = z.object({
   modified: z.string(),
   stock_quantity: z.number().optional(),
   price: z.number().optional(),
+  total_sales: z.number(),
   image: z.string().nullable(),
   attributes: z.array(ProductDefaultAttributesSchema),
 });
-             
+
 export const ProductsMinimizedSchema = z.object({
   id: z.number(),
   parent_id: z.number(),
@@ -60,6 +61,7 @@ export const ProductsMinimizedSchema = z.object({
   stock_quantity: z.number().optional(),
   average_rating: z.number(),
   price: z.number().optional(),
+  total_sales: z.number(),
   image: z.object({
     id: z.number(),
     name: z.string(),
@@ -86,6 +88,7 @@ export const ProductSchema = z.object({
   stock_quantity: z.number().nullable(),
   min_price: z.number().nullable(),
   max_price: z.number().nullable(),
+  total_sales: z.number(),
   average_rating: z.number(),
   categories: z.array(ProductCategorySchema),
   thumbnail: ThumbnailSchema.nullable(),

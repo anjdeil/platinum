@@ -114,7 +114,8 @@
     "clearFilter": "Clear",
     "applyFilter": "Apply",
     "searchResults": "Search Results",
-    "phraseSought": "Phrase Sought"
+    "phraseSought": "Phrase Sought",
+    "productsNotFound": "Products not found"
   },
   "Product": {
     "addToBasket": "Add to basket",

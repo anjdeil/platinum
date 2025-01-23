@@ -114,7 +114,8 @@
     "clearFilter": "Очистить",
     "applyFilter": "Применить",
     "searchResults": "Результаты поиска",
-    "phraseSought": "Искомая фраза"
+    "phraseSought": "Искомая фраза",
+    "productsNotFound": "Товары не найдены"
   },
   "Product": {
     "addToBasket": "Добавить в корзину",

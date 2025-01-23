@@ -70,8 +70,8 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
       return {
         ...product,
         quantity,
-        variation: cartItem.variation_id || undefined,
-        product_id: cartItem.product_id,
+        ...(cartItem?.variation_id && { variation: cartItem.variation_id }),
+        product_id: cartItem?.product_id,
         totalPrice,
       };
     });

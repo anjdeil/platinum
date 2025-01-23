@@ -114,7 +114,8 @@
     "clearFilter": "Очистити",
     "applyFilter": "Застосувати",
     "searchResults": "Результати пошуку",
-    "phraseSought": "Шукана фраза"
+    "phraseSought": "Шукана фраза",
+    "productsNotFound": "Товари не знайдено"
   },
   "Product": {
     "addToBasket": "Додати до кошика",

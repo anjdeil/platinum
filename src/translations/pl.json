@@ -114,7 +114,8 @@
     "clearFilter": "Wyczyść",
     "applyFilter": "Zastosuj",
     "searchResults": "Wyniki wyszukiwania",
-    "phraseSought": "Poszukiwana fraza"
+    "phraseSought": "Poszukiwana fraza",
+    "productsNotFound": "Nie znaleziono towarów"
   },
   "Product": {
     "addToBasket": "Dodaj do koszyka",
