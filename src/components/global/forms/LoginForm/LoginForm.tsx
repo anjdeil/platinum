@@ -76,7 +76,8 @@ export const LoginForm: FC<LoginFormProps> = ({
       if (onClose) {
         setTimeout(() => {
           onClose();
-        }, 800);
+          window.location.reload();
+        }, 500);
       }
     } catch (err) {
       if (err instanceof Error) setCustomError(err.message);

@@ -3,14 +3,15 @@ import {
   useLazyFetchUserDataQuery,
 } from '@/store/rtk-queries/wpApi';
 import { WishlistItem } from '@/types/store/rtk-queries/wpApi';
-import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import useGetAuthToken from './useGetAuthToken';
 import { ProductType } from '@/types/components/shop/product/products';
+import { useAppDispatch } from '@/store';
+import { popupToggle } from '@/store/slices/PopupSlice';
 
 export const useWishlist = () => {
+  const dispatch = useAppDispatch();
   const authToken = useGetAuthToken();
-  const router = useRouter();
   const [fetchUserData, { data: userData, isFetching: isUserFetching }] =
     useLazyFetchUserDataQuery();
   const [fetchUserUpdate, { isLoading: isUpdatingWishlist }] =
@@ -27,7 +28,7 @@ export const useWishlist = () => {
 
   const handleWishlistToggle = (product: ProductType) => {
     if (!authToken) {
-      router.push('/my-account/login');
+      dispatch(popupToggle('login'));
       return;
     }
 
