@@ -147,12 +147,12 @@ export const AccordionDetailsSlider = styled(AccordionDetails)`
 //---------------CONTACTS-------------
 
 export const Contact = styled.div`
-> *:first-child {
+  > *:first-of-type {
     margin-right: 20px;
-    }
-   display:flex;
-   align-items:center;
-   margin-bottom:16px;
+  }
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
 `;
 export const ContactLink = styled(Link)`
   cursor: pointer;
