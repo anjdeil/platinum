@@ -1,4 +1,29 @@
-import React, { FC } from 'react';
+import CloseIcon from '@/components/global/icons/CloseIcon/CloseIcon';
+import DeleteIcon from '@/components/global/icons/DeleteIcon/DeleteIcon';
+import Notification from '@/components/global/Notification/Notification';
+import { MenuSkeleton } from '@/components/menus/MenuSkeleton';
+import { useResponsive } from '@/hooks/useResponsive';
+import { FlexBox, LinkWrapper, Title } from '@/styles/components';
+import theme from '@/styles/theme';
+import { CartTableProps } from '@/types/pages/cart';
+import checkProductAvailability from '@/utils/cart/checkProductAvailability';
+import { useTranslations } from 'next-intl';
+import { FC, useState } from 'react';
+import CartProductWarning from '../CartProductWarning/CartProductWarning';
+import CartQuantity from '../CartQuantity/CartQuantity';
+import {
+  CardContent,
+  CartCardAllWrapper,
+  CartCardWrapper,
+  CartImgWrapper,
+  CartItemImg,
+  CartTableWrapper,
+  DeleteCell,
+  OnePrice,
+  ProducTitle,
+  ProductPrice,
+  TextNameCell,
+} from '../styles';
 import {
   CartTableGrid,
   GridHeader,
@@ -7,31 +32,6 @@ import {
   TextCell,
   TextCellHeader,
 } from './style';
-import DeleteIcon from '@/components/global/icons/DeleteIcon/DeleteIcon';
-import { useResponsive } from '@/hooks/useResponsive';
-import CloseIcon from '@/components/global/icons/CloseIcon/CloseIcon';
-import checkProductAvailability from '@/utils/cart/checkProductAvailability';
-import CartProductWarning from '../CartProductWarning/CartProductWarning';
-import CartQuantity from '../CartQuantity/CartQuantity';
-import { MenuSkeleton } from '@/components/menus/MenuSkeleton';
-import theme from '@/styles/theme';
-import { useTranslations } from 'next-intl';
-import Notification from '@/components/global/Notification/Notification';
-import {
-  OnePrice,
-  ProductPrice,
-  CardContent,
-  CartCardWrapper,
-  CartTableWrapper,
-  DeleteCell,
-  CartImgWrapper,
-  CartItemImg,
-  TextNameCell,
-  CartCardAllWrapper,
-  ProducTitle,
-} from '../styles';
-import { CartTableProps } from '@/types/pages/cart';
-import { FlexBox, LinkWrapper, Title } from '@/styles/components';
 
 const CartTable: FC<CartTableProps> = ({
   symbol,
@@ -46,6 +46,19 @@ const CartTable: FC<CartTableProps> = ({
 }) => {
   const t = useTranslations('Cart');
   const { isMobile } = useResponsive();
+  const [innercartItems, setCartItems] = useState(order?.line_items || []);
+
+  const handleDeleteItem = (productId: number, variationId: number) => {
+    const updatedCartItems = innercartItems.filter(
+      item => item.product_id !== productId || item.variation_id !== variationId
+    );
+    setCartItems(updatedCartItems);
+
+    handleChangeQuantity(productId, 'value', variationId, 0);
+  };
+
+  console.log('cartItems...', cartItems);
+  console.log('order?.line_items...', order?.line_items);
 
   return (
     <CartTableWrapper>
@@ -96,11 +109,9 @@ const CartTable: FC<CartTableProps> = ({
                         <div>
                           <DeleteIcon
                             onClick={() =>
-                              handleChangeQuantity(
+                              handleDeleteItem(
                                 item.product_id,
-                                'value',
-                                item.variation_id,
-                                0
+                                item.variation_id
                               )
                             }
                           />
@@ -168,7 +179,7 @@ const CartTable: FC<CartTableProps> = ({
       ) : (
         <>
           {cartItems.length !== 0 &&
-            order?.line_items.map(item => {
+            innercartItems.map(item => {
               const { resolveCount, isAvailable } = checkProductAvailability(
                 item,
                 productsSpecs
