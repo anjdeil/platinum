@@ -278,14 +278,14 @@
     "aboutOurBrand": "About our brand",
     "newUnreadMessage": "New unread message",
     "unreadMessageDate": "Now",
-    "subscribeToOurNewsletter": "Subscribe to our  newsletter!",
-    "newArrivals": "Be the first to know about new arrivals, exclusive discounts and special offers.",
+    "subscribeToOurNewsletter": "Subscribe to our newsletter!",
+    "newArrivals": "Join our WhatsApp newsletter to receive exclusive discounts, great offers, and stay up-to-date.",
     "joinToWhatsApp": "Join to WhatsApp",
-    "subscribe": "Subscribe",
+    "subscribe": "Join now",
     "allShop": "All shop"
   },
   "SubscriptionForm": {
-    "subscribe": "Subscribe",
+    "subscribe": "Join now",
     "sending": "Sending...",
     "typeValidEmail": "Please, type valid email",
     "failedSubscribe": "Failed to send email",

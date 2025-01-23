@@ -97,7 +97,7 @@
     "codeProvidedHasExpired": "Der angegebene Rücksetzungscode ist abgelaufen."
   },
   "TopBar": {
-    "CallUs": "Rufen Sie uns an"
+    "CallUs": "Kontakt"
   },
   "Search": {
     "Search": "Suche"
@@ -279,13 +279,13 @@
     "newUnreadMessage": "Neue ungelesene Nachricht",
     "unreadMessageDate": "Jetzt",
     "subscribeToOurNewsletter": "Abonnieren Sie unseren Newsletter!",
-    "newArrivals": "Seien Sie der Erste, der über Neuzugänge, exklusive Rabatte und Sonderangebote informiert wird.",
+    "newArrivals": "Treten Sie unserem WhatsApp-Newsletter bei, um exklusive Rabatte, tolle Angebote zu erhalten und immer auf dem neuesten Stand zu sein.",
     "joinToWhatsApp": "Beitritt zu WhatsAp",
-    "subscribe": "Subscribe",
+    "subscribe": "Jetzt beitreten",
     "allShop": "Alle Geschäfte"
   },
   "SubscriptionForm": {
-    "subscribe": "Abonnieren",
+    "subscribe": "Jetzt beitreten",
     "sending": "Senden...",
     "typeValidEmail": "Geben Sie eine gültige email ein",
     "failedSubscribe": "Fehler beim Abonnieren",
