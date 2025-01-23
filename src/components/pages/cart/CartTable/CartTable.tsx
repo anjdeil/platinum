@@ -8,7 +8,7 @@ import theme from '@/styles/theme';
 import { CartTableProps } from '@/types/pages/cart';
 import checkProductAvailability from '@/utils/cart/checkProductAvailability';
 import { useTranslations } from 'next-intl';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import CartProductWarning from '../CartProductWarning/CartProductWarning';
 import CartQuantity from '../CartQuantity/CartQuantity';
 import {
@@ -48,6 +48,15 @@ const CartTable: FC<CartTableProps> = ({
   const { isMobile } = useResponsive();
   const [innercartItems, setCartItems] = useState(order?.line_items || []);
 
+  useEffect(() => {
+    setCartItems(
+      order?.line_items.filter(lineItem =>
+        cartItems.some(cartItem => cartItem.product_id == lineItem.product_id)
+      ) || []
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [order?.line_items, cartItems]);
+
   const handleDeleteItem = (productId: number, variationId: number) => {
     const updatedCartItems = innercartItems.filter(
       item => item.product_id !== productId || item.variation_id !== variationId
@@ -56,9 +65,6 @@ const CartTable: FC<CartTableProps> = ({
 
     handleChangeQuantity(productId, 'value', variationId, 0);
   };
-
-  console.log('cartItems...', cartItems);
-  console.log('order?.line_items...', order?.line_items);
 
   return (
     <CartTableWrapper>
@@ -88,7 +94,7 @@ const CartTable: FC<CartTableProps> = ({
                 </GridRow>
               </GridHeader>
 
-              {order?.line_items.map(item => {
+              {innercartItems.map(item => {
                 const { resolveCount, isAvailable } = checkProductAvailability(
                   item,
                   productsSpecs
@@ -103,7 +109,7 @@ const CartTable: FC<CartTableProps> = ({
                 });
 
                 return (
-                  <RowWrapper key={item.id} isLoadingItem={isLoadingOrder}>
+                  <RowWrapper key={item.id}>
                     <GridRow>
                       <DeleteCell>
                         <div>
