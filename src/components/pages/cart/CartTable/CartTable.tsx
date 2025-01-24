@@ -115,7 +115,9 @@ const CartTable: FC<CartTableProps> = ({
                       </CartImgWrapper>
                       <TextNameCell>
                         <LinkWrapper
-                          href={`/product/${productSpec?.parent_slug}`}
+                          href={`/product/${
+                            productSpec?.parent_slug || productSpec?.slug
+                          }`}
                         >
                           {item.name}
                         </LinkWrapper>
@@ -175,6 +177,14 @@ const CartTable: FC<CartTableProps> = ({
                 item,
                 productsSpecs
               );
+              const productSpec = productsSpecs.find(product => {
+                if (product.parent_id === 0) {
+                  return product.id === item.product_id;
+                } else {
+                  return product.parent_id === item.product_id;
+                }
+              });
+
               return (
                 <CartCardAllWrapper key={item.id}>
                   <CartCardWrapper isLoadingItem={isLoadingOrder}>
@@ -187,7 +197,13 @@ const CartTable: FC<CartTableProps> = ({
                     </CartImgWrapper>
                     <CardContent>
                       <ProducTitle>
-                        <p>{item.name}</p>
+                        <LinkWrapper
+                          href={`/product/${
+                            productSpec?.parent_slug || productSpec?.slug
+                          }`}
+                        >
+                          {item.name}
+                        </LinkWrapper>
                         <CloseIcon
                           padding="8px"
                           onClick={() =>

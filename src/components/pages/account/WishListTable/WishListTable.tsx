@@ -126,7 +126,9 @@ const WishListTable: FC<WishListTableProps> = ({
                     </WishlistImgWrapper>
                     <CardContent gap="12px">
                       <TextNameCell>
-                        <LinkWrapper href={`/product/${item.parent_slug}`}>
+                        <LinkWrapper
+                          href={`/product/${item?.parent_slug || item?.slug}`}
+                        >
                           {item.name}
                         </LinkWrapper>
                       </TextNameCell>
@@ -178,7 +180,9 @@ const WishListTable: FC<WishListTableProps> = ({
                       </WishlistImgWrapper>
                       <CardContent gap="8px" padding="0 0 4px 0">
                         <ProducTitle>
-                          <LinkWrapper href={`/product/${item.slug}`}>
+                          <LinkWrapper
+                            href={`/product/${item?.parent_slug || item?.slug}`}
+                          >
                             {item.name}
                           </LinkWrapper>
                           <TrashIcon

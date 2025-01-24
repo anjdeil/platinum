@@ -202,7 +202,9 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
                 </CartImgWrapper>
                 <CardContent padding="8px 0" gap="1px">
                   <ProducTitle>
-                    <LinkWrapper href={`/product/${item.parent_slug}`}>
+                    <LinkWrapper
+                      href={`/product/${item?.parent_slug || item?.slug}`}
+                    >
                       {item.name}
                     </LinkWrapper>
                     <TrashIcon
