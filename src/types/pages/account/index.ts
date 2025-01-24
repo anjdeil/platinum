@@ -12,6 +12,11 @@ const AccountLinkBlockSchema = z.object({
   icon: z.any(),
   title: z.string(),
   href: z.string().optional(),
+  onClick: z
+    .function()
+    .args(z.instanceof(MouseEvent))
+    .returns(z.void())
+    .optional(),
 });
 
 const StyledInfoContainerPropsShema = z.object({

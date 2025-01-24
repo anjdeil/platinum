@@ -3,15 +3,17 @@ import {
   useLazyFetchUserDataQuery,
 } from '@/store/rtk-queries/wpApi';
 import { WishlistItem } from '@/types/store/rtk-queries/wpApi';
-import { useEffect } from 'react';
-import useGetAuthToken from './useGetAuthToken';
+import { useEffect, useState } from 'react';
 import { ProductType } from '@/types/components/shop/product/products';
-import { useAppDispatch } from '@/store';
+import { useAppDispatch, useAppSelector } from '@/store';
 import { popupToggle } from '@/store/slices/PopupSlice';
-
+import { getUserFromLocalStorage } from '@/utils/auth/userLocalStorage';
 export const useWishlist = () => {
   const dispatch = useAppDispatch();
-  const authToken = useGetAuthToken();
+
+  const { user: userSlice } = useAppSelector(state => state.userSlice);
+  const [user] = useState(() => getUserFromLocalStorage());
+
   const [fetchUserData, { data: userData, isFetching: isUserFetching }] =
     useLazyFetchUserDataQuery();
   const [fetchUserUpdate, { isLoading: isUpdatingWishlist }] =
@@ -20,14 +22,15 @@ export const useWishlist = () => {
   const wishlist: WishlistItem[] = userData?.meta?.wishlist || [];
 
   useEffect(() => {
-    if (authToken) {
+    if (user !== null) {
       fetchUserData();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authToken]);
+  }, [userSlice]);
 
   const handleWishlistToggle = (product: ProductType) => {
-    if (!authToken) {
+    const user = getUserFromLocalStorage();
+
+    if (!user) {
       dispatch(popupToggle('login'));
       return;
     }
@@ -67,14 +70,16 @@ export const useWishlist = () => {
       fetchUserUpdate(userUpdateRequestBody);
     }
   };
-
-  const checkDesired = (productId: number) =>
-    Boolean(
-      wishlist?.find(
-        (item: WishlistItem) => item.product_id === productId /* &&
-          (!choosenVariation || item.variation_id === choosenVariation.id) */
-      )
-    );
+  const checkDesired = (productId: number) => {
+    const user = getUserFromLocalStorage();
+    if (user) {
+      return Boolean(
+        wishlist?.find((item: WishlistItem) => item.product_id === productId)
+      );
+    } else {
+      return false;
+    }
+  };
 
   return {
     wishlist,

@@ -24,6 +24,8 @@ import theme from '@/styles/theme';
 import { useRouter } from 'next/router';
 import { useTranslations } from 'next-intl';
 import Notification from '../../Notification/Notification';
+import { fetchUser } from '@/utils/auth/authService';
+import { useAppDispatch } from '@/store';
 
 interface LoginFormProps {
   border?: boolean;
@@ -39,7 +41,7 @@ export const LoginForm: FC<LoginFormProps> = ({
   const router = useRouter();
   const t = useTranslations('MyAccount');
   const [customError, setCustomError] = useState<string>('');
-
+  const dispatch = useAppDispatch();
   /** Form settings */
   const {
     register,
@@ -73,10 +75,11 @@ export const LoginForm: FC<LoginFormProps> = ({
       if (redirect) {
         router.push('/my-account');
       }
+
       if (onClose) {
+        fetchUser(dispatch);
         setTimeout(() => {
           onClose();
-          window.location.reload();
         }, 500);
       }
     } catch (err) {

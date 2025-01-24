@@ -68,19 +68,22 @@ const MyAccount: FC<MyAccountPropsType> = ({ user }) => {
   const t = useTranslations('MyAccount');
   const { data: currencies } = useGetCurrenciesQuery();
   const selectedCurrency = useAppSelector(state => state.currencySlice.name);
+  const { user: userSlice } = useAppSelector(state => state.userSlice);
 
   const dispatch = useDispatch();
 
-  const userData = {
-    id: user.id,
-    first_name: user.first_name,
-    last_name: user.last_name,
-    email: user.email,
-  };
+  if (!userSlice) {
+    const userData = {
+      id: user.id,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      email: user.email,
+    };
 
-  dispatch(setUser(userData));
+    dispatch(setUser(userData));
 
-  saveUserToLocalStorage(userData);
+    saveUserToLocalStorage(userData);
+  }
 
   const { data: ordersData } = useFetchOrdersQuery({
     customer: user.id,
