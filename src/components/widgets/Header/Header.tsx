@@ -55,6 +55,7 @@ const Header: React.FC = () => {
               }}
               texttransform="uppercase"
               justify="space-between"
+              align="center"
             />
           </MenuWrapper>
         ) : (

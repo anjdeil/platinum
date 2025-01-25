@@ -12,14 +12,19 @@ export const NavList = styled.ul<NavListProps>`
   list-style: none;
   align-items: ${({ align = 'center' }) => align};
 
-  @media ${({ theme }) => theme.media.large} {
-    column-gap: ${({ mobGap = '48px' }) => mobGap};
+  @media ${({ theme }) => theme.media.xl} {
+    column-gap: ${({ mobGap = '24px' }) => mobGap};
   }
+`;
+export const CustomNav = styled.nav`
+  display: flex;
+  align-items: center;
 `;
 
 export const NavLink = styled(Link)<NavLinkProps>`
   display: inline-block;
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
+  line-height: 1.2rem;
   font-size: ${({ fontSize }) => fontSize};
   text-decoration: none;
   text-align: ${({ textalign = 'center' }) => textalign};
@@ -36,6 +41,6 @@ export const NavLink = styled(Link)<NavLinkProps>`
   }
 
   @media ${({ theme }) => theme.media.large} {
-    font-size: ${({ fontSize = '16px' }) => fontSize};
+    font-size: ${({ fontSize = '0.875rem' }) => fontSize};
   }
 `;

@@ -95,6 +95,7 @@ const CartTable: FC<CartTableProps> = ({
               </GridHeader>
 
               {innercartItems.map(item => {
+                console.log(item);
                 const { resolveCount, isAvailable } = checkProductAvailability(
                   item,
                   productsSpecs
@@ -107,9 +108,9 @@ const CartTable: FC<CartTableProps> = ({
                     return product.parent_id === item.product_id;
                   }
                 });
-
+                console.log(productSpec);
                 return (
-                  <RowWrapper key={item.id}>
+                  <RowWrapper key={item.id} isLoadingItem={isLoadingOrder}>
                     <GridRow>
                       <DeleteCell>
                         <div>
@@ -132,7 +133,7 @@ const CartTable: FC<CartTableProps> = ({
                       </CartImgWrapper>
                       <TextNameCell>
                         <LinkWrapper href={`/product/${productSpec?.slug}`}>
-                          {item.name}
+                          {productSpec?.name || item.name}
                         </LinkWrapper>
                       </TextNameCell>
                       <TextCell>
@@ -190,6 +191,15 @@ const CartTable: FC<CartTableProps> = ({
                 item,
                 productsSpecs
               );
+
+              const productSpec = productsSpecs.find(product => {
+                if (product.parent_id === 0) {
+                  return product.id === item.product_id;
+                } else {
+                  return product.parent_id === item.product_id;
+                }
+              });
+
               return (
                 <CartCardAllWrapper key={item.id}>
                   <CartCardWrapper isLoadingItem={isLoadingOrder}>
@@ -202,7 +212,7 @@ const CartTable: FC<CartTableProps> = ({
                     </CartImgWrapper>
                     <CardContent>
                       <ProducTitle>
-                        <p>{item.name}</p>
+                        <p> {productSpec?.name || item.name}</p>
                         <CloseIcon
                           padding="8px"
                           onClick={() =>

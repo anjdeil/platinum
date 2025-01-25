@@ -118,7 +118,7 @@
     "productsNotFound": "Artikel nicht gefunden"
   },
   "Product": {
-    "addToBasket": "In den Korb",
+    "addToBasket": "In den Warenkorb",
     "viewCart": "Warenkorb anzeigen",
     "chooseOptions": "Option wählen",
     "updateCart": "Menge aktualisieren",

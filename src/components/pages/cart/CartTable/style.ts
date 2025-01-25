@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
-
+import { css } from '@emotion/react';
+import { blink } from '../styles';
 interface GridRowFullProps {
   padding?: string;
 }
@@ -17,13 +18,19 @@ export const GridHeader = styled.div`
   text-transform: uppercase;
   border: 1px solid ${({ theme }) => theme.background.secondary};
 `;
-export const RowWrapper = styled.div`
+export const RowWrapper = styled.div<{ isLoadingItem: boolean }>`
   border: 1px solid ${({ theme }) => theme.colors.lightBorder};
   border-top: none;
   &:last-of-type {
     border-bottom-right-radius: 8px;
     border-bottom-left-radius: 8px;
   }
+  ${({ isLoadingItem }) =>
+    isLoadingItem &&
+    css`
+      pointer-events: none;
+      animation: ${blink} 1.2s ease-in-out infinite;
+    `}
 `;
 export const GridRow = styled.div<GridRowFullProps>`
   height: 100%;

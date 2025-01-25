@@ -70,20 +70,22 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
   const [quantity, setQuantity] = useState<number>(1);
   const [cartMatch, setCartMatch] = useState<CartItem>();
 
-  useEffect(() => {
-    const cartMatch = cartItems.find(
-      ({ product_id }) => product_id === product.id
-    );
-    if (cartMatch) {
-      setCartMatch(cartMatch);
-      setQuantity(cartMatch.quantity);
-    }
-  }, [cartItems]);
-
   /**
    * Choosen variation
    */
   const [currentVariation, setCurrentVariation] = useState<ProductVariation>();
+
+  useEffect(() => {
+    const cartMatch = cartItems.find(
+      ({ product_id, variation_id }) =>
+        product_id === product.id &&
+        (!variation_id || variation_id === currentVariation?.id)
+    );
+    setCartMatch(cartMatch);
+    if (cartMatch) {
+      setQuantity(cartMatch.quantity);
+    }
+  }, [cartItems, product, currentVariation?.id]);
 
   // Temporary code (whole useEffect) for assigning the current variation
   useEffect(() => {
