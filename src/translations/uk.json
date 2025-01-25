@@ -97,7 +97,7 @@
     "codeProvidedHasExpired": "Термін дії наданого коду скидання закінчився."
   },
   "TopBar": {
-    "CallUs": "Зателефонуйте нам"
+    "CallUs": "Контакт"
   },
   "Search": {
     "Search": "Пошук"
@@ -198,21 +198,21 @@
   "Contacts": {
     "contacts": "Контакти",
     "telephone": "Телефон",
-    "call": "Подзвонити",
+    "call": "Зателефонувати",
     "address": "Адреса",
-    "schedule": "Пн-Пт: з",
-    "dayOff": "Сб-Нд: Вихідний",
-    "satSun": "Сб-Нд: з",
+    "schedule": "Пн-Пт: з {from} до {to}",
+    "dayOff": "Сб-Нд: вихідний",
+    "satSun": "Сб-Нд: з {from} до {to}",
     "howToGetThere": "Як дістатися?",
-    "email": "Електронна пошта",
+    "email": "E-MAIL",
     "toWrite": "Написати",
     "socialMedia": "Ми в соціальних мережах",
     "askUsQuestion": "Задайте нам питання",
-    "yourNamePlaceholder": "Як вас звати?",
-    "emailPlaceholder": "Електронна пошта",
-    "yourQuestionPlaceholder": "Напишіть своє питання",
-    "sending": "Відправляється...",
-    "sendButton": "Відправити",
+    "yourNamePlaceholder": "Як вас звати",
+    "emailPlaceholder": "E-mail",
+    "yourQuestionPlaceholder": "Напишіть ваше питання",
+    "sending": "Надсилається...",
+    "sendButton": "Надіслати питання",
     "errorMessage": "Щось пішло не так. Будь ласка, спробуйте ще раз.",
     "successMessage": "Ваше повідомлення успішно відправлено!"
   },
@@ -280,13 +280,13 @@
     "newUnreadMessage": "Нове непрочитане повідомлення",
     "unreadMessageDate": "Зараз",
     "subscribeToOurNewsletter": "Підпишіться на нашу розсилку!",
-    "newArrivals": "Дізнавайтеся першими про новинки, ексклюзивні знижки та спеціальні пропозиції.",
+    "newArrivals": "Приєднуйтесь до нашої розсилки в WhatsApp, щоб отримувати ексклюзивні знижки, чудові пропозиції та завжди бути в курсі новин.",
     "joinToWhatsApp": "Приєднуйтесь до WhatsApp",
-    "subscribe": "Підписатися",
+    "subscribe": "Приєднатися зараз",
     "allShop": "Весь магазин"
   },
   "SubscriptionForm": {
-    "subscribe": "Підписатися",
+    "subscribe": "Приєднатися зараз",
     "sending": "Відправка...",
     "typeValidEmail": "Введіть правильну електронну адресу",
     "failedSubscribe": "Не вдалося відправити лист",
