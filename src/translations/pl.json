@@ -200,10 +200,10 @@
     "telephone": "Telefon",
     "call": "Zadzwoń",
     "address": "Adres",
-    "schedule": "Pn-Pt: od",
-    "dayOff": "Sb-Nd: Dzień wolny",
-    "satSun": "Sb-Nd: od",
-    "howToGetThere": "Jak się tam dostać?",
+    "schedule": "Pon-Pt: od {from} do {to}",
+    "dayOff": "Sob-Ndz: Dzień wolny",
+    "satSun": "Sob-Ndz: od {from} do {to}",
+    "howToGetThere": "Jak dojechać?",
     "email": "E-mail",
     "toWrite": "Napisz",
     "socialMedia": "Jesteśmy w mediach społecznościowych",
@@ -212,7 +212,7 @@
     "emailPlaceholder": "E-mail",
     "yourQuestionPlaceholder": "Napisz swoje pytanie",
     "sending": "Wysyłanie...",
-    "sendButton": "Wyślij",
+    "sendButton": "Wyślij pytanie",
     "errorMessage": "Coś poszło nie tak. Spróbuj ponownie.",
     "successMessage": "Twoja wiadomość została wysłana pomyślnie!"
   },
@@ -308,7 +308,7 @@
     "myAccount": "Moje konto",
     "categories": "Kategorie",
     "information": "Informacja",
-    "contacts": "Kontakty",
+    "contacts": "Kontakt",
     "delivery": "Dostawa",
     "payments": "Płatności"
   }
