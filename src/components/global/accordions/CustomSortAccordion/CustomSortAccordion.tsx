@@ -17,6 +17,7 @@ export const CustomSortAccordion = () => {
   const accordionRef = useRef<HTMLDivElement | null>(null);
   const detailsRef = useRef<HTMLDivElement | null>(null);
   const t = useTranslations('Archive');
+
   const currentSort = useMemo(() => {
     const orderBy = searchParams.get('order_by');
     const order = searchParams.get('order');
@@ -81,11 +82,12 @@ export const CustomSortAccordion = () => {
       const newSlugs = slugs.filter(
         slug => slug !== 'page' && Number.isNaN(+slug)
       );
-
+      
       if (sort === 'stocks') {
+        const { order_by, order, ...restParams } = params;
         router.push({
           pathname: router.pathname,
-          query: { slugs: newSlugs, ...params },
+          query: { slugs: newSlugs, ...restParams },
         });
         setExpanded(false);
         return;
@@ -103,13 +105,6 @@ export const CustomSortAccordion = () => {
         case 'expensive':
           newSortParams = { order_by: 'min_price', order: 'desc' };
           break;
-        case 'stocks':
-          router.push({
-            pathname: router.pathname,
-            query: { slugs: newSlugs, ...params },
-          });
-          setExpanded(false);
-          return;
         default:
           break;
       }

@@ -97,7 +97,7 @@
     "codeProvidedHasExpired": "Термін дії наданого коду скидання закінчився."
   },
   "TopBar": {
-    "CallUs": "Зателефонуйте нам"
+    "CallUs": "Контакт"
   },
   "Search": {
     "Search": "Пошук"
@@ -114,7 +114,8 @@
     "clearFilter": "Очистити",
     "applyFilter": "Застосувати",
     "searchResults": "Результати пошуку",
-    "phraseSought": "Шукана фраза"
+    "phraseSought": "Шукана фраза",
+    "productsNotFound": "Товари не знайдено"
   },
   "Product": {
     "addToBasket": "Додати до кошика",
@@ -197,21 +198,21 @@
   "Contacts": {
     "contacts": "Контакти",
     "telephone": "Телефон",
-    "call": "Подзвонити",
+    "call": "Зателефонувати",
     "address": "Адреса",
-    "schedule": "Пн-Пт: з",
-    "dayOff": "Сб-Нд: Вихідний",
-    "satSun": "Сб-Нд: з",
+    "schedule": "Пн-Пт: з {from} до {to}",
+    "dayOff": "Сб-Нд: вихідний",
+    "satSun": "Сб-Нд: з {from} до {to}",
     "howToGetThere": "Як дістатися?",
-    "email": "Електронна пошта",
+    "email": "E-MAIL",
     "toWrite": "Написати",
     "socialMedia": "Ми в соціальних мережах",
     "askUsQuestion": "Задайте нам питання",
-    "yourNamePlaceholder": "Як вас звати?",
-    "emailPlaceholder": "Електронна пошта",
-    "yourQuestionPlaceholder": "Напишіть своє питання",
-    "sending": "Відправляється...",
-    "sendButton": "Відправити",
+    "yourNamePlaceholder": "Як вас звати",
+    "emailPlaceholder": "E-mail",
+    "yourQuestionPlaceholder": "Напишіть ваше питання",
+    "sending": "Надсилається...",
+    "sendButton": "Надіслати питання",
     "errorMessage": "Щось пішло не так. Будь ласка, спробуйте ще раз.",
     "successMessage": "Ваше повідомлення успішно відправлено!"
   },
@@ -251,6 +252,8 @@
     "PasswordDigit": "Пароль повинен містити хоча б одну цифру.",
     "PasswordSpecialChar": "Пароль повинен містити хоча б один спеціальний символ.",
     "PasswordsDoNotMatch": "Паролі не збігаються",
+    "parcelLocker": "Будь ласка, оберіть скриньку для посилок",
+    "shippingMethod": "Будь ласка, оберіть спосіб доставки",
     "noChanges": "Ваші дані не змінилися"
   },
   "Forms": {
@@ -279,13 +282,13 @@
     "newUnreadMessage": "Нове непрочитане повідомлення",
     "unreadMessageDate": "Зараз",
     "subscribeToOurNewsletter": "Підпишіться на нашу розсилку!",
-    "newArrivals": "Дізнавайтеся першими про новинки, ексклюзивні знижки та спеціальні пропозиції.",
+    "newArrivals": "Приєднуйтесь до нашої розсилки в WhatsApp, щоб отримувати ексклюзивні знижки, чудові пропозиції та завжди бути в курсі новин.",
     "joinToWhatsApp": "Приєднуйтесь до WhatsApp",
-    "subscribe": "Підписатися",
+    "subscribe": "Приєднатися зараз",
     "allShop": "Весь магазин"
   },
   "SubscriptionForm": {
-    "subscribe": "Підписатися",
+    "subscribe": "Приєднатися зараз",
     "sending": "Відправка...",
     "typeValidEmail": "Введіть правильну електронну адресу",
     "failedSubscribe": "Не вдалося відправити лист",
@@ -302,6 +305,23 @@
     "nextPost": "Наступний",
     "blogSectionSubtitle": "Останні статті",
     "blogPage": "Блог"
+  },
+  "ShippingMethodSelector": {
+    "delivery": "Доставка",
+    "change": "Змінити",
+    "parcelLocker": "Поштомат",
+    "selectParcelLocker": "Вибрати поштомат",
+    "deliveryUnavailable": "Способи доставки недоступні для обраного регіону. Будь ласка, перевірте свою країну."
+  },
+  "InPostGeowidget": {
+    "close": "Закрити"
+  },
+  "Checkout": {
+    "login": "Увійдіть",
+    "fieldsWillFilled": ", і поля будуть заповнені автоматично після першого замовлення",
+    "pay": "Оплатити замовлення",
+    "agreement": "Ваші персональні дані будуть використані для обробки вашого замовлення, підтримки вашого досвіду на цьому веб-сайті та для інших цілей, описаних у нашій ",
+    "privacyPolicy": "політиці конфіденційності"
   },
   "Footer": {
     "myAccount": "Мій акаунт",

@@ -97,7 +97,7 @@
     "codeProvidedHasExpired": "Dostarczony kod resetowania wygasł."
   },
   "TopBar": {
-    "CallUs": "Zadzwoń do nas"
+    "CallUs": "Kontakt"
   },
   "Search": {
     "Search": "Wyszukiwanie"
@@ -114,7 +114,8 @@
     "clearFilter": "Wyczyść",
     "applyFilter": "Zastosuj",
     "searchResults": "Wyniki wyszukiwania",
-    "phraseSought": "Poszukiwana fraza"
+    "phraseSought": "Poszukiwana fraza",
+    "productsNotFound": "Nie znaleziono towarów"
   },
   "Product": {
     "addToBasket": "Dodaj do koszyka",
@@ -199,10 +200,10 @@
     "telephone": "Telefon",
     "call": "Zadzwoń",
     "address": "Adres",
-    "schedule": "Pn-Pt: od",
-    "dayOff": "Sb-Nd: Dzień wolny",
-    "satSun": "Sb-Nd: od",
-    "howToGetThere": "Jak się tam dostać?",
+    "schedule": "Pon-Pt: od {from} do {to}",
+    "dayOff": "Sob-Ndz: Dzień wolny",
+    "satSun": "Sob-Ndz: od {from} do {to}",
+    "howToGetThere": "Jak dojechać?",
     "email": "E-mail",
     "toWrite": "Napisz",
     "socialMedia": "Jesteśmy w mediach społecznościowych",
@@ -211,7 +212,7 @@
     "emailPlaceholder": "E-mail",
     "yourQuestionPlaceholder": "Napisz swoje pytanie",
     "sending": "Wysyłanie...",
-    "sendButton": "Wyślij",
+    "sendButton": "Wyślij pytanie",
     "errorMessage": "Coś poszło nie tak. Spróbuj ponownie.",
     "successMessage": "Twoja wiadomość została wysłana pomyślnie!"
   },
@@ -251,6 +252,8 @@
     "PasswordDigit": "Hasło musi zawierać przynajmniej jedną cyfrę.",
     "PasswordSpecialChar": "Hasło musi zawierać przynajmniej jeden znak specjalny.",
     "PasswordsDoNotMatch": "Hasła nie są zgodne",
+    "parcelLocker": "Wybierz paczkomat",
+    "shippingMethod": "Wybierz metodę wysyłki",
     "noChanges": "Dane nie uległy zmianie"
   },
   "Forms": {
@@ -279,13 +282,13 @@
     "newUnreadMessage": "Nowa nieprzeczytana wiadomość",
     "unreadMessageDate": "Teraz",
     "subscribeToOurNewsletter": "Zapisz się do naszego newslettera!",
-    "newArrivals": "Bądź pierwszy, który dowie się o nowościach, ekskluzywnych zniżkach i ofertach specjalnych.",
+    "newArrivals": "Dołącz do naszego newslettera WhatsApp, aby otrzymywać ekskluzywne rabaty, świetne oferty i być zawsze na bieżąco.",
     "joinToWhatsApp": "Dołącz do nas na WhatsApp",
-    "subscribe": "Zapisz się",
+    "subscribe": "Dołącz teraz",
     "allShop": "Wszystkie produkty"
   },
   "SubscriptionForm": {
-    "subscribe": "Zapisz się",
+    "subscribe": "Dołącz teraz",
     "sending": "Wysyłanie...",
     "typeValidEmail": "Wprowadź poprawny adres e-mail",
     "failedSubscribe": "Nie udało się wysłać e-maila",
@@ -303,11 +306,28 @@
     "blogPage": "Blog",
     "blogSectionSubtitle": "Ostatnie artykuły"
   },
+  "ShippingMethodSelector": {
+    "delivery": "Dostawa",
+    "change": "Zmień",
+    "parcelLocker": "Paczkomat",
+    "selectParcelLocker": "Wybierz paczkomat",
+    "deliveryUnavailable": "Metody dostawy nie są dostępne dla wybranego regionu. Sprawdź swój kraj."
+  },
+  "InPostGeowidget": {
+    "close": "Zamknij"
+  },
+  "Checkout": {
+    "login": "Zaloguj się",
+    "fieldsWillFilled": ", a pola zostaną wypełnione automatycznie po pierwszym zamówieniu",
+    "pay": "Opłacić zamówienie",
+    "agreement": "Dane osobowe użytkownika będą wykorzystywane do przetwarzania jego zamówień, obsługi jego doświadczeń na tej stronie internetowej oraz do innych celów opisanych w naszej ",
+    "privacyPolicy": "polityce prywatności"
+  },
   "Footer": {
     "myAccount": "Moje konto",
     "categories": "Kategorie",
     "information": "Informacja",
-    "contacts": "Kontakty",
+    "contacts": "Kontakt",
     "delivery": "Dostawa",
     "payments": "Płatności"
   }

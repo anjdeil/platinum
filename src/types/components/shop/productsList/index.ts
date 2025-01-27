@@ -4,6 +4,7 @@ import { ProductSchema } from '../product/products';
 export const ColumnsPropsSchema = z.object({
   mobileColumns: z.number().optional(),
   tabletColumns: z.number().optional(),
+  mintabletColumns: z.number().optional(),
   desktopColumns: z.number().optional(),
 });
 

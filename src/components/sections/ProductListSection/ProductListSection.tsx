@@ -25,7 +25,7 @@ export const ProductListSection: React.FC<ProductListSectionProps> = ({
   const POPULAR_PARAMS = {
     lang: router.locale,
     per_page: PER_PAGE,
-    order_by: 'stock_quantity',
+    order_by: 'total_sales',
     order: 'desc' as const,
   };
 

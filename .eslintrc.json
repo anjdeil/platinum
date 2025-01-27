@@ -34,7 +34,7 @@
       {
         "vars": "all",
         "args": "none",
-        "ignoreRestSiblings": false,
+        "ignoreRestSiblings": true,
         "argsIgnorePattern": "^_"
       }
     ],
