@@ -1,9 +1,9 @@
 import { MenusContext } from '@/components/Layout/Layout';
+import { wpMenuProps } from '@/types/menus/WpMenus';
+import { menuItemsType } from '@/types/services/wpCustomApi/menus';
 import { FC, useContext } from 'react';
 import { MenuSkeleton } from '../MenuSkeleton';
-import { NavLink, NavList } from './styles';
-import { menuItemsType } from '@/types/services/wpCustomApi/menus';
-import { wpMenuProps } from '@/types/menus/WpMenus';
+import { NavLink, NavList, StyleNav } from './styles';
 
 const Nav: FC<wpMenuProps> = ({
   menuId,
@@ -47,7 +47,7 @@ const Nav: FC<wpMenuProps> = ({
   }
 
   return (
-    <nav>
+    <StyleNav>
       <NavList
         justify={justify}
         direction={direction}
@@ -71,7 +71,7 @@ const Nav: FC<wpMenuProps> = ({
             </li>
           ))}
       </NavList>
-    </nav>
+    </StyleNav>
   );
 };
 
