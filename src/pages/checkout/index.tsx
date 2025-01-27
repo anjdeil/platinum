@@ -8,7 +8,7 @@ import {
   CheckoutPayButton, CheckoutPayButtonWrapper,
   CheckoutSummary,
   CheckoutSummaryWrapper,
-} from './style';
+} from '@/components/pages/checkout/style';
 import ShippingMethodSelector from '@/components/pages/checkout/ShippingMethodSelector/ShippingMethodSelector';
 import useShippingMethods from '@/hooks/useShippingMethods';
 import { OrderLineMetaDataType, ParcelMachineType, ShippingLineType } from '@/types/pages/checkout';
