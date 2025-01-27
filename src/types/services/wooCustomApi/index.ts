@@ -367,6 +367,31 @@ export const ReviewRespSchema = z.object({
 
 export const ReviewsRespSchema = z.array(ReviewRespSchema);
 
+export const ShippingZoneSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  order: z.number()
+});
+
+export const ShippingMethodSchema = z.object({
+  id: z.number(),
+  instance_id: z.number(),
+  title: z.string(),
+  order: z.number(),
+  enabled: z.boolean(),
+  method_id: z.string(),
+  method_title: z.string(),
+  method_description: z.string(),
+});
+
+export const ShippingLocationSchema = z.object({
+  code: z.string(),
+  type: z.string(),
+});
+
+export type ShippingZoneType = z.infer<typeof ShippingZoneSchema>;
+export type ShippingMethodType = z.infer<typeof ShippingMethodSchema>;
+export type ShippingLocationType = z.infer<typeof ShippingLocationSchema>;
 export type OrderType = z.infer<typeof OrderTypeSchema>;
 export type AddressType = z.infer<typeof AddressTypeSchema>;
 export type WooCustomerType = z.infer<typeof WooCustomerSchema>;

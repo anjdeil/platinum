@@ -252,6 +252,8 @@
     "PasswordDigit": "Hasło musi zawierać przynajmniej jedną cyfrę.",
     "PasswordSpecialChar": "Hasło musi zawierać przynajmniej jeden znak specjalny.",
     "PasswordsDoNotMatch": "Hasła nie są zgodne",
+    "parcelLocker": "Wybierz paczkomat",
+    "shippingMethod": "Wybierz metodę wysyłki",
     "noChanges": "Dane nie uległy zmianie"
   },
   "Forms": {
@@ -303,6 +305,23 @@
     "nextPost": "Następny",
     "blogPage": "Blog",
     "blogSectionSubtitle": "Ostatnie artykuły"
+  },
+  "ShippingMethodSelector": {
+    "delivery": "Dostawa",
+    "change": "Zmień",
+    "parcelLocker": "Paczkomat",
+    "selectParcelLocker": "Wybierz paczkomat",
+    "deliveryUnavailable": "Metody dostawy nie są dostępne dla wybranego regionu. Sprawdź swój kraj."
+  },
+  "InPostGeowidget": {
+    "close": "Zamknij"
+  },
+  "Checkout": {
+    "login": "Zaloguj się",
+    "fieldsWillFilled": ", a pola zostaną wypełnione automatycznie po pierwszym zamówieniu",
+    "pay": "Opłacić zamówienie",
+    "agreement": "Dane osobowe użytkownika będą wykorzystywane do przetwarzania jego zamówień, obsługi jego doświadczeń na tej stronie internetowej oraz do innych celów opisanych w naszej ",
+    "privacyPolicy": "polityce prywatności"
   },
   "Footer": {
     "myAccount": "Moje konto",
