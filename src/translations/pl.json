@@ -321,7 +321,8 @@
     "fieldsWillFilled": ", a pola zostaną wypełnione automatycznie po pierwszym zamówieniu",
     "pay": "Opłacić zamówienie",
     "agreement": "Dane osobowe użytkownika będą wykorzystywane do przetwarzania jego zamówień, obsługi jego doświadczeń na tej stronie internetowej oraz do innych celów opisanych w naszej ",
-    "privacyPolicy": "polityce prywatności"
+    "privacyPolicy": "polityce prywatności",
+    "registerAccount": "Zarejestruj konto podczas dokonywania zakupów."
   },
   "Footer": {
     "myAccount": "Moje konto",

@@ -72,7 +72,7 @@ export default function CheckoutPage() {
   /**
    * Shipping
    */
-  const [currentCountryCode, setCurrentCountryCode] = useState<string>();
+  const [currentCountryCode, setCurrentCountryCode] = useState<string>('PL');
   const { shippingMethods, isLoading } = useShippingMethods(currentCountryCode);
   const [shippingMethod, setShippingMethod] = useState<ShippingMethodType>();
   const [parcelMachine, setParcelMachine] = useState<ParcelMachineType>();
@@ -84,18 +84,24 @@ export default function CheckoutPage() {
 
       const meta: OrderLineMetaDataType[] = [];
 
-      if (parcelMachinesMethods.includes(method_id) && parcelMachine && parcelMachine.methodId === method_id) {
+      if (
+        parcelMachinesMethods.includes(method_id) &&
+        parcelMachine &&
+        parcelMachine.methodId === method_id
+      ) {
         meta.push(
           {
             key: 'Selected parcel locker',
             value: parcelMachine.choosenParcelMachine.name,
-          }, {
+          },
+          {
             key: 'Address',
             value: parcelMachine.choosenParcelMachine.address,
-          }, {
+          },
+          {
             key: 'Description',
             value: parcelMachine.choosenParcelMachine.description,
-          },
+          }
         );
       }
 
@@ -116,14 +122,19 @@ export default function CheckoutPage() {
   /**
    * Order logic
    */
-  const [orderStatus, setOrderStatus] = useState<'on-hold' | 'pending'>('on-hold');
+  const [orderStatus, setOrderStatus] = useState<'on-hold' | 'pending'>(
+    'on-hold'
+  );
 
   const authToken = useGetAuthToken();
 
-  const { name: currency, code: currencySymbol } = useAppSelector(state => state.currencySlice);
+  const { name: currency, code: currencySymbol } = useAppSelector(
+    state => state.currencySlice
+  );
   const { cartItems, couponCodes } = useAppSelector(state => state.cartSlice);
 
-  const [createOrder, { data: order, isLoading: isOrderLoading = true }] = useCreateOrderMutation();
+  const [createOrder, { data: order, isLoading: isOrderLoading = true }] =
+    useCreateOrderMutation();
   const [getProductsMinimized] = useGetProductsMinimizedMutation();
   const [fetchUserData, { data: userData }] = useLazyFetchUserDataQuery();
 
@@ -152,7 +163,7 @@ export default function CheckoutPage() {
 
   /* Update an order */
   useEffect(() => {
-    const couponLines = couponCodes.map((code) => ({ code }));
+    const couponLines = couponCodes.map(code => ({ code }));
 
     const loyaltyStatus = userData?.meta?.loyalty;
     if (loyaltyStatus) couponLines.push({ code: loyaltyStatus });
@@ -160,6 +171,18 @@ export default function CheckoutPage() {
     createOrder({
       status: orderStatus,
       currency,
+      billing: {
+        first_name: 'John',
+        last_name: 'Doe',
+        address_1: '969 Market',
+        address_2: '',
+        city: 'San Francisco',
+        state: 'CA',
+        postcode: '94103',
+        country: 'US',
+        email: 'john.doe@example.com',
+        phone: '(555) 555-5555',
+      },
       line_items: cartItems,
       coupon_lines: couponLines,
       ...(userData?.id && { customer_id: userData.id }),
