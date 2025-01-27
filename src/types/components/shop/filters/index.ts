@@ -2,10 +2,10 @@ import { AttributeSchema } from "@/types/services/wpCustomApi/attributes";
 import { z } from "zod";
 
 export const FilterPanelPropsSchema = z.object({
-    attributes: z.array(AttributeSchema),
-    maxPrice: z.number(),
-    minPrice: z.number()
-})
+  attributes: z.array(AttributeSchema),
+  minPrice: z.number(),
+  maxPrice: z.number(),
+});
 
 export const FilterAttributesPropsSchema = z.object({
   attribute: AttributeSchema,

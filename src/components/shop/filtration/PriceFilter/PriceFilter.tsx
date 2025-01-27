@@ -5,6 +5,7 @@ import { Divider, PriceFilterContainer } from './styles';
 import { FilterActionButtons } from '../filterActionButtons';
 
 interface PriceFilter {
+  currencyCode: string;
   currentMin: number;
   currentMax: number;
   minPrice: number;
@@ -17,6 +18,7 @@ interface PriceFilter {
 
 export const PriceFilter: FC<PriceFilter> = props => {
   const {
+    currencyCode,
     currentMin,
     currentMax,
     minPrice,
@@ -35,7 +37,7 @@ export const PriceFilter: FC<PriceFilter> = props => {
 
       if (newValue[1] !== currentMax) updateMaxPrice(newValue[1]);
     },
-    []
+    [currentMin, currentMax, updateMinPrice, updateMaxPrice]
   );
 
   return (
@@ -52,7 +54,7 @@ export const PriceFilter: FC<PriceFilter> = props => {
         <CustomInput value={currentMin} onChange={updateMinPrice} />
         <Divider />
         <CustomInput value={currentMax} onChange={updateMaxPrice} />
-        <p>zł</p>
+        <p>{currencyCode}</p>
       </PriceFilterContainer>
       <FilterActionButtons onReset={onReset} onApply={onApply} isApply={true} />
     </>
