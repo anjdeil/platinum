@@ -25,19 +25,8 @@ export const ShippingMethodSelectorMethod = styled.label`
     position: relative;
     display: block;
     line-height: 1.4;
-    &:first-child .ShippingMethodSelectorMethodContent {
-        border-radius: 30px 30px 10px 10px;
-    }
     &:last-child {
         margin-bottom: 0;
-        .ShippingMethodSelectorMethodContent {
-            border-radius: 10px 10px 30px 30px;
-        }
-    }
-    &:last-child:first-child {
-        .ShippingMethodSelectorMethodContent {
-            border-radius: 30px 30px 30px 30px;
-        }
     }
 `;
 
@@ -62,7 +51,7 @@ export const ShippingMethodSelectorMethodRadio = styled.input`
 
 export const ShippingMethodSelectorMethodContent = styled.div`
     position: relative;
-    border-radius: 10px;
+    border-radius: 30px;
     border: 2px solid ${({ theme }) => theme.background.secondary};
     padding: 30px 25px;
     transition: .2s ease;

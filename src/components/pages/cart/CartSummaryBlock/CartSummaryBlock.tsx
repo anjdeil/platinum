@@ -18,6 +18,7 @@ import { setCommentToOrder } from '@/store/slices/cartSlice';
 import OrderSummary from '../OrderSummary/OrderSummary';
 import { CartSummaryBlockProps } from '@/types/pages/cart';
 import Notification from '@/components/global/Notification/Notification';
+import router from 'next/router';
 
 const CartSummaryBlock: FC<CartSummaryBlockProps> = ({
   symbol,
@@ -69,22 +70,19 @@ const CartSummaryBlock: FC<CartSummaryBlockProps> = ({
 
         {!isLoading && (
           <>
-            {auth ? (
               <StyledButton
                 width="100%"
                 height="56px"
                 secondary={true}
                 hoverColor={theme.colors.white}
                 hoverBackgroundColor={theme.colors.primary}
+                onClick={() => {
+                  router.push('/checkout');
+                }}
                 disabled={isLoading || cartItems.length === 0}
               >
                 {t('Continue')}
               </StyledButton>
-            ) : (
-              <Notification type="info">
-                {t('YouNeedToLoginForOrder')}
-              </Notification>
-            )}
           </>
         )}
       </CartSummaryWrapper>

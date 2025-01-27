@@ -65,11 +65,27 @@ const ParcelMachineSchema = z.object({
     choosenParcelMachine: z.object({
         name: z.string(),
         address: z.string(),
-        description: z.string().optional()
+        description: z.string()
     })
 });
 
+const OrderLineMetaDataSchema = z.object({
+    key: z.string(),
+    value: z.string(),
+    display_key: z.string().optional(),
+    display_value: z.string().optional()
+});
+
+const ShippingLineSchema = z.object({
+    method_id: z.string(),
+    method_title: z.string(),
+    instance_id: z.string(),
+    meta_data: z.array(OrderLineMetaDataSchema).optional()
+})
+
 export type ShippingsType = z.infer<typeof ShippingsSchema>;
+export type ShippingLineType = z.infer<typeof ShippingLineSchema>;
+export type OrderLineMetaDataType = z.infer<typeof OrderLineMetaDataSchema>;
 export type ParcelMachineType = z.infer<typeof ParcelMachineSchema>;
 export type userFieldsType = z.infer<typeof userDataSchema>;
 export type CheckoutProps = z.infer<typeof CheckoutPropsSchema>;

@@ -25,7 +25,7 @@ export const InPostGeowidgetWindow = styled.div`
     }
 `;
 
-export const InPostGeowidgetCloseButton = styled.button`
+export const InPostGeowidgetCloseButton = styled.div`
     position: absolute;
     top: 20px;
     left: 50%;

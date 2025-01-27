@@ -165,7 +165,7 @@
     "Continue": "Continue",
     "OrderSummaryTotal": "total to pay",
     "products": "Products",
-    "сoupon": "Сoupon",
+    "coupon": "Coupon",
     "paymentMethod": "Payment method",
     "Basket": "Basket",
     "PersonalInformation": "Personal Information",
@@ -236,7 +236,9 @@
     "PasswordLowercaseLetter": "Password must contain at least one lowercase letter.",
     "PasswordDigit": "Password must contain at least one digit.",
     "PasswordSpecialChar": "Password must contain at least one special character.",
-    "PasswordsDoNotMatch": "Passwords do not match"
+    "PasswordsDoNotMatch": "Passwords do not match",
+    "parcelLocker": "Please, select a parcel locker",
+    "shippingMethod": "Please, select a shipping method"
   },
   "Forms": {
     "applicationForm": "application form",
@@ -296,5 +298,12 @@
   },
   "InPostGeowidget": {
     "close": "Close"
+  },
+  "Checkout": {
+    "login": "Log in",
+    "fieldsWillFilled": " and the fields will be filled in automatically after your first order",
+    "pay": "Pay for order",
+    "agreement": "Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our ",
+    "privacyPolicy": "privacy policy"
   }
 }
