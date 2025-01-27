@@ -219,13 +219,13 @@ export default function CheckoutPage() {
 
           {/* Delete 3 strings bellow after forms implemented */}
           <button style={{ border: 'none', background: 'none', margin: '1em', textDecoration: 'underline' }}
-                  onClick={() => setCurrentCountryCode('PL')}>Set "PL"
+                  onClick={() => setCurrentCountryCode('PL')}>Set &ldquo;PL&ldquo;
           </button>
           <button style={{ border: 'none', background: 'none', margin: '1em', textDecoration: 'underline' }}
-                  onClick={() => setCurrentCountryCode('US')}>Set "US"
+                  onClick={() => setCurrentCountryCode('US')}>Set &ldquo;US&ldquo;
           </button>
           <button style={{ border: 'none', background: 'none', margin: '1em', textDecoration: 'underline' }}
-                  onClick={() => setCurrentCountryCode('Bla-bla')}>Set "Bla-bla"
+                  onClick={() => setCurrentCountryCode('Bla-bla')}>Set &ldquo;Bla-bla&ldquo;
           </button>
 
           <ShippingMethodSelector
