@@ -42,7 +42,7 @@ export default function CheckoutPage() {
   /**
    * InPost
    */
-  const { InPostHead, InPostGeowidget, pointDetail } = useInPostGeowidget();
+  const { inPostHead, InPostGeowidget, pointDetail } = useInPostGeowidget();
   const [isGeowidgetShown, setGeowidgetShown] = useState(false);
 
   const handleParcelMachineChange = (methodId: string) => {
@@ -194,7 +194,7 @@ export default function CheckoutPage() {
   return (
     <>
       <Head>
-        <InPostHead />
+        {inPostHead},
       </Head>
       <OrderProgress />
 
