@@ -7,6 +7,8 @@ import { FilterActionButtons } from '../filterActionButtons';
 import { FilterAttributes } from '../FilterAttributes/FilterAttributes';
 import { PriceFilter } from '../PriceFilter';
 import { FilterPanelWrap } from './styles';
+import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
+import { useAppSelector } from '@/store';
 
 /**
  * @todo
@@ -25,13 +27,49 @@ type UpdateAttributesParams = {
 
 export const FilterPanel: FC<FilterPanelPropsType> = ({
   attributes,
-  maxPrice,
   minPrice,
+  maxPrice,
 }) => {
+  const {
+    currentCurrency,
+    convertCurrency,
+    convertToDefaultCurrency,
+    currencyCode,
+    isLoading,
+  } = useCurrencyConverter();
+  const selectedCurrency = useAppSelector(state => state.currencySlice);
+
+  const [initialPriceRange, setInitialPriceRange] = useState({
+    min: minPrice,
+    max: maxPrice,
+  });
+
   const [priceRange, setPriceRange] = useState({
     min: minPrice,
     max: maxPrice,
   });
+
+  useEffect(() => {
+    const initializePrices = async () => {
+      const convertedMinPrice = await convertCurrency(minPrice);
+      const convertedMaxPrice = await convertCurrency(maxPrice);
+      setInitialPriceRange({ min: convertedMinPrice, max: convertedMaxPrice });
+      setPriceRange({ min: convertedMinPrice, max: convertedMaxPrice });
+    };
+
+    initializePrices();
+  }, [minPrice, maxPrice, selectedCurrency, currentCurrency]);
+
+  useEffect(() => {
+    const updatePrices = async () => {
+      const convertedMinPrice = await convertCurrency(minPrice);
+      const convertedMaxPrice = await convertCurrency(maxPrice);
+      setPriceRange({ min: convertedMinPrice, max: convertedMaxPrice });
+    };
+
+    updatePrices();
+  }, [currentCurrency, minPrice, maxPrice]);
+
   const [chosenAttributes, setChosenAttributes] =
     useState<ChosenAttributesType>(new Map());
   const router = useRouter();
@@ -75,7 +113,7 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
   );
   /** Updates chosen with url params */
   useEffect(() => {
-    const updateFromUrl = (url?: string) => {
+    const updateFromUrl = async (url?: string) => {
       const currentUrl = url
         ? new URL(url, window.location.origin)
         : new URL(window.location.href);
@@ -93,9 +131,15 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
       // Updating the price range
       const minPriceParam = params.get('min_price');
       const maxPriceParam = params.get('max_price');
+      const convertedMinPrice = minPriceParam
+        ? await convertCurrency(parseFloat(minPriceParam))
+        : initialPriceRange.min;
+      const convertedMaxPrice = maxPriceParam
+        ? await convertCurrency(parseFloat(maxPriceParam))
+        : initialPriceRange.max;
       setPriceRange({
-        min: minPriceParam ? parseFloat(minPriceParam) : minPrice,
-        max: maxPriceParam ? parseFloat(maxPriceParam) : maxPrice,
+        min: convertedMinPrice,
+        max: convertedMaxPrice,
       });
     };
 
@@ -112,7 +156,7 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
     return () => {
       router.events.off('routeChangeComplete', handleRouteChange);
     };
-  }, [router]);
+  }, [router, minPrice, maxPrice]);
 
   /** Updates chosen by click on attribute */
   const updateCurrentParams = useCallback(
@@ -126,8 +170,43 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
     [updateChosenAttributes]
   );
 
+  /** Reset price filters in URL when currency changes */
+  useEffect(() => {
+    const resetPriceFiltersInUrl = async () => {
+      const { slugs, ...params } = router.query;
+      const newQuery: Record<string, string | string[]> = slugs
+        ? { slugs }
+        : {};
+
+      // Remove price filters
+      delete params.min_price;
+      delete params.max_price;
+
+      Object.keys(params).forEach(paramKey => {
+        if (params[paramKey] !== undefined) {
+          newQuery[paramKey] = params[paramKey];
+        }
+      });
+
+      router.replace({
+        pathname: router.pathname,
+        query: newQuery,
+      });
+
+      // Reset price range in state
+      const convertedMin = await convertCurrency(minPrice);
+      const convertedMax = await convertCurrency(maxPrice);
+      setPriceRange({
+        min: convertedMin,
+        max: convertedMax,
+      });
+    };
+
+    resetPriceFiltersInUrl();
+  }, [currentCurrency]);
+
   /** Updates url params by chosen */
-  const updateUrlParams = useCallback(() => {
+  const updateUrlParams = useCallback(async () => {
     const params = Object.fromEntries(
       Array.from(chosenAttributes.entries())
         .filter(([key, set]) => set.size > 0) // Remove empty parameters
@@ -145,12 +224,20 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
       ...params,
     };
 
-    if (priceRange.min !== minPrice) {
-      newQuery.min_price = priceRange.min.toString();
+    if (priceRange.min !== initialPriceRange.min) {
+      newQuery.min_price = await convertToDefaultCurrency(
+        priceRange.min
+      ).toString();
+    } else if (priceRange.min === initialPriceRange.min) {
+      delete newQuery.min_price;
     }
 
-    if (priceRange.max !== maxPrice) {
-      newQuery.max_price = priceRange.max.toString();
+    if (priceRange.max !== initialPriceRange.max) {
+      newQuery.max_price = await convertToDefaultCurrency(
+        priceRange.max
+      ).toString();
+    } else if (priceRange.max === initialPriceRange.max) {
+      delete newQuery.max_price;
     }
 
     // Remove empty parameters from newQuery
@@ -171,7 +258,7 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
       pathname: router.pathname,
       query: newQuery,
     });
-  }, [chosenAttributes, router, priceRange]);
+  }, [chosenAttributes, router, priceRange, currentCurrency]);
 
   /** Apply params */
   const onApplyClick = useCallback(() => {
@@ -179,15 +266,20 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
   }, [chosenAttributes]);
 
   /** Reset params */
-  const onResetClick = useCallback(() => {
+  const onResetClick = useCallback(async () => {
     const { slugs } = router.query;
     router.replace({
       pathname: router.pathname,
       query: { slugs },
     });
     setChosenAttributes(new Map());
-    setPriceRange({ min: minPrice, max: maxPrice });
-  }, [router.query, minPrice, maxPrice]);
+    const convertedMin = await convertCurrency(minPrice);
+    const convertedMax = await convertCurrency(maxPrice);
+    setPriceRange({
+      min: convertedMin,
+      max: convertedMax,
+    });
+  }, [router.query, minPrice, maxPrice, convertCurrency]);
 
   /** Reset specific params */
   const onResetParams = useCallback(
@@ -247,10 +339,10 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
 
       // Reset price values ​​in state if type is 'price'
       if (type === 'price') {
-        setPriceRange({ min: minPrice, max: maxPrice });
+        setPriceRange(initialPriceRange);
       }
     },
-    [chosenAttributes, router.query, minPrice, maxPrice, updateCurrentParams]
+    [chosenAttributes, router.query, initialPriceRange, updateCurrentParams]
   );
 
   const updateMinPrice = useCallback(
@@ -258,7 +350,6 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
       if (
         newValue !== priceRange.min &&
         newValue >= 0 &&
-        newValue <= maxPrice &&
         newValue <= priceRange.max
       ) {
         setPriceRange(prev => ({ ...prev, min: newValue }));
@@ -269,7 +360,7 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
         });
       }
     },
-    [priceRange, maxPrice]
+    [priceRange]
   );
 
   const updateMaxPrice = useCallback(
@@ -277,7 +368,6 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
       if (
         newValue !== priceRange.max &&
         newValue >= 0 &&
-        newValue <= maxPrice &&
         newValue >= priceRange.min
       ) {
         setPriceRange(prev => ({ ...prev, max: newValue }));
@@ -288,23 +378,28 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
         });
       }
     },
-    [priceRange, maxPrice]
+    [priceRange]
   );
 
   return (
     <FilterPanelWrap>
       <FilterPanelWrap>
         <CustomSingleAccordion title={'Price'}>
-          <PriceFilter
-            currentMin={priceRange.min}
-            currentMax={priceRange.max}
-            minPrice={minPrice}
-            maxPrice={maxPrice}
-            updateMaxPrice={updateMaxPrice}
-            updateMinPrice={updateMinPrice}
-            onReset={() => onResetParams('price', 'price')}
-            onApply={onApplyClick}
-          />
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : (
+            <PriceFilter
+              currencyCode={currencyCode}
+              currentMin={priceRange.min}
+              currentMax={priceRange.max}
+              minPrice={initialPriceRange.min}
+              maxPrice={initialPriceRange.max}
+              updateMaxPrice={updateMaxPrice}
+              updateMinPrice={updateMinPrice}
+              onReset={async () => await onResetParams('price', 'price')}
+              onApply={onApplyClick}
+            />
+          )}
         </CustomSingleAccordion>
         {attributes.map(attribute => {
           const attrName = `pa_${attribute.slug}`;

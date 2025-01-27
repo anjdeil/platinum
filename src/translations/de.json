@@ -252,6 +252,8 @@
     "PasswordDigit": "Das Passwort muss mindestens eine Ziffer enthalten.",
     "PasswordSpecialChar": "Das Passwort muss mindestens ein Sonderzeichen enthalten.",
     "PasswordsDoNotMatch": "Passwörter stimmen nicht überein",
+    "parcelLocker": "Bitte wählen Sie ein Paketfach",
+    "shippingMethod": "Bitte wählen Sie eine Versandart",
     "noChanges": "Ihre Daten haben sich nicht geändert"
   },
   "Forms": {
@@ -303,6 +305,23 @@
     "nextPost": "Weiter",
     "blogPage": "Blog",
     "blogSectionSubtitle": "Letzte artikel"
+  },
+  "ShippingMethodSelector": {
+    "delivery": "Lieferung",
+    "change": "Ändern",
+    "parcelLocker": "Paketstation",
+    "selectParcelLocker": "Paketstation auswählen",
+    "deliveryUnavailable": "Für die ausgewählte Region sind keine Liefermethoden verfügbar. Bitte überprüfen Sie Ihr Land."
+  },
+  "InPostGeowidget": {
+    "close": "Schließen"
+  },
+  "Checkout": {
+    "login": "Loggen Sie sich ein",
+    "fieldsWillFilled": " und die Felder werden nach Ihrer ersten Bestellung automatisch ausgefüllt",
+    "pay": "Bezahlung der Bestellung",
+    "agreement": "Ihre persönlichen Daten werden verwendet, um Ihre Bestellung zu bearbeiten, Ihre Erfahrung auf dieser Website zu unterstützen und für andere Zwecke, die in unserer ",
+    "privacyPolicy": "Datenschutzrichtlinie beschrieben sind"
   },
   "Footer": {
     "myAccount": "Mein Konto",
