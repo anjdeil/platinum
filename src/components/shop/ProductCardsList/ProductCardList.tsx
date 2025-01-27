@@ -1,14 +1,9 @@
+import useGetAuthToken from '@/hooks/useGetAuthToken';
 import { useAppSelector } from '@/store';
-import {
-  useFetchUserUpdateMutation,
-  useLazyFetchUserDataQuery,
-} from '@/store/rtk-queries/wpApi';
+import { useLazyFetchUserDataQuery } from '@/store/rtk-queries/wpApi';
 import { useGetCurrenciesQuery } from '@/store/rtk-queries/wpCustomApi';
 import { ProductCardListProps } from '@/types/components/shop';
-import { WishlistItem } from '@/types/store/rtk-queries/wpApi';
-import { useRouter } from 'next/router';
 import { FC, useEffect } from 'react';
-import { useCookies } from 'react-cookie';
 import ProductCard from '../product/ProductCard/ProductCard';
 import { ProductCardListSkeleton } from './ProductCardListSkeleton';
 import { StyledProductCardList } from './styles';
@@ -20,22 +15,10 @@ export const ProductCardList: FC<ProductCardListProps> = ({
   columns,
   length,
 }) => {
-  const [cookie] = useCookies(['authToken']);
+  const authToken = useGetAuthToken();
 
-  const router = useRouter();
+  const [fetchUserData] = useLazyFetchUserDataQuery();
 
-  const [
-    fetchUserData,
-    {
-      data: userData,
-      isLoading: isUserDataLoading,
-      isFetching: isUserFetching,
-    },
-  ] = useLazyFetchUserDataQuery();
-  const [fetchUserUpdate, { isLoading: userDataUpdateLoading }] =
-    useFetchUserUpdateMutation();
-
-  const wishlist: WishlistItem[] = userData?.meta?.wishlist || [];
   const { data: currencies, isLoading: isCurrenciesLoading } =
     useGetCurrenciesQuery();
   const selectedCurrency = useAppSelector(state => state.currencySlice);
@@ -53,56 +36,57 @@ export const ProductCardList: FC<ProductCardListProps> = ({
   };
 
   useEffect(() => {
-    if (cookie.authToken) {
+    if (authToken) {
       fetchUserData();
     }
-  }, [cookie, fetchUserData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authToken]);
 
-  const handleDisire = (productId: number, variationId?: number) => {
-    if (!userData?.meta?.wishlist) {
-      router.push('/my-account/login');
+  // const handleDisire = (productId: number, variationId?: number) => {
+  //   if (!userData?.meta?.wishlist.length) {
+  //     dispatch(popupToggle('login'));
 
-      return;
-    }
+  //     return;
+  //   }
 
-    if (!cookie.authToken) {
-      return;
-    }
+  //   if (!authToken) {
+  //     return;
+  //   }
 
-    const userWishlist = userData?.meta.wishlist || [];
+  //   const userWishlist = userData?.meta.wishlist || [];
 
-    const index = userWishlist.findIndex(
-      (item: WishlistItem) =>
-        item.product_id === productId &&
-        (!variationId || item.variation_id === variationId)
-    );
+  //   const index = userWishlist.findIndex(
+  //     (item: WishlistItem) =>
+  //       item.product_id === productId &&
+  //       (!variationId || item.variation_id === variationId)
+  //   );
 
-    let updatedWishlist: WishlistItem[];
+  //   let updatedWishlist: WishlistItem[];
 
-    if (index >= 0) {
-      updatedWishlist = userWishlist.filter(
-        (_: WishlistItem, index2: number) => index2 !== index
-      );
-    } else {
-      updatedWishlist = [
-        ...userWishlist,
-        {
-          product_id: productId,
-          ...(variationId && { variation_id: variationId }),
-        },
-      ];
-    }
+  //   if (index >= 0) {
+  //     updatedWishlist = userWishlist.filter(
+  //       (_: WishlistItem, index2: number) => index2 !== index
+  //     );
+  //   } else {
+  //     updatedWishlist = [
+  //       ...userWishlist,
+  //       {
+  //         product_id: productId,
+  //         ...(variationId && { variation_id: variationId }),
+  //       },
+  //     ];
+  //   }
 
-    const userUpdateRequestBody = {
-      meta: {
-        wishlist: updatedWishlist,
-      },
-    };
+  //   const userUpdateRequestBody = {
+  //     meta: {
+  //       wishlist: updatedWishlist,
+  //     },
+  //   };
 
-    if (userData?.id) {
-      fetchUserUpdate(userUpdateRequestBody);
-    }
-  };
+  //   if (userData?.id) {
+  //     fetchUserUpdate(userUpdateRequestBody);
+  //   }
+  // };
 
   if (isLoading) {
     return <ProductCardListSkeleton columns={columns} length={length} />;
@@ -112,21 +96,17 @@ export const ProductCardList: FC<ProductCardListProps> = ({
     return <p>We cannot get the products</p>;
   }
 
-  isLoading = userDataUpdateLoading || isUserFetching;
-
   return (
     <StyledProductCardList
       mobileColumns={columns?.mobileColumns}
+      mintabletColumns={columns?.mintabletColumns}
       tabletColumns={columns?.tabletColumns}
       desktopColumns={columns?.desktopColumns}
     >
       {products?.map((product, i) => (
         <ProductCard
-          wishlist={wishlist}
           key={product.id}
           product={product}
-          handleDisire={handleDisire}
-          isLoading={isLoading}
           currency={extendedCurrency}
         />
       ))}

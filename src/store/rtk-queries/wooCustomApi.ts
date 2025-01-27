@@ -7,7 +7,6 @@ import {
   ReviewsRespType,
   WooCustomerReqType,
   WooCustomerType,
-  WooCustomerUpdateType,
 } from '@/types/services/wooCustomApi/customer';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 

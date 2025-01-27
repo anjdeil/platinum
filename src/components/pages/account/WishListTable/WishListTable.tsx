@@ -1,4 +1,6 @@
-import React, { FC } from 'react';
+import AddToBasketButton from '@/components/global/buttons/AddToBasketButton/AddToBasketButton';
+import TrashIcon from '@/components/global/icons/TrashIcon/TrashIcon';
+import { MenuSkeleton } from '@/components/menus/MenuSkeleton';
 import {
   CardContent,
   CartCardAllWrapper,
@@ -12,24 +14,23 @@ import {
   TextNameCell,
 } from '@/components/pages/cart/styles/index';
 import { useResponsive } from '@/hooks/useResponsive';
-import { MenuSkeleton } from '@/components/menus/MenuSkeleton';
-import { CartItem } from '@/types/store/reducers/сartSlice';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { updateCart } from '@/store/slices/cartSlice';
 import theme from '@/styles/theme';
-import { useTranslations } from 'next-intl';
+import { WishListTableProps } from '@/types/components/pages/myAccount/wishlist';
 import { ProductsMinimizedType } from '@/types/components/shop/product/products';
+import { CartItem } from '@/types/store/reducers/сartSlice';
 import { roundedPrice } from '@/utils/cart/roundedPrice';
+import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/router';
+import { FC } from 'react';
 import {
   Circle,
   QuantityRow,
   WishlistCardAllWrapper,
   WishlistImgWrapper,
 } from './style';
-import TrashIcon from '@/components/global/icons/TrashIcon/TrashIcon';
-import { useAppDispatch, useAppSelector } from '@/store';
-import AddToBasketButton from '@/components/global/buttons/AddToBasketButton/AddToBasketButton';
-import { useRouter } from 'next/router';
-import { updateCart } from '@/store/slices/cartSlice';
-import { WishListTableProps } from '@/types/components/pages/myAccount/wishlist';
+import { LinkWrapper } from '@/styles/components';
 
 const WishListTable: FC<WishListTableProps> = ({
   symbol,
@@ -43,7 +44,7 @@ const WishListTable: FC<WishListTableProps> = ({
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const { cartItems } = useAppSelector((state) => state.cartSlice);
+  const { cartItems } = useAppSelector(state => state.cartSlice);
 
   const checkCartMatch = (cartItems: CartItem[], productId: number) => {
     return cartItems.some(({ product_id }) => product_id === productId);
@@ -73,31 +74,44 @@ const WishListTable: FC<WishListTableProps> = ({
     }
   }
 
+  const handleDelete = (item: ProductsMinimizedType) => {
+    const { id, parent_id } = item;
+    if (parent_id === 0) {
+      onDelete({ product_id: id });
+    } else {
+      onDelete({ product_id: parent_id, variation_id: id });
+    }
+  };
+
   return (
     <CartTableWrapper>
       <>
         {!isTablet && !isMobile ? (
           <>
             {!isLoading &&
-              wishlist?.map((item) => {
+              wishlist?.map(item => {
                 const isCartMatch = checkCartMatch(cartItems, item.id);
 
                 return (
                   <WishlistCardAllWrapper key={item.id} padding="16px">
                     <DeleteCell>
-                      <TrashIcon
-                        onClick={() => onDelete({ product_id: item.id })}
-                      />
+                      <TrashIcon onClick={() => handleDelete(item)} />
                     </DeleteCell>
                     <WishlistImgWrapper maxHeight="100px" maxWidth="100px">
                       <CartItemImg
-                        src={item?.image.src}
+                        src={
+                          item?.image?.src || '/assets/images/not-found.webp'
+                        }
                         alt={item.name}
                         width="50"
                       />
                     </WishlistImgWrapper>
                     <CardContent gap="12px">
-                      <TextNameCell>{item.name}</TextNameCell>
+                      <TextNameCell>
+                        <LinkWrapper href={`/product/${item.slug}`}>
+                          {item.name}
+                        </LinkWrapper>
+                      </TextNameCell>
                       <QuantityRow>
                         <Circle />
                         {item.stock_quantity}
@@ -123,7 +137,7 @@ const WishListTable: FC<WishListTableProps> = ({
         ) : (
           <>
             {!isLoading &&
-              wishlist?.map((item) => {
+              wishlist?.map(item => {
                 const isCartMatch = checkCartMatch(cartItems, item.id);
                 return (
                   <CartCardAllWrapper key={item.id} padding="16px">
@@ -137,10 +151,12 @@ const WishListTable: FC<WishListTableProps> = ({
                       </WishlistImgWrapper>
                       <CardContent gap="8px" padding="0 0 4px 0">
                         <ProducTitle>
-                          <p>{item.name}</p>
+                          <LinkWrapper href={`/product/${item.slug}`}>
+                            {item.name}
+                          </LinkWrapper>
                           <TrashIcon
                             padding="0 10px 0 0"
-                            onClick={() => onDelete({ product_id: item.id })}
+                            onClick={() => handleDelete(item)}
                           />
                         </ProducTitle>
                         <QuantityRow>

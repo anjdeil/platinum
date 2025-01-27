@@ -80,10 +80,24 @@
     "YourAccountHasBeenCreated": "Twoje konto zostało pomyślnie utworzone!",
     "ForgotYourPassword": "Haben Sie Ihr Passwort vergessen?",
     "SuccessfullyLoggedIn": "Erfolgreich eingeloggt!",
-    "ErrorLoggedIn": "Falsche E-Mail-Adresse oder falsches Passwort. Bitte versuchen Sie es erneut."
+    "ErrorLoggedIn": "Falsche E-Mail-Adresse oder falsches Passwort. Bitte versuchen Sie es erneut.",
+    "newpassword": "Neues Passwort",
+    "passwordChanged": "Passwort erfolgreich geändert",
+    "passwordChangeError": "Beim Ändern des Passworts ist ein Fehler aufgetreten, bitte versuchen Sie es erneut",
+    "resetPassword": "Passwort zurücksetzen",
+    "codeSendError": "Der Code wurde nicht gesendet, es ist möglich, dass das Konto mit dieser E-Mail nicht existiert",
+    "codeSent": "Der Code wurde gesendet, überprüfen Sie Ihre E-Mails",
+    "codeSentToEmail": "Der Code wurde an {email} gesendet, überprüfen Sie Ihre E-Mails",
+    "code": "Code",
+    "setNewPassword": "Neues Passwort festlegen",
+    "resetCodeAttemptsTwo": "Der bereitgestellte Reset-Code ist ungültig. Sie haben noch 2 Versuche.",
+    "resetCodeAttemptsOne": "Der bereitgestellte Reset-Code ist ungültig. Sie haben noch 1 Versuch.",
+    "passwordResetRequired": "Sie müssen einen Passwort-Reset-Code anfordern, bevor Sie versuchen, ein neues Passwort festzulegen.",
+    "maxAttemptsExceeded": "Der bereitgestellte Reset-Code ist ungültig. Sie haben die maximal zulässige Anzahl von Versuchen überschritten. Sie müssen einen neuen Code anfordern.",
+    "codeProvidedHasExpired": "Der angegebene Rücksetzungscode ist abgelaufen."
   },
   "TopBar": {
-    "CallUs": "Rufen Sie uns an"
+    "CallUs": "Kontakt"
   },
   "Search": {
     "Search": "Suche"
@@ -100,12 +114,13 @@
     "clearFilter": "Löschen",
     "applyFilter": "Anwenden",
     "searchResults": "Suchergebnisse",
-    "phraseSought": "Gesuchte Phrase"
+    "phraseSought": "Gesuchte Phrase",
+    "productsNotFound": "Artikel nicht gefunden"
   },
   "Product": {
-    "addToBasket": "In den Warenkorb legen",
+    "addToBasket": "In den Korb",
     "viewCart": "Warenkorb anzeigen",
-    "chooseOptions": "Wählen Sie eine Option",
+    "chooseOptions": "Option wählen",
     "updateCart": "Menge aktualisieren",
     "sortBy": "Sortieren nach",
     "productList": "Produktliste",
@@ -130,8 +145,7 @@
     "addComment": "Kommentar hinzufügen",
     "submitting": "Einreichen",
     "commentText1": "Haben Sie unser Produkt getestet? Teilen Sie Ihre Meinung mit;",
-    "commentText2": "- Wir versuchen, das Beste für Sie zu sein, und Ihre Meinung wird uns sehr helfen!",
-    "lastedArticles": "Neueste Artikel"
+    "commentText2": "- Wir versuchen, das Beste für Sie zu sein, und Ihre Meinung wird uns sehr helfen!"
   },
   "Cart": {
     "cart": "Warenkorb",
@@ -184,29 +198,29 @@
   "Contacts": {
     "contacts": "Kontakte",
     "telephone": "Telefon",
-    "call": "Anruf",
+    "call": "Anrufen",
     "address": "Adresse",
-    "schedule": "Mon-Fri: from",
-    "dayOff": "Sat-Sun: Day off",
-    "satSun": "Sat-Sun: from",
-    "howToGetThere": "Wie kommt man dorthin?",
+    "schedule": "Mo-Fr: von {from} bis {to}",
+    "dayOff": "Sa-So: Ruhetage",
+    "satSun": "Sa-So: von {from} bis {to}",
+    "howToGetThere": "Wie komme ich hin?",
     "email": "E-Mail",
     "toWrite": "Schreiben",
     "socialMedia": "Wir sind in den sozialen medien",
-    "askUsQuestion": "Stellen Sie uns eine Frage",
-    "yourNamePlaceholder": "Wie heißt du?",
+    "askUsQuestion": "STELL UNS EINE FRAGE",
+    "yourNamePlaceholder": "Wie heißt du",
     "emailPlaceholder": "E-Mail",
-    "yourQuestionPlaceholder": "Schreiben Sie Ihre Frage",
+    "yourQuestionPlaceholder": "Schreibe deine Frage",
     "errorMessage": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
     "successMessage": "Ihre Nachricht wurde erfolgreich gesendet!",
     "sending": "Senden...",
-    "sendButton": "Senden"
+    "sendButton": "Frage senden"
   },
   "Validation": {
     "emailValidation": "Geben Sie eine gültige E-Mail-Adresse ein",
     "minChar": "Muss mindestens {count} Zeichen lang sein.",
     "RequiredField": "Pflichtfeld",
-    "email": "E-Mail",
+    "email": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
     "name": "Name",
     "lastName": "Nachname",
     "address": "Adresse",
@@ -239,7 +253,8 @@
     "PasswordSpecialChar": "Das Passwort muss mindestens ein Sonderzeichen enthalten.",
     "PasswordsDoNotMatch": "Passwörter stimmen nicht überein",
     "parcelLocker": "Bitte wählen Sie ein Paketfach",
-    "shippingMethod": "Bitte wählen Sie eine Versandart"
+    "shippingMethod": "Bitte wählen Sie eine Versandart",
+    "noChanges": "Ihre Daten haben sich nicht geändert"
   },
   "Forms": {
     "applicationForm": "application form",
@@ -267,12 +282,13 @@
     "newUnreadMessage": "Neue ungelesene Nachricht",
     "unreadMessageDate": "Jetzt",
     "subscribeToOurNewsletter": "Abonnieren Sie unseren Newsletter!",
-    "newArrivals": "Seien Sie der Erste, der über Neuzugänge, exklusive Rabatte und Sonderangebote informiert wird.",
+    "newArrivals": "Treten Sie unserem WhatsApp-Newsletter bei, um exklusive Rabatte, tolle Angebote zu erhalten und immer auf dem neuesten Stand zu sein.",
     "joinToWhatsApp": "Beitritt zu WhatsAp",
-    "subscribe": "Subscribe"
+    "subscribe": "Jetzt beitreten",
+    "allShop": "Alle Geschäfte"
   },
   "SubscriptionForm": {
-    "subscribe": "Abonnieren",
+    "subscribe": "Jetzt beitreten",
     "sending": "Senden...",
     "typeValidEmail": "Geben Sie eine gültige email ein",
     "failedSubscribe": "Fehler beim Abonnieren",
@@ -306,5 +322,13 @@
     "pay": "Bezahlung der Bestellung",
     "agreement": "Ihre persönlichen Daten werden verwendet, um Ihre Bestellung zu bearbeiten, Ihre Erfahrung auf dieser Website zu unterstützen und für andere Zwecke, die in unserer ",
     "privacyPolicy": "Datenschutzrichtlinie beschrieben sind"
+  },
+  "Footer": {
+    "myAccount": "Mein Konto",
+    "categories": "Kategorien",
+    "information": "Informationen",
+    "contacts": "Kontakt",
+    "delivery": "Lieferung",
+    "payments": "Zahlungen"
   }
 }

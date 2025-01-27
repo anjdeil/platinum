@@ -28,6 +28,7 @@ interface UserType {
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
+  const { locale } = context;
   const cookies = context.req.cookies;
   const reqUrl =
     process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3000';
@@ -52,7 +53,7 @@ export const getServerSideProps: GetServerSideProps = async (
     console.error(err);
     return {
       redirect: {
-        destination: '/my-account/login',
+        destination: `/${locale}/my-account/login`,
         permanent: false,
       },
     };
@@ -65,8 +66,7 @@ interface MyAccountPropsType {
 
 const MyAccount: FC<MyAccountPropsType> = ({ user }) => {
   const t = useTranslations('MyAccount');
-  const { data: currencies, isLoading: isCurrenciesLoading } =
-    useGetCurrenciesQuery();
+  const { data: currencies } = useGetCurrenciesQuery();
   const selectedCurrency = useAppSelector(state => state.currencySlice.name);
 
   const dispatch = useDispatch();
@@ -94,7 +94,7 @@ const MyAccount: FC<MyAccountPropsType> = ({ user }) => {
     })
   );
 
-  const { orderCount, totalAmountPLN, totalAmount } =
+  const { orderCount, totalAmount } =
     currencies && ordersData
       ? transformOrders(ordersData, currencies, selectedCurrency)
       : { orderCount: undefined, totalAmount: undefined };

@@ -22,20 +22,21 @@ import {
   TitleWrapper,
 } from './styles';
 
+import { useWishlist } from '@/hooks/useWishlist';
 import { popupToggle } from '@/store/slices/PopupSlice';
 import { CircularProgress } from '@mui/material';
-import { WishlistItem } from '@/types/store/rtk-queries/wpApi';
 
-const ProductCard: React.FC<ProductCardPropsType> = ({
-  product,
-  handleDisire,
-  wishlist,
-  isLoading,
-  currency,
-}) => {
+const ProductCard: React.FC<ProductCardPropsType> = ({ product, currency }) => {
   const t = useTranslations('Product');
 
   const router = useRouter();
+
+  const {
+    handleWishlistToggle,
+    isFetchingWishlist,
+    isUpdatingWishlist,
+    checkDesired,
+  } = useWishlist();
 
   const dispatch = useAppDispatch();
   const { cartItems } = useAppSelector(state => state.cartSlice);
@@ -52,8 +53,11 @@ const ProductCard: React.FC<ProductCardPropsType> = ({
   function handleCartButtonClick() {
     if (product?.type === 'variable') {
       router.push(
-        `/${router.locale === 'en' ? '' : router.locale}/product/${product.slug}`
+        `/${router.locale === 'en' ? '' : router.locale}/product/${
+          product.slug
+        }`
       );
+      return;
     }
 
     if (!isCartMatch) {
@@ -69,17 +73,9 @@ const ProductCard: React.FC<ProductCardPropsType> = ({
     }
   }
 
-  const checkDesired = () =>
-    Boolean(
-      wishlist?.find(
-        (item: WishlistItem) => item.product_id === product.id /* &&
-          (!choosenVariation || item.variation_id === choosenVariation.id) */
-      )
-    );
-
   return (
     <StyledProductCard>
-      <ProductWrapper>
+      <ProductWrapper isFavorite={checkDesired(product.id)}>
         <ProductImageWrapper>
           <Link href={`/product/${product.slug}`}>
             <Image
@@ -124,10 +120,10 @@ const ProductCard: React.FC<ProductCardPropsType> = ({
             <ProductBadge type="sale" />
           )}
           <FavoriteButton
-            onClick={() => handleDisire(product.id, undefined)}
+            onClick={() => handleWishlistToggle(product)}
             marginLeft="auto"
-            active={checkDesired()}
-            isLoading={isLoading}
+            active={checkDesired(product.id)}
+            isLoading={isUpdatingWishlist || isFetchingWishlist}
           />
         </ProductBadgeWrapper>
       </ProductWrapper>

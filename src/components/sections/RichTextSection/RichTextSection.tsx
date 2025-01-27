@@ -15,6 +15,7 @@ export const RichTextSection: React.FC<RichTextSectionProps> = ({
   }
 
   const cleanedContent = text.replace(/<br\s*\/?>/gi, '');
+  // .replace(/\s*t\s*/g, '');
   const content = parse(cleanedContent);
 
   return (

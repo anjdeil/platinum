@@ -1,12 +1,12 @@
-import { CustomSingleAccordion } from "@/components/global/accordions/CustomSingleAccordion"
-import { FC, useCallback, useEffect, useMemo, useState } from "react"
-import { PriceFilter } from "../PriceFilter"
-import { useRouter } from "next/router";
-import { FilterPanelPropsType } from "@/types/components/shop/filters";
-import { FilterAttributes } from "../FilterAttributes/FilterAttributes";
-import { FilterPanelWrap } from './styles';
+import { CustomSingleAccordion } from '@/components/global/accordions/CustomSingleAccordion';
+import { FilterPanelPropsType } from '@/types/components/shop/filters';
+import { useRouter } from 'next/router';
+import { FC, useCallback, useEffect, useState } from 'react';
 import ColorsFilter from '../ColorsFilter/ColorsFilter';
 import { FilterActionButtons } from '../filterActionButtons';
+import { FilterAttributes } from '../FilterAttributes/FilterAttributes';
+import { PriceFilter } from '../PriceFilter';
+import { FilterPanelWrap } from './styles';
 
 /**
  * @todo
@@ -334,7 +334,9 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
           );
         })}
       </FilterPanelWrap>
-      <FilterActionButtons onReset={onResetClick} />
+      {Boolean(attributes.length) && (
+        <FilterActionButtons onReset={onResetClick} />
+      )}
     </FilterPanelWrap>
   );
 };

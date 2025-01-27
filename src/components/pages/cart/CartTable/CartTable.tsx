@@ -1,4 +1,29 @@
-import React, { FC } from 'react';
+import CloseIcon from '@/components/global/icons/CloseIcon/CloseIcon';
+import DeleteIcon from '@/components/global/icons/DeleteIcon/DeleteIcon';
+import Notification from '@/components/global/Notification/Notification';
+import { MenuSkeleton } from '@/components/menus/MenuSkeleton';
+import { useResponsive } from '@/hooks/useResponsive';
+import { FlexBox, LinkWrapper, Title } from '@/styles/components';
+import theme from '@/styles/theme';
+import { CartTableProps } from '@/types/pages/cart';
+import checkProductAvailability from '@/utils/cart/checkProductAvailability';
+import { useTranslations } from 'next-intl';
+import { FC, useEffect, useState } from 'react';
+import CartProductWarning from '../CartProductWarning/CartProductWarning';
+import CartQuantity from '../CartQuantity/CartQuantity';
+import {
+  CardContent,
+  CartCardAllWrapper,
+  CartCardWrapper,
+  CartImgWrapper,
+  CartItemImg,
+  CartTableWrapper,
+  DeleteCell,
+  OnePrice,
+  ProducTitle,
+  ProductPrice,
+  TextNameCell,
+} from '../styles';
 import {
   CartTableGrid,
   GridHeader,
@@ -7,31 +32,6 @@ import {
   TextCell,
   TextCellHeader,
 } from './style';
-import DeleteIcon from '@/components/global/icons/DeleteIcon/DeleteIcon';
-import { useResponsive } from '@/hooks/useResponsive';
-import CloseIcon from '@/components/global/icons/CloseIcon/CloseIcon';
-import checkProductAvailability from '@/utils/cart/checkProductAvailability';
-import CartProductWarning from '../CartProductWarning/CartProductWarning';
-import CartQuantity from '../CartQuantity/CartQuantity';
-import { MenuSkeleton } from '@/components/menus/MenuSkeleton';
-import theme from '@/styles/theme';
-import { useTranslations } from 'next-intl';
-import Notification from '@/components/global/Notification/Notification';
-import {
-  OnePrice,
-  ProductPrice,
-  CardContent,
-  CartCardWrapper,
-  CartTableWrapper,
-  DeleteCell,
-  CartImgWrapper,
-  CartItemImg,
-  TextNameCell,
-  CartCardAllWrapper,
-  ProducTitle,
-} from '../styles';
-import { CartTableProps } from '@/types/pages/cart';
-import { FlexBox, Title } from '@/styles/components';
 
 const CartTable: FC<CartTableProps> = ({
   symbol,
@@ -43,10 +43,28 @@ const CartTable: FC<CartTableProps> = ({
   hasConflict,
   cartItems,
   handleChangeQuantity,
-  loadingItems,
 }) => {
   const t = useTranslations('Cart');
   const { isMobile } = useResponsive();
+  const [innercartItems, setCartItems] = useState(order?.line_items || []);
+
+  useEffect(() => {
+    setCartItems(
+      order?.line_items.filter(lineItem =>
+        cartItems.some(cartItem => cartItem.product_id == lineItem.product_id)
+      ) || []
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [order?.line_items, cartItems]);
+
+  const handleDeleteItem = (productId: number, variationId: number) => {
+    const updatedCartItems = innercartItems.filter(
+      item => item.product_id !== productId || item.variation_id !== variationId
+    );
+    setCartItems(updatedCartItems);
+
+    handleChangeQuantity(productId, 'value', variationId, 0);
+  };
 
   return (
     <CartTableWrapper>
@@ -76,24 +94,30 @@ const CartTable: FC<CartTableProps> = ({
                 </GridRow>
               </GridHeader>
 
-              {order?.line_items.map((item) => {
+              {innercartItems.map(item => {
                 const { resolveCount, isAvailable } = checkProductAvailability(
                   item,
                   productsSpecs
                 );
-                /*     const isLoadingItem = loadingItems.includes(item.product_id); */
+
+                const productSpec = productsSpecs.find(product => {
+                  if (product.parent_id === 0) {
+                    return product.id === item.product_id;
+                  } else {
+                    return product.parent_id === item.product_id;
+                  }
+                });
+
                 return (
-                  <RowWrapper key={item.id} isLoadingItem={isLoadingOrder}>
+                  <RowWrapper key={item.id}>
                     <GridRow>
                       <DeleteCell>
                         <div>
                           <DeleteIcon
                             onClick={() =>
-                              handleChangeQuantity(
+                              handleDeleteItem(
                                 item.product_id,
-                                'value',
-                                item.variation_id,
-                                0
+                                item.variation_id
                               )
                             }
                           />
@@ -106,7 +130,11 @@ const CartTable: FC<CartTableProps> = ({
                           width="50"
                         />
                       </CartImgWrapper>
-                      <TextNameCell>{item.name}</TextNameCell>
+                      <TextNameCell>
+                        <LinkWrapper href={`/product/${productSpec?.slug}`}>
+                          {item.name}
+                        </LinkWrapper>
+                      </TextNameCell>
                       <TextCell>
                         {roundedPrice(item.price)}&nbsp;{symbol}
                       </TextCell>
@@ -157,13 +185,11 @@ const CartTable: FC<CartTableProps> = ({
       ) : (
         <>
           {cartItems.length !== 0 &&
-            order?.line_items.map((item) => {
+            innercartItems.map(item => {
               const { resolveCount, isAvailable } = checkProductAvailability(
                 item,
                 productsSpecs
               );
-              /*     const isLoadingItem = loadingItems.includes(item.product_id); */
-
               return (
                 <CartCardAllWrapper key={item.id}>
                   <CartCardWrapper isLoadingItem={isLoadingOrder}>

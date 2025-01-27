@@ -1,6 +1,6 @@
-import { FavoriteButtonProps } from '@/types/components/global/buttons/favoriteButton'
-import { Heart } from './styles'
-import { StyledIconButton } from '../IconButton/styles'
+import { FavoriteButtonProps } from '@/types/components/global/buttons/favoriteButton';
+import { StyledIconButton } from '../IconButton/styles';
+import { Heart } from './styles';
 
 const FavoriteButton: React.FC<FavoriteButtonProps> = ({
   active = false,
@@ -9,7 +9,13 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({
   isLoading,
 }) => {
   return (
-    <StyledIconButton onClick={onClick} marginLeft={marginLeft}>
+    <StyledIconButton
+      disabled={isLoading}
+      isLoading={isLoading}
+      onClick={onClick}
+      marginLeft={marginLeft}
+      className="heart-button"
+    >
       <Heart
         isLoading={isLoading}
         active={active}
@@ -24,7 +30,7 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({
         />
       </Heart>
     </StyledIconButton>
-  )
-}
+  );
+};
 
-export default FavoriteButton
+export default FavoriteButton;

@@ -1,24 +1,24 @@
+import { IsMobileScreen } from '@/components/global/isMobileScreenWrapper';
 import { Container } from '@/styles/components';
-import { SliderSection } from '../SliderSection';
-import { ProductListSection } from '../ProductListSection';
-import { CategoriesSection } from '../CategoriesSection';
-import { InstagramSection } from '../InstagramSection';
-import { ReviewsSection } from '../ReviewsSection';
-import { NewsletterSection } from '../NewsletterSection';
-import { AboutPlatinumSection } from '../AboutPlatinumSection';
-import { FeaturesSection } from '../FeaturesSection/FeaturesSection';
-import { BlogSection } from '../BlogSection';
-import { HeroSection } from '../HeroSection';
-import { SplitSection } from '../SplitSection';
-import { LoyaltySection } from '../LoyaltySection';
-import { ContactsSection } from '../ContactsSection';
 import { SectionsType } from '@/types/components/sections';
 import { normalizeSlides } from '@/utils/normalizeSlides';
-import { IsMobileScreen } from '@/components/global/isMobileScreenWrapper';
-import { RichTextSection } from '../RichTextSection';
-import { SectionContainer } from '../styles';
-import { QuestionFormSection } from '../QuestionFormSection';
+import { AboutPlatinumSection } from '../AboutPlatinumSection';
+import { BlogSection } from '../BlogSection';
+import { CategoriesSection } from '../CategoriesSection';
+import { ContactsSection } from '../ContactsSection';
+import { FeaturesSection } from '../FeaturesSection/FeaturesSection';
+import { HeroSection } from '../HeroSection';
+import { InstagramSection } from '../InstagramSection';
+import { LoyaltySection } from '../LoyaltySection';
 import { NetworksSection } from '../NetworksSection';
+import { NewsletterSection } from '../NewsletterSection';
+import { ProductListSection } from '../ProductListSection';
+import { QuestionFormSection } from '../QuestionFormSection';
+import { ReviewsSection } from '../ReviewsSection';
+import { RichTextSection } from '../RichTextSection';
+import { SliderSection } from '../SliderSection';
+import { SplitSection } from '../SplitSection';
+import { SectionContainer } from '../styles';
 
 interface SectionRendererProps {
   sections: SectionsType[];
@@ -145,10 +145,11 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
             );
           case 'loyalty':
             return (
-              <LoyaltySection
-                key={index}
-                loyalty_separator={section.loyalty_separator}
-              />
+              <Container key={index}>
+                <SectionContainer>
+                  <LoyaltySection key={index} />
+                </SectionContainer>
+              </Container>
             );
           case 'contacts':
             return (

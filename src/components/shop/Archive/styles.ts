@@ -1,5 +1,5 @@
-import { Container } from "@/styles/components";
-import styled from "@emotion/styled";
+import { Container } from '@/styles/components';
+import styled from '@emotion/styled';
 
 export const CatalogContainer = styled(Container)`
   display: flex;
@@ -36,7 +36,7 @@ export const FilterSortWrapper = styled.div`
 export const FilterWrapper = styled.div`
   display: none;
 
-  @media ${({ theme }) => theme.media.large} {
+  @media ${({ theme }) => theme.media.middle} {
     display: block;
   }
 `;
@@ -52,11 +52,11 @@ export const PagesNavigationFooterWrapper = styled.div`
   justify-content: center;
   margin-bottom: 24px;
 `;
-  
+
 export const CountProduct = styled.span`
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
 
-  @media ${({ theme }) => theme.media.large} {
+  @media ${({ theme }) => theme.media.middle} {
     display: none;
   }
 `;
@@ -80,7 +80,7 @@ export const CatalogFilterBlock = styled.div<{ visible: boolean }>`
     padding: 24px 32px;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
-    display: ${({ visible }) => (visible ? "block" : "none")};
+    display: ${({ visible }) => (visible ? 'block' : 'none')};
     background-color: ${({ theme }) => theme.colors.white};
   }
   @media ${({ theme }) => theme.media.medium} {
@@ -99,7 +99,7 @@ export const CatalogRightWrapper = styled.div`
   flex-direction: column;
   row-gap: 24px;
 
-  @media ${({ theme }) => theme.media.large} {
+  @media ${({ theme }) => theme.media.middle} {
     grid-column: 1 / -1;
   }
 `;
@@ -107,7 +107,7 @@ export const CatalogRightWrapper = styled.div`
 export const CatalogListBlock = styled.div`
   grid-column: span 9;
 
-  @media ${({ theme }) => theme.media.large} {
+  @media ${({ theme }) => theme.media.middle} {
     grid-column: 1 / -1;
   }
 `;
@@ -132,7 +132,7 @@ export const FilterNCategoriesHead = styled.div`
   }
 `;
 export const FilterOverlay = styled.div<{ visible: boolean }>`
-  display: ${({ visible }) => (visible ? "block" : "none")};
+  display: ${({ visible }) => (visible ? 'block' : 'none')};
   position: fixed;
   top: 0;
   left: 0;
@@ -142,7 +142,7 @@ export const FilterOverlay = styled.div<{ visible: boolean }>`
   z-index: 11;
 
   @media ${({ theme }) => theme.media.large} {
-    display: ${({ visible }) => (visible ? "block" : "none")};
+    display: ${({ visible }) => (visible ? 'block' : 'none')};
   }
 
   @media ${({ theme }) => theme.media.medium} {

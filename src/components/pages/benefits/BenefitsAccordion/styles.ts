@@ -41,21 +41,21 @@ export const BenefitsItem = styled(Box, {
   gap: ${({ gapMedium = '16px' }) => gapMedium};
   min-width: 30%;
   @media ${({ theme }) => theme.media.medium} {
-    :nth-child(1) {
+    :nth-of-type(1) {
       width: 50%;
     }
-    :nth-child(2) {
+    :nth-of-type(2) {
       width: 65%;
     }
-    :nth-child(3) {
+    :nth-of-type(3) {
       width: 80%;
     }
     gap: ${({ gapSm = '8px' }) => gapSm};
   }
   @media ${({ theme }) => theme.media.small} {
-    :nth-child(1),
-    :nth-child(2),
-    :nth-child(3) {
+    :nth-of-type(1),
+    :nth-of-type(2),
+    :nth-of-type(3) {
       width: 100%;
     }
   }

@@ -1,9 +1,13 @@
 import AddToBasketButton from '@/components/global/buttons/AddToBasketButton/AddToBasketButton';
+import FavoriteButton from '@/components/global/buttons/FavoriteButton/FavoriteButton';
 import DetailsAccordion from '@/components/global/DetailsAccordeon/DetailsAccordion';
 import Rating from '@/components/global/Rating/Rating';
+import ProductBadge from '@/components/shop/product/ProductBadge/ProductBadge';
+import ProductBadgeWrapper from '@/components/shop/product/ProductBadgeWrapper/ProductBadgeWrapper';
+import { useWishlist } from '@/hooks/useWishlist';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { updateCart } from '@/store/slices/cartSlice';
-import { popupSet } from '@/store/slices/PopupSlice';
+import { popupSet, popupToggle } from '@/store/slices/PopupSlice';
 import { setData } from '@/store/slices/ProductSlice';
 import { StyledButton, Title } from '@/styles/components';
 import { ProductCardPropsType } from '@/types/components/shop';
@@ -37,20 +41,19 @@ import {
 } from './styles';
 
 const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
-  const {
-    name,
-    stock_quantity,
-    sku,
-    min_price,
-    max_price,
-    images,
-    variations,
-  } = product;
+  const { images, thumbnail } = product;
   const t = useTranslations('Product');
 
   const dispatch = useAppDispatch();
   const { cartItems } = useAppSelector(state => state.cartSlice);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const {
+    handleWishlistToggle,
+    isFetchingWishlist,
+    isUpdatingWishlist,
+    checkDesired,
+  } = useWishlist();
 
   useEffect(() => {
     const checkAuth = () => {
@@ -64,14 +67,7 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
     checkAuth();
   }, []);
 
-  const sizeList = ['M', 'L', 'XL'];
-
   const [quantity, setQuantity] = useState<number>(1);
-  const [currentSize, setCurrentSize] = useState<string>(sizeList[0]);
-  const lengthList = ['8-14mm', '0.05mm', '0.07mm', '2mm'];
-  const [currentLength, setCurrentLength] = useState<string>(lengthList[0]);
-  const colorList = ['red', 'white', 'green', 'grey'];
-  const [currentColor, setCurrentColor] = useState<string>(colorList[0]);
   const [cartMatch, setCartMatch] = useState<CartItem>();
 
   useEffect(() => {
@@ -111,9 +107,8 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
         ...(currentVariation && { variation_id: currentVariation.id }),
       })
     );
+    dispatch(popupToggle('mini-cart'));
   }
-
-  const testimages = Array.from({ length: 4 }).map((_, index) => images[0]);
 
   const stockQuantity = useMemo(() => {
     if (!currentVariation?.stock_quantity && !product.stock_quantity) return 0;
@@ -150,13 +145,43 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
     if (isAuthenticated) {
       updateProductState(product);
       dispatch(popupSet('add-comment'));
+    } else {
+      dispatch(popupToggle('login'));
     }
   };
+
+  const galleryImages =
+    thumbnail?.id && thumbnail?.name && thumbnail?.src
+      ? [
+          { id: thumbnail.id, name: thumbnail.name, src: thumbnail.src },
+          ...images,
+        ]
+      : [...images];
+
+  function handleFavorite() {
+    if (isAuthenticated) {
+      console.log('Authenticated');
+      //proc
+    } else {
+      dispatch(popupToggle('login'));
+    }
+  }
 
   return (
     <ProductWrapper>
       <ProductImageWrapper>
-        <ProductSwiper data={testimages || []} />
+        <ProductSwiper handleFavorite={handleFavorite} data={galleryImages} />
+        <ProductBadgeWrapper>
+          {product.min_price !== product.max_price && (
+            <ProductBadge type="sale" />
+          )}
+          <FavoriteButton
+            onClick={() => handleWishlistToggle(product)}
+            marginLeft="auto"
+            active={checkDesired(product.id)}
+            isLoading={isUpdatingWishlist || isFetchingWishlist}
+          />
+        </ProductBadgeWrapper>
       </ProductImageWrapper>
       <ProductTitleWrapper>
         <Title as="h1" uppercase textalign="left">
@@ -178,7 +203,7 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
             currentVariation.price !== null && (
               <ProductPrice
                 currency={currency}
-                minPrice={currentVariation.price * currency.rate}
+                minPrice={(currentVariation.price ?? 0) * currency.rate}
               />
             )
           ) : (
@@ -221,11 +246,7 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
         </AddToBasketWrapper>
         <PaymentList />
         <ShippingList />
-        <StyledButton
-          onClick={addComment}
-          secondary={isAuthenticated}
-          isDisabled={!isAuthenticated}
-        >
+        <StyledButton onClick={addComment}>
           Leave a review about product
         </StyledButton>
         <DetailsAccordion summary="Descriptions">

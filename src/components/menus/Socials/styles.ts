@@ -10,13 +10,13 @@ interface SocialTextProps {
 }
 export const SocialsContainer = styled.div<SocialsContainerProps>`
   display: flex;
-  margin: ${({ margin = "0 0 0 0" }) => margin};
-  flex-wrap: wrap;
-  gap: 15px;
-  width: 100%;
   justify-content: center;
+  margin: ${({ margin = '0 0 0 0' }) => margin};
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 100%;
 `;
-export const SocialItemLink = styled(Link)<SocialItemLinkProps>`
+export const SocialItemLink = styled(Link) <SocialItemLinkProps>`
   display: flex;
   align-items: center;
   :not(:last-child) {

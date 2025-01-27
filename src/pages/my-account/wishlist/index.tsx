@@ -1,21 +1,24 @@
-import React, { useEffect, useState, useMemo, useCallback } from 'react';
-import { useRouter } from 'next/router';
-import { useCookies } from 'react-cookie';
 import AccountLayout from '@/components/pages/account/AccountLayout';
 import WishListTable from '@/components/pages/account/WishListTable/WishListTable';
+import { useAppSelector } from '@/store';
 import {
   useFetchUserUpdateMutation,
   useLazyFetchUserDataQuery,
 } from '@/store/rtk-queries/wpApi';
-import { useAppSelector } from '@/store';
 import { useGetProductsMinimizedMutation } from '@/store/rtk-queries/wpCustomApi';
 import { ProductsMinimizedType } from '@/types/components/shop/product/products';
 import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/router';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCookies } from 'react-cookie';
 
-import { StyledButton, Title } from '@/styles/components';
-import { CartLink } from '@/components/global/popups/MiniCart/style';
 import Notification from '@/components/global/Notification/Notification';
-import { Skeleton } from '@mui/material';
+import { CartLink } from '@/components/global/popups/MiniCart/style';
+import {
+  SkeletonItem,
+  SkeletonWrapper,
+  StyledButton,
+} from '@/styles/components';
 import { WishlistItem } from '@/types/store/rtk-queries/wpApi';
 
 function Wishlist() {
@@ -35,6 +38,7 @@ function Wishlist() {
       isFetching: isUserFetching,
     },
   ] = useLazyFetchUserDataQuery();
+
   const [fetchUserUpdate, { isLoading: isUserUpdateLoading }] =
     useFetchUserUpdateMutation();
   const [
@@ -113,8 +117,25 @@ function Wishlist() {
     isUserFetching ||
     isLoadingWishlist;
 
+  const skeletonsCount = wishListProducts.length || 2;
+  const Skeletons = Array.from({ length: skeletonsCount }, (_, index) => (
+    <SkeletonItem key={index} variant="rounded" />
+  ));
+
   return (
     <AccountLayout title={tMyAccount('wishlist')}>
+      {isLoading && <SkeletonWrapper>{Skeletons}</SkeletonWrapper>}
+
+      {!isLoading && (
+        <WishListTable
+          symbol={symbol}
+          wishlist={wishListProducts}
+          wishlistMinElements={wishlist}
+          isLoading={isLoading}
+          onDelete={handleDelete}
+        />
+      )}
+
       {!!(!isLoading && wishListProducts && wishListProducts.length === 0) && (
         <>
           <Notification type="info">
@@ -127,16 +148,6 @@ function Wishlist() {
           </CartLink>
         </>
       )}
-      {!isLoading && (
-        <WishListTable
-          symbol={symbol}
-          wishlist={wishListProducts}
-          wishlistMinElements={wishlist}
-          isLoading={isLoading}
-          onDelete={handleDelete}
-        />
-      )}
-      {isLoading && <Skeleton variant="rounded" height={130} />}
     </AccountLayout>
   );
 }

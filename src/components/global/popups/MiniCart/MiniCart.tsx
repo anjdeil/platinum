@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useCallback, useMemo } from 'react'
-import { useAppDispatch, useAppSelector } from '@/store'
-import checkCartConflict from '@/utils/cart/checkCartConflict'
-import { useGetProductsMinimizedMutation } from '@/store/rtk-queries/wpCustomApi'
-import OrderBar from '@/components/pages/cart/OrderBar/OrderBar'
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
+import { useAppDispatch, useAppSelector } from '@/store';
+import checkCartConflict from '@/utils/cart/checkCartConflict';
+import { useGetProductsMinimizedMutation } from '@/store/rtk-queries/wpCustomApi';
+import OrderBar from '@/components/pages/cart/OrderBar/OrderBar';
 import {
   CartCardWrapper,
   CartImgWrapper,
@@ -11,75 +11,80 @@ import {
   ProducTitle,
   ProductPrice,
   CardContent,
-} from '@/components/pages/cart/styles/index'
-import CloseIcon from '@/components/global/icons/CloseIcon/CloseIcon'
+} from '@/components/pages/cart/styles/index';
+import CloseIcon from '@/components/global/icons/CloseIcon/CloseIcon';
 import CartQuantity, {
   adaptItemToCartQuantity,
-} from '@/components/pages/cart/CartQuantity/CartQuantity'
-import { useTranslations } from 'next-intl'
-import { PopupOverlay } from '@/components/global/popups/SwiperPopup/styles'
-import { CartLink, MiniCartContainer } from './style'
-import { FlexBox, StyledButton, Title } from '@/styles/components'
-import { Skeleton } from '@mui/material'
-import TrashIcon from '@/components/global/icons/TrashIcon/TrashIcon'
-import { OrderBarDesc } from '@/components/pages/cart/OrderBar/style'
-import Notification from '@/components/global/Notification/Notification'
-import { handleQuantityChange } from '@/utils/cart/handleQuantityChange'
-import { roundedPrice } from '@/utils/cart/roundedPrice'
-import { MenuSkeleton } from '@/components/menus/MenuSkeleton'
-import theme from '@/styles/theme'
+} from '@/components/pages/cart/CartQuantity/CartQuantity';
+import { useTranslations } from 'next-intl';
+import { PopupOverlay } from '@/components/global/popups/SwiperPopup/styles';
+import { CartLink, MiniCartContainer } from './style';
+import { FlexBox, LinkWrapper, StyledButton, Title } from '@/styles/components';
+import { Skeleton } from '@mui/material';
+import TrashIcon from '@/components/global/icons/TrashIcon/TrashIcon';
+import { OrderBarDesc } from '@/components/pages/cart/OrderBar/style';
+import Notification from '@/components/global/Notification/Notification';
+import { handleQuantityChange } from '@/utils/cart/handleQuantityChange';
+import { roundedPrice } from '@/utils/cart/roundedPrice';
+import { MenuSkeleton } from '@/components/menus/MenuSkeleton';
+import theme from '@/styles/theme';
 
 interface MiniCartProps {
-  onClose: () => void
+  onClose: () => void;
 }
 
 const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
-  const dispatch = useAppDispatch()
-  const { code: symbol } = useAppSelector((state) => state.currencySlice)
-  const { cartItems } = useAppSelector((state) => state.cartSlice)
-  const t = useTranslations('Cart')
+  const dispatch = useAppDispatch();
+  const { code: symbol } = useAppSelector(state => state.currencySlice);
+  const { cartItems } = useAppSelector(state => state.cartSlice);
+  const t = useTranslations('Cart');
 
-  const [hasConflict, setHasConflict] = useState(false)
-  const [isVisible, setIsVisible] = useState(false)
+  const [hasConflict, setHasConflict] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   // FETCH
   const [
     getProductsMinimized,
-    { data: productsSpecsData, isLoading: isLoadingProducts, isSuccess },
-  ] = useGetProductsMinimizedMutation()
+    { data: productsSpecsData, isLoading: isLoadingProducts },
+  ] = useGetProductsMinimizedMutation();
 
   const productsWithCartData = useMemo(() => {
     if (!productsSpecsData?.data?.items || !cartItems) {
-      return []
+      return [];
     }
     const cartItemsMap = cartItems.reduce((acc, cartItem) => {
-      acc[cartItem.product_id] = cartItem
-      return acc
-    }, {} as Record<number, (typeof cartItems)[0]>)
+      acc[cartItem.product_id] = cartItem;
+      return acc;
+    }, {} as Record<number, (typeof cartItems)[0]>);
 
-    return productsSpecsData.data.items.map((product) => {
-      const cartItem = cartItemsMap[product.id] || {}
-      const quantity = cartItem.quantity || 0
-      const price = product.price || 0
-      const totalPrice = price * quantity
+    return productsSpecsData.data.items.map(product => {
+      const cartItem =
+        product.parent_id === 0
+          ? cartItemsMap[product.id]
+          : cartItemsMap[product.parent_id] || {};
+
+      const quantity = cartItem ? cartItem.quantity || 0 : 0;
+      const price = product.price || 0;
+      const totalPrice = price * quantity;
 
       return {
         ...product,
         quantity,
-        variation: cartItem.variation_id || undefined,
+        ...(cartItem?.variation_id && { variation: cartItem.variation_id }),
+        product_id: cartItem?.product_id,
         totalPrice,
-      }
-    })
-  }, [productsSpecsData, cartItems])
+      };
+    });
+  }, [productsSpecsData, cartItems]);
 
   const productsSpecs = useMemo(
     () => productsSpecsData?.data?.items || [],
     [productsSpecsData]
-  )
+  );
   const totalCartPrice = useMemo(
     () => productsWithCartData.reduce((sum, item) => sum + item.totalPrice, 0),
     [productsWithCartData]
-  )
+  );
 
   const handleChangeQuantity = useCallback(
     async (
@@ -95,34 +100,34 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
         action,
         variation_id,
         newQuantity
-      )
+      );
     },
     [cartItems, dispatch]
-  )
+  );
 
   const handleClose = useCallback(() => {
-    setIsVisible(false)
-    setTimeout(onClose, 300)
-  }, [onClose])
+    setIsVisible(false);
+    setTimeout(onClose, 300);
+  }, [onClose]);
 
   useEffect(() => {
-    setIsVisible(true)
-  }, [])
+    setIsVisible(true);
+  }, []);
 
   useEffect(() => {
-    getProductsMinimized(cartItems)
-  }, [getProductsMinimized, cartItems.length])
+    getProductsMinimized(cartItems);
+  }, [getProductsMinimized, cartItems.length]);
 
   useEffect(() => {
     if (productsSpecs.length > 0) {
-      setHasConflict(checkCartConflict(cartItems, productsSpecs))
+      setHasConflict(checkCartConflict(cartItems, productsSpecs));
     }
-  }, [cartItems, productsSpecs])
+  }, [cartItems, productsSpecs]);
 
   return (
     <PopupOverlay
-      onClick={(e) => {
-        if (e.target === e.currentTarget) handleClose()
+      onClick={e => {
+        if (e.target === e.currentTarget) handleClose();
       }}
     >
       <MiniCartContainer isVisible={isVisible}>
@@ -147,30 +152,48 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
         {!isLoadingProducts && hasConflict && productsWithCartData && (
           <Notification type="warning">{t('cartConflict')}</Notification>
         )}
-        {productsWithCartData && !isLoadingProducts && cartItems.length == 0 && (
-          <FlexBox flexDirection="column" margin="0 0 46px 0">
-            <Title fontSize="1.5em" as="h3" marginTop="46px" marginBottom="16px">
-              {t('nothingInTheCart')}
-            </Title>
-            <p>{t('nothingInTheCartText')}</p>
-          </FlexBox>
-        )}
+        {productsWithCartData &&
+          !isLoadingProducts &&
+          cartItems.length == 0 && (
+            <FlexBox flexDirection="column" margin="0 0 46px 0">
+              <Title
+                fontSize="1.5em"
+                as="h3"
+                marginTop="46px"
+                marginBottom="16px"
+              >
+                {t('nothingInTheCart')}
+              </Title>
+              <p>{t('nothingInTheCartText')}</p>
+            </FlexBox>
+          )}
         {productsWithCartData && !isLoadingProducts ? (
-          productsWithCartData?.map((item) => {
-            const resolveCount = item.stock_quantity
+          productsWithCartData?.map(item => {
+            const resolveCount = item.stock_quantity;
 
             return (
               <CartCardWrapper key={item.id} marginBottom="68px" gap="16px">
                 <CartImgWrapper maxHeight="140px" maxWidth="140px">
-                  <CartItemImg src={item.image?.src} alt={item.name} width="50" />
+                  <CartItemImg
+                    src={item.image?.src}
+                    alt={item.name}
+                    width="50"
+                  />
                 </CartImgWrapper>
                 <CardContent padding="8px 0" gap="1px">
                   <ProducTitle>
-                    <p>{item.name}</p>
+                    <LinkWrapper href={`/product/${item.slug}`}>
+                      {item.name}
+                    </LinkWrapper>
                     <TrashIcon
                       padding="0"
                       onClick={() =>
-                        handleChangeQuantity(item.id, 'value', item.variation, 0)
+                        handleChangeQuantity(
+                          item.product_id,
+                          'value',
+                          item.variation,
+                          0
+                        )
                       }
                     />
                   </ProducTitle>
@@ -196,7 +219,7 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
                   </ProductPrice>
                 </CardContent>
               </CartCardWrapper>
-            )
+            );
           })
         ) : (
           <MenuSkeleton
@@ -224,14 +247,18 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
           </CartLink>
           <StyledButton
             height="58px"
-            disabled={hasConflict || isLoadingProducts || productsWithCartData.length < 1}
+            disabled={
+              hasConflict ||
+              isLoadingProducts ||
+              productsWithCartData.length < 1
+            }
           >
             {t('placeAnOrder')}
           </StyledButton>
         </FlexBox>
       </MiniCartContainer>
     </PopupOverlay>
-  )
-}
+  );
+};
 
-export default MiniCart
+export default MiniCart;

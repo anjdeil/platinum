@@ -6,8 +6,7 @@ import {
   OrderSummaryTotal,
   OrderSummaryTotalValue,
   OrderSummaryWrapper,
-} from './style'
-import { OrderType } from '@/types/services'
+} from './style';
 import getSubtotalByLineItems from '@/utils/cart/getSubtotalByLineItems'
 import formatPrice from '@/utils/cart/formatPrice'
 import OrderTotalsRowsSkeleton from '../../order/OrderTotals/OrderTotalsRowsSkeleton'

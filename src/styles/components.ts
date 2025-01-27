@@ -6,7 +6,7 @@ import {
   TextProps,
 } from '@/types/styles/components';
 import styled from '@emotion/styled';
-import { Pagination } from '@mui/material';
+import { Pagination, Skeleton } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -127,8 +127,8 @@ export const StyledButton = styled.button<StyledButtonProps>`
     secondary
       ? theme.colors.black
       : isDisabled
-        ? theme.colors.black
-        : theme.colors.white};
+      ? theme.colors.black
+      : theme.colors.white};
   background-color: ${({
     isDisabled = false,
     notify = false,
@@ -138,10 +138,10 @@ export const StyledButton = styled.button<StyledButtonProps>`
     notify
       ? theme.colors.secondary
       : secondary
-        ? 'transparent'
-        : isDisabled
-          ? theme.colors.grey
-          : theme.colors.primary};
+      ? 'transparent'
+      : isDisabled
+      ? theme.colors.grey
+      : theme.colors.primary};
   padding-block: 16px;
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
   text-transform: none;
@@ -248,15 +248,26 @@ interface CustomFormProps {
 }
 
 export const CustomForm = styled.form<CustomFormProps>`
+  width: 100%;
   margin: 0 auto;
-  max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : '1100px')};
+  max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : '1000px')};
+  @media ${({ theme }) => theme.media.middle} {
+    margin: 0 auto;
+  }
 `;
 
-export const FormWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(49%, 1fr));
+interface CustomFormProps {
+  direction?: 'column' | 'grid';
+}
+export const FormWrapper = styled.div<CustomFormProps>`
+  display: ${({ direction }) => (direction === 'column' ? 'flex' : 'grid')};
+  flex-direction: ${({ direction }) =>
+    direction === 'column' ? 'column' : 'unset'};
+  grid-template-columns: ${({ direction }) =>
+    direction === 'column' ? 'unset' : 'repeat(auto-fill, minmax(49%, 1fr))'};
   column-gap: 1%;
-  row-gap: 15px;
+  gap: ${({ direction }) => (direction === 'column' ? '15px' : 'unset')};
+  row-gap: ${({ direction }) => (direction === 'column' ? 'unset' : '15px')};
   padding-bottom: 20px;
 
   @media ${({ theme }) => theme.media.medium} {
@@ -267,11 +278,26 @@ export const FormWrapper = styled.div`
 `;
 
 export const FormWrapperBottom = styled.div`
-  margin-top: 24px;
+  margin-top: 16px;
   margin-bottom: 16px;
   display: flex;
   flex-direction: column;
   gap: 20px;
+`;
+
+interface InfoCardProps {
+  marginBottom?: string;
+  marginTop?: string;
+}
+
+export const InfoCard = styled.div<InfoCardProps>`
+  margin: 0 auto;
+  margin-bottom: ${({ marginBottom = '24px' }) => marginBottom};
+
+  border-radius: 8px;
+  border: 1px solid ${({ theme }) => theme.colors.lightBorder};
+
+  padding: 32px;
 `;
 
 export const Overlay = styled.div`
@@ -314,6 +340,10 @@ export const StyledHeaderWrapper = styled.header`
   gap: 8px;
   margin: 24px 0;
 `;
+export const FormPageWrapper = styled.header`
+  min-height: 85vh;
+  padding: 24px 0;
+`;
 
 // ------------------RICH TEXT SLUG PAGE
 
@@ -329,5 +359,24 @@ export const StyledSlugRichTextSection = styled.div`
     align-items: flex-start;
     justify-content: flex-start;
     margin-bottom: '64px';
+  }
+`;
+
+export const LinkWrapper = styled(Link)`
+  text-decoration: none;
+  color: ${({ theme }) => theme.colors.black};
+`;
+
+export const SkeletonWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`;
+
+export const SkeletonItem = styled(Skeleton)`
+  height: 130px;
+
+  @media ${({ theme }) => theme.media.large} {
+    height: 240px;
   }
 `;

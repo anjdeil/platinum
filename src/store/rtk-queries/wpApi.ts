@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { WishlistItem, WpUserType } from '@/types/store/rtk-queries/wpApi';
+import { WpUserType } from '@/types/store/rtk-queries/wpApi';
 import { JwtTokenResponseType } from '@/types/services';
 import { AuthConfigType } from '@/types/services/wpRestApi/auth';
 

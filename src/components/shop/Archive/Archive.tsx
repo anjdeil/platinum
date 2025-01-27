@@ -33,6 +33,7 @@ import {
   PagesNavigationFooterWrapper,
   PagesNavigationWrapper,
 } from './styles';
+import Notification from '@/components/global/Notification/Notification';
 
 const switchPage = (page: number, maxPage: number) => {
   if (maxPage < page) return;
@@ -52,14 +53,20 @@ const switchPage = (page: number, maxPage: number) => {
 };
 
 export const switchCategory = (parentSlug: string, childSlug?: string) => {
-  const { slugs, ...params } = router.query;
+  const { ...params } = router.query;
   const newSlugs = childSlug ? [parentSlug, childSlug] : [parentSlug];
+
+  console.log('router.pathname...', router.pathname);
+  console.log('parentSlug...', parentSlug);
+  console.log('childSlug...', childSlug);
+  console.log('newSlugs...', newSlugs);
+  console.log('params...', params);
 
   router.push({
     pathname: router.pathname,
     query: {
-      slugs: newSlugs,
       ...params,
+      slugs: newSlugs,
     },
   });
 };
@@ -210,7 +217,11 @@ export const Archive: FC<ArchivePropsType> = props => {
               <CustomSortAccordion />
             </FilterSortWrapper>
             <CountProduct>
-              {statistic.products_count}&nbsp;{t('products')}
+              {statistic.products_count !== 0 && (
+                <>
+                  {statistic.products_count}&nbsp;{t('products')}
+                </>
+              )}
             </CountProduct>
             <PagesNavigationWrapper>
               <PagesNavigation
@@ -225,15 +236,19 @@ export const Archive: FC<ArchivePropsType> = props => {
             </PagesNavigationWrapper>
           </CatalogTopWrapper>
           <CatalogListBlock>
-            {products?.length && (
+            {products?.length > 0 && (
               <ProductCardList
                 products={products}
                 columns={{
                   mobileColumns: 2,
                   tabletColumns: 4,
+                  mintabletColumns: 3,
                   desktopColumns: 3,
                 }}
               />
+            )}
+            {products.length === 0 && (
+              <Notification>{t('productsNotFound')}</Notification>
             )}
           </CatalogListBlock>
           <PagesNavigationFooterWrapper>
