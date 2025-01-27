@@ -208,13 +208,13 @@
     "toWrite": "To write",
     "socialMedia": "We are in social media",
     "askUsQuestion": "Ask Us a Question",
-    "yourNamePlaceholder": "What is your name?",
+    "yourNamePlaceholder": "What is your name",
     "emailPlaceholder": "Email",
     "yourQuestionPlaceholder": "Write your question",
     "errorMessage": "Something went wrong. Please try again.",
     "successMessage": "Your message has been sent successfully!",
     "sending": "Sending...",
-    "sendButton": "Send"
+    "sendButton": "Send a question"
   },
   "Validation": {
     "emailValidation": "Please enter a valid email.",
