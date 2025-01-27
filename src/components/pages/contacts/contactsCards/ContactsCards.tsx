@@ -1,21 +1,21 @@
+import AddressIcon from '@/components/global/icons/contacts/AddressIcon/AddressIcon';
+import MailIcon from '@/components/global/icons/contacts/MailIcon/MailIcon';
+import PhoneIcon from '@/components/global/icons/contacts/PhoneIcon/PhoneIcon';
+import { useResponsive } from '@/hooks/useResponsive';
+import { useAppSelector } from '@/store';
+import { Title } from '@/styles/components';
+import { Skeleton } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import {
-  ContactsCardsWrapper,
   ContactCard,
   ContactCardText,
   ContactLink,
+  ContactsCardsWrapper,
 } from './styles';
-import PhoneIcon from '@/components/global/icons/contacts/PhoneIcon/PhoneIcon';
-import MailIcon from '@/components/global/icons/contacts/MailIcon/MailIcon';
-import AddressIcon from '@/components/global/icons/contacts/AddressIcon/AddressIcon';
-import { Title } from '@/styles/components';
-import { useAppSelector } from '@/store';
-import { Skeleton } from '@mui/material';
-import { useResponsive } from '@/hooks/useResponsive';
 
 export const ContactsCards = () => {
   const t = useTranslations('Contacts');
-  const themeOptions = useAppSelector((state) => state.themeOptions);
+  const themeOptions = useAppSelector(state => state.themeOptions);
   const ContactItems = themeOptions.data.item.contacts;
   const { isTablet } = useResponsive();
 
@@ -46,13 +46,17 @@ export const ContactsCards = () => {
             <>
               {ContactItems.address}
               <div>
-                {t('schedule')}: {ContactItems.schedule[0]?.from_time} -{' '}
-                {ContactItems.schedule[0]?.to_time} <br />
+                {t('schedule', {
+                  from: ContactItems.schedule[0]?.from_time,
+                  to: ContactItems.schedule[0]?.to_time,
+                })}
+                <br />
                 {ContactItems.schedule[1]?.not_working
                   ? t('dayOff')
-                  : `${t('satSun')} ${ContactItems.schedule[1]?.from_time} - ${
-                      ContactItems.schedule[1]?.to_time
-                    }`}
+                  : `${t('satSun', {
+                      from: ContactItems.schedule[1]?.from_time,
+                      to: ContactItems.schedule[1]?.to_time,
+                    })}`}
               </div>
             </>
           ) : (

@@ -49,13 +49,13 @@ const theme: Theme = {
   background: {
     secondary: '#f2f8fe',
     main: '#063e7b',
-    hover: '#063e7b',
+    hover: '#032344',
     skeleton: 'linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%)',
     skeletonSecondary:
       'linear-gradient(90deg, #f2f8fe 25%, #DFEAF4  50%, #f2f8fe 75%)',
     grey: '#BEBEBE',
     success: '#82E1A9',
-    warning: '#F2B517',
+    warning: '#ffe8ae',
     primaryGradient:
       'radial-gradient(79.43% 79.43% at 49.95% 64.07%, #024584 0%, #0B233D 100%)',
     infoGradient:
