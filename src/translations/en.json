@@ -322,7 +322,12 @@
     "pay": "Pay for order",
     "agreement": "Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our ",
     "privacyPolicy": "privacy policy",
-    "registerAccount": "Register an account when making a purchase."
+    "registerAccount": "Register an account when making a purchase.",
+    "billingFormName": "Customer information",
+    "shippingFormName": "Shipping information",
+    "proofSelect": "Proof of purchase",
+    "vatInvoice": "VAT invoice",
+    "receipt": "Receipt"
   },
   "Footer": {
     "myAccount": "My account",

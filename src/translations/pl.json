@@ -322,7 +322,12 @@
     "pay": "Opłacić zamówienie",
     "agreement": "Dane osobowe użytkownika będą wykorzystywane do przetwarzania jego zamówień, obsługi jego doświadczeń na tej stronie internetowej oraz do innych celów opisanych w naszej ",
     "privacyPolicy": "polityce prywatności",
-    "registerAccount": "Zarejestruj konto podczas dokonywania zakupów."
+    "registerAccount": "Zarejestruj konto podczas dokonywania zakupów.",
+    "billingFormName": "Informacje dla klientów",
+    "shippingFormName": "Informacje o wysyłce",
+    "proofSelect": "Dowód zakupu",
+    "vatInvoice": "VAT Faktura",
+    "receipt": "Paragon"
   },
   "Footer": {
     "myAccount": "Moje konto",

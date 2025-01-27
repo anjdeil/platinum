@@ -322,7 +322,12 @@
     "pay": "Bezahlung der Bestellung",
     "agreement": "Ihre persönlichen Daten werden verwendet, um Ihre Bestellung zu bearbeiten, Ihre Erfahrung auf dieser Website zu unterstützen und für andere Zwecke, die in unserer ",
     "privacyPolicy": "Datenschutzrichtlinie beschrieben sind",
-    "registerAccount": "Registrieren Sie beim Kauf ein Konto."
+    "registerAccount": "Registrieren Sie beim Kauf ein Konto.",
+    "billingFormName": "Rechnungsinformationen",
+    "shippingFormName": "Lieferinformationen",
+    "proofSelect": "Wählen Sie den Kaufnachweis",
+    "vatInvoice": "VAT Rechnung",
+    "receipt": "Quittung"
   },
   "Footer": {
     "myAccount": "Mein Konto",

@@ -28,19 +28,24 @@ import { useTranslations } from 'next-intl';
 import { ActiveText } from '../LoginForm/styles';
 import CustomCountrySelect from '../../selects/CustomCountrySelect/CustomCountrySelect';
 import { countryOptions } from '@/utils/mockdata/countryOptions';
+import { BillingFormSchema } from '@/types/components/global/forms/billingForm';
+import { ConfirmationRegCard } from './ConfirmationRegCard';
+
+// const PROOF_OPTIONS_KEY = ['vatInvoice', 'receipt'];
 
 export const BillingForm: FC = () => {
   const tValidation = useTranslations('Validation');
   const tMyAccount = useTranslations('MyAccount');
+  const tCheckout = useTranslations('Checkout');
   const router = useRouter();
   const [customError, setCustomError] = useState<string>('');
+  // const [isRegister, setIsRegister] = useState<boolean>(false);
+  // const [isInvoice, setIsInvoice] = useState<boolean>(false);
 
   /** Form settings */
-  const formSchema = useMemo(
-    () => RegistrationFormSchema(false, tValidation),
-    []
-  );
-  type RegistrationFormType = z.infer<typeof formSchema>;
+  const formSchema = useMemo(() => BillingFormSchema(false, tValidation), []);
+
+  type BillingFormType = z.infer<typeof formSchema>;
   const {
     register,
     handleSubmit,
@@ -48,7 +53,7 @@ export const BillingForm: FC = () => {
     reset,
     setValue,
     control,
-  } = useForm<RegistrationFormType>({
+  } = useForm<BillingFormType>({
     resolver: zodResolver(formSchema),
   });
 
@@ -60,29 +65,24 @@ export const BillingForm: FC = () => {
   const [fetchToken] = useGetTokenMutation();
   const [checkToken] = useCheckTokenMutation();
 
-  async function onSubmit(formData: RegistrationFormType) {
+  async function onSubmit(formData: BillingFormType) {
     setCustomError('');
     const reqBody = {
-      email: formData.email,
       first_name: formData.first_name,
       last_name: formData.last_name,
-      password: formData.password,
-      role: 'customer',
+      email: formData.email,
+      phone: formData.phone,
+      country: formData.country,
+      city: formData.city,
+      address_1: formData.address_1,
+      address_2: [formData.address_2, formData.apartmentNumber]
+        .filter(Boolean)
+        .join('/'),
+      postcode: formData.postcode,
 
+      password: formData.password,
       username: formData.email,
-      billing: {
-        first_name: formData.first_name,
-        last_name: formData.last_name,
-        address_1: formData.address_1,
-        address_2: [formData.address_2, formData.apartmentNumber]
-          .filter(Boolean)
-          .join('/'),
-        city: formData.city,
-        postcode: formData.postcode,
-        country: formData.country,
-        email: formData.email,
-        phone: formData.phone,
-      },
+      role: 'customer',
     };
 
     try {
@@ -129,6 +129,12 @@ export const BillingForm: FC = () => {
           setValue={setValue}
         />
       ))}
+      <CustomFormCheckbox
+        name={'invoice'}
+        register={register}
+        errors={errors}
+        label={tMyAccount('agreePersonalData')}
+      />
       <CustomCountrySelect
         name={`country`}
         control={control}
@@ -136,74 +142,88 @@ export const BillingForm: FC = () => {
         label={tMyAccount('country')}
         errors={errors}
       />
-      {[
-        'city',
-        'address_1',
-        'address_2',
-        'apartmentNumber',
-        'postcode',
-        'password',
-        'confirmPassword',
-      ].map(field => (
-        <CustomFormInput
-          key={field}
-          fieldName={tMyAccount(field)}
-          name={`${field}`}
-          register={register}
-          errors={errors}
-          inputTag="input"
-          inputType={
-            field === 'postCode'
-              ? 'number'
-              : field == 'password' || field == 'confirmPassword'
-              ? 'newpassword'
-              : 'text'
-          }
-          setValue={setValue}
+      {['city', 'address_1', 'address_2', 'apartmentNumber', 'postcode'].map(
+        field => (
+          <CustomFormInput
+            key={field}
+            fieldName={tMyAccount(field)}
+            name={`${field}`}
+            register={register}
+            errors={errors}
+            inputTag="input"
+            inputType={field === 'postCode' ? 'number' : 'text'}
+            setValue={setValue}
+          />
+        )
+      )}
+      {/* <CustomCheckboxLabel>
+        <CustomCheckboxStyled
+          name={proof}
+          onClick={prev => setIsRegister(!prev)}
         />
-      ))}
+        {label}
+      </CustomCheckboxLabel> */}
+
+      {form &&
+        ['password', 'confirmPassword'].map(field => (
+          <CustomFormInput
+            key={field}
+            fieldName={tMyAccount(field)}
+            name={field}
+            register={register}
+            errors={errors}
+            inputTag="input"
+            inputType={'newpassword'}
+            setValue={setValue}
+          />
+        ))}
     </>
   );
 
   return (
-    <CustomForm onSubmit={handleSubmit(onSubmit)} maxWidth="850px">
-      <Title as={'h2'} uppercase={true} marginBottom={'24px'}>
-        {tMyAccount('registration')}
-      </Title>
-      <FormWrapper>{renderFormFields()} </FormWrapper>
-      <CustomFormCheckbox
-        name={'terms'}
-        register={register}
-        errors={errors}
-        label={tMyAccount('agreePersonalData')}
-      />
-      <FormWrapperBottom>
-        <StyledButton
-          color={theme.colors.white}
-          type="submit"
-          disabled={isSubmitting}
-        >
-          {tMyAccount('register')}
-        </StyledButton>
-        {error && customError && (
-          <CustomError
-            dangerouslySetInnerHTML={{
-              __html: isAuthErrorResponseType(error || customError),
-            }}
-          ></CustomError>
+    <>
+      <ConfirmationRegCard name="registration" setIsRegister={setIsRegister} />
+      <CustomForm onSubmit={handleSubmit(onSubmit)} maxWidth="850px">
+        <Title as={'h2'} uppercase={true} marginBottom={'24px'}>
+          {tCheckout('billingFormName')}
+        </Title>
+        <FormWrapper>{renderFormFields()} </FormWrapper>
+        {isRegister && (
+          <CustomFormCheckbox
+            name={'terms'}
+            register={register}
+            errors={errors}
+            label={tMyAccount('agreePersonalData')}
+          />
         )}
-        {isSubmitSuccessful && !error && customError && (
-          <CustomSuccess>
-            {tMyAccount('Your account has been created successfully!')}
-          </CustomSuccess>
-        )}
-      </FormWrapperBottom>
-      <FlexBox gap="10px" justifyContent="flex-end" margin="16px 0 0 0">
-        <div>{tMyAccount('AlreadyHaveAnAccount')} </div>
-        <ActiveText href="/my-account/login">
-          {tMyAccount('log-In')}!
-        </ActiveText>
-      </FlexBox>
-    </CustomForm>
+        <FormWrapperBottom>
+          <StyledButton
+            color={theme.colors.white}
+            type="submit"
+            disabled={isSubmitting}
+          >
+            {tMyAccount('register')}
+          </StyledButton>
+          {error && customError && (
+            <CustomError
+              dangerouslySetInnerHTML={{
+                __html: isAuthErrorResponseType(error || customError),
+              }}
+            ></CustomError>
+          )}
+          {isSubmitSuccessful && !error && customError && (
+            <CustomSuccess>
+              {tMyAccount('Your account has been created successfully!')}
+            </CustomSuccess>
+          )}
+        </FormWrapperBottom>
+        <FlexBox gap="10px" justifyContent="flex-end" margin="16px 0 0 0">
+          <div>{tMyAccount('AlreadyHaveAnAccount')} </div>
+          <ActiveText href="/my-account/login">
+            {tMyAccount('log-In')}!
+          </ActiveText>
+        </FlexBox>
+      </CustomForm>
+    </>
   );
 };
