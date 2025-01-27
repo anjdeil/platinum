@@ -291,8 +291,6 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
     [priceRange, maxPrice]
   );
 
-  console.log('attributes...', attributes);
-
   return (
     <FilterPanelWrap>
       <FilterPanelWrap>
