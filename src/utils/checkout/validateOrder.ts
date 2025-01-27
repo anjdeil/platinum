@@ -1,5 +1,4 @@
 import { OrderType } from '@/types/services';
-import parcelMachinesMethods from '@/utils/checkout/parcelMachinesMethods';
 import validateOrderShippingLines from '@/utils/checkout/validateOrderShippingLines';
 
 export default function validateOrder(order: OrderType) : {

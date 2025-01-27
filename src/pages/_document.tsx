@@ -1,9 +1,3 @@
-// @ts-nocheck
-
-function onPointSelect(event) {
-  alert(event.details.name);
-}
-
 import { Head, Html, Main, NextScript } from "next/document";
 export default function Document() {
   return (
@@ -12,7 +6,6 @@ export default function Document() {
       <body>
         <Main />
         <NextScript />
-
       </body>
     </Html>
   );

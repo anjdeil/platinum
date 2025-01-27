@@ -17,7 +17,6 @@ import { debounce } from 'lodash';
 import { setCommentToOrder } from '@/store/slices/cartSlice';
 import OrderSummary from '../OrderSummary/OrderSummary';
 import { CartSummaryBlockProps } from '@/types/pages/cart';
-import Notification from '@/components/global/Notification/Notification';
 import router from 'next/router';
 
 const CartSummaryBlock: FC<CartSummaryBlockProps> = ({
