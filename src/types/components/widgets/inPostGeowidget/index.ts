@@ -1,5 +1,3 @@
-import { boolean, number } from "zod"
-
 export interface onPointSelectEvent extends Event {
     detail: InPostPointDetail,
 };
