@@ -6,7 +6,7 @@ export const StyledProductCardList = styled.div<StyledProductCardListProps>`
   display: grid;
   justify-content: space-between;
   gap: ${({ gap = '16px' }) => gap};
-  grid-template-columns: ${({ desktopColumns = 3 }) =>
+  grid-template-columns: ${({ desktopColumns = 4 }) =>
     `repeat(${desktopColumns}, 1fr)`};
 
   @media ${({ theme }) => theme.media.large} {
@@ -14,7 +14,7 @@ export const StyledProductCardList = styled.div<StyledProductCardListProps>`
       `repeat(${tabletColumns}, 1fr)`};
   }
   @media ${({ theme }) => theme.media.mediumLarge} {
-    grid-template-columns: ${({ mintabletColumns = 3 }) =>
+    grid-template-columns: ${({ mintabletColumns = 4 }) =>
       `repeat(${mintabletColumns}, 1fr)`};
   }
 
