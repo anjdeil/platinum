@@ -7,6 +7,7 @@ import SearchBar from '@/components/global/SearchBar/SearchBar';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { popupSet, popupToggle } from '@/store/slices/PopupSlice';
 import { fetchUser } from '@/utils/auth/authService';
+import { useTranslations } from 'next-intl';
 import React, { useEffect, useState } from 'react';
 import Nav from '../../menus/Nav/Nav';
 import {
@@ -17,7 +18,6 @@ import {
   HeaderWrapper,
   MenuWrapper,
 } from './styles';
-import { useTranslations } from 'next-intl';
 
 const Header: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -41,7 +41,6 @@ const Header: React.FC = () => {
           <MenuWrapper>
             <CategoriesButton
               onMouseEnter={() => dispatch(popupSet('categories-menu'))}
-              // onClick={() => dispatch(popupToggle('categories-menu'))}
             >
               {t('allShop')}
             </CategoriesButton>

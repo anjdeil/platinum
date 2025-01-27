@@ -24,7 +24,6 @@ export const PopupContainer = styled.div<PopupContainerProps>`
   }
 
   @media ${({ theme }) => theme.media.large} {
-    bottom: 80px;
     grid-template-rows: ${({ title, closeButton = false }) => (closeButton ? "auto 1fr" : title === '' && "1fr")};
     overflow: auto;
   }

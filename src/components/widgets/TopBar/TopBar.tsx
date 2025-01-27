@@ -53,6 +53,7 @@ const TopBar: React.FC = () => {
             }}
             justify="space-between"
             color={theme.colors.black}
+            gap="24px"
           />
         </NavWrapper>
         <SelectsWrapper>
