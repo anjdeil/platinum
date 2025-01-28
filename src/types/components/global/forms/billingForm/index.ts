@@ -17,6 +17,8 @@ export const BillingFormSchema = (isLoggedIn: boolean, t: any) => {
       password: !isLoggedIn ? passwordSchema(t) : z.string().optional(),
       confirmPassword: !isLoggedIn ? z.string() : z.string().optional(),
       terms: termsSchema(t),
+      invoice: z.boolean().optional(),
+      proof: z.boolean().optional(),
     })
     .refine(data => data.password === data.confirmPassword, {
       message: t('PasswordsDoNotMatch'),

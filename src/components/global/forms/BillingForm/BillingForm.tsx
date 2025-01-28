@@ -1,6 +1,6 @@
 import { FC, useMemo, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { z } from 'zod';
 import 'react-international-phone/style.css';
 import { useRegisterCustomerMutation } from '@/store/rtk-queries/wooCustomApi';
@@ -115,6 +115,18 @@ export const BillingForm: FC = () => {
     }
   }
 
+  const isInvoice = useWatch({
+    control,
+    name: 'invoice',
+    defaultValue: false,
+  });
+
+  const isRegistration = useWatch({
+    control,
+    name: 'registration',
+    defaultValue: false,
+  });
+
   const renderFormFields = () => (
     <>
       {['first_name', 'last_name', 'email', 'phone'].map(field => (
@@ -135,6 +147,23 @@ export const BillingForm: FC = () => {
         errors={errors}
         label={tMyAccount('agreePersonalData')}
       />
+      {isInvoice && (
+        <>
+          {['company', 'nip'].map(field => (
+            <CustomFormInput
+              key={field}
+              fieldName={tMyAccount(field)}
+              name={`${field}`}
+              register={register}
+              errors={errors}
+              inputTag="input"
+              inputType={field === 'postCode' ? 'number' : 'text'}
+              setValue={setValue}
+            />
+          ))}
+        </>
+      )}
+
       <CustomCountrySelect
         name={`country`}
         control={control}
@@ -156,15 +185,14 @@ export const BillingForm: FC = () => {
           />
         )
       )}
-      {/* <CustomCheckboxLabel>
-        <CustomCheckboxStyled
-          name={proof}
-          onClick={prev => setIsRegister(!prev)}
-        />
-        {label}
-      </CustomCheckboxLabel> */}
+      <CustomFormCheckbox
+        name={'registration'}
+        register={register}
+        errors={errors}
+        label={tCheckout('registerAccount')}
+      />
 
-      {form &&
+      {isRegistration &&
         ['password', 'confirmPassword'].map(field => (
           <CustomFormInput
             key={field}
@@ -182,20 +210,23 @@ export const BillingForm: FC = () => {
 
   return (
     <>
-      <ConfirmationRegCard name="registration" setIsRegister={setIsRegister} />
       <CustomForm onSubmit={handleSubmit(onSubmit)} maxWidth="850px">
         <Title as={'h2'} uppercase={true} marginBottom={'24px'}>
           {tCheckout('billingFormName')}
         </Title>
+        <div>
+          <Title as={'h3'}></Title>
+          <button></button>
+        </div>
         <FormWrapper>{renderFormFields()} </FormWrapper>
-        {isRegister && (
+        {/* {isRegister && (
           <CustomFormCheckbox
             name={'terms'}
             register={register}
             errors={errors}
             label={tMyAccount('agreePersonalData')}
           />
-        )}
+        )} */}
         <FormWrapperBottom>
           <StyledButton
             color={theme.colors.white}
