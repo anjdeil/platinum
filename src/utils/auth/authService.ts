@@ -21,9 +21,7 @@ export const fetchUser = async (dispatch: AppDispatch) => {
         dispatch(setUser(user));
     } else {
         try {
-            const reqUrl =
-                process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3000';
-            const response = await axios.get(`${reqUrl}/api/wooAuth/customers`, {
+            const response = await axios.get(`/api/wooAuth/customers`, {
                 headers: {
                     Cookie: `authToken=${authToken}`,
                 },
