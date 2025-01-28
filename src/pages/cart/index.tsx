@@ -7,14 +7,12 @@ import OrderBar from '@/components/pages/cart/OrderBar/OrderBar';
 import OrderProgress from '@/components/pages/cart/OrderProgress/OrderProgress';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { useCreateOrderMutation } from '@/store/rtk-queries/wooCustomApi';
-
-import { useGetProductsMinimizedMutation } from '@/store/rtk-queries/wpCustomApi';
 import { CartPageWrapper } from '@/styles/cart/style';
 import { Container, FlexBox, StyledButton } from '@/styles/components';
 import { CreateOrderRequestType } from '@/types/services';
 import { WpUserType } from '@/types/store/rtk-queries/wpApi';
 import checkCartConflict from '@/utils/cart/checkCartConflict';
-import getSubtotalByLineItems from '@/utils/cart/getSubtotalByLineItems';
+import getTotalByLineItems from '@/utils/cart/getTotalByLineItems';
 import { handleQuantityChange } from '@/utils/cart/handleQuantityChange';
 import { roundedPrice } from '@/utils/cart/roundedPrice';
 import axios from 'axios';
@@ -47,11 +45,10 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
 
   const [createOrder, { data: orderItems, isLoading: isLoadingOrder }] =
     useCreateOrderMutation();
-  const { cartItems, couponCodes } = useAppSelector(state => state.cartSlice);
-  const [
-    getProductsMinimized,
-    { data: productsSpecsData, isLoading: isLoadingProductsMin },
-  ] = useGetProductsMinimizedMutation();
+
+  const { cartItems, couponCodes, productsData } = useAppSelector(
+    state => state.cartSlice
+  );
 
   const [cachedOrderItems, setCachedOrderItems] = useState(orderItems);
 
@@ -91,12 +88,6 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   }, [cartItems, couponCodes, code, defaultCustomerData]);
 
   useEffect(() => {
-    if (cartItems.length > 0) {
-      getProductsMinimized(cartItems);
-    }
-  }, [getProductsMinimized, cartItems.length]);
-
-  useEffect(() => {
     if (orderItems?.currency_symbol) {
       setSymbol(orderItems.currency_symbol);
       setCachedOrderItems(orderItems);
@@ -122,16 +113,9 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
     [cartItems, dispatch]
   );
 
-  const productsSpecs = useMemo(
-    () => productsSpecsData?.data?.items || [],
-    [productsSpecsData]
-  );
-
   const subtotal = useMemo(
     () =>
-      orderItems?.line_items
-        ? getSubtotalByLineItems(orderItems.line_items)
-        : 0,
+      orderItems?.line_items ? getTotalByLineItems(orderItems.line_items) : 0,
     [orderItems]
   );
 
@@ -140,16 +124,16 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      setHasConflict(checkCartConflict(cartItems, productsSpecs));
+      setHasConflict(checkCartConflict(cartItems, productsData));
     }, 100);
 
     return () => clearTimeout(timeoutId);
-  }, [productsSpecs]);
+  }, [productsData]);
 
   const currentOrderItems = orderItems ?? cachedOrderItems;
 
   const isLoading = isLoadingOrder;
-  const isLoadingCart = isLoadingOrder || isLoadingProductsMin;
+  const isLoadingCart = isLoadingOrder;
 
   //fix  hydration
   const [hydrated, setHydrated] = useState(false);
@@ -178,7 +162,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
               cartItems={cartItems}
               order={currentOrderItems}
               isLoadingOrder={isLoadingCart}
-              productsSpecs={productsSpecs}
+              productsSpecs={productsData}
               roundedPrice={roundedPrice}
               hasConflict={hasConflict}
               handleChangeQuantity={handleChangeQuantity}

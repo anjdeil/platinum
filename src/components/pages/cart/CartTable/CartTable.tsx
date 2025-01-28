@@ -54,6 +54,10 @@ const CartTable: FC<CartTableProps> = ({
         cartItems.some(cartItem => cartItem.product_id == lineItem.product_id)
       ) || []
     );
+    console.log('cartItems', cartItems);
+    console.log('order?.line_items', order?.line_items);
+    console.log('productsSpecs', productsSpecs);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [order?.line_items, cartItems]);
 
@@ -95,11 +99,11 @@ const CartTable: FC<CartTableProps> = ({
               </GridHeader>
 
               {innercartItems.map(item => {
-                console.log(item);
                 const { resolveCount, isAvailable } = checkProductAvailability(
                   item,
                   productsSpecs
                 );
+                console.log(item);
 
                 const productSpec = productsSpecs.find(product => {
                   if (product.parent_id === 0) {
@@ -108,7 +112,7 @@ const CartTable: FC<CartTableProps> = ({
                     return product.parent_id === item.product_id;
                   }
                 });
-                console.log(productSpec);
+
                 return (
                   <RowWrapper key={item.id} isLoadingItem={isLoadingOrder}>
                     <GridRow>
