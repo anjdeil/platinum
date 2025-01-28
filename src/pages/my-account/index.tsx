@@ -30,15 +30,15 @@ export const getServerSideProps: GetServerSideProps = async (
 ) => {
   const { locale } = context;
   const cookies = context.req.cookies;
-  // const reqUrl =
-  //   process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3000';
+  const reqUrl =
+    process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3000';
 
   try {
     if (!cookies?.authToken) {
       throw new Error('Invalid or missing authentication token');
     }
 
-    const resp = await axios.get(`/api/wooAuth/customers`, {
+    const resp = await axios.get(`${reqUrl}/api/wooAuth/customers`, {
       headers: {
         Cookie: `authToken=${cookies.authToken}`,
       },

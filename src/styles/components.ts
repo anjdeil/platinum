@@ -258,6 +258,7 @@ export const CustomForm = styled.form<CustomFormProps>`
 
 interface CustomFormProps {
   direction?: 'column' | 'grid';
+  inMiddle?: boolean;
 }
 export const FormWrapper = styled.div<CustomFormProps>`
   display: ${({ direction }) => (direction === 'column' ? 'flex' : 'grid')};
@@ -269,6 +270,7 @@ export const FormWrapper = styled.div<CustomFormProps>`
   gap: ${({ direction }) => (direction === 'column' ? '15px' : 'unset')};
   row-gap: ${({ direction }) => (direction === 'column' ? 'unset' : '15px')};
   padding-bottom: 20px;
+  padding-bottom: ${({ inMiddle }) => (inMiddle ? '0' : '20px')};
 
   @media ${({ theme }) => theme.media.medium} {
     display: flex;

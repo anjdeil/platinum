@@ -29,6 +29,7 @@ import checkCartConflict from '@/utils/cart/checkCartConflict';
 import parcelMachinesMethods from '@/utils/checkout/parcelMachinesMethods';
 import CheckoutWarnings from '@/components/pages/checkout/CheckoutWarnings';
 import validateOrder from '@/utils/checkout/validateOrder';
+import { BillingForm } from '@/components/global/forms/BillingForm';
 
 export function getServerSideProps() {
   return {
@@ -65,7 +66,6 @@ export default function CheckoutPage() {
       });
 
       setGeowidgetShown(false);
-
     }
   }, [pointDetail]);
 
@@ -201,7 +201,6 @@ export default function CheckoutPage() {
    */
   const [warnings, setWarnings] = useState<string[]>();
   const handlePayOrder = () => {
-
     if (!order) return;
 
     const validationResult = validateOrder(order);
@@ -216,14 +215,12 @@ export default function CheckoutPage() {
 
   return (
     <>
-      <Head>
-        {inPostHead},
-      </Head>
+      <Head>{inPostHead},</Head>
       <OrderProgress />
 
       <CheckoutContainer>
         <CheckoutFormsWrapper>
-          {!userData &&
+          {!userData && (
             <Notification>
               <p>
                 <Link
@@ -231,30 +228,60 @@ export default function CheckoutPage() {
                   onClick={() => {
                     /* Login Popup opening logic */
                   }}
-                >{t('login')}</Link>{t('fieldsWillFilled')}
+                >
+                  {t('login')}
+                </Link>
+                {t('fieldsWillFilled')}
               </p>
             </Notification>
-          }
+          )}
 
-          {warnings && <CheckoutWarnings messages={warnings}></CheckoutWarnings>}
+          {warnings && (
+            <CheckoutWarnings messages={warnings}></CheckoutWarnings>
+          )}
 
           {/* Billing and shipping forms */}
+          <BillingForm />
 
           {/* Delete 3 strings bellow after forms implemented */}
-          <button style={{ border: 'none', background: 'none', margin: '1em', textDecoration: 'underline' }}
-                  onClick={() => setCurrentCountryCode('PL')}>Set &ldquo;PL&ldquo;
+          <button
+            style={{
+              border: 'none',
+              background: 'none',
+              margin: '1em',
+              textDecoration: 'underline',
+            }}
+            onClick={() => setCurrentCountryCode('PL')}
+          >
+            Set &ldquo;PL&ldquo;
           </button>
-          <button style={{ border: 'none', background: 'none', margin: '1em', textDecoration: 'underline' }}
-                  onClick={() => setCurrentCountryCode('US')}>Set &ldquo;US&ldquo;
+          <button
+            style={{
+              border: 'none',
+              background: 'none',
+              margin: '1em',
+              textDecoration: 'underline',
+            }}
+            onClick={() => setCurrentCountryCode('US')}
+          >
+            Set &ldquo;US&ldquo;
           </button>
-          <button style={{ border: 'none', background: 'none', margin: '1em', textDecoration: 'underline' }}
-                  onClick={() => setCurrentCountryCode('Bla-bla')}>Set &ldquo;Bla-bla&ldquo;
+          <button
+            style={{
+              border: 'none',
+              background: 'none',
+              margin: '1em',
+              textDecoration: 'underline',
+            }}
+            onClick={() => setCurrentCountryCode('Bla-bla')}
+          >
+            Set &ldquo;Bla-bla&ldquo;
           </button>
 
           <ShippingMethodSelector
             methods={shippingMethods}
             isLoading={isLoading}
-            onChange={(method) => setShippingMethod(method)}
+            onChange={method => setShippingMethod(method)}
             parcelMachinesMethods={parcelMachinesMethods}
             parcelMachine={parcelMachine}
             onParcelMachineChange={handleParcelMachineChange}
@@ -262,27 +289,33 @@ export default function CheckoutPage() {
         </CheckoutFormsWrapper>
         <CheckoutSummaryWrapper>
           <CheckoutSummary>
-            <OrderSummary symbol={currencySymbol} order={order} isLoading={isOrderLoading} />
+            <OrderSummary
+              symbol={currencySymbol}
+              order={order}
+              isLoading={isOrderLoading}
+            />
           </CheckoutSummary>
           <CheckoutPayButtonWrapper>
             <CheckoutPayButton
               disabled={isPayButtonDisabled}
               onClick={handlePayOrder}
-            >{t('pay')}</CheckoutPayButton>
+            >
+              {t('pay')}
+            </CheckoutPayButton>
             <CheckoutAgreementWrapper>
               <CheckIcon />
               <CheckoutAgreement>
-                {t('agreement')} <Link href="/privacy-policy">{t('privacyPolicy')}</Link>.
+                {t('agreement')}{' '}
+                <Link href="/privacy-policy">{t('privacyPolicy')}</Link>.
               </CheckoutAgreement>
             </CheckoutAgreementWrapper>
           </CheckoutPayButtonWrapper>
-
         </CheckoutSummaryWrapper>
       </CheckoutContainer>
 
-      {isGeowidgetShown &&
+      {isGeowidgetShown && (
         <InPostGeowidget onClose={() => setGeowidgetShown(false)} />
-      }
+      )}
     </>
   );
 }

@@ -4,8 +4,6 @@ import { useForm, useWatch } from 'react-hook-form';
 import { z } from 'zod';
 import 'react-international-phone/style.css';
 import { useRegisterCustomerMutation } from '@/store/rtk-queries/wooCustomApi';
-import { useRouter } from 'next/router';
-import { RegistrationFormSchema } from '@/types/components/global/forms/registrationForm';
 import { isAuthErrorResponseType } from '@/utils/isAuthErrorResponseType';
 import { CustomFormInput } from '../CustomFormInput';
 import { CustomError, CustomSuccess } from '../CustomFormInput/styles';
@@ -29,6 +27,8 @@ import { ActiveText } from '../LoginForm/styles';
 import CustomCountrySelect from '../../selects/CustomCountrySelect/CustomCountrySelect';
 import { countryOptions } from '@/utils/mockdata/countryOptions';
 import { BillingFormSchema } from '@/types/components/global/forms/billingForm';
+import { AnimatedWrapper, VariationFields } from './style';
+import { truncate } from 'node:fs';
 import { ConfirmationRegCard } from './ConfirmationRegCard';
 
 // const PROOF_OPTIONS_KEY = ['vatInvoice', 'receipt'];
@@ -37,7 +37,7 @@ export const BillingForm: FC = () => {
   const tValidation = useTranslations('Validation');
   const tMyAccount = useTranslations('MyAccount');
   const tCheckout = useTranslations('Checkout');
-  const router = useRouter();
+  // const router = useRouter();
   const [customError, setCustomError] = useState<string>('');
   // const [isRegister, setIsRegister] = useState<boolean>(false);
   // const [isInvoice, setIsInvoice] = useState<boolean>(false);
@@ -105,7 +105,7 @@ export const BillingForm: FC = () => {
       /** Validate auth token */
       const isTokenValid = await checkToken({});
       if (!isTokenValid) throw new Error('Auth token validation failed.');
-      router.push('/my-account');
+      // router.push('/my-account');
     } catch (err) {
       setCustomError(
         'Oops! Something went wrong with the server. Please try again or contact support.'
@@ -127,7 +127,7 @@ export const BillingForm: FC = () => {
     defaultValue: false,
   });
 
-  const renderFormFields = () => (
+  const personalInfoFields = () => (
     <>
       {['first_name', 'last_name', 'email', 'phone'].map(field => (
         <CustomFormInput
@@ -141,29 +141,40 @@ export const BillingForm: FC = () => {
           setValue={setValue}
         />
       ))}
+    </>
+  );
+
+  const invoiceFields = () => (
+    <>
       <CustomFormCheckbox
         name={'invoice'}
         register={register}
         errors={errors}
-        label={tMyAccount('agreePersonalData')}
+        label={tCheckout('vatInvoice')}
       />
-      {isInvoice && (
-        <>
-          {['company', 'nip'].map(field => (
-            <CustomFormInput
-              key={field}
-              fieldName={tMyAccount(field)}
-              name={`${field}`}
-              register={register}
-              errors={errors}
-              inputTag="input"
-              inputType={field === 'postCode' ? 'number' : 'text'}
-              setValue={setValue}
-            />
-          ))}
-        </>
-      )}
+      <AnimatedWrapper isVisible={isInvoice}>
+        {isInvoice && (
+          <FormWrapper inMiddle>
+            {['company', 'nip'].map(field => (
+              <CustomFormInput
+                key={field}
+                fieldName={tCheckout(field)}
+                name={`${field}`}
+                register={register}
+                errors={errors}
+                inputTag="input"
+                inputType="text"
+                setValue={setValue}
+              />
+            ))}
+          </FormWrapper>
+        )}
+      </AnimatedWrapper>
+    </>
+  );
 
+  const addressFields = () => (
+    <>
       <CustomCountrySelect
         name={`country`}
         control={control}
@@ -185,48 +196,48 @@ export const BillingForm: FC = () => {
           />
         )
       )}
-      <CustomFormCheckbox
-        name={'registration'}
-        register={register}
-        errors={errors}
-        label={tCheckout('registerAccount')}
-      />
-
-      {isRegistration &&
-        ['password', 'confirmPassword'].map(field => (
-          <CustomFormInput
-            key={field}
-            fieldName={tMyAccount(field)}
-            name={field}
-            register={register}
-            errors={errors}
-            inputTag="input"
-            inputType={'newpassword'}
-            setValue={setValue}
-          />
-        ))}
     </>
   );
 
-  return (
-    <>
-      <CustomForm onSubmit={handleSubmit(onSubmit)} maxWidth="850px">
-        <Title as={'h2'} uppercase={true} marginBottom={'24px'}>
-          {tCheckout('billingFormName')}
-        </Title>
-        <div>
-          <Title as={'h3'}></Title>
-          <button></button>
-        </div>
-        <FormWrapper>{renderFormFields()} </FormWrapper>
-        {/* {isRegister && (
+  const registrationFields = () => (
+    <AnimatedWrapper isVisible={isRegistration}>
+      {isRegistration && (
+        <>
+          <FormWrapper inMiddle>
+            {['password', 'confirmPassword'].map(field => (
+              <CustomFormInput
+                key={field}
+                fieldName={tMyAccount(field)}
+                name={field}
+                register={register}
+                errors={errors}
+                inputTag="input"
+                inputType={'newpassword'}
+                setValue={setValue}
+              />
+            ))}
+          </FormWrapper>
           <CustomFormCheckbox
             name={'terms'}
             register={register}
             errors={errors}
             label={tMyAccount('agreePersonalData')}
           />
-        )} */}
+        </>
+      )}
+    </AnimatedWrapper>
+  );
+  return (
+    <>
+      <CustomForm onSubmit={handleSubmit(onSubmit)} maxWidth="850px">
+        <Title as={'h2'} uppercase={true} marginBottom={'24px'}>
+          {tCheckout('billingFormName')}
+        </Title>
+        <ConfirmationRegCard register={register} errors={errors} />
+        <FormWrapper inMiddle>{personalInfoFields()} </FormWrapper>
+        <VariationFields>{invoiceFields()} </VariationFields>
+        <FormWrapper inMiddle>{addressFields()} </FormWrapper>
+        <VariationFields>{registrationFields()} </VariationFields>
         <FormWrapperBottom>
           <StyledButton
             color={theme.colors.white}

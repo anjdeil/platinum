@@ -324,10 +324,12 @@
     "privacyPolicy": "Datenschutzrichtlinie beschrieben sind",
     "registerAccount": "Registrieren Sie beim Kauf ein Konto.",
     "billingFormName": "Rechnungsinformationen",
+    "guestWarning": "Die Bestellung erfolgt ohne Registrierung!",
     "shippingFormName": "Lieferinformationen",
     "proofSelect": "Wählen Sie den Kaufnachweis",
     "vatInvoice": "VAT Rechnung",
-    "receipt": "Quittung"
+    "company": "Vor- und Nachname/Firma",
+    "nip": "Steuernummer"
   },
   "Footer": {
     "myAccount": "Mein Konto",

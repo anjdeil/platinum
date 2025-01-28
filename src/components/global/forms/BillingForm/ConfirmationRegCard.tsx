@@ -1,28 +1,40 @@
 import { FC } from 'react';
-';
-import { Title } from '@/styles/components';
+import { FormWrapper, StyledButton, Title } from '@/styles/components';
 import { useTranslations } from 'next-intl';
-import { CustomCheckboxLabel } from '../CustomFormCheckbox/styles';
-import { CustomCheckboxStyled } from '../CustomCheckbox/styles';
+import { CustomFormCheckbox } from '../CustomFormCheckbox';
+import { ConfirmationContainer, ConfirmationContentrapper } from './style';
+import theme from '@/styles/theme';
 
 type ConfirmationRegCardType = {
-  name: string;
-  setIsRegister: any;
+  register: any;
+  errors: any;
 };
 
 export const ConfirmationRegCard: FC<ConfirmationRegCardType> = ({
-  name,
-  setIsRegister,
+  register,
+  errors,
 }) => {
   const t = useTranslations('Checkout');
   return (
-    <div>
-      <Title as={'h3'}></Title>
-      <CustomCheckboxLabel>
-        <CustomCheckboxStyled name={name} onClick={prev => setIsRegister(!prev)}/>
-        {t('registerAccount')}
-      </CustomCheckboxLabel>
-      <button></button>
-    </div>
+    <ConfirmationContainer>
+      <Title as={'h3'} uppercase fontSize="16px" fontWeight={400}>
+        {t('guestWarning')}
+      </Title>
+      <FormWrapper>
+        <CustomFormCheckbox
+          name={'registration'}
+          register={register}
+          errors={errors}
+          label={t('registerAccount')}
+        />
+        <StyledButton
+          color={theme.colors.white}
+          type="submit"
+          // disabled={isSubmitting}
+        >
+          {t('login')}
+        </StyledButton>
+      </FormWrapper>
+    </ConfirmationContainer>
   );
 };

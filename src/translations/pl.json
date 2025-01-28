@@ -324,10 +324,12 @@
     "privacyPolicy": "polityce prywatności",
     "registerAccount": "Zarejestruj konto podczas dokonywania zakupów.",
     "billingFormName": "Informacje dla klientów",
+    "guestWarning": "Zamówienie złożone bez rejestracji!",
     "shippingFormName": "Informacje o wysyłce",
     "proofSelect": "Dowód zakupu",
     "vatInvoice": "VAT Faktura",
-    "receipt": "Paragon"
+    "company": "Imię i nazwisko/Firma",
+    "nip": "NIP"
   },
   "Footer": {
     "myAccount": "Moje konto",

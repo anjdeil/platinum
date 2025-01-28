@@ -324,10 +324,12 @@
     "privacyPolicy": "privacy policy",
     "registerAccount": "Register an account when making a purchase.",
     "billingFormName": "Customer information",
+    "guestWarning": "The order is placed without registration!",
     "shippingFormName": "Shipping information",
     "proofSelect": "Proof of purchase",
     "vatInvoice": "VAT invoice",
-    "receipt": "Receipt"
+    "company": "Name and surname/Company",
+    "nip": "TİN"
   },
   "Footer": {
     "myAccount": "My account",
