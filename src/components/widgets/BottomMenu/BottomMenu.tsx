@@ -9,11 +9,18 @@ import { useAppDispatch, useAppSelector } from '@/store';
 import { popupToggle } from '@/store/slices/PopupSlice';
 import { useTheme } from '@emotion/react';
 import { BottomMenuNav, BottomMenuWrapper } from './styles';
+import { useEffect, useState } from 'react';
 
 const BottomMenu = () => {
   const dispatch = useAppDispatch();
   const theme = useTheme();
+  const { cartItems } = useAppSelector(state => state.cartSlice);
   const popup = useAppSelector(state => state.popup);
+  const [cartCount, setCartCount] = useState(0);
+
+  useEffect(() => {
+    setCartCount(cartItems.length);
+  }, [cartItems]);
 
   return (
     <BottomMenuWrapper>
@@ -34,15 +41,11 @@ const BottomMenu = () => {
           }
           IconComponent={CatalogIcon}
         />
-        <IconButton
-          count={2}
-          color={theme.colors.primary}
-          IconComponent={HeartIcon}
-        />
+        <IconButton color={theme.colors.primary} IconComponent={HeartIcon} />
         <IconButton
           href="/cart"
           color={theme.colors.primary}
-          count={3}
+          count={cartCount}
           IconComponent={CartIcon}
         />
         <IconButton

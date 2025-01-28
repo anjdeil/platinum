@@ -1,20 +1,21 @@
-import { useState } from "react";
-import BackArrow from "@/components/global/icons/BackArrow/BackArrow";
-import SideList from "@/components/global/SideList/SideList";
-import { CategoryType } from "@/types/pages/shop/categories";
-import { useTheme } from "@emotion/react";
-import { FC } from "react";
-import MobilePopup from "../MobilePopup/MobilePopup";
+import { useState } from 'react';
+import BackArrow from '@/components/global/icons/BackArrow/BackArrow';
+import SideList from '@/components/global/SideList/SideList';
+import { CategoryType } from '@/types/pages/shop/categories';
+import { useTheme } from '@emotion/react';
+import { FC } from 'react';
+import MobilePopup from '../MobilePopup/MobilePopup';
 import {
+  CategoriesHead,
   MobileCategoriesSkeletonWrapper,
   TabletCategoriesSkeletonWrapper,
   Title,
   TitleWrapper,
-} from "./styles";
-import { MenuSkeleton } from "@/components/menus/MenuSkeleton";
-import { StyledButton } from "@/styles/components";
-import { mobileCategoriesMenuProps } from "@/types/components/global/popups/mobilePopup";
-import { useAppSelector } from "@/store";
+} from './styles';
+import { MenuSkeleton } from '@/components/menus/MenuSkeleton';
+import { StyledButton } from '@/styles/components';
+import { mobileCategoriesMenuProps } from '@/types/components/global/popups/mobilePopup';
+import { useAppSelector } from '@/store';
 
 const MobileCategoriesMenu: FC<mobileCategoriesMenuProps> = ({
   padding,
@@ -27,7 +28,7 @@ const MobileCategoriesMenu: FC<mobileCategoriesMenuProps> = ({
   const [parent, setParent] = useState<CategoryType | undefined>();
 
   const categories: CategoryType[] | undefined = useAppSelector(
-    (state) => state.categoriesSlice.categories
+    state => state.categoriesSlice.categories
   );
 
   const theme = useTheme();
@@ -35,7 +36,7 @@ const MobileCategoriesMenu: FC<mobileCategoriesMenuProps> = ({
 
   const renderTitle = (title: string) => {
     return (
-      <div>
+      <CategoriesHead>
         <TitleWrapper onClick={() => setParent(undefined)}>
           <BackArrow />
           <Title>{title}</Title>
@@ -43,16 +44,18 @@ const MobileCategoriesMenu: FC<mobileCategoriesMenuProps> = ({
         <StyledButton
           secondary
           height="35px"
-          onClick={() => switchCategory(parent?.slug || "", undefined)}
+          onClick={() => switchCategory(parent?.slug || '', undefined)}
         >
           Show All
         </StyledButton>
-      </div>
+      </CategoriesHead>
     );
   };
 
   const handleClick = (slug: string, child: string | undefined) => {
-    const selectedCategory = categories?.find((category: CategoryType) => category.slug === slug);
+    const selectedCategory = categories?.find(
+      (category: CategoryType) => category.slug === slug
+    );
     const hasSubcategories = categories?.some(
       (category: CategoryType) => category.parent_id === selectedCategory?.id
     );
@@ -61,7 +64,7 @@ const MobileCategoriesMenu: FC<mobileCategoriesMenuProps> = ({
       if (hasSubcategories) {
         setParent(selectedCategory);
       } else {
-        switchCategory(slug, "");
+        switchCategory(slug, '');
         onClose();
       }
     } else {
@@ -71,7 +74,7 @@ const MobileCategoriesMenu: FC<mobileCategoriesMenuProps> = ({
   };
 
   const filteredCategories = categories?.filter((category: CategoryType) => {
-    if (category.slug === "uncategorized") return false;
+    if (category.slug === 'uncategorized') return false;
 
     if (parent) {
       return category.parent_id === parent.id;
@@ -80,29 +83,43 @@ const MobileCategoriesMenu: FC<mobileCategoriesMenuProps> = ({
     }
   });
 
-  const categoriesLinks = filteredCategories?.map(({ id, name, slug }: CategoryType) => {
-    const hasSubcategories = categories?.some(
-      (category: CategoryType) => category.parent_id === id
-    );
-    return {
-      name,
-      url: slug,
-      isActive: false,
-      isNested: hasSubcategories,
-    };
-  });
+  const categoriesLinks = filteredCategories?.map(
+    ({ id, name, slug }: CategoryType) => {
+      const hasSubcategories = categories?.some(
+        (category: CategoryType) => category.parent_id === id
+      );
+      return {
+        name,
+        url: slug,
+        isActive: false,
+        isNested: hasSubcategories,
+      };
+    }
+  );
 
   if (!categories || categories.length === 0) {
     if (disableOverlay) {
       return (
         <TabletCategoriesSkeletonWrapper>
-          <MenuSkeleton elements={6} direction="column" width="280px" height="40px" gap="30px" />
+          <MenuSkeleton
+            elements={6}
+            direction="column"
+            width="280px"
+            height="40px"
+            gap="30px"
+          />
         </TabletCategoriesSkeletonWrapper>
       );
     } else {
       return (
         <MobileCategoriesSkeletonWrapper>
-          <MenuSkeleton elements={9} direction="column" width="90vw" height="40px" gap="30px" />
+          <MenuSkeleton
+            elements={9}
+            direction="column"
+            width="90vw"
+            height="40px"
+            gap="30px"
+          />
         </MobileCategoriesSkeletonWrapper>
       );
     }

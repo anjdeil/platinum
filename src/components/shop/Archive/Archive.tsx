@@ -53,15 +53,20 @@ const switchPage = (page: number, maxPage: number) => {
 };
 
 export const switchCategory = (parentSlug: string, childSlug?: string) => {
-  const { ...params } = router.query;
-  const newSlugs = childSlug ? [parentSlug, childSlug] : [parentSlug];
+  const { query } = router;
+
+  const newPath = `/product-category/${parentSlug}${
+    childSlug ? `/${childSlug}` : ''
+  }`;
+
+  const newQuery = {
+    ...query,
+    slugs: childSlug ? [parentSlug, childSlug] : [parentSlug],
+  };
 
   router.push({
-    pathname: router.pathname,
-    query: {
-      ...params,
-      slugs: newSlugs,
-    },
+    pathname: newPath,
+    query: newQuery,
   });
 };
 
