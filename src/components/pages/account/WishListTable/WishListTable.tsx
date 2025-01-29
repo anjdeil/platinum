@@ -31,6 +31,8 @@ import {
   WishlistImgWrapper,
 } from './style';
 import { LinkWrapper } from '@/styles/components';
+import { useGetCurrenciesQuery } from '@/store/rtk-queries/wpCustomApi';
+import { CircularProgress } from '@mui/material';
 
 const WishListTable: FC<WishListTableProps> = ({
   symbol,
@@ -46,6 +48,22 @@ const WishListTable: FC<WishListTableProps> = ({
 
   const { cartItems } = useAppSelector(state => state.cartSlice);
 
+  const { data: currencies, isLoading: isCurrenciesLoading } =
+    useGetCurrenciesQuery();
+  const selectedCurrency = useAppSelector(state => state.currencySlice);
+
+  const currentCurrency =
+    currencies && !isCurrenciesLoading
+      ? currencies?.data?.items.find(
+          currency => currency.code === selectedCurrency.name
+        )
+      : undefined;
+
+  const extendedCurrency = {
+    ...selectedCurrency,
+    rate: currentCurrency ? currentCurrency.rate || 1 : undefined,
+  };
+
   const checkCartMatch = (cartItems: CartItem[], productId: number) => {
     return cartItems.some(({ product_id }) => product_id === productId);
   };
@@ -57,7 +75,7 @@ const WishListTable: FC<WishListTableProps> = ({
     if (product.parent_id !== 0) {
       router.push(
         `/${router.locale === 'en' ? '' : router.locale}/product/${
-          product.slug
+          product.parent_slug
         }`
       );
     } else {
@@ -108,7 +126,9 @@ const WishListTable: FC<WishListTableProps> = ({
                     </WishlistImgWrapper>
                     <CardContent gap="12px">
                       <TextNameCell>
-                        <LinkWrapper href={`/product/${item.slug}`}>
+                        <LinkWrapper
+                          href={`/product/${item?.parent_slug || item?.slug}`}
+                        >
                           {item.name}
                         </LinkWrapper>
                       </TextNameCell>
@@ -117,7 +137,16 @@ const WishListTable: FC<WishListTableProps> = ({
                         {item.stock_quantity}
                       </QuantityRow>
                       <OnePrice fontSize="1.1em">
-                        {item.price && roundedPrice(item.price)}&nbsp;{symbol}
+                        {extendedCurrency.rate ? (
+                          <p>
+                            {item.price &&
+                              roundedPrice(item.price * extendedCurrency.rate)}
+                            &nbsp;
+                            {extendedCurrency.code}
+                          </p>
+                        ) : (
+                          <CircularProgress size={20} />
+                        )}
                       </OnePrice>
                     </CardContent>
                     <AddToBasketButton
@@ -151,7 +180,9 @@ const WishListTable: FC<WishListTableProps> = ({
                       </WishlistImgWrapper>
                       <CardContent gap="8px" padding="0 0 4px 0">
                         <ProducTitle>
-                          <LinkWrapper href={`/product/${item.slug}`}>
+                          <LinkWrapper
+                            href={`/product/${item?.parent_slug || item?.slug}`}
+                          >
                             {item.name}
                           </LinkWrapper>
                           <TrashIcon
@@ -167,8 +198,18 @@ const WishListTable: FC<WishListTableProps> = ({
                         </QuantityRow>
                         <ProductPrice>
                           <OnePrice fontSize="1.3em">
-                            {item.price && roundedPrice(item.price)}&nbsp;
-                            {symbol}
+                            {extendedCurrency.rate ? (
+                              <p>
+                                {item.price &&
+                                  roundedPrice(
+                                    item.price * extendedCurrency.rate
+                                  )}
+                                &nbsp;
+                                {extendedCurrency.code}
+                              </p>
+                            ) : (
+                              <CircularProgress size={20} />
+                            )}
                           </OnePrice>
                         </ProductPrice>
                       </CardContent>
