@@ -5,8 +5,23 @@ const useGetAuthToken = () => {
   const [authToken, setAuthToken] = useState<string | null>(null);
 
   useEffect(() => {
-    const cookies = parseCookies(document.cookie);
-    setAuthToken(cookies.authToken || null);
+    const getAuthToken = () => {
+      const cookies = parseCookies(document.cookie);
+      return cookies.authToken || null;
+    };
+
+    setAuthToken(getAuthToken());
+
+    const handleCookieChange = () => {
+      const updatedToken = getAuthToken();
+      setAuthToken(updatedToken);
+    };
+
+    window.addEventListener('storage', handleCookieChange);
+
+    return () => {
+      window.removeEventListener('storage', handleCookieChange);
+    };
   }, []);
 
   return authToken;

@@ -8,7 +8,10 @@ import { useFetchOrdersQuery } from '@/store/rtk-queries/wooCustomApi';
 import { useGetCurrenciesQuery } from '@/store/rtk-queries/wpCustomApi';
 import { setUser } from '@/store/slices/userSlice';
 import { AccountInfoWrapper } from '@/styles/components';
-import { saveUserToLocalStorage } from '@/utils/auth/userLocalStorage';
+import {
+  getUserFromLocalStorage,
+  saveUserToLocalStorage,
+} from '@/utils/auth/userLocalStorage';
 import { accountLinkList } from '@/utils/consts';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { useTranslations } from 'next-intl';
@@ -86,17 +89,20 @@ const MyAccount: FC<MyAccountPropsType> = ({ user }) => {
   const selectedCurrency = useAppSelector(state => state.currencySlice.name);
 
   const dispatch = useDispatch();
+  const userLocal = getUserFromLocalStorage();
 
-  const userData = {
-    id: user.id,
-    first_name: user.first_name,
-    last_name: user.last_name,
-    email: user.email,
-  };
+  if (!userLocal) {
+    const userData = {
+      id: user.id,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      email: user.email,
+    };
 
-  dispatch(setUser(userData));
+    dispatch(setUser(userData));
 
-  saveUserToLocalStorage(userData);
+    saveUserToLocalStorage(userData);
+  }
 
   const { data: ordersData } = useFetchOrdersQuery({
     customer: user.id,

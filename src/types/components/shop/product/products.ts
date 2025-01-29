@@ -56,6 +56,7 @@ export const ProductsMinimizedSchema = z.object({
   parent_id: z.number(),
   sku: z.string().nullable(),
   slug: z.string(),
+  parent_slug: z.string(),
   name: z.string(),
   language_code: z.string().optional(),
   stock_quantity: z.number().optional(),
