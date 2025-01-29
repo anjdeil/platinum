@@ -195,12 +195,9 @@ export default function CheckoutPage() {
     createOrder({
       status: orderStatus,
       currency,
-      //TODO I try to fix it, byt it's not working
-      // @ts-ignore
-      billing: billingData,
-      //company
       line_items: cartItems,
       coupon_lines: couponLines,
+      ...((billingData && orderStatus === 'pending') && { billing: billingData }),
       ...(userData?.id && { customer_id: userData.id }),
       ...(shippingLine && { shipping_lines: [shippingLine] }),
     });
@@ -211,7 +208,6 @@ export default function CheckoutPage() {
     currency,
     userData,
     shippingLine,
-    billingData,
   ]);
 
   useEffect(() => {
@@ -227,11 +223,12 @@ export default function CheckoutPage() {
 
   const handlePayOrder = () => {
     if (!order) return;
-    // @ts-ignore
     const validationResult = validateOrder(order);
     if (validationResult.isValid) {
       setOrderStatus('pending');
     }
+
+    // register user
 
     setWarnings(validationResult.messageKeys);
   };
@@ -267,7 +264,6 @@ export default function CheckoutPage() {
           <CheckoutSummary>
             <OrderSummary
               symbol={currencySymbol}
-              // @ts-ignore
               order={order}
               isLoading={isOrderLoading}
             />
