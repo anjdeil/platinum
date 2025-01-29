@@ -3,31 +3,32 @@ import {
   useLazyFetchUserDataQuery,
 } from '@/store/rtk-queries/wpApi';
 import { WishlistItem } from '@/types/store/rtk-queries/wpApi';
-import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import useGetAuthToken from './useGetAuthToken';
 import { ProductType } from '@/types/components/shop/product/products';
-
+import { useAppDispatch, useAppSelector } from '@/store';
+import { popupToggle } from '@/store/slices/PopupSlice';
 export const useWishlist = () => {
-  const authToken = useGetAuthToken();
-  const router = useRouter();
+  const dispatch = useAppDispatch();
+
+  const { user: userSlice } = useAppSelector(state => state.userSlice);
+
   const [fetchUserData, { data: userData, isFetching: isUserFetching }] =
     useLazyFetchUserDataQuery();
+
   const [fetchUserUpdate, { isLoading: isUpdatingWishlist }] =
     useFetchUserUpdateMutation();
 
   const wishlist: WishlistItem[] = userData?.meta?.wishlist || [];
 
   useEffect(() => {
-    if (authToken) {
+    if (userSlice !== null) {
       fetchUserData();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authToken]);
+  }, [userSlice]);
 
   const handleWishlistToggle = (product: ProductType) => {
-    if (!authToken) {
-      router.push('/my-account/login');
+    if (!userSlice) {
+      dispatch(popupToggle('login'));
       return;
     }
 
@@ -66,14 +67,15 @@ export const useWishlist = () => {
       fetchUserUpdate(userUpdateRequestBody);
     }
   };
-
-  const checkDesired = (productId: number) =>
-    Boolean(
-      wishlist?.find(
-        (item: WishlistItem) => item.product_id === productId /* &&
-          (!choosenVariation || item.variation_id === choosenVariation.id) */
-      )
-    );
+  const checkDesired = (productId: number) => {
+    if (userSlice) {
+      return Boolean(
+        wishlist?.find((item: WishlistItem) => item.product_id === productId)
+      );
+    } else {
+      return false;
+    }
+  };
 
   return {
     wishlist,
