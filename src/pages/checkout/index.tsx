@@ -30,6 +30,7 @@ import parcelMachinesMethods from '@/utils/checkout/parcelMachinesMethods';
 import CheckoutWarnings from '@/components/pages/checkout/CheckoutWarnings';
 import validateOrder from '@/utils/checkout/validateOrder';
 import { BillingForm } from '@/components/global/forms/BillingForm';
+import { AddressType } from '@/types/services/wooCustomApi/customer';
 
 export function getServerSideProps() {
   return {
@@ -126,6 +127,7 @@ export default function CheckoutPage() {
     'on-hold'
   );
 
+  const [formData, setFormData] = useState<AddressType>();
   const authToken = useGetAuthToken();
 
   const { name: currency, code: currencySymbol } = useAppSelector(
@@ -171,24 +173,21 @@ export default function CheckoutPage() {
     createOrder({
       status: orderStatus,
       currency,
-      billing: {
-        first_name: 'John',
-        last_name: 'Doe',
-        address_1: '969 Market',
-        address_2: '',
-        city: 'San Francisco',
-        state: 'CA',
-        postcode: '94103',
-        country: 'US',
-        email: 'john.doe@example.com',
-        phone: '(555) 555-5555',
-      },
+      billing: formData,
       line_items: cartItems,
       coupon_lines: couponLines,
       ...(userData?.id && { customer_id: userData.id }),
       ...(shippingLine && { shipping_lines: [shippingLine] }),
     });
-  }, [cartItems, couponCodes, orderStatus, currency, userData, shippingLine]);
+  }, [
+    cartItems,
+    couponCodes,
+    orderStatus,
+    currency,
+    userData,
+    shippingLine,
+    formData,
+  ]);
 
   useEffect(() => {
     if (order?.status === 'pending' && order.payment_url) {
@@ -241,7 +240,7 @@ export default function CheckoutPage() {
           )}
 
           {/* Billing and shipping forms */}
-          <BillingForm />
+          <BillingForm setFormData={setFormData} />
 
           {/* Delete 3 strings bellow after forms implemented */}
           <button
