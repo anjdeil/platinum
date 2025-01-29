@@ -115,7 +115,16 @@
     "applyFilter": "Anwenden",
     "searchResults": "Suchergebnisse",
     "phraseSought": "Gesuchte Phrase",
-    "productsNotFound": "Artikel nicht gefunden"
+    "productsNotFound": "Artikel nicht gefunden",
+    "filter": "Filter",
+    "price": "Preis",
+    "Length": "Länge",
+    "Thickness": "Dicke",
+    "Colour": "Farbe",
+    "Size": "Größe",
+    "Volumes": "Volumen",
+    "view": "Ansicht",
+    "gift certificate": "Geschenkgutschein"
   },
   "Product": {
     "addToBasket": "In den Korb",
