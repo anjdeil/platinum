@@ -76,11 +76,12 @@ const OrderLineMetaDataSchema = z.object({
     display_value: z.string().optional()
 });
 
-const ShippingLineSchema = z.object({
+export const ShippingLineSchema = z.object({
     method_id: z.string(),
     method_title: z.string(),
     instance_id: z.string(),
-    meta_data: z.array(OrderLineMetaDataSchema).optional()
+    meta_data: z.array(OrderLineMetaDataSchema).optional(),
+    total: z.string().optional()
 })
 
 export type ShippingsType = z.infer<typeof ShippingsSchema>;

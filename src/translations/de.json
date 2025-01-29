@@ -321,7 +321,15 @@
     "fieldsWillFilled": " und die Felder werden nach Ihrer ersten Bestellung automatisch ausgefüllt",
     "pay": "Bezahlung der Bestellung",
     "agreement": "Ihre persönlichen Daten werden verwendet, um Ihre Bestellung zu bearbeiten, Ihre Erfahrung auf dieser Website zu unterstützen und für andere Zwecke, die in unserer ",
-    "privacyPolicy": "Datenschutzrichtlinie beschrieben sind"
+    "privacyPolicy": "Datenschutzrichtlinie beschrieben sind",
+    "registerAccount": "Registrieren Sie beim Kauf ein Konto.",
+    "billingFormName": "Rechnungsinformationen",
+    "guestWarning": "Die Bestellung erfolgt ohne Registrierung!",
+    "shippingFormName": "Lieferinformationen",
+    "proofSelect": "Wählen Sie den Kaufnachweis",
+    "vatInvoice": "VAT Rechnung",
+    "company": "Vor- und Nachname/Firma",
+    "nip": "Steuernummer"
   },
   "Footer": {
     "myAccount": "Mein Konto",
