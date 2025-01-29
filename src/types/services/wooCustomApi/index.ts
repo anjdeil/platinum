@@ -373,6 +373,22 @@ export const ShippingZoneSchema = z.object({
   order: z.number()
 });
 
+export const ShippingLocationSchema = z.object({
+  code: z.string(),
+  type: z.string(),
+});
+
+export const ShippingMethodRuleConditionSchema = z.object({
+  condition_id: z.string(),
+  min: z.string().optional(),
+  max: z.string().optional()
+});
+
+export const ShippingMethodRuleSchema = z.object({
+  conditions: z.array(ShippingMethodRuleConditionSchema),
+  cost_per_order: z.string()
+});
+
 export const ShippingMethodSchema = z.object({
   id: z.number(),
   instance_id: z.number(),
@@ -382,16 +398,28 @@ export const ShippingMethodSchema = z.object({
   method_id: z.string(),
   method_title: z.string(),
   method_description: z.string(),
-});
-
-export const ShippingLocationSchema = z.object({
-  code: z.string(),
-  type: z.string(),
+  settings: z.object({
+    fs_method_rules: z.object({
+      type: z.string(),
+      value: z.string()
+    }).optional(),
+    method_rules: z.object({
+      type: z.string(),
+      value: z.array(ShippingMethodRuleSchema)
+    }).optional(),
+    free_shipping_cost: z.object({
+      value: z.string()
+    }).optional(),
+    cost_per_order: z.object({
+      value: z.string()
+    }).optional()
+  }).optional()
 });
 
 export type ShippingZoneType = z.infer<typeof ShippingZoneSchema>;
 export type ShippingMethodType = z.infer<typeof ShippingMethodSchema>;
 export type ShippingLocationType = z.infer<typeof ShippingLocationSchema>;
+export type ShippingMethodRuleType = z.infer<typeof ShippingMethodRuleSchema>;
 export type OrderType = z.infer<typeof OrderTypeSchema>;
 export type AddressType = z.infer<typeof AddressTypeSchema>;
 export type WooCustomerType = z.infer<typeof WooCustomerSchema>;
