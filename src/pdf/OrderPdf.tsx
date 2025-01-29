@@ -280,7 +280,7 @@ const OrderPdf = ({ order }: { order: OrderType }) => {
                         </View>
                         <View style={styles.splitLast}>
                             <Text style={styles.text}>
-                                {order?.billing?.company || "—"}
+                                {/*{order?.billing?.company || "—"}*/}
                             </Text>
                         </View>
                     </View>
@@ -420,7 +420,7 @@ const OrderPdf = ({ order }: { order: OrderType }) => {
                         </View>
                         <View style={styles.splitLast}>
                             <Text style={styles.text}>
-                                {order?.shipping?.company || "—"}
+                                {/*{order?.shipping?.company || "—"}*/}
                             </Text>
                         </View>
                     </View>

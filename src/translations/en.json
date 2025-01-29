@@ -321,7 +321,15 @@
     "fieldsWillFilled": " and the fields will be filled in automatically after your first order",
     "pay": "Pay for order",
     "agreement": "Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our ",
-    "privacyPolicy": "privacy policy"
+    "privacyPolicy": "privacy policy",
+    "registerAccount": "Register an account when making a purchase.",
+    "billingFormName": "Customer information",
+    "guestWarning": "The order is placed without registration!",
+    "shippingFormName": "Shipping information",
+    "proofSelect": "Proof of purchase",
+    "vatInvoice": "VAT invoice",
+    "company": "Name and surname/Company",
+    "nip": "TİN"
   },
   "Footer": {
     "myAccount": "My account",
