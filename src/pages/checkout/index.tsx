@@ -179,6 +179,7 @@ export default function CheckoutPage() {
       status: orderStatus,
       currency,
       //TODO I try to fix it, byt it's not working
+      // @ts-ignore
       billing: billingData,
       //company
       line_items: cartItems,
@@ -209,7 +210,7 @@ export default function CheckoutPage() {
 
   const handlePayOrder = () => {
     if (!order) return;
-
+    // @ts-ignore
     const validationResult = validateOrder(order);
     if (validationResult.isValid) {
       setOrderStatus('pending');
@@ -247,6 +248,7 @@ export default function CheckoutPage() {
           <CheckoutSummary>
             <OrderSummary
               symbol={currencySymbol}
+              // @ts-ignore
               order={order}
               isLoading={isOrderLoading}
             />

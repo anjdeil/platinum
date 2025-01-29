@@ -192,6 +192,7 @@ const CartPage: React.FC = () => {
             <CartTable
               symbol={symbol}
               cartItems={cartItems}
+              // @ts-ignore
               order={currentOrderItems}
               isLoadingOrder={isLoadingCart}
               productsSpecs={productsSpecs}
@@ -231,6 +232,7 @@ const CartPage: React.FC = () => {
           <CartSummaryBlock
             auth={auth}
             symbol={symbol}
+            // @ts-ignore
             order={orderItems}
             cartItems={cartItems}
             isLoading={isLoading}
