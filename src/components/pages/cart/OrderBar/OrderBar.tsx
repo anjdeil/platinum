@@ -25,7 +25,8 @@ const OrderBar: FC<OrderBarProps> = ({
       <OrderBarContent>
         <OrderBarSum>
           {(isLoadingOrder !== null && isLoadingOrder) ||
-          (productsData !== null && !productsData) ? (
+          (productsData !== null && !productsData) ||
+          !cartSum ? (
             <>
               <Skeleton width="50px" />
             </>

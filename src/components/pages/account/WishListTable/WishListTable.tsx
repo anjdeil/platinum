@@ -32,7 +32,7 @@ import {
 } from './style';
 import { LinkWrapper } from '@/styles/components';
 import { useGetCurrenciesQuery } from '@/store/rtk-queries/wpCustomApi';
-import { CircularProgress } from '@mui/material';
+import { Skeleton } from '@mui/material';
 
 const WishListTable: FC<WishListTableProps> = ({
   symbol,
@@ -145,7 +145,7 @@ const WishListTable: FC<WishListTableProps> = ({
                             {extendedCurrency.code}
                           </p>
                         ) : (
-                          <CircularProgress size={20} />
+                          <Skeleton width="50px" />
                         )}
                       </OnePrice>
                     </CardContent>
@@ -208,7 +208,7 @@ const WishListTable: FC<WishListTableProps> = ({
                                 {extendedCurrency.code}
                               </p>
                             ) : (
-                              <CircularProgress size={20} />
+                              <Skeleton width="50px" />
                             )}
                           </OnePrice>
                         </ProductPrice>

@@ -35,11 +35,12 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   const [auth, setAuth] = useState<boolean>(false);
   const [userLoyalityStatus, setUserLoyalityStatus] = useState<
     string | undefined
-  >('');
+  >();
 
   useEffect(() => {
     if (defaultCustomerData) {
       setAuth(true);
+      setUserLoyalityStatus(defaultCustomerData?.meta?.loyalty);
     }
   }, [defaultCustomerData]);
 
@@ -53,15 +54,12 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   const [cachedOrderItems, setCachedOrderItems] = useState(orderItems);
 
   const handleCreateOrder = async () => {
-    const userCoupons = defaultCustomerData?.meta?.loyalty
+    const userCoupons = defaultCustomerData?.meta.loyalty
       ? [{ code: defaultCustomerData.meta.loyalty }]
       : [];
+
     const additionalCoupons = couponCodes.map((code: string) => ({ code }));
-    const combinedCoupons =
-      auth && defaultCustomerData
-        ? [...userCoupons, ...additionalCoupons]
-        : additionalCoupons;
-    setUserLoyalityStatus(defaultCustomerData?.meta?.loyalty);
+    const combinedCoupons = [...userCoupons, ...additionalCoupons];
 
     const requestData = {
       line_items: cartItems,
@@ -113,7 +111,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
     [cartItems, dispatch]
   );
 
-  const subtotal = useMemo(
+  const total = useMemo(
     () =>
       orderItems?.line_items ? getTotalByLineItems(orderItems.line_items) : 0,
     [orderItems]
@@ -172,7 +170,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
               <OrderBar
                 miniCart={false}
                 isLoadingOrder={isLoadingOrder}
-                cartSum={subtotal}
+                cartSum={total}
                 symbol={symbol}
               />
             ) : (

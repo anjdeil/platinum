@@ -1,10 +1,7 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store';
 import checkCartConflict from '@/utils/cart/checkCartConflict';
-import {
-  useGetCurrenciesQuery,
-  useGetProductsMinimizedMutation,
-} from '@/store/rtk-queries/wpCustomApi';
+import { useGetCurrenciesQuery } from '@/store/rtk-queries/wpCustomApi';
 import OrderBar from '@/components/pages/cart/OrderBar/OrderBar';
 import {
   CartCardWrapper,
@@ -23,7 +20,7 @@ import { useTranslations } from 'next-intl';
 import { PopupOverlay } from '@/components/global/popups/SwiperPopup/styles';
 import { CartLink, MiniCartContainer } from './style';
 import { FlexBox, LinkWrapper, StyledButton, Title } from '@/styles/components';
-import { CircularProgress, Skeleton } from '@mui/material';
+import { Skeleton } from '@mui/material';
 import TrashIcon from '@/components/global/icons/TrashIcon/TrashIcon';
 import { OrderBarDesc } from '@/components/pages/cart/OrderBar/style';
 import Notification from '@/components/global/Notification/Notification';
@@ -31,14 +28,13 @@ import { handleQuantityChange } from '@/utils/cart/handleQuantityChange';
 import { roundedPrice } from '@/utils/cart/roundedPrice';
 import { MenuSkeleton } from '@/components/menus/MenuSkeleton';
 import theme from '@/styles/theme';
-
+import router from 'next/router';
 interface MiniCartProps {
   onClose: () => void;
 }
 
 const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
   const dispatch = useAppDispatch();
-  /* const { code: symbol } = useAppSelector(state => state.currencySlice); */
   const { cartItems, productsData } = useAppSelector(state => state.cartSlice);
   const t = useTranslations('Cart');
 
@@ -46,7 +42,6 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   // FETCH
-
   const { data: currencies, isLoading: isCurrenciesLoading } =
     useGetCurrenciesQuery();
   const selectedCurrency = useAppSelector(state => state.currencySlice);
@@ -63,14 +58,7 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
     rate: currentCurrency ? currentCurrency.rate || 1 : undefined,
   };
 
-  const [
-    getProductsMinimized,
-    { data: productsSpecsData, isLoading: isLoadingProducts },
-  ] = useGetProductsMinimizedMutation();
-
   const productsWithCartData = useMemo(() => {
-    console.log('use memo productsWithCartData');
-
     if (!productsData || !cartItems) {
       return [];
     }
@@ -221,7 +209,7 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
                           {extendedCurrency.code}
                         </p>
                       ) : (
-                        <CircularProgress size={20} />
+                        <Skeleton width="50px" />
                       )}
                     </ProductPrice>
                     <CartQuantity
@@ -243,7 +231,7 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
                         {extendedCurrency.code}
                       </OnePrice>
                     ) : (
-                      <CircularProgress size={20} />
+                      <Skeleton width="50px" />
                     )}
                   </ProductPrice>
                 </CardContent>
@@ -262,7 +250,7 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
         )}
 
         <OrderBar
-          isLoadingOrder={isLoadingProducts}
+          productsData={productsData}
           cartSum={
             extendedCurrency?.rate !== undefined
               ? totalCartPrice * extendedCurrency.rate
@@ -279,6 +267,9 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
             </StyledButton>
           </CartLink>
           <StyledButton
+            onClick={() => {
+              router.push('/checkout');
+            }}
             height="58px"
             disabled={hasConflict || productsWithCartData.length < 1}
           >

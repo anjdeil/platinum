@@ -16,7 +16,7 @@ import { ProductType } from '@/types/pages/shop';
 import { CartItem } from '@/types/store/reducers/сartSlice';
 import { getCookieValue } from '@/utils/auth/getCookieValue';
 import { getCurrentVariation } from '@/utils/getCurrentVariation';
-import { CircularProgress } from '@mui/material';
+import { Skeleton } from '@mui/material';
 import ReactHtmlParser from 'html-react-parser';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
@@ -219,7 +219,7 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
             )
           )
         ) : (
-          <CircularProgress size={20} />
+          <Skeleton width="50px" />
         )}
       </ProductTitleWrapper>
       <ProductInfoWrapper>
