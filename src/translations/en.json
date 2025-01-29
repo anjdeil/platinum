@@ -115,7 +115,16 @@
     "applyFilter": "Apply",
     "searchResults": "Search Results",
     "phraseSought": "Phrase Sought",
-    "productsNotFound": "Products not found"
+    "productsNotFound": "Products not found",
+    "filter": "Filter",
+    "price": "Price",
+    "Length": "Length",
+    "Thickness": "Thickness",
+    "Colour": "Colour",
+    "Size": "Size",
+    "Volumes": "Volumes",
+    "view": "View",
+    "gift certificate": "Gift certificate"
   },
   "Product": {
     "addToBasket": "Add to basket",
