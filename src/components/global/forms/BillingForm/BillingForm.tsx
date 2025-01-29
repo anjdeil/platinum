@@ -51,7 +51,7 @@ export const BillingForm: FC<BillingFormProps> = ({ setFormData }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting, isSubmitSuccessful },
+    formState: { errors, isSubmitSuccessful },
     reset,
     setValue,
     control,
