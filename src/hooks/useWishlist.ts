@@ -3,34 +3,31 @@ import {
   useLazyFetchUserDataQuery,
 } from '@/store/rtk-queries/wpApi';
 import { WishlistItem } from '@/types/store/rtk-queries/wpApi';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { ProductType } from '@/types/components/shop/product/products';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { popupToggle } from '@/store/slices/PopupSlice';
-import { getUserFromLocalStorage } from '@/utils/auth/userLocalStorage';
 export const useWishlist = () => {
   const dispatch = useAppDispatch();
 
   const { user: userSlice } = useAppSelector(state => state.userSlice);
-  const [user] = useState(() => getUserFromLocalStorage());
 
   const [fetchUserData, { data: userData, isFetching: isUserFetching }] =
     useLazyFetchUserDataQuery();
+
   const [fetchUserUpdate, { isLoading: isUpdatingWishlist }] =
     useFetchUserUpdateMutation();
 
   const wishlist: WishlistItem[] = userData?.meta?.wishlist || [];
 
   useEffect(() => {
-    if (user !== null) {
+    if (userSlice !== null) {
       fetchUserData();
     }
   }, [userSlice]);
 
   const handleWishlistToggle = (product: ProductType) => {
-    const user = getUserFromLocalStorage();
-
-    if (!user) {
+    if (!userSlice) {
       dispatch(popupToggle('login'));
       return;
     }
@@ -71,8 +68,7 @@ export const useWishlist = () => {
     }
   };
   const checkDesired = (productId: number) => {
-    const user = getUserFromLocalStorage();
-    if (user) {
+    if (userSlice) {
       return Boolean(
         wishlist?.find((item: WishlistItem) => item.product_id === productId)
       );
