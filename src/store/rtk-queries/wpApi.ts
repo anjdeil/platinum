@@ -32,7 +32,7 @@ export const wpRtkApi = createApi({
       }),
     }),
 
-    fetchUserData: builder.query<WpUserType, void>({
+    fetchUserData: builder.query<WpUserType, string | void>({
       query: () => ({
         url: '/users/me',
         prepareHeaders: (headers: any) => {

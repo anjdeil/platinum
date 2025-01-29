@@ -97,7 +97,7 @@
     "codeProvidedHasExpired": "Срок действия предоставленного кода сброса истек."
   },
   "TopBar": {
-    "CallUs": "Позвоните нам"
+    "CallUs": "Контакт"
   },
   "Search": {
     "Search": "Поиск"
@@ -114,7 +114,8 @@
     "clearFilter": "Очистить",
     "applyFilter": "Применить",
     "searchResults": "Результаты поиска",
-    "phraseSought": "Искомая фраза"
+    "phraseSought": "Искомая фраза",
+    "productsNotFound": "Товары не найдены"
   },
   "Product": {
     "addToBasket": "Добавить в корзину",
@@ -199,19 +200,19 @@
     "telephone": "Телефон",
     "call": "Позвонить",
     "address": "Адрес",
-    "schedule": "Пн-Пт: с",
-    "dayOff": "Сб-Вс: Выходной",
-    "satSun": "Сб-Вс: с",
+    "schedule": "Пн-Пт: c {from} до {to}",
+    "dayOff": "Сб-Вс: выходной",
+    "satSun": "Сб-Вс: c {from} до {to}",
     "howToGetThere": "Как добраться?",
-    "email": "Электронная почта",
+    "email": "E-MAIL",
     "toWrite": "Написать",
     "socialMedia": "Мы в социальных сетях",
     "askUsQuestion": "Задайте нам вопрос",
-    "yourNamePlaceholder": "Как вас зовут?",
-    "emailPlaceholder": "Электронная почта",
+    "yourNamePlaceholder": "Как вас зовут",
+    "emailPlaceholder": "E-mail",
     "yourQuestionPlaceholder": "Напишите ваш вопрос",
     "sending": "Отправляется...",
-    "sendButton": "Отправить",
+    "sendButton": "Отправить вопрос",
     "errorMessage": "Что-то пошло не так. Пожалуйста, попробуйте снова.",
     "successMessage": "Ваше сообщение успешно отправлено!"
   },
@@ -251,6 +252,8 @@
     "PasswordDigit": "Пароль должен содержать хотя бы одну цифру.",
     "PasswordSpecialChar": "Пароль должен содержать хотя бы один специальный символ.",
     "PasswordsDoNotMatch": "Пароли не совпадают",
+    "parcelLocker": "Пожалуйста, выберите шкафчик для посылок",
+    "shippingMethod": "Пожалуйста, выберите способ доставки",
     "noChanges": "В ваших данных нет никаких изменений"
   },
   "Forms": {
@@ -279,13 +282,13 @@
     "newUnreadMessage": "Новое непрочитанное сообщение",
     "unreadMessageDate": "Сейчас",
     "subscribeToOurNewsletter": "Подпишитесь на нашу рассылку!",
-    "newArrivals": "Узнавайте первыми о новых поступлениях, эксклюзивных скидках и специальных предложениях.",
+    "newArrivals": "Присоединяйтесь к нашей рассылке в WhatsApp, чтобы получать эксклюзивные скидки, отличные предложения и быть всегда в курсе новинок.",
     "joinToWhatsApp": "Присоединяйтесь к WhatsApp",
-    "subscribe": "Подписаться",
+    "subscribe": "Присоединиться сейчас",
     "allShop": "Весь магазин"
   },
   "SubscriptionForm": {
-    "subscribe": "Подписаться",
+    "subscribe": "Присоединиться сейчас",
     "sending": "Отправка...",
     "typeValidEmail": "Введите правильный email",
     "failedSubscribe": "Не удалось отправить письмо",
@@ -302,6 +305,23 @@
     "nextPost": "Следующий",
     "blogPage": "Блог",
     "blogSectionSubtitle": "Последние статьи"
+  },
+  "ShippingMethodSelector": {
+    "delivery": "Доставка",
+    "change": "Изменить",
+    "parcelLocker": "Почтомат",
+    "selectParcelLocker": "Выбрать почтомат",
+    "deliveryUnavailable": "Способы доставки недоступны для выбранного региона. Пожалуйста, проверьте свою страну."
+  },
+  "InPostGeowidget": {
+    "close": "Закрыть"
+  },
+  "Checkout": {
+    "login": "Войдите",
+    "fieldsWillFilled": ", и поля будут заполнены автоматически после вашего первого заказа",
+    "pay": "Оплатить заказ",
+    "agreement": "Ваши личные данные будут использоваться для обработки вашего заказа, поддержки вашего опыта на этом сайте и для других целей, описанных в нашей ",
+    "privacyPolicy": "политике конфиденциальности"
   },
   "Footer": {
     "myAccount": "Мой аккаунт",

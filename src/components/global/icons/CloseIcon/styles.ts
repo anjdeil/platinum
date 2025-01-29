@@ -9,8 +9,10 @@ export const CloseButton = styled.button<CloseProps>`
   cursor: pointer;
   transition: all 0.2s ease;
   align-items: top;
-
   &:hover {
     scale: 1.2;
+  }
+  path {
+    stroke: ${(({ color }) => color || "black")}
   }
 `;

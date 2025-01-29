@@ -97,7 +97,7 @@
     "codeProvidedHasExpired": "Der angegebene Rücksetzungscode ist abgelaufen."
   },
   "TopBar": {
-    "CallUs": "Rufen Sie uns an"
+    "CallUs": "Kontakt"
   },
   "Search": {
     "Search": "Suche"
@@ -114,12 +114,13 @@
     "clearFilter": "Löschen",
     "applyFilter": "Anwenden",
     "searchResults": "Suchergebnisse",
-    "phraseSought": "Gesuchte Phrase"
+    "phraseSought": "Gesuchte Phrase",
+    "productsNotFound": "Artikel nicht gefunden"
   },
   "Product": {
-    "addToBasket": "In den Warenkorb legen",
+    "addToBasket": "In den Korb",
     "viewCart": "Warenkorb anzeigen",
-    "chooseOptions": "Wählen Sie eine Option",
+    "chooseOptions": "Option wählen",
     "updateCart": "Menge aktualisieren",
     "sortBy": "Sortieren nach",
     "productList": "Produktliste",
@@ -197,23 +198,23 @@
   "Contacts": {
     "contacts": "Kontakte",
     "telephone": "Telefon",
-    "call": "Anruf",
+    "call": "Anrufen",
     "address": "Adresse",
-    "schedule": "Mon-Fri: from",
-    "dayOff": "Sat-Sun: Day off",
-    "satSun": "Sat-Sun: from",
-    "howToGetThere": "Wie kommt man dorthin?",
+    "schedule": "Mo-Fr: von {from} bis {to}",
+    "dayOff": "Sa-So: Ruhetage",
+    "satSun": "Sa-So: von {from} bis {to}",
+    "howToGetThere": "Wie komme ich hin?",
     "email": "E-Mail",
     "toWrite": "Schreiben",
     "socialMedia": "Wir sind in den sozialen medien",
-    "askUsQuestion": "Stellen Sie uns eine Frage",
-    "yourNamePlaceholder": "Wie heißt du?",
+    "askUsQuestion": "STELL UNS EINE FRAGE",
+    "yourNamePlaceholder": "Wie heißt du",
     "emailPlaceholder": "E-Mail",
-    "yourQuestionPlaceholder": "Schreiben Sie Ihre Frage",
+    "yourQuestionPlaceholder": "Schreibe deine Frage",
     "errorMessage": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
     "successMessage": "Ihre Nachricht wurde erfolgreich gesendet!",
     "sending": "Senden...",
-    "sendButton": "Senden"
+    "sendButton": "Frage senden"
   },
   "Validation": {
     "emailValidation": "Geben Sie eine gültige E-Mail-Adresse ein",
@@ -251,6 +252,8 @@
     "PasswordDigit": "Das Passwort muss mindestens eine Ziffer enthalten.",
     "PasswordSpecialChar": "Das Passwort muss mindestens ein Sonderzeichen enthalten.",
     "PasswordsDoNotMatch": "Passwörter stimmen nicht überein",
+    "parcelLocker": "Bitte wählen Sie ein Paketfach",
+    "shippingMethod": "Bitte wählen Sie eine Versandart",
     "noChanges": "Ihre Daten haben sich nicht geändert"
   },
   "Forms": {
@@ -279,13 +282,13 @@
     "newUnreadMessage": "Neue ungelesene Nachricht",
     "unreadMessageDate": "Jetzt",
     "subscribeToOurNewsletter": "Abonnieren Sie unseren Newsletter!",
-    "newArrivals": "Seien Sie der Erste, der über Neuzugänge, exklusive Rabatte und Sonderangebote informiert wird.",
+    "newArrivals": "Treten Sie unserem WhatsApp-Newsletter bei, um exklusive Rabatte, tolle Angebote zu erhalten und immer auf dem neuesten Stand zu sein.",
     "joinToWhatsApp": "Beitritt zu WhatsAp",
-    "subscribe": "Subscribe",
+    "subscribe": "Jetzt beitreten",
     "allShop": "Alle Geschäfte"
   },
   "SubscriptionForm": {
-    "subscribe": "Abonnieren",
+    "subscribe": "Jetzt beitreten",
     "sending": "Senden...",
     "typeValidEmail": "Geben Sie eine gültige email ein",
     "failedSubscribe": "Fehler beim Abonnieren",
@@ -303,11 +306,28 @@
     "blogPage": "Blog",
     "blogSectionSubtitle": "Letzte artikel"
   },
+  "ShippingMethodSelector": {
+    "delivery": "Lieferung",
+    "change": "Ändern",
+    "parcelLocker": "Paketstation",
+    "selectParcelLocker": "Paketstation auswählen",
+    "deliveryUnavailable": "Für die ausgewählte Region sind keine Liefermethoden verfügbar. Bitte überprüfen Sie Ihr Land."
+  },
+  "InPostGeowidget": {
+    "close": "Schließen"
+  },
+  "Checkout": {
+    "login": "Loggen Sie sich ein",
+    "fieldsWillFilled": " und die Felder werden nach Ihrer ersten Bestellung automatisch ausgefüllt",
+    "pay": "Bezahlung der Bestellung",
+    "agreement": "Ihre persönlichen Daten werden verwendet, um Ihre Bestellung zu bearbeiten, Ihre Erfahrung auf dieser Website zu unterstützen und für andere Zwecke, die in unserer ",
+    "privacyPolicy": "Datenschutzrichtlinie beschrieben sind"
+  },
   "Footer": {
     "myAccount": "Mein Konto",
     "categories": "Kategorien",
     "information": "Informationen",
-    "contacts": "Kontakte",
+    "contacts": "Kontakt",
     "delivery": "Lieferung",
     "payments": "Zahlungen"
   }

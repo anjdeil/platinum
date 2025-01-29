@@ -99,6 +99,7 @@ export const ProductCardList: FC<ProductCardListProps> = ({
   return (
     <StyledProductCardList
       mobileColumns={columns?.mobileColumns}
+      mintabletColumns={columns?.mintabletColumns}
       tabletColumns={columns?.tabletColumns}
       desktopColumns={columns?.desktopColumns}
     >
