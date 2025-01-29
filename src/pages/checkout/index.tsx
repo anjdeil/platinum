@@ -20,7 +20,6 @@ import { useAppSelector } from '@/store';
 import useGetAuthToken from '@/hooks/useGetAuthToken';
 import { useLazyFetchUserDataQuery } from '@/store/rtk-queries/wpApi';
 import Link from 'next/link';
-import Notification from '@/components/global/Notification/Notification';
 import { useTranslations } from 'next-intl';
 import OrderSummary from '@/components/pages/cart/OrderSummary/OrderSummary';
 import CheckIcon from '@/components/global/icons/CheckIcon';
@@ -173,6 +172,7 @@ export default function CheckoutPage() {
     createOrder({
       status: orderStatus,
       currency,
+      //TODO I try to fix it, byt it's not working
       billing: formData,
       line_items: cartItems,
       coupon_lines: couponLines,
@@ -219,22 +219,6 @@ export default function CheckoutPage() {
 
       <CheckoutContainer>
         <CheckoutFormsWrapper>
-          {!userData && (
-            <Notification>
-              <p>
-                <Link
-                  href={`/my-account/login`}
-                  onClick={() => {
-                    /* Login Popup opening logic */
-                  }}
-                >
-                  {t('login')}
-                </Link>
-                {t('fieldsWillFilled')}
-              </p>
-            </Notification>
-          )}
-
           {warnings && (
             <CheckoutWarnings messages={warnings}></CheckoutWarnings>
           )}

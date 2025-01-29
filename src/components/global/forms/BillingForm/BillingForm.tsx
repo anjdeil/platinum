@@ -20,6 +20,7 @@ import { validateWooCustomer } from '@/utils/zodValidators/validateWooCustomer';
 import {
   useCheckTokenMutation,
   useGetTokenMutation,
+  useLazyFetchUserDataQuery,
 } from '@/store/rtk-queries/wpApi';
 import { CustomFormCheckbox } from '../CustomFormCheckbox';
 import { useTranslations } from 'next-intl';
@@ -28,9 +29,9 @@ import { countryOptions } from '@/utils/mockdata/countryOptions';
 import { BillingFormSchema } from '@/types/components/global/forms/billingForm';
 import { AnimatedWrapper, StyledFormWrapper, VariationFields } from './style';
 import { ConfirmationRegCard } from './ConfirmationRegCard';
-import { getUserFromLocalStorage } from '@/utils/auth/userLocalStorage';
 import { AddressType } from '@/types/services/wooCustomApi/customer';
 import { CircularProgress } from '@mui/material';
+import { useAppSelector } from '@/store';
 
 interface BillingFormProps {
   setFormData: (formData: AddressType) => void;
@@ -66,11 +67,18 @@ export const BillingForm: FC<BillingFormProps> = ({ setFormData }) => {
   const [registerCustomerMutation, { error }] = useRegisterCustomerMutation();
   const [fetchToken] = useGetTokenMutation();
   const [checkToken] = useCheckTokenMutation();
+  const { user: userSlice } = useAppSelector(state => state.userSlice);
+  const [fetchUserData, { data: userData }] = useLazyFetchUserDataQuery();
+
+  useEffect(() => {
+    if (userSlice !== null) {
+      fetchUserData();
+    }
+  }, [userSlice]);
 
   const fetchCustomerData = () => {
-    const user = getUserFromLocalStorage();
-    if (user?.id) {
-      setUserId(user.id);
+    if (userData?.id) {
+      setUserId(userData.id.toString());
     }
   };
 
@@ -200,7 +208,6 @@ export const BillingForm: FC<BillingFormProps> = ({ setFormData }) => {
         /** Validate auth token */
         const isTokenValid = await checkToken({});
         if (!isTokenValid) throw new Error('Auth token validation failed.');
-        // router.push('/my-account');
       } catch (err) {
         setCustomError(
           'Oops! Something went wrong with the server. Please try again or contact support.'
@@ -363,7 +370,11 @@ export const BillingForm: FC<BillingFormProps> = ({ setFormData }) => {
       ) : (
         <>
           {!customer && (
-            <ConfirmationRegCard register={register} errors={errors} />
+            <ConfirmationRegCard
+              register={register}
+              errors={errors}
+              setUserId={setUserId}
+            />
           )}
           <CustomForm onSubmit={handleSubmit(onSubmit)} maxWidth="850px">
             <StyledFormWrapper inMiddle>
