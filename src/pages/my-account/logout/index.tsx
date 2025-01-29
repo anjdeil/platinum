@@ -1,3 +1,4 @@
+import { removeUserFromLocalStorage } from '@/utils/auth/userLocalStorage';
 import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 
@@ -17,7 +18,7 @@ export const getServerSideProps = async (
     'Set-Cookie',
     'authToken=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; '
   );
-
+  removeUserFromLocalStorage();
   return {
     redirect: {
       destination: `/${locale}/my-account/login`,

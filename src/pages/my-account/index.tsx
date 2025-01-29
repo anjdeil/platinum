@@ -8,13 +8,20 @@ import { useFetchOrdersQuery } from '@/store/rtk-queries/wooCustomApi';
 import { useGetCurrenciesQuery } from '@/store/rtk-queries/wpCustomApi';
 import { setUser } from '@/store/slices/userSlice';
 import { AccountInfoWrapper } from '@/styles/components';
-import { saveUserToLocalStorage } from '@/utils/auth/userLocalStorage';
+import {
+  getUserFromLocalStorage,
+  saveUserToLocalStorage,
+} from '@/utils/auth/userLocalStorage';
 import { accountLinkList } from '@/utils/consts';
-import axios from 'axios';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import { FC } from 'react';
 import { useDispatch } from 'react-redux';
+import wpRestApi from '@/services/wpRestApi';
+import { decodeJwt } from 'jose';
+import { JwtDecodedDataType } from '@/types/services/wpRestApi/auth';
+import { validateJwtDecode } from '@/utils/zodValidators/validateJwtDecode';
+import wooCommerceRestApi from '@/services/wooCommerceRestApi';
 
 // Delete this interface when we have a user type
 interface UserType {
@@ -30,23 +37,35 @@ export const getServerSideProps: GetServerSideProps = async (
 ) => {
   const { locale } = context;
   const cookies = context.req.cookies;
-  const reqUrl =
-    process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3000';
 
   try {
     if (!cookies?.authToken)
       throw new Error('Invalid or missing authentication token');
-    const resp = await axios.get(`${reqUrl}/api/wooAuth/customers`, {
-      headers: {
-        Cookie: `authToken=${cookies.authToken}`,
-      },
-    });
 
-    if (!resp.data) throw new Error('Invalid or missing authentication token');
+    const authResp = await wpRestApi.post(
+      'jwt-auth/v1/token/validate',
+      {},
+      false,
+      `Bearer ${cookies.authToken}`
+    );
+    if (authResp?.data?.code !== 'jwt_auth_valid_token')
+      throw new Error('Invalid or missing authentication token');
+
+    const jwtDecodedData = decodeJwt(cookies.authToken) as JwtDecodedDataType;
+    const isJwtDecodedDataValid = await validateJwtDecode(jwtDecodedData);
+    if (!isJwtDecodedDataValid)
+      throw new Error('Invalid or missing authentication token');
+
+    const customerId = jwtDecodedData.data.user.id;
+    const customerResp = await wooCommerceRestApi.get(
+      `customers/${customerId}`
+    );
+    if (!customerResp?.data)
+      throw new Error('Invalid or missing authentication token');
 
     return {
       props: {
-        user: resp.data,
+        user: customerResp.data,
       },
     };
   } catch (err) {
@@ -70,17 +89,20 @@ const MyAccount: FC<MyAccountPropsType> = ({ user }) => {
   const selectedCurrency = useAppSelector(state => state.currencySlice.name);
 
   const dispatch = useDispatch();
+  const userLocal = getUserFromLocalStorage();
 
-  const userData = {
-    id: user.id,
-    first_name: user.first_name,
-    last_name: user.last_name,
-    email: user.email,
-  };
+  if (!userLocal) {
+    const userData = {
+      id: user.id,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      email: user.email,
+    };
 
-  dispatch(setUser(userData));
+    dispatch(setUser(userData));
 
-  saveUserToLocalStorage(userData);
+    saveUserToLocalStorage(userData);
+  }
 
   const { data: ordersData } = useFetchOrdersQuery({
     customer: user.id,
