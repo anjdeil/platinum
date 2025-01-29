@@ -37,13 +37,8 @@ export const getServerSideProps = async (
   if (!cookies?.authToken) return { props: {} };
 
   try {
-    const response = await wpRestApi.post(
-      'jwt-auth/v1/token/validate',
-      {},
-      false,
-      `Bearer ${cookies.authToken}`
-    );
-    if (!response.data) return { props: {} };
+    const authResp = await wpRestApi.post('jwt-auth/v1/token/validate', {}, false, `Bearer ${cookies.authToken}`);
+    if (authResp?.data?.code !== 'jwt_auth_valid_token') return { props: {} };
 
     return {
       redirect: {

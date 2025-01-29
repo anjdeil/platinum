@@ -180,7 +180,7 @@
     "Continue": "Continue",
     "OrderSummaryTotal": "total to pay",
     "products": "Products",
-    "сoupon": "Сoupon",
+    "coupon": "Coupon",
     "paymentMethod": "Payment method",
     "Basket": "Basket",
     "PersonalInformation": "Personal Information",
@@ -200,21 +200,21 @@
     "telephone": "Telephone",
     "call": "Call",
     "address": "Address",
-    "schedule": "Mon-Fri: from",
-    "dayOff": "Sat-Sun: Day off",
-    "satSun": "Sat-Sun: from",
+    "schedule": "Mon-Fri: from {from} to {to}",
+    "dayOff": "Sat-Sun: day is a day off",
+    "satSun": "Sat-Sun: from {from} to {to}",
     "howToGetThere": "How to get there?",
-    "email": "Email",
+    "email": "MAIL",
     "toWrite": "To write",
     "socialMedia": "We are in social media",
     "askUsQuestion": "Ask Us a Question",
-    "yourNamePlaceholder": "What is your name?",
+    "yourNamePlaceholder": "What is your name",
     "emailPlaceholder": "Email",
     "yourQuestionPlaceholder": "Write your question",
     "errorMessage": "Something went wrong. Please try again.",
     "successMessage": "Your message has been sent successfully!",
     "sending": "Sending...",
-    "sendButton": "Send"
+    "sendButton": "Send a question"
   },
   "Validation": {
     "emailValidation": "Please enter a valid email.",
@@ -252,6 +252,8 @@
     "PasswordDigit": "Password must contain at least one digit.",
     "PasswordSpecialChar": "Password must contain at least one special character.",
     "PasswordsDoNotMatch": "Passwords do not match",
+    "parcelLocker": "Please, select a parcel locker",
+    "shippingMethod": "Please, select a shipping method",
     "noChanges": "There's no change in your data"
   },
   "Forms": {
@@ -279,14 +281,14 @@
     "aboutOurBrand": "About our brand",
     "newUnreadMessage": "New unread message",
     "unreadMessageDate": "Now",
-    "subscribeToOurNewsletter": "Subscribe to our  newsletter!",
-    "newArrivals": "Be the first to know about new arrivals, exclusive discounts and special offers.",
+    "subscribeToOurNewsletter": "Subscribe to our newsletter!",
+    "newArrivals": "Join our WhatsApp newsletter to receive exclusive discounts, great offers, and stay up-to-date.",
     "joinToWhatsApp": "Join to WhatsApp",
-    "subscribe": "Subscribe",
+    "subscribe": "Join now",
     "allShop": "All shop"
   },
   "SubscriptionForm": {
-    "subscribe": "Subscribe",
+    "subscribe": "Join now",
     "sending": "Sending...",
     "typeValidEmail": "Please, type valid email",
     "failedSubscribe": "Failed to send email",
@@ -303,6 +305,23 @@
     "nextPost": "Next",
     "blogPage": "Blog",
     "blogSectionTitle": "Lasted articles"
+  },
+  "ShippingMethodSelector": {
+    "delivery": "Delivery",
+    "change": "Change",
+    "parcelLocker": "Parcel locker",
+    "selectParcelLocker": "Select a parcel locker",
+    "deliveryUnavailable": "Delivery methods are not available for the selected region. Please check your country."
+  },
+  "InPostGeowidget": {
+    "close": "Close"
+  },
+  "Checkout": {
+    "login": "Log in",
+    "fieldsWillFilled": " and the fields will be filled in automatically after your first order",
+    "pay": "Pay for order",
+    "agreement": "Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our ",
+    "privacyPolicy": "privacy policy"
   },
   "Footer": {
     "myAccount": "My account",

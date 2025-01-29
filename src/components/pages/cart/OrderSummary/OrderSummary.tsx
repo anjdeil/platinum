@@ -42,7 +42,7 @@ const OrderSummary: FC<OrderSummaryProps> = ({ order, symbol, isLoading = false 
 
           {/* сoupons */}
           {order?.coupon_lines?.map((line) => {
-            const name = `${t('сoupon')} ${
+            const name = `${t('coupon')} ${
               line.discount_type === 'percent' ? `-${line.nominal_amount}% ` : ''
             }`
             return (

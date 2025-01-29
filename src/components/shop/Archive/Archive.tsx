@@ -56,12 +56,6 @@ export const switchCategory = (parentSlug: string, childSlug?: string) => {
   const { ...params } = router.query;
   const newSlugs = childSlug ? [parentSlug, childSlug] : [parentSlug];
 
-  console.log('router.pathname...', router.pathname);
-  console.log('parentSlug...', parentSlug);
-  console.log('childSlug...', childSlug);
-  console.log('newSlugs...', newSlugs);
-  console.log('params...', params);
-
   router.push({
     pathname: router.pathname,
     query: {
@@ -203,8 +197,8 @@ export const Archive: FC<ArchivePropsType> = props => {
           </Title>
           <FilterPanel
             attributes={statistic.attributes}
-            maxPrice={statistic.max_price || 0}
             minPrice={statistic.min_price || 0}
+            maxPrice={statistic.max_price || 0}
           />
         </CatalogFilterBlock>
         <FilterOverlay visible={isMenuVisible} onClick={toggleMenu} />

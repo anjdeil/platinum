@@ -15,6 +15,7 @@ export const HeaderWrapper = styled.div<HeaderWrapperProps>`
     backgroundColor = theme.background.primaryGradient,
   }) => backgroundColor};
   position: relative;
+  overflow: hidden;
 
   @media ${({ theme }) => theme.media.large} {
     padding-block: 16px;
@@ -28,6 +29,10 @@ export const MenuWrapper = styled.div`
   @media ${({ theme }) => theme.media.large} {
     gap: 24px;
   }
+
+  @media ${({ theme }) => theme.media.mediumLarge} {
+    gap: 16px;
+  }
 `;
 
 export const CategoriesButton = styled.button`
@@ -40,12 +45,18 @@ export const CategoriesButton = styled.button`
   border: none;
   cursor: pointer;
   line-height: 1.2rem;
+  white-space: nowrap;
+
   &.active {
     font-weight: 600;
   }
 
   &:hover {
     opacity: 0.7;
+  }
+
+  @media ${({ theme }) => theme.media.xl} {
+    white-space: unset;
   }
 
   @media ${({ theme }) => theme.media.large} {
@@ -60,6 +71,10 @@ export const HeaderContainer = styled(Container)<HeaderContainerProps>`
   align-items: center;
   overflow: visible;
   width: 93%;
+
+  @media ${({ theme }) => theme.media.mediumLarge} {
+    gap: 16px;
+  }
 `;
 
 export const HeaderContent = styled.div`
