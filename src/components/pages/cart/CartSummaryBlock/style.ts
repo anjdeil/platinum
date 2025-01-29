@@ -35,6 +35,7 @@ export const CartCommentInput = styled.textarea`
   border-radius: 8px;
   padding: 12px 16px;
   background: ${({ theme }) => theme.background.secondary};
+  resize: none;
 
   & placeholder {
     text-align: left;
