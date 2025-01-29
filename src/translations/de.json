@@ -145,7 +145,11 @@
     "addComment": "Kommentar hinzufügen",
     "submitting": "Einreichen",
     "commentText1": "Haben Sie unser Produkt getestet? Teilen Sie Ihre Meinung mit;",
-    "commentText2": "- Wir versuchen, das Beste für Sie zu sein, und Ihre Meinung wird uns sehr helfen!"
+    "commentText2": "- Wir versuchen, das Beste für Sie zu sein, und Ihre Meinung wird uns sehr helfen!",
+    "thickness": "Dicke",
+    "length": "Länge",
+    "leaveAReviewAboutProduct": "Hinterlassen Sie eine Bewertung über die Ware",
+    "descriptions": "Beschreibung"
   },
   "Cart": {
     "cart": "Warenkorb",
