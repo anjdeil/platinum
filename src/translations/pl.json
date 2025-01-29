@@ -321,7 +321,15 @@
     "fieldsWillFilled": ", a pola zostaną wypełnione automatycznie po pierwszym zamówieniu",
     "pay": "Opłacić zamówienie",
     "agreement": "Dane osobowe użytkownika będą wykorzystywane do przetwarzania jego zamówień, obsługi jego doświadczeń na tej stronie internetowej oraz do innych celów opisanych w naszej ",
-    "privacyPolicy": "polityce prywatności"
+    "privacyPolicy": "polityce prywatności",
+    "registerAccount": "Zarejestruj konto podczas dokonywania zakupów.",
+    "billingFormName": "Informacje dla klientów",
+    "guestWarning": "Zamówienie złożone bez rejestracji!",
+    "shippingFormName": "Informacje o wysyłce",
+    "proofSelect": "Dowód zakupu",
+    "vatInvoice": "VAT Faktura",
+    "company": "Imię i nazwisko/Firma",
+    "nip": "NIP"
   },
   "Footer": {
     "myAccount": "Moje konto",
