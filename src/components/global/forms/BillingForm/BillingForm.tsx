@@ -58,6 +58,7 @@ export const BillingForm: FC<BillingFormProps> = ({ setBillingData }) => {
     resetField,
   } = useForm<BillingFormType>({
     resolver: zodResolver(formSchema),
+    mode: 'onChange',
   });
 
   /** API
