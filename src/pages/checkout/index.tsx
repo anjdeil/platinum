@@ -29,6 +29,8 @@ import checkCartConflict from '@/utils/cart/checkCartConflict';
 import parcelMachinesMethods from '@/utils/checkout/parcelMachinesMethods';
 import CheckoutWarnings from '@/components/pages/checkout/CheckoutWarnings';
 import validateOrder from '@/utils/checkout/validateOrder';
+import getCalculatedMethodCostByWeight from '@/utils/checkout/getCalculatedMethodCostByWeight';
+import getShippingMethodFixedCost from '@/utils/checkout/getShippingMethodFixedCost';
 
 export function getServerSideProps() {
   return {
@@ -109,9 +111,24 @@ export default function CheckoutPage() {
         method_title: title,
         instance_id: instance_id.toString(),
         meta_data: meta,
+        total: String(getCalculatedMethodCost(shippingMethod))
       });
     }
   }, [shippingMethod, parcelMachine]);
+
+  /**
+   * Shipping costs login
+   */
+  const [totalWeight] = useState(0);
+  const getCalculatedMethodCost = (method: ShippingMethodType) => {
+    const costByWeight = getCalculatedMethodCostByWeight(method, totalWeight);
+    if (costByWeight !== false) return costByWeight;
+
+    const costFixed = getShippingMethodFixedCost(method);
+    if (costFixed !== false) return costFixed;
+
+    return 0;
+  }
 
   /**
    * Order logic
@@ -225,6 +242,9 @@ export default function CheckoutPage() {
                   onClick={() => setCurrentCountryCode('US')}>Set &ldquo;US&ldquo;
           </button>
           <button style={{ border: 'none', background: 'none', margin: '1em', textDecoration: 'underline' }}
+                  onClick={() => setCurrentCountryCode('ES')}>Set &ldquo;ES&ldquo;
+          </button>
+          <button style={{ border: 'none', background: 'none', margin: '1em', textDecoration: 'underline' }}
                   onClick={() => setCurrentCountryCode('Bla-bla')}>Set &ldquo;Bla-bla&ldquo;
           </button>
 
@@ -235,6 +255,7 @@ export default function CheckoutPage() {
             parcelMachinesMethods={parcelMachinesMethods}
             parcelMachine={parcelMachine}
             onParcelMachineChange={handleParcelMachineChange}
+            getCalculatedMethodCost={getCalculatedMethodCost}
           />
         </CheckoutFormsWrapper>
         <CheckoutSummaryWrapper>
