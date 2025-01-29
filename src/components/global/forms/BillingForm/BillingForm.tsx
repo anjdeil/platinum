@@ -34,10 +34,10 @@ import { CircularProgress } from '@mui/material';
 import { useAppSelector } from '@/store';
 
 interface BillingFormProps {
-  setFormData: (formData: AddressType) => void;
+  setBillingData: (formData: AddressType) => void;
 }
 
-export const BillingForm: FC<BillingFormProps> = ({ setFormData }) => {
+export const BillingForm: FC<BillingFormProps> = ({ setBillingData }) => {
   const tValidation = useTranslations('Validation');
   const tMyAccount = useTranslations('MyAccount');
   const tCheckout = useTranslations('Checkout');
@@ -113,22 +113,9 @@ export const BillingForm: FC<BillingFormProps> = ({ setFormData }) => {
 
   const watchedFields = useWatch({ control });
 
-  const formValues: AddressType = {
-    first_name: watchedFields.first_name || '',
-    last_name: watchedFields.last_name || '',
-    company: watchedFields.company || '',
-    address_1: watchedFields.address_1 || '',
-    address_2: watchedFields.address_2 || '',
-    city: watchedFields.city || '',
-    state: watchedFields.state || '',
-    postcode: watchedFields.postcode || '',
-    country: watchedFields.country || '',
-    email: watchedFields.email || '',
-    phone: watchedFields.phone || '',
-  };
   useEffect(() => {
-    setFormData(formValues);
-  }, [watchedFields, setFormData]);
+    setBillingData(watchedFields as AddressType);
+  }, [watchedFields]);
 
   const isInvoice = useWatch({
     control,

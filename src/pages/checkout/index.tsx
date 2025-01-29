@@ -72,7 +72,7 @@ export default function CheckoutPage() {
   /**
    * Shipping
    */
-  const [currentCountryCode, setCurrentCountryCode] = useState<string>('PL');
+  const [currentCountryCode, setCurrentCountryCode] = useState<string>();
   const { shippingMethods, isLoading } = useShippingMethods(currentCountryCode);
   const [shippingMethod, setShippingMethod] = useState<ShippingMethodType>();
   const [parcelMachine, setParcelMachine] = useState<ParcelMachineType>();
@@ -126,9 +126,15 @@ export default function CheckoutPage() {
     'on-hold'
   );
 
-  const [formData, setFormData] = useState<AddressType>();
-  const authToken = useGetAuthToken();
+  const [billingData, setBillingData] = useState<AddressType>();
 
+  useEffect(() => {
+    if (!billingData?.country) return;
+
+    setCurrentCountryCode(billingData.country);
+  }, [billingData?.country]);
+
+  const authToken = useGetAuthToken();
   const { name: currency, code: currencySymbol } = useAppSelector(
     state => state.currencySlice
   );
@@ -173,7 +179,8 @@ export default function CheckoutPage() {
       status: orderStatus,
       currency,
       //TODO I try to fix it, byt it's not working
-      billing: formData,
+      billing: billingData,
+      //company
       line_items: cartItems,
       coupon_lines: couponLines,
       ...(userData?.id && { customer_id: userData.id }),
@@ -186,7 +193,7 @@ export default function CheckoutPage() {
     currency,
     userData,
     shippingLine,
-    formData,
+    billingData,
   ]);
 
   useEffect(() => {
@@ -199,6 +206,7 @@ export default function CheckoutPage() {
    * Order validation
    */
   const [warnings, setWarnings] = useState<string[]>();
+
   const handlePayOrder = () => {
     if (!order) return;
 
@@ -224,42 +232,7 @@ export default function CheckoutPage() {
           )}
 
           {/* Billing and shipping forms */}
-          <BillingForm setFormData={setFormData} />
-
-          {/* Delete 3 strings bellow after forms implemented */}
-          <button
-            style={{
-              border: 'none',
-              background: 'none',
-              margin: '1em',
-              textDecoration: 'underline',
-            }}
-            onClick={() => setCurrentCountryCode('PL')}
-          >
-            Set &ldquo;PL&ldquo;
-          </button>
-          <button
-            style={{
-              border: 'none',
-              background: 'none',
-              margin: '1em',
-              textDecoration: 'underline',
-            }}
-            onClick={() => setCurrentCountryCode('US')}
-          >
-            Set &ldquo;US&ldquo;
-          </button>
-          <button
-            style={{
-              border: 'none',
-              background: 'none',
-              margin: '1em',
-              textDecoration: 'underline',
-            }}
-            onClick={() => setCurrentCountryCode('Bla-bla')}
-          >
-            Set &ldquo;Bla-bla&ldquo;
-          </button>
+          <BillingForm setBillingData={setBillingData} />
 
           <ShippingMethodSelector
             methods={shippingMethods}
