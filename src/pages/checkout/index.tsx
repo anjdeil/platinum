@@ -32,6 +32,8 @@ import { BillingForm } from '@/components/global/forms/BillingForm';
 import { AddressType } from '@/types/services/wooCustomApi/customer';
 import getCalculatedMethodCostByWeight from '@/utils/checkout/getCalculatedMethodCostByWeight';
 import getShippingMethodFixedCost from '@/utils/checkout/getShippingMethodFixedCost';
+import validateBillingData from '@/utils/checkout/validateBillingData';
+import BillingWarnings from '@/components/pages/checkout/BillingWarnings';
 
 export function getServerSideProps() {
   return {
@@ -41,6 +43,7 @@ export function getServerSideProps() {
 
 export default function CheckoutPage() {
   const t = useTranslations('Checkout');
+  const tValidation = useTranslations('Validation');
 
   /**
    * InPost
@@ -117,7 +120,7 @@ export default function CheckoutPage() {
         method_title: title,
         instance_id: instance_id.toString(),
         meta_data: meta,
-        total: String(getCalculatedMethodCost(shippingMethod))
+        total: String(getCalculatedMethodCost(shippingMethod)),
       });
     }
   }, [shippingMethod, parcelMachine]);
@@ -134,7 +137,7 @@ export default function CheckoutPage() {
     if (costFixed !== false) return costFixed;
 
     return 0;
-  }
+  };
 
   /**
    * Order logic
@@ -185,6 +188,48 @@ export default function CheckoutPage() {
     if (authToken) fetchUserData(authToken);
   }, [authToken]);
 
+  /**
+   * Order validation
+   */
+  const [warnings, setWarnings] = useState<string[]>();
+  const [billingWarnings, setBillingWarnings] = useState<string[]>();
+  const [isWarningsShown, setIsWarningsShown] = useState(false);
+
+  // Validate billing data
+  const [isBillingDataReady, setIsBillingDataReady] = useState(false);
+
+  useEffect(() => {
+    if (
+      billingData &&
+      !Object.values(billingData).every(value => value === '')
+    ) {
+      const result = validateBillingData(billingData);
+      if (result.isValid) {
+        setIsBillingDataReady(true);
+        setBillingWarnings([]);
+      } else {
+        setIsBillingDataReady(false);
+        setBillingWarnings(result.messageKeys);
+      }
+    }
+  }, [billingData]);
+
+  const handlePayOrder = () => {
+    if (!order) return;
+    const validationResult = validateOrder(order);
+    if (validationResult.isValid) {
+      setOrderStatus('pending');
+    } else {
+      setIsWarningsShown(true);
+    }
+
+    // register user
+
+    setWarnings(validationResult.messageKeys);
+  };
+
+  const isPayButtonDisabled = isOrderLoading || orderStatus === 'pending';
+
   /* Update an order */
   useEffect(() => {
     const couponLines = couponCodes.map(code => ({ code }));
@@ -197,7 +242,7 @@ export default function CheckoutPage() {
       currency,
       line_items: cartItems,
       coupon_lines: couponLines,
-      ...((billingData && orderStatus === 'pending') && { billing: billingData }),
+      ...(billingData && isBillingDataReady && { billing: billingData }),
       ...(userData?.id && { customer_id: userData.id }),
       ...(shippingLine && { shipping_lines: [shippingLine] }),
     });
@@ -208,6 +253,7 @@ export default function CheckoutPage() {
     currency,
     userData,
     shippingLine,
+    isBillingDataReady,
   ]);
 
   useEffect(() => {
@@ -216,25 +262,6 @@ export default function CheckoutPage() {
     }
   }, [order]);
 
-  /**
-   * Order validation
-   */
-  const [warnings, setWarnings] = useState<string[]>();
-
-  const handlePayOrder = () => {
-    if (!order) return;
-    const validationResult = validateOrder(order);
-    if (validationResult.isValid) {
-      setOrderStatus('pending');
-    }
-
-    // register user
-
-    setWarnings(validationResult.messageKeys);
-  };
-
-  const isPayButtonDisabled = isOrderLoading || orderStatus === 'pending';
-
   return (
     <>
       <Head>{inPostHead},</Head>
@@ -242,14 +269,15 @@ export default function CheckoutPage() {
 
       <CheckoutContainer>
         <CheckoutFormsWrapper>
+          {/* Billing and shipping forms */}
+          {billingWarnings && isWarningsShown && (
+            <BillingWarnings messages={billingWarnings}></BillingWarnings>
+          )}
+          <BillingForm setBillingData={setBillingData} />
+
           {warnings && (
             <CheckoutWarnings messages={warnings}></CheckoutWarnings>
           )}
-
-          {/* Billing and shipping forms */}
-
-          <BillingForm setBillingData={setBillingData} />
-
           <ShippingMethodSelector
             methods={shippingMethods}
             isLoading={isLoading}

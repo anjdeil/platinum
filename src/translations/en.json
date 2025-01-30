@@ -254,7 +254,18 @@
     "PasswordsDoNotMatch": "Passwords do not match",
     "parcelLocker": "Please, select a parcel locker",
     "shippingMethod": "Please, select a shipping method",
-    "noChanges": "There's no change in your data"
+    "noChanges": "There's no change in your data",
+    "noBillingInformation": "Please, field the billing information",
+    "isRequired": "field is required",
+    "areRequired": "fields are required",
+    "firstname": "First name",
+    "lastname": "Last name",
+    "address_1": "Street Address",
+    "address2": "Building number",
+    "postcode": "Postcode",
+    "emailI": "Email",
+    "phoneIsRequired": "Phone",
+    "apartmentNumber": "Apartment number"
   },
   "Forms": {
     "applicationForm": "application form",

@@ -58,7 +58,7 @@ export const BillingForm: FC<BillingFormProps> = ({ setBillingData }) => {
     resetField,
   } = useForm<BillingFormType>({
     resolver: zodResolver(formSchema),
-    mode: 'onChange',
+    mode: 'onBlur',
   });
 
   /** API
@@ -300,7 +300,7 @@ export const BillingForm: FC<BillingFormProps> = ({ setBillingData }) => {
           register={register}
           errors={errors}
           inputTag="input"
-          inputType={field === 'postcode' ? 'number' : 'text'}
+          inputType="text"
           setValue={setValue}
           defaultValue={
             field === 'address_2'
