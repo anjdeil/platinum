@@ -41,6 +41,7 @@ import getShippingMethodFixedCost from '@/utils/checkout/getShippingMethodFixedC
 import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
 import validateBillingData from '@/utils/checkout/validateBillingData';
 import BillingWarnings from '@/components/pages/checkout/BillingWarnings';
+import getCartTotals from '@/utils/cart/getCartTotals';
 
 export function getServerSideProps() {
   return {
@@ -70,44 +71,8 @@ export default function CheckoutPage() {
 
   useEffect(() => {
     const productsMinimized = productsMinimizedData?.data?.items;
-    if (productsMinimized) {
-      const totals = cartItems.reduce(
-        (totals, cartItem) => {
-          const matchedProduct = productsMinimized.find(({ id, parent_id }) => {
-            if (cartItem?.variation_id) {
-              if (
-                cartItem.variation_id === id &&
-                cartItem.product_id === parent_id
-              )
-                return true;
-            } else {
-              if (cartItem.product_id === id) return true;
-            }
-          });
-
-          console.log(cartItem, matchedProduct);
-
-          if (matchedProduct && matchedProduct?.price) {
-            return {
-              totalCost:
-                totals.totalCost + matchedProduct.price * cartItem.quantity,
-              totalWeight:
-                totals.totalWeight + matchedProduct.weight * cartItem.quantity,
-            };
-          }
-
-          return totals;
-        },
-        { totalCost: 0, totalWeight: 0 }
-      );
-
-      setCartTotals(totals);
-    }
+    if (productsMinimized) setCartTotals(getCartTotals(productsMinimized, cartItems));
   }, [cartItems, productsMinimizedData]);
-
-  useEffect(() => {
-    console.log(totalCost, totalWeight);
-  }, [totalCost, totalWeight]);
 
   /**
    * InPost
@@ -142,11 +107,10 @@ export default function CheckoutPage() {
    * Shipping costs logic
    */
   const getCalculatedShippingMethodCost = (method: ShippingMethodType) => {
-    console.log(totalWeight);
     const costByWeight = getCalculatedMethodCostByWeight(method, totalWeight);
     if (costByWeight !== false) return costByWeight;
 
-    const costFixed = getShippingMethodFixedCost(method, 199);
+    const costFixed = getShippingMethodFixedCost(method, totalCost);
     if (costFixed !== false) return costFixed;
 
     return 0;
@@ -262,7 +226,9 @@ export default function CheckoutPage() {
   const [billingWarnings, setBillingWarnings] = useState<string[]>();
   const [isWarningsShown, setIsWarningsShown] = useState(false);
 
-  // Validate billing data
+  /**
+   * Validate billing data
+   */
   const [isBillingDataReady, setIsBillingDataReady] = useState(false);
 
   useEffect(() => {
@@ -308,7 +274,7 @@ export default function CheckoutPage() {
       status: orderStatus,
       line_items: cartItems,
       coupon_lines: couponLines,
-      ...(currency && { currency: currencyCode }),
+      ...(currencyCode && { currency: currencyCode }),
       ...(billingData && orderStatus === 'pending' && { billing: billingData }),
       ...(userData?.id && { customer_id: userData.id }),
       ...(shippingLine && { shipping_lines: [shippingLine] }),
