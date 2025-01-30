@@ -25,13 +25,13 @@ import {
 import { ShippingMethodType } from '@/types/services';
 import ShippingMethodSelectorSkeleton from './ShippingMethodSelectorSkeleton';
 import { ParcelMachineType } from '@/types/pages/checkout';
-import { useState } from 'react';
 import { CustomRequired } from '@/components/global/forms/CustomFormInput/styles';
 import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
 
 export default function ShippingMethodSelector({
                                                  methods,
                                                  isLoading,
+                                                 currentMethodId,
                                                  onChange,
                                                  parcelMachinesMethods,
                                                  parcelMachine,
@@ -40,6 +40,7 @@ export default function ShippingMethodSelector({
                                                }: {
   methods: ShippingMethodType[],
   isLoading: boolean,
+  currentMethodId?: string,
   onChange: (shippingMethod: ShippingMethodType) => void,
   parcelMachinesMethods: string[],
   parcelMachine?: ParcelMachineType,
@@ -49,15 +50,12 @@ export default function ShippingMethodSelector({
   const t = useTranslations('ShippingMethodSelector');
   const {convertCurrency, currencyCode} = useCurrencyConverter();
 
-  const [choosenMethod, setChoosenMethod] = useState<string>('');
-
   const handleChangeShippingMethod = (method: ShippingMethodType) => {
-    setChoosenMethod(method.method_id);
     onChange(method);
   };
 
   const isParcelMachineCollapsed = (methodId: string) => {
-    return choosenMethod === methodId && parcelMachinesMethods.includes(methodId);
+    return currentMethodId === methodId && parcelMachinesMethods.includes(methodId);
   };
 
   return (
@@ -74,7 +72,7 @@ export default function ShippingMethodSelector({
                   type="radio"
                   name="shippingMethod"
                   value={method.method_id}
-                  checked={choosenMethod === method.method_id}
+                  checked={currentMethodId === method.method_id}
                   onChange={() => handleChangeShippingMethod(method)}
                 />
                 <ShippingMethodSelectorMethodContent className="ShippingMethodSelectorMethodContent">

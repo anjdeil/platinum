@@ -32,6 +32,7 @@ import { BillingForm } from '@/components/global/forms/BillingForm';
 import { AddressType } from '@/types/services/wooCustomApi/customer';
 import getCalculatedMethodCostByWeight from '@/utils/checkout/getCalculatedMethodCostByWeight';
 import getShippingMethodFixedCost from '@/utils/checkout/getShippingMethodFixedCost';
+import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
 
 export function getServerSideProps() {
   return {
@@ -41,6 +42,52 @@ export function getServerSideProps() {
 
 export default function CheckoutPage() {
   const t = useTranslations('Checkout');
+  const {
+    currentCurrency: currency,
+    isLoading: isCurrencyLoading,
+    convertCurrency,
+    currencyCode: currencySymbol,
+  } = useCurrencyConverter();
+
+  /**
+   * Calculate totals
+   */
+  const { cartItems, couponCodes } = useAppSelector(state => state.cartSlice);
+  const [getProductsMinimized, { data: productsMinimizedData }] = useGetProductsMinimizedMutation();
+  const [{ totalCost, totalWeight }, setCartTotals] = useState({ totalCost: 0, totalWeight: 0 });
+
+  useEffect(() => {
+    const productsMinimized = productsMinimizedData?.data?.items;
+    if (productsMinimized) {
+
+      const totals = cartItems.reduce((totals, cartItem) => {
+        const matchedProduct = productsMinimized.find(({ id, parent_id }) => {
+          if (cartItem?.variation_id) {
+            if (cartItem.variation_id === id && cartItem.product_id === parent_id) return true;
+          } else {
+            if (cartItem.product_id === id) return true;
+          }
+        });
+
+        console.log(cartItem, matchedProduct);
+
+        if (matchedProduct && matchedProduct?.price) {
+          return {
+            totalCost: totals.totalCost + matchedProduct.price * cartItem.quantity,
+            totalWeight: totals.totalWeight + matchedProduct.weight * cartItem.quantity
+          };
+        }
+
+        return totals;
+      }, { totalCost: 0, totalWeight: 0 });
+
+      setCartTotals(totals);
+    }
+  }, [cartItems, productsMinimizedData]);
+
+  useEffect(() => {
+    console.log(totalCost, totalWeight);
+  }, [totalCost, totalWeight]);
 
   /**
    * InPost
@@ -72,6 +119,20 @@ export default function CheckoutPage() {
   }, [pointDetail]);
 
   /**
+   * Shipping costs logic
+   */
+  const getCalculatedShippingMethodCost = (method: ShippingMethodType) => {
+    console.log(totalWeight);
+    const costByWeight = getCalculatedMethodCostByWeight(method, totalWeight);
+    if (costByWeight !== false) return costByWeight;
+
+    const costFixed = getShippingMethodFixedCost(method, 199);
+    if (costFixed !== false) return costFixed;
+
+    return 0;
+  };
+
+  /**
    * Shipping
    */
   const [currentCountryCode, setCurrentCountryCode] = useState<string>();
@@ -81,8 +142,14 @@ export default function CheckoutPage() {
   const [shippingLine, setShippingLine] = useState<ShippingLineType>();
 
   useEffect(() => {
-    if (shippingMethod) {
+    setShippingMethod(undefined);
+  }, [shippingMethods]);
+
+  useEffect(() => {
+    if (shippingMethod && !isCurrencyLoading) {
       const { title, method_id, instance_id } = shippingMethod;
+
+      const shippingMethodCost = convertCurrency(getCalculatedShippingMethodCost(shippingMethod));
 
       const meta: OrderLineMetaDataType[] = [];
 
@@ -103,7 +170,7 @@ export default function CheckoutPage() {
           {
             key: 'Description',
             value: parcelMachine.choosenParcelMachine.description,
-          }
+          },
         );
       }
 
@@ -117,30 +184,18 @@ export default function CheckoutPage() {
         method_title: title,
         instance_id: instance_id.toString(),
         meta_data: meta,
-        total: String(getCalculatedMethodCost(shippingMethod))
+        total: String(shippingMethodCost),
       });
+    } else {
+      setShippingLine(undefined);
     }
-  }, [shippingMethod, parcelMachine]);
-
-  /**
-   * Shipping costs login
-   */
-  const [totalWeight] = useState(0);
-  const getCalculatedMethodCost = (method: ShippingMethodType) => {
-    const costByWeight = getCalculatedMethodCostByWeight(method, totalWeight);
-    if (costByWeight !== false) return costByWeight;
-
-    const costFixed = getShippingMethodFixedCost(method);
-    if (costFixed !== false) return costFixed;
-
-    return 0;
-  }
+  }, [shippingMethod, parcelMachine, isCurrencyLoading, currency]);
 
   /**
    * Order logic
    */
   const [orderStatus, setOrderStatus] = useState<'on-hold' | 'pending'>(
-    'on-hold'
+    'on-hold',
   );
 
   const [billingData, setBillingData] = useState<AddressType>();
@@ -152,14 +207,9 @@ export default function CheckoutPage() {
   }, [billingData?.country]);
 
   const authToken = useGetAuthToken();
-  const { name: currency, code: currencySymbol } = useAppSelector(
-    state => state.currencySlice
-  );
-  const { cartItems, couponCodes } = useAppSelector(state => state.cartSlice);
-
+  const { name: currencyCode } = useAppSelector(state => state.currencySlice);
   const [createOrder, { data: order, isLoading: isOrderLoading = true }] =
     useCreateOrderMutation();
-  const [getProductsMinimized] = useGetProductsMinimizedMutation();
   const [fetchUserData, { data: userData }] = useLazyFetchUserDataQuery();
 
   /* Check cart conflict */
@@ -194,9 +244,9 @@ export default function CheckoutPage() {
 
     createOrder({
       status: orderStatus,
-      currency,
       line_items: cartItems,
       coupon_lines: couponLines,
+      ...(currency && { currency: currencyCode }),
       ...((billingData && orderStatus === 'pending') && { billing: billingData }),
       ...(userData?.id && { customer_id: userData.id }),
       ...(shippingLine && { shipping_lines: [shippingLine] }),
@@ -205,7 +255,7 @@ export default function CheckoutPage() {
     cartItems,
     couponCodes,
     orderStatus,
-    currency,
+    currencyCode,
     userData,
     shippingLine,
   ]);
@@ -253,11 +303,12 @@ export default function CheckoutPage() {
           <ShippingMethodSelector
             methods={shippingMethods}
             isLoading={isLoading}
+            currentMethodId={shippingMethod?.method_id}
             onChange={method => setShippingMethod(method)}
             parcelMachinesMethods={parcelMachinesMethods}
             parcelMachine={parcelMachine}
             onParcelMachineChange={handleParcelMachineChange}
-            getCalculatedMethodCost={getCalculatedMethodCost}
+            getCalculatedMethodCost={getCalculatedShippingMethodCost}
           />
         </CheckoutFormsWrapper>
         <CheckoutSummaryWrapper>
