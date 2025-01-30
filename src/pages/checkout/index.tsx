@@ -108,7 +108,6 @@ export default function CheckoutPage() {
   useEffect(() => {
     console.log(totalCost, totalWeight);
   }, [totalCost, totalWeight]);
-  const tValidation = useTranslations('Validation');
 
   /**
    * InPost
