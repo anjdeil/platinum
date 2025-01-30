@@ -2,16 +2,22 @@ import OrderProgress from '@/components/pages/cart/OrderProgress/OrderProgress';
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
 import {
-  CheckoutAgreement, CheckoutAgreementWrapper,
+  CheckoutAgreement,
+  CheckoutAgreementWrapper,
   CheckoutContainer,
   CheckoutFormsWrapper,
-  CheckoutPayButton, CheckoutPayButtonWrapper,
+  CheckoutPayButton,
+  CheckoutPayButtonWrapper,
   CheckoutSummary,
   CheckoutSummaryWrapper,
 } from '@/components/pages/checkout/style';
 import ShippingMethodSelector from '@/components/pages/checkout/ShippingMethodSelector/ShippingMethodSelector';
 import useShippingMethods from '@/hooks/useShippingMethods';
-import { OrderLineMetaDataType, ParcelMachineType, ShippingLineType } from '@/types/pages/checkout';
+import {
+  OrderLineMetaDataType,
+  ParcelMachineType,
+  ShippingLineType,
+} from '@/types/pages/checkout';
 import useInPostGeowidget from '@/hooks/useInPostGeowidget';
 import { ShippingMethodType } from '@/types/services';
 import { useCreateOrderMutation } from '@/store/rtk-queries/wooCustomApi';
@@ -20,7 +26,6 @@ import { useAppSelector } from '@/store';
 import useGetAuthToken from '@/hooks/useGetAuthToken';
 import { useLazyFetchUserDataQuery } from '@/store/rtk-queries/wpApi';
 import Link from 'next/link';
-import Notification from '@/components/global/Notification/Notification';
 import { useTranslations } from 'next-intl';
 import OrderSummary from '@/components/pages/cart/OrderSummary/OrderSummary';
 import CheckIcon from '@/components/global/icons/CheckIcon';
@@ -29,8 +34,13 @@ import checkCartConflict from '@/utils/cart/checkCartConflict';
 import parcelMachinesMethods from '@/utils/checkout/parcelMachinesMethods';
 import CheckoutWarnings from '@/components/pages/checkout/CheckoutWarnings';
 import validateOrder from '@/utils/checkout/validateOrder';
+import { BillingForm } from '@/components/global/forms/BillingForm';
+import { AddressType } from '@/types/services/wooCustomApi/customer';
 import getCalculatedMethodCostByWeight from '@/utils/checkout/getCalculatedMethodCostByWeight';
 import getShippingMethodFixedCost from '@/utils/checkout/getShippingMethodFixedCost';
+import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
+import validateBillingData from '@/utils/checkout/validateBillingData';
+import BillingWarnings from '@/components/pages/checkout/BillingWarnings';
 
 export function getServerSideProps() {
   return {
@@ -40,6 +50,64 @@ export function getServerSideProps() {
 
 export default function CheckoutPage() {
   const t = useTranslations('Checkout');
+  const {
+    currentCurrency: currency,
+    isLoading: isCurrencyLoading,
+    convertCurrency,
+    currencyCode: currencySymbol,
+  } = useCurrencyConverter();
+
+  /**
+   * Calculate totals
+   */
+  const { cartItems, couponCodes } = useAppSelector(state => state.cartSlice);
+  const [getProductsMinimized, { data: productsMinimizedData }] =
+    useGetProductsMinimizedMutation();
+  const [{ totalCost, totalWeight }, setCartTotals] = useState({
+    totalCost: 0,
+    totalWeight: 0,
+  });
+
+  useEffect(() => {
+    const productsMinimized = productsMinimizedData?.data?.items;
+    if (productsMinimized) {
+      const totals = cartItems.reduce(
+        (totals, cartItem) => {
+          const matchedProduct = productsMinimized.find(({ id, parent_id }) => {
+            if (cartItem?.variation_id) {
+              if (
+                cartItem.variation_id === id &&
+                cartItem.product_id === parent_id
+              )
+                return true;
+            } else {
+              if (cartItem.product_id === id) return true;
+            }
+          });
+
+          console.log(cartItem, matchedProduct);
+
+          if (matchedProduct && matchedProduct?.price) {
+            return {
+              totalCost:
+                totals.totalCost + matchedProduct.price * cartItem.quantity,
+              totalWeight:
+                totals.totalWeight + matchedProduct.weight * cartItem.quantity,
+            };
+          }
+
+          return totals;
+        },
+        { totalCost: 0, totalWeight: 0 }
+      );
+
+      setCartTotals(totals);
+    }
+  }, [cartItems, productsMinimizedData]);
+
+  useEffect(() => {
+    console.log(totalCost, totalWeight);
+  }, [totalCost, totalWeight]);
 
   /**
    * InPost
@@ -67,9 +135,22 @@ export default function CheckoutPage() {
       });
 
       setGeowidgetShown(false);
-
     }
   }, [pointDetail]);
+
+  /**
+   * Shipping costs logic
+   */
+  const getCalculatedShippingMethodCost = (method: ShippingMethodType) => {
+    console.log(totalWeight);
+    const costByWeight = getCalculatedMethodCostByWeight(method, totalWeight);
+    if (costByWeight !== false) return costByWeight;
+
+    const costFixed = getShippingMethodFixedCost(method, 199);
+    if (costFixed !== false) return costFixed;
+
+    return 0;
+  };
 
   /**
    * Shipping
@@ -81,23 +162,37 @@ export default function CheckoutPage() {
   const [shippingLine, setShippingLine] = useState<ShippingLineType>();
 
   useEffect(() => {
-    if (shippingMethod) {
+    setShippingMethod(undefined);
+  }, [shippingMethods]);
+
+  useEffect(() => {
+    if (shippingMethod && !isCurrencyLoading) {
       const { title, method_id, instance_id } = shippingMethod;
+
+      const shippingMethodCost = convertCurrency(
+        getCalculatedShippingMethodCost(shippingMethod)
+      );
 
       const meta: OrderLineMetaDataType[] = [];
 
-      if (parcelMachinesMethods.includes(method_id) && parcelMachine && parcelMachine.methodId === method_id) {
+      if (
+        parcelMachinesMethods.includes(method_id) &&
+        parcelMachine &&
+        parcelMachine.methodId === method_id
+      ) {
         meta.push(
           {
             key: 'Selected parcel locker',
             value: parcelMachine.choosenParcelMachine.name,
-          }, {
+          },
+          {
             key: 'Address',
             value: parcelMachine.choosenParcelMachine.address,
-          }, {
+          },
+          {
             key: 'Description',
             value: parcelMachine.choosenParcelMachine.description,
-          },
+          }
         );
       }
 
@@ -111,37 +206,30 @@ export default function CheckoutPage() {
         method_title: title,
         instance_id: instance_id.toString(),
         meta_data: meta,
-        total: String(getCalculatedMethodCost(shippingMethod))
+        total: String(shippingMethodCost),
       });
     }
-  }, [shippingMethod, parcelMachine]);
-
-  /**
-   * Shipping costs login
-   */
-  const [totalWeight] = useState(0);
-  const getCalculatedMethodCost = (method: ShippingMethodType) => {
-    const costByWeight = getCalculatedMethodCostByWeight(method, totalWeight);
-    if (costByWeight !== false) return costByWeight;
-
-    const costFixed = getShippingMethodFixedCost(method);
-    if (costFixed !== false) return costFixed;
-
-    return 0;
-  }
+  }, [shippingMethod, parcelMachine, currency, isCurrencyLoading]);
 
   /**
    * Order logic
    */
-  const [orderStatus, setOrderStatus] = useState<'on-hold' | 'pending'>('on-hold');
+  const [orderStatus, setOrderStatus] = useState<'on-hold' | 'pending'>(
+    'on-hold'
+  );
+
+  const [billingData, setBillingData] = useState<AddressType>();
+
+  useEffect(() => {
+    if (!billingData?.country) return;
+
+    setCurrentCountryCode(billingData.country);
+  }, [billingData?.country]);
 
   const authToken = useGetAuthToken();
-
-  const { name: currency, code: currencySymbol } = useAppSelector(state => state.currencySlice);
-  const { cartItems, couponCodes } = useAppSelector(state => state.cartSlice);
-
-  const [createOrder, { data: order, isLoading: isOrderLoading = true }] = useCreateOrderMutation();
-  const [getProductsMinimized] = useGetProductsMinimizedMutation();
+  const { name: currencyCode } = useAppSelector(state => state.currencySlice);
+  const [createOrder, { data: order, isLoading: isOrderLoading = true }] =
+    useCreateOrderMutation();
   const [fetchUserData, { data: userData }] = useLazyFetchUserDataQuery();
 
   /* Check cart conflict */
@@ -167,22 +255,73 @@ export default function CheckoutPage() {
     if (authToken) fetchUserData(authToken);
   }, [authToken]);
 
+  /**
+   * Order validation
+   */
+  const [warnings, setWarnings] = useState<string[]>();
+  const [billingWarnings, setBillingWarnings] = useState<string[]>();
+  const [isWarningsShown, setIsWarningsShown] = useState(false);
+
+  // Validate billing data
+  const [isBillingDataReady, setIsBillingDataReady] = useState(false);
+
+  useEffect(() => {
+    if (
+      billingData &&
+      !Object.values(billingData).every(value => value === '')
+    ) {
+      const result = validateBillingData(billingData);
+      if (result.isValid) {
+        setIsBillingDataReady(true);
+        setBillingWarnings([]);
+      } else {
+        setIsBillingDataReady(false);
+        setBillingWarnings(result.messageKeys);
+      }
+    }
+  }, [billingData]);
+
+  const handlePayOrder = () => {
+    if (!order) return;
+    const validationResult = validateOrder(order);
+    if (validationResult.isValid) {
+      setOrderStatus('pending');
+    } else {
+      setIsWarningsShown(true);
+    }
+
+    // register user
+
+    setWarnings(validationResult.messageKeys);
+  };
+
+  const isPayButtonDisabled = isOrderLoading || orderStatus === 'pending';
+
   /* Update an order */
   useEffect(() => {
-    const couponLines = couponCodes.map((code) => ({ code }));
+    const couponLines = couponCodes.map(code => ({ code }));
 
     const loyaltyStatus = userData?.meta?.loyalty;
     if (loyaltyStatus) couponLines.push({ code: loyaltyStatus });
 
     createOrder({
       status: orderStatus,
-      currency,
       line_items: cartItems,
       coupon_lines: couponLines,
+      ...(currency && { currency: currencyCode }),
+      ...(billingData && orderStatus === 'pending' && { billing: billingData }),
       ...(userData?.id && { customer_id: userData.id }),
       ...(shippingLine && { shipping_lines: [shippingLine] }),
     });
-  }, [cartItems, couponCodes, orderStatus, currency, userData, shippingLine]);
+  }, [
+    cartItems,
+    couponCodes,
+    orderStatus,
+    currencyCode,
+    userData,
+    shippingLine,
+    isBillingDataReady,
+  ]);
 
   useEffect(() => {
     if (order?.status === 'pending' && order.payment_url) {
@@ -190,97 +329,62 @@ export default function CheckoutPage() {
     }
   }, [order]);
 
-  /**
-   * Order validation
-   */
-  const [warnings, setWarnings] = useState<string[]>();
-  const handlePayOrder = () => {
-
-    if (!order) return;
-
-    const validationResult = validateOrder(order);
-    if (validationResult.isValid) {
-      setOrderStatus('pending');
-    }
-
-    setWarnings(validationResult.messageKeys);
-  };
-
-  const isPayButtonDisabled = isOrderLoading || orderStatus === 'pending';
-
   return (
     <>
-      <Head>
-        {inPostHead},
-      </Head>
+      <Head>{inPostHead},</Head>
       <OrderProgress />
 
       <CheckoutContainer>
         <CheckoutFormsWrapper>
-          {!userData &&
-            <Notification>
-              <p>
-                <Link
-                  href={`/my-account/login`}
-                  onClick={() => {
-                    /* Login Popup opening logic */
-                  }}
-                >{t('login')}</Link>{t('fieldsWillFilled')}
-              </p>
-            </Notification>
-          }
-
-          {warnings && <CheckoutWarnings messages={warnings}></CheckoutWarnings>}
-
           {/* Billing and shipping forms */}
+          {billingWarnings && isWarningsShown && (
+            <BillingWarnings messages={billingWarnings}></BillingWarnings>
+          )}
+          <BillingForm setBillingData={setBillingData} />
 
-          {/* Delete 3 strings bellow after forms implemented */}
-          <button style={{ border: 'none', background: 'none', margin: '1em', textDecoration: 'underline' }}
-                  onClick={() => setCurrentCountryCode('PL')}>Set &ldquo;PL&ldquo;
-          </button>
-          <button style={{ border: 'none', background: 'none', margin: '1em', textDecoration: 'underline' }}
-                  onClick={() => setCurrentCountryCode('US')}>Set &ldquo;US&ldquo;
-          </button>
-          <button style={{ border: 'none', background: 'none', margin: '1em', textDecoration: 'underline' }}
-                  onClick={() => setCurrentCountryCode('ES')}>Set &ldquo;ES&ldquo;
-          </button>
-          <button style={{ border: 'none', background: 'none', margin: '1em', textDecoration: 'underline' }}
-                  onClick={() => setCurrentCountryCode('Bla-bla')}>Set &ldquo;Bla-bla&ldquo;
-          </button>
-
+          {warnings && (
+            <CheckoutWarnings messages={warnings}></CheckoutWarnings>
+          )}
           <ShippingMethodSelector
             methods={shippingMethods}
             isLoading={isLoading}
-            onChange={(method) => setShippingMethod(method)}
+            currentMethodId={shippingMethod?.method_id}
+            onChange={method => setShippingMethod(method)}
             parcelMachinesMethods={parcelMachinesMethods}
             parcelMachine={parcelMachine}
             onParcelMachineChange={handleParcelMachineChange}
-            getCalculatedMethodCost={getCalculatedMethodCost}
+            getCalculatedMethodCost={getCalculatedShippingMethodCost}
           />
         </CheckoutFormsWrapper>
         <CheckoutSummaryWrapper>
           <CheckoutSummary>
-            <OrderSummary symbol={currencySymbol} order={order} isLoading={isOrderLoading} />
+            <OrderSummary
+              symbol={currencySymbol}
+              order={order}
+              isLoading={isOrderLoading}
+            />
           </CheckoutSummary>
           <CheckoutPayButtonWrapper>
             <CheckoutPayButton
               disabled={isPayButtonDisabled}
               onClick={handlePayOrder}
-            >{t('pay')}</CheckoutPayButton>
+            >
+              {t('pay')}
+            </CheckoutPayButton>
             <CheckoutAgreementWrapper>
               <CheckIcon />
               <CheckoutAgreement>
-                {t('agreement')} <Link href="/privacy-policy">{t('privacyPolicy')}</Link>.
+                {t('agreement')}{' '}
+                <Link href="/privacy-policy">{t('privacyPolicy')}</Link>.
               </CheckoutAgreement>
             </CheckoutAgreementWrapper>
           </CheckoutPayButtonWrapper>
-
         </CheckoutSummaryWrapper>
       </CheckoutContainer>
 
-      {isGeowidgetShown &&
+      {isGeowidgetShown && (
         <InPostGeowidget onClose={() => setGeowidgetShown(false)} />
-      }
+      )}
     </>
   );
 }

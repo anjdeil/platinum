@@ -104,7 +104,6 @@ export const WooCustomerReqSchema = z.object({
 export const AddressTypeSchema = z.object({
   first_name: z.string(),
   last_name: z.string(),
-  company: z.string(),
   address_1: z.string(),
   address_2: z.string(),
   city: z.string(),

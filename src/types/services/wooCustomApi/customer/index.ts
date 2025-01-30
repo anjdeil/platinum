@@ -1,6 +1,7 @@
 import { LineItemSchema } from '@/types/components/shop/product/products';
 import { lineOrderItemsSchema } from '@/types/store/reducers/сartSlice';
 import { z } from 'zod';
+import { ShippingLineSchema } from '@/types/pages/checkout';
 
 const currencies: [string, ...string[]] = ['EUR', 'USD', 'PLN'];
 
@@ -103,7 +104,6 @@ export const WooCustomerReqSchema = z.object({
 export const AddressTypeSchema = z.object({
   first_name: z.string(),
   last_name: z.string(),
-  company: z.string(),
   address_1: z.string(),
   address_2: z.string(),
   city: z.string(),
@@ -244,6 +244,9 @@ const LineItemReqSchema = z.object({
 
 const CreateOrderRequestSchema = z.object({
   line_items: z.array(LineItemReqSchema),
+  billing: AddressTypeSchema.optional(),
+  customer_id: z.number().optional(),
+  shipping_lines: z.array(ShippingLineSchema).optional(),
   coupon_lines: z
     .array(
       z.object({
@@ -267,7 +270,7 @@ const CreateOrderRequestSchema = z.object({
     'refunded',
     'failed',
   ]),
-  currency: z.enum(currencies),
+  currency: z.enum(currencies).optional(),
 });
 
 const CreateOrderResponseSchema = z.object({
