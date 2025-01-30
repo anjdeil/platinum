@@ -39,8 +39,6 @@ const CommentPopup: React.FC<SwiperPopupProps> = ({ onClose }) => {
 
   const user = useAppSelector(state => state.userSlice.user);
 
-  console.log('user...', user);
-
   const {
     register,
     handleSubmit,
