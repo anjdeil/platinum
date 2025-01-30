@@ -263,7 +263,18 @@
     "PasswordsDoNotMatch": "Паролі не збігаються",
     "parcelLocker": "Будь ласка, оберіть скриньку для посилок",
     "shippingMethod": "Будь ласка, оберіть спосіб доставки",
-    "noChanges": "Ваші дані не змінилися"
+    "noChanges": "Ваші дані не змінилися",
+    "noBillingInformation": "Ви не вказали інформацію про платника",
+    "isRequired": "поле обов'язкове для заповнення",
+    "areRequired": "поля обов'язкові для заповнення",
+    "firstname": "Ім'я",
+    "lastname": "Прізвище",
+    "address1": "Вулиця та номер будинку",
+    "address2": "Номер будівлі",
+    "postcode": "Поштовий індекс",
+    "emailI": "Електронна пошта",
+    "phoneIsRequired": "Телефон",
+    "apartmentNumber": "Номер квартири"
   },
   "Forms": {
     "applicationForm": "форма заявки",

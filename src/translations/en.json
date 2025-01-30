@@ -269,7 +269,7 @@
     "areRequired": "fields are required",
     "firstname": "First name",
     "lastname": "Last name",
-    "address_1": "Street Address",
+    "address1": "Street Address",
     "address2": "Building number",
     "postcode": "Postcode",
     "emailI": "Email",

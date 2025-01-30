@@ -263,7 +263,18 @@
     "PasswordsDoNotMatch": "Passwörter stimmen nicht überein",
     "parcelLocker": "Bitte wählen Sie ein Paketfach",
     "shippingMethod": "Bitte wählen Sie eine Versandart",
-    "noChanges": "Ihre Daten haben sich nicht geändert"
+    "noChanges": "Ihre Daten haben sich nicht geändert",
+    "noBillingInformation": "Keine Rechnungsinformationen",
+    "isRequired": "Feld ist erforderlich",
+    "areRequired": "Felder sind erforderlich",
+    "firstname": "Vorname",
+    "lastname": "Nachname",
+    "address1": "Straße und Hausnummer",
+    "address2": "Gebäudenummer",
+    "postcode": "Postleitzahl",
+    "emailI": "E-Mail",
+    "phoneIsRequired": "Telefon",
+    "apartmentNumber": "Wohnungsnummer"
   },
   "Forms": {
     "applicationForm": "application form",
