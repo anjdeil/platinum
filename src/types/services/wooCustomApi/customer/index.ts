@@ -270,7 +270,7 @@ const CreateOrderRequestSchema = z.object({
     'refunded',
     'failed',
   ]),
-  currency: z.enum(currencies),
+  currency: z.enum(currencies).optional(),
 });
 
 const CreateOrderResponseSchema = z.object({

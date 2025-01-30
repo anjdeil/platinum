@@ -2,16 +2,22 @@ import OrderProgress from '@/components/pages/cart/OrderProgress/OrderProgress';
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
 import {
-  CheckoutAgreement, CheckoutAgreementWrapper,
+  CheckoutAgreement,
+  CheckoutAgreementWrapper,
   CheckoutContainer,
   CheckoutFormsWrapper,
-  CheckoutPayButton, CheckoutPayButtonWrapper,
+  CheckoutPayButton,
+  CheckoutPayButtonWrapper,
   CheckoutSummary,
   CheckoutSummaryWrapper,
 } from '@/components/pages/checkout/style';
 import ShippingMethodSelector from '@/components/pages/checkout/ShippingMethodSelector/ShippingMethodSelector';
 import useShippingMethods from '@/hooks/useShippingMethods';
-import { OrderLineMetaDataType, ParcelMachineType, ShippingLineType } from '@/types/pages/checkout';
+import {
+  OrderLineMetaDataType,
+  ParcelMachineType,
+  ShippingLineType,
+} from '@/types/pages/checkout';
 import useInPostGeowidget from '@/hooks/useInPostGeowidget';
 import { ShippingMethodType } from '@/types/services';
 import { useCreateOrderMutation } from '@/store/rtk-queries/wooCustomApi';
@@ -32,6 +38,7 @@ import { BillingForm } from '@/components/global/forms/BillingForm';
 import { AddressType } from '@/types/services/wooCustomApi/customer';
 import getCalculatedMethodCostByWeight from '@/utils/checkout/getCalculatedMethodCostByWeight';
 import getShippingMethodFixedCost from '@/utils/checkout/getShippingMethodFixedCost';
+import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
 import validateBillingData from '@/utils/checkout/validateBillingData';
 import BillingWarnings from '@/components/pages/checkout/BillingWarnings';
 
@@ -43,6 +50,64 @@ export function getServerSideProps() {
 
 export default function CheckoutPage() {
   const t = useTranslations('Checkout');
+  const {
+    currentCurrency: currency,
+    isLoading: isCurrencyLoading,
+    convertCurrency,
+    currencyCode: currencySymbol,
+  } = useCurrencyConverter();
+
+  /**
+   * Calculate totals
+   */
+  const { cartItems, couponCodes } = useAppSelector(state => state.cartSlice);
+  const [getProductsMinimized, { data: productsMinimizedData }] =
+    useGetProductsMinimizedMutation();
+  const [{ totalCost, totalWeight }, setCartTotals] = useState({
+    totalCost: 0,
+    totalWeight: 0,
+  });
+
+  useEffect(() => {
+    const productsMinimized = productsMinimizedData?.data?.items;
+    if (productsMinimized) {
+      const totals = cartItems.reduce(
+        (totals, cartItem) => {
+          const matchedProduct = productsMinimized.find(({ id, parent_id }) => {
+            if (cartItem?.variation_id) {
+              if (
+                cartItem.variation_id === id &&
+                cartItem.product_id === parent_id
+              )
+                return true;
+            } else {
+              if (cartItem.product_id === id) return true;
+            }
+          });
+
+          console.log(cartItem, matchedProduct);
+
+          if (matchedProduct && matchedProduct?.price) {
+            return {
+              totalCost:
+                totals.totalCost + matchedProduct.price * cartItem.quantity,
+              totalWeight:
+                totals.totalWeight + matchedProduct.weight * cartItem.quantity,
+            };
+          }
+
+          return totals;
+        },
+        { totalCost: 0, totalWeight: 0 }
+      );
+
+      setCartTotals(totals);
+    }
+  }, [cartItems, productsMinimizedData]);
+
+  useEffect(() => {
+    console.log(totalCost, totalWeight);
+  }, [totalCost, totalWeight]);
   const tValidation = useTranslations('Validation');
 
   /**
@@ -75,6 +140,20 @@ export default function CheckoutPage() {
   }, [pointDetail]);
 
   /**
+   * Shipping costs logic
+   */
+  const getCalculatedShippingMethodCost = (method: ShippingMethodType) => {
+    console.log(totalWeight);
+    const costByWeight = getCalculatedMethodCostByWeight(method, totalWeight);
+    if (costByWeight !== false) return costByWeight;
+
+    const costFixed = getShippingMethodFixedCost(method, 199);
+    if (costFixed !== false) return costFixed;
+
+    return 0;
+  };
+
+  /**
    * Shipping
    */
   const [currentCountryCode, setCurrentCountryCode] = useState<string>();
@@ -84,8 +163,16 @@ export default function CheckoutPage() {
   const [shippingLine, setShippingLine] = useState<ShippingLineType>();
 
   useEffect(() => {
-    if (shippingMethod) {
+    setShippingMethod(undefined);
+  }, [shippingMethods]);
+
+  useEffect(() => {
+    if (shippingMethod && !isCurrencyLoading) {
       const { title, method_id, instance_id } = shippingMethod;
+
+      const shippingMethodCost = convertCurrency(
+        getCalculatedShippingMethodCost(shippingMethod)
+      );
 
       const meta: OrderLineMetaDataType[] = [];
 
@@ -120,7 +207,7 @@ export default function CheckoutPage() {
         method_title: title,
         instance_id: instance_id.toString(),
         meta_data: meta,
-        total: String(getCalculatedMethodCost(shippingMethod)),
+        total: String(shippingMethodCost),
       });
     }
   }, [shippingMethod, parcelMachine]);
@@ -128,12 +215,11 @@ export default function CheckoutPage() {
   /**
    * Shipping costs login
    */
-  const [totalWeight] = useState(0);
   const getCalculatedMethodCost = (method: ShippingMethodType) => {
     const costByWeight = getCalculatedMethodCostByWeight(method, totalWeight);
     if (costByWeight !== false) return costByWeight;
 
-    const costFixed = getShippingMethodFixedCost(method);
+    const costFixed = getShippingMethodFixedCost(method, 0);
     if (costFixed !== false) return costFixed;
 
     return 0;
@@ -155,14 +241,9 @@ export default function CheckoutPage() {
   }, [billingData?.country]);
 
   const authToken = useGetAuthToken();
-  const { name: currency, code: currencySymbol } = useAppSelector(
-    state => state.currencySlice
-  );
-  const { cartItems, couponCodes } = useAppSelector(state => state.cartSlice);
-
+  const { name: currencyCode } = useAppSelector(state => state.currencySlice);
   const [createOrder, { data: order, isLoading: isOrderLoading = true }] =
     useCreateOrderMutation();
-  const [getProductsMinimized] = useGetProductsMinimizedMutation();
   const [fetchUserData, { data: userData }] = useLazyFetchUserDataQuery();
 
   /* Check cart conflict */
@@ -239,10 +320,9 @@ export default function CheckoutPage() {
 
     createOrder({
       status: orderStatus,
-      currency,
       line_items: cartItems,
       coupon_lines: couponLines,
-      ...(billingData && isBillingDataReady && { billing: billingData }),
+      ...(billingData && orderStatus === 'pending' && { billing: billingData }),
       ...(userData?.id && { customer_id: userData.id }),
       ...(shippingLine && { shipping_lines: [shippingLine] }),
     });
@@ -250,7 +330,7 @@ export default function CheckoutPage() {
     cartItems,
     couponCodes,
     orderStatus,
-    currency,
+    currencyCode,
     userData,
     shippingLine,
     isBillingDataReady,
@@ -281,11 +361,12 @@ export default function CheckoutPage() {
           <ShippingMethodSelector
             methods={shippingMethods}
             isLoading={isLoading}
+            currentMethodId={shippingMethod?.method_id}
             onChange={method => setShippingMethod(method)}
             parcelMachinesMethods={parcelMachinesMethods}
             parcelMachine={parcelMachine}
             onParcelMachineChange={handleParcelMachineChange}
-            getCalculatedMethodCost={getCalculatedMethodCost}
+            getCalculatedMethodCost={getCalculatedShippingMethodCost}
           />
         </CheckoutFormsWrapper>
         <CheckoutSummaryWrapper>

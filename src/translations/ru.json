@@ -115,7 +115,16 @@
     "applyFilter": "Применить",
     "searchResults": "Результаты поиска",
     "phraseSought": "Искомая фраза",
-    "productsNotFound": "Товары не найдены"
+    "productsNotFound": "Товары не найдены",
+    "filter": "Фильтр",
+    "price": "Цена",
+    "Length": "Длина",
+    "Thickness": "Толщина",
+    "Colour": "Цвет",
+    "Size": "Размер",
+    "Volumes": "Объемы",
+    "view": "Вид",
+    "gift certificate": "Подарочный сертификат"
   },
   "Product": {
     "addToBasket": "Добавить в корзину",

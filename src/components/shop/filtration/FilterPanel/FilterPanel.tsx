@@ -1,5 +1,8 @@
 import { CustomSingleAccordion } from '@/components/global/accordions/CustomSingleAccordion';
+import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
+import { useAppSelector } from '@/store';
 import { FilterPanelPropsType } from '@/types/components/shop/filters';
+import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import { FC, useCallback, useEffect, useState } from 'react';
 import ColorsFilter from '../ColorsFilter/ColorsFilter';
@@ -7,8 +10,6 @@ import { FilterActionButtons } from '../filterActionButtons';
 import { FilterAttributes } from '../FilterAttributes/FilterAttributes';
 import { PriceFilter } from '../PriceFilter';
 import { FilterPanelWrap } from './styles';
-import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
-import { useAppSelector } from '@/store';
 
 /**
  * @todo
@@ -38,6 +39,8 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
     isLoading,
   } = useCurrencyConverter();
   const selectedCurrency = useAppSelector(state => state.currencySlice);
+
+  const t = useTranslations('Archive');
 
   const [initialPriceRange, setInitialPriceRange] = useState({
     min: minPrice,
@@ -384,7 +387,7 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
   return (
     <FilterPanelWrap>
       <FilterPanelWrap>
-        <CustomSingleAccordion title={'Price'}>
+        <CustomSingleAccordion title={t('price')}>
           {isLoading ? (
             <p>Loading...</p>
           ) : (
@@ -407,7 +410,7 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
           const currentAttr = existingSet ? [...existingSet] : [];
 
           return (
-            <CustomSingleAccordion title={attribute.name} key={attribute.id}>
+            <CustomSingleAccordion title={t(attribute.name)} key={attribute.id}>
               {attributes && attribute.slug === 'colour' ? (
                 <ColorsFilter
                   attribute={attribute}

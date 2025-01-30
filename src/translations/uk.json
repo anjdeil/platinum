@@ -115,7 +115,16 @@
     "applyFilter": "Застосувати",
     "searchResults": "Результати пошуку",
     "phraseSought": "Шукана фраза",
-    "productsNotFound": "Товари не знайдено"
+    "productsNotFound": "Товари не знайдено",
+    "filter": "Фільтр",
+    "price": "Ціна",
+    "Length": "Довжина",
+    "Thickness": "Товщина",
+    "Colour": "Колір",
+    "Size": "Розмір",
+    "Volumes": "Об'єми",
+    "view": "Вид",
+    "gift certificate": "Подарунковий сертифікат"
   },
   "Product": {
     "addToBasket": "Додати до кошика",
