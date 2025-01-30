@@ -210,20 +210,7 @@ export default function CheckoutPage() {
         total: String(shippingMethodCost),
       });
     }
-  }, [shippingMethod, parcelMachine]);
-
-  /**
-   * Shipping costs login
-   */
-  const getCalculatedMethodCost = (method: ShippingMethodType) => {
-    const costByWeight = getCalculatedMethodCostByWeight(method, totalWeight);
-    if (costByWeight !== false) return costByWeight;
-
-    const costFixed = getShippingMethodFixedCost(method, 0);
-    if (costFixed !== false) return costFixed;
-
-    return 0;
-  };
+  }, [shippingMethod, parcelMachine, currency, isCurrencyLoading]);
 
   /**
    * Order logic
@@ -322,6 +309,7 @@ export default function CheckoutPage() {
       status: orderStatus,
       line_items: cartItems,
       coupon_lines: couponLines,
+      ...(currency && { currency: currencyCode }),
       ...(billingData && orderStatus === 'pending' && { billing: billingData }),
       ...(userData?.id && { customer_id: userData.id }),
       ...(shippingLine && { shipping_lines: [shippingLine] }),
