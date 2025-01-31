@@ -94,7 +94,8 @@
     "resetCodeAttemptsOne": "Der bereitgestellte Reset-Code ist ungültig. Sie haben noch 1 Versuch.",
     "passwordResetRequired": "Sie müssen einen Passwort-Reset-Code anfordern, bevor Sie versuchen, ein neues Passwort festzulegen.",
     "maxAttemptsExceeded": "Der bereitgestellte Reset-Code ist ungültig. Sie haben die maximal zulässige Anzahl von Versuchen überschritten. Sie müssen einen neuen Code anfordern.",
-    "codeProvidedHasExpired": "Der angegebene Rücksetzungscode ist abgelaufen."
+    "codeProvidedHasExpired": "Der angegebene Rücksetzungscode ist abgelaufen.",
+    "Addresses": "Adressen"
   },
   "TopBar": {
     "CallUs": "Kontakt"
