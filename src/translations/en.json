@@ -324,7 +324,8 @@
     "previousPost": "Previous",
     "nextPost": "Next",
     "blogPage": "Blog",
-    "blogSectionTitle": "Lasted articles"
+    "blogSectionTitle": "Lasted articles",
+    "selectCategory": "Select category"
   },
   "ShippingMethodSelector": {
     "delivery": "Delivery",
