@@ -20,13 +20,18 @@ const BlogPagination: React.FC<PaginationProps> = ({ page, count }) => {
       hidePrevButton
       hideNextButton
       renderItem={item => {
-        const queryParams: Record<string, string | number> = {
-          ...router.query,
-          page: +(item?.page || 0),
-        };
+        const queryParams: Record<string, string | number> = {};
 
         if (category) {
-          queryParams.category = category as string;
+          queryParams.category = Array.isArray(category)
+            ? category[0]
+            : category;
+        }
+
+        if (item.page && item.page !== 1) {
+          queryParams.page = item.page;
+        } else {
+          delete queryParams.page;
         }
 
         return (

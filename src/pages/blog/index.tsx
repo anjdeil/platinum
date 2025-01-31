@@ -74,18 +74,19 @@ export const getServerSideProps: GetServerSideProps = async (
   }
 };
 
-// uncomment this when we have real categories in post
-// const getCategoriesFromPosts = (posts: BlogParsedItemType[]) => {
-//   const categoriesSet = new Set<string>();
+const getCategoriesFromPosts = (posts: BlogParsedItemType[]) => {
+  const categoriesSet = new Set<string>();
 
-//   posts.forEach(post => {
-//     post.categories.forEach(category => {
-//       categoriesSet.add(category.name);
-//     });
-//   });
+  posts.forEach(post => {
+    post.categories.forEach(category => {
+      categoriesSet.add(
+        JSON.stringify({ name: category.name, slug: category.slug })
+      );
+    });
+  });
 
-//   return Array.from(categoriesSet);
-// };
+  return Array.from(categoriesSet).map(item => JSON.parse(item));
+};
 
 interface BlogProps {
   posts: BlogParsedItemType[];
@@ -102,12 +103,11 @@ const BlogPage: React.FC<BlogProps> = ({
 }) => {
   const router = useRouter();
 
-  // uncomment this when we have real categories in post
-  // const categories = getCategoriesFromPosts(posts);
+  const categories = getCategoriesFromPosts(posts);
 
-  const handleCategoryChange = (category: string | null) => {
-    let newQuery = category
-      ? { ...router.query, category }
+  const handleCategoryChange = (categorySlug: string | null) => {
+    let newQuery = categorySlug
+      ? { ...router.query, category: categorySlug }
       : omit(router.query, ['category']);
 
     newQuery = omit(newQuery, ['page']);
@@ -140,13 +140,3 @@ const BlogPage: React.FC<BlogProps> = ({
 };
 
 export default BlogPage;
-
-// delete this when we have real categories in post
-const categories = [
-  'Glues',
-  'Eyelashes',
-  'UV system',
-  'Workplace equipment',
-  'Lifting and lamination',
-  'Eyebrow styling',
-];

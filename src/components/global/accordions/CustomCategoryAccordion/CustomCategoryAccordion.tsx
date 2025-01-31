@@ -9,8 +9,13 @@ import {
   StyledText,
 } from './styles';
 
+type Category = {
+  name: string;
+  slug: string;
+};
+
 type CustomCategoryAccordionProps = {
-  categories: string[];
+  categories: Category[];
   selectedCategory: string | null;
   setSelectedCategory(name: string | null): void;
 };
@@ -33,8 +38,8 @@ export const CustomCategoryAccordion = ({
     setExpanded(isExpanded);
   };
 
-  const handleSelectCategory = (category: string | null) => {
-    setSelectedCategory(category);
+  const handleSelectCategory = (slug: string | null) => {
+    setSelectedCategory(slug);
     setExpanded(false);
   };
 
@@ -64,7 +69,10 @@ export const CustomCategoryAccordion = ({
     >
       <StyledSortAccordionSummary expandIcon={<ExpandMoreIcon />}>
         <StyledText>
-          {selectedCategory ? selectedCategory : t('selectCategory')}
+          {selectedCategory
+            ? categories.find(category => category.slug === selectedCategory)
+                ?.name
+            : t('selectCategory')}
         </StyledText>
       </StyledSortAccordionSummary>
       <StyledSortDetails ref={detailsRef}>
@@ -76,11 +84,11 @@ export const CustomCategoryAccordion = ({
         </StyledSortItem>
         {categories.map(category => (
           <StyledSortItem
-            key={category}
-            isSelected={selectedCategory === category}
-            onClick={() => handleSelectCategory(category)}
+            key={category.slug}
+            isSelected={selectedCategory === category.slug}
+            onClick={() => handleSelectCategory(category.slug)}
           >
-            {category}
+            {category.name}
           </StyledSortItem>
         ))}
       </StyledSortDetails>
