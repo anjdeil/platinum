@@ -45,6 +45,7 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
   const { images, thumbnail } = product;
   const t = useTranslations('Product');
   const { isMobile } = useResponsive();
+  const { user: userSlice } = useAppSelector(state => state.userSlice);
   const dispatch = useAppDispatch();
   const { cartItems } = useAppSelector(state => state.cartSlice);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -66,7 +67,7 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
     };
 
     checkAuth();
-  }, []);
+  }, [userSlice]);
 
   const [quantity, setQuantity] = useState<number>(1);
   const [cartMatch, setCartMatch] = useState<CartItem>();

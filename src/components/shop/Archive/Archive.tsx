@@ -2,6 +2,7 @@ import { CustomSortAccordion } from '@/components/global/accordions/CustomSortAc
 import Breadcrumbs from '@/components/global/Breadcrumbs/Breadcrumbs';
 import FilterButton from '@/components/global/buttons/FilterButton/FilterButton';
 import CloseIcon from '@/components/global/icons/CloseIcon/CloseIcon';
+import Notification from '@/components/global/Notification/Notification';
 import MobileCategoriesMenu from '@/components/global/popups/MobileCategoriesMenu/MobileCategoriesMenu';
 import CategoriesMenu from '@/components/shop/categories/CategoriesMenu/CategoriesMenu';
 import { useResponsive } from '@/hooks/useResponsive';
@@ -33,7 +34,6 @@ import {
   PagesNavigationFooterWrapper,
   PagesNavigationWrapper,
 } from './styles';
-import Notification from '@/components/global/Notification/Notification';
 
 const switchPage = (page: number, maxPage: number) => {
   if (maxPage < page) return;
@@ -144,7 +144,7 @@ export const Archive: FC<ArchivePropsType> = props => {
             {isMenuVisible ? (
               <>
                 <FilterNCategoriesHead>
-                  <h4>FILTER</h4>
+                  <h4>{t('filter')}</h4>
                   <CloseIcon onClick={toggleMenu} />
                 </FilterNCategoriesHead>
                 {!isMobile ? (
@@ -198,7 +198,7 @@ export const Archive: FC<ArchivePropsType> = props => {
           </>
 
           <Title as="h3" uppercase textalign="left" marginBottom="24px">
-            Filters
+            {t('filters')}
           </Title>
           <FilterPanel
             attributes={statistic.attributes}

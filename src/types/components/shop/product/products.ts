@@ -56,11 +56,13 @@ export const ProductsMinimizedSchema = z.object({
   parent_id: z.number(),
   sku: z.string().nullable(),
   slug: z.string(),
+  parent_slug: z.string(),
   name: z.string(),
   language_code: z.string().optional(),
   stock_quantity: z.number().optional(),
   average_rating: z.number(),
   price: z.number().optional(),
+  weight: z.number(),
   total_sales: z.number(),
   image: z.object({
     id: z.number(),
