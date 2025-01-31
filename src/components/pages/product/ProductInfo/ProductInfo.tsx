@@ -16,7 +16,7 @@ import { ProductType } from '@/types/pages/shop';
 import { CartItem } from '@/types/store/reducers/сartSlice';
 import { getCookieValue } from '@/utils/auth/getCookieValue';
 import { getCurrentVariation } from '@/utils/getCurrentVariation';
-import { CircularProgress } from '@mui/material';
+import { Skeleton } from '@mui/material';
 import ReactHtmlParser from 'html-react-parser';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
@@ -158,19 +158,10 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
         ]
       : [...images];
 
-  function handleFavorite() {
-    if (isAuthenticated) {
-      console.log('Authenticated');
-      //proc
-    } else {
-      dispatch(popupToggle('login'));
-    }
-  }
-
   return (
     <ProductWrapper>
       <ProductImageWrapper>
-        <ProductSwiper handleFavorite={handleFavorite} data={galleryImages} />
+        <ProductSwiper data={galleryImages} />
         <ProductBadgeWrapper>
           {product.min_price !== product.max_price && (
             <ProductBadge type="sale" />
@@ -217,7 +208,7 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
             )
           )
         ) : (
-          <CircularProgress size={20} />
+          <Skeleton width="80px" height="40px" />
         )}
       </ProductTitleWrapper>
       <ProductInfoWrapper>
@@ -230,7 +221,7 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
         )}
         {/* Options END*/}
 
-        <ProductPromotion time={new Date('2024-10-30T00:00:00')} />
+        <ProductPromotion time={new Date('2025-10-30T00:00:00')} />
         <AddToBasketWrapper>
           <ProductQuantity quantity={quantity} onChange={setQuantity} />
 
@@ -247,9 +238,9 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
         <PaymentList />
         <ShippingList />
         <StyledButton onClick={addComment}>
-          Leave a review about product
+          {t('leaveAReviewAboutProduct')}
         </StyledButton>
-        <DetailsAccordion summary="Descriptions">
+        <DetailsAccordion summary={t('descriptions')}>
           <div
             dangerouslySetInnerHTML={{
               __html: ReactHtmlParser(
