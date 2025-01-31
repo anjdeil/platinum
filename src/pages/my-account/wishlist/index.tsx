@@ -10,8 +10,6 @@ import { ProductsMinimizedType } from '@/types/components/shop/product/products'
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useCookies } from 'react-cookie';
-
 import Notification from '@/components/global/Notification/Notification';
 import { CartLink } from '@/components/global/popups/MiniCart/style';
 import {
@@ -20,13 +18,13 @@ import {
   StyledButton,
 } from '@/styles/components';
 import { WishlistItem } from '@/types/store/rtk-queries/wpApi';
+import { getCookieValue } from '@/utils/auth/getCookieValue';
 
 function Wishlist() {
   const { code: symbol } = useAppSelector(state => state.currencySlice);
   const router = useRouter();
   const tMyAccount = useTranslations('MyAccount');
   const tCart = useTranslations('Cart');
-  const [cookie] = useCookies(['authToken']);
 
   const [isLoadingWishlist, setIsLoadingWishlist] = useState(true);
 
@@ -56,19 +54,15 @@ function Wishlist() {
   >([]);
 
   useEffect(() => {
-    const authToken =
-      cookie.authToken ||
-      document.cookie
-        .split('; ')
-        .find(row => row.startsWith('authToken='))
-        ?.split('=')[1];
+    const cookies = document.cookie;
+    const authToken = getCookieValue(cookies || '', 'authToken');
 
     if (authToken) {
       fetchUserData().then(() => setIsLoadingWishlist(false));
     } else {
       router.push('/my-account/login');
     }
-  }, [cookie.authToken, fetchUserData]);
+  }, [router, fetchUserData]);
 
   useEffect(() => {
     if (wishlist.length > 0) {
