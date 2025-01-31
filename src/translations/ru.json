@@ -263,7 +263,18 @@
     "PasswordsDoNotMatch": "Пароли не совпадают",
     "parcelLocker": "Пожалуйста, выберите шкафчик для посылок",
     "shippingMethod": "Пожалуйста, выберите способ доставки",
-    "noChanges": "В ваших данных нет никаких изменений"
+    "noChanges": "В ваших данных нет никаких изменений",
+    "noBillingInformation": "Please, field the billing information",
+    "isRequired": "поле обязательно для заполнения",
+    "areRequired": "поля обязательны для заполнения",
+    "firstname": "Имя",
+    "lastname": "Фамилия",
+    "address1": "Улица и номер дома",
+    "address2": "Номер здания",
+    "postcode": "Почтовый индекс",
+    "emailI": "Электронная почта",
+    "phoneIsRequired": "Телефон",
+    "apartmentNumber": "Номер квартиры"
   },
   "Forms": {
     "applicationForm": "Форма заявки",
