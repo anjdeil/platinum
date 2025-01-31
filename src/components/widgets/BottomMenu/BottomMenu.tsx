@@ -41,7 +41,11 @@ const BottomMenu = () => {
           }
           IconComponent={CatalogIcon}
         />
-        <IconButton color={theme.colors.primary} IconComponent={HeartIcon} />
+        <IconButton
+          href="/my-account/wishlist"
+          color={theme.colors.primary}
+          IconComponent={HeartIcon}
+        />
         <IconButton
           href="/cart"
           color={theme.colors.primary}
