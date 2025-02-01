@@ -266,15 +266,14 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
               {t('goToCart')}
             </StyledButton>
           </CartLink>
-          <StyledButton
-            onClick={() => {
-              router.push('/checkout');
-            }}
-            height="58px"
-            disabled={hasConflict || productsWithCartData.length < 1}
-          >
-            {t('placeAnOrder')}
-          </StyledButton>
+          <CartLink href="/checkout">
+            <StyledButton
+              height="58px"
+              disabled={hasConflict || productsWithCartData.length < 1}
+            >
+              {t('placeAnOrder')}
+            </StyledButton>
+          </CartLink>
         </FlexBox>
       </MiniCartContainer>
     </PopupOverlay>

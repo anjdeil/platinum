@@ -6,7 +6,7 @@ import {
 import styled from '@emotion/styled';
 
 export const HeaderWrapper = styled.div<HeaderWrapperProps>`
-  z-index: 10;
+  z-index: 100;
   height: 78px;
   display: grid;
   align-items: center;
@@ -15,7 +15,7 @@ export const HeaderWrapper = styled.div<HeaderWrapperProps>`
     backgroundColor = theme.background.primaryGradient,
   }) => backgroundColor};
   position: relative;
-  overflow: hidden;
+  overflow-x: clip;
 
   @media ${({ theme }) => theme.media.large} {
     padding-block: 16px;
