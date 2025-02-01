@@ -10,7 +10,7 @@ cartListenerMiddleware.startListening({
   actionCreator: cartSlice.actions.updateCart,
   effect: async (action, listenerApi) => {
     const state = listenerApi.getState() as RootState;
-
+    const lang = state.languageSlice.code || 'en';
     const cartItems = state.cartSlice.cartItems;
     const needsProductDataUpdate = state.cartSlice.needsProductDataUpdate;
 
@@ -19,7 +19,10 @@ cartListenerMiddleware.startListening({
     }
     try {
       const result = await listenerApi.dispatch(
-        wpCustomRtkApi.endpoints.getProductsMinimized.initiate(cartItems)
+        wpCustomRtkApi.endpoints.getProductsMinimized.initiate({
+          cartItems,
+          lang,
+        })
       );
 
       if ('data' in result && result.data?.data?.items) {
@@ -45,7 +48,7 @@ cartListenerMiddleware.startListening({
   actionCreator: cartSlice.actions.initializeCart,
   effect: async (action, listenerApi) => {
     const state = listenerApi.getState() as RootState;
-
+    const lang = state.languageSlice.code || 'en';
     const cartItems = state.cartSlice.cartItems;
     const needsProductDataUpdate = state.cartSlice.needsProductDataUpdate;
 
@@ -55,7 +58,10 @@ cartListenerMiddleware.startListening({
 
     try {
       const result = await listenerApi.dispatch(
-        wpCustomRtkApi.endpoints.getProductsMinimized.initiate(cartItems)
+        wpCustomRtkApi.endpoints.getProductsMinimized.initiate({
+          cartItems,
+          lang,
+        })
       );
 
       if ('data' in result && result.data?.data?.items) {

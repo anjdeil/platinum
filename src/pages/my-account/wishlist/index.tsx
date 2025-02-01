@@ -9,7 +9,7 @@ import { useGetProductsMinimizedMutation } from '@/store/rtk-queries/wpCustomApi
 import { ProductsMinimizedType } from '@/types/components/shop/product/products';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { useCookies } from 'react-cookie';
 
 import Notification from '@/components/global/Notification/Notification';
@@ -21,7 +21,11 @@ import {
 } from '@/styles/components';
 import { WishlistItem } from '@/types/store/rtk-queries/wpApi';
 
-function Wishlist() {
+interface WishlistPageProps {
+  /* defaultCustomerData: WpUserType | null; */
+}
+
+const Wishlist: FC<WishlistPageProps> = (/* { defaultCustomerData } */) => {
   const { code: symbol } = useAppSelector(state => state.currencySlice);
   const router = useRouter();
   const tMyAccount = useTranslations('MyAccount');
@@ -71,14 +75,17 @@ function Wishlist() {
   }, [cookie.authToken, fetchUserData]);
 
   useEffect(() => {
-    if (wishlist.length > 0) {
-      getProductsMinimized(wishlist);
+    if (router.locale !== undefined && wishlist.length > 0) {
+      getProductsMinimized({
+        cartItems: wishlist,
+        lang: router.locale,
+      });
       setIsLoadingWishlist(true);
     } else {
       setWishListProducts([]);
       setIsLoadingWishlist(false);
     }
-  }, [wishlist, getProductsMinimized]);
+  }, [wishlist, getProductsMinimized, router]);
 
   useEffect(() => {
     if (productsSpecsData?.data.items) {
@@ -150,6 +157,6 @@ function Wishlist() {
       )}
     </AccountLayout>
   );
-}
+};
 
 export default Wishlist;

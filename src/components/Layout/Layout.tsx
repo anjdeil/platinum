@@ -21,6 +21,7 @@ import Header from '../widgets/Header/Header';
 import MobileHeader from '../widgets/MobileHeader/MobileHeader';
 import TopBar from '../widgets/TopBar/TopBar';
 import { initializeCart } from '@/store/slices/cartSlice';
+import { setCurrentLanguage } from '@/store/slices/languageSlice';
 
 export const MenusContext = createContext<WpMenuResponseType[] | []>([]);
 
@@ -39,7 +40,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     useGetCategoriesQuery(langParam);
 
   useEffect(() => {
-    dispatch(initializeCart());
+    if (locale) {
+      dispatch(setCurrentLanguage({ name: locale }));
+      dispatch(initializeCart());
+    }
   }, []);
 
   useEffect(() => {
