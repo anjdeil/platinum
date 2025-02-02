@@ -22,10 +22,7 @@ export default async function handler(
         response = await customRestApi.get(slug, params);
         break;
       case 'POST':
-        console.log('Query params:', params);
-        console.log('Request body:', JSON.stringify(body, null, 2));
         response = await customRestApi.post(slug, body, params);
-        console.log(response);
 
         break;
       default:

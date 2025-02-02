@@ -21,7 +21,10 @@ import Header from '../widgets/Header/Header';
 import MobileHeader from '../widgets/MobileHeader/MobileHeader';
 import TopBar from '../widgets/TopBar/TopBar';
 import { initializeCart } from '@/store/slices/cartSlice';
-import { setCurrentLanguage } from '@/store/slices/languageSlice';
+import {
+  languageSymbols,
+  setCurrentLanguage,
+} from '@/store/slices/languageSlice';
 
 export const MenusContext = createContext<WpMenuResponseType[] | []>([]);
 
@@ -41,7 +44,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (locale) {
-      dispatch(setCurrentLanguage({ name: locale }));
+      const currentLanguage =
+        languageSymbols.find(lang => lang.code === locale)?.name || 'en';
+      dispatch(setCurrentLanguage({ name: currentLanguage }));
       dispatch(initializeCart());
     }
   }, []);

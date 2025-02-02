@@ -51,6 +51,7 @@ export function getServerSideProps() {
 
 export default function CheckoutPage() {
   const t = useTranslations('Checkout');
+
   const {
     currentCurrency: currency,
     isLoading: isCurrencyLoading,
@@ -71,7 +72,8 @@ export default function CheckoutPage() {
 
   useEffect(() => {
     const productsMinimized = productsMinimizedData?.data?.items;
-    if (productsMinimized) setCartTotals(getCartTotals(productsMinimized, cartItems));
+    if (productsMinimized)
+      setCartTotals(getCartTotals(productsMinimized, cartItems));
   }, [cartItems, productsMinimizedData]);
 
   /**
@@ -199,7 +201,10 @@ export default function CheckoutPage() {
   /* Check cart conflict */
   useEffect(() => {
     const fetchData = async () => {
-      const productsMinimizedData = await getProductsMinimized(cartItems);
+      const productsMinimizedData = await getProductsMinimized({
+        cartItems,
+        lang: router.locale || 'en',
+      });
       const productsMinimized = productsMinimizedData?.data?.data?.items || [];
 
       if (checkCartConflict(cartItems, productsMinimized)) {

@@ -5,17 +5,20 @@ import CartSummaryBlock from '@/components/pages/cart/CartSummaryBlock/CartSumma
 import CartTable from '@/components/pages/cart/CartTable/CartTable';
 import OrderBar from '@/components/pages/cart/OrderBar/OrderBar';
 import OrderProgress from '@/components/pages/cart/OrderProgress/OrderProgress';
+import wpRestApi from '@/services/wpRestApi';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { useCreateOrderMutation } from '@/store/rtk-queries/wooCustomApi';
 import { CartPageWrapper } from '@/styles/cart/style';
 import { Container, FlexBox, StyledButton } from '@/styles/components';
 import { CreateOrderRequestType } from '@/types/services';
+import { JwtDecodedDataType } from '@/types/services/wpRestApi/auth';
 import { WpUserType } from '@/types/store/rtk-queries/wpApi';
 import checkCartConflict from '@/utils/cart/checkCartConflict';
 import getTotalByLineItems from '@/utils/cart/getTotalByLineItems';
 import { handleQuantityChange } from '@/utils/cart/handleQuantityChange';
 import { roundedPrice } from '@/utils/cart/roundedPrice';
-import axios from 'axios';
+import { validateJwtDecode } from '@/utils/zodValidators/validateJwtDecode';
+import { decodeJwt } from 'jose';
 import { debounce } from 'lodash';
 import { GetServerSidePropsContext } from 'next';
 import { useTranslations } from 'next-intl';
@@ -77,7 +80,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   useEffect(() => {
     const debouncedCreateOrder = debounce(async () => {
       await handleCreateOrder();
-    }, 900);
+    }, 1200);
 
     debouncedCreateOrder();
     return () => {
@@ -210,31 +213,37 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
 export const getServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
-  const reqUrl =
-    process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3000';
-
-  const { locale } = context;
   const cookies = context.req.cookies;
-
-  if (!cookies?.authToken) {
-    return {
-      props: {
-        user: null,
-        messages: (await import(`../../translations/${locale}.json`)).default,
-      },
-    };
-  }
+  const { locale } = context;
 
   try {
-    if (!cookies?.authToken)
+    if (!cookies?.authToken) {
       throw new Error('Invalid or missing authentication token');
-    const resp = await axios.get(`${reqUrl}/api/wp/users/me`, {
-      headers: {
-        Cookie: `authToken=${cookies.authToken}`,
-      },
-    });
+    }
 
-    if (!resp.data) throw new Error('Invalid or missing authentication token');
+    const authResp = await wpRestApi.post(
+      'jwt-auth/v1/token/validate',
+      {},
+      false,
+      `Bearer ${cookies.authToken}`
+    );
+    if (authResp?.data?.code !== 'jwt_auth_valid_token')
+      throw new Error('Invalid or missing authentication token');
+
+    const jwtDecodedData = decodeJwt(cookies.authToken) as JwtDecodedDataType;
+    const isJwtDecodedDataValid = await validateJwtDecode(jwtDecodedData);
+    if (!isJwtDecodedDataValid)
+      throw new Error('Invalid or missing authentication token');
+
+    const resp = await wpRestApi.get(
+      'users/me',
+      undefined,
+      `Bearer ${cookies.authToken}`
+    );
+
+    if (!resp?.data) {
+      throw new Error('Failed to fetch user data');
+    }
 
     return {
       props: {
@@ -244,6 +253,7 @@ export const getServerSideProps = async (
     };
   } catch (err) {
     console.error('Error validating auth token:', err);
+
     return {
       props: {
         user: null,

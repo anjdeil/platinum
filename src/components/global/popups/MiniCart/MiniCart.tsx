@@ -28,7 +28,7 @@ import { handleQuantityChange } from '@/utils/cart/handleQuantityChange';
 import { roundedPrice } from '@/utils/cart/roundedPrice';
 import { MenuSkeleton } from '@/components/menus/MenuSkeleton';
 import theme from '@/styles/theme';
-import router from 'next/router';
+
 interface MiniCartProps {
   onClose: () => void;
 }

@@ -51,12 +51,14 @@ const CartTable: FC<CartTableProps> = ({
   useEffect(() => {
     setCartItems(
       order?.line_items.filter(lineItem =>
-        cartItems.some(cartItem => cartItem.product_id == lineItem.product_id)
+        cartItems.some(
+          cartItem =>
+            cartItem.product_id === lineItem.product_id &&
+            (!cartItem.variation_id ||
+              cartItem.variation_id === lineItem.variation_id)
+        )
       ) || []
     );
-    console.log('cartItems', cartItems);
-    console.log('order?.line_items', order?.line_items);
-    console.log('productsSpecs', productsSpecs);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [order?.line_items, cartItems]);
@@ -103,7 +105,6 @@ const CartTable: FC<CartTableProps> = ({
                   item,
                   productsSpecs
                 );
-                console.log(item);
 
                 const productSpec = productsSpecs.find(product => {
                   if (product.parent_id === 0) {
@@ -141,7 +142,7 @@ const CartTable: FC<CartTableProps> = ({
                             productSpec?.parent_slug || productSpec?.slug
                           }`}
                         >
-                          {item.name}
+                          {productSpec?.name || item.name}
                         </LinkWrapper>
                       </TextNameCell>
                       <TextCell>
@@ -224,7 +225,7 @@ const CartTable: FC<CartTableProps> = ({
                             productSpec?.parent_slug || productSpec?.slug
                           }`}
                         >
-                          {item.name}
+                          {productSpec?.name || item.name}
                         </LinkWrapper>
                         <CloseIcon
                           padding="8px"
