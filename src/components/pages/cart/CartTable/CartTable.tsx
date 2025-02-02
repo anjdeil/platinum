@@ -51,9 +51,15 @@ const CartTable: FC<CartTableProps> = ({
   useEffect(() => {
     setCartItems(
       order?.line_items.filter(lineItem =>
-        cartItems.some(cartItem => cartItem.product_id == lineItem.product_id)
+        cartItems.some(
+          cartItem =>
+            cartItem.product_id === lineItem.product_id &&
+            (!cartItem.variation_id ||
+              cartItem.variation_id === lineItem.variation_id)
+        )
       ) || []
     );
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [order?.line_items, cartItems]);
 
@@ -109,7 +115,7 @@ const CartTable: FC<CartTableProps> = ({
                 });
 
                 return (
-                  <RowWrapper key={item.id}>
+                  <RowWrapper key={item.id} isLoadingItem={isLoadingOrder}>
                     <GridRow>
                       <DeleteCell>
                         <div>
@@ -136,7 +142,7 @@ const CartTable: FC<CartTableProps> = ({
                             productSpec?.parent_slug || productSpec?.slug
                           }`}
                         >
-                          {item.name}
+                          {productSpec?.name || item.name}
                         </LinkWrapper>
                       </TextNameCell>
                       <TextCell>
@@ -219,7 +225,7 @@ const CartTable: FC<CartTableProps> = ({
                             productSpec?.parent_slug || productSpec?.slug
                           }`}
                         >
-                          {item.name}
+                          {productSpec?.name || item.name}
                         </LinkWrapper>
                         <CloseIcon
                           padding="8px"

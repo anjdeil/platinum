@@ -1,6 +1,6 @@
 import AddToBasketButton from '@/components/global/buttons/AddToBasketButton/AddToBasketButton';
 import TrashIcon from '@/components/global/icons/TrashIcon/TrashIcon';
-import { MenuSkeleton } from '@/components/menus/MenuSkeleton';
+/* import { MenuSkeleton } from '@/components/menus/MenuSkeleton'; */
 import {
   CardContent,
   CartCardAllWrapper,
@@ -16,7 +16,7 @@ import {
 import { useResponsive } from '@/hooks/useResponsive';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { updateCart } from '@/store/slices/cartSlice';
-import theme from '@/styles/theme';
+/* import theme from '@/styles/theme'; */
 import { WishListTableProps } from '@/types/components/pages/myAccount/wishlist';
 import { ProductsMinimizedType } from '@/types/components/shop/product/products';
 import { CartItem } from '@/types/store/reducers/сartSlice';
@@ -32,7 +32,7 @@ import {
 } from './style';
 import { LinkWrapper } from '@/styles/components';
 import { useGetCurrenciesQuery } from '@/store/rtk-queries/wpCustomApi';
-import { CircularProgress } from '@mui/material';
+import { Skeleton } from '@mui/material';
 
 const WishListTable: FC<WishListTableProps> = ({
   symbol,
@@ -145,7 +145,7 @@ const WishListTable: FC<WishListTableProps> = ({
                             {extendedCurrency.code}
                           </p>
                         ) : (
-                          <CircularProgress size={20} />
+                          <Skeleton width="50px" />
                         )}
                       </OnePrice>
                     </CardContent>
@@ -208,7 +208,7 @@ const WishListTable: FC<WishListTableProps> = ({
                                 {extendedCurrency.code}
                               </p>
                             ) : (
-                              <CircularProgress size={20} />
+                              <Skeleton width="50px" />
                             )}
                           </OnePrice>
                         </ProductPrice>
@@ -230,7 +230,7 @@ const WishListTable: FC<WishListTableProps> = ({
           </>
         )}
 
-        {isLoading && (
+        {/*  {isLoading && (
           <MenuSkeleton
             elements={1}
             direction="column"
@@ -239,7 +239,7 @@ const WishListTable: FC<WishListTableProps> = ({
             gap="5px"
             color={theme.background.skeletonSecondary}
           />
-        )}
+        )} */}
       </>
     </CartTableWrapper>
   );

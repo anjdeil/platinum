@@ -35,7 +35,10 @@ const CartQuantity: React.FC<QuantityComponentProps> = ({
   inputWidth,
   inputHeight,
 }) => {
-  const maxCount = resolveCount ?? Infinity;
+  const maxCount = Math.min(
+    resolveCount ?? Number.MAX_SAFE_INTEGER,
+    Number.MAX_SAFE_INTEGER
+  );
 
   const [inputValue, setInputValue] = useState(item.quantity);
 

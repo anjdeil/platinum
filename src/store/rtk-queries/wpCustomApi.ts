@@ -63,10 +63,10 @@ export const wpCustomRtkApi = createApi({
     }),
     getProductsMinimized: builder.mutation<
       CustomDataProductsMinimizedResponseType,
-      ProductMinReq[]
+      { cartItems: ProductMinReq[]; lang: string }
     >({
-      query: cartItems => ({
-        url: `/products/minimized`,
+      query: ({ cartItems, lang }) => ({
+        url: `/products/minimized?lang=${lang}`,
         method: 'POST',
         body: cartItems,
       }),

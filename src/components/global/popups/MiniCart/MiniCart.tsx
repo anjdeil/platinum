@@ -1,10 +1,7 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store';
 import checkCartConflict from '@/utils/cart/checkCartConflict';
-import {
-  useGetCurrenciesQuery,
-  useGetProductsMinimizedMutation,
-} from '@/store/rtk-queries/wpCustomApi';
+import { useGetCurrenciesQuery } from '@/store/rtk-queries/wpCustomApi';
 import OrderBar from '@/components/pages/cart/OrderBar/OrderBar';
 import {
   CartCardWrapper,
@@ -23,7 +20,7 @@ import { useTranslations } from 'next-intl';
 import { PopupOverlay } from '@/components/global/popups/SwiperPopup/styles';
 import { CartLink, MiniCartContainer } from './style';
 import { FlexBox, LinkWrapper, StyledButton, Title } from '@/styles/components';
-import { CircularProgress, Skeleton } from '@mui/material';
+import { Skeleton } from '@mui/material';
 import TrashIcon from '@/components/global/icons/TrashIcon/TrashIcon';
 import { OrderBarDesc } from '@/components/pages/cart/OrderBar/style';
 import Notification from '@/components/global/Notification/Notification';
@@ -38,15 +35,13 @@ interface MiniCartProps {
 
 const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
   const dispatch = useAppDispatch();
-  /*  const { code: symbol } = useAppSelector(state => state.currencySlice); */
-  const { cartItems } = useAppSelector(state => state.cartSlice);
+  const { cartItems, productsData } = useAppSelector(state => state.cartSlice);
   const t = useTranslations('Cart');
 
   const [hasConflict, setHasConflict] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
   // FETCH
-
   const { data: currencies, isLoading: isCurrenciesLoading } =
     useGetCurrenciesQuery();
   const selectedCurrency = useAppSelector(state => state.currencySlice);
@@ -63,13 +58,8 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
     rate: currentCurrency ? currentCurrency.rate || 1 : undefined,
   };
 
-  const [
-    getProductsMinimized,
-    { data: productsSpecsData, isLoading: isLoadingProducts },
-  ] = useGetProductsMinimizedMutation();
-
   const productsWithCartData = useMemo(() => {
-    if (!productsSpecsData?.data?.items || !cartItems) {
+    if (!productsData || !cartItems) {
       return [];
     }
     const cartItemsMap = cartItems.reduce((acc, cartItem) => {
@@ -77,7 +67,7 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
       return acc;
     }, {} as Record<number, (typeof cartItems)[0]>);
 
-    return productsSpecsData.data.items.map(product => {
+    return productsData.map(product => {
       const cartItem =
         product.parent_id === 0
           ? cartItemsMap[product.id]
@@ -95,12 +85,8 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
         totalPrice,
       };
     });
-  }, [productsSpecsData, cartItems]);
+  }, [productsData, cartItems]);
 
-  const productsSpecs = useMemo(
-    () => productsSpecsData?.data?.items || [],
-    [productsSpecsData]
-  );
   const totalCartPrice = useMemo(
     () => productsWithCartData.reduce((sum, item) => sum + item.totalPrice, 0),
     [productsWithCartData]
@@ -135,14 +121,10 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
   }, []);
 
   useEffect(() => {
-    getProductsMinimized(cartItems);
-  }, [getProductsMinimized, cartItems.length]);
-
-  useEffect(() => {
-    if (productsSpecs.length > 0) {
-      setHasConflict(checkCartConflict(cartItems, productsSpecs));
+    if (productsData.length > 0 && cartItems.length === productsData.length) {
+      setHasConflict(checkCartConflict(cartItems, productsData));
     }
-  }, [cartItems, productsSpecs]);
+  }, [cartItems, productsData]);
 
   return (
     <PopupOverlay
@@ -169,25 +151,23 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
         <OrderBarDesc textAlign="left" marginBottom="40px">
           {t('priceToDelivery', { locale: '26 zl' })}
         </OrderBarDesc>
-        {!isLoadingProducts && hasConflict && productsWithCartData && (
+        {hasConflict && productsWithCartData && productsData && (
           <Notification type="warning">{t('cartConflict')}</Notification>
         )}
-        {productsWithCartData &&
-          !isLoadingProducts &&
-          cartItems.length == 0 && (
-            <FlexBox flexDirection="column" margin="0 0 46px 0">
-              <Title
-                fontSize="1.5em"
-                as="h3"
-                marginTop="46px"
-                marginBottom="16px"
-              >
-                {t('nothingInTheCart')}
-              </Title>
-              <p>{t('nothingInTheCartText')}</p>
-            </FlexBox>
-          )}
-        {productsWithCartData && !isLoadingProducts ? (
+        {productsWithCartData && cartItems.length == 0 && (
+          <FlexBox flexDirection="column" margin="0 0 46px 0">
+            <Title
+              fontSize="1.5em"
+              as="h3"
+              marginTop="46px"
+              marginBottom="16px"
+            >
+              {t('nothingInTheCart')}
+            </Title>
+            <p>{t('nothingInTheCartText')}</p>
+          </FlexBox>
+        )}
+        {productsWithCartData ? (
           productsWithCartData?.map(item => {
             const resolveCount = item.stock_quantity;
 
@@ -229,7 +209,7 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
                           {extendedCurrency.code}
                         </p>
                       ) : (
-                        <CircularProgress size={20} />
+                        <Skeleton width="50px" />
                       )}
                     </ProductPrice>
                     <CartQuantity
@@ -251,7 +231,7 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
                         {extendedCurrency.code}
                       </OnePrice>
                     ) : (
-                      <CircularProgress size={20} />
+                      <Skeleton width="50px" />
                     )}
                   </ProductPrice>
                 </CardContent>
@@ -270,7 +250,7 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
         )}
 
         <OrderBar
-          isLoadingOrder={isLoadingProducts}
+          productsData={productsData}
           cartSum={
             extendedCurrency?.rate !== undefined
               ? totalCartPrice * extendedCurrency.rate
@@ -289,11 +269,7 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
           <CartLink href="/checkout">
             <StyledButton
               height="58px"
-              disabled={
-                hasConflict ||
-                isLoadingProducts ||
-                productsWithCartData.length < 1
-              }
+              disabled={hasConflict || productsWithCartData.length < 1}
             >
               {t('placeAnOrder')}
             </StyledButton>

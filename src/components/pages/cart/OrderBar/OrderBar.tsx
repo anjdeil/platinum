@@ -14,8 +14,9 @@ import { OrderBarProps } from '@/types/pages/cart';
 const OrderBar: FC<OrderBarProps> = ({
   cartSum,
   symbol,
-  isLoadingOrder,
+  isLoadingOrder = null,
   miniCart = false,
+  productsData = null,
 }) => {
   const t = useTranslations('Cart');
   return (
@@ -23,7 +24,9 @@ const OrderBar: FC<OrderBarProps> = ({
       <OrderBarTitle miniCart={miniCart}>{t('orderValue')}</OrderBarTitle>
       <OrderBarContent>
         <OrderBarSum>
-          {isLoadingOrder || !cartSum ? (
+          {(isLoadingOrder !== null && isLoadingOrder) ||
+          (productsData !== null && !productsData) ||
+          !cartSum ? (
             <>
               <Skeleton width="50px" />
             </>

@@ -127,7 +127,7 @@
     "gift certificate": "Geschenkgutschein"
   },
   "Product": {
-    "addToBasket": "In den Korb",
+    "addToBasket": "In den Warenkorb",
     "viewCart": "Warenkorb anzeigen",
     "chooseOptions": "Option wählen",
     "updateCart": "Menge aktualisieren",
@@ -202,7 +202,8 @@
     "nothingInTheCart": "Es ist nichts im Warenkorb...",
     "goToShop": "Zum Shop gehen",
     "nothingInTheCartText": "Sehen Sie sich unsere neuen Produkte an oder nutzen Sie die Suche, wenn Sie etwas Bestimmtes suchen",
-    "YouNeedToLoginForOrder": "Sie müssen sich anmelden, um eine Bestellung aufzugeben."
+    "YouNeedToLoginForOrder": "Sie müssen sich anmelden, um eine Bestellung aufzugeben.",
+    "сoupon": "Coupon"
   },
   "Contacts": {
     "contacts": "Kontakte",

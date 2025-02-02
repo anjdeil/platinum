@@ -14,9 +14,9 @@ export const wpRtkApi = createApi({
     baseUrl: '/api/wp',
   }),
   tagTypes: ['User'],
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     getToken: builder.mutation<JwtTokenResponseType, AuthConfigType>({
-      query: (credentials) => ({
+      query: credentials => ({
         url: '/jwt-auth/v1/token',
         method: 'POST',
         body: credentials,
@@ -38,35 +38,22 @@ export const wpRtkApi = createApi({
         prepareHeaders: (headers: any) => {
           const token = getAuthTokenFromCookie(document.cookie);
           if (token) {
-            headers.set('Authorization', `Bearer ${token}`);
+            headers.set('Cookie', `authToken=${token}`);
           }
           return headers;
         },
       }),
       providesTags: ['User'],
     }),
-    fetchUserDataById: builder.query<
-      WpUserType,
-      { accessToken: string; id: number }
-    >({
-      query: ({ accessToken, id }) => ({
-        url: `/users/me`,
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }),
-      providesTags: ['User'],
-    }),
-
     fetchUserUpdate: builder.mutation({
-      query: (body) => ({
+      query: body => ({
         url: '/users/me',
         method: 'PUT',
         body: body,
         prepareHeaders: (headers: any) => {
           const token = getAuthTokenFromCookie(document.cookie);
           if (token) {
-            headers.set('Authorization', `Bearer ${token}`);
+            headers.set('Cookie', `authToken=${token}`);
           }
           return headers;
         },
@@ -81,5 +68,4 @@ export const {
   useCheckTokenMutation,
   useLazyFetchUserDataQuery,
   useFetchUserUpdateMutation,
-  useLazyFetchUserDataByIdQuery,
 } = wpRtkApi;
