@@ -1,13 +1,4 @@
-import { Title } from "@/styles/components";
 import styled from "@emotion/styled";
-
-export const ShippingMethodSelectorWrapper = styled.div``;
-
-export const ShippingMethodSelectorTitle = styled(Title)`
-    text-transform: uppercase;
-    text-align: left;
-    margin-bottom: 0.8em;
-`;
 
 export const ShippingMethodSelectorLabel = styled.p`
     margin-bottom: 0.8em;

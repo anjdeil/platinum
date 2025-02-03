@@ -328,7 +328,6 @@
     "blogSectionSubtitle": "Последние статьи"
   },
   "ShippingMethodSelector": {
-    "delivery": "Доставка",
     "change": "Изменить",
     "parcelLocker": "Почтомат",
     "selectParcelLocker": "Выбрать почтомат",
@@ -338,6 +337,7 @@
     "close": "Закрыть"
   },
   "Checkout": {
+    "delivery": "Доставка",
     "login": "Войдите",
     "fieldsWillFilled": ", и поля будут заполнены автоматически после вашего первого заказа",
     "pay": "Оплатить заказ",
@@ -350,7 +350,8 @@
     "proofSelect": "Доказательство покупки",
     "vatInvoice": "VAT-фактура",
     "company": "Имя и фамилия/Компания",
-    "nip": "ИНН"
+    "nip": "ИНН",
+    "freeShipping": "Чтобы получить бесплатную доставку, нужно еще {cost}."
   },
   "Footer": {
     "myAccount": "Мой аккаунт",

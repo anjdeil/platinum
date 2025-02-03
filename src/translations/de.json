@@ -328,7 +328,6 @@
     "blogSectionSubtitle": "Letzte artikel"
   },
   "ShippingMethodSelector": {
-    "delivery": "Lieferung",
     "change": "Ändern",
     "parcelLocker": "Paketstation",
     "selectParcelLocker": "Paketstation auswählen",
@@ -338,6 +337,7 @@
     "close": "Schließen"
   },
   "Checkout": {
+    "delivery": "Lieferung",
     "login": "Loggen Sie sich ein",
     "fieldsWillFilled": " und die Felder werden nach Ihrer ersten Bestellung automatisch ausgefüllt",
     "pay": "Bezahlung der Bestellung",
@@ -350,7 +350,8 @@
     "proofSelect": "Wählen Sie den Kaufnachweis",
     "vatInvoice": "VAT Rechnung",
     "company": "Vor- und Nachname/Firma",
-    "nip": "Steuernummer"
+    "nip": "Steuernummer",
+    "freeShipping": "Um Free Shipping zu erreichen, bleiben {cost}."
   },
   "Footer": {
     "myAccount": "Mein Konto",
