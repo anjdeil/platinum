@@ -25,10 +25,11 @@ import {
 import { useWishlist } from '@/hooks/useWishlist';
 import { popupToggle } from '@/store/slices/PopupSlice';
 import { CircularProgress } from '@mui/material';
+import { useResponsive } from '@/hooks/useResponsive';
 
 const ProductCard: React.FC<ProductCardPropsType> = ({ product, currency }) => {
   const t = useTranslations('Product');
-
+  const { isMobile } = useResponsive();
   const router = useRouter();
 
   const {
@@ -67,7 +68,9 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product, currency }) => {
           quantity: 1,
         })
       );
-      dispatch(popupToggle('mini-cart'));
+      if (!isMobile) {
+        dispatch(popupToggle('mini-cart'));
+      }
     } else {
       router.push(`/${router.locale === 'en' ? '' : router.locale}/cart`);
     }

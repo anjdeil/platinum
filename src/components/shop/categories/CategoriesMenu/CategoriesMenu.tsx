@@ -6,7 +6,7 @@ import MenuCategoriesSlice from '@/store/slices/MenuCategoriesSlice';
 import { Title } from '@/styles/components';
 import CategoryType from '@/types/components/shop/categories/categories';
 import { CategoriesMenuPropsType } from '@/types/components/shop/categories/categoriesMenu';
-import { FC, useCallback } from 'react';
+import { FC, useCallback, useEffect } from 'react';
 import {
   Categories,
   ChildListWrapper,
@@ -14,6 +14,7 @@ import {
   List,
   ListWrapper,
 } from './styles';
+import { popupClosed } from '@/store/slices/PopupSlice';
 
 const CategoriesMenu: FC<CategoriesMenuPropsType> = ({
   selectedCategories,
@@ -27,6 +28,10 @@ const CategoriesMenu: FC<CategoriesMenuPropsType> = ({
 
   const dispatch = useAppDispatch();
   const popup = useAppSelector(state => state.popup);
+  useEffect(() => {
+    console.log(popup);
+  }, [popup]);
+
   const { isOpen, CategoryActiveHover } = useAppSelector(
     state => state.MenuCategoriesSlice
   );
@@ -41,6 +46,7 @@ const CategoriesMenu: FC<CategoriesMenuPropsType> = ({
 
   const onMouseLeave = useCallback(() => {
     dispatch(setCategory(null));
+    dispatch(popupClosed());
   }, [dispatch]);
 
   const activeCategoryHover = CategoryActiveHover

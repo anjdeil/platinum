@@ -14,7 +14,7 @@ export const StyledProductCardList = styled.div<StyledProductCardListProps>`
       `repeat(${tabletColumns}, 1fr)`};
   }
   @media ${({ theme }) => theme.media.mediumLarge} {
-    grid-template-columns: ${({ mintabletColumns = 4 }) =>
+    grid-template-columns: ${({ mintabletColumns = 3 }) =>
       `repeat(${mintabletColumns}, 1fr)`};
   }
 
