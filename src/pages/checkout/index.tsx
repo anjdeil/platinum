@@ -4,7 +4,8 @@ import React, { useEffect, useState } from 'react';
 import {
   CheckoutAgreement,
   CheckoutAgreementWrapper,
-  CheckoutContainer, CheckoutFormSection,
+  CheckoutContainer,
+  CheckoutFormSection,
   CheckoutFormSectionTitle,
   CheckoutFormsWrapper,
   CheckoutPayButton,
@@ -35,7 +36,6 @@ import checkCartConflict from '@/utils/cart/checkCartConflict';
 import parcelMachinesMethods from '@/utils/checkout/parcelMachinesMethods';
 import CheckoutWarnings from '@/components/pages/checkout/CheckoutWarnings';
 import validateOrder from '@/utils/checkout/validateOrder';
-import { BillingForm } from '@/components/global/forms/BillingForm';
 import { AddressType } from '@/types/services/wooCustomApi/customer';
 import getCalculatedMethodCostByWeight from '@/utils/checkout/getCalculatedMethodCostByWeight';
 import getShippingMethodFixedCost from '@/utils/checkout/getShippingMethodFixedCost';
@@ -44,6 +44,7 @@ import validateBillingData from '@/utils/checkout/validateBillingData';
 import BillingWarnings from '@/components/pages/checkout/BillingWarnings';
 import getCartTotals from '@/utils/cart/getCartTotals';
 import FreeShippingNotifications from '@/components/pages/checkout/FreeShippingNotifications/FreeShippingNotifications';
+import { NewBillingForm } from '@/components/global/forms/BillingForm/NewBillingForm';
 
 export function getServerSideProps() {
   return {
@@ -111,6 +112,7 @@ export default function CheckoutPage() {
    * Shipping costs logic
    */
   const getCalculatedShippingMethodCost = (method: ShippingMethodType) => {
+    // console.log(totalWeight);
     const costByWeight = getCalculatedMethodCostByWeight(method, totalWeight);
     if (costByWeight !== false) return costByWeight;
 
@@ -136,7 +138,6 @@ export default function CheckoutPage() {
   useEffect(() => {
     if (!isCurrencyLoading) {
       if (shippingMethod) {
-
         const { title, method_id, instance_id } = shippingMethod;
 
         const shippingMethodCost = convertCurrency(
@@ -182,7 +183,14 @@ export default function CheckoutPage() {
         setShippingLine(undefined);
       }
     }
-  }, [shippingMethod, parcelMachine, currency, isCurrencyLoading, totalWeight, totalCost]);
+  }, [
+    shippingMethod,
+    parcelMachine,
+    currency,
+    isCurrencyLoading,
+    totalWeight,
+    totalCost,
+  ]);
 
   /**
    * Order logic
@@ -318,16 +326,22 @@ export default function CheckoutPage() {
           {billingWarnings && isWarningsShown && (
             <BillingWarnings messages={billingWarnings}></BillingWarnings>
           )}
-          <BillingForm setBillingData={setBillingData} />
+          {/* <BillingForm setBillingData={setBillingData} /> */}
+          <NewBillingForm setBillingData={setBillingData} />
 
           <CheckoutFormSection>
-            <CheckoutFormSectionTitle as={'h2'}>{t('delivery')}</CheckoutFormSectionTitle>
+            <CheckoutFormSectionTitle as={'h2'}>
+              {t('delivery')}
+            </CheckoutFormSectionTitle>
 
             {warnings && (
               <CheckoutWarnings messages={warnings}></CheckoutWarnings>
             )}
 
-            <FreeShippingNotifications methods={shippingMethods} totalCost={totalCost} />
+            <FreeShippingNotifications
+              methods={shippingMethods}
+              totalCost={totalCost}
+            />
 
             <ShippingMethodSelector
               methods={shippingMethods}

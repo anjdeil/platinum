@@ -358,11 +358,7 @@ export const BillingForm: FC<BillingFormProps> = ({ setBillingData }) => {
       ) : (
         <>
           {!customer && (
-            <ConfirmationRegCard
-              register={register}
-              errors={errors}
-              setUserId={setUserId}
-            />
+            <ConfirmationRegCard register={register} errors={errors} />
           )}
           <CustomForm onSubmit={handleSubmit(onSubmit)} maxWidth="850px">
             <StyledFormWrapper inMiddle>
