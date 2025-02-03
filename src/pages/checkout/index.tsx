@@ -164,7 +164,7 @@ export default function CheckoutPage() {
 
       meta.push({
         key: 'Weight',
-        value: '1 kg',
+        value: `${totalWeight} kg`,
       });
 
       setShippingLine({
@@ -175,7 +175,7 @@ export default function CheckoutPage() {
         total: String(shippingMethodCost),
       });
     }
-  }, [shippingMethod, parcelMachine, currency, isCurrencyLoading]);
+  }, [shippingMethod, parcelMachine, currency, isCurrencyLoading, totalWeight]);
 
   /**
    * Order logic
