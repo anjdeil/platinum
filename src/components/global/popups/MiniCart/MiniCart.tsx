@@ -166,9 +166,6 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
           </FlexBox>
           <CloseIcon onClick={handleClose} />
         </FlexBox>
-        <OrderBarDesc textAlign="left" marginBottom="40px">
-          {t('priceToDelivery', { locale: '26 zl' })}
-        </OrderBarDesc>
         {!isLoadingProducts && hasConflict && productsWithCartData && (
           <Notification type="warning">{t('cartConflict')}</Notification>
         )}
