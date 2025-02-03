@@ -1,11 +1,11 @@
 import SwiperModal from '@/store/slices/SwiperModal';
-import saveCartSliceToLocalStorageMiddleware from '@/utils/cartSlice/saveCartSliceToLocalStorageMiddleware';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { contactForm7Api } from './rtk-queries/contactFrom7/contactFromApi7';
 import { instagramCustomRtkApi } from './rtk-queries/instagramMedia';
 import { mailpoetApi } from './rtk-queries/mailpoetApi';
+import { passwordResetApi } from './rtk-queries/passwordResetApi';
 import { wooCustomRktApi } from './rtk-queries/wooCustomApi';
 import { wooCustomAuthRktApi } from './rtk-queries/wooCustomAuthApi';
 import { wpRtkApi } from './rtk-queries/wpApi';
@@ -19,12 +19,11 @@ import PopupSlice from './slices/PopupSlice';
 import ProductSlice from './slices/ProductSlice';
 import themeOptionsSlice from './slices/themeOptionsSlice';
 import userSlice from './slices/userSlice';
-import { passwordResetApi } from './rtk-queries/passwordResetApi';
 
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['currencySlice'],
+  whitelist: ['currencySlice', 'cartSlice'],
 };
 
 const rootReducer = combineReducers({
@@ -36,7 +35,7 @@ const rootReducer = combineReducers({
   [wooCustomAuthRktApi.reducerPath]: wooCustomAuthRktApi.reducer,
   [instagramCustomRtkApi.reducerPath]: instagramCustomRtkApi.reducer,
   [passwordResetApi.reducerPath]: passwordResetApi.reducer,
-  cartSlice,
+  cartSlice: cartSlice,
   languageSlice: languageSlice,
   currencySlice: currencySlice,
   categoriesSlice: categoriesSlice.reducer,
@@ -65,7 +64,7 @@ export const setupStore = () => {
         wooCustomRktApi.middleware,
         wpRtkApi.middleware,
         contactForm7Api.middleware,
-        saveCartSliceToLocalStorageMiddleware,
+        // saveCartSliceToLocalStorageMiddleware,
         mailpoetApi.middleware,
         wooCustomAuthRktApi.middleware,
         instagramCustomRtkApi.middleware,
