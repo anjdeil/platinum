@@ -327,7 +327,6 @@
     "blogSectionSubtitle": "Ostatnie artykuły"
   },
   "ShippingMethodSelector": {
-    "delivery": "Dostawa",
     "change": "Zmień",
     "parcelLocker": "Paczkomat",
     "selectParcelLocker": "Wybierz paczkomat",
@@ -337,6 +336,7 @@
     "close": "Zamknij"
   },
   "Checkout": {
+    "delivery": "Dostawa",
     "login": "Zaloguj się",
     "fieldsWillFilled": ", a pola zostaną wypełnione automatycznie po pierwszym zamówieniu",
     "pay": "Opłacić zamówienie",
@@ -349,7 +349,8 @@
     "proofSelect": "Dowód zakupu",
     "vatInvoice": "VAT Faktura",
     "company": "Imię i nazwisko/Firma",
-    "nip": "NIP"
+    "nip": "NIP",
+    "freeShipping": "Aby uzyskać darmową wysyłkę, pozostało {cost}."
   },
   "Footer": {
     "myAccount": "Moje konto",

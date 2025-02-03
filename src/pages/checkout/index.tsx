@@ -4,7 +4,8 @@ import React, { useEffect, useState } from 'react';
 import {
   CheckoutAgreement,
   CheckoutAgreementWrapper,
-  CheckoutContainer,
+  CheckoutContainer, CheckoutFormSection,
+  CheckoutFormSectionTitle,
   CheckoutFormsWrapper,
   CheckoutPayButton,
   CheckoutPayButtonWrapper,
@@ -42,6 +43,7 @@ import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
 import validateBillingData from '@/utils/checkout/validateBillingData';
 import BillingWarnings from '@/components/pages/checkout/BillingWarnings';
 import getCartTotals from '@/utils/cart/getCartTotals';
+import FreeShippingNotifications from '@/components/pages/checkout/FreeShippingNotifications/FreeShippingNotifications';
 
 export function getServerSideProps() {
   return {
@@ -308,19 +310,26 @@ export default function CheckoutPage() {
           )}
           <BillingForm setBillingData={setBillingData} />
 
-          {warnings && (
-            <CheckoutWarnings messages={warnings}></CheckoutWarnings>
-          )}
-          <ShippingMethodSelector
-            methods={shippingMethods}
-            isLoading={isLoading}
-            currentMethodId={shippingMethod?.method_id}
-            onChange={method => setShippingMethod(method)}
-            parcelMachinesMethods={parcelMachinesMethods}
-            parcelMachine={parcelMachine}
-            onParcelMachineChange={handleParcelMachineChange}
-            getCalculatedMethodCost={getCalculatedShippingMethodCost}
-          />
+          <CheckoutFormSection>
+            <CheckoutFormSectionTitle as={'h2'}>{t('delivery')}</CheckoutFormSectionTitle>
+
+            {warnings && (
+              <CheckoutWarnings messages={warnings}></CheckoutWarnings>
+            )}
+
+            <FreeShippingNotifications methods={shippingMethods} totalCost={totalCost} />
+
+            <ShippingMethodSelector
+              methods={shippingMethods}
+              isLoading={isLoading}
+              currentMethodId={shippingMethod?.method_id}
+              onChange={method => setShippingMethod(method)}
+              parcelMachinesMethods={parcelMachinesMethods}
+              parcelMachine={parcelMachine}
+              onParcelMachineChange={handleParcelMachineChange}
+              getCalculatedMethodCost={getCalculatedShippingMethodCost}
+            />
+          </CheckoutFormSection>
         </CheckoutFormsWrapper>
         <CheckoutSummaryWrapper>
           <CheckoutSummary>
