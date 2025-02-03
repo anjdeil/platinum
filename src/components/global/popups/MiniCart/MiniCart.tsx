@@ -25,7 +25,6 @@ import { CartLink, MiniCartContainer } from './style';
 import { FlexBox, LinkWrapper, StyledButton, Title } from '@/styles/components';
 import { CircularProgress, Skeleton } from '@mui/material';
 import TrashIcon from '@/components/global/icons/TrashIcon/TrashIcon';
-import { OrderBarDesc } from '@/components/pages/cart/OrderBar/style';
 import Notification from '@/components/global/Notification/Notification';
 import { handleQuantityChange } from '@/utils/cart/handleQuantityChange';
 import { roundedPrice } from '@/utils/cart/roundedPrice';
@@ -166,9 +165,6 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
           </FlexBox>
           <CloseIcon onClick={handleClose} />
         </FlexBox>
-        <OrderBarDesc textAlign="left" marginBottom="40px">
-          {t('priceToDelivery', { locale: '26 zl' })}
-        </OrderBarDesc>
         {!isLoadingProducts && hasConflict && productsWithCartData && (
           <Notification type="warning">{t('cartConflict')}</Notification>
         )}
