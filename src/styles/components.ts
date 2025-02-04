@@ -365,6 +365,7 @@ export const StyledSlugRichTextSection = styled.div`
 export const LinkWrapper = styled(Link)`
   text-decoration: none;
   color: ${({ theme }) => theme.colors.black};
+  padding-bottom: 10px;
 `;
 
 export const SkeletonWrapper = styled.div`

@@ -24,25 +24,29 @@ export const VariationListBlock = styled.div`
 `;
 
 export const VariationsButton = styled.button<VariationsButtonProps>`
-    border-radius: 8px;
-    background-color: transparent;
-    border: 1px solid;
-    padding: 11px 24px;
-    width: auto;
-    border-color: ${({ active, theme }) => active ? theme.colors.active : theme.colors.black};
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font: ${({ theme }) => theme.fonts.bodyMiddleReg};
+  border-radius: 8px;
+  background-color: transparent;
+  border: 1px solid;
+  padding: 11px 24px;
+  width: auto;
+  border-color: ${({ active, theme }) =>
+    active ? theme.colors.active : theme.colors.black};
+  outline: ${({ active, theme }) =>
+    active ? `1px solid ${theme.colors.active}` : 'none'};
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font: ${({ theme }) => theme.fonts.bodyMiddleReg};
 
-    &:hover {
-        border-color: ${({ theme }) => theme.colors.active};
-    }
+  &:hover {
+    border-color: ${({ theme }) => theme.colors.active};
+    outline: 1px solid ${({ theme }) => theme.colors.active};
+  }
 
-    @media ${({ theme }) => theme.media.large} {
-       font-size: 14px;
-    }
+  @media ${({ theme }) => theme.media.large} {
+    font-size: 14px;
+  }
 
-    @media ${({ theme }) => theme.media.medium} {
-       flex: 1;
-    }
+  @media ${({ theme }) => theme.media.medium} {
+    flex: 1;
+  }
 `;

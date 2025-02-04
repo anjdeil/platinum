@@ -23,13 +23,14 @@ export const VariationListBlock = styled.div`
 `;
 
 export const VariationsColorButton = styled.button<VariationsButtonProps>`
-    border-radius: 8px;
-    background-color: ${({ theme, color = theme.colors.white }) => color};
-    border: 1px solid;    
-    width: 60px;
-    height: 46px;
-    border-color: ${({ theme }) => theme.colors.lightBorder};
-    cursor: pointer;
-    position: relative;
-    outline: ${({ active, theme }) => active ? `2px solid ${theme.colors.primary}` : 'none'};
+  border-radius: 8px;
+  background-color: ${({ theme, color = theme.colors.white }) => color};
+  border: 1px solid;
+  width: 60px;
+  height: 46px;
+  border-color: ${({ theme }) => theme.colors.lightBorder};
+  cursor: pointer;
+  position: relative;
+  outline: ${({ active, theme }) =>
+    active ? `2px solid ${theme.colors.active}` : 'none'};
 `;

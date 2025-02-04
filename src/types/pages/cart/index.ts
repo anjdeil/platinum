@@ -67,9 +67,11 @@ export const CartTableSchema = z.object({
   loadingItems: z.array(z.number()).optional(),
 });
 export const OrderBarSchema = z.object({
-  cartSum: z.number().optional(),
+  subtotal: z.number().optional(),
+  totalDisc: z.number().optional(),
   symbol: z.string(),
-  isLoadingOrder: z.boolean(),
+  isLoadingOrder: z.boolean().optional(),
+  productsData: z.array(ProductsMinimizedSchema).optional(),
   miniCart: z.boolean().optional(),
 });
 export const OrderSummarySchema = z.object({

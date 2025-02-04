@@ -13,7 +13,7 @@ export const adaptItemToCartQuantity = (
     name: item.name,
     parent_name: item.parent_name || '',
     product_id: item.product_id,
-    variation_id: item.variation_id || item.variation || 0,
+    variation_id: item.variation || 0,
     quantity: item.quantity,
     tax_class: item.tax_class || '',
     subtotal: item.subtotal || '',
@@ -35,7 +35,10 @@ const CartQuantity: React.FC<QuantityComponentProps> = ({
   inputWidth,
   inputHeight,
 }) => {
-  const maxCount = resolveCount ?? Infinity;
+  const maxCount = Math.min(
+    resolveCount ?? Number.MAX_SAFE_INTEGER,
+    Number.MAX_SAFE_INTEGER
+  );
 
   const [inputValue, setInputValue] = useState(item.quantity);
 

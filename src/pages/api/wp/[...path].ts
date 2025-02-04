@@ -23,7 +23,7 @@ export default async function handler(
   let authorization = null;
   let response;
 
-  if (slug.includes('token/validate')) {
+  if (slug.includes('token/validate') || slug.includes('users')) {
     const authToken = getCookieValue(headers.cookie || '', 'authToken');
     authorization = authToken && `Bearer ${authToken}`;
   }
