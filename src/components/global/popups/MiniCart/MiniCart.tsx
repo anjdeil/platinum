@@ -41,7 +41,6 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
   const [hasConflict, setHasConflict] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
-  // FETCH
   const { data: currencies, isLoading: isCurrenciesLoading } =
     useGetCurrenciesQuery();
   const selectedCurrency = useAppSelector(state => state.currencySlice);
