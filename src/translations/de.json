@@ -115,10 +115,19 @@
     "applyFilter": "Anwenden",
     "searchResults": "Suchergebnisse",
     "phraseSought": "Gesuchte Phrase",
-    "productsNotFound": "Artikel nicht gefunden"
+    "productsNotFound": "Artikel nicht gefunden",
+    "filter": "Filter",
+    "price": "Preis",
+    "Length": "Länge",
+    "Thickness": "Dicke",
+    "Colour": "Farbe",
+    "Size": "Größe",
+    "Volumes": "Volumen",
+    "view": "Ansicht",
+    "gift certificate": "Geschenkgutschein"
   },
   "Product": {
-    "addToBasket": "In den Korb",
+    "addToBasket": "In den Warenkorb",
     "viewCart": "Warenkorb anzeigen",
     "chooseOptions": "Option wählen",
     "updateCart": "Menge aktualisieren",
@@ -197,7 +206,8 @@
     "nothingInTheCart": "Es ist nichts im Warenkorb...",
     "goToShop": "Zum Shop gehen",
     "nothingInTheCartText": "Sehen Sie sich unsere neuen Produkte an oder nutzen Sie die Suche, wenn Sie etwas Bestimmtes suchen",
-    "YouNeedToLoginForOrder": "Sie müssen sich anmelden, um eine Bestellung aufzugeben."
+    "YouNeedToLoginForOrder": "Sie müssen sich anmelden, um eine Bestellung aufzugeben.",
+    "сoupon": "Coupon"
   },
   "Contacts": {
     "contacts": "Kontakte",
@@ -258,7 +268,18 @@
     "PasswordsDoNotMatch": "Passwörter stimmen nicht überein",
     "parcelLocker": "Bitte wählen Sie ein Paketfach",
     "shippingMethod": "Bitte wählen Sie eine Versandart",
-    "noChanges": "Ihre Daten haben sich nicht geändert"
+    "noChanges": "Ihre Daten haben sich nicht geändert",
+    "noBillingInformation": "Keine Rechnungsinformationen",
+    "isRequired": "Feld ist erforderlich",
+    "areRequired": "Felder sind erforderlich",
+    "firstname": "Vorname",
+    "lastname": "Nachname",
+    "address1": "Straße und Hausnummer",
+    "address2": "Gebäudenummer",
+    "postcode": "Postleitzahl",
+    "emailI": "E-Mail",
+    "phoneIsRequired": "Telefon",
+    "apartmentNumber": "Wohnungsnummer"
   },
   "Forms": {
     "applicationForm": "application form",
@@ -311,7 +332,6 @@
     "blogSectionSubtitle": "Letzte artikel"
   },
   "ShippingMethodSelector": {
-    "delivery": "Lieferung",
     "change": "Ändern",
     "parcelLocker": "Paketstation",
     "selectParcelLocker": "Paketstation auswählen",
@@ -321,11 +341,21 @@
     "close": "Schließen"
   },
   "Checkout": {
+    "delivery": "Lieferung",
     "login": "Loggen Sie sich ein",
     "fieldsWillFilled": " und die Felder werden nach Ihrer ersten Bestellung automatisch ausgefüllt",
     "pay": "Bezahlung der Bestellung",
     "agreement": "Ihre persönlichen Daten werden verwendet, um Ihre Bestellung zu bearbeiten, Ihre Erfahrung auf dieser Website zu unterstützen und für andere Zwecke, die in unserer ",
-    "privacyPolicy": "Datenschutzrichtlinie beschrieben sind"
+    "privacyPolicy": "Datenschutzrichtlinie beschrieben sind",
+    "registerAccount": "Registrieren Sie beim Kauf ein Konto.",
+    "billingFormName": "Rechnungsinformationen",
+    "guestWarning": "Die Bestellung erfolgt ohne Registrierung!",
+    "shippingFormName": "Lieferinformationen",
+    "proofSelect": "Wählen Sie den Kaufnachweis",
+    "vatInvoice": "VAT Rechnung",
+    "company": "Vor- und Nachname/Firma",
+    "nip": "Steuernummer",
+    "freeShipping": "Um Free Shipping zu erreichen, bleiben {cost}."
   },
   "Footer": {
     "myAccount": "Mein Konto",

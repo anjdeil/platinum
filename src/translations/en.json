@@ -115,7 +115,16 @@
     "applyFilter": "Apply",
     "searchResults": "Search Results",
     "phraseSought": "Phrase Sought",
-    "productsNotFound": "Products not found"
+    "productsNotFound": "Products not found",
+    "filter": "Filter",
+    "price": "Price",
+    "Length": "Length",
+    "Thickness": "Thickness",
+    "Colour": "Colour",
+    "Size": "Size",
+    "Volumes": "Volumes",
+    "view": "View",
+    "gift certificate": "Gift certificate"
   },
   "Product": {
     "addToBasket": "Add to basket",
@@ -258,7 +267,18 @@
     "PasswordsDoNotMatch": "Passwords do not match",
     "parcelLocker": "Please, select a parcel locker",
     "shippingMethod": "Please, select a shipping method",
-    "noChanges": "There's no change in your data"
+    "noChanges": "There's no change in your data",
+    "noBillingInformation": "Please, field the billing information",
+    "isRequired": "field is required",
+    "areRequired": "fields are required",
+    "firstname": "First name",
+    "lastname": "Last name",
+    "address1": "Street Address",
+    "address2": "Building number",
+    "postcode": "Postcode",
+    "emailI": "Email",
+    "phoneIsRequired": "Phone",
+    "apartmentNumber": "Apartment number"
   },
   "Forms": {
     "applicationForm": "application form",
@@ -311,7 +331,6 @@
     "blogSectionTitle": "Lasted articles"
   },
   "ShippingMethodSelector": {
-    "delivery": "Delivery",
     "change": "Change",
     "parcelLocker": "Parcel locker",
     "selectParcelLocker": "Select a parcel locker",
@@ -321,11 +340,21 @@
     "close": "Close"
   },
   "Checkout": {
+    "delivery": "Delivery",
     "login": "Log in",
     "fieldsWillFilled": " and the fields will be filled in automatically after your first order",
     "pay": "Pay for order",
     "agreement": "Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our ",
-    "privacyPolicy": "privacy policy"
+    "privacyPolicy": "privacy policy",
+    "registerAccount": "Register an account when making a purchase.",
+    "billingFormName": "Customer information",
+    "guestWarning": "The order is placed without registration!",
+    "shippingFormName": "Shipping information",
+    "proofSelect": "Proof of purchase",
+    "vatInvoice": "VAT invoice",
+    "company": "Name and surname/Company",
+    "nip": "TIN",
+    "freeShipping": "You need {cost} more to get free shipping."
   },
   "Footer": {
     "myAccount": "My account",

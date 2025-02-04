@@ -70,25 +70,29 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
   const [quantity, setQuantity] = useState<number>(1);
   const [cartMatch, setCartMatch] = useState<CartItem>();
 
-  useEffect(() => {
-    const cartMatch = cartItems.find(
-      ({ product_id }) => product_id === product.id
-    );
-    if (cartMatch) {
-      setCartMatch(cartMatch);
-      setQuantity(cartMatch.quantity);
-    }
-  }, [cartItems]);
-
   /**
    * Choosen variation
    */
   const [currentVariation, setCurrentVariation] = useState<ProductVariation>();
 
   // Temporary code (whole useEffect) for assigning the current variation
-  useEffect(() => {
+  /* useEffect(() => {
     setCurrentVariation(product?.variations[0]);
-  }, []);
+    console.log(currentVariation);
+    
+  }, []); */
+
+  useEffect(() => {
+    const cartMatch = cartItems.find(
+      ({ product_id, variation_id }) =>
+        product_id === product.id &&
+        (!variation_id || variation_id === currentVariation?.id)
+    );
+    setCartMatch(cartMatch);
+    if (cartMatch) {
+      setQuantity(cartMatch.quantity);
+    }
+  }, [cartItems, product, currentVariation?.id]);
 
   function renderCartButtonInnerText() {
     if (cartMatch) {
@@ -119,12 +123,6 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
   }, [currentVariation, product]);
 
   const router = useRouter();
-
-  useEffect(() => {
-    if (product) {
-      console.log('product:', product);
-    }
-  }, [product]);
 
   /** Set default attributes */
   useEffect(() => {

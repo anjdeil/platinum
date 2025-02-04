@@ -1,4 +1,4 @@
-import { Container } from '@/styles/components';
+import { Container, Title } from '@/styles/components';
 import styled from '@emotion/styled'
 
 export const CheckoutContainer = styled(Container)`
@@ -17,6 +17,14 @@ export const CheckoutContainer = styled(Container)`
 `;
 
 export const CheckoutFormsWrapper = styled.div`
+`;
+
+export const CheckoutFormSection = styled.div``;
+
+export const CheckoutFormSectionTitle = styled(Title)`
+    text-transform: uppercase;
+    text-align: left;
+    margin-bottom: 0.8em;
 `;
 
 export const CheckoutSummaryWrapper = styled.div`

@@ -1,3 +1,4 @@
+import { ProductsMinimizedSchema } from '@/types/components/shop/product/products';
 import { z } from 'zod';
 
 export const CartItemSchema = z.object({
@@ -10,6 +11,8 @@ export const CartStateSchema = z.object({
   cartItems: z.array(CartItemSchema),
   couponCodes: z.array(z.string()),
   commentToOrder: z.string(),
+  productsData: z.array(ProductsMinimizedSchema),
+  needsProductDataUpdate: z.boolean(),
 });
 
 export const ProductMinReqSchema = z.object({
