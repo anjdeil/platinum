@@ -1,16 +1,14 @@
-import { lineOrderItems } from "@/types/store/reducers/сartSlice";
+import { lineOrderItems } from '@/types/store/reducers/сartSlice';
 
-const getSubtotalByLineItems = (lineItems: lineOrderItems[]): number =>
-{
-    let subtotal = 0;
+const getSubtotalByLineItems = (lineItems: lineOrderItems[]): number => {
+  let subtotal = 0;
 
-    lineItems.forEach(item =>
-    {
-        const itemSubtotal = +item.subtotal;
-        if (!Number.isNaN(itemSubtotal)) subtotal += itemSubtotal;
-    });
+  lineItems.forEach(item => {
+    const itemSubtotal = +item.subtotal;
+    if (!Number.isNaN(itemSubtotal)) subtotal += itemSubtotal;
+  });
 
-    return subtotal;
-}
+  return subtotal;
+};
 
 export default getSubtotalByLineItems;

@@ -24,7 +24,7 @@ import {
 
 import { useWishlist } from '@/hooks/useWishlist';
 import { popupToggle } from '@/store/slices/PopupSlice';
-import { CircularProgress } from '@mui/material';
+import { Skeleton } from '@mui/material';
 import { useResponsive } from '@/hooks/useResponsive';
 
 const ProductCard: React.FC<ProductCardPropsType> = ({ product, currency }) => {
@@ -114,7 +114,7 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product, currency }) => {
                 )}
               </>
             ) : (
-              <CircularProgress size={20} />
+              <Skeleton width="50px" />
             )}
           </PriceWrapper>
         </TitleWrapper>

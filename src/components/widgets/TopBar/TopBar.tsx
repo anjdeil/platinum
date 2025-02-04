@@ -49,7 +49,7 @@ const TopBar: React.FC = () => {
               elements: 4,
               width: '90px',
               height: '22px',
-              gap: '40px',
+              gap: '20px',
             }}
             justify="space-between"
             color={theme.colors.black}

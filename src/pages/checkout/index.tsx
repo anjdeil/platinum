@@ -53,6 +53,7 @@ export function getServerSideProps() {
 
 export default function CheckoutPage() {
   const t = useTranslations('Checkout');
+
   const {
     currentCurrency: currency,
     isLoading: isCurrencyLoading,
@@ -73,7 +74,8 @@ export default function CheckoutPage() {
 
   useEffect(() => {
     const productsMinimized = productsMinimizedData?.data?.items;
-    if (productsMinimized) setCartTotals(getCartTotals(productsMinimized, cartItems));
+    if (productsMinimized)
+      setCartTotals(getCartTotals(productsMinimized, cartItems));
   }, [cartItems, productsMinimizedData]);
 
   /**
@@ -132,50 +134,55 @@ export default function CheckoutPage() {
   }, [shippingMethods]);
 
   useEffect(() => {
-    if (shippingMethod && !isCurrencyLoading) {
-      const { title, method_id, instance_id } = shippingMethod;
+    if (!isCurrencyLoading) {
+      if (shippingMethod) {
 
-      const shippingMethodCost = convertCurrency(
-        getCalculatedShippingMethodCost(shippingMethod)
-      );
+        const { title, method_id, instance_id } = shippingMethod;
 
-      const meta: OrderLineMetaDataType[] = [];
-
-      if (
-        parcelMachinesMethods.includes(method_id) &&
-        parcelMachine &&
-        parcelMachine.methodId === method_id
-      ) {
-        meta.push(
-          {
-            key: 'Selected parcel locker',
-            value: parcelMachine.choosenParcelMachine.name,
-          },
-          {
-            key: 'Address',
-            value: parcelMachine.choosenParcelMachine.address,
-          },
-          {
-            key: 'Description',
-            value: parcelMachine.choosenParcelMachine.description,
-          }
+        const shippingMethodCost = convertCurrency(
+          getCalculatedShippingMethodCost(shippingMethod)
         );
+
+        const meta: OrderLineMetaDataType[] = [];
+
+        if (
+          parcelMachinesMethods.includes(method_id) &&
+          parcelMachine &&
+          parcelMachine.methodId === method_id
+        ) {
+          meta.push(
+            {
+              key: 'Selected parcel locker',
+              value: parcelMachine.choosenParcelMachine.name,
+            },
+            {
+              key: 'Address',
+              value: parcelMachine.choosenParcelMachine.address,
+            },
+            {
+              key: 'Description',
+              value: parcelMachine.choosenParcelMachine.description,
+            }
+          );
+        }
+
+        meta.push({
+          key: 'Weight',
+          value: `${totalWeight} kg`,
+        });
+
+        setShippingLine({
+          method_id,
+          method_title: title,
+          instance_id: instance_id.toString(),
+          meta_data: meta,
+          total: String(shippingMethodCost),
+        });
+      } else {
+        setShippingLine(undefined);
       }
-
-      meta.push({
-        key: 'Weight',
-        value: `${totalWeight} kg`,
-      });
-
-      setShippingLine({
-        method_id,
-        method_title: title,
-        instance_id: instance_id.toString(),
-        meta_data: meta,
-        total: String(shippingMethodCost),
-      });
     }
-  }, [shippingMethod, parcelMachine, currency, isCurrencyLoading, totalWeight]);
+  }, [shippingMethod, parcelMachine, currency, isCurrencyLoading, totalWeight, totalCost]);
 
   /**
    * Order logic
@@ -201,7 +208,10 @@ export default function CheckoutPage() {
   /* Check cart conflict */
   useEffect(() => {
     const fetchData = async () => {
-      const productsMinimizedData = await getProductsMinimized(cartItems);
+      const productsMinimizedData = await getProductsMinimized({
+        cartItems,
+        lang: router.locale || 'en',
+      });
       const productsMinimized = productsMinimizedData?.data?.data?.items || [];
 
       if (checkCartConflict(cartItems, productsMinimized)) {

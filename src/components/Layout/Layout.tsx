@@ -20,6 +20,11 @@ import { Footer } from '../widgets/Footer';
 import Header from '../widgets/Header/Header';
 import MobileHeader from '../widgets/MobileHeader/MobileHeader';
 import TopBar from '../widgets/TopBar/TopBar';
+import { initializeCart } from '@/store/slices/cartSlice';
+import {
+  languageSymbols,
+  setCurrentLanguage,
+} from '@/store/slices/languageSlice';
 
 export const MenusContext = createContext<WpMenuResponseType[] | []>([]);
 
@@ -36,6 +41,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const { data: themeOptions } = useGetThemeOptionsQuery();
   const { data: categoriesResp, isLoading: isCategoriesLoading } =
     useGetCategoriesQuery(langParam);
+
+  useEffect(() => {
+    if (locale) {
+      const currentLanguage =
+        languageSymbols.find(lang => lang.code === locale)?.name || 'en';
+      dispatch(setCurrentLanguage({ name: currentLanguage }));
+      dispatch(initializeCart());
+    }
+  }, []);
 
   useEffect(() => {
     if (menusResp && menusResp.data && menusResp.data.items) {
