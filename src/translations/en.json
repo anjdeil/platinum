@@ -299,7 +299,7 @@
     "pleaseFillInTheNip": "Please, fill in the TIN",
     "yourNipIsTooShort": "Your NIP is too short",
     "yourNipIsTooLong": "Your NIP is too long",
-    "invalidNipFormat": "Invalid NIP format,use 123-456-78-90 or 123-45-67-890 format",
+    "invalidNipFormat": "Invalid NIP format",
     "pleaseSelectACountry": "Please, select a country",
     "pleaseFillInTheCity": "Please, fill in the city",
     "yourCityNameIsTooShort": "Your city name is too short",
@@ -312,7 +312,7 @@
     "pleaseFillInTheApartmentNumber": "Please, fill in the apartment number",
     "yourApartmentNumberIsTooLong": "Your apartment number is too long",
     "pleaseFillInThePostcode": "Please, fill in the postcode",
-    "invalidPostcodeFormat": "Invalid postcode format, use 12345 format"
+    "invalidPostcodeFormat": "Invalid postcode format"
   },
   "Forms": {
     "applicationForm": "application form",

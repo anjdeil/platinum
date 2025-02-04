@@ -199,7 +199,7 @@ export default function CheckoutPage() {
     'on-hold'
   );
 
-  const [billingData, setBillingData] = useState<AddressType>();
+  const [billingData, setBillingData] = useState<AddressType | null>();
 
   useEffect(() => {
     if (!billingData?.country) return;
@@ -251,6 +251,7 @@ export default function CheckoutPage() {
    */
   const [isBillingDataReady, setIsBillingDataReady] = useState(false);
 
+  console.log('billingData', billingData);
   useEffect(() => {
     if (
       billingData &&

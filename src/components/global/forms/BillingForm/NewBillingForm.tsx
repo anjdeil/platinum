@@ -3,6 +3,7 @@ import {
   AnimatedWrapper,
   StyledFomContainer,
   StyledFormWrapper,
+  StyledPhoneWrapper,
   VariationFields,
 } from './style';
 import { CustomForm, Title } from '@/styles/components';
@@ -12,13 +13,13 @@ import { getValidationSchema } from '@/utils/getValidationSchema';
 import { FC, useEffect } from 'react';
 import CustomTextField from '../CustomTextField/CustomTextField';
 import { useGetCustomerData } from '@/hooks/useGetCustomerData';
-import { CustomFormCheckbox } from '../CustomFormCheckbox';
 import CustomCountrySelect from '../../selects/CustomCountrySelect/CustomCountrySelect';
 import { countryOptions } from '@/utils/mockdata/countryOptions';
 import { AddressType } from '@/types/services/wooCustomApi/customer';
+import { FormCheckbox } from './FormCheckbox';
 
 interface BillingFormProps {
-  setBillingData: (formData: AddressType) => void;
+  setBillingData: (formData: AddressType | null) => void;
 }
 
 export const NewBillingForm: FC<BillingFormProps> = ({ setBillingData }) => {
@@ -35,15 +36,17 @@ export const NewBillingForm: FC<BillingFormProps> = ({ setBillingData }) => {
     control,
     watch,
     trigger,
-  } = useForm({ mode: 'onChange' });
+  } = useForm({
+    mode: 'onBlur',
+  });
 
   useEffect(() => {
     if (customer) {
-      setValue('country', customer.billing?.country || '');
       setValue('first_name', customer.billing?.first_name || '');
       setValue('last_name', customer.billing?.last_name || '');
       setValue('email', customer.billing?.email || '');
       setValue('phone', customer.billing?.phone || '');
+      setValue('country', customer.billing?.country || '');
       setValue('city', customer.billing?.city || '');
       setValue('address_1', customer.billing?.address_1 || '');
       setValue('address_2', customer.billing?.address_2?.split('/')[0] || '');
@@ -59,18 +62,42 @@ export const NewBillingForm: FC<BillingFormProps> = ({ setBillingData }) => {
   const password = watch('password');
 
   const watchedFields = useWatch({ control });
-
+  // const hasUserInput = Object.values(watchedFields).some(value => value);
+  const hasUserInput = Object.values(watchedFields).filter(
+    value => typeof value !== 'boolean' && value !== ''
+  );
   useEffect(() => {
     if (password) {
       trigger('confirm_password');
     }
   }, [password, trigger]);
 
+  // useEffect(() => {
+  //   const validateAndSetData = async () => {
+  //     // const hasUserInput = Object.values(watchedFields).some(value => value);
+
+  //     if (hasUserInput) {
+  //       const isFormValid = await trigger();
+  //       if (isFormValid) {
+  //         console.log('Форма валидна, передаю данные:', watchedFields);
+  //         setBillingData(watchedFields as AddressType);
+  //       } else {
+  //         console.log('Форма НЕ валидна, данные не переданы');
+  //       }
+  //     }
+  //   };
+
+  //   validateAndSetData();
+  // }, [watchedFields, trigger]);
+
   useEffect(() => {
     console.log('1', watchedFields, errors);
-    if (isValid) {
+    if (isValid && hasUserInput) {
       console.log('2', watchedFields);
       setBillingData(watchedFields as AddressType);
+    } else {
+      setBillingData(null);
+      if (hasUserInput.length > 3) trigger();
     }
   }, [watchedFields, isValid]);
 
@@ -153,23 +180,25 @@ export const NewBillingForm: FC<BillingFormProps> = ({ setBillingData }) => {
                   setValue={setValue}
                   defaultValue={customer?.billing?.email || ''}
                 />
-                <CustomTextField
-                  isPhone={true}
-                  name="phone"
-                  register={register}
-                  inputType="text"
-                  autocomplete="tel"
-                  errors={errors}
-                  placeholder={tMyAccount('phone')}
-                  validation={getValidationSchema('phone', tValidation)}
-                  setValue={setValue}
-                  defaultValue={customer?.billing?.phone || ''}
-                  onChange={handlePhoneChange}
-                  onBlur={handlePhoneBlur}
-                />
+                <StyledPhoneWrapper>
+                  <CustomTextField
+                    isPhone={true}
+                    name="phone"
+                    register={register}
+                    inputType="text"
+                    autocomplete="tel"
+                    errors={errors}
+                    placeholder={tMyAccount('phone')}
+                    validation={getValidationSchema('phone', tValidation)}
+                    setValue={setValue}
+                    defaultValue={customer?.billing?.phone || ''}
+                    onChange={handlePhoneChange}
+                    onBlur={handlePhoneBlur}
+                  />
+                </StyledPhoneWrapper>
               </StyledFormWrapper>
               <VariationFields>
-                <CustomFormCheckbox
+                <FormCheckbox
                   name={'invoice'}
                   register={register}
                   errors={errors}
@@ -302,7 +331,7 @@ export const NewBillingForm: FC<BillingFormProps> = ({ setBillingData }) => {
                         )}
                       />
                     </AnimatedWrapper>
-                    <CustomFormCheckbox
+                    <FormCheckbox
                       name={'terms'}
                       register={register}
                       errors={errors}

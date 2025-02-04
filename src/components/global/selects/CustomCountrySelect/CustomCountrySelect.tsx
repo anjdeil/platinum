@@ -63,7 +63,7 @@ const CustomCountrySelect: React.FC<CustomSelectProps> = ({
                 marginBottom: noPaddings ? '24px' : '8px',
                 border: 'none',
                 height: noPaddings ? '48px' : '50px',
-                padding: '5px',
+                padding: noPaddings ? '0' : '5px',
                 borderRadius: '10px',
                 background: theme.background.formElements,
                 outline: state.isFocused

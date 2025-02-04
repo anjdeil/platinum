@@ -78,7 +78,7 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
         <StyledFormLabel htmlFor={name}>{label}</StyledFormLabel>
         {isPhone ? (
           <>
-            <StyledInputStyle isError={!!errors[name]}>
+            <StyledInputStyle isError={!!errors[name]} isPhone={isPhone}>
               <StyledPhoneWrapper>
                 <StyledPhoneInput
                   {...register(name, validation)}

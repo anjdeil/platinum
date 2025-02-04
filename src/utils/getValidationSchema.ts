@@ -76,8 +76,7 @@ export const getValidationSchema = (
           message: t('yourNipIsTooLong'),
         },
         pattern: {
-          value:
-            /^((\d{3}[- ]\d{3}[- ]\d{2}[- ]\d{2})|(\d{3}[- ]\d{2}[- ]\d{2}[- ]\d{3}))$/,
+          value: /^[0-9\\-]*$/,
           message: t('invalidNipFormat'),
         },
       };

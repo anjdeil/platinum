@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { keyframes } from '@emotion/react';
+import { Checkbox } from '@mui/material';
 
 export const StyledFomContainer = styled.div`
   padding: 32px;
@@ -13,6 +14,7 @@ export const StyledFormWrapper = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(49%, 1fr));
   column-gap: 2%;
   align-items: baseline;
+  row-gap: 16px;
 
   @media ${({ theme }) => theme.media.preSmall} {
     display: flex;
@@ -26,6 +28,18 @@ export const VariationFields = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  row-gap: 16px;
+  margin-bottom: 16px;
+`;
+
+export const StyledCheckBoxWrapper = styled.div`
+  display: flex;
+`;
+
+export const StyledPhoneWrapper = styled.div`
+  @media ${({ theme }) => theme.media.medium} {
+    margin-bottom: 24px;
+  }
 `;
 
 const fadeIn = keyframes`
@@ -104,3 +118,14 @@ export const ConfirmationFormWrapper = styled.div`
     }
   }
 `;
+
+export const StyledCheckbox = styled(Checkbox)(({ theme }) => ({
+  padding: '0 9px 0 0',
+  color: theme.colors.primary,
+  '&.Mui-checked': {
+    color: theme.colors.primary,
+  },
+  '& .MuiSvgIcon-root': {
+    fontSize: 30,
+  },
+}));

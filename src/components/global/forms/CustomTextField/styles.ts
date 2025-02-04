@@ -2,14 +2,8 @@ import styled from '@emotion/styled';
 import { FormControl, FormLabel, TextField } from '@mui/material';
 import Image from 'next/image';
 
-export const StyledFormControl = styled(FormControl)`
-  "& .MuiInputBase-root": {
+export const StyledFormControl = styled(FormControl)``;
 
-  },
-  "& .MuiOutlinedInput-root:hover > fieldset": {
-    borderColor: theme.palette.primary.main,
-  },
-`;
 export const StyledFormLabel = styled(FormLabel)`
   margin: 0 !important;
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
@@ -20,6 +14,7 @@ export const StyledFormLabel = styled(FormLabel)`
 
 interface StyledInputStyleProps {
   isError: boolean;
+  isPhone?: boolean;
 }
 
 export const StyledInputStyle = styled.div<StyledInputStyleProps>`
@@ -30,7 +25,7 @@ export const StyledInputStyle = styled.div<StyledInputStyleProps>`
   width: 100%;
   overflow: inherit;
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
-  margin-top: 4px !important;
+  margin-top: ${({ isPhone }) => (isPhone ? '0 !important' : '4px !important')};
   div {
   }
   span {
@@ -95,7 +90,7 @@ export const StyledTextField = styled(TextField)<{ isError: boolean }>`
   box-sizing: border-box;
   margin-top: 4px !important;
   transition: border 0.1s ease-in-out, outline-color 0.1s ease-in-out;
-  margin-bottom: 34px;
+  margin-bottom: 24px;
   & .MuiOutlinedInput-root {
     color: ${({ theme }) => theme.colors.black};
     background-color: ${({ theme }) => theme.background.secondary};
