@@ -22,12 +22,12 @@ import { CartLink, MiniCartContainer } from './style';
 import { FlexBox, LinkWrapper, StyledButton, Title } from '@/styles/components';
 import { Skeleton } from '@mui/material';
 import TrashIcon from '@/components/global/icons/TrashIcon/TrashIcon';
-import { OrderBarDesc } from '@/components/pages/cart/OrderBar/style';
 import Notification from '@/components/global/Notification/Notification';
 import { handleQuantityChange } from '@/utils/cart/handleQuantityChange';
 import { roundedPrice } from '@/utils/cart/roundedPrice';
 import { MenuSkeleton } from '@/components/menus/MenuSkeleton';
 import theme from '@/styles/theme';
+import { OrderBarDesc } from '@/components/pages/cart/OrderBar/style';
 
 interface MiniCartProps {
   onClose: () => void;
