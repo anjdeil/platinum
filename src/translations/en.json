@@ -94,7 +94,8 @@
     "resetCodeAttemptsOne": "The reset code provided is not valid. You have 1 attempt remaining.",
     "passwordResetRequired": "You must request a password reset code before you try to set a new password.",
     "maxAttemptsExceeded": "The reset code provided is not valid. You have used the maximum number of attempts allowed. You must request a new code",
-    "codeProvidedHasExpired": "The reset code provided has expired."
+    "codeProvidedHasExpired": "The reset code provided has expired.",
+    "Addresses": "Addresses"
   },
   "TopBar": {
     "CallUs": "Call us"

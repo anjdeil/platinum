@@ -39,10 +39,12 @@ import {
   ProductTitleWrapper,
   ProductWrapper,
 } from './styles';
+import { useResponsive } from '@/hooks/useResponsive';
 
 const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
   const { images, thumbnail } = product;
   const t = useTranslations('Product');
+  const { isMobile } = useResponsive();
   const { user: userSlice } = useAppSelector(state => state.userSlice);
   const dispatch = useAppDispatch();
   const { cartItems } = useAppSelector(state => state.cartSlice);
@@ -111,7 +113,9 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
         ...(currentVariation && { variation_id: currentVariation.id }),
       })
     );
-    dispatch(popupToggle('mini-cart'));
+    if (!isMobile) {
+      dispatch(popupToggle('mini-cart'));
+    }
   }
 
   const stockQuantity = useMemo(() => {

@@ -17,8 +17,8 @@ const shouldForwardProp = (prop: string) =>
 export const BenefitsLayout = styled(Box, {
   shouldForwardProp,
 })<BenefitsGapProps>`
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: ${({ gapMedium = '16px' }) => gapMedium};
   margin-bottom: 80px;
   @media ${({ theme }) => theme.media.medium} {
@@ -40,6 +40,7 @@ export const BenefitsItem = styled(Box, {
   justify-content: flex-end;
   gap: ${({ gapMedium = '16px' }) => gapMedium};
   min-width: 30%;
+
   @media ${({ theme }) => theme.media.medium} {
     :nth-of-type(1) {
       width: 50%;
@@ -71,6 +72,15 @@ export const BenefitsTitle = styled(Title)`
 `;
 
 export const BenefitsAccordionDetails = styled(AccordionDetails)`
+  &.silver {
+    min-height: 200px;
+  }
+  &.gold {
+    min-height: 350px;
+  }
+  &.platinum {
+    min-height: 450px;
+  }
   margin-top: ${({ theme }) => theme.spacing.medium};
 `;
 
