@@ -45,7 +45,7 @@ const OrderBar: FC<OrderBarProps> = ({
                   {subtotal !== totalDisc ? (
                     <FlexBox alignItems="flex-end">
                       <CrossedOut>{roundedPrice(subtotal)}</CrossedOut>
-                      {totalDisc}&nbsp;{symbol}
+                      {roundedPrice(totalDisc)}&nbsp;{symbol}
                     </FlexBox>
                   ) : (
                     <>
