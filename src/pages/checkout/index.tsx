@@ -175,7 +175,7 @@ export default function CheckoutPage() {
         total: String(shippingMethodCost),
       });
     }
-  }, [shippingMethod, parcelMachine, currency, isCurrencyLoading, totalWeight]);
+  }, [shippingMethod, parcelMachine, currency, isCurrencyLoading, totalWeight, totalCost]);
 
   /**
    * Order logic
