@@ -158,7 +158,10 @@
     "thickness": "thickness",
     "length": "length",
     "leaveAReviewAboutProduct": "Leave a review about product",
-    "descriptions": "Descriptions"
+    "descriptions": "Descriptions",
+    "days": "Days",
+    "hours": "Hours",
+    "minutes": "Minutes"
   },
   "Cart": {
     "cart": "Cart",

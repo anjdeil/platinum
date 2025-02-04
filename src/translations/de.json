@@ -158,7 +158,10 @@
     "thickness": "Dicke",
     "length": "Länge",
     "leaveAReviewAboutProduct": "Hinterlassen Sie eine Bewertung über die Ware",
-    "descriptions": "Beschreibung"
+    "descriptions": "Beschreibung",
+    "days": "Tage",
+    "hours": "Stunden",
+    "minutes": "Minuten"
   },
   "Cart": {
     "cart": "Warenkorb",

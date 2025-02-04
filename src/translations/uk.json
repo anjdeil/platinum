@@ -158,7 +158,10 @@
     "thickness": "товщина",
     "length": "довжина",
     "leaveAReviewAboutProduct": "Залиште відгук про товар",
-    "descriptions": "Опис"
+    "descriptions": "Опис",
+    "days": "Днів",
+    "hours": "Годин",
+    "minutes": "Хвилин"
   },
   "Cart": {
     "cart": "Кошик",

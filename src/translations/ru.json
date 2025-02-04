@@ -158,7 +158,10 @@
     "thickness": "толщина",
     "length": "длина",
     "leaveAReviewAboutProduct": "Оставьте отзыв о товаре",
-    "descriptions": "Описание"
+    "descriptions": "Описание",
+    "days": "Дней",
+    "hours": "Часов",
+    "minutes": "Минут"
   },
   "Cart": {
     "cart": "Корзина",
