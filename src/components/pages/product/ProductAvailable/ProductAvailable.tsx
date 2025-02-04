@@ -1,24 +1,31 @@
-import { useTranslations } from "next-intl";
-import { AvailableStyles, EmptyStyled } from "./styles";
+import { useTranslations } from 'next-intl';
+import { AvailableStyles, EmptyStyled } from './styles';
+import { Skeleton } from '@mui/material';
 
-const ProductAvailable = ({ count = 0 }) =>
-{
-    const t = useTranslations("Product");
+interface ProductAvailableProps {
+  count: number;
+}
 
-    return (
+const ProductAvailable: React.FC<ProductAvailableProps> = ({ count }) => {
+  const t = useTranslations('Product');
+
+  return (
+    <>
+      {!count ? (
+        <Skeleton width="120px" height="24px" />
+      ) : (
         <>
-            {count > 0 ? (
-                <AvailableStyles>
-                    {`${t("available", { count: count })}`}
-                </AvailableStyles >
-            ) : (
-                <EmptyStyled>
-                    {t(`notAvailable`)}
-                </EmptyStyled >
-            )}
-            
+          {count > 0 ? (
+            <AvailableStyles>
+              {`${t('available', { count: count })}`}
+            </AvailableStyles>
+          ) : (
+            <EmptyStyled>{t(`notAvailable`)}</EmptyStyled>
+          )}
         </>
-    );
+      )}
+    </>
+  );
 };
 
 export default ProductAvailable;

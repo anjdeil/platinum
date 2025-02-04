@@ -154,7 +154,14 @@
     "submitting": "Wysyłanie",
     "commentText1": "Czy przetestowałeś nasz produkt? Podziel się swoją opinią;",
     "commentText2": "- Staramy się być najlepsi dla Ciebie, a Twoja opinia bardzo nam pomoże!",
-    "lastedArticles": "Najnowsze artykuły"
+    "lastedArticles": "Najnowsze artykuły",
+    "thickness": "grubość",
+    "length": "długość",
+    "leaveAReviewAboutProduct": "Zostaw recenzję o towarze",
+    "descriptions": "Opis",
+    "days": "Dni",
+    "hours": "Godziny",
+    "minutes": "Minuty"
   },
   "Cart": {
     "cart": "Koszyk",
