@@ -25,6 +25,7 @@ import {
 import { useWishlist } from '@/hooks/useWishlist';
 import { popupToggle } from '@/store/slices/PopupSlice';
 import { Skeleton } from '@mui/material';
+import { useResponsive } from '@/hooks/useResponsive';
 
 const ProductCard: React.FC<ProductCardPropsType> = ({ product, currency }) => {
   const t = useTranslations('Product');
