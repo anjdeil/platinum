@@ -47,6 +47,7 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
   const dispatch = useAppDispatch();
   const { cartItems } = useAppSelector(state => state.cartSlice);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const router = useRouter();
 
   const {
     handleWishlistToggle,
@@ -70,16 +71,6 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
   const [quantity, setQuantity] = useState<number>(1);
   const [cartMatch, setCartMatch] = useState<CartItem>();
 
-  useEffect(() => {
-    const cartMatch = cartItems.find(
-      ({ product_id }) => product_id === product.id
-    );
-    if (cartMatch) {
-      setCartMatch(cartMatch);
-      setQuantity(cartMatch.quantity);
-    }
-  }, [cartItems]);
-
   /**
    * Choosen variation
    */
@@ -88,10 +79,20 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
   // Temporary code (whole useEffect) for assigning the current variation
   useEffect(() => {
     setCurrentVariation(product?.variations[0]);
-  }, []);
+  }, [router.query]);
+
+  useEffect(() => {
+    const cartMatch = cartItems.find(
+      ({ variation_id }) => variation_id === currentVariation?.id
+    );
+    if (cartMatch) {
+      setCartMatch(cartMatch);
+      setQuantity(cartMatch.quantity);
+    }
+  }, [cartItems, currentVariation]);
 
   function renderCartButtonInnerText() {
-    if (cartMatch) {
+    if (cartMatch && cartMatch.variation_id === currentVariation?.id) {
       if (cartMatch.quantity === quantity) return t('viewCart');
       return t('updateCart');
     } else {
@@ -117,14 +118,6 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
     if (product?.stock_quantity) return product?.stock_quantity;
     return 0;
   }, [currentVariation, product]);
-
-  const router = useRouter();
-
-  useEffect(() => {
-    if (product) {
-      console.log('product:', product);
-    }
-  }, [product]);
 
   /** Set default attributes */
   useEffect(() => {
@@ -200,7 +193,9 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
         </ProductFlexWrapper>
         {currency.rate ? (
           currentVariation ? (
-            currentVariation.price !== null && (
+            currentVariation.price !== null &&
+            product.min_price !== null &&
+            product.max_price !== null && (
               <ProductPrice
                 currency={currency}
                 minPrice={(currentVariation.price ?? 0) * currency.rate}

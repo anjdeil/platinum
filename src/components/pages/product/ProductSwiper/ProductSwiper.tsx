@@ -21,9 +21,6 @@ import {
   ThumbnailWrapper,
   ThumbsSwiper,
 } from './styles';
-import ProductBadgeWrapper from '@/components/shop/product/ProductBadgeWrapper/ProductBadgeWrapper';
-import ProductBadge from '@/components/shop/product/ProductBadge/ProductBadge';
-import FavoriteButton from '@/components/global/buttons/FavoriteButton/FavoriteButton';
 
 const ProductSwiper: React.FC<SwiperProps> = ({ data, handleFavorite }) => {
   const {
@@ -40,14 +37,6 @@ const ProductSwiper: React.FC<SwiperProps> = ({ data, handleFavorite }) => {
 
   return (
     <SwiperContainer>
-      <ProductBadgeWrapper>
-        <ProductBadge type="sale" />
-        <FavoriteButton
-          isLoading={false}
-          active={true}
-          onClick={handleFavorite}
-        />
-      </ProductBadgeWrapper>
       <MainSwiper
         ref={swiperRef}
         spaceBetween={10}
