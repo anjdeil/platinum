@@ -9,7 +9,7 @@ import {
 } from '@/components/sections/styles';
 import { customRestApi } from '@/services/wpCustomApi';
 import { Container, StyledHeaderWrapper } from '@/styles/components';
-import { BlogParsedItemType } from '@/types/pages/blog';
+import { BlogCategoryType, BlogParsedItemType } from '@/types/pages/blog';
 import { CustomDataPostsType } from '@/types/services';
 import { serverParseHTMLContent } from '@/utils/blog/serverParseHTMLContent';
 import { validateWpBlogPage } from '@/utils/zodValidators/validateWpBlogPage';
@@ -33,13 +33,25 @@ export const getServerSideProps: GetServerSideProps = async (
       category: selectedCategory || undefined,
     });
 
+    const categoriesResponseData = await customRestApi.get(`post-categories`, {
+      lang: locale,
+    });
+
     if (!responseData || responseData.status !== 200) {
+      return { notFound: true };
+    }
+
+    if (!categoriesResponseData || categoriesResponseData.status !== 200) {
       return { notFound: true };
     }
 
     if (responseData) {
       validateWpBlogPage(responseData.data);
     }
+
+    const categories = Array.isArray(categoriesResponseData?.data?.data?.items)
+      ? categoriesResponseData.data.data.items
+      : [];
 
     const pageResponseData = responseData.data as CustomDataPostsType;
     const postsData: BlogParsedItemType[] = pageResponseData.data.items.map(
@@ -58,6 +70,7 @@ export const getServerSideProps: GetServerSideProps = async (
     return {
       props: {
         posts: postsData,
+        categories,
         totalPages,
         page,
         selectedCategory,
@@ -74,22 +87,9 @@ export const getServerSideProps: GetServerSideProps = async (
   }
 };
 
-const getCategoriesFromPosts = (posts: BlogParsedItemType[]) => {
-  const categoriesSet = new Set<string>();
-
-  posts.forEach(post => {
-    post.categories.forEach(category => {
-      categoriesSet.add(
-        JSON.stringify({ name: category.name, slug: category.slug })
-      );
-    });
-  });
-
-  return Array.from(categoriesSet).map(item => JSON.parse(item));
-};
-
 interface BlogProps {
   posts: BlogParsedItemType[];
+  categories: BlogCategoryType[];
   totalPages: number;
   page: number;
   selectedCategory: string | null;
@@ -97,13 +97,12 @@ interface BlogProps {
 
 const BlogPage: React.FC<BlogProps> = ({
   posts,
+  categories,
   totalPages,
   page,
   selectedCategory,
 }) => {
   const router = useRouter();
-
-  const categories = getCategoriesFromPosts(posts);
 
   const handleCategoryChange = (categorySlug: string | null) => {
     let newQuery = categorySlug

@@ -6,6 +6,15 @@ export const ThumbnailSchema = z.object({
   src: z.string(),
 });
 
+export const BlogCategorySchema = z.object({
+  id: z.number(),
+  parent_id: z.number(),
+  name: z.string(),
+  slug: z.string(),
+  description: z.string(),
+  count: z.number(),
+});
+
 export const BaseBlogItemSchema = z.object({
   id: z.number(),
   slug: z.string(),
@@ -24,16 +33,7 @@ export const BaseBlogItemSchema = z.object({
   status: z.string(),
   language_code: z.string(),
   menu_order: z.number(),
-  categories: z.array(
-    z.object({
-      id: z.number(),
-      parent_id: z.number(),
-      name: z.string(),
-      slug: z.string(),
-      description: z.string(),
-      count: z.number(),
-    })
-  ),
+  categories: z.array(BlogCategorySchema),
 });
 
 export const BlogItemSchema = BaseBlogItemSchema.extend({
@@ -84,6 +84,7 @@ export const BlogResponseTypeSchema = z.object({
 });
 
 export type BlogItemType = z.infer<typeof BlogItemSchema>;
+export type BlogCategoryType = z.infer<typeof BlogCategorySchema>;
 export type BlogListBlockProps = z.infer<typeof BlogListBlockPropsSchema>;
 export type BlogListSkeletonProps = z.infer<typeof BlogListSkeletonPropsSchema>;
 export type BlogParsedItemType = z.infer<typeof BlogParsedItemSchema>;
