@@ -22,7 +22,6 @@ import { CartLink, MiniCartContainer } from './style';
 import { FlexBox, LinkWrapper, StyledButton, Title } from '@/styles/components';
 import { Skeleton } from '@mui/material';
 import TrashIcon from '@/components/global/icons/TrashIcon/TrashIcon';
-import { OrderBarDesc } from '@/components/pages/cart/OrderBar/style';
 import Notification from '@/components/global/Notification/Notification';
 import { handleQuantityChange } from '@/utils/cart/handleQuantityChange';
 import { roundedPrice } from '@/utils/cart/roundedPrice';
