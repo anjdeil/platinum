@@ -75,6 +75,13 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
    */
   const [currentVariation, setCurrentVariation] = useState<ProductVariation>();
 
+  // Temporary code (whole useEffect) for assigning the current variation
+  /* useEffect(() => {
+    setCurrentVariation(product?.variations[0]);
+    console.log(currentVariation);
+    
+  }, []); */
+
   useEffect(() => {
     const cartMatch = cartItems.find(
       ({ product_id, variation_id }) =>
@@ -86,11 +93,6 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
       setQuantity(cartMatch.quantity);
     }
   }, [cartItems, product, currentVariation?.id]);
-
-  // Temporary code (whole useEffect) for assigning the current variation
-  useEffect(() => {
-    setCurrentVariation(product?.variations[0]);
-  }, []);
 
   function renderCartButtonInnerText() {
     if (cartMatch) {

@@ -74,7 +74,7 @@ const Wishlist: FC<WishlistPageProps> = ({ defaultCustomerData }) => {
       setWishListProducts([]);
       setIsLoadingWishlist(false);
     }
-  }, [wishlist, getProductsMinimized, router]);
+  }, [wishlist, getProductsMinimized, router.locale]);
 
   useEffect(() => {
     if (productsSpecsData?.data.items) {

@@ -1,8 +1,8 @@
-import styled from '@emotion/styled'
+import styled from '@emotion/styled';
 
 interface OrderBarDescProps {
-  textAlign?: 'left' | 'right'
-  marginBottom?: string
+  textAlign?: 'left' | 'right';
+  marginBottom?: string;
 }
 
 export const OrderBarWrapper = styled.div`
@@ -12,7 +12,7 @@ export const OrderBarWrapper = styled.div`
   background: ${({ theme }) => theme.background.secondary};
   display: flex;
   justify-content: space-between;
-`
+`;
 export const OrderBarTitle = styled.div<{ miniCart: boolean }>`
   display: flex;
   align-items: ${({ miniCart }) => miniCart && 'end'};
@@ -24,7 +24,7 @@ export const OrderBarTitle = styled.div<{ miniCart: boolean }>`
   margin-right: ${({ miniCart }) => miniCart && '10px'};
   text-transform: ${({ miniCart }) => (miniCart ? 'lowercase' : 'uppercase')};
   font-weight: ${({ miniCart }) => (miniCart ? '500' : '400')};
-`
+`;
 
 export const OrderBarContent = styled.div`
   height: 100%;
@@ -32,8 +32,8 @@ export const OrderBarContent = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: right;
-`
-export const OrderBarSum = styled.p`
+`;
+export const OrderBarSum = styled.div`
   text-align: right;
   display: flex;
   justify-content: end;
@@ -43,9 +43,17 @@ export const OrderBarSum = styled.p`
   &:not(:last-child) {
     margin-bottom: 8px;
   }
-`
+`;
 export const OrderBarDesc = styled.p<OrderBarDescProps>`
   color: ${({ theme }) => theme.colors.active};
   text-align: ${({ textAlign }) => textAlign};
   margin-bottom: ${({ marginBottom = '0' }) => marginBottom};
-`
+`;
+export const CrossedOut = styled.span`
+  position: relative;
+  font-size: 1rem;
+  line-height: 1.2rem;
+  color: ${({ theme }) => theme.colors.grey};
+  margin-right: 10px;
+  text-decoration: line-through;
+`;

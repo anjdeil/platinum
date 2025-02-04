@@ -1,5 +1,5 @@
 import { lineOrderItems } from '@/types/store/reducers/сartSlice';
-//with coupon  discount
+
 const getTotalByLineItems = (lineItems: lineOrderItems[]): number => {
   let total = 0;
 

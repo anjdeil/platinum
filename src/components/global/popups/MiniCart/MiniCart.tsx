@@ -62,29 +62,40 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
     if (!productsData || !cartItems) {
       return [];
     }
-    const cartItemsMap = cartItems.reduce((acc, cartItem) => {
-      acc[cartItem.product_id] = cartItem;
-      return acc;
-    }, {} as Record<number, (typeof cartItems)[0]>);
 
-    return productsData.map(product => {
-      const cartItem =
-        product.parent_id === 0
-          ? cartItemsMap[product.id]
-          : cartItemsMap[product.parent_id] || {};
+    const cartItemsMap = new Map<string, (typeof cartItems)[0]>();
 
-      const quantity = cartItem ? cartItem.quantity || 0 : 0;
-      const price = product.price || 0;
-      const totalPrice = price * quantity;
-
-      return {
-        ...product,
-        quantity,
-        ...(cartItem?.variation_id && { variation: cartItem.variation_id }),
-        product_id: cartItem?.product_id,
-        totalPrice,
-      };
+    cartItems.forEach(cartItem => {
+      const key = cartItem.variation_id
+        ? `v-${cartItem.product_id}-${cartItem.variation_id}`
+        : `p-${cartItem.product_id}`;
+      cartItemsMap.set(key, cartItem);
     });
+
+    return productsData
+      .map(product => {
+        const isVariation = product.parent_id !== 0;
+        const key = isVariation
+          ? `v-${product.parent_id}-${product.id}`
+          : `p-${product.id}`;
+
+        const cartItem = cartItemsMap.get(key) || undefined;
+
+        if (!cartItem) return undefined;
+
+        const quantity = cartItem ? cartItem.quantity || 0 : 0;
+        const price = product.price || 0;
+        const totalPrice = price * quantity;
+
+        return {
+          ...product,
+          quantity,
+          variation: cartItem?.variation_id || 0,
+          product_id: cartItem?.product_id || product.id,
+          totalPrice,
+        };
+      })
+      .filter((item): item is NonNullable<typeof item> => !!item);
   }, [productsData, cartItems]);
 
   const totalCartPrice = useMemo(
@@ -167,7 +178,7 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
             <p>{t('nothingInTheCartText')}</p>
           </FlexBox>
         )}
-        {productsWithCartData ? (
+        {productsWithCartData || cartItems.length !== 0 ? (
           productsWithCartData?.map(item => {
             const resolveCount = item.stock_quantity;
 
@@ -251,7 +262,7 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
 
         <OrderBar
           productsData={productsData}
-          cartSum={
+          subtotal={
             extendedCurrency?.rate !== undefined
               ? totalCartPrice * extendedCurrency.rate
               : undefined

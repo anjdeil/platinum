@@ -32,6 +32,8 @@ import {
   TextCell,
   TextCellHeader,
 } from './style';
+import { ProductsMinimizedType } from '@/types/components/shop/product/products';
+import { lineOrderItems } from '@/types/store/reducers/сartSlice';
 
 const CartTable: FC<CartTableProps> = ({
   symbol,
@@ -72,11 +74,26 @@ const CartTable: FC<CartTableProps> = ({
     handleChangeQuantity(productId, 'value', variationId, 0);
   };
 
+  const findProductSpec = (
+    productsSpecs: ProductsMinimizedType[],
+    item: lineOrderItems
+  ): ProductsMinimizedType | undefined => {
+    return productsSpecs.find(product =>
+      product.parent_id === 0
+        ? product.id === item.product_id
+        : product.parent_id === item.product_id &&
+          product.id === item.variation_id
+    );
+  };
+
   return (
     <CartTableWrapper>
-      {!!(!isLoadingOrder && hasConflict && firstLoad) && (
-        <Notification type="warning">{t('cartConflict')}</Notification>
-      )}
+      {!!(
+        !isLoadingOrder &&
+        hasConflict &&
+        firstLoad &&
+        cartItems.length !== 0
+      ) && <Notification type="warning">{t('cartConflict')}</Notification>}
       {cartItems.length == 0 && (
         <FlexBox flexDirection="column" margin="0 0 46px 0" alignItems="center">
           <Title fontSize="1.5em" as="h3" marginTop="46px" marginBottom="16px">
@@ -106,13 +123,7 @@ const CartTable: FC<CartTableProps> = ({
                   productsSpecs
                 );
 
-                const productSpec = productsSpecs.find(product => {
-                  if (product.parent_id === 0) {
-                    return product.id === item.product_id;
-                  } else {
-                    return product.parent_id === item.product_id;
-                  }
-                });
+                const productSpec = findProductSpec(productsSpecs, item);
 
                 return (
                   <RowWrapper key={item.id} isLoadingItem={isLoadingOrder}>
@@ -146,7 +157,9 @@ const CartTable: FC<CartTableProps> = ({
                         </LinkWrapper>
                       </TextNameCell>
                       <TextCell>
-                        {roundedPrice(item.price)}&nbsp;{symbol}
+                        {roundedPrice(Number(item.subtotal) / item.quantity)}
+                        &nbsp;
+                        {symbol}
                       </TextCell>
                       <TextCell>
                         <CartQuantity
@@ -156,7 +169,7 @@ const CartTable: FC<CartTableProps> = ({
                         />
                       </TextCell>
                       <TextCell>
-                        {roundedPrice(item.price * item.quantity)}&nbsp;
+                        {roundedPrice(Number(item.subtotal))}&nbsp;
                         {symbol}
                       </TextCell>
                     </GridRow>
@@ -200,13 +213,8 @@ const CartTable: FC<CartTableProps> = ({
                 item,
                 productsSpecs
               );
-              const productSpec = productsSpecs.find(product => {
-                if (product.parent_id === 0) {
-                  return product.id === item.product_id;
-                } else {
-                  return product.parent_id === item.product_id;
-                }
-              });
+
+              const productSpec = findProductSpec(productsSpecs, item);
 
               return (
                 <CartCardAllWrapper key={item.id}>
@@ -241,7 +249,8 @@ const CartTable: FC<CartTableProps> = ({
                       </ProducTitle>
                       <ProductPrice>
                         <p>
-                          {roundedPrice(item.price)}&nbsp;{symbol}
+                          {roundedPrice(Number(item.subtotal) / item.quantity)}
+                          &nbsp;{symbol}
                         </p>
                       </ProductPrice>
                       <CartQuantity
@@ -252,7 +261,7 @@ const CartTable: FC<CartTableProps> = ({
                       <ProductPrice>
                         <span>{t('summary')}</span>
                         <OnePrice>
-                          {roundedPrice(item.price * item.quantity)}&nbsp;
+                          {roundedPrice(Number(item.subtotal))}&nbsp;
                           {symbol}
                         </OnePrice>
                       </ProductPrice>

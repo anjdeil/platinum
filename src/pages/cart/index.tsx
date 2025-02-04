@@ -14,6 +14,7 @@ import { CreateOrderRequestType } from '@/types/services';
 import { JwtDecodedDataType } from '@/types/services/wpRestApi/auth';
 import { WpUserType } from '@/types/store/rtk-queries/wpApi';
 import checkCartConflict from '@/utils/cart/checkCartConflict';
+import getSubtotalByLineItems from '@/utils/cart/getSubtotalByLineItems';
 import getTotalByLineItems from '@/utils/cart/getTotalByLineItems';
 import { handleQuantityChange } from '@/utils/cart/handleQuantityChange';
 import { roundedPrice } from '@/utils/cart/roundedPrice';
@@ -114,6 +115,13 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
     [cartItems, dispatch]
   );
 
+  const subtotal = useMemo(
+    () =>
+      orderItems?.line_items
+        ? getSubtotalByLineItems(orderItems.line_items)
+        : 0,
+    [orderItems]
+  );
   const total = useMemo(
     () =>
       orderItems?.line_items ? getTotalByLineItems(orderItems.line_items) : 0,
@@ -173,7 +181,8 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
               <OrderBar
                 miniCart={false}
                 isLoadingOrder={isLoadingOrder}
-                cartSum={total}
+                totalDisc={total}
+                subtotal={subtotal}
                 symbol={symbol}
               />
             ) : (
