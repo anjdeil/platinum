@@ -328,7 +328,6 @@
     "selectCategory": "Виберіть категорію"
   },
   "ShippingMethodSelector": {
-    "delivery": "Доставка",
     "change": "Змінити",
     "parcelLocker": "Поштомат",
     "selectParcelLocker": "Вибрати поштомат",
@@ -338,6 +337,7 @@
     "close": "Закрити"
   },
   "Checkout": {
+    "delivery": "Доставка",
     "login": "Увійдіть",
     "fieldsWillFilled": ", і поля будуть заповнені автоматично після першого замовлення",
     "pay": "Оплатити замовлення",
@@ -350,7 +350,8 @@
     "proofSelect": "Виберіть спосіб підтвердження",
     "vatInvoice": "VAT-фактура",
     "company": "Ім'я та прізвище/Підприємство",
-    "nip": "ІПН"
+    "nip": "ІПН",
+    "freeShipping": "You need {cost} more to get free shipping."
   },
   "Footer": {
     "myAccount": "Мій акаунт",

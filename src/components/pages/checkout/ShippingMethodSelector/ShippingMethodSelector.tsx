@@ -19,8 +19,6 @@ import {
   ShippingMethodSelectorMethodRadioBox,
   ShippingMethodSelectorMethods,
   ShippingMethodSelectorNotification,
-  ShippingMethodSelectorTitle,
-  ShippingMethodSelectorWrapper,
 } from './style';
 import { ShippingMethodType } from '@/types/services';
 import ShippingMethodSelectorSkeleton from './ShippingMethodSelectorSkeleton';
@@ -59,9 +57,7 @@ export default function ShippingMethodSelector({
   };
 
   return (
-    <ShippingMethodSelectorWrapper>
-      <ShippingMethodSelectorTitle as={'h2'}>{t('delivery')}</ShippingMethodSelectorTitle>
-
+    <>
       {isLoading ?
         <ShippingMethodSelectorSkeleton />
         : Boolean(methods.length) ?
@@ -119,7 +115,6 @@ export default function ShippingMethodSelector({
           :
           <ShippingMethodSelectorNotification>{t('deliveryUnavailable')}</ShippingMethodSelectorNotification>
       }
-    </ShippingMethodSelectorWrapper>
-
+    </>
   );
 }
