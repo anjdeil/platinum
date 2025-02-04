@@ -27,9 +27,13 @@ export const ProductTitleWrapper = styled.div`
 `;
 
 export const ProductFlexWrapper = styled.div`
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+  @media ${({ theme }) => theme.media.preSmall} {
+    flex-direction: column;
+  }
 `;
 
 export const ProductImageWrapper = styled.div`

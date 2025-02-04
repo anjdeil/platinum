@@ -124,12 +124,6 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
 
   const router = useRouter();
 
-  useEffect(() => {
-    if (product) {
-      console.log('product:', product);
-    }
-  }, [product]);
-
   /** Set default attributes */
   useEffect(() => {
     if (product.type === 'variable') {
