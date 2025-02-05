@@ -1,13 +1,13 @@
 import { OrderType } from '@/types/services';
 import validateOrderShippingLines from '@/utils/checkout/validateOrderShippingLines';
 
-export default function validateOrder(order: OrderType) : {
-  isValid: boolean,
-  messageKeys: string[]
+export default function validateOrder(order: OrderType): {
+  isValid: boolean;
+  messageKeys: string[];
 } {
   const result = {
     isValid: true,
-    messageKeys: [] as string[]
+    messageKeys: [] as string[],
   };
 
   /**

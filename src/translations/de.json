@@ -6,17 +6,17 @@
   "MyAccount": {
     "order": "Bestellung",
     "clientPersonalAccount": "Kundenkonto",
-    "dashboard": "Armaturenbrett",
+    "dashboard": "Übersicht",
     "userInformation": "Benutzerinformationen",
     "shippingAddress": "Lieferadresse",
-    "orderHistory": "Geschichte der Bestellung",
+    "orderHistory": "Bestellverlauf",
     "wishlist": "Wunschzettel",
     "subscription": "Anmeldung zum Newsletter",
     "loyaltyProgram": "Loyalitätsprogramm",
     "changePassword": "Passwort ändern",
     "logout": "Abmeldung",
     "numberOfOrders": "Anzahl Der Bestellungen",
-    "totalOrderAmount": "Gesamtbetrag Der Aufträge",
+    "totalOrderAmount": "Gesamtbetrag der Bestellungen",
     "myInformation": "Meine Informationen",
     "number": "Nummer",
     "deliveryPaymentTotal": "Lieferung / Zahlung / Gesamt",
@@ -64,20 +64,20 @@
     "action": "Aktion",
     "availablePcs": "Verfügbar {quantity} Stk",
     "nothingInTheWishlist": "Auf der Wunschliste steht nichts...",
-    "apartmentNumber": "Wohnungsnumme",
-    "login": "Zaloguj się",
-    "log-In": "Zaloguj się",
-    "password": "Hasło",
-    "confirmPassword": "Potwierdź hasło",
-    "AlreadyHaveAnAccount": "Masz już konto?",
-    "DontHaveAnAccount": "Nie masz konta?",
-    "SignUpNow": "Zarejestruj się teraz!",
-    "register": "Zarejestruj się",
-    "registration": "Rejestracja",
-    "agreePersonalData": "Zgadzam się na przetwarzanie danych osobowych",
-    "EditUserInfo": "Zaktualizuj swój profil",
-    "successUpdate": "Twój profil został pomyślnie zaktualizowany",
-    "YourAccountHasBeenCreated": "Twoje konto zostało pomyślnie utworzone!",
+    "apartmentNumber": "Wohnungsnummer",
+    "login": "Einloggen",
+    "log-In": "Einloggen",
+    "password": "Passwort",
+    "confirmPassword": "Passwort bestätigen",
+    "AlreadyHaveAnAccount": "Haben Sie bereits ein Konto?",
+    "DontHaveAnAccount": "Haben Sie noch kein Konto?",
+    "SignUpNow": "Jetzt registrieren!",
+    "register": "Registrieren",
+    "registration": "Registrierung",
+    "agreePersonalData": "Ich stimme der Verarbeitung personenbezogener Daten zu",
+    "EditUserInfo": "Aktualisieren Sie Ihr Profil",
+    "successUpdate": "Ihr Profil wurde erfolgreich aktualisiert",
+    "YourAccountHasBeenCreated": "Ihr Konto wurde erfolgreich erstellt!",
     "ForgotYourPassword": "Haben Sie Ihr Passwort vergessen?",
     "SuccessfullyLoggedIn": "Erfolgreich eingeloggt!",
     "ErrorLoggedIn": "Falsche E-Mail-Adresse oder falsches Passwort. Bitte versuchen Sie es erneut.",
@@ -94,7 +94,8 @@
     "resetCodeAttemptsOne": "Der bereitgestellte Reset-Code ist ungültig. Sie haben noch 1 Versuch.",
     "passwordResetRequired": "Sie müssen einen Passwort-Reset-Code anfordern, bevor Sie versuchen, ein neues Passwort festzulegen.",
     "maxAttemptsExceeded": "Der bereitgestellte Reset-Code ist ungültig. Sie haben die maximal zulässige Anzahl von Versuchen überschritten. Sie müssen einen neuen Code anfordern.",
-    "codeProvidedHasExpired": "Der angegebene Rücksetzungscode ist abgelaufen."
+    "codeProvidedHasExpired": "Der angegebene Rücksetzungscode ist abgelaufen.",
+    "Addresses": "Adressen"
   },
   "TopBar": {
     "CallUs": "Kontakt"
@@ -115,10 +116,19 @@
     "applyFilter": "Anwenden",
     "searchResults": "Suchergebnisse",
     "phraseSought": "Gesuchte Phrase",
-    "productsNotFound": "Artikel nicht gefunden"
+    "productsNotFound": "Artikel nicht gefunden",
+    "filter": "Filter",
+    "price": "Preis",
+    "Length": "Länge",
+    "Thickness": "Dicke",
+    "Colour": "Farbe",
+    "Size": "Größe",
+    "Volumes": "Volumen",
+    "view": "Ansicht",
+    "gift certificate": "Geschenkgutschein"
   },
   "Product": {
-    "addToBasket": "In den Korb",
+    "addToBasket": "In den Warenkorb",
     "viewCart": "Warenkorb anzeigen",
     "chooseOptions": "Option wählen",
     "updateCart": "Menge aktualisieren",
@@ -145,7 +155,14 @@
     "addComment": "Kommentar hinzufügen",
     "submitting": "Einreichen",
     "commentText1": "Haben Sie unser Produkt getestet? Teilen Sie Ihre Meinung mit;",
-    "commentText2": "- Wir versuchen, das Beste für Sie zu sein, und Ihre Meinung wird uns sehr helfen!"
+    "commentText2": "- Wir versuchen, das Beste für Sie zu sein, und Ihre Meinung wird uns sehr helfen!",
+    "thickness": "Dicke",
+    "length": "Länge",
+    "leaveAReviewAboutProduct": "Hinterlassen Sie eine Bewertung über die Ware",
+    "descriptions": "Beschreibung",
+    "days": "Tage",
+    "hours": "Stunden",
+    "minutes": "Minuten"
   },
   "Cart": {
     "cart": "Warenkorb",
@@ -193,7 +210,8 @@
     "nothingInTheCart": "Es ist nichts im Warenkorb...",
     "goToShop": "Zum Shop gehen",
     "nothingInTheCartText": "Sehen Sie sich unsere neuen Produkte an oder nutzen Sie die Suche, wenn Sie etwas Bestimmtes suchen",
-    "YouNeedToLoginForOrder": "Sie müssen sich anmelden, um eine Bestellung aufzugeben."
+    "YouNeedToLoginForOrder": "Sie müssen sich anmelden, um eine Bestellung aufzugeben.",
+    "сoupon": "Coupon"
   },
   "Contacts": {
     "contacts": "Kontakte",
@@ -254,7 +272,18 @@
     "PasswordsDoNotMatch": "Passwörter stimmen nicht überein",
     "parcelLocker": "Bitte wählen Sie ein Paketfach",
     "shippingMethod": "Bitte wählen Sie eine Versandart",
-    "noChanges": "Ihre Daten haben sich nicht geändert"
+    "noChanges": "Ihre Daten haben sich nicht geändert",
+    "noBillingInformation": "Keine Rechnungsinformationen",
+    "isRequired": "Feld ist erforderlich",
+    "areRequired": "Felder sind erforderlich",
+    "firstname": "Vorname",
+    "lastname": "Nachname",
+    "address1": "Straße und Hausnummer",
+    "address2": "Gebäudenummer",
+    "postcode": "Postleitzahl",
+    "emailI": "E-Mail",
+    "phoneIsRequired": "Telefon",
+    "apartmentNumber": "Wohnungsnummer"
   },
   "Forms": {
     "applicationForm": "application form",
@@ -264,10 +293,10 @@
     "fileTooLarge": "file too large"
   },
   "Breadcrumbs": {
-    "homePage": "Home Page",
-    "benefitsPage": "Loyalty Program",
-    "myAccount": "My account",
-    "registration": "Registration",
+    "homePage": "Hauptseite",
+    "benefitsPage": "Treueprogramm",
+    "myAccount": "Mein Konto",
+    "registration": "Anmeldung",
     "blogPage": "Blog"
   },
   "NotFoundPage": {
@@ -283,7 +312,7 @@
     "unreadMessageDate": "Jetzt",
     "subscribeToOurNewsletter": "Abonnieren Sie unseren Newsletter!",
     "newArrivals": "Treten Sie unserem WhatsApp-Newsletter bei, um exklusive Rabatte, tolle Angebote zu erhalten und immer auf dem neuesten Stand zu sein.",
-    "joinToWhatsApp": "Beitritt zu WhatsAp",
+    "joinToWhatsApp": "Beitritt zu WhatsApp",
     "subscribe": "Jetzt beitreten",
     "allShop": "Alle Geschäfte"
   },
@@ -293,7 +322,7 @@
     "typeValidEmail": "Geben Sie eine gültige email ein",
     "failedSubscribe": "Fehler beim Abonnieren",
     "successSubscribe": "Erfolgreich abonniert",
-    "userAlreadySubscribed": "Du wurdest bereits bemalt"
+    "userAlreadySubscribed": "Sie sind bereits abonniert"
   },
   "Delivery": {
     "costsTitle": "Lieferkosten sind in der Kaufkalkulation nicht enthalten.",
@@ -307,7 +336,6 @@
     "blogSectionSubtitle": "Letzte artikel"
   },
   "ShippingMethodSelector": {
-    "delivery": "Lieferung",
     "change": "Ändern",
     "parcelLocker": "Paketstation",
     "selectParcelLocker": "Paketstation auswählen",
@@ -317,6 +345,7 @@
     "close": "Schließen"
   },
   "Checkout": {
+    "delivery": "Lieferung",
     "login": "Loggen Sie sich ein",
     "fieldsWillFilled": " und die Felder werden nach Ihrer ersten Bestellung automatisch ausgefüllt",
     "pay": "Bezahlung der Bestellung",
@@ -329,7 +358,8 @@
     "proofSelect": "Wählen Sie den Kaufnachweis",
     "vatInvoice": "VAT Rechnung",
     "company": "Vor- und Nachname/Firma",
-    "nip": "Steuernummer"
+    "nip": "Steuernummer",
+    "freeShipping": "Um Free Shipping zu erreichen, bleiben {cost}."
   },
   "Footer": {
     "myAccount": "Mein Konto",

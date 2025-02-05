@@ -94,7 +94,8 @@
     "resetCodeAttemptsOne": "Наданий код скидання неправильний. У вас залишилась 1 спроба.",
     "passwordResetRequired": "Ви повинні запросити код скидання пароля перед тим, як спробувати встановити новий пароль.",
     "maxAttemptsExceeded": "Наданий код скидання неправильний. Ви використали максимальну кількість дозволених спроб. Вам потрібно запросити новий код.",
-    "codeProvidedHasExpired": "Термін дії наданого коду скидання закінчився."
+    "codeProvidedHasExpired": "Термін дії наданого коду скидання закінчився.",
+    "Addresses": "Адреси"
   },
   "TopBar": {
     "CallUs": "Контакт"
@@ -115,7 +116,16 @@
     "applyFilter": "Застосувати",
     "searchResults": "Результати пошуку",
     "phraseSought": "Шукана фраза",
-    "productsNotFound": "Товари не знайдено"
+    "productsNotFound": "Товари не знайдено",
+    "filter": "Фільтр",
+    "price": "Ціна",
+    "Length": "Довжина",
+    "Thickness": "Товщина",
+    "Colour": "Колір",
+    "Size": "Розмір",
+    "Volumes": "Об'єми",
+    "view": "Вид",
+    "gift certificate": "Подарунковий сертифікат"
   },
   "Product": {
     "addToBasket": "Додати до кошика",
@@ -145,7 +155,14 @@
     "submitting": "Відправка",
     "commentText1": "Ви протестували наш продукт? Поділіться своєю думкою;",
     "commentText2": "- Ми намагаємося бути найкращими для вас, і ваша думка дуже нам допоможе!",
-    "lastedArticles": "Останні статті"
+    "lastedArticles": "Останні статті",
+    "thickness": "товщина",
+    "length": "довжина",
+    "leaveAReviewAboutProduct": "Залиште відгук про товар",
+    "descriptions": "Опис",
+    "days": "Днів",
+    "hours": "Годин",
+    "minutes": "Хвилин"
   },
   "Cart": {
     "cart": "Кошик",
@@ -193,7 +210,8 @@
     "nothingInTheCart": "У кошику нічого немає...",
     "goToShop": "Перейти до магазину",
     "nothingInTheCartText": "Перегляньте наші нові продукти або скористайтеся пошуком, якщо ви шукаєте щось конкретне",
-    "YouNeedToLoginForOrder": "Вам потрібно увійти в систему, щоб оформити замовлення."
+    "YouNeedToLoginForOrder": "Вам потрібно увійти в систему, щоб оформити замовлення.",
+    "сoupon": "Купон"
   },
   "Contacts": {
     "contacts": "Контакти",
@@ -254,7 +272,18 @@
     "PasswordsDoNotMatch": "Паролі не збігаються",
     "parcelLocker": "Будь ласка, оберіть скриньку для посилок",
     "shippingMethod": "Будь ласка, оберіть спосіб доставки",
-    "noChanges": "Ваші дані не змінилися"
+    "noChanges": "Ваші дані не змінилися",
+    "noBillingInformation": "Ви не вказали інформацію про платника",
+    "isRequired": "поле обов'язкове для заповнення",
+    "areRequired": "поля обов'язкові для заповнення",
+    "firstname": "Ім'я",
+    "lastname": "Прізвище",
+    "address1": "Вулиця та номер будинку",
+    "address2": "Номер будівлі",
+    "postcode": "Поштовий індекс",
+    "emailI": "Електронна пошта",
+    "phoneIsRequired": "Телефон",
+    "apartmentNumber": "Номер квартири"
   },
   "Forms": {
     "applicationForm": "форма заявки",
@@ -307,7 +336,6 @@
     "blogPage": "Блог"
   },
   "ShippingMethodSelector": {
-    "delivery": "Доставка",
     "change": "Змінити",
     "parcelLocker": "Поштомат",
     "selectParcelLocker": "Вибрати поштомат",
@@ -317,6 +345,7 @@
     "close": "Закрити"
   },
   "Checkout": {
+    "delivery": "Доставка",
     "login": "Увійдіть",
     "fieldsWillFilled": ", і поля будуть заповнені автоматично після першого замовлення",
     "pay": "Оплатити замовлення",
@@ -329,7 +358,8 @@
     "proofSelect": "Виберіть спосіб підтвердження",
     "vatInvoice": "VAT-фактура",
     "company": "Ім'я та прізвище/Підприємство",
-    "nip": "ІПН"
+    "nip": "ІПН",
+    "freeShipping": "You need {cost} more to get free shipping."
   },
   "Footer": {
     "myAccount": "Мій акаунт",

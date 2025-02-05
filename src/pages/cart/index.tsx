@@ -5,23 +5,30 @@ import CartSummaryBlock from '@/components/pages/cart/CartSummaryBlock/CartSumma
 import CartTable from '@/components/pages/cart/CartTable/CartTable';
 import OrderBar from '@/components/pages/cart/OrderBar/OrderBar';
 import OrderProgress from '@/components/pages/cart/OrderProgress/OrderProgress';
-import useGetAuthToken from '@/hooks/useGetAuthToken';
+import wpRestApi from '@/services/wpRestApi';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { useCreateOrderMutation } from '@/store/rtk-queries/wooCustomApi';
-import { useLazyFetchUserDataQuery } from '@/store/rtk-queries/wpApi';
-import { useGetProductsMinimizedMutation } from '@/store/rtk-queries/wpCustomApi';
 import { CartPageWrapper } from '@/styles/cart/style';
 import { Container, FlexBox, StyledButton } from '@/styles/components';
 import { CreateOrderRequestType } from '@/types/services';
+import { JwtDecodedDataType } from '@/types/services/wpRestApi/auth';
+import { WpUserType } from '@/types/store/rtk-queries/wpApi';
 import checkCartConflict from '@/utils/cart/checkCartConflict';
 import getSubtotalByLineItems from '@/utils/cart/getSubtotalByLineItems';
+import getTotalByLineItems from '@/utils/cart/getTotalByLineItems';
 import { handleQuantityChange } from '@/utils/cart/handleQuantityChange';
 import { roundedPrice } from '@/utils/cart/roundedPrice';
+import { validateJwtDecode } from '@/utils/zodValidators/validateJwtDecode';
+import { decodeJwt } from 'jose';
 import { debounce } from 'lodash';
+import { GetServerSidePropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
-const CartPage: React.FC = () => {
+interface CartPageProps {
+  defaultCustomerData: WpUserType | null;
+}
+const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   const { name: code } = useAppSelector(state => state.currencySlice);
   const status: CreateOrderRequestType['status'] = 'on-hold';
   const [symbol, setSymbol] = useState<string>('');
@@ -32,55 +39,31 @@ const CartPage: React.FC = () => {
   const [auth, setAuth] = useState<boolean>(false);
   const [userLoyalityStatus, setUserLoyalityStatus] = useState<
     string | undefined
-  >('');
-
-  const authToken = useGetAuthToken();
-
-  const [fetchUserData, { data: userData, isLoading: isLoadingUser }] =
-    useLazyFetchUserDataQuery();
+  >();
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (authToken) {
-        try {
-          const result = await fetchUserData().unwrap();
-          setAuth(true);
-          if (result && result.meta && result.meta.loyalty) {
-            setUserLoyalityStatus(result.meta.loyalty);
-          }
-        } catch (error) {
-          console.error('Error fetching user data:', error);
-          setAuth(false);
-        }
-      } else if (authToken === undefined) {
-        setAuth(false);
-      }
-    };
-
-    fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authToken]);
+    if (defaultCustomerData) {
+      setAuth(true);
+      setUserLoyalityStatus(defaultCustomerData?.meta?.loyalty);
+    }
+  }, [defaultCustomerData]);
 
   const [createOrder, { data: orderItems, isLoading: isLoadingOrder }] =
     useCreateOrderMutation();
-  const { cartItems, couponCodes } = useAppSelector(state => state.cartSlice);
-  const [
-    getProductsMinimized,
-    { data: productsSpecsData, isLoading: isLoadingProductsMin },
-  ] = useGetProductsMinimizedMutation();
+
+  const { cartItems, couponCodes, productsData } = useAppSelector(
+    state => state.cartSlice
+  );
 
   const [cachedOrderItems, setCachedOrderItems] = useState(orderItems);
 
   const handleCreateOrder = async () => {
-    const userCoupons = userData?.meta?.loyalty
-      ? [{ code: userData.meta.loyalty }]
+    const userCoupons = defaultCustomerData?.meta.loyalty
+      ? [{ code: defaultCustomerData.meta.loyalty }]
       : [];
+
     const additionalCoupons = couponCodes.map((code: string) => ({ code }));
-    const combinedCoupons =
-      auth && userData
-        ? [...userCoupons, ...additionalCoupons]
-        : additionalCoupons;
-    setUserLoyalityStatus(userData?.meta?.loyalty);
+    const combinedCoupons = [...userCoupons, ...additionalCoupons];
 
     const requestData = {
       line_items: cartItems,
@@ -98,19 +81,13 @@ const CartPage: React.FC = () => {
   useEffect(() => {
     const debouncedCreateOrder = debounce(async () => {
       await handleCreateOrder();
-    }, 900);
+    }, 1200);
 
     debouncedCreateOrder();
     return () => {
       debouncedCreateOrder.cancel();
     };
-  }, [cartItems, couponCodes, code, userData]);
-
-  useEffect(() => {
-    if (cartItems.length > 0) {
-      getProductsMinimized(cartItems);
-    }
-  }, [getProductsMinimized, cartItems.length]);
+  }, [cartItems, couponCodes, code, defaultCustomerData]);
 
   useEffect(() => {
     if (orderItems?.currency_symbol) {
@@ -138,16 +115,16 @@ const CartPage: React.FC = () => {
     [cartItems, dispatch]
   );
 
-  const productsSpecs = useMemo(
-    () => productsSpecsData?.data?.items || [],
-    [productsSpecsData]
-  );
-
   const subtotal = useMemo(
     () =>
       orderItems?.line_items
         ? getSubtotalByLineItems(orderItems.line_items)
         : 0,
+    [orderItems]
+  );
+  const total = useMemo(
+    () =>
+      orderItems?.line_items ? getTotalByLineItems(orderItems.line_items) : 0,
     [orderItems]
   );
 
@@ -156,16 +133,16 @@ const CartPage: React.FC = () => {
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      setHasConflict(checkCartConflict(cartItems, productsSpecs));
+      setHasConflict(checkCartConflict(cartItems, productsData));
     }, 100);
 
     return () => clearTimeout(timeoutId);
-  }, [productsSpecs]);
+  }, [productsData]);
 
   const currentOrderItems = orderItems ?? cachedOrderItems;
 
-  const isLoading = isLoadingOrder || isLoadingUser;
-  const isLoadingCart = isLoadingOrder || isLoadingProductsMin || isLoadingUser;
+  const isLoading = isLoadingOrder;
+  const isLoadingCart = isLoadingOrder;
 
   //fix  hydration
   const [hydrated, setHydrated] = useState(false);
@@ -194,7 +171,7 @@ const CartPage: React.FC = () => {
               cartItems={cartItems}
               order={currentOrderItems}
               isLoadingOrder={isLoadingCart}
-              productsSpecs={productsSpecs}
+              productsSpecs={productsData}
               roundedPrice={roundedPrice}
               hasConflict={hasConflict}
               handleChangeQuantity={handleChangeQuantity}
@@ -204,7 +181,8 @@ const CartPage: React.FC = () => {
               <OrderBar
                 miniCart={false}
                 isLoadingOrder={isLoadingOrder}
-                cartSum={subtotal}
+                totalDisc={total}
+                subtotal={subtotal}
                 symbol={symbol}
               />
             ) : (
@@ -239,6 +217,59 @@ const CartPage: React.FC = () => {
       </Container>
     </>
   );
+};
+
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  const cookies = context.req.cookies;
+  const { locale } = context;
+
+  try {
+    if (!cookies?.authToken) {
+      throw new Error('Invalid or missing authentication token');
+    }
+
+    const authResp = await wpRestApi.post(
+      'jwt-auth/v1/token/validate',
+      {},
+      false,
+      `Bearer ${cookies.authToken}`
+    );
+    if (authResp?.data?.code !== 'jwt_auth_valid_token')
+      throw new Error('Invalid or missing authentication token');
+
+    const jwtDecodedData = decodeJwt(cookies.authToken) as JwtDecodedDataType;
+    const isJwtDecodedDataValid = await validateJwtDecode(jwtDecodedData);
+    if (!isJwtDecodedDataValid)
+      throw new Error('Invalid or missing authentication token');
+
+    const resp = await wpRestApi.get(
+      'users/me',
+      undefined,
+      `Bearer ${cookies.authToken}`
+    );
+
+    if (!resp?.data) {
+      throw new Error('Failed to fetch user data');
+    }
+
+    return {
+      props: {
+        defaultCustomerData: resp.data,
+        messages: (await import(`../../translations/${locale}.json`)).default,
+      },
+    };
+  } catch (err) {
+    console.error('Error validating auth token:', err);
+
+    return {
+      props: {
+        user: null,
+        messages: (await import(`../../translations/${locale}.json`)).default,
+      },
+    };
+  }
 };
 
 export default CartPage;

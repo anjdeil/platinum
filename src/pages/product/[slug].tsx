@@ -118,11 +118,15 @@ export const getServerSideProps: GetServerSideProps = async ({
   locale,
 }: GetServerSidePropsContext) => {
   const { slug } = query;
-
+    
   try {
     if (typeof slug !== 'string') throw new Error('Invalid product slug');
+    if (typeof locale !== 'string')
+      throw new Error('Invalid language parameter');
 
-    const response = await customRestApi.get(`products/${slug}`);
+    const response = await customRestApi.get(`products/${slug}`, {
+      lang: locale,
+    });
 
     const isValid = await validateCustomSingleProduct(response.data);
     if (!isValid) throw new Error('Invalid product data');

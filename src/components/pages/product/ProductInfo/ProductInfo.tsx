@@ -16,7 +16,7 @@ import { ProductType } from '@/types/pages/shop';
 import { CartItem } from '@/types/store/reducers/сartSlice';
 import { getCookieValue } from '@/utils/auth/getCookieValue';
 import { getCurrentVariation } from '@/utils/getCurrentVariation';
-import { CircularProgress } from '@mui/material';
+import { Skeleton } from '@mui/material';
 import ReactHtmlParser from 'html-react-parser';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
@@ -39,10 +39,12 @@ import {
   ProductTitleWrapper,
   ProductWrapper,
 } from './styles';
+import { useResponsive } from '@/hooks/useResponsive';
 
 const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
   const { images, thumbnail } = product;
   const t = useTranslations('Product');
+  const { isMobile } = useResponsive();
   const { user: userSlice } = useAppSelector(state => state.userSlice);
   const dispatch = useAppDispatch();
   const { cartItems } = useAppSelector(state => state.cartSlice);
@@ -70,25 +72,29 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
   const [quantity, setQuantity] = useState<number>(1);
   const [cartMatch, setCartMatch] = useState<CartItem>();
 
-  useEffect(() => {
-    const cartMatch = cartItems.find(
-      ({ product_id }) => product_id === product.id
-    );
-    if (cartMatch) {
-      setCartMatch(cartMatch);
-      setQuantity(cartMatch.quantity);
-    }
-  }, [cartItems]);
-
   /**
    * Choosen variation
    */
   const [currentVariation, setCurrentVariation] = useState<ProductVariation>();
 
   // Temporary code (whole useEffect) for assigning the current variation
-  useEffect(() => {
+  /* useEffect(() => {
     setCurrentVariation(product?.variations[0]);
-  }, []);
+    console.log(currentVariation);
+    
+  }, []); */
+
+  useEffect(() => {
+    const cartMatch = cartItems.find(
+      ({ product_id, variation_id }) =>
+        product_id === product.id &&
+        (!variation_id || variation_id === currentVariation?.id)
+    );
+    setCartMatch(cartMatch);
+    if (cartMatch) {
+      setQuantity(cartMatch.quantity);
+    }
+  }, [cartItems, product, currentVariation?.id]);
 
   function renderCartButtonInnerText() {
     if (cartMatch) {
@@ -107,7 +113,9 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
         ...(currentVariation && { variation_id: currentVariation.id }),
       })
     );
-    dispatch(popupToggle('mini-cart'));
+    if (!isMobile) {
+      dispatch(popupToggle('mini-cart'));
+    }
   }
 
   const stockQuantity = useMemo(() => {
@@ -119,12 +127,6 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
   }, [currentVariation, product]);
 
   const router = useRouter();
-
-  useEffect(() => {
-    if (product) {
-      console.log('product:', product);
-    }
-  }, [product]);
 
   /** Set default attributes */
   useEffect(() => {
@@ -158,19 +160,10 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
         ]
       : [...images];
 
-  function handleFavorite() {
-    if (isAuthenticated) {
-      console.log('Authenticated');
-      //proc
-    } else {
-      dispatch(popupToggle('login'));
-    }
-  }
-
   return (
     <ProductWrapper>
       <ProductImageWrapper>
-        <ProductSwiper handleFavorite={handleFavorite} data={galleryImages} />
+        <ProductSwiper data={galleryImages} />
         <ProductBadgeWrapper>
           {product.min_price !== product.max_price && (
             <ProductBadge type="sale" />
@@ -217,7 +210,7 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
             )
           )
         ) : (
-          <CircularProgress size={20} />
+          <Skeleton width="80px" height="40px" />
         )}
       </ProductTitleWrapper>
       <ProductInfoWrapper>
@@ -230,7 +223,7 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
         )}
         {/* Options END*/}
 
-        <ProductPromotion time={new Date('2024-10-30T00:00:00')} />
+        <ProductPromotion time={new Date('2025-10-30T00:00:00')} />
         <AddToBasketWrapper>
           <ProductQuantity quantity={quantity} onChange={setQuantity} />
 
@@ -247,9 +240,9 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
         <PaymentList />
         <ShippingList />
         <StyledButton onClick={addComment}>
-          Leave a review about product
+          {t('leaveAReviewAboutProduct')}
         </StyledButton>
-        <DetailsAccordion summary="Descriptions">
+        <DetailsAccordion summary={t('descriptions')}>
           <div
             dangerouslySetInnerHTML={{
               __html: ReactHtmlParser(

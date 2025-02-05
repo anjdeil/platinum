@@ -94,7 +94,8 @@
     "resetCodeAttemptsOne": "Podany kod resetowania jest nieprawidłowy. Pozostała 1 próba.",
     "passwordResetRequired": "Musisz poprosić o kod resetowania hasła, zanim spróbujesz ustawić nowe hasło.",
     "maxAttemptsExceeded": "Podany kod resetowania jest nieprawidłowy. Wykorzystałeś maksymalną liczbę dozwolonych prób. Musisz poprosić o nowy kod.",
-    "codeProvidedHasExpired": "Dostarczony kod resetowania wygasł."
+    "codeProvidedHasExpired": "Dostarczony kod resetowania wygasł.",
+    "Addresses": "Adresy"
   },
   "TopBar": {
     "CallUs": "Kontakt"
@@ -115,7 +116,16 @@
     "applyFilter": "Zastosuj",
     "searchResults": "Wyniki wyszukiwania",
     "phraseSought": "Poszukiwana fraza",
-    "productsNotFound": "Nie znaleziono towarów"
+    "productsNotFound": "Nie znaleziono towarów",
+    "filter": "Filtr",
+    "price": "Cena",
+    "Length": "Długość",
+    "Thickness": "Grubość",
+    "Colour": "Kolor",
+    "Size": "Rozmiar",
+    "Volumes": "Objemy",
+    "view": "Widok",
+    "gift certificate": "Certyfikat podarunkowy"
   },
   "Product": {
     "addToBasket": "Dodaj do koszyka",
@@ -145,7 +155,14 @@
     "submitting": "Wysyłanie",
     "commentText1": "Czy przetestowałeś nasz produkt? Podziel się swoją opinią;",
     "commentText2": "- Staramy się być najlepsi dla Ciebie, a Twoja opinia bardzo nam pomoże!",
-    "lastedArticles": "Najnowsze artykuły"
+    "lastedArticles": "Najnowsze artykuły",
+    "thickness": "grubość",
+    "length": "długość",
+    "leaveAReviewAboutProduct": "Zostaw recenzję o towarze",
+    "descriptions": "Opis",
+    "days": "Dni",
+    "hours": "Godziny",
+    "minutes": "Minuty"
   },
   "Cart": {
     "cart": "Koszyk",
@@ -193,7 +210,8 @@
     "nothingInTheCart": "Nie ma nic w koszyku...",
     "goToShop": "Przejdź do sklepu",
     "nothingInTheCartText": "Sprawdź nasze nowe produkty lub skorzystaj z wyszukiwarki, jeśli szukasz czegoś konkretnego",
-    "YouNeedToLoginForOrder": "Musisz się zalogować, aby złożyć zamówienie."
+    "YouNeedToLoginForOrder": "Musisz się zalogować, aby złożyć zamówienie.",
+    "сoupon": "Kupon"
   },
   "Contacts": {
     "contacts": "Kontakty",
@@ -254,7 +272,18 @@
     "PasswordsDoNotMatch": "Hasła nie są zgodne",
     "parcelLocker": "Wybierz paczkomat",
     "shippingMethod": "Wybierz metodę wysyłki",
-    "noChanges": "Dane nie uległy zmianie"
+    "noChanges": "Dane nie uległy zmianie",
+    "noBillingInformation": "Please, field the billing information",
+    "isRequired": "field is required",
+    "areRequired": "fields are required",
+    "firstname": "First name",
+    "lastname": "Last name",
+    "address1": "Street Address",
+    "address2": "Building number",
+    "postcode": "Postcode",
+    "emailI": "Email",
+    "phoneIsRequired": "Phone",
+    "apartmentNumber": "Apartment number"
   },
   "Forms": {
     "applicationForm": "Formularz zgłoszeniowy",
@@ -307,7 +336,6 @@
     "blogSectionSubtitle": "Ostatnie artykuły"
   },
   "ShippingMethodSelector": {
-    "delivery": "Dostawa",
     "change": "Zmień",
     "parcelLocker": "Paczkomat",
     "selectParcelLocker": "Wybierz paczkomat",
@@ -317,6 +345,7 @@
     "close": "Zamknij"
   },
   "Checkout": {
+    "delivery": "Dostawa",
     "login": "Zaloguj się",
     "fieldsWillFilled": ", a pola zostaną wypełnione automatycznie po pierwszym zamówieniu",
     "pay": "Opłacić zamówienie",
@@ -329,7 +358,8 @@
     "proofSelect": "Dowód zakupu",
     "vatInvoice": "VAT Faktura",
     "company": "Imię i nazwisko/Firma",
-    "nip": "NIP"
+    "nip": "NIP",
+    "freeShipping": "Aby uzyskać darmową wysyłkę, pozostało {cost}."
   },
   "Footer": {
     "myAccount": "Moje konto",

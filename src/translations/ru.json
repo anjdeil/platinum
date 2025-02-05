@@ -94,7 +94,8 @@
     "resetCodeAttemptsOne": "Предоставленный код сброса неверен. У вас осталась 1 попытка.",
     "passwordResetRequired": "Вы должны запросить код сброса пароля, прежде чем попытаться установить новый пароль.",
     "maxAttemptsExceeded": "Предоставленный код сброса неверен. Вы использовали максимальное количество разрешенных попыток. Вам нужно запросить новый код.",
-    "codeProvidedHasExpired": "Срок действия предоставленного кода сброса истек."
+    "codeProvidedHasExpired": "Срок действия предоставленного кода сброса истек.",
+    "Addresses": "Адреса"
   },
   "TopBar": {
     "CallUs": "Контакт"
@@ -115,7 +116,16 @@
     "applyFilter": "Применить",
     "searchResults": "Результаты поиска",
     "phraseSought": "Искомая фраза",
-    "productsNotFound": "Товары не найдены"
+    "productsNotFound": "Товары не найдены",
+    "filter": "Фильтр",
+    "price": "Цена",
+    "Length": "Длина",
+    "Thickness": "Толщина",
+    "Colour": "Цвет",
+    "Size": "Размер",
+    "Volumes": "Объемы",
+    "view": "Вид",
+    "gift certificate": "Подарочный сертификат"
   },
   "Product": {
     "addToBasket": "Добавить в корзину",
@@ -145,7 +155,14 @@
     "submitting": "Отправка",
     "commentText1": "Вы протестировали наш продукт? Поделитесь своим мнением;",
     "commentText2": "- Мы стараемся быть лучшими для вас, и ваше мнение очень нам поможет!",
-    "lastedArticles": "Последние статьи"
+    "lastedArticles": "Последние статьи",
+    "thickness": "толщина",
+    "length": "длина",
+    "leaveAReviewAboutProduct": "Оставьте отзыв о товаре",
+    "descriptions": "Описание",
+    "days": "Дней",
+    "hours": "Часов",
+    "minutes": "Минут"
   },
   "Cart": {
     "cart": "Корзина",
@@ -193,7 +210,8 @@
     "nothingInTheCart": "В корзине ничего нет...",
     "goToShop": "Перейти в магазин",
     "nothingInTheCartText": "Ознакомьтесь с нашими новыми продуктами или воспользуйтесь поиском, если вы ищете что-то конкретное",
-    "YouNeedToLoginForOrder": "Вам нужно войти в систему, чтобы оформить заказ."
+    "YouNeedToLoginForOrder": "Вам нужно войти в систему, чтобы оформить заказ.",
+    "сoupon": "Купон"
   },
   "Contacts": {
     "contacts": "Контакты",
@@ -254,7 +272,18 @@
     "PasswordsDoNotMatch": "Пароли не совпадают",
     "parcelLocker": "Пожалуйста, выберите шкафчик для посылок",
     "shippingMethod": "Пожалуйста, выберите способ доставки",
-    "noChanges": "В ваших данных нет никаких изменений"
+    "noChanges": "В ваших данных нет никаких изменений",
+    "noBillingInformation": "Please, field the billing information",
+    "isRequired": "поле обязательно для заполнения",
+    "areRequired": "поля обязательны для заполнения",
+    "firstname": "Имя",
+    "lastname": "Фамилия",
+    "address1": "Улица и номер дома",
+    "address2": "Номер здания",
+    "postcode": "Почтовый индекс",
+    "emailI": "Электронная почта",
+    "phoneIsRequired": "Телефон",
+    "apartmentNumber": "Номер квартиры"
   },
   "Forms": {
     "applicationForm": "Форма заявки",
@@ -307,7 +336,6 @@
     "blogSectionSubtitle": "Последние статьи"
   },
   "ShippingMethodSelector": {
-    "delivery": "Доставка",
     "change": "Изменить",
     "parcelLocker": "Почтомат",
     "selectParcelLocker": "Выбрать почтомат",
@@ -317,6 +345,7 @@
     "close": "Закрыть"
   },
   "Checkout": {
+    "delivery": "Доставка",
     "login": "Войдите",
     "fieldsWillFilled": ", и поля будут заполнены автоматически после вашего первого заказа",
     "pay": "Оплатить заказ",
@@ -329,7 +358,8 @@
     "proofSelect": "Доказательство покупки",
     "vatInvoice": "VAT-фактура",
     "company": "Имя и фамилия/Компания",
-    "nip": "ИНН"
+    "nip": "ИНН",
+    "freeShipping": "Чтобы получить бесплатную доставку, нужно еще {cost}."
   },
   "Footer": {
     "myAccount": "Мой аккаунт",

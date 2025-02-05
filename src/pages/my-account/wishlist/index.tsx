@@ -9,9 +9,7 @@ import { useGetProductsMinimizedMutation } from '@/store/rtk-queries/wpCustomApi
 import { ProductsMinimizedType } from '@/types/components/shop/product/products';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useCookies } from 'react-cookie';
-
+import { FC, useCallback, useEffect, useState } from 'react';
 import Notification from '@/components/global/Notification/Notification';
 import { CartLink } from '@/components/global/popups/MiniCart/style';
 import {
@@ -19,16 +17,27 @@ import {
   SkeletonWrapper,
   StyledButton,
 } from '@/styles/components';
-import { WishlistItem } from '@/types/store/rtk-queries/wpApi';
+import { WishlistItem, WpUserType } from '@/types/store/rtk-queries/wpApi';
+import { GetServerSidePropsContext } from 'next';
+import wpRestApi from '@/services/wpRestApi';
+import { decodeJwt } from 'jose';
+import { validateJwtDecode } from '@/utils/zodValidators/validateJwtDecode';
+import { JwtDecodedDataType } from '@/types/services/wpRestApi/auth';
 
-function Wishlist() {
+interface WishlistPageProps {
+  defaultCustomerData: WpUserType | null;
+}
+
+const Wishlist: FC<WishlistPageProps> = ({ defaultCustomerData }) => {
   const { code: symbol } = useAppSelector(state => state.currencySlice);
   const router = useRouter();
   const tMyAccount = useTranslations('MyAccount');
   const tCart = useTranslations('Cart');
-  const [cookie] = useCookies(['authToken']);
 
   const [isLoadingWishlist, setIsLoadingWishlist] = useState(true);
+  const [wishlist, setWishlist] = useState(
+    defaultCustomerData?.meta.wishlist || []
+  );
 
   const [
     fetchUserData,
@@ -46,39 +55,26 @@ function Wishlist() {
     { data: productsSpecsData, isLoading: isProductsLoading },
   ] = useGetProductsMinimizedMutation();
 
-  const wishlist: WishlistItem[] = useMemo(
-    () => userData?.meta?.wishlist || [],
-    [userData]
-  );
+  useEffect(() => {
+    setWishlist(userData?.meta.wishlist || []);
+  }, [userData]);
 
   const [wishListProducts, setWishListProducts] = useState<
     ProductsMinimizedType[]
   >([]);
 
   useEffect(() => {
-    const authToken =
-      cookie.authToken ||
-      document.cookie
-        .split('; ')
-        .find(row => row.startsWith('authToken='))
-        ?.split('=')[1];
-
-    if (authToken) {
-      fetchUserData().then(() => setIsLoadingWishlist(false));
-    } else {
-      router.push('/my-account/login');
-    }
-  }, [cookie.authToken, fetchUserData]);
-
-  useEffect(() => {
-    if (wishlist.length > 0) {
-      getProductsMinimized(wishlist);
+    if (wishlist && router.locale !== undefined && wishlist?.length > 0) {
+      getProductsMinimized({
+        cartItems: wishlist,
+        lang: router.locale,
+      });
       setIsLoadingWishlist(true);
     } else {
       setWishListProducts([]);
       setIsLoadingWishlist(false);
     }
-  }, [wishlist, getProductsMinimized]);
+  }, [wishlist, getProductsMinimized, router.locale]);
 
   useEffect(() => {
     if (productsSpecsData?.data.items) {
@@ -89,7 +85,7 @@ function Wishlist() {
 
   const handleDelete = useCallback(
     ({ product_id, variation_id }: WishlistItem) => {
-      const updatedWishlist = wishlist.filter(
+      const updatedWishlist = wishlist?.filter(
         item =>
           !(
             item.product_id === product_id &&
@@ -110,14 +106,14 @@ function Wishlist() {
   );
 
   const isLoading =
-    !userData ||
     isProductsLoading ||
     isUserDataLoading ||
     isUserUpdateLoading ||
     isUserFetching ||
     isLoadingWishlist;
 
-  const skeletonsCount = wishListProducts.length || 2;
+  const skeletonsCount = wishListProducts.length || 1;
+
   const Skeletons = Array.from({ length: skeletonsCount }, (_, index) => (
     <SkeletonItem key={index} variant="rounded" />
   ));
@@ -130,7 +126,7 @@ function Wishlist() {
         <WishListTable
           symbol={symbol}
           wishlist={wishListProducts}
-          wishlistMinElements={wishlist}
+          wishlistMinElements={wishlist || []}
           isLoading={isLoading}
           onDelete={handleDelete}
         />
@@ -150,6 +146,77 @@ function Wishlist() {
       )}
     </AccountLayout>
   );
-}
+};
+
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  const cookies = context.req.cookies;
+  const { locale } = context;
+
+  try {
+    if (!cookies?.authToken) {
+      return {
+        redirect: {
+          destination: '/my-account/login',
+          permanent: false,
+        },
+      };
+    }
+
+    const authResp = await wpRestApi.post(
+      'jwt-auth/v1/token/validate',
+      {},
+      false,
+      `Bearer ${cookies.authToken}`
+    );
+    if (authResp?.data?.code !== 'jwt_auth_valid_token') {
+      return {
+        redirect: {
+          destination: '/my-account/login',
+          permanent: false,
+        },
+      };
+    }
+
+    const jwtDecodedData = decodeJwt(cookies.authToken) as JwtDecodedDataType;
+    const isJwtDecodedDataValid = await validateJwtDecode(jwtDecodedData);
+    if (!isJwtDecodedDataValid) {
+      return {
+        redirect: {
+          destination: '/my-account/login',
+          permanent: false,
+        },
+      };
+    }
+
+    const resp = await wpRestApi.get(
+      'users/me',
+      undefined,
+      `Bearer ${cookies.authToken}`
+    );
+
+    if (!resp?.data) {
+      throw new Error('Failed to fetch user data');
+    }
+
+    return {
+      props: {
+        defaultCustomerData: resp.data,
+        messages: (await import(`../../../translations/${locale}.json`))
+          .default,
+      },
+    };
+  } catch (err) {
+    console.error('Error validating auth token:', err);
+
+    return {
+      redirect: {
+        destination: '/my-account/login',
+        permanent: false,
+      },
+    };
+  }
+};
 
 export default Wishlist;

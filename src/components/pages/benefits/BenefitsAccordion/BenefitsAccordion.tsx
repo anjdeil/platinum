@@ -1,26 +1,25 @@
-import { FC, useCallback, useMemo } from 'react';
-import React, { useState } from 'react';
-import {
-  BenefitsLayout,
-  BenefitsTitle,
-  BenefitsPrice,
-  BenefitsItem,
-  BenefitsAccordionStyled,
-  CustomAccordionSummary,
-  AccordionTitle,
-  AccordionHeader,
-  BenefitsAccordionDetails,
-} from './styles';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { useMediaQuery } from '@mui/material';
-import { CustomSvgMarker } from '../CustomSvgMarker';
-import { BenefitsList } from '../BenefitsList';
+import { useAppSelector } from '@/store';
 import {
   BenefitsProps,
   loyaltyDescriptionSchema,
 } from '@/types/components/pages/benefits/benefitsAccordion';
-import { useAppSelector } from '@/store';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { useMediaQuery } from '@mui/material';
+import { FC, useCallback, useMemo, useState } from 'react';
 import { MenuSkeleton } from '../../../menus/MenuSkeleton';
+import { BenefitsList } from '../BenefitsList';
+import { CustomSvgMarker } from '../CustomSvgMarker';
+import {
+  AccordionHeader,
+  AccordionTitle,
+  BenefitsAccordionDetails,
+  BenefitsAccordionStyled,
+  BenefitsItem,
+  BenefitsLayout,
+  BenefitsPrice,
+  BenefitsTitle,
+  CustomAccordionSummary,
+} from './styles';
 
 const renderDescriptionList = (
   description: string | undefined,
@@ -40,7 +39,7 @@ export const BenefitsAccordion: FC<BenefitsProps> = ({
   gapMedium,
   gapLg,
 }) => {
-  const isMobile = useMediaQuery('(max-width: 768px)');
+  const isMobile = useMediaQuery('(max-width: 767px)');
   const [expanded, setExpanded] = useState<string | false>(
     !isMobile ? 'expanded' : false
   );
@@ -52,7 +51,7 @@ export const BenefitsAccordion: FC<BenefitsProps> = ({
     []
   );
 
-  const themeOptions = useAppSelector((state) => state.themeOptions);
+  const themeOptions = useAppSelector(state => state.themeOptions);
 
   const data = useMemo(() => {
     return themeOptions.data.item.loyalty_options;
@@ -81,20 +80,21 @@ export const BenefitsAccordion: FC<BenefitsProps> = ({
         <BenefitsAccordionStyled
           expanded={!isMobile || expanded === 'panel1'}
           onChange={handleChange('panel1')}
-          level='silver'
-          role='region'
-          aria-labelledby='accordion1-header'
+          level="silver"
+          role="region"
+          aria-labelledby="accordion1-header"
         >
           <CustomAccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls='accordion1-content'
-            id='accordion1-header'
+            aria-controls="accordion1-content"
+            id="accordion1-header"
           >
             <AccordionTitle>Silver Level Benefits</AccordionTitle>
           </CustomAccordionSummary>
           <BenefitsAccordionDetails
+            className="silver"
             aria-expanded={expanded === 'panel1'}
-            id='accordion1-content'
+            id="accordion1-content"
           >
             <BenefitsList>
               {validatedData ? (
@@ -117,20 +117,21 @@ export const BenefitsAccordion: FC<BenefitsProps> = ({
         <BenefitsAccordionStyled
           expanded={!isMobile || expanded === 'panel2'}
           onChange={handleChange('panel2')}
-          level='gold'
-          role='region'
-          aria-labelledby='accordion2-header'
+          level="gold"
+          role="region"
+          aria-labelledby="accordion2-header"
         >
           <CustomAccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls='accordion2-content'
-            id='accordion2-header'
+            aria-controls="accordion2-content"
+            id="accordion2-header"
           >
             <AccordionTitle>Gold Level Benefits</AccordionTitle>
           </CustomAccordionSummary>
           <BenefitsAccordionDetails
+            className="gold"
             aria-expanded={expanded === 'panel2'}
-            id='accordion2-content'
+            id="accordion2-content"
           >
             <BenefitsList>
               {validatedData ? (
@@ -153,20 +154,21 @@ export const BenefitsAccordion: FC<BenefitsProps> = ({
         <BenefitsAccordionStyled
           expanded={!isMobile || expanded === 'panel3'}
           onChange={handleChange('panel3')}
-          level='platinum'
-          role='region'
-          aria-labelledby='accordion3-header'
+          level="platinum"
+          role="region"
+          aria-labelledby="accordion3-header"
         >
           <CustomAccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls='accordion3-content'
-            id='accordion3-header'
+            aria-controls="accordion3-content"
+            id="accordion3-header"
           >
             <AccordionTitle>Platinum Level Benefits</AccordionTitle>
           </CustomAccordionSummary>
           <BenefitsAccordionDetails
+            className="platinum"
             aria-expanded={expanded === 'panel3'}
-            id='accordion3-content'
+            id="accordion3-content"
           >
             <BenefitsList>
               {validatedData ? (
