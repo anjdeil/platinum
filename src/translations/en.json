@@ -101,7 +101,8 @@
     "CallUs": "Call us"
   },
   "Search": {
-    "Search": "Search"
+    "Search": "Search",
+    "showAll": "Show all"
   },
   "Archive": {
     "goHome": "Home",

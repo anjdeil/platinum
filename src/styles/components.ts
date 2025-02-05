@@ -144,6 +144,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
       : theme.colors.primary};
   padding-block: 16px;
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
+  font-size: ${({ fontSize = '1rem' }) => fontSize};
   text-transform: none;
   border: ${({ isDisabled = false, theme }) =>
     isDisabled ? 'none' : `1px solid ${theme.colors.secondary}`};

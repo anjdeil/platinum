@@ -101,7 +101,8 @@
     "CallUs": "Контакт"
   },
   "Search": {
-    "Search": "Поиск"
+    "Search": "Поиск",
+    "showAll": "Показать всё"
   },
   "Archive": {
     "goHome": "Главная",

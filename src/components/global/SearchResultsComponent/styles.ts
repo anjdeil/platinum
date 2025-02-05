@@ -52,7 +52,7 @@ export const SearchInputLoadingIcon = styled(CircularProgress)`
 export const SearchResults = styled.div`
   background-color: rgba(242, 248, 254, 0.9);
   backdrop-filter: blur(15px);
-  max-height: 500px;
+  max-height: 380px;
   overflow-y: scroll;
   @media ${({ theme }) => theme.media.medium} {
     max-height: 100%;
@@ -108,6 +108,19 @@ export const SearchResultsRowCat = styled.div`
   font-weight: 600;
   opacity: 0.4;
   margin-top: 0.4em;
+  max-width: 100%;
+  max-height: 1.3em;
+  overflow: hidden;
+`;
+export const SearchResultsPrice = styled.div`
+  font-size: 1em;
+  opacity: 0.8;
+  margin-right: 1em;
+`;
+export const SearchButtonWrapper = styled.div`
+  padding: 10px;
+  display: flex;
+  justify-content: center;
 `;
 
 export const SearchResultsRow = styled.button`

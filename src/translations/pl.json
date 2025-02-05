@@ -101,7 +101,8 @@
     "CallUs": "Kontakt"
   },
   "Search": {
-    "Search": "Wyszukiwanie"
+    "Search": "Wyszukiwanie",
+    "showAll": "Pokaż wszystko"
   },
   "Archive": {
     "goHome": "Główna",
