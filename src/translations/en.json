@@ -388,7 +388,9 @@
     "vatInvoice": "VAT invoice",
     "company": "Name and surname/Company",
     "nip": "TIN",
-    "freeShipping": "You need {cost} more to get free shipping."
+    "freeShipping": "You need {cost} more to get free shipping.",
+    "shippingDifferentAddress": "Ship to a different address?",
+    "inValidForm": "Place, fill customer information correctly"
   },
   "Footer": {
     "myAccount": "My account",

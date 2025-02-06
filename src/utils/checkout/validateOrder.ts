@@ -1,4 +1,4 @@
-import { OrderType } from '@/types/services';
+import { OrderType } from '@/types/services/wooCustomApi/customer';
 import validateOrderShippingLines from '@/utils/checkout/validateOrderShippingLines';
 
 export default function validateOrder(order: OrderType): {

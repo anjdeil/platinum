@@ -129,3 +129,7 @@ export const StyledCheckbox = styled(Checkbox)(({ theme }) => ({
     fontSize: 30,
   },
 }));
+
+export const StyledSingleCheckBoxWrapper = styled.div`
+  margin-bottom: 24px;
+`;

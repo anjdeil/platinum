@@ -388,7 +388,9 @@
     "vatInvoice": "VAT Rechnung",
     "company": "Vor- und Nachname/Firma",
     "nip": "Steuernummer",
-    "freeShipping": "Um Free Shipping zu erreichen, bleiben {cost}."
+    "freeShipping": "Um Free Shipping zu erreichen, bleiben {cost}.",
+    "shippingDifferentAddress": "Lieferadresse ist anders als Rechnungsadresse",
+    "inValidForm": "Das Formular ist ungültig"
   },
   "Footer": {
     "myAccount": "Mein Konto",

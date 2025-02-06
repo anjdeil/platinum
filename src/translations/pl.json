@@ -388,7 +388,9 @@
     "vatInvoice": "VAT Faktura",
     "company": "Imię i nazwisko/Firma",
     "nip": "NIP",
-    "freeShipping": "Aby uzyskać darmową wysyłkę, pozostało {cost}."
+    "freeShipping": "Aby uzyskać darmową wysyłkę, pozostało {cost}.",
+    "shippingDifferentAddress": "Wysyłka na inny adres",
+    "inValidForm": "Formularz zawiera błędy"
   },
   "Footer": {
     "myAccount": "Moje konto",

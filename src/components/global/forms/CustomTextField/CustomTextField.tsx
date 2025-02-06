@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { RegisterOptions } from 'react-hook-form';
+import { Controller, RegisterOptions } from 'react-hook-form';
 import {
   ShowPasswordImage,
   StyledError,
@@ -15,6 +15,7 @@ interface CustomTextFieldProps {
   isPhone?: boolean;
   name: string;
   register: any;
+  control?: any;
   inputType?: string;
   autocomplete?: string;
   errors: any;
@@ -24,12 +25,14 @@ interface CustomTextFieldProps {
   defaultValue?: string;
   onChange?: (value: string) => void;
   onBlur?: (value: string) => void;
+  notRequired?: boolean;
 }
 
 const CustomTextField: React.FC<CustomTextFieldProps> = ({
   isPhone,
   name,
   register,
+  control,
   inputType,
   autocomplete,
   errors,
@@ -37,8 +40,7 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
   validation,
   setValue,
   defaultValue,
-  onChange,
-  onBlur,
+  notRequired,
 }) => {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
 
@@ -62,8 +64,14 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
     ? '/images/show-pass.svg'
     : '/images/hidden-pass.svg';
 
-  const label = `${placeholder}*`;
-  const autoCompleteValue = autocomplete || name;
+  const label = notRequired ? placeholder : `${placeholder} *`;
+  const autocompleteName =
+    name === 'password'
+      ? 'new-password'
+      : name === 'company'
+      ? 'organization'
+      : name;
+  const autoCompleteValue = autocomplete || autocompleteName;
   const defaultPhoneValue = '+48';
 
   useEffect(() => {
@@ -76,24 +84,26 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
     <>
       <StyledFormControl fullWidth>
         <StyledFormLabel htmlFor={name}>{label}</StyledFormLabel>
+
         {isPhone ? (
           <>
             <StyledInputStyle isError={!!errors[name]} isPhone={isPhone}>
               <StyledPhoneWrapper>
-                <StyledPhoneInput
-                  {...register(name, validation)}
-                  defaultCountry="pl"
-                  value={defaultValue}
-                  error={!!errors[name]}
-                  onChange={(value: string) => {
-                    setValue(name, value, {
-                      shouldValidate: value !== defaultPhoneValue,
-                    });
-                    onChange?.(value);
-                  }}
-                  onBlur={(e: React.FocusEvent<HTMLInputElement>) => {
-                    onBlur?.(e.target.value);
-                  }}
+                <Controller
+                  name={name}
+                  control={control}
+                  rules={validation}
+                  render={({ field }) => (
+                    <StyledPhoneInput
+                      {...field}
+                      defaultCountry="pl"
+                      onChange={value =>
+                        setValue(name, value, { shouldValidate: true })
+                      }
+                      value={field.value || ''}
+                      onBlur={() => field.onBlur()}
+                    />
+                  )}
                 />
               </StyledPhoneWrapper>
               {errors[name] && (

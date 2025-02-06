@@ -36,15 +36,21 @@ import checkCartConflict from '@/utils/cart/checkCartConflict';
 import parcelMachinesMethods from '@/utils/checkout/parcelMachinesMethods';
 import CheckoutWarnings from '@/components/pages/checkout/CheckoutWarnings';
 import validateOrder from '@/utils/checkout/validateOrder';
-import { AddressType } from '@/types/services/wooCustomApi/customer';
 import getCalculatedMethodCostByWeight from '@/utils/checkout/getCalculatedMethodCostByWeight';
 import getShippingMethodFixedCost from '@/utils/checkout/getShippingMethodFixedCost';
 import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
-import validateBillingData from '@/utils/checkout/validateBillingData';
-import BillingWarnings from '@/components/pages/checkout/BillingWarnings';
 import getCartTotals from '@/utils/cart/getCartTotals';
 import FreeShippingNotifications from '@/components/pages/checkout/FreeShippingNotifications/FreeShippingNotifications';
 import { NewBillingForm } from '@/components/global/forms/BillingForm/NewBillingForm';
+import Notification from '@/components/global/Notification/Notification';
+import {
+  RegistrationType,
+} from '@/utils/checkout/getFormattedUserData';
+import {
+  BillingType,
+  MetaDataType,
+  ShippingType,
+} from '@/types/services/wooCustomApi/customer';
 
 export function getServerSideProps() {
   return {
@@ -199,13 +205,30 @@ export default function CheckoutPage() {
     'on-hold'
   );
 
-  const [billingData, setBillingData] = useState<AddressType | null>();
+  // // Get data from BillingForm
+  // const [billingData, setBillingData] = useState<BillingType | null>(null);
+  // const [shippingData, setShippingData] = useState<ShippingType | null>(null);
+  // const [metaData, setMetaData] = useState<MetaDataType[] | null>(null);
+  // const [registrationData, setRegistrationData] =
+  //   useState<RegistrationType | null>(null);
+
+  const [isValidation, setIsValidation] = useState(false);
+  const [formOrderData, setFormOrderData] = useState<{
+    billing: BillingType | null;
+    shipping: ShippingType | null;
+    metaData: MetaDataType[] | null;
+    registration: RegistrationType | null;
+  }>({
+    billing: null,
+    shipping: null,
+    metaData: null,
+    registration: null,
+  });
 
   useEffect(() => {
-    if (!billingData?.country) return;
-
-    setCurrentCountryCode(billingData.country);
-  }, [billingData?.country]);
+    if (!formOrderData.shipping?.country) return;
+    setCurrentCountryCode(formOrderData.shipping.country);
+  }, [formOrderData.shipping?.country]);
 
   const authToken = useGetAuthToken();
   const { name: currencyCode } = useAppSelector(state => state.currencySlice);
@@ -242,33 +265,53 @@ export default function CheckoutPage() {
   /**
    * Order validation
    */
+  // const [billingWarning, setBillingWarning] = useState<string | null>(null);
+  // const [registrationError, setRegistrationError] = useState<string | null>(
+  //   null
+  // );
+
   const [warnings, setWarnings] = useState<string[]>();
-  const [billingWarnings, setBillingWarnings] = useState<string[]>();
+  const [validationErrors, setValidationErrors] = useState<string[]>([]);
+
   const [isWarningsShown, setIsWarningsShown] = useState(false);
 
   /**
    * Validate billing data
    */
-  const [isBillingDataReady, setIsBillingDataReady] = useState(false);
+  // const { registerUser, error } = useRegisterUser();
 
-  console.log('billingData', billingData);
-  useEffect(() => {
-    if (
-      billingData &&
-      !Object.values(billingData).every(value => value === '')
-    ) {
-      const result = validateBillingData(billingData);
-      if (result.isValid) {
-        setIsBillingDataReady(true);
-        setBillingWarnings([]);
-      } else {
-        setIsBillingDataReady(false);
-        setBillingWarnings(result.messageKeys);
-      }
-    }
-  }, [billingData]);
+  console.log('formOrderData', formOrderData);
+  console.log('validationErrors', validationErrors);
 
   const handlePayOrder = () => {
+    setIsValidation(true);
+    //triger form fields if !billingData
+    // if (!billingData) {
+    //   setBillingWarning('inValidForm');
+
+    //   return;
+    // } else {
+    //   setBillingData(billingData);
+    //   setBillingWarning(null);
+    // }
+
+    // if (!shippingData) {
+    //   setBillingWarning('inValidForm');
+    //   return;
+    // } else {
+    //   setBillingWarning(null);
+    // }
+
+    // if (registrationData) {
+    //   registerUser(registrationData);
+    //   if (ok) {
+    //     setRegistrationError(null);
+    //   } else {
+    //     setRegistrationError(error);
+    //     return;
+    //   }
+    // }
+
     if (!order) return;
     const validationResult = validateOrder(order);
     if (validationResult.isValid) {
@@ -276,8 +319,6 @@ export default function CheckoutPage() {
     } else {
       setIsWarningsShown(true);
     }
-
-    // register user
 
     setWarnings(validationResult.messageKeys);
   };
@@ -296,7 +337,9 @@ export default function CheckoutPage() {
       line_items: cartItems,
       coupon_lines: couponLines,
       ...(currencyCode && { currency: currencyCode }),
-      ...(billingData && orderStatus === 'pending' && { billing: billingData }),
+      // ...(billingData && orderStatus === 'pending' && { billing: billingData }),
+      //...(shippingData && orderStatus === 'pending' && { shipping: shippingData }),
+      //...(metaData && orderStatus === 'pending' && { meta_data: metaData }),
       ...(userData?.id && { customer_id: userData.id }),
       ...(shippingLine && { shipping_lines: [shippingLine] }),
     });
@@ -307,7 +350,6 @@ export default function CheckoutPage() {
     currencyCode,
     userData,
     shippingLine,
-    isBillingDataReady,
   ]);
 
   useEffect(() => {
@@ -324,18 +366,24 @@ export default function CheckoutPage() {
       <CheckoutContainer>
         <CheckoutFormsWrapper>
           {/* Billing and shipping forms */}
-          {billingWarnings && isWarningsShown && (
-            <BillingWarnings messages={billingWarnings}></BillingWarnings>
+          {validationErrors.length > 0 && (
+            <Notification type={'warning'}>{validationErrors}</Notification>
           )}
           {/* <BillingForm setBillingData={setBillingData} /> */}
-          <NewBillingForm setBillingData={setBillingData} />
+          <NewBillingForm
+            setFormOrderData={setFormOrderData}
+            setCurrentCountryCode={setCurrentCountryCode}
+            setValidationErrors={setValidationErrors}
+            isValidation={isValidation}
+            setIsValidation={setIsValidation}
+          />
 
           <CheckoutFormSection>
             <CheckoutFormSectionTitle as={'h2'}>
               {t('delivery')}
             </CheckoutFormSectionTitle>
 
-            {warnings && (
+            {warnings && isWarningsShown && (
               <CheckoutWarnings messages={warnings}></CheckoutWarnings>
             )}
 
@@ -380,6 +428,9 @@ export default function CheckoutPage() {
             </CheckoutAgreementWrapper>
           </CheckoutPayButtonWrapper>
         </CheckoutSummaryWrapper>
+        {/* {registrationError && (
+          <Notification type={'warning'}>{registrationError}</Notification>
+        )} */}
       </CheckoutContainer>
 
       {isGeowidgetShown && (

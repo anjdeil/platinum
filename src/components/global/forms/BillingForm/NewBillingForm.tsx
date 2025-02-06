@@ -1,9 +1,10 @@
-import { useForm, useWatch } from 'react-hook-form';
+import { FieldError, useForm, useWatch } from 'react-hook-form';
 import {
   AnimatedWrapper,
   StyledFomContainer,
   StyledFormWrapper,
   StyledPhoneWrapper,
+  StyledSingleCheckBoxWrapper,
   VariationFields,
 } from './style';
 import { CustomForm, Title } from '@/styles/components';
@@ -15,14 +16,40 @@ import CustomTextField from '../CustomTextField/CustomTextField';
 import { useGetCustomerData } from '@/hooks/useGetCustomerData';
 import CustomCountrySelect from '../../selects/CustomCountrySelect/CustomCountrySelect';
 import { countryOptions } from '@/utils/mockdata/countryOptions';
-import { AddressType } from '@/types/services/wooCustomApi/customer';
 import { FormCheckbox } from './FormCheckbox';
+import {
+  getFormattedUserData,
+  RegistrationType,
+  ReqData,
+} from '@/utils/checkout/getFormattedUserData';
+import {
+  BillingType,
+  MetaDataType,
+  ShippingType,
+} from '@/types/services/wooCustomApi/customer';
+
+type OrderFormData = {
+  billing: BillingType | null;
+  shipping: ShippingType | null;
+  metaData: MetaDataType[] | null;
+  registration: RegistrationType | null;
+};
 
 interface BillingFormProps {
-  setBillingData: (formData: AddressType | null) => void;
+  setFormOrderData: (data: OrderFormData) => void;
+  setCurrentCountryCode: (code: string) => void;
+  setValidationErrors: (errors: string[]) => void;
+  isValidation: boolean;
+  setIsValidation: (value: boolean) => void;
 }
 
-export const NewBillingForm: FC<BillingFormProps> = ({ setBillingData }) => {
+export const NewBillingForm: FC<BillingFormProps> = ({
+  setFormOrderData,
+  setCurrentCountryCode,
+  setValidationErrors,
+  isValidation,
+  setIsValidation,
+}) => {
   const { customer, isCustomerLoading } = useGetCustomerData();
   const tValidation = useTranslations('Validation');
   const tCheckout = useTranslations('Checkout');
@@ -30,7 +57,6 @@ export const NewBillingForm: FC<BillingFormProps> = ({ setBillingData }) => {
 
   const {
     register,
-    handleSubmit,
     formState: { errors, isValid },
     setValue,
     control,
@@ -40,13 +66,44 @@ export const NewBillingForm: FC<BillingFormProps> = ({ setBillingData }) => {
     mode: 'onBlur',
   });
 
+  const phone = useWatch({
+    control,
+    name: 'registration',
+    defaultValue: false,
+  });
+
+  console.log(phone, 'phone');
+  const isRegistration = useWatch({
+    control,
+    name: 'registration',
+    defaultValue: false,
+  });
+
+  const isInvoice = useWatch({
+    control,
+    name: 'invoice',
+    defaultValue: false,
+  });
+
+  const isDifferentAddress = useWatch({
+    control,
+    name: 'same_address',
+    defaultValue: false,
+  });
+
+  const password = watch('password');
+  const shippingCountry = watch('shipping_country');
+  const watchedFields = useWatch({ control });
+
   useEffect(() => {
     if (customer) {
+      const countryCode =
+        customer.billing?.country === '' ? 'PL' : customer.billing?.country;
       setValue('first_name', customer.billing?.first_name || '');
       setValue('last_name', customer.billing?.last_name || '');
       setValue('email', customer.billing?.email || '');
       setValue('phone', customer.billing?.phone || '');
-      setValue('country', customer.billing?.country || '');
+      setValue('country', countryCode);
       setValue('city', customer.billing?.city || '');
       setValue('address_1', customer.billing?.address_1 || '');
       setValue('address_2', customer.billing?.address_2?.split('/')[0] || '');
@@ -59,83 +116,144 @@ export const NewBillingForm: FC<BillingFormProps> = ({ setBillingData }) => {
     }
   }, [customer, setValue]);
 
-  const password = watch('password');
+  useEffect(() => {
+    if (isDifferentAddress) {
+      setValue('shipping_country', 'PL');
+      setValue('shipping_city', '');
+      setValue('shipping_address_1', '');
+      setValue('shipping_address_2', '');
+      setValue('shipping_apartmentNumber', '');
+      setValue('shipping_postcode', '');
+    } else {
+      setValue('shipping_country', watch('country'));
+      setValue('shipping_city', watch('city'));
+      setValue('shipping_address_1', watch('address_1'));
+      setValue('shipping_address_2', watch('address_2'));
+      setValue('shipping_apartmentNumber', watch('apartmentNumber'));
+      setValue('shipping_postcode', watch('postcode'));
+    }
+  }, [isDifferentAddress, watch, setValue]);
 
-  const watchedFields = useWatch({ control });
-  // const hasUserInput = Object.values(watchedFields).some(value => value);
-  const hasUserInput = Object.values(watchedFields).filter(
-    value => typeof value !== 'boolean' && value !== ''
-  );
   useEffect(() => {
     if (password) {
       trigger('confirm_password');
     }
   }, [password, trigger]);
 
-  // useEffect(() => {
-  //   const validateAndSetData = async () => {
-  //     // const hasUserInput = Object.values(watchedFields).some(value => value);
-
-  //     if (hasUserInput) {
-  //       const isFormValid = await trigger();
-  //       if (isFormValid) {
-  //         console.log('Форма валидна, передаю данные:', watchedFields);
-  //         setBillingData(watchedFields as AddressType);
-  //       } else {
-  //         console.log('Форма НЕ валидна, данные не переданы');
-  //       }
-  //     }
-  //   };
-
-  //   validateAndSetData();
-  // }, [watchedFields, trigger]);
+  useEffect(() => {
+    if (shippingCountry) {
+      setCurrentCountryCode(shippingCountry);
+    }
+  }, [shippingCountry]);
 
   useEffect(() => {
-    console.log('1', watchedFields, errors);
-    if (isValid && hasUserInput) {
-      console.log('2', watchedFields);
-      setBillingData(watchedFields as AddressType);
-    } else {
-      setBillingData(null);
-      if (hasUserInput.length > 3) trigger();
+    console.log('0', isValidation);
+    if (isValidation) {
+      console.log('1', isValidation);
+      trigger().then(isValid => {
+        if (isValid) {
+          console.log('2', isValidation);
+          const {
+            formattedBillingData,
+            formattedShippingData,
+            formattedRegistrationData,
+            formattedMetaData,
+            registration,
+          } = getFormattedUserData(watchedFields as ReqData);
+
+          setFormOrderData({
+            billing: formattedBillingData as BillingType,
+            shipping: formattedShippingData as ShippingType,
+            metaData: formattedMetaData as MetaDataType[],
+            registration: registration
+              ? (formattedRegistrationData as RegistrationType)
+              : null,
+          });
+          setValidationErrors([]);
+          setIsValidation(false);
+        } else {
+          setIsValidation(false);
+          const validationErrors = Object.values(errors)
+            .filter((error): error is FieldError => error !== undefined)
+            .map(error => error.message as string);
+          setValidationErrors(validationErrors);
+          console.log('3', isValidation);
+        }
+      });
     }
-  }, [watchedFields, isValid]);
+  }, [isValidation, isValid]);
 
-  interface LoginData {
-    email: string;
-    password: string;
-  }
-
-  const login = (data: LoginData): void => {
-    event.preventDefault();
-    console.log(data);
-  };
-  // const login = async data => {
-  //   let { email, password } = data;
-  //   email = email.trim();
-  //   try {
-  //     await signInWithEmailAndPassword(auth, email, password);
-  //   } catch (error) {
-  //   }
-  //   reset();
-  // };
-  // if (user) {
-  //   <Navigate to="/" replace />;
-  // }
-
-  const isRegistration = useWatch({
-    control,
-    name: 'registration',
-    defaultValue: false,
-  });
-
-  const handlePhoneChange = (value: string) => {
-    console.log('Телефон изменился:', value);
-  };
-
-  const handlePhoneBlur = (value: string) => {
-    console.log('Телефон потерял фокус:', value);
-  };
+  const addressFields = (form: string) => (
+    <>
+      <CustomCountrySelect
+        name={form === 'billing' ? 'country' : 'shipping_country'}
+        control={control}
+        options={countryOptions}
+        label={tMyAccount('country')}
+        errors={errors}
+        defaultValue={customer?.billing?.country || 'PL'}
+        noPaddings={true}
+      />
+      <CustomTextField
+        name={form === 'billing' ? 'city' : 'shipping_city'}
+        register={register}
+        inputType="text"
+        errors={errors}
+        placeholder={tMyAccount('city')}
+        validation={getValidationSchema('city', tValidation)}
+        setValue={setValue}
+        defaultValue={customer?.billing?.city || ''}
+        autocomplete="address-level2"
+      />
+      <CustomTextField
+        name={form === 'billing' ? 'address_1' : 'shipping_address_1'}
+        register={register}
+        inputType="text"
+        errors={errors}
+        placeholder={tMyAccount('address_1')}
+        validation={getValidationSchema('address_1', tValidation)}
+        setValue={setValue}
+        defaultValue={customer?.billing?.address_1 || ''}
+        autocomplete="address-line1"
+      />
+      <CustomTextField
+        name={form === 'billing' ? 'address_2' : 'shipping_address_2'}
+        register={register}
+        inputType="text"
+        errors={errors}
+        placeholder={tMyAccount('address_2')}
+        validation={getValidationSchema('address_2', tValidation)}
+        setValue={setValue}
+        defaultValue={customer?.billing?.address_2 || ''}
+        autocomplete="address-line2"
+      />
+      <CustomTextField
+        name={
+          form === 'billing' ? 'apartmentNumber' : 'shipping_apartmentNumber'
+        }
+        register={register}
+        inputType="text"
+        errors={errors}
+        placeholder={tValidation('apartment/office')}
+        validation={getValidationSchema('apartmentNumber', tValidation)}
+        setValue={setValue}
+        defaultValue={customer?.billing.address_2?.split('/')[1] || ''}
+        notRequired={true}
+        autocomplete="address-line3"
+      />
+      <CustomTextField
+        name={form === 'billing' ? 'postcode' : 'shipping_postcode'}
+        register={register}
+        inputType="text"
+        errors={errors}
+        placeholder={tMyAccount('postcode')}
+        validation={getValidationSchema('postcode', tValidation)}
+        setValue={setValue}
+        defaultValue={customer?.billing?.postcode || ''}
+        autocomplete="postal-code"
+      />
+    </>
+  );
 
   return (
     <>
@@ -148,7 +266,7 @@ export const NewBillingForm: FC<BillingFormProps> = ({ setBillingData }) => {
           <p>Loading...</p>
         ) : (
           <>
-            <CustomForm onSubmit={handleSubmit(login)} maxWidth="850px">
+            <CustomForm maxWidth="850px">
               <StyledFormWrapper>
                 <CustomTextField
                   name="first_name"
@@ -184,6 +302,7 @@ export const NewBillingForm: FC<BillingFormProps> = ({ setBillingData }) => {
                   <CustomTextField
                     isPhone={true}
                     name="phone"
+                    control={control}
                     register={register}
                     inputType="text"
                     autocomplete="tel"
@@ -192,8 +311,6 @@ export const NewBillingForm: FC<BillingFormProps> = ({ setBillingData }) => {
                     validation={getValidationSchema('phone', tValidation)}
                     setValue={setValue}
                     defaultValue={customer?.billing?.phone || ''}
-                    onChange={handlePhoneChange}
-                    onBlur={handlePhoneBlur}
                   />
                 </StyledPhoneWrapper>
               </StyledFormWrapper>
@@ -204,7 +321,7 @@ export const NewBillingForm: FC<BillingFormProps> = ({ setBillingData }) => {
                   errors={errors}
                   label={tCheckout('vatInvoice')}
                 />
-                {watchedFields.invoice && (
+                {isInvoice && (
                   <StyledFormWrapper>
                     <AnimatedWrapper isVisible={true}>
                       <CustomTextField
@@ -233,72 +350,7 @@ export const NewBillingForm: FC<BillingFormProps> = ({ setBillingData }) => {
                   </StyledFormWrapper>
                 )}
               </VariationFields>
-              <StyledFormWrapper>
-                <CustomCountrySelect
-                  name={`country`}
-                  control={control}
-                  options={countryOptions}
-                  label={tMyAccount('country')}
-                  errors={errors}
-                  defaultValue={customer?.billing?.country || 'PL'}
-                  noPaddings={true}
-                />
-                <CustomTextField
-                  name="city"
-                  register={register}
-                  inputType="text"
-                  errors={errors}
-                  placeholder={tMyAccount('city')}
-                  validation={getValidationSchema('city', tValidation)}
-                  setValue={setValue}
-                  defaultValue={customer?.billing?.city || ''}
-                />
-                <CustomTextField
-                  name="address_1"
-                  register={register}
-                  inputType="text"
-                  errors={errors}
-                  placeholder={tMyAccount('address_1')}
-                  validation={getValidationSchema('address_1', tValidation)}
-                  setValue={setValue}
-                  defaultValue={customer?.billing?.address_1 || ''}
-                />
-                <CustomTextField
-                  name="address_2"
-                  register={register}
-                  inputType="text"
-                  errors={errors}
-                  placeholder={tMyAccount('address_2')}
-                  validation={getValidationSchema('address_2', tValidation)}
-                  setValue={setValue}
-                  defaultValue={customer?.billing?.address_2 || ''}
-                />
-                <CustomTextField
-                  name="apartmentNumber"
-                  register={register}
-                  inputType="text"
-                  errors={errors}
-                  placeholder={tMyAccount('apartmentNumber')}
-                  validation={getValidationSchema(
-                    'apartmentNumber',
-                    tValidation
-                  )}
-                  setValue={setValue}
-                  defaultValue={
-                    customer?.billing.address_2?.split('/')[1] || ''
-                  }
-                />
-                <CustomTextField
-                  name="postcode"
-                  register={register}
-                  inputType="text"
-                  errors={errors}
-                  placeholder={tMyAccount('postcode')}
-                  validation={getValidationSchema('postcode', tValidation)}
-                  setValue={setValue}
-                  defaultValue={customer?.billing?.postcode || ''}
-                />
-              </StyledFormWrapper>
+              <StyledFormWrapper>{addressFields('billing')}</StyledFormWrapper>
               <VariationFields>
                 {watchedFields.registration && (
                   <StyledFormWrapper>
@@ -344,6 +396,36 @@ export const NewBillingForm: FC<BillingFormProps> = ({ setBillingData }) => {
           </>
         )}
       </StyledFomContainer>
+      <StyledFomContainer>
+        <Title as={'h2'} uppercase={true} marginBottom={'24px'}>
+          {tCheckout('shippingFormName')}
+        </Title>
+        <StyledSingleCheckBoxWrapper>
+          <FormCheckbox
+            name={'same_address'}
+            register={register}
+            errors={errors}
+            label={tCheckout('shippingDifferentAddress')}
+          />
+        </StyledSingleCheckBoxWrapper>
+        {isDifferentAddress && (
+          <CustomForm maxWidth="850px">
+            <StyledFormWrapper>{addressFields('shipping')}</StyledFormWrapper>
+          </CustomForm>
+        )}
+      </StyledFomContainer>
+      {/* {registrationError && (
+        <CustomError
+          dangerouslySetInnerHTML={{
+            __html: isAuthErrorResponseType(registrationError),
+          }}
+        ></CustomError>
+      )}
+      {isSubmitSuccessful && !registrationError && (
+        <CustomSuccess>
+          {tMyAccount('Your account has been created successfully!')}
+        </CustomSuccess>
+      )} */}
     </>
   );
 };

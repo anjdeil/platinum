@@ -12,12 +12,9 @@ export const StyledFormLabel = styled(FormLabel)`
   color: ${({ theme }) => theme.colors.black};
 `;
 
-interface StyledInputStyleProps {
-  isError: boolean;
-  isPhone?: boolean;
-}
-
-export const StyledInputStyle = styled.div<StyledInputStyleProps>`
+export const StyledInputStyle = styled('div', {
+  shouldForwardProp: prop => prop !== 'isError' && prop !== 'isPhone',
+})<{ isError?: boolean; isPhone?: boolean }>`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -86,7 +83,9 @@ export const StyledError = styled.div`
   }
 `;
 
-export const StyledTextField = styled(TextField)<{ isError: boolean }>`
+export const StyledTextField = styled(TextField, {
+  shouldForwardProp: prop => prop !== 'isError',
+})<{ isError?: boolean }>`
   box-sizing: border-box;
   margin-top: 4px !important;
   transition: border 0.1s ease-in-out, outline-color 0.1s ease-in-out;

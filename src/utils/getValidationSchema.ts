@@ -48,7 +48,7 @@ export const getValidationSchema = (
           message: t('yourPhoneNumberIsTooShort'),
         },
         pattern: {
-          value: /^\+?[1-9]\d{1,14}$/,
+          value: /^\+?[1-9]\d{1,14}$/g,
           message: t('invalidPhoneNumber'),
         },
       };
@@ -118,7 +118,6 @@ export const getValidationSchema = (
       };
     case 'apartmentNumber':
       return {
-        required: t('pleaseFillInTheApartmentNumber'),
         maxLength: {
           value: 10,
           message: t('yourApartmentNumberIsTooLong'),
