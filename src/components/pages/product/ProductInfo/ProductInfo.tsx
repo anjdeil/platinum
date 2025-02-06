@@ -4,6 +4,7 @@ import DetailsAccordion from '@/components/global/DetailsAccordeon/DetailsAccord
 import Rating from '@/components/global/Rating/Rating';
 import ProductBadge from '@/components/shop/product/ProductBadge/ProductBadge';
 import ProductBadgeWrapper from '@/components/shop/product/ProductBadgeWrapper/ProductBadgeWrapper';
+import { useResponsive } from '@/hooks/useResponsive';
 import { useWishlist } from '@/hooks/useWishlist';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { updateCart } from '@/store/slices/cartSlice';
@@ -39,7 +40,6 @@ import {
   ProductTitleWrapper,
   ProductWrapper,
 } from './styles';
-import { useResponsive } from '@/hooks/useResponsive';
 
 const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
   const { images, thumbnail } = product;
@@ -49,6 +49,8 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
   const dispatch = useAppDispatch();
   const { cartItems } = useAppSelector(state => state.cartSlice);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  console.log('product...', product);
 
   const {
     handleWishlistToggle,
