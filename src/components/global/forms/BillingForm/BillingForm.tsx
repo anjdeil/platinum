@@ -252,7 +252,7 @@ export const BillingForm: FC<BillingFormProps> = ({ setBillingData }) => {
       />
       <AnimatedWrapper isVisible={isInvoice}>
         {isInvoice && (
-          <StyledFormWrapper inMiddle>
+          <StyledFormWrapper>
             {['company', 'nip'].map(field => (
               <CustomFormInput
                 key={field}
@@ -318,7 +318,7 @@ export const BillingForm: FC<BillingFormProps> = ({ setBillingData }) => {
     <AnimatedWrapper isVisible={isRegistration}>
       {isRegistration && (
         <>
-          <StyledFormWrapper inMiddle>
+          <StyledFormWrapper>
             {['password', 'confirmPassword'].map(field => (
               <CustomFormInput
                 key={field}
@@ -361,11 +361,9 @@ export const BillingForm: FC<BillingFormProps> = ({ setBillingData }) => {
             <ConfirmationRegCard register={register} errors={errors} />
           )}
           <CustomForm onSubmit={handleSubmit(onSubmit)} maxWidth="850px">
-            <StyledFormWrapper inMiddle>
-              {personalInfoFields()}{' '}
-            </StyledFormWrapper>
+            <StyledFormWrapper>{personalInfoFields()} </StyledFormWrapper>
             <VariationFields>{invoiceFields()} </VariationFields>
-            <StyledFormWrapper inMiddle>{addressFields()} </StyledFormWrapper>
+            <StyledFormWrapper>{addressFields()} </StyledFormWrapper>
             <VariationFields>{registrationFields()} </VariationFields>
             <FormWrapperBottom>
               {error && customError && (
