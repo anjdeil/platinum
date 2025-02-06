@@ -5,6 +5,7 @@ import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 export const StyledSortAccordion = styled(Accordion)`
   box-shadow: none;
   position: relative;
+  margin-right: auto;
 
   &::before {
     display: none;

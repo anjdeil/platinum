@@ -82,7 +82,7 @@ export const CustomSortAccordion = () => {
       const newSlugs = slugs.filter(
         slug => slug !== 'page' && Number.isNaN(+slug)
       );
-      
+
       if (sort === 'stocks') {
         const { order_by, order, ...restParams } = params;
         router.push({
@@ -160,7 +160,7 @@ export const CustomSortAccordion = () => {
         </StyledText>
       </StyledSortAccordionSummary>
       <StyledSortDetails ref={detailsRef}>
-        {sorts.map((sort, index) => (
+        {sorts.map(sort => (
           <StyledSortItem
             key={sort.name}
             isSelected={currentSort === sort.name}

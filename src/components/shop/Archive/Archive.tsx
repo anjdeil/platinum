@@ -4,7 +4,6 @@ import FilterButton from '@/components/global/buttons/FilterButton/FilterButton'
 import CloseIcon from '@/components/global/icons/CloseIcon/CloseIcon';
 import Notification from '@/components/global/Notification/Notification';
 import MobileCategoriesMenu from '@/components/global/popups/MobileCategoriesMenu/MobileCategoriesMenu';
-import CategoriesMenu from '@/components/shop/categories/CategoriesMenu/CategoriesMenu';
 import { useResponsive } from '@/hooks/useResponsive';
 import transformCategoriesIntoLinks from '@/services/transformers/transformCategoriesIntoLinks';
 import { useAppSelector } from '@/store';
@@ -15,6 +14,7 @@ import { Skeleton } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import router from 'next/router';
 import { FC, useState } from 'react';
+import CategoriesMenu from '../categories/CategoriesMenu/CategoriesMenu';
 import SelectParentCategory from '../categories/SelectParentCategoryMobile/SelectParentCategoryMobile';
 import { FilterPanel } from '../filtration/FilterPanel';
 import { ProductCardList } from '../ProductCardsList';
@@ -139,80 +139,86 @@ export const Archive: FC<ArchivePropsType> = props => {
         </Title>
       </CatalogTitleWrapper>
       <CatalogLayout>
-        <CatalogFilterBlock visible={isMenuVisible}>
+        {!searchTerm && (
           <>
-            {isMenuVisible ? (
+            <CatalogFilterBlock visible={isMenuVisible}>
               <>
-                <FilterNCategoriesHead>
-                  <h4>{t('filter')}</h4>
-                  <CloseIcon onClick={toggleMenu} />
-                </FilterNCategoriesHead>
-                {!isMobile ? (
-                  <CategoriesMenu
-                    switchCategory={switchCategory}
-                    selectedCategories={categories}
-                    shop={true}
-                    isMenuVisible={isMenuVisible}
-                  />
-                ) : (
+                {isMenuVisible ? (
                   <>
-                    {categories.length !== 0 ? (
+                    <FilterNCategoriesHead>
+                      <h4>{t('filter')}</h4>
+                      <CloseIcon onClick={toggleMenu} />
+                    </FilterNCategoriesHead>
+                    {!isMobile ? (
+                      <CategoriesMenu
+                        switchCategory={switchCategory}
+                        selectedCategories={categories}
+                        shop={true}
+                        isMenuVisible={isMenuVisible}
+                      />
+                    ) : (
                       <>
-                        {isLoading ? (
-                          <Skeleton
-                            width="100%"
-                            height={48}
-                            variant="rounded"
-                          />
+                        {categories.length !== 0 ? (
+                          <>
+                            {isLoading ? (
+                              <Skeleton
+                                width="100%"
+                                height={48}
+                                variant="rounded"
+                              />
+                            ) : (
+                              <SelectParentCategory
+                                selectedCategories={categories}
+                                switchCategory={switchCategory}
+                              />
+                            )}
+                          </>
                         ) : (
-                          <SelectParentCategory
-                            selectedCategories={categories}
+                          <MobileCategoriesMenu
+                            padding="all"
+                            disableOverlay={true}
+                            width="100%"
+                            onClose={toggleMenu}
                             switchCategory={switchCategory}
                           />
                         )}
                       </>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    {isLoading ? (
+                      <Skeleton width="100%" height={48} variant="rounded" />
                     ) : (
-                      <MobileCategoriesMenu
-                        padding="all"
-                        disableOverlay={true}
-                        width="100%"
-                        onClose={toggleMenu}
+                      <SelectParentCategory
+                        selectedCategories={categories}
                         switchCategory={switchCategory}
                       />
                     )}
                   </>
                 )}
               </>
-            ) : (
-              <>
-                {isLoading ? (
-                  <Skeleton width="100%" height={48} variant="rounded" />
-                ) : (
-                  <SelectParentCategory
-                    selectedCategories={categories}
-                    switchCategory={switchCategory}
-                  />
-                )}
-              </>
-            )}
-          </>
 
-          <Title as="h3" uppercase textalign="left" marginBottom="24px">
-            {t('filters')}
-          </Title>
-          <FilterPanel
-            attributes={statistic.attributes}
-            minPrice={statistic.min_price || 0}
-            maxPrice={statistic.max_price || 0}
-          />
-        </CatalogFilterBlock>
-        <FilterOverlay visible={isMenuVisible} onClick={toggleMenu} />
-        <CatalogRightWrapper>
+              <Title as="h3" uppercase textalign="left" marginBottom="24px">
+                {t('filters')}
+              </Title>
+              <FilterPanel
+                attributes={statistic.attributes}
+                minPrice={statistic.min_price || 0}
+                maxPrice={statistic.max_price || 0}
+              />
+            </CatalogFilterBlock>
+            <FilterOverlay visible={isMenuVisible} onClick={toggleMenu} />
+          </>
+        )}
+        <CatalogRightWrapper search={searchTerm}>
           <CatalogTopWrapper>
             <FilterSortWrapper>
-              <FilterWrapper>
-                <FilterButton onClick={toggleMenu} />
-              </FilterWrapper>
+              {!searchTerm && (
+                <FilterWrapper>
+                  <FilterButton onClick={toggleMenu} />
+                </FilterWrapper>
+              )}
               <CustomSortAccordion />
             </FilterSortWrapper>
             <CountProduct>
@@ -240,9 +246,9 @@ export const Archive: FC<ArchivePropsType> = props => {
                 products={products}
                 columns={{
                   mobileColumns: 2,
-                  tabletColumns: 4,
                   mintabletColumns: 3,
-                  desktopColumns: 3,
+                  tabletColumns: 4,
+                  desktopColumns: searchTerm ? 4 : 3,
                 }}
               />
             )}

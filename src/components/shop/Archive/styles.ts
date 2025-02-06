@@ -93,8 +93,8 @@ export const CatalogFilterBlock = styled.div<{ visible: boolean }>`
   }
 `;
 
-export const CatalogRightWrapper = styled.div`
-  grid-column: span 9;
+export const CatalogRightWrapper = styled.div<{ search?: string }>`
+  grid-column: ${({ search }) => search ? '1 / -1' : 'span 9'};
   display: flex;
   flex-direction: column;
   row-gap: 24px;
