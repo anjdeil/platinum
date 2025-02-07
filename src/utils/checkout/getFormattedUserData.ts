@@ -21,6 +21,7 @@ export interface ReqData {
   company?: string;
   nip?: string;
   password?: string;
+  confirm_password?: string;
   shipping_address_1: string;
   shipping_address_2: string;
   shipping_city: string;
@@ -30,13 +31,19 @@ export interface ReqData {
 }
 
 export interface RegistrationType {
+  phone: string;
   email: string;
   first_name: string;
   last_name: string;
-  role: string;
-  billing: BillingType;
-  shipping: ShippingType;
-  password: string;
+  address_1: string;
+  address_2: string;
+  city: string;
+  postcode: string;
+  country: string;
+  apartmentNumber: string;
+  terms: boolean;
+  password?: string | undefined;
+  confirmPassword?: string | undefined;
 }
 
 export const getFormattedUserData = (billingData: ReqData) => {
@@ -57,6 +64,7 @@ export const getFormattedUserData = (billingData: ReqData) => {
     company,
     nip,
     password,
+    confirm_password,
     shipping_address_1,
     shipping_address_2,
     shipping_city,
@@ -98,15 +106,22 @@ export const getFormattedUserData = (billingData: ReqData) => {
   };
 
   let formattedRegistrationData: RegistrationType | null = null;
-  if (registration && password) {
+
+  if (registration && password && confirm_password) {
     formattedRegistrationData = {
+      phone,
       email,
       first_name,
       last_name,
-      role: 'customer',
-      password,
-      billing: formattedBillingData,
-      shipping: formattedShippingData,
+      address_1: address_1,
+      address_2: address_2,
+      city: city,
+      postcode: postcode,
+      country: country,
+      apartmentNumber: apartmentNumber || '',
+      terms: registration,
+      password: password,
+      confirmPassword: confirm_password,
     };
   }
 

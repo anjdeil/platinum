@@ -49,6 +49,9 @@ import {
   ShippingType,
 } from '@/types/services/wooCustomApi/customer';
 import BillingWarnings from '@/components/pages/checkout/BillingWarnings';
+import Notification from '@/components/global/Notification/Notification';
+import { useRegisterUser } from '@/hooks/useRegisterUser';
+import { RegistrationError } from '@/components/pages/checkout/RegistrationError/RegistrationError';
 
 export function getServerSideProps() {
   return {
@@ -58,6 +61,7 @@ export function getServerSideProps() {
 
 export default function CheckoutPage() {
   const t = useTranslations('Checkout');
+  const tMyAccount = useTranslations('MyAccount');
 
   const {
     currentCurrency: currency,
@@ -116,7 +120,6 @@ export default function CheckoutPage() {
    * Shipping costs logic
    */
   const getCalculatedShippingMethodCost = (method: ShippingMethodType) => {
-    // console.log(totalWeight);
     const costByWeight = getCalculatedMethodCostByWeight(method, totalWeight);
     if (costByWeight !== false) return costByWeight;
 
@@ -203,13 +206,7 @@ export default function CheckoutPage() {
     'on-hold'
   );
 
-  // // Get data from BillingForm
-  // const [billingData, setBillingData] = useState<BillingType | null>(null);
-  // const [shippingData, setShippingData] = useState<ShippingType | null>(null);
-  // const [metaData, setMetaData] = useState<MetaDataType[] | null>(null);
-  // const [registrationData, setRegistrationData] =
-  //   useState<RegistrationType | null>(null);
-
+  // Get data from Billing/Shipping forms
   const [isValidation, setIsValidation] = useState(false);
   const [formOrderData, setFormOrderData] = useState<{
     billing: BillingType | null;
@@ -264,9 +261,13 @@ export default function CheckoutPage() {
    * Order validation
    */
   // const [billingWarning, setBillingWarning] = useState<string | null>(null);
-  // const [registrationError, setRegistrationError] = useState<string | null>(
-  //   null
-  // );
+  const [registrationErrorWarning, setRegistrationErrorWarning] = useState<
+    string | null
+  >(null);
+  const [isRegistrationSuccessful, setIsRegistrationSuccessful] = useState<
+    boolean | null
+  >(null);
+
   const [warnings, setWarnings] = useState<string[]>();
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
 
@@ -275,43 +276,32 @@ export default function CheckoutPage() {
   /**
    * Validate billing data
    */
-  // const { registerUser, error } = useRegisterUser();
+  const { registerUser } = useRegisterUser();
 
-  console.log('formOrderData', formOrderData);
-  console.log('validationErrors', validationErrors);
-
-  const handlePayOrder = () => {
+  const handlePayOrder = async () => {
     setIsValidation(true);
-    //triger form fields if !billingData
-    // if (!billingData) {
-    //   setBillingWarning('inValidForm');
 
-    //   return;
-    // } else {
-    //   setBillingData(billingData);
-    //   setBillingWarning(null);
-    // }
+    if (formOrderData.registration) {
+      console.log('1 registerUser start', formOrderData.registration);
+      setIsRegistrationSuccessful(false);
 
-    // if (!shippingData) {
-    //   setBillingWarning('inValidForm');
-    //   return;
-    // } else {
-    //   setBillingWarning(null);
-    // }
+      const registrationError = await registerUser(formOrderData.registration);
 
-    // if (registrationData) {
-    //   registerUser(registrationData);
-    //   if (ok) {
-    //     setRegistrationError(null);
-    //   } else {
-    //     setRegistrationError(error);
-    //     return;
-    //   }
-    // }
+      if (!registrationError) {
+        console.log('2 SUCCESS registerUser start', formOrderData.registration);
+        setIsRegistrationSuccessful(true);
+        setRegistrationErrorWarning(null);
+      } else {
+        console.log('3 ERROR registerUser start', formOrderData.registration);
+        setRegistrationErrorWarning(registrationError);
+        return;
+      }
+    }
 
     if (!order) return;
     const validationResult = validateOrder(order);
     if (validationResult.isValid) {
+      console.log('4 validationResult.isValid');
       setOrderStatus('pending');
     } else {
       setIsWarningsShown(true);
@@ -334,9 +324,12 @@ export default function CheckoutPage() {
       line_items: cartItems,
       coupon_lines: couponLines,
       ...(currencyCode && { currency: currencyCode }),
-      // ...(billingData && orderStatus === 'pending' && { billing: billingData }),
-      //...(shippingData && orderStatus === 'pending' && { shipping: shippingData }),
-      //...(metaData && orderStatus === 'pending' && { meta_data: metaData }),
+      ...(formOrderData.billing &&
+        orderStatus === 'pending' && { billing: formOrderData.billing }),
+      ...(formOrderData.shipping &&
+        orderStatus === 'pending' && { shipping: formOrderData.shipping }),
+      ...(formOrderData.metaData &&
+        orderStatus === 'pending' && { meta_data: formOrderData.metaData }),
       ...(userData?.id && { customer_id: userData.id }),
       ...(shippingLine && { shipping_lines: [shippingLine] }),
     });
@@ -366,6 +359,10 @@ export default function CheckoutPage() {
           {validationErrors.length > 0 && (
             <BillingWarnings message={validationErrors} />
           )}
+          {registrationErrorWarning && (
+            <RegistrationError message={registrationErrorWarning} />
+          )}
+
           <BillingForm
             setFormOrderData={setFormOrderData}
             setCurrentCountryCode={setCurrentCountryCode}
@@ -424,9 +421,11 @@ export default function CheckoutPage() {
             </CheckoutAgreementWrapper>
           </CheckoutPayButtonWrapper>
         </CheckoutSummaryWrapper>
-        {/* {registrationError && (
-          <Notification type={'warning'}>{registrationError}</Notification>
-        )} */}
+        {!registrationErrorWarning && isRegistrationSuccessful && (
+          <Notification type={'success'}>
+            {tMyAccount('YourAccountHasBeenCreated')}
+          </Notification>
+        )}
       </CheckoutContainer>
 
       {isGeowidgetShown && (

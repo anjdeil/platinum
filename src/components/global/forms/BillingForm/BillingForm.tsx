@@ -102,11 +102,11 @@ export const BillingForm: FC<BillingFormProps> = ({
       setValue('apartmentNumber', billing?.address_2?.split('/')[1] || '');
 
       if (invoice) {
-        console.log('company', billing?.company);
         setValue('company', billing?.company || '');
       }
     }
   }, [customer, invoice]);
+
   useEffect(() => {
     if (different_address) {
       setValue('shipping_country', 'PL');
@@ -426,18 +426,6 @@ export const BillingForm: FC<BillingFormProps> = ({
           </AnimatedWrapper>
         )}
       </StyledFomContainer>
-      {/* {registrationError && (
-        <CustomError
-          dangerouslySetInnerHTML={{
-            __html: isAuthErrorResponseType(registrationError),
-          }}
-        ></CustomError>
-      )}
-      {isSubmitSuccessful && !registrationError && (
-        <CustomSuccess>
-          {tMyAccount('Your account has been created successfully!')}
-        </CustomSuccess>
-      )} */}
     </>
   );
 };
