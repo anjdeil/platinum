@@ -8,7 +8,7 @@ import { popupToggle } from '@/store/slices/PopupSlice';
 export const RegistrationError = ({ message }: { message: string | null }) => {
   const tMyAccount = useTranslations('MyAccount');
   const dispatch = useAppDispatch();
-  let errorMessage =
+  const errorMessage =
     message ||
     'Oops! Something went wrong with the server. Please try again or contact support.';
 
