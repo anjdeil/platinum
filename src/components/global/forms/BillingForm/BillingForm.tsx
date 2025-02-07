@@ -67,30 +67,6 @@ export const BillingForm: FC<BillingFormProps> = ({
     mode: 'onBlur',
   });
 
-  // const phone = useWatch({
-  //   control,
-  //   name: 'registration',
-  //   defaultValue: false,
-  // });
-
-  // const isRegistration = useWatch({
-  //   control,
-  //   name: 'registration',
-  //   defaultValue: false,
-  // });
-
-  // const isInvoice = useWatch({
-  //   control,
-  //   name: 'invoice',
-  //   defaultValue: false,
-  // });
-
-  // const isDifferentAddress = useWatch({
-  //   control,
-  //   name: 'same_address',
-  //   defaultValue: false,
-  // });
-
   const watchedFields = useWatch({ control });
 
   const {
@@ -99,22 +75,7 @@ export const BillingForm: FC<BillingFormProps> = ({
     different_address,
     password,
     shipping_country,
-    country: billingCountry,
-    city: billingCity,
-    address_1: billingAddress1,
-    address_2: billingAddress2,
-    apartmentNumber: billingApartmentNumber,
-    postcode: billingPostcode,
   } = watchedFields;
-
-  // const password = watch('password');
-  // const billingCountry = watch('country');
-  // const billingCity = watch('city');
-  // const billingAddress1 = watch('address_1');
-  // const billingAddress2 = watch('address_2');
-  // const billingApartmentNumber = watch('apartmentNumber');
-  // const billingPostcode = watch('postcode');
-  const shippingCountry = watch('shipping_country');
 
   useEffect(() => {
     if (customer) {
@@ -186,10 +147,10 @@ export const BillingForm: FC<BillingFormProps> = ({
   }, [password, trigger]);
 
   useEffect(() => {
-    if (shippingCountry) {
-      setCurrentCountryCode(shippingCountry);
+    if (shipping_country) {
+      setCurrentCountryCode(shipping_country);
     }
-  }, [shippingCountry]);
+  }, [shipping_country]);
 
   useEffect(() => {
     if (isValidation) {
@@ -227,66 +188,6 @@ export const BillingForm: FC<BillingFormProps> = ({
       });
     }
   }, [isValidation, isValid]);
-
-  // const renderAddressFields = (form: 'billing' | 'shipping') => {
-  //   const prefix = form === 'billing' ? '' : 'shipping_';
-  //   const defaultCountry =
-  //     form === 'billing'
-  //       ? customer?.billing?.country || 'PL'
-  //       : different_address
-  //       ? billingCountry
-  //       : 'PL';
-
-  //   const otherFields = [
-  //     { name: 'city' },
-  //     { name: 'address_1' },
-  //     { name: 'address_2' },
-  //     {
-  //       name: 'apartmentNumber',
-  //       notRequired: true,
-  //       placeholder: tValidation('apartment/office'),
-  //     },
-  //     { name: 'postcode' },
-  //   ];
-
-  //   const countryField = (
-  //     <CustomCountrySelect
-  //       key="country"
-  //       name={`${prefix}country`}
-  //       options={countryOptions}
-  //       defaultValue={defaultCountry}
-  //       control={control}
-  //       label={tMyAccount('country')}
-  //       errors={errors}
-  //       noPaddings={true}
-  //     />
-  //   );
-
-  //   const otherFieldComponents = otherFields.map(({ name, ...props }) => (
-  //     <CustomTextField
-  //       key={name}
-  //       name={`${prefix}${name}`}
-  //       register={register}
-  //       inputType="text"
-  //       errors={errors}
-  //       placeholder={tMyAccount(name)}
-  //       validation={getValidationSchema(name, tValidation)}
-  //       setValue={setValue}
-  //       defaultValue={
-  //         customer?.billing?.[name as keyof typeof customer.billing] || ''
-  //       }
-  //       autocomplete={name}
-  //       // {...props}
-  //     />
-  //   ));
-
-  //   return (
-  //     <>
-  //       {countryField}
-  //       {otherFieldComponents}
-  //     </>
-  //   );
-  // };
 
   const addressFields = (form: string) => (
     <>

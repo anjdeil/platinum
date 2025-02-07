@@ -42,7 +42,6 @@ import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
 import getCartTotals from '@/utils/cart/getCartTotals';
 import FreeShippingNotifications from '@/components/pages/checkout/FreeShippingNotifications/FreeShippingNotifications';
 import { BillingForm } from '@/components/global/forms/BillingForm/BillingForm';
-import Notification from '@/components/global/Notification/Notification';
 import { RegistrationType } from '@/utils/checkout/getFormattedUserData';
 import {
   BillingType,
