@@ -59,6 +59,15 @@ export const AmbassadorForm: FC = () => {
 
   const SEND_AMBASSADOR_FORM_ID = 26923;
 
+  const ALLOWED_FILE_TYPES = [
+    'image/png',
+    'image/jpeg',
+    'image/jpg',
+    'image/svg+xml',
+    'image/gif',
+    'application/pdf',
+  ];
+
   const {
     register,
     handleSubmit,
@@ -133,6 +142,10 @@ export const AmbassadorForm: FC = () => {
 
   const validateAndSetFile = (uploadedFile: File | null) => {
     if (uploadedFile) {
+      if (!ALLOWED_FILE_TYPES.includes(uploadedFile.type)) {
+        setFileErr(tValidation('invalidFileType'));
+        return;
+      }
       if (uploadedFile.size > MAX_FILE_SIZE) {
         setFileErr(tValidation('fileTooLarge'));
         return;
@@ -267,7 +280,7 @@ export const AmbassadorForm: FC = () => {
                 <input
                   id="file-upload"
                   type="file"
-                  accept=".svg, .png, .jpg, .gif"
+                  accept=".pdf, .png, .jpg, .jpeg, .svg, .gif"
                   onChange={handleFileChange}
                   style={{ display: 'none' }}
                 />

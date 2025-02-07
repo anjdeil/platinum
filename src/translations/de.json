@@ -283,7 +283,8 @@
     "postcode": "Postleitzahl",
     "emailI": "E-Mail",
     "phoneIsRequired": "Telefon",
-    "apartmentNumber": "Wohnungsnummer"
+    "apartmentNumber": "Wohnungsnummer",
+    "invalidFileType": "Ungültiger Dateityp"
   },
   "Forms": {
     "applicationForm": "application form",

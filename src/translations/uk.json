@@ -283,7 +283,8 @@
     "postcode": "Поштовий індекс",
     "emailI": "Електронна пошта",
     "phoneIsRequired": "Телефон",
-    "apartmentNumber": "Номер квартири"
+    "apartmentNumber": "Номер квартири",
+    "invalidFileType": "Недійсний тип файлу"
   },
   "Forms": {
     "applicationForm": "форма заявки",

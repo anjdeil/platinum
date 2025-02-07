@@ -283,7 +283,8 @@
     "postcode": "Почтовый индекс",
     "emailI": "Электронная почта",
     "phoneIsRequired": "Телефон",
-    "apartmentNumber": "Номер квартиры"
+    "apartmentNumber": "Номер квартиры",
+    "invalidFileType": "Недопустимый тип файла"
   },
   "Forms": {
     "applicationForm": "Форма заявки",
