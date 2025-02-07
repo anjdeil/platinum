@@ -1,10 +1,14 @@
 import { CurrencyType } from '@/types/components/shop';
-import { ProductPriceOldStyled, ProductPriceStyled } from './styles';
+import {
+  ProductPriceOldStyled,
+  ProductPriceStyled,
+  ProductPriceWrapper,
+} from './styles';
 
 interface ProductPriceProps {
   currency?: CurrencyType;
-  minPrice?: number | null;
-  maxPrice?: number | null;
+  minPrice: number;
+  maxPrice: number;
 }
 
 const ProductPrice: React.FC<ProductPriceProps> = ({
@@ -13,14 +17,16 @@ const ProductPrice: React.FC<ProductPriceProps> = ({
   maxPrice,
 }) => {
   return (
-    <>
-      {maxPrice && maxPrice !== minPrice && (
-        <ProductPriceOldStyled>{maxPrice.toFixed(2)}</ProductPriceOldStyled>
+    <ProductPriceWrapper>
+      {maxPrice !== minPrice && (
+        <ProductPriceOldStyled>{`${maxPrice.toFixed(2)}  ${
+          currency ? currency.code : 'zl'
+        }`}</ProductPriceOldStyled>
       )}
-      {minPrice && (
-        <ProductPriceStyled>{`${minPrice.toFixed(2)}  ${currency ? currency.code : 'zl'}`}</ProductPriceStyled>
-      )}
-    </>
+      <ProductPriceStyled>{`${minPrice.toFixed(2)}  ${
+        currency ? currency.code : 'zl'
+      }`}</ProductPriceStyled>
+    </ProductPriceWrapper>
   );
 };
 

@@ -162,7 +162,8 @@
     "descriptions": "Описание",
     "days": "Дней",
     "hours": "Часов",
-    "minutes": "Минут"
+    "minutes": "Минут",
+    "priceFrom": "от {price}"
   },
   "Cart": {
     "cart": "Корзина",

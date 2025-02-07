@@ -162,7 +162,8 @@
     "descriptions": "Opis",
     "days": "Dni",
     "hours": "Godziny",
-    "minutes": "Minuty"
+    "minutes": "Minuty",
+    "priceFrom": "od {price}"
   },
   "Cart": {
     "cart": "Koszyk",

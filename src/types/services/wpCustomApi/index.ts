@@ -1,10 +1,10 @@
 import { SectionsTypeSchema } from '@/types/components/sections';
-import { ProductsMinimizedSchema } from '@/types/components/shop/product/products';
+import { ProductSchema, ProductsMinimizedSchema } from '@/types/components/shop/product/products';
 import { WpMenuResponseSchema } from '@/types/menus/WpMenus';
 import { BlogItemSchema, BlogItemUnionSchema } from '@/types/pages/blog';
+import { CategorySchema } from '@/types/pages/shop';
 import { ProductReviewSchema } from '@/types/pages/shop/reviews';
 import { z } from 'zod';
-import { CategorySchema, ProductSchema } from '../../pages/shop';
 import { AttributeSchema } from './attributes';
 import { menuItemsSchema } from './menus';
 import { ThemeOptionsItemSchema } from './themeOptions';
@@ -86,8 +86,8 @@ export const CurrenciesResponseSchema = z.object({
 
 export const CustomDataProductsStatisticSchema = z.object({
   products_count: z.number(),
-  min_price: z.number().nullable(),
-  max_price: z.number().nullable(),
+  min_price: z.number(),
+  max_price: z.number(),
   attributes: z.array(AttributeSchema),
 });
 
