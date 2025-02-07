@@ -1,30 +1,27 @@
-import { FC, useEffect, useState } from 'react';
-import { CustomError } from '../CustomFormInput/styles';
+import { FC } from 'react';
 import { CustomFormCheckboxType } from '@/types/components/global/forms/customFormCheckbox';
 import { CustomCheckboxLabel } from '../CustomFormCheckbox/styles';
-import { StyledCheckbox, StyledCheckBoxWrapper } from './style';
+import {
+  CustomError,
+  StyledCheckbox,
+  StyledCheckBoxContainer,
+  StyledCheckBoxWrapper,
+} from './style';
 
 export const FormCheckbox: FC<CustomFormCheckboxType> = ({
   errors,
   label,
   name,
   register,
+  validation,
 }) => {
-  const [isError, setError] = useState(false);
-
-  useEffect(() => {
-    if (!errors || !name) {
-      setError(false);
-      return;
-    }
-    setError(name in errors);
-  }, [errors, name]);
-
   return (
     <StyledCheckBoxWrapper>
-      <StyledCheckbox {...register(name)} />
-      <CustomCheckboxLabel>{label}</CustomCheckboxLabel>
-      {isError && name && <CustomError>{errors[name]?.message}</CustomError>}
+      <StyledCheckBoxContainer>
+        <StyledCheckbox {...register(name, validation)} error={errors[name]} />
+        <CustomCheckboxLabel>{label}</CustomCheckboxLabel>
+      </StyledCheckBoxContainer>
+      {errors && name && <CustomError>{errors[name]?.message}</CustomError>}
     </StyledCheckBoxWrapper>
   );
 };

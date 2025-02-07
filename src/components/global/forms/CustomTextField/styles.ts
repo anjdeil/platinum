@@ -50,6 +50,8 @@ export const StyledInputStyle = styled('div', {
     padding-left: 60px;
     outline: 1px solid
       ${({ isError, theme }) => (isError ? theme.colors.error : 'transparent')};
+    box-shadow: ${({ isError }) =>
+      isError ? '0px 0px 4px 0px #be414180;' : 'none'};
 
     &:hover {
       outline: 1px solid ${({ theme }) => theme.colors.primary};
@@ -100,6 +102,8 @@ export const StyledTextField = styled(TextField, {
     // Default state
     & fieldset {
       border: 1px solid transparent;
+      ${props =>
+        props.isError ? `box-shadow: 0px 0px 4px 0px #be414180;` : ''}
     }
 
     // Hover effect
@@ -120,7 +124,6 @@ export const StyledTextField = styled(TextField, {
   & .MuiInputBase-input {
     height: 1.5rem;
     font: ${({ theme }) => theme.fonts.bodyMiddleReg};
-    font-size: ${({ theme }) => theme.fonts.bodyMiddleReg};
     padding: 12px 16px;
   }
 

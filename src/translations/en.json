@@ -312,7 +312,8 @@
     "pleaseFillInTheApartmentNumber": "Please, fill in the apartment number",
     "yourApartmentNumberIsTooLong": "Your apartment number is too long",
     "pleaseFillInThePostcode": "Please, fill in the postcode",
-    "invalidPostcodeFormat": "Invalid postcode format"
+    "invalidPostcodeFormat": "Invalid postcode format",
+    "validationErrorsFields": "Check the following fields:"
   },
   "Forms": {
     "applicationForm": "application form",

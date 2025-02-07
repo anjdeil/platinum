@@ -88,7 +88,7 @@ export const getValidationSchema = (
       return {
         required: t('pleaseFillInTheCity'),
         minLength: {
-          value: 2,
+          value: 3,
           message: t('yourCityNameIsTooShort'),
         },
         maxLength: {
@@ -166,6 +166,10 @@ export const getValidationSchema = (
         },
         validate: (value: string) =>
           value === watch?.('password') || t('PasswordsDoNotMatch'),
+      };
+    case 'terms':
+      return {
+        required: t('agreentmentTerms'),
       };
     default:
       return {};

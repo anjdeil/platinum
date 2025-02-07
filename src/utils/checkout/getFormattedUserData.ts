@@ -5,7 +5,7 @@ import {
 } from '@/types/services/wooCustomApi/customer';
 
 export interface ReqData {
-  same_address: boolean;
+  different_address: boolean;
   registration: boolean;
   invoice: boolean;
   first_name: string;
@@ -41,7 +41,7 @@ export interface RegistrationType {
 
 export const getFormattedUserData = (billingData: ReqData) => {
   const {
-    same_address,
+    different_address,
     registration,
     invoice,
     first_name,
@@ -64,7 +64,6 @@ export const getFormattedUserData = (billingData: ReqData) => {
     shipping_country,
     shipping_apartmentNumber,
   } = billingData;
-
   const formattedBillingData: BillingType = {
     first_name,
     last_name,
@@ -116,8 +115,7 @@ export const getFormattedUserData = (billingData: ReqData) => {
     formattedShippingData,
     formattedRegistrationData,
     formattedMetaData,
-    same_address,
+    different_address,
     invoice,
-    registration,
   };
 };

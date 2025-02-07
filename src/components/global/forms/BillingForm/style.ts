@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { keyframes } from '@emotion/react';
-import { Checkbox } from '@mui/material';
+import { Checkbox, CheckboxProps } from '@mui/material';
 
 export const StyledFomContainer = styled.div`
   padding: 32px;
@@ -34,6 +34,13 @@ export const VariationFields = styled.div`
 
 export const StyledCheckBoxWrapper = styled.div`
   display: flex;
+  flex-direction: column;
+  gap: 4px;
+`;
+
+export const StyledCheckBoxContainer = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 export const StyledPhoneWrapper = styled.div`
@@ -119,12 +126,20 @@ export const ConfirmationFormWrapper = styled.div`
   }
 `;
 
-export const StyledCheckbox = styled(Checkbox)(({ theme }) => ({
+interface StyledCheckboxProps extends CheckboxProps {
+  error?: boolean;
+}
+
+export const StyledCheckbox = styled(Checkbox, {
+  shouldForwardProp: prop => prop !== 'error',
+})<StyledCheckboxProps>(({ theme, error }) => ({
   padding: '0 9px 0 0',
   color: theme.colors.primary,
+
   '&.Mui-checked': {
     color: theme.colors.primary,
   },
+
   '& .MuiSvgIcon-root': {
     fontSize: 30,
   },
@@ -132,4 +147,9 @@ export const StyledCheckbox = styled(Checkbox)(({ theme }) => ({
 
 export const StyledSingleCheckBoxWrapper = styled.div`
   margin-bottom: 24px;
+`;
+
+export const CustomError = styled.p`
+  font: ${({ theme }) => theme.fonts.bodypresmallReg};
+  color: ${({ theme }) => theme.colors.error};
 `;

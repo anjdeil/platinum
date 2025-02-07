@@ -41,16 +41,15 @@ import getShippingMethodFixedCost from '@/utils/checkout/getShippingMethodFixedC
 import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
 import getCartTotals from '@/utils/cart/getCartTotals';
 import FreeShippingNotifications from '@/components/pages/checkout/FreeShippingNotifications/FreeShippingNotifications';
-import { NewBillingForm } from '@/components/global/forms/BillingForm/NewBillingForm';
+import { BillingForm } from '@/components/global/forms/BillingForm/BillingForm';
 import Notification from '@/components/global/Notification/Notification';
-import {
-  RegistrationType,
-} from '@/utils/checkout/getFormattedUserData';
+import { RegistrationType } from '@/utils/checkout/getFormattedUserData';
 import {
   BillingType,
   MetaDataType,
   ShippingType,
 } from '@/types/services/wooCustomApi/customer';
+import BillingWarnings from '@/components/pages/checkout/BillingWarnings';
 
 export function getServerSideProps() {
   return {
@@ -269,7 +268,6 @@ export default function CheckoutPage() {
   // const [registrationError, setRegistrationError] = useState<string | null>(
   //   null
   // );
-
   const [warnings, setWarnings] = useState<string[]>();
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
 
@@ -367,10 +365,9 @@ export default function CheckoutPage() {
         <CheckoutFormsWrapper>
           {/* Billing and shipping forms */}
           {validationErrors.length > 0 && (
-            <Notification type={'warning'}>{validationErrors}</Notification>
+            <BillingWarnings message={validationErrors} />
           )}
-          {/* <BillingForm setBillingData={setBillingData} /> */}
-          <NewBillingForm
+          <BillingForm
             setFormOrderData={setFormOrderData}
             setCurrentCountryCode={setCurrentCountryCode}
             setValidationErrors={setValidationErrors}
