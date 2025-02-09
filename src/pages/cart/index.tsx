@@ -12,6 +12,7 @@ import { CartPageWrapper } from '@/styles/cart/style';
 import { Container, FlexBox, StyledButton } from '@/styles/components';
 import { CreateOrderRequestType } from '@/types/services';
 import { JwtDecodedDataType } from '@/types/services/wpRestApi/auth';
+import { lineOrderItems } from '@/types/store/reducers/сartSlice';
 import { WpUserType } from '@/types/store/rtk-queries/wpApi';
 import checkCartConflict from '@/utils/cart/checkCartConflict';
 import getSubtotalByLineItems from '@/utils/cart/getSubtotalByLineItems';
@@ -152,20 +153,40 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
     currentOrderItems?.line_items || []
   );
 
+  const [filteredOutItems, setFilteredOutItems] = useState<lineOrderItems[]>(
+    []
+  );
+
   useEffect(() => {
-    setCartItems(
-      currentOrderItems?.line_items.filter(lineItem =>
-        cartItems.some(
+    if (isLoadingOrder || !currentOrderItems?.line_items) return;
+
+    const filteredItems = currentOrderItems.line_items.filter(lineItem =>
+      cartItems.some(
+        cartItem =>
+          cartItem.product_id === lineItem.product_id &&
+          (!cartItem.variation_id ||
+            cartItem.variation_id === lineItem.variation_id)
+      )
+    );
+
+    const notFilteredItems = currentOrderItems.line_items.filter(
+      lineItem =>
+        !cartItems.some(
           cartItem =>
             cartItem.product_id === lineItem.product_id &&
             (!cartItem.variation_id ||
               cartItem.variation_id === lineItem.variation_id)
         )
-      ) || []
     );
 
+    console.log('filteredItems', filteredItems);
+    console.log('notFilteredItems', notFilteredItems);
+
+    setCartItems(filteredItems);
+    setFilteredOutItems(notFilteredItems);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentOrderItems?.line_items, cartItems]);
+  }, [currentOrderItems?.line_items, isLoadingOrder]);
 
   const handleDeleteItem = (productId: number, variationId: number) => {
     const updatedCartItems = innercartItems.filter(
@@ -203,6 +224,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
               cartItems={cartItems}
               innercartItems={innercartItems}
               isLoadingOrder={isLoadingCart}
+              filteredOutItems={filteredOutItems}
               order={currentOrderItems}
               productsSpecs={productsData}
               roundedPrice={roundedPrice}
@@ -211,16 +233,15 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
               firstLoad={firstLoad}
               handleDeleteItem={handleDeleteItem}
             />
-            {innercartItems.length === cartItems.length &&
-              innercartItems.length > 0 && (
-                <OrderBar
-                  miniCart={false}
-                  isLoadingOrder={isLoadingOrder}
-                  totalDisc={total}
-                  subtotal={subtotal}
-                  symbol={symbol}
-                />
-              )}
+            {(innercartItems.length > 0 || filteredOutItems?.length > 0) && (
+              <OrderBar
+                miniCart={false}
+                isLoadingOrder={isLoadingOrder}
+                totalDisc={total}
+                subtotal={subtotal}
+                symbol={symbol}
+              />
+            )}
             {innercartItems.length == 0 && cartItems.length == 0 && (
               <FlexBox justifyContent="center">
                 <CartLink href="/">
@@ -240,16 +261,15 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
             auth={auth}
             symbol={symbol}
           />
-          {innercartItems.length === cartItems.length &&
-            innercartItems.length > 0 && (
-              <CartSummaryBlock
-                auth={auth}
-                symbol={symbol}
-                order={orderItems}
-                cartItems={cartItems}
-                isLoading={isLoading}
-              />
-            )}
+          {innercartItems.length > 0 && filteredOutItems.length == 0 && (
+            <CartSummaryBlock
+              auth={auth}
+              symbol={symbol}
+              order={orderItems}
+              cartItems={cartItems}
+              isLoading={isLoading}
+            />
+          )}
         </CartPageWrapper>
       </Container>
     </>

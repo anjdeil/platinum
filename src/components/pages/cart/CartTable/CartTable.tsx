@@ -34,12 +34,11 @@ import {
 } from './style';
 import { ProductsMinimizedType } from '@/types/components/shop/product/products';
 import { lineOrderItems } from '@/types/store/reducers/сartSlice';
-import { useAppDispatch } from '@/store';
-import { clearCart } from '@/store/slices/cartSlice';
 
 const CartTable: FC<CartTableProps> = ({
   symbol,
   order,
+  filteredOutItems,
   isLoadingOrder,
   firstLoad,
   productsSpecs,
@@ -53,10 +52,7 @@ const CartTable: FC<CartTableProps> = ({
   const t = useTranslations('Cart');
   const { isMobile } = useResponsive();
 
-  const dispatch = useAppDispatch();
-
   const findProductSpec = (
-    productsSpecs: ProductsMinimizedType[],
     item: lineOrderItems
   ): ProductsMinimizedType | undefined => {
     return productsSpecs.find(product =>
@@ -64,6 +60,152 @@ const CartTable: FC<CartTableProps> = ({
         ? product.id === item.product_id
         : product.parent_id === item.product_id &&
           product.id === item.variation_id
+    );
+  };
+
+  const renderMobileCartItems = (
+    items: lineOrderItems[],
+    isFiltered = false
+  ) => {
+    return items.map((item: lineOrderItems) => {
+      const { resolveCount, isAvailable } = checkProductAvailability(
+        item,
+        productsSpecs
+      );
+      const productSpec = findProductSpec(item);
+
+      return (
+        <CartCardAllWrapper key={item.id}>
+          <CartCardWrapper isLoadingItem={isLoadingOrder}>
+            <CartImgWrapper>
+              <CartItemImg src={item.image?.src} alt={item.name} width="50" />
+            </CartImgWrapper>
+            <CardContent>
+              <ProducTitle>
+                <LinkWrapper
+                  href={`/product/${
+                    productSpec?.parent_slug || productSpec?.slug
+                  }`}
+                >
+                  {productSpec?.name || item.name}
+                </LinkWrapper>
+                <CloseIcon
+                  onClick={() =>
+                    handleChangeQuantity(
+                      item.product_id,
+                      'value',
+                      item.variation_id,
+                      0
+                    )
+                  }
+                />
+              </ProducTitle>
+              <ProductPrice>
+                <p>
+                  {roundedPrice(Number(item.subtotal) / item.quantity)} {symbol}
+                </p>
+              </ProductPrice>
+              <CartQuantity
+                resolveCount={resolveCount}
+                item={item}
+                handleChangeQuantity={handleChangeQuantity}
+                disabled={isFiltered}
+              />
+              <ProductPrice>
+                <span>{t('summary')}</span>
+                <OnePrice>
+                  {roundedPrice(Number(item.subtotal))} {symbol}
+                </OnePrice>
+              </ProductPrice>
+            </CardContent>
+          </CartCardWrapper>
+          {(!isAvailable || isFiltered) && (
+            <CartProductWarning
+              onUpdate={() =>
+                handleChangeQuantity(
+                  item.product_id,
+                  'value',
+                  isFiltered ? undefined : item.variation_id,
+                  isFiltered ? 0 : resolveCount
+                )
+              }
+              resolveCount={resolveCount}
+              isProductError={isFiltered}
+            />
+          )}
+        </CartCardAllWrapper>
+      );
+    });
+  };
+  const renderCartItems = (items: lineOrderItems[], isFiltered = false) => {
+    return (
+      <>
+        {items.map((item: lineOrderItems) => {
+          const { resolveCount, isAvailable } = checkProductAvailability(
+            item,
+            productsSpecs
+          );
+          const productSpec = findProductSpec(item);
+
+          return (
+            <RowWrapper key={item.id} isLoadingItem={isLoadingOrder}>
+              <GridRow>
+                <DeleteCell>
+                  <DeleteIcon
+                    onClick={() =>
+                      handleDeleteItem(item.product_id, item.variation_id)
+                    }
+                  />
+                </DeleteCell>
+                <CartImgWrapper>
+                  <CartItemImg
+                    src={item.image?.src}
+                    alt={item.name}
+                    width="50"
+                  />
+                </CartImgWrapper>
+                <TextNameCell>
+                  <LinkWrapper
+                    href={`/product/${
+                      productSpec?.parent_slug || productSpec?.slug
+                    }`}
+                  >
+                    {productSpec?.name || item.name}
+                  </LinkWrapper>
+                </TextNameCell>
+                <TextCell>
+                  {roundedPrice(Number(item.subtotal) / item.quantity)} {symbol}
+                </TextCell>
+                <TextCell>
+                  <CartQuantity
+                    resolveCount={isFiltered ? undefined : resolveCount}
+                    item={item}
+                    handleChangeQuantity={handleChangeQuantity}
+                    disabled={isFiltered}
+                  />
+                </TextCell>
+                <TextCell>
+                  {roundedPrice(Number(item.subtotal))} {symbol}
+                </TextCell>
+              </GridRow>
+              {(!isAvailable || isFiltered) && (
+                <CartProductWarning
+                  onUpdate={() =>
+                    handleChangeQuantity(
+                      item.product_id,
+                      'value',
+                      isFiltered ? undefined : item.variation_id,
+                      isFiltered ? 0 : resolveCount
+                    )
+                  }
+                  resolveCount={isFiltered ? undefined : resolveCount}
+                  isProductError={isFiltered}
+                />
+              )}
+            </RowWrapper>
+          );
+        })}
+      </>
     );
   };
 
@@ -76,6 +218,19 @@ const CartTable: FC<CartTableProps> = ({
         firstLoad &&
         innercartItems.length === cartItems.length
       ) && <Notification type="warning">{t('cartConflict')}</Notification>}
+      {innercartItems.length !== cartItems.length && order && (
+        <>
+          <Notification type="warning" marginBottom="0">
+            Ошибка получения текущих товаров
+          </Notification>
+          <FlexBox
+            alignItems="center"
+            flexDirection="column"
+            width="100%"
+            margin="0 0 24px 0"
+          ></FlexBox>
+        </>
+      )}
 
       {cartItems.length == 0 && (
         <FlexBox flexDirection="column" margin="0 0 46px 0" alignItems="center">
@@ -87,8 +242,8 @@ const CartTable: FC<CartTableProps> = ({
       )}
       {!isMobile ? (
         <>
-          {innercartItems.length === cartItems.length &&
-            innercartItems.length > 0 && (
+          {filteredOutItems &&
+            (innercartItems.length > 0 || filteredOutItems?.length > 0) && (
               <CartTableGrid>
                 <GridHeader>
                   <GridRow>
@@ -100,209 +255,27 @@ const CartTable: FC<CartTableProps> = ({
                     <TextCellHeader>{t('value')}</TextCellHeader>
                   </GridRow>
                 </GridHeader>
-
-                {innercartItems.map(item => {
-                  const { resolveCount, isAvailable } =
-                    checkProductAvailability(item, productsSpecs);
-
-                  const productSpec = findProductSpec(productsSpecs, item);
-
-                  return (
-                    <RowWrapper key={item.id} isLoadingItem={isLoadingOrder}>
-                      <GridRow>
-                        <DeleteCell>
-                          <div>
-                            <DeleteIcon
-                              onClick={() =>
-                                handleDeleteItem(
-                                  item.product_id,
-                                  item.variation_id
-                                )
-                              }
-                            />
-                          </div>
-                        </DeleteCell>
-                        <CartImgWrapper>
-                          <CartItemImg
-                            src={item.image?.src}
-                            alt={item.name}
-                            width="50"
-                          />
-                        </CartImgWrapper>
-                        <TextNameCell>
-                          <LinkWrapper
-                            href={`/product/${
-                              productSpec?.parent_slug || productSpec?.slug
-                            }`}
-                          >
-                            {productSpec?.name || item.name}
-                          </LinkWrapper>
-                        </TextNameCell>
-                        <TextCell>
-                          {roundedPrice(Number(item.subtotal) / item.quantity)}
-                          &nbsp;
-                          {symbol}
-                        </TextCell>
-                        <TextCell>
-                          <CartQuantity
-                            resolveCount={resolveCount}
-                            item={item}
-                            handleChangeQuantity={handleChangeQuantity}
-                          />
-                        </TextCell>
-                        <TextCell>
-                          {roundedPrice(Number(item.subtotal))}&nbsp;
-                          {symbol}
-                        </TextCell>
-                      </GridRow>
-                      {isAvailable === false && (
-                        <GridRow padding="5px 16px 16px 16px">
-                          <CartProductWarning
-                            onUpdate={() =>
-                              handleChangeQuantity(
-                                item.product_id,
-                                'value',
-                                item.variation_id,
-                                resolveCount
-                              )
-                            }
-                            resolveCount={resolveCount}
-                          />
-                        </GridRow>
-                      )}
-                    </RowWrapper>
-                  );
-                })}
+                {renderCartItems(innercartItems)}
+                {filteredOutItems && renderCartItems(filteredOutItems, true)}
               </CartTableGrid>
             )}
-
-          {!!(!order && cartItems.length !== 0) && (
-            <MenuSkeleton
-              elements={3}
-              direction="column"
-              width="100%"
-              height="78px"
-              gap="8px"
-              color={theme.background.skeletonSecondary}
-            />
-          )}
         </>
       ) : (
         <>
-          {innercartItems.length !== 0 &&
-            innercartItems.map(item => {
-              const { resolveCount, isAvailable } = checkProductAvailability(
-                item,
-                productsSpecs
-              );
-
-              const productSpec = findProductSpec(productsSpecs, item);
-
-              return (
-                <CartCardAllWrapper key={item.id}>
-                  <CartCardWrapper isLoadingItem={isLoadingOrder}>
-                    <CartImgWrapper>
-                      <CartItemImg
-                        src={item.image?.src}
-                        alt={item.name}
-                        width="50"
-                      />
-                    </CartImgWrapper>
-                    <CardContent>
-                      <ProducTitle>
-                        <LinkWrapper
-                          href={`/product/${
-                            productSpec?.parent_slug || productSpec?.slug
-                          }`}
-                        >
-                          {productSpec?.name || item.name}
-                        </LinkWrapper>
-                        <CloseIcon
-                          padding="8px"
-                          onClick={() =>
-                            handleChangeQuantity(
-                              item.product_id,
-                              'value',
-                              item.variation_id,
-                              0
-                            )
-                          }
-                        />
-                      </ProducTitle>
-                      <ProductPrice>
-                        <p>
-                          {roundedPrice(Number(item.subtotal) / item.quantity)}
-                          &nbsp;{symbol}
-                        </p>
-                      </ProductPrice>
-                      <CartQuantity
-                        resolveCount={resolveCount}
-                        item={item}
-                        handleChangeQuantity={handleChangeQuantity}
-                      />
-                      <ProductPrice>
-                        <span>{t('summary')}</span>
-                        <OnePrice>
-                          {roundedPrice(Number(item.subtotal))}&nbsp;
-                          {symbol}
-                        </OnePrice>
-                      </ProductPrice>
-                    </CardContent>
-                  </CartCardWrapper>
-                  {isAvailable === false && (
-                    <CartProductWarning
-                      onUpdate={() =>
-                        handleChangeQuantity(
-                          item.product_id,
-                          'value',
-                          item.variation_id,
-                          resolveCount
-                        )
-                      }
-                      resolveCount={resolveCount}
-                    />
-                  )}
-                </CartCardAllWrapper>
-              );
-            })}
-          {!!(!order && cartItems.length !== 0) && (
-            <MenuSkeleton
-              elements={1}
-              direction="column"
-              width="100%"
-              height="230px"
-              gap="5px"
-              color={theme.background.skeletonSecondary}
-            />
-          )}
+          {renderMobileCartItems(innercartItems)}
+          {filteredOutItems && renderMobileCartItems(filteredOutItems, true)}
         </>
       )}
-
-      {innercartItems.length !== cartItems.length &&
-        innercartItems.length > 0 &&
-        order && (
-          <>
-            <Notification type="warning" marginTop="24px">
-              Ошибка получения текущих товаров
-            </Notification>
-            <FlexBox
-              alignItems="center"
-              flexDirection="column"
-              width="100%"
-              margin="0 0 24px 0"
-            >
-              <StyledButton
-                secondary
-                height="58px"
-                width="310px"
-                minWidthMobile="100%"
-                onClick={() => dispatch(clearCart())}
-              >
-                Очистить корзину
-              </StyledButton>
-            </FlexBox>
-          </>
-        )}
+      {!!(!order && cartItems.length !== 0) && (
+        <MenuSkeleton
+          elements={isMobile ? 1 : 3}
+          direction="column"
+          width="100%"
+          height={isMobile ? '230px' : '78px'}
+          gap="5px"
+          color={theme.background.skeletonSecondary}
+        />
+      )}
     </CartTableWrapper>
   );
 };

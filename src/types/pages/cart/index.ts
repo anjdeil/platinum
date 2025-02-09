@@ -11,9 +11,11 @@ import { z } from 'zod';
 
 export const CartProductWarningSchema = z.object({
   onUpdate: z.function().returns(z.void()),
-  resolveCount: z.number(),
+  resolveCount: z.number().optional(),
+  isProductError: z.boolean().optional(),
 });
 export const QuantityComponentSchema = z.object({
+  disabled: z.boolean().optional(),
   resolveCount: z.number().optional(),
   item: lineOrderItemsSchema || ProductsWithCartDataSchema,
   inputWidth: z.string().optional(),
@@ -48,6 +50,7 @@ export const CartSummaryBlockSchema = z.object({
 export const CartTableSchema = z.object({
   symbol: z.string(),
   order: OrderTypeSchema.optional(),
+  filteredOutItems: z.array(lineOrderItemsSchema).optional(),
   isLoadingOrder: z.boolean(),
   firstLoad: z.boolean(),
   innercartItems: z.array(z.any()),
