@@ -5,15 +5,21 @@ interface NotificationPropsType {
   children: ReactNode;
   type?: 'success' | 'warning' | 'info';
   marginBottom?: string;
+  marginTop?: string;
 }
 
 const Notification: FC<NotificationPropsType> = ({
   children,
   type,
   marginBottom,
+  marginTop,
 }) => {
   return (
-    <NotificationWrapper marginBottom={marginBottom} type={type}>
+    <NotificationWrapper
+      marginTop={marginTop}
+      marginBottom={marginBottom}
+      type={type}
+    >
       {children}
     </NotificationWrapper>
   );

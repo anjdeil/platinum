@@ -70,6 +70,9 @@ export const cartSlice = createSlice({
     initializeCart: state => {
       state.needsProductDataUpdate = true;
     },
+    clearCart: state => {
+      state.cartItems = [];
+    },
   },
 });
 
@@ -80,6 +83,7 @@ export const {
   setCommentToOrder,
   clearCommentToOrder,
   initializeCart,
+  clearCart,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

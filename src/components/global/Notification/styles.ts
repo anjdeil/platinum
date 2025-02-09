@@ -3,9 +3,11 @@ import styled from '@emotion/styled';
 export const NotificationWrapper = styled.div<{
   type?: 'success' | 'warning' | 'info';
   marginBottom?: string;
+  marginTop?: string;
 }>`
   padding: 16px;
   margin-bottom: ${({ marginBottom = '24px' }) => marginBottom};
+  margin-top: ${({ marginTop = '0' }) => marginTop};
   border-radius: 8px;
   display: flex;
   justify-content: space-between;

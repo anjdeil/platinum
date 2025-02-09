@@ -30,10 +30,10 @@ interface WishlistPageProps {
 
 const Wishlist: FC<WishlistPageProps> = ({ defaultCustomerData }) => {
   const { code: symbol } = useAppSelector(state => state.currencySlice);
+  const { code } = useAppSelector(state => state.languageSlice);
   const router = useRouter();
   const tMyAccount = useTranslations('MyAccount');
   const tCart = useTranslations('Cart');
-
   const [isLoadingWishlist, setIsLoadingWishlist] = useState(true);
   const [wishlist, setWishlist] = useState(
     defaultCustomerData?.meta.wishlist || []
@@ -56,7 +56,9 @@ const Wishlist: FC<WishlistPageProps> = ({ defaultCustomerData }) => {
   ] = useGetProductsMinimizedMutation();
 
   useEffect(() => {
-    setWishlist(userData?.meta.wishlist || []);
+    if (userData?.meta.wishlist) {
+      setWishlist(userData?.meta.wishlist);
+    }
   }, [userData]);
 
   const [wishListProducts, setWishListProducts] = useState<
@@ -64,17 +66,17 @@ const Wishlist: FC<WishlistPageProps> = ({ defaultCustomerData }) => {
   >([]);
 
   useEffect(() => {
-    if (wishlist && router.locale !== undefined && wishlist?.length > 0) {
+    if (wishlist && router?.locale !== undefined && wishlist?.length > 0) {
       getProductsMinimized({
         cartItems: wishlist,
-        lang: router.locale,
+        lang: code,
       });
       setIsLoadingWishlist(true);
     } else {
       setWishListProducts([]);
       setIsLoadingWishlist(false);
     }
-  }, [wishlist, getProductsMinimized, router.locale]);
+  }, [wishlist, getProductsMinimized, code, userData]);
 
   useEffect(() => {
     if (productsSpecsData?.data.items) {

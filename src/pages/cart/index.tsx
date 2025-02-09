@@ -71,6 +71,8 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
       coupon_lines: combinedCoupons,
       currency: code,
     };
+    console.log(requestData);
+
     try {
       await createOrder(requestData);
     } finally {
@@ -144,6 +146,36 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   const isLoading = isLoadingOrder;
   const isLoadingCart = isLoadingOrder;
 
+  //check cart items and order coincidence
+
+  const [innercartItems, setCartItems] = useState(
+    currentOrderItems?.line_items || []
+  );
+
+  useEffect(() => {
+    setCartItems(
+      currentOrderItems?.line_items.filter(lineItem =>
+        cartItems.some(
+          cartItem =>
+            cartItem.product_id === lineItem.product_id &&
+            (!cartItem.variation_id ||
+              cartItem.variation_id === lineItem.variation_id)
+        )
+      ) || []
+    );
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentOrderItems?.line_items, cartItems]);
+
+  const handleDeleteItem = (productId: number, variationId: number) => {
+    const updatedCartItems = innercartItems.filter(
+      item => item.product_id !== productId || item.variation_id !== variationId
+    );
+    setCartItems(updatedCartItems);
+
+    handleChangeQuantity(productId, 'value', variationId, 0);
+  };
+
   //fix  hydration
   const [hydrated, setHydrated] = useState(false);
 
@@ -169,36 +201,38 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
             <CartTable
               symbol={symbol}
               cartItems={cartItems}
-              order={currentOrderItems}
+              innercartItems={innercartItems}
               isLoadingOrder={isLoadingCart}
+              order={currentOrderItems}
               productsSpecs={productsData}
               roundedPrice={roundedPrice}
               hasConflict={hasConflict}
               handleChangeQuantity={handleChangeQuantity}
               firstLoad={firstLoad}
+              handleDeleteItem={handleDeleteItem}
             />
-            {cartItems.length > 0 ? (
-              <OrderBar
-                miniCart={false}
-                isLoadingOrder={isLoadingOrder}
-                totalDisc={total}
-                subtotal={subtotal}
-                symbol={symbol}
-              />
-            ) : (
-              <>
-                <FlexBox justifyContent="center">
-                  <CartLink href="/">
-                    <StyledButton
-                      height="58px"
-                      width="310px"
-                      minWidthMobile="100%"
-                    >
-                      {t('goToShop')}
-                    </StyledButton>
-                  </CartLink>
-                </FlexBox>
-              </>
+            {innercartItems.length === cartItems.length &&
+              innercartItems.length > 0 && (
+                <OrderBar
+                  miniCart={false}
+                  isLoadingOrder={isLoadingOrder}
+                  totalDisc={total}
+                  subtotal={subtotal}
+                  symbol={symbol}
+                />
+              )}
+            {innercartItems.length == 0 && cartItems.length == 0 && (
+              <FlexBox justifyContent="center">
+                <CartLink href="/">
+                  <StyledButton
+                    height="58px"
+                    width="310px"
+                    minWidthMobile="100%"
+                  >
+                    {t('goToShop')}
+                  </StyledButton>
+                </CartLink>
+              </FlexBox>
             )}
           </div>
           <CartCouponBlock
@@ -206,13 +240,16 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
             auth={auth}
             symbol={symbol}
           />
-          <CartSummaryBlock
-            auth={auth}
-            symbol={symbol}
-            order={orderItems}
-            cartItems={cartItems}
-            isLoading={isLoading}
-          />
+          {innercartItems.length === cartItems.length &&
+            innercartItems.length > 0 && (
+              <CartSummaryBlock
+                auth={auth}
+                symbol={symbol}
+                order={orderItems}
+                cartItems={cartItems}
+                isLoading={isLoading}
+              />
+            )}
         </CartPageWrapper>
       </Container>
     </>

@@ -50,7 +50,7 @@ export const CartTableSchema = z.object({
   order: OrderTypeSchema.optional(),
   isLoadingOrder: z.boolean(),
   firstLoad: z.boolean(),
-  /*  isLoadingProductsMin: z.boolean(), */
+  innercartItems: z.array(z.any()),
   productsSpecs: z.array(ProductsMinimizedSchema),
   cartItems: z.array(z.any()),
   roundedPrice: z.function().args(z.number()).returns(z.number()),
@@ -63,6 +63,10 @@ export const CartTableSchema = z.object({
       z.number().optional(), // variation_id
       z.union([z.number(), z.boolean()]).optional() // newQuantity
     )
+    .returns(z.void()),
+  handleDeleteItem: z
+    .function()
+    .args(z.number(), z.number()) // productId, variationId
     .returns(z.void()),
   loadingItems: z.array(z.number()).optional(),
 });
