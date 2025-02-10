@@ -19,6 +19,7 @@ import PopupSlice from './slices/PopupSlice';
 import ProductSlice from './slices/ProductSlice';
 import themeOptionsSlice from './slices/themeOptionsSlice';
 import userSlice from './slices/userSlice';
+import cartListenerMiddleware from './listeners/cartSliceListener';
 
 const persistConfig = {
   key: 'root',
@@ -68,7 +69,8 @@ export const setupStore = () => {
         mailpoetApi.middleware,
         wooCustomAuthRktApi.middleware,
         instagramCustomRtkApi.middleware,
-        passwordResetApi.middleware
+        passwordResetApi.middleware,
+        cartListenerMiddleware.middleware
       ),
   });
 

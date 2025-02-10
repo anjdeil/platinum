@@ -25,37 +25,23 @@ const ProductPromotion: React.FC<ProductPromotion> = ({ time }) =>
     const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
 
     return (
-        <PromotionContainer>
-            <PromotionTitle>
-                {t('theEndOfThePromotion')}
-            </PromotionTitle>
-            <TimerContainer>
-                <ItemBlock>
-                    <ItemCount>
-                        {days}
-                    </ItemCount>
-                    <ItemText>
-                        Days
-                    </ItemText>
-                </ItemBlock>
-                <ItemBlock>
-                    <ItemCount>
-                        {hours.toString().padStart(2, '0')}
-                    </ItemCount>
-                    <ItemText>
-                        hours
-                    </ItemText>
-                </ItemBlock>
-                <ItemBlock>
-                    <ItemCount>
-                        {minutes.toString().padStart(2, '0')}
-                    </ItemCount>
-                    <ItemText>
-                        minutes
-                    </ItemText>
-                </ItemBlock>
-            </TimerContainer>
-        </PromotionContainer>
+      <PromotionContainer>
+        <PromotionTitle>{t('theEndOfThePromotion')}</PromotionTitle>
+        <TimerContainer>
+          <ItemBlock>
+            <ItemCount>{days}</ItemCount>
+            <ItemText>{t('days')}</ItemText>
+          </ItemBlock>
+          <ItemBlock>
+            <ItemCount>{hours.toString().padStart(2, '0')}</ItemCount>
+            <ItemText>{t('hours')}</ItemText>
+          </ItemBlock>
+          <ItemBlock>
+            <ItemCount>{minutes.toString().padStart(2, '0')}</ItemCount>
+            <ItemText>{t('minutes')}</ItemText>
+          </ItemBlock>
+        </TimerContainer>
+      </PromotionContainer>
     );
 };
 

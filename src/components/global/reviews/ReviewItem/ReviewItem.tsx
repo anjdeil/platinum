@@ -48,30 +48,34 @@ const ReviewItem: FC<ReviewItemPropsType> = ({ review, isOpen, setOpened }) => {
         return () => { if (currentRef) observer.unobserve(currentRef); };
     }, [ review, isOpen, setOpened]);
 
-    return ( 
-        <ReviewContainer ref={reviewRef} isOpen={isOpen || !showReadMore}>
-            <FlexWrapper>
-                <ImageWrapper>
-                    <Image
-                        src={product?.thumbnail?.src || ''}
-                        width={64}
-                        height={64}
-                        alt={product?.name || ''}
-                    />
-                </ImageWrapper>
-                <ReviewName>{review.reviewer}</ReviewName>
-            </FlexWrapper>
-            <Rating rating={review.rating} />
-            <ReviewText 
-                ref={reviewTextRef}
-                collapsedSize="3rem"
-                in={isOpen}
-                timeout="auto"                
-            >{review.review}</ReviewText>
-            {showReadMore && !isOpen &&
-                <MoreButton onClick={() => setOpened(review.id)}>{t('readMore')}</MoreButton>
-            }
-        </ReviewContainer>
+    return (
+      <ReviewContainer ref={reviewRef} isOpen={isOpen || !showReadMore}>
+        <FlexWrapper>
+          <ImageWrapper>
+            <Image
+              src={product?.thumbnail?.src || '/assets/images/user.png'}
+              width={64}
+              height={64}
+              alt={product?.name || ''}
+            />
+          </ImageWrapper>
+          <ReviewName>{review.reviewer}</ReviewName>
+        </FlexWrapper>
+        <Rating rating={review.rating} />
+        <ReviewText
+          ref={reviewTextRef}
+          collapsedSize="3rem"
+          in={isOpen}
+          timeout="auto"
+        >
+          {review.review}
+        </ReviewText>
+        {showReadMore && !isOpen && (
+          <MoreButton onClick={() => setOpened(review.id)}>
+            {t('readMore')}
+          </MoreButton>
+        )}
+      </ReviewContainer>
     );
 };
 

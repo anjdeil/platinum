@@ -94,7 +94,8 @@
     "resetCodeAttemptsOne": "Podany kod resetowania jest nieprawidłowy. Pozostała 1 próba.",
     "passwordResetRequired": "Musisz poprosić o kod resetowania hasła, zanim spróbujesz ustawić nowe hasło.",
     "maxAttemptsExceeded": "Podany kod resetowania jest nieprawidłowy. Wykorzystałeś maksymalną liczbę dozwolonych prób. Musisz poprosić o nowy kod.",
-    "codeProvidedHasExpired": "Dostarczony kod resetowania wygasł."
+    "codeProvidedHasExpired": "Dostarczony kod resetowania wygasł.",
+    "Addresses": "Adresy"
   },
   "TopBar": {
     "CallUs": "Kontakt"
@@ -154,7 +155,14 @@
     "submitting": "Wysyłanie",
     "commentText1": "Czy przetestowałeś nasz produkt? Podziel się swoją opinią;",
     "commentText2": "- Staramy się być najlepsi dla Ciebie, a Twoja opinia bardzo nam pomoże!",
-    "lastedArticles": "Najnowsze artykuły"
+    "lastedArticles": "Najnowsze artykuły",
+    "thickness": "grubość",
+    "length": "długość",
+    "leaveAReviewAboutProduct": "Zostaw recenzję o towarze",
+    "descriptions": "Opis",
+    "days": "Dni",
+    "hours": "Godziny",
+    "minutes": "Minuty"
   },
   "Cart": {
     "cart": "Koszyk",
@@ -202,7 +210,8 @@
     "nothingInTheCart": "Nie ma nic w koszyku...",
     "goToShop": "Przejdź do sklepu",
     "nothingInTheCartText": "Sprawdź nasze nowe produkty lub skorzystaj z wyszukiwarki, jeśli szukasz czegoś konkretnego",
-    "YouNeedToLoginForOrder": "Musisz się zalogować, aby złożyć zamówienie."
+    "YouNeedToLoginForOrder": "Musisz się zalogować, aby złożyć zamówienie.",
+    "сoupon": "Kupon"
   },
   "Contacts": {
     "contacts": "Kontakty",

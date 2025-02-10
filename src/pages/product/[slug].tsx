@@ -2,6 +2,7 @@ import Breadcrumbs from '@/components/global/Breadcrumbs/Breadcrumbs';
 import Reviews from '@/components/global/reviews/Reviews/Reviews';
 import CustomProductList from '@/components/pages/product/CustomProductList/CustomProductList';
 import ProductInfo from '@/components/pages/product/ProductInfo/ProductInfo';
+import transformCategoriesIntoLinks from '@/services/transformers/transformCategoriesIntoLinks';
 import { customRestApi } from '@/services/wpCustomApi';
 import { useAppSelector } from '@/store';
 import { useGetCurrenciesQuery } from '@/store/rtk-queries/wpCustomApi';
@@ -36,7 +37,10 @@ import { useEffect, useState } from 'react';
 // Map or Set for current variation
 // Variations FOR attributes FOR check slug and option
 
-export default function ProductPage({ res }: ProductPageType) {
+export default function ProductPage({
+  res,
+  locale,
+}: ProductPageType & { locale: string }) {
   const product = res.data.item;
   const [breadcrumbsLinks, setBreadcrumbsLinks] = useState<BreadcrumbType[]>(
     []
@@ -59,12 +63,17 @@ export default function ProductPage({ res }: ProductPageType) {
   };
 
   useEffect(() => {
-    const links = product.categories.map(item => ({
-      name: item.name,
-      url: `product-category/${item.name}`,
+    const categoriesWithLang = product.categories.map(item => ({
+      ...item,
+      language_code: locale,
     }));
-    links.push({ name: product.name, url: '/' });
-    setBreadcrumbsLinks(links);
+
+    const categoriesBreadcrumbsLinks = transformCategoriesIntoLinks(
+      categoriesWithLang || []
+    );
+
+    categoriesBreadcrumbsLinks.push({ name: product.name, url: '/' });
+    setBreadcrumbsLinks(categoriesBreadcrumbsLinks);
   }, [product.categories]);
 
   return (
@@ -104,15 +113,20 @@ export default function ProductPage({ res }: ProductPageType) {
 
 const recommendProducts = [24707, 24777, 24737, 24717];
 
-export const getServerSideProps: GetServerSideProps = async (
-  context: GetServerSidePropsContext
-) => {
-  const { slug } = context.query;
-
+export const getServerSideProps: GetServerSideProps = async ({
+  query,
+  locale,
+}: GetServerSidePropsContext) => {
+  const { slug } = query;
+    
   try {
     if (typeof slug !== 'string') throw new Error('Invalid product slug');
+    if (typeof locale !== 'string')
+      throw new Error('Invalid language parameter');
 
-    const response = await customRestApi.get(`products/${slug}`);
+    const response = await customRestApi.get(`products/${slug}`, {
+      lang: locale,
+    });
 
     const isValid = await validateCustomSingleProduct(response.data);
     if (!isValid) throw new Error('Invalid product data');
@@ -120,6 +134,7 @@ export const getServerSideProps: GetServerSideProps = async (
     return {
       props: {
         res: response.data,
+        locale,
       },
     };
   } catch (err) {
