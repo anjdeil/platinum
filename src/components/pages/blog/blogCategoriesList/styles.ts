@@ -20,6 +20,7 @@ export const StyledList = styled.section`
 `;
 
 export const StyledOwnButton = styled(StyledButton)`
+  height: 56px;
   padding-inline: 24px;
 `;
 

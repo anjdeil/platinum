@@ -40,8 +40,6 @@ const BlogItem: FC<BlogItemProps> = ({ post }) => {
   const currentPath = router.pathname;
   const POST_URL = getPostUrl(slug, currentPath);
 
-  console.log('post...', post);
-
   return (
     <BlogItemContainer>
       <ImageBlock>
@@ -56,13 +54,12 @@ const BlogItem: FC<BlogItemProps> = ({ post }) => {
         </Link>
       </ImageBlock>
       <CategoriesTagWrapper>
-        {post.categories.map(category => (
-          <>
-            {category.name !== 'Uncategorized' && (
+        {post.categories.map(
+          category =>
+            category.name !== 'Uncategorized' && (
               <StyledTag key={category.id}>{category.name}</StyledTag>
-            )}
-          </>
-        ))}
+            )
+        )}
       </CategoriesTagWrapper>
       <ContentBlock>
         <StyledWrapperLink href={POST_URL} passHref>

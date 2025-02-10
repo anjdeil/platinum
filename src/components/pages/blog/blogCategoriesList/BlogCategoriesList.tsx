@@ -1,5 +1,6 @@
 import { CustomCategoryAccordion } from '@/components/global/accordions/CustomCategoryAccordion';
 import { FilterCategoryWrapper, StyledList, StyledOwnButton } from './styles';
+import AllCategoriesButton from '../blogCategoriesAllButton/BlogCategoriesAllButton';
 
 type Category = {
   name: string;
@@ -20,14 +21,10 @@ export const BlogCategoriesList = ({
   return (
     <>
       <StyledList>
-        <StyledOwnButton
-          noWrap={true}
-          width="auto"
-          secondary={selectedCategory !== null}
-          onClick={() => setSelectedCategory(null)}
-        >
-          All
-        </StyledOwnButton>
+        <AllCategoriesButton
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+        />
         {categories.map(category => (
           <StyledOwnButton
             noWrap={true}

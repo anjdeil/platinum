@@ -333,7 +333,8 @@
     "nextPost": "Next",
     "blogPage": "Blog",
     "blogSectionTitle": "Lasted articles",
-    "selectCategory": "Select category"
+    "selectCategory": "Select category",
+    "all": "All"
   },
   "ShippingMethodSelector": {
     "change": "Change",

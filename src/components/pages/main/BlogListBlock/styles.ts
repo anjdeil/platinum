@@ -10,12 +10,13 @@ export const BlogListBlockContainer = styled.div`
 `;
 
 export const BlogList = styled.div`
-    width: 100%; 
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 16px;
+  row-gap: 32px;
 
-    @media ${({ theme }) => theme.media.medium} {
-        grid-template-columns: 1fr;
-    }
+  @media ${({ theme }) => theme.media.medium} {
+    grid-template-columns: 1fr;
+  }
 `;
