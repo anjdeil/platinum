@@ -97,9 +97,13 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
                     <StyledPhoneInput
                       {...field}
                       defaultCountry="pl"
-                      onChange={value =>
-                        setValue(name, value, { shouldValidate: true })
-                      }
+                      onChange={value => {
+                        if (value !== defaultPhoneValue) {
+                          setValue(name, value, { shouldValidate: true });
+                        } else {
+                          setValue(name, value, { shouldValidate: false });
+                        }
+                      }}
                       value={field.value || ''}
                       onBlur={() => field.onBlur()}
                     />
