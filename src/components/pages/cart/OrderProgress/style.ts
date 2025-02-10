@@ -46,7 +46,7 @@ export const OrderStepWrapper = styled.div`
   padding: 5px;
 `;
 
-export const OrderStepWrapperLink = styled(Link)<{ completed: boolean }>`
+export const OrderStepWrapperLink = styled(Link)<{ completed: string }>`
   text-decoration: none;
   color: ${({ theme }) => theme.colors.black};
   display: flex;
@@ -58,10 +58,10 @@ export const OrderStepWrapperLink = styled(Link)<{ completed: boolean }>`
 
   border-radius: 8px;
   transition: background-color 0.2s;
-  cursor: ${({ completed }) => completed && 'pointer'};
+  cursor: ${({ completed }) => completed === 'true' && 'pointer'};
   &:hover {
     background-color: ${({ completed, theme }) =>
-      completed && theme.background.secondary};
+      completed === 'true' && theme.background.secondary};
   }
 `;
 

@@ -17,6 +17,7 @@ interface CustomSelectProps {
   errors: any;
   rules?: any;
   defaultValue?: string;
+  noPaddings?: boolean;
 }
 const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
 
@@ -28,13 +29,14 @@ const CustomCountrySelect: React.FC<CustomSelectProps> = ({
   errors,
   rules,
   defaultValue,
+  noPaddings,
 }) => {
   const tValidation = useTranslations('Validation');
   const selectRef = useRef<any>(null);
   if (typeof window !== 'undefined') {
   }
   return (
-    <CustomSelectInput>
+    <CustomSelectInput noPaddings={noPaddings}>
       <label>{label}</label>
       <CustomRequired>*</CustomRequired>
 
@@ -58,10 +60,10 @@ const CustomCountrySelect: React.FC<CustomSelectProps> = ({
               control: (base, state) => ({
                 ...base,
                 marginTop: '8px',
-                marginBottom: '8px',
+                marginBottom: noPaddings ? '24px' : '8px',
                 border: 'none',
-                height: '50px',
-                padding: '5px',
+                height: noPaddings ? '48px' : '50px',
+                padding: noPaddings ? '0' : '5px',
                 borderRadius: '10px',
                 background: theme.background.formElements,
                 outline: state.isFocused

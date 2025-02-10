@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 import { RegistrationFormSchema } from '@/types/components/global/forms/registrationForm';
 import { isAuthErrorResponseType } from '@/utils/isAuthErrorResponseType';
 import { CustomFormInput } from '../CustomFormInput';
-import { CustomError, CustomSuccess } from '../CustomFormInput/styles';
+import { CustomError } from '../CustomFormInput/styles';
 import {
   CustomForm,
   FlexBox,
@@ -28,6 +28,7 @@ import { useTranslations } from 'next-intl';
 import { ActiveText } from '../LoginForm/styles';
 import CustomCountrySelect from '../../selects/CustomCountrySelect/CustomCountrySelect';
 import { countryOptions } from '@/utils/mockdata/countryOptions';
+import Notification from '../../Notification/Notification';
 
 export const RegistrationForm: FC = () => {
   const tValidation = useTranslations('Validation');
@@ -193,9 +194,9 @@ export const RegistrationForm: FC = () => {
           ></CustomError>
         )}
         {isSubmitSuccessful && !error && customError && (
-          <CustomSuccess>
+          <Notification type="success">
             {tMyAccount('Your account has been created successfully!')}
-          </CustomSuccess>
+          </Notification>
         )}
       </FormWrapperBottom>
       <FlexBox gap="10px" justifyContent="flex-end" margin="16px 0 0 0">
