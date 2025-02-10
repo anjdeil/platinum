@@ -101,7 +101,8 @@
     "CallUs": "Kontakt"
   },
   "Search": {
-    "Search": "Suche"
+    "Search": "Suche",
+    "Placeholder": "Geben Sie den Produktnamen ein"
   },
   "Archive": {
     "goHome": "Startseite",

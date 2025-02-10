@@ -101,7 +101,8 @@
     "CallUs": "Контакт"
   },
   "Search": {
-    "Search": "Пошук"
+    "Search": "Пошук",
+    "Placeholder": "Введіть назву товару"
   },
   "Archive": {
     "goHome": "Головна",
