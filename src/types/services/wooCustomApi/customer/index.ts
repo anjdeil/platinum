@@ -1,7 +1,7 @@
 import { LineItemSchema } from '@/types/components/shop/product/products';
+import { ShippingLineSchema } from '@/types/pages/checkout';
 import { lineOrderItemsSchema } from '@/types/store/reducers/сartSlice';
 import { z } from 'zod';
-import { ShippingLineSchema } from '@/types/pages/checkout';
 
 const currencies: [string, ...string[]] = ['EUR', 'USD', 'PLN'];
 
@@ -357,6 +357,10 @@ const retrieveCouponQuerySchema = z.object({
   id: z.number(),
 });
 
+const reviewQuerySchema = z.object({
+  product: z.number(),
+});
+
 export const WooCustomerUpdateSchema = z.object({
   email: z.string().optional(),
   first_name: z.string().optional(),
@@ -430,6 +434,7 @@ export type CreateOrderResponseType = z.infer<typeof CreateOrderResponseSchema>;
 export type CreateOrderRequestType = z.infer<typeof CreateOrderRequestSchema>;
 export type couponRespType = z.infer<typeof couponRespSchema>;
 export type retrieveCouponQueryType = z.infer<typeof retrieveCouponQuerySchema>;
+export type reviewQueryType = z.infer<typeof reviewQuerySchema>;
 export type ReviewRespType = z.infer<typeof ReviewRespSchema>;
 export type ReviewsRespType = z.infer<typeof ReviewsRespSchema>;
 export type WooCustomerUpdateType = z.infer<typeof WooCustomerUpdateSchema>;

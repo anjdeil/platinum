@@ -1,10 +1,10 @@
 import { ReviewsRespType } from '@/types/services';
 import { FC, useState } from 'react';
-import { CustomSwiper, ReviewsContainer } from './styles';
+import 'swiper/css';
 import { Pagination } from 'swiper/modules';
 import { SwiperSlide } from 'swiper/react';
 import ReviewsCard from '../ReviewsCard/ReviewsCard';
-import 'swiper/css';
+import { CustomSwiper, ReviewsContainer } from './styles';
 
 type ReviewsPropsType = {
   reviews: ReviewsRespType;
