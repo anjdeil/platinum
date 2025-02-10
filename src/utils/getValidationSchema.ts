@@ -48,7 +48,7 @@ export const getValidationSchema = (
           message: t('yourPhoneNumberIsTooShort'),
         },
         pattern: {
-          value: /^\+?[1-9]\d{1,14}$/g,
+          value: /^\+?[1-9]\d{0,2}[-\s]?\d{3}[-\s]?\d{3}[-\s]?\d{3,4}$/g,
           message: t('invalidPhoneNumber'),
         },
       };

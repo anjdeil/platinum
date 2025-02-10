@@ -36,6 +36,7 @@ export const StyledCheckBoxWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4px;
+  margin-top: 20px;
 `;
 
 export const StyledCheckBoxContainer = styled.div`

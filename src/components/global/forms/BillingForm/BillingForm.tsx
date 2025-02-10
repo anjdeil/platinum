@@ -1,4 +1,4 @@
-import { FieldError, useForm, useWatch } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import {
   AnimatedWrapper,
   StyledFomContainer,
@@ -33,23 +33,32 @@ type OrderFormData = {
   billing: BillingType | null;
   shipping: ShippingType | null;
   metaData: MetaDataType[] | null;
-  registration: RegistrationType | null;
 };
 
 interface BillingFormProps {
   setFormOrderData: (data: OrderFormData) => void;
   setCurrentCountryCode: (code: string) => void;
-  setValidationErrors: (errors: string[]) => void;
-  isValidation: boolean;
-  setIsValidation: (value: boolean) => void;
+  setValidationErrors: (errors: string | null) => void;
+  triggerValidationForm: boolean;
+  setTriggerValidationForm: (value: boolean) => void;
+  isUserAlreadyExist: boolean;
+  setRegistrationErrorWarning: (value: string | null) => void;
+  setIsRegistration: (value: boolean) => void;
+  setRegistrationData: (data: RegistrationType) => void;
+  setIsValidForm: (value: boolean) => void;
 }
 
 export const BillingForm: FC<BillingFormProps> = ({
   setFormOrderData,
   setCurrentCountryCode,
   setValidationErrors,
-  isValidation,
-  setIsValidation,
+  triggerValidationForm,
+  setTriggerValidationForm,
+  isUserAlreadyExist,
+  setRegistrationErrorWarning,
+  setIsRegistration,
+  setRegistrationData,
+  setIsValidForm,
 }) => {
   const { customer, isCustomerLoading } = useGetCustomerData();
   const tValidation = useTranslations('Validation');
@@ -108,6 +117,18 @@ export const BillingForm: FC<BillingFormProps> = ({
   }, [customer, invoice]);
 
   useEffect(() => {
+    setIsValidForm(isValid);
+  }, [isValid]);
+
+  useEffect(() => {
+    if (customer) {
+      console.log('customer send');
+      setValue('registration', false);
+      setRegistrationErrorWarning(null);
+    }
+  }, [customer]);
+
+  useEffect(() => {
     if (different_address) {
       setValue('shipping_country', 'PL');
       setValue('shipping_city', '');
@@ -153,41 +174,50 @@ export const BillingForm: FC<BillingFormProps> = ({
   }, [shipping_country]);
 
   useEffect(() => {
-    if (isValidation) {
+    if (newCustomerRegistration) {
+      setIsRegistration(true);
+    } else {
+      setIsRegistration(false);
+    }
+  }, [newCustomerRegistration]);
+
+  useEffect(() => {
+    if (newCustomerRegistration && isValid) {
+      const { formattedRegistrationData } = getFormattedUserData(
+        watchedFields as ReqData
+      );
+      setRegistrationData(formattedRegistrationData as RegistrationType);
+    }
+  }, [newCustomerRegistration, isValid]);
+
+  useEffect(() => {
+    if (triggerValidationForm) {
       trigger().then(isValid => {
         if (isValid) {
           const {
             formattedBillingData,
             formattedShippingData,
-            formattedRegistrationData,
             formattedMetaData,
           } = getFormattedUserData(watchedFields as ReqData);
           setFormOrderData({
             billing: formattedBillingData as BillingType,
             shipping: formattedShippingData as ShippingType,
             metaData: formattedMetaData as MetaDataType[],
-            registration: newCustomerRegistration
-              ? (formattedRegistrationData as RegistrationType)
-              : null,
           });
-          setValidationErrors([]);
-          setIsValidation(false);
+          setValidationErrors(null);
+          setTriggerValidationForm(false);
         } else {
-          setIsValidation(false);
-          const validationErrors = Object.values(errors)
-            .filter((error): error is FieldError => error !== undefined)
-            .map(error => error.message as string);
-          setValidationErrors(validationErrors);
+          setTriggerValidationForm(false);
+          setValidationErrors('validationErrorsFields');
           setFormOrderData({
             billing: null,
             shipping: null,
             metaData: null,
-            registration: null,
           });
         }
       });
     }
-  }, [isValidation, isValid]);
+  }, [triggerValidationForm, isValid]);
 
   const addressFields = (form: string) => (
     <>
@@ -262,7 +292,7 @@ export const BillingForm: FC<BillingFormProps> = ({
   );
   return (
     <>
-      {!customer && !isCustomerLoading && (
+      {!customer && !isCustomerLoading && !isUserAlreadyExist && (
         <ConfirmationRegCard register={register} errors={errors} />
       )}
       <StyledFomContainer>
@@ -355,7 +385,7 @@ export const BillingForm: FC<BillingFormProps> = ({
               </VariationFields>
               <StyledFormWrapper>{addressFields('billing')}</StyledFormWrapper>
               <VariationFields>
-                {watchedFields.registration && (
+                {watchedFields.registration && !isUserAlreadyExist && (
                   <>
                     <StyledFormWrapper>
                       <AnimatedWrapper isVisible={newCustomerRegistration}>
@@ -388,7 +418,7 @@ export const BillingForm: FC<BillingFormProps> = ({
                         />
                       </AnimatedWrapper>
                     </StyledFormWrapper>
-                    <AnimatedWrapper isVisible={newCustomerRegistration}>
+                    {/* <AnimatedWrapper isVisible={newCustomerRegistration}>
                       <StyledSingleCheckBoxWrapper>
                         <FormCheckbox
                           name={'terms'}
@@ -398,7 +428,7 @@ export const BillingForm: FC<BillingFormProps> = ({
                           validation={getValidationSchema('terms', tValidation)}
                         />
                       </StyledSingleCheckBoxWrapper>
-                    </AnimatedWrapper>
+                    </AnimatedWrapper> */}
                   </>
                 )}
               </VariationFields>

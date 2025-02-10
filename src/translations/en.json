@@ -96,7 +96,8 @@
     "passwordResetRequired": "You must request a password reset code before you try to set a new password.",
     "maxAttemptsExceeded": "The reset code provided is not valid. You have used the maximum number of attempts allowed. You must request a new code",
     "codeProvidedHasExpired": "The reset code provided has expired.",
-    "Addresses": "Addresses"
+    "Addresses": "Addresses",
+    "serverError": "Something went wrong with the server. Please try again or contact support."
   },
   "TopBar": {
     "CallUs": "Call us"
@@ -274,10 +275,18 @@
     "parcelLocker": "Please, select a parcel locker",
     "shippingMethod": "Please, select a shipping method",
     "noChanges": "There's no change in your data",
-    "noBillingInformation": "Please, field the billing information",
+    "noBillingInformation": "Please, field the billing/shipping information",
     "isRequired": "field is required",
     "areRequired": "fields are required",
     "pleaseFillInTheEmail": "Please, fill in the email",
+    "firstname": "Name",
+    "lastname": "Surname",
+    "address1": "Street",
+    "address2": "Building number",
+    "postcode": "Postcode",
+    "emailInput": "E-Mail",
+    "phoneIsRequired": "Phone number is required",
+    "apartmentNumber": "Apartment number",
     "wrongEmailFormat": "Wrong email format",
     "cannotExceed254Characters": "Cannot exceed 254 characters",
     "pleaseFillInThePassword": "Please, fill in the password",
@@ -313,7 +322,8 @@
     "yourApartmentNumberIsTooLong": "Your apartment number is too long",
     "pleaseFillInThePostcode": "Please, fill in the postcode",
     "invalidPostcodeFormat": "Invalid postcode format",
-    "validationErrorsFields": "Check the following fields:"
+    "validationErrorsFields": "Please, fill in the incorrect form fields",
+    "noRegistrationData": "No registration data"
   },
   "Forms": {
     "applicationForm": "application form",

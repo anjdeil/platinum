@@ -207,18 +207,19 @@ export default function CheckoutPage() {
   );
 
   // Get data from Billing/Shipping forms
-  const [isValidation, setIsValidation] = useState(false);
+  const [triggerValidationForm, setTriggerValidationForm] = useState(false);
   const [formOrderData, setFormOrderData] = useState<{
     billing: BillingType | null;
     shipping: ShippingType | null;
     metaData: MetaDataType[] | null;
-    registration: RegistrationType | null;
   }>({
     billing: null,
     shipping: null,
     metaData: null,
-    registration: null,
   });
+  const [isRegistration, setIsRegistration] = useState(false);
+  const [registrationData, setRegistrationData] =
+    useState<RegistrationType | null>(null);
 
   useEffect(() => {
     if (!formOrderData.shipping?.country) return;
@@ -260,16 +261,16 @@ export default function CheckoutPage() {
   /**
    * Order validation
    */
-  // const [billingWarning, setBillingWarning] = useState<string | null>(null);
   const [registrationErrorWarning, setRegistrationErrorWarning] = useState<
     string | null
   >(null);
+  const [isUserAlreadyExist, setIsUserAlreadyExist] = useState<boolean>(false);
   const [isRegistrationSuccessful, setIsRegistrationSuccessful] = useState<
     boolean | null
   >(null);
-
+  const [isValidForm, setIsValidForm] = useState<boolean>(false);
   const [warnings, setWarnings] = useState<string[]>();
-  const [validationErrors, setValidationErrors] = useState<string[]>([]);
+  const [validationErrors, setValidationErrors] = useState<string | null>(null);
 
   const [isWarningsShown, setIsWarningsShown] = useState(false);
 
@@ -279,35 +280,52 @@ export default function CheckoutPage() {
   const { registerUser } = useRegisterUser();
 
   const handlePayOrder = async () => {
-    setIsValidation(true);
+    if (!order) return;
 
-    if (formOrderData.registration) {
-      console.log('1 registerUser start', formOrderData.registration);
+    setTriggerValidationForm(true); //trigger
+    setIsWarningsShown(true);
+
+    let isOrderValid = true;
+
+    if (!isValidForm) {
+      isOrderValid = false;
+    }
+
+    const shippingValidationResult = validateOrder(order);
+    if (!shippingValidationResult.isValid) {
+      setWarnings(shippingValidationResult.messageKeys);
+      isOrderValid = false;
+    } else {
+      setWarnings([]);
+    }
+
+    setRegistrationErrorWarning(null);
+    if (isRegistration && registrationData && isOrderValid) {
       setIsRegistrationSuccessful(false);
 
-      const registrationError = await registerUser(formOrderData.registration);
+      const registrationError = await registerUser(registrationData);
 
       if (!registrationError) {
-        console.log('2 SUCCESS registerUser start', formOrderData.registration);
         setIsRegistrationSuccessful(true);
-        setRegistrationErrorWarning(null);
+        setRegistrationErrorWarning(null); //?
+        setRegistrationData(null); //?
       } else {
-        console.log('3 ERROR registerUser start', formOrderData.registration);
+        isOrderValid = false;
         setRegistrationErrorWarning(registrationError);
-        return;
+
+        if (
+          registrationError.includes(
+            'An account is already registered with your email address.'
+          )
+        ) {
+          setRegistrationData(null); //?
+        }
       }
     }
 
-    if (!order) return;
-    const validationResult = validateOrder(order);
-    if (validationResult.isValid) {
-      console.log('4 validationResult.isValid');
+    if (isOrderValid) {
       setOrderStatus('pending');
-    } else {
-      setIsWarningsShown(true);
     }
-
-    setWarnings(validationResult.messageKeys);
   };
 
   const isPayButtonDisabled = isOrderLoading || orderStatus === 'pending';
@@ -356,19 +374,26 @@ export default function CheckoutPage() {
       <CheckoutContainer>
         <CheckoutFormsWrapper>
           {/* Billing and shipping forms */}
-          {validationErrors.length > 0 && (
-            <BillingWarnings message={validationErrors} />
-          )}
+          {validationErrors && <BillingWarnings message={validationErrors} />}
+
           {registrationErrorWarning && (
-            <RegistrationError message={registrationErrorWarning} />
+            <RegistrationError
+              message={registrationErrorWarning}
+              setIsUserAlreadyExist={setIsUserAlreadyExist}
+            />
           )}
 
           <BillingForm
             setFormOrderData={setFormOrderData}
             setCurrentCountryCode={setCurrentCountryCode}
             setValidationErrors={setValidationErrors}
-            isValidation={isValidation}
-            setIsValidation={setIsValidation}
+            triggerValidationForm={triggerValidationForm}
+            setTriggerValidationForm={setTriggerValidationForm}
+            isUserAlreadyExist={isUserAlreadyExist}
+            setRegistrationErrorWarning={setRegistrationErrorWarning}
+            setIsRegistration={setIsRegistration}
+            setRegistrationData={setRegistrationData}
+            setIsValidForm={setIsValidForm}
           />
 
           <CheckoutFormSection>

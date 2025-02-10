@@ -1,26 +1,36 @@
-import Notification from '@/components/global/Notification/Notification';
-import { FlexBox } from '@/styles/components';
 import { useTranslations } from 'next-intl';
 import { useAppDispatch } from '@/store';
-import { Button } from '@mui/material';
 import { popupToggle } from '@/store/slices/PopupSlice';
+import Notification from '@/components/global/Notification/Notification';
+import { FlexBox } from '@/styles/components';
+import { Button } from '@mui/material';
+import { StyledText } from '../style';
 
-export const RegistrationError = ({ message }: { message: string | null }) => {
+type RegistrationErrorProps = {
+  message: string | null;
+  setIsUserAlreadyExist: (value: boolean) => void;
+};
+export const RegistrationError = ({
+  message,
+  setIsUserAlreadyExist,
+}: RegistrationErrorProps) => {
   const tMyAccount = useTranslations('MyAccount');
   const dispatch = useAppDispatch();
-  const errorMessage =
-    message ||
-    'Oops! Something went wrong with the server. Please try again or contact support.';
+  const errorMessage = message || tMyAccount('serverError');
 
-  if (
-    errorMessage.includes(
-      'An account is already registered with your email address.'
-    )
-  ) {
+  const isUserAlreadyExist = errorMessage.includes(
+    'An account is already registered with your email address.'
+  );
+
+  if (isUserAlreadyExist) {
+    setIsUserAlreadyExist(true);
+  }
+
+  if (isUserAlreadyExist) {
     return (
       <Notification type={'warning'}>
         <FlexBox justifyContent="flex-end" alignItems="center">
-          <p>{tMyAccount('AlreadyHaveAnAccount')} </p>
+          <StyledText>{tMyAccount('AlreadyHaveAnAccount')} </StyledText>
           <Button onClick={() => dispatch(popupToggle('login'))}>
             {tMyAccount('log-In')}!
           </Button>

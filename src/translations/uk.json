@@ -49,12 +49,14 @@
     "first_name": "Ім'я",
     "last_name": "Прізвище",
     "company": "Компанія",
+    "nip": "ІПН",
     "address_1": "Вулиця",
     "address_2": "Номер будівлі",
     "city": "Місто",
     "state": "Область",
     "postcode": "Поштовий індекс",
     "country": "Країна",
+    "apartmentNumber": "Номер квартири",
     "email": "Електронна пошта",
     "phone": "Телефон",
     "discountCode": "Промокод",
@@ -64,8 +66,6 @@
     "action": "Дія",
     "availablePcs": "У наявності {quantity} шт",
     "nothingInTheWishlist": "У списку бажань нічого немає...",
-    "apartmentNumber": "Номер квартири",
-    "registration": "Реєстрація",
     "login": "Увійти",
     "log-In": "Увійти",
     "password": "Пароль",
@@ -74,6 +74,7 @@
     "DontHaveAnAccount": "Немає акаунта?",
     "SignUpNow": "Зареєструйтесь зараз!",
     "register": "Зареєструватися",
+    "registration": "Реєстрація",
     "agreePersonalData": "Згоден на обробку персональних даних",
     "EditUserInfo": "Оновити профіль",
     "successUpdate": "Ваш профіль був успішно оновлений",
@@ -95,7 +96,8 @@
     "passwordResetRequired": "Ви повинні запросити код скидання пароля перед тим, як спробувати встановити новий пароль.",
     "maxAttemptsExceeded": "Наданий код скидання неправильний. Ви використали максимальну кількість дозволених спроб. Вам потрібно запросити новий код.",
     "codeProvidedHasExpired": "Термін дії наданого коду скидання закінчився.",
-    "Addresses": "Адреси"
+    "Addresses": "Адреси",
+    "serverError": "Щось пішло не так із сервером. Спробуйте ще раз або зверніться до служби підтримки."
   },
   "TopBar": {
     "CallUs": "Контакт"
@@ -183,18 +185,17 @@
     "discountText": "УВІЙДІТЬ В СИСТЕМУ ТА СКОРИСТАЙТЕСЯ {discounts}",
     "CouponText": "ЯКЩО В ВАС Є КУПОН НА ЗНИЖКУ, ВИКОРИСТАЙТЕ ЙОГО ТА ОТРИМАЙТЕ ЗНИЖКУ!",
     "ChooseCouponText": "Виберіть, якщо у вас є код знижки або бонусні бали, які ви хочете використати, або хочете оцінити вартість доставки.",
-    "ErrorCoupon": "Цього купона не існує",
     "LoginAnd": "УВІЙДІТЬ В СИСТЕМУ ТА СКОРИСТАЙТЕСЯ",
     "Above": "ВИЩЕ",
     "ForOrders": "ДЛЯ ЗАМОВЛЕНЬ",
     "CouponApply": "Купон успішно застосований",
+    "ErrorCoupon": "Цього купона не існує",
     "CouponApplyBtn": "Применить купон",
     "CouponInputPlaceholder": "Код купона",
     "OrderComments": "КОМЕНТАРІ ДО ЗАМОВЛЕННЯ",
     "OrderCommentPlaceholder": "Поділіться будь-якими конкретними деталями або запитами щодо вашого замовлення...",
     "OrderCommentHint": "Не соромтеся надавати будь-які додаткові інструкції або нотатки до вашого замовлення тут.",
     "OrderSummary": "Підсумок замовлення",
-    "summary": "Сума",
     "Continue": "Продовжити",
     "OrderSummaryTotal": "загальна сума до сплати",
     "products": "Товари",
@@ -206,12 +207,12 @@
     "welcomeToPlatinumShop": "Ласкаво просимо до Platinum Shop",
     "theBest": "Найкращий",
     "productForYou": "Продукт для вас",
+    "summary": "Сума",
     "UserLoyalityStatus": "Ви маєте статус {validStatus} i отримуєте",
     "nothingInTheCart": "У кошику нічого немає...",
     "goToShop": "Перейти до магазину",
     "nothingInTheCartText": "Перегляньте наші нові продукти або скористайтеся пошуком, якщо ви шукаєте щось конкретне",
-    "YouNeedToLoginForOrder": "Вам потрібно увійти в систему, щоб оформити замовлення.",
-    "сoupon": "Купон"
+    "YouNeedToLoginForOrder": "Вам потрібно увійти в систему, щоб оформити замовлення."
   },
   "Contacts": {
     "contacts": "Контакти",
@@ -229,10 +230,10 @@
     "yourNamePlaceholder": "Як вас звати",
     "emailPlaceholder": "E-mail",
     "yourQuestionPlaceholder": "Напишіть ваше питання",
-    "sending": "Надсилається...",
-    "sendButton": "Надіслати питання",
     "errorMessage": "Щось пішло не так. Будь ласка, спробуйте ще раз.",
-    "successMessage": "Ваше повідомлення успішно відправлено!"
+    "successMessage": "Ваше повідомлення успішно відправлено!",
+    "sending": "Надсилається...",
+    "sendButton": "Надіслати питання"
   },
   "Validation": {
     "emailValidation": "Будь ласка, введіть правильну електронну адресу.",
@@ -261,6 +262,7 @@
     "saving": "Збереження...",
     "saveChanges": "Зберегти зміни",
     "InvalidPhoneNumber": "Неправильний номер телефону",
+    "yourPhoneNumberIsTooShort": "Ваш номер телефону занадто короткий",
     "fileTooLarge": "файл занадто великий",
     "agreentment": "Я погоджуюсь на отримання інформації про новини та зміни в пропозиції магазину",
     "agreentmentTerms": "Ви повинні погодитися з умовами",
@@ -276,6 +278,7 @@
     "noBillingInformation": "Ви не вказали інформацію про платника",
     "isRequired": "поле обов'язкове для заповнення",
     "areRequired": "поля обов'язкові для заповнення",
+    "pleaseFillInTheEmail": "Будь ласка, введіть електронну пошту",
     "firstname": "Ім'я",
     "lastname": "Прізвище",
     "address1": "Вулиця та номер будинку",
@@ -284,7 +287,6 @@
     "emailInput": "Електронна пошта",
     "phoneIsRequired": "Телефон",
     "apartmentNumber": "Номер квартири",
-    "pleaseFillInTheEmail": "Будь ласка, введіть електронну пошту",
     "wrongEmailFormat": "Неправильний формат електронної пошти",
     "cannotExceed254Characters": "Не може перевищувати 254 символи",
     "pleaseFillInThePassword": "Будь ласка, введіть пароль",
@@ -300,8 +302,13 @@
     "yourLastNameIsTooLong": "Ваше прізвище занадто довге",
     "pleaseFillInThePhoneNumber": "Будь ласка, введіть номер телефону",
     "invalidPhoneNumber": "Неправильний номер телефону",
+    "pleaseFillInTheCompanyName": "Будь ласка, введіть назву вашої компанії",
+    "yourCompanyNameIsTooShort": "Назва вашої компанії занадто коротка",
     "yourCompanyNameIsTooLong": "Назва вашої компанії занадто довга",
+    "pleaseFillInTheNip": "Будь ласка, введіть ІПН",
+    "yourNipIsTooShort": "Ваш ІПН занадто короткий",
     "yourNipIsTooLong": "Ваш ІПН занадто довгий",
+    "invalidNipFormat": "Неправильний формат ІПН",
     "pleaseSelectACountry": "Будь ласка, виберіть країну",
     "pleaseFillInTheCity": "Будь ласка, введіть місто",
     "yourCityNameIsTooShort": "Назва вашого міста занадто коротка",
@@ -309,10 +316,14 @@
     "pleaseFillInTheStreetAddress": "Будь ласка, введіть адресу вулиці",
     "yourStreetAddressIsTooShort": "Ваша адреса вулиці занадто коротка",
     "yourStreetAddressIsTooLong": "Ваша адреса вулиці занадто довга",
+    "pleaseFillInTheBuildingNumber": "Будь ласка, введіть номер будинку",
     "yourBuildingNumberIsTooLong": "Номер вашого будинку занадто довгий",
+    "pleaseFillInTheApartmentNumber": "Будь ласка, введіть номер квартири",
     "yourApartmentNumberIsTooLong": "Номер вашої квартири занадто довгий",
     "pleaseFillInThePostcode": "Будь ласка, введіть поштовий індекс",
-    "invalidPostcodeFormat": "Неправильний формат поштового індексу"
+    "invalidPostcodeFormat": "Неправильний формат поштового індексу",
+    "validationErrorsFields": "Будь ласка, заповніть неправильні поля форми",
+    "noRegistrationData": "Немає даних для реєстрації"
   },
   "Forms": {
     "applicationForm": "форма заявки",
@@ -361,8 +372,8 @@
   "BlogPostPage": {
     "previousPost": "Попередній",
     "nextPost": "Наступний",
-    "blogSectionSubtitle": "Останні статті",
-    "blogPage": "Блог"
+    "blogPage": "Блог",
+    "blogSectionSubtitle": "Останні статті"
   },
   "ShippingMethodSelector": {
     "change": "Змінити",
@@ -389,8 +400,8 @@
     "company": "Ім'я та прізвище/Підприємство",
     "nip": "ІПН",
     "freeShipping": "Вам потрібно ще {cost}, щоб отримати безкоштовну доставку.",
-    "shippingDifferentAddress": "Ship to a different address?",
-    "inValidForm": "Place, fill customer information correctly"
+    "shippingDifferentAddress": "Доставка за іншою адресою",
+    "inValidForm": "Форма містить помилки:"
   },
   "Footer": {
     "myAccount": "Мій акаунт",
