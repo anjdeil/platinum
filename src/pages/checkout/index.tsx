@@ -282,7 +282,7 @@ export default function CheckoutPage() {
   const handlePayOrder = async () => {
     if (!order) return;
 
-    setTriggerValidationForm(true); //trigger
+    setTriggerValidationForm(true);
     setIsWarningsShown(true);
 
     let isOrderValid = true;
