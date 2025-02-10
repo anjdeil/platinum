@@ -38,17 +38,20 @@ const OrderProgress: FC = () => {
                         </>
                     );
                     return (
-                        <React.Fragment key={step.url}>
-                            {isCompleted ? (
-                                <OrderStepWrapperLink href={step.url} completed>
-                                    {StepContent}
-                                </OrderStepWrapperLink>
-                            ) : (
-                                <OrderStepWrapper>{StepContent}</OrderStepWrapper>
-                            )}
+                      <React.Fragment key={step.url}>
+                        {isCompleted ? (
+                          <OrderStepWrapperLink
+                            href={step.url}
+                            completed={'true'}
+                          >
+                            {StepContent}
+                          </OrderStepWrapperLink>
+                        ) : (
+                          <OrderStepWrapper>{StepContent}</OrderStepWrapper>
+                        )}
 
-                            {index < steps.length - 1 && <ForwardArrow />}
-                        </React.Fragment>
+                        {index < steps.length - 1 && <ForwardArrow />}
+                      </React.Fragment>
                     );
                 })}
 
