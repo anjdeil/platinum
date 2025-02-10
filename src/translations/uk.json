@@ -373,8 +373,10 @@
   "BlogPostPage": {
     "previousPost": "Попередній",
     "nextPost": "Наступний",
+    "blogSectionSubtitle": "Останні статті",
     "blogPage": "Блог",
-    "blogSectionSubtitle": "Останні статті"
+    "selectCategory": "Виберіть категорію",
+    "all": "Всі"
   },
   "ShippingMethodSelector": {
     "change": "Змінити",
