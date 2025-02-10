@@ -3,12 +3,12 @@ import DeleteIcon from '@/components/global/icons/DeleteIcon/DeleteIcon';
 import Notification from '@/components/global/Notification/Notification';
 import { MenuSkeleton } from '@/components/menus/MenuSkeleton';
 import { useResponsive } from '@/hooks/useResponsive';
-import { FlexBox, LinkWrapper, StyledButton, Title } from '@/styles/components';
+import { FlexBox, LinkWrapper, Title } from '@/styles/components';
 import theme from '@/styles/theme';
 import { CartTableProps } from '@/types/pages/cart';
 import checkProductAvailability from '@/utils/cart/checkProductAvailability';
 import { useTranslations } from 'next-intl';
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import CartProductWarning from '../CartProductWarning/CartProductWarning';
 import CartQuantity from '../CartQuantity/CartQuantity';
 import {
