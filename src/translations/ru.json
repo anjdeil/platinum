@@ -374,7 +374,9 @@
     "previousPost": "Предыдущий",
     "nextPost": "Следующий",
     "blogPage": "Блог",
-    "blogSectionSubtitle": "Последние статьи"
+    "blogSectionSubtitle": "Последние статьи",
+    "selectCategory": "Выберите категорию",
+    "all": "Все"
   },
   "ShippingMethodSelector": {
     "change": "Изменить",
