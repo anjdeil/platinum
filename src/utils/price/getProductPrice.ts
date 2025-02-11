@@ -7,12 +7,18 @@ export const getProductPrice = (priceData: ProductPriceType | VariationPriceType
     const saleToDate = priceData.sale_dates_to ? new Date(priceData.sale_dates_to) : null;
 
     const isSaleActive =
-        priceData.sale_price &&
-        (saleFromDate ? saleFromDate <= now : false) &&
-        (saleToDate ? saleToDate >= now : false);
+        Boolean(priceData.sale_price &&
+            (
+                // Безстрокова акція
+                (!saleFromDate && !saleToDate) ||
+                // Акція починається в майбутньому
+                (saleFromDate && !saleToDate && saleFromDate <= now) ||
+                // Акція має початок і кінець
+                (saleFromDate && saleToDate && saleFromDate <= now && saleToDate >= now)
+            ));
 
     const regularPrice = priceData.regular_price;
     const finalPrice = isSaleActive ? priceData.sale_price : regularPrice;
 
-    return { finalPrice, regularPrice, isSale: !!isSaleActive, saleEndDate: saleToDate };
+    return { finalPrice, regularPrice, isSale: isSaleActive, saleEndDate: saleToDate };
 };

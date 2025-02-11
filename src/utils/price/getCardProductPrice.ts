@@ -10,6 +10,14 @@ export const getCardProductPrice = (product: ProductType) => {
         const saleFromDate = priceData.sale_dates_from ? new Date(priceData.sale_dates_from) : null;
         const saleToDate = priceData.sale_dates_to ? new Date(priceData.sale_dates_to) : null;
 
+        if (priceData.sale_price && !saleFromDate && !saleToDate) {
+            return true; // Безстрокова акція
+        }
+
+        if (priceData.sale_price && saleFromDate && !saleToDate) {
+            return saleFromDate <= now; // Якщо початок акції в майбутньому, то акція не активна до цієї дати
+        }
+
         return (
             priceData.sale_price &&
             (saleFromDate ? saleFromDate <= now : false) &&
