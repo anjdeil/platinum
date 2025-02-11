@@ -8,13 +8,7 @@ import {
 } from '@/store/rtk-queries/mailpoetApi';
 import { useEffect, useState } from 'react';
 import { FlexBox } from '@/styles/components';
-import {
-  CustomSwitch,
-  SubscribeDescText,
-  SubscribeText,
-  SubscriptionCardWrapper,
-  SubscriptionWrapper,
-} from './style';
+
 import Notification from '@/components/global/Notification/Notification';
 import { MenuSkeleton } from '@/components/menus/MenuSkeleton';
 import theme from '@/styles/theme';
@@ -23,6 +17,13 @@ import { decodeJwt } from 'jose';
 import { JwtDecodedDataType } from '@/types/services/wpRestApi/auth';
 import { validateJwtDecode } from '@/utils/zodValidators/validateJwtDecode';
 import wooCommerceRestApi from '@/services/wooCommerceRestApi';
+import {
+  CustomSwitch,
+  SubscribeDescText,
+  SubscribeText,
+  SubscriptionCardWrapper,
+  SubscriptionWrapper,
+} from '@/components/pages/account/Newsletter/style';
 
 interface SubscriptionProps {
   email: string;
