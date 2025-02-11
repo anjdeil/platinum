@@ -374,7 +374,9 @@
     "previousPost": "Poprzedni",
     "nextPost": "Następny",
     "blogPage": "Blog",
-    "blogSectionSubtitle": "Ostatnie artykuły"
+    "blogSectionSubtitle": "Ostatnie artykuły",
+    "selectCategory": "Wybierz kategorię",
+    "all": "Wszystkie"
   },
   "ShippingMethodSelector": {
     "change": "Zmień",
