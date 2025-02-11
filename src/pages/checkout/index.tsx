@@ -207,6 +207,7 @@ export default function CheckoutPage() {
   );
 
   // Get data from Billing/Shipping forms
+  const [isValidForm, setIsValidForm] = useState<boolean>(false);
   const [triggerValidationForm, setTriggerValidationForm] = useState(false);
   const [formOrderData, setFormOrderData] = useState<{
     billing: BillingType | null;
@@ -217,6 +218,7 @@ export default function CheckoutPage() {
     shipping: null,
     metaData: null,
   });
+
   const [isRegistration, setIsRegistration] = useState(false);
   const [registrationData, setRegistrationData] =
     useState<RegistrationType | null>(null);
@@ -268,12 +270,11 @@ export default function CheckoutPage() {
   const [isRegistrationSuccessful, setIsRegistrationSuccessful] = useState<
     boolean | null
   >(null);
-  const [isValidForm, setIsValidForm] = useState<boolean>(false);
+
   const [warnings, setWarnings] = useState<string[]>();
   const [validationErrors, setValidationErrors] = useState<string | null>(null);
 
   const [isWarningsShown, setIsWarningsShown] = useState(false);
-
   /**
    * Validate billing data
    */
@@ -285,21 +286,27 @@ export default function CheckoutPage() {
     setTriggerValidationForm(true);
     setIsWarningsShown(true);
 
+    await new Promise(resolve => setTimeout(resolve, 100));
+
     let isOrderValid = true;
 
-    if (!isValidForm) {
+    if (!isValidForm || !formOrderData.billing) {
+      if (!isValidForm) setValidationErrors('validationErrorsFields');
+      console.log('1');
       isOrderValid = false;
     }
 
     const shippingValidationResult = validateOrder(order);
     if (!shippingValidationResult.isValid) {
       setWarnings(shippingValidationResult.messageKeys);
+      console.log('2');
       isOrderValid = false;
     } else {
       setWarnings([]);
     }
 
     setRegistrationErrorWarning(null);
+
     if (isRegistration && registrationData && isOrderValid) {
       setIsRegistrationSuccessful(false);
 

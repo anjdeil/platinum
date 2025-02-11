@@ -53,7 +53,6 @@ export const BillingForm: FC<BillingFormProps> = ({
   setCurrentCountryCode,
   setValidationErrors,
   triggerValidationForm,
-  setTriggerValidationForm,
   isUserAlreadyExist,
   setRegistrationErrorWarning,
   setIsRegistration,
@@ -72,6 +71,7 @@ export const BillingForm: FC<BillingFormProps> = ({
     control,
     watch,
     trigger,
+    clearErrors,
   } = useForm({
     mode: 'onBlur',
   });
@@ -205,9 +205,7 @@ export const BillingForm: FC<BillingFormProps> = ({
             metaData: formattedMetaData as MetaDataType[],
           });
           setValidationErrors(null);
-          setTriggerValidationForm(false);
         } else {
-          setTriggerValidationForm(false);
           setValidationErrors('validationErrorsFields');
           setFormOrderData({
             billing: null,
@@ -217,7 +215,7 @@ export const BillingForm: FC<BillingFormProps> = ({
         }
       });
     }
-  }, [triggerValidationForm, isValid]);
+  }, [triggerValidationForm, watchedFields, trigger, setFormOrderData]);
 
   const addressFields = (form: string) => (
     <>
