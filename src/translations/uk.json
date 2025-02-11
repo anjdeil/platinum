@@ -165,7 +165,8 @@
     "descriptions": "Опис",
     "days": "Днів",
     "hours": "Годин",
-    "minutes": "Хвилин"
+    "minutes": "Хвилин",
+    "priceFrom": "від {price}"
   },
   "Cart": {
     "cart": "Кошик",

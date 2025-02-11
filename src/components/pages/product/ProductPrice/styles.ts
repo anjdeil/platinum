@@ -1,18 +1,18 @@
 import { Text } from "@/styles/components";
 import styled from "@emotion/styled";
 
-export const ProductPriceWrapper = styled(Text)`    
+export const ProductPriceWrapper = styled.div`    
     display: flex;
     flex-direction: column;
 `;
 
 export const ProductPriceOldStyled = styled(Text)`    
     color: ${({ theme }) => theme.colors.grey};
+    font: ${({ theme }) => theme.fonts.bodyMiddleReg};
     text-decoration: line-through;
-    margin-bottom: -12px;
 
     @media ${({ theme }) => theme.media.large} {
-        font-size: 14px;
+        font-size: 14px; 
     }
 `;
 
