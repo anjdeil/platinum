@@ -1,4 +1,4 @@
-import { ProductSchema } from "@/types/pages/shop";
+import { ProductSchema } from "@/types/components/shop/product/products";
 import { z } from "zod";
 
 export const BannerSlideTypeSchema = z.object({

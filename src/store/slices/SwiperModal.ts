@@ -1,4 +1,4 @@
-import { ProductImageType } from "@/types/pages/shop";
+import { ProductImageType } from "@/types/components/shop/product/products";
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface SwiperModalState {

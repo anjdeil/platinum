@@ -4,6 +4,7 @@ import DetailsAccordion from '@/components/global/DetailsAccordeon/DetailsAccord
 import Rating from '@/components/global/Rating/Rating';
 import ProductBadge from '@/components/shop/product/ProductBadge/ProductBadge';
 import ProductBadgeWrapper from '@/components/shop/product/ProductBadgeWrapper/ProductBadgeWrapper';
+import { useResponsive } from '@/hooks/useResponsive';
 import { useWishlist } from '@/hooks/useWishlist';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { updateCart } from '@/store/slices/cartSlice';
@@ -11,11 +12,14 @@ import { popupSet, popupToggle } from '@/store/slices/PopupSlice';
 import { setData } from '@/store/slices/ProductSlice';
 import { StyledButton, Title } from '@/styles/components';
 import { ProductCardPropsType } from '@/types/components/shop';
-import { ProductVariation } from '@/types/components/shop/product/products';
-import { ProductType } from '@/types/pages/shop';
+import {
+  ProductType,
+  ProductVariation,
+} from '@/types/components/shop/product/products';
 import { CartItem } from '@/types/store/reducers/сartSlice';
 import { getCookieValue } from '@/utils/auth/getCookieValue';
 import { getCurrentVariation } from '@/utils/getCurrentVariation';
+import { getProductPrice } from '@/utils/price/getProductPrice';
 import { Skeleton } from '@mui/material';
 import ReactHtmlParser from 'html-react-parser';
 import { useTranslations } from 'next-intl';
@@ -39,7 +43,6 @@ import {
   ProductTitleWrapper,
   ProductWrapper,
 } from './styles';
-import { useResponsive } from '@/hooks/useResponsive';
 
 const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
   const { images, thumbnail } = product;
@@ -95,6 +98,15 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
       setQuantity(cartMatch.quantity);
     }
   }, [cartItems, product, currentVariation?.id]);
+
+  const { finalPrice, regularPrice, isSale, saleEndDate } = useMemo(() => {
+    const priceData =
+      product.type === 'simple' ? product.price : currentVariation?.price;
+    if (priceData) {
+      return getProductPrice(priceData);
+    }
+    return { finalPrice: 0, regularPrice: 0, isSale: false, saleEndDate: null };
+  }, [product, currentVariation]);
 
   function renderCartButtonInnerText() {
     if (cartMatch) {
@@ -165,9 +177,7 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
       <ProductImageWrapper>
         <ProductSwiper data={galleryImages} />
         <ProductBadgeWrapper>
-          {product.min_price !== product.max_price && (
-            <ProductBadge type="sale" />
-          )}
+          {isSale && <ProductBadge type="sale" />}
           <FavoriteButton
             onClick={() => handleWishlistToggle(product)}
             marginLeft="auto"
@@ -192,23 +202,11 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
           <Rating rating={product.average_rating} />
         </ProductFlexWrapper>
         {currency.rate ? (
-          currentVariation ? (
-            currentVariation.price !== null && (
-              <ProductPrice
-                currency={currency}
-                minPrice={(currentVariation.price ?? 0) * currency.rate}
-              />
-            )
-          ) : (
-            product.min_price !== null &&
-            product.max_price !== null && (
-              <ProductPrice
-                currency={currency}
-                minPrice={product.min_price * currency.rate}
-                maxPrice={product.max_price * currency.rate}
-              />
-            )
-          )
+          <ProductPrice
+            currency={currency}
+            minPrice={finalPrice ? finalPrice * currency.rate : 0}
+            maxPrice={regularPrice ? regularPrice * currency.rate : 0}
+          />
         ) : (
           <Skeleton width="80px" height="40px" />
         )}
@@ -223,7 +221,8 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
         )}
         {/* Options END*/}
 
-        <ProductPromotion time={new Date('2025-10-30T00:00:00')} />
+        {isSale && saleEndDate && <ProductPromotion time={saleEndDate} />}
+
         <AddToBasketWrapper>
           <ProductQuantity quantity={quantity} onChange={setQuantity} />
 

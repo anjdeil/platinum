@@ -165,7 +165,8 @@
     "descriptions": "Descriptions",
     "days": "Days",
     "hours": "Hours",
-    "minutes": "Minutes"
+    "minutes": "Minutes",
+    "priceFrom": "from {price}"
   },
   "Cart": {
     "cart": "Cart",

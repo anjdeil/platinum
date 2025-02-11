@@ -1,4 +1,4 @@
-import { ProductSchema } from '@/types/pages/shop';
+import { ProductSchema } from '@/types/components/shop/product/products';
 import { z, ZodError } from 'zod';
 
 export async function validateCustomProducts(res: any): Promise<boolean> {

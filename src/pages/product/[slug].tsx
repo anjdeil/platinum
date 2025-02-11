@@ -118,7 +118,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   locale,
 }: GetServerSidePropsContext) => {
   const { slug } = query;
-    
+
   try {
     if (typeof slug !== 'string') throw new Error('Invalid product slug');
     if (typeof locale !== 'string')

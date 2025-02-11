@@ -1,13 +1,13 @@
-import React from 'react';
-import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
-import { SwiperSlide } from 'swiper/react';
 import BackArrow from '@/components/global/icons/BackArrow/BackArrow';
 import ForwardArrow from '@/components/global/icons/ForwardArrow/ForwardArrow';
 import useProductSwiper from '@/hooks/useProductSwiper';
 import { SwiperProps } from '@/types/components/global/sliders/productSwiper';
+import React from 'react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
+import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
+import { SwiperSlide } from 'swiper/react';
 import {
   CustomWrapper,
   ImageStyled,
@@ -20,8 +20,6 @@ import {
   ThumbnailWrapper,
   ThumbsSwiper,
 } from './styles';
-import ProductBadgeWrapper from '@/components/shop/product/ProductBadgeWrapper/ProductBadgeWrapper';
-import ProductBadge from '@/components/shop/product/ProductBadge/ProductBadge';
 
 const ProductSwiper: React.FC<SwiperProps> = ({ data }) => {
   const {
@@ -38,14 +36,6 @@ const ProductSwiper: React.FC<SwiperProps> = ({ data }) => {
 
   return (
     <SwiperContainer>
-      <ProductBadgeWrapper>
-        <ProductBadge type="sale" />
-        {/* <FavoriteButton
-          isLoading={false}
-          active={true}
-          onClick={handleFavorite}
-        /> */}
-      </ProductBadgeWrapper>
       <MainSwiper
         ref={swiperRef}
         spaceBetween={10}
