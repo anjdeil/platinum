@@ -5,24 +5,25 @@ export const getCardProductPrice = (product: ProductType) => {
 
     // Функція для перевірки, чи є акція у продукту або варіації
     const isSaleActive = (priceData: ProductPriceType | VariationPriceType) => {
-        if (!priceData || !priceData.sale_price) return false;
+        if (!priceData?.sale_price) return false;
 
         const saleFromDate = priceData.sale_dates_from ? new Date(priceData.sale_dates_from) : null;
         const saleToDate = priceData.sale_dates_to ? new Date(priceData.sale_dates_to) : null;
 
-        if (priceData.sale_price && !saleFromDate && !saleToDate) {
+        if (!saleFromDate && !saleToDate) {
             return true; // Безстрокова акція
         }
 
-        if (priceData.sale_price && saleFromDate && !saleToDate) {
+        if (saleFromDate && !saleToDate) {
             return saleFromDate <= now; // Якщо початок акції в майбутньому, то акція не активна до цієї дати
         }
 
-        return (
-            priceData.sale_price &&
-            (saleFromDate ? saleFromDate <= now : false) &&
-            (saleToDate ? saleToDate >= now : false)
-        );
+        if (!saleFromDate && saleToDate) {
+            return saleToDate >= now; // Якщо кінцева дата акції ще не пройшла
+        }
+
+        return (saleFromDate ? saleFromDate <= now : false) &&
+            (saleToDate ? saleToDate >= now : false);
     };
 
     // Для простих товарів

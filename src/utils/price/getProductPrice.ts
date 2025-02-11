@@ -14,7 +14,9 @@ export const getProductPrice = (priceData: ProductPriceType | VariationPriceType
                 // Акція починається в майбутньому
                 (saleFromDate && !saleToDate && saleFromDate <= now) ||
                 // Акція має початок і кінець
-                (saleFromDate && saleToDate && saleFromDate <= now && saleToDate >= now)
+                (saleFromDate && saleToDate && saleFromDate <= now && saleToDate >= now) ||
+                // Акція без початку, але з кінцевою датою
+                (!saleFromDate && saleToDate && saleToDate >= now)
             ));
 
     const regularPrice = priceData.regular_price;
