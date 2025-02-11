@@ -1,8 +1,8 @@
-import { StyledRichTextSection } from './styles';
 import { RichTextSectionProps } from '@/types/components/sections';
 import parse from 'html-react-parser';
 import { StyledTitle } from '../AboutPlatinumSection/styles';
 import { StyledError } from '../styles';
+import { StyledRichTextSection } from './styles';
 
 export const RichTextSection: React.FC<RichTextSectionProps> = ({
   title,
@@ -13,6 +13,8 @@ export const RichTextSection: React.FC<RichTextSectionProps> = ({
   if (!text) {
     return <StyledError>Rich text section is empty</StyledError>;
   }
+
+  console.log('Description:', text);
 
   const cleanedContent = text.replace(/<br\s*\/?>/gi, '');
   // .replace(/\s*t\s*/g, '');
