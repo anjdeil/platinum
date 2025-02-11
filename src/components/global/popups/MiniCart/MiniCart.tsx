@@ -1,33 +1,34 @@
-import React, { useEffect, useState, useCallback, useMemo } from 'react';
-import { useAppDispatch, useAppSelector } from '@/store';
-import checkCartConflict from '@/utils/cart/checkCartConflict';
-import { useGetCurrenciesQuery } from '@/store/rtk-queries/wpCustomApi';
+import CloseIcon from '@/components/global/icons/CloseIcon/CloseIcon';
+import TrashIcon from '@/components/global/icons/TrashIcon/TrashIcon';
+import Notification from '@/components/global/Notification/Notification';
+import { PopupOverlay } from '@/components/global/popups/SwiperPopup/styles';
+import { MenuSkeleton } from '@/components/menus/MenuSkeleton';
+import CartQuantity, {
+  adaptItemToCartQuantity,
+} from '@/components/pages/cart/CartQuantity/CartQuantity';
 import OrderBar from '@/components/pages/cart/OrderBar/OrderBar';
+import { OrderBarDesc } from '@/components/pages/cart/OrderBar/style';
 import {
+  CardContent,
   CartCardWrapper,
   CartImgWrapper,
   CartItemImg,
   OnePrice,
   ProducTitle,
   ProductPrice,
-  CardContent,
 } from '@/components/pages/cart/styles/index';
-import CloseIcon from '@/components/global/icons/CloseIcon/CloseIcon';
-import CartQuantity, {
-  adaptItemToCartQuantity,
-} from '@/components/pages/cart/CartQuantity/CartQuantity';
-import { useTranslations } from 'next-intl';
-import { PopupOverlay } from '@/components/global/popups/SwiperPopup/styles';
-import { CartLink, MiniCartContainer } from './style';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { useGetCurrenciesQuery } from '@/store/rtk-queries/wpCustomApi';
 import { FlexBox, LinkWrapper, StyledButton, Title } from '@/styles/components';
-import { Skeleton } from '@mui/material';
-import TrashIcon from '@/components/global/icons/TrashIcon/TrashIcon';
-import Notification from '@/components/global/Notification/Notification';
+import theme from '@/styles/theme';
+import checkCartConflict from '@/utils/cart/checkCartConflict';
 import { handleQuantityChange } from '@/utils/cart/handleQuantityChange';
 import { roundedPrice } from '@/utils/cart/roundedPrice';
-import { MenuSkeleton } from '@/components/menus/MenuSkeleton';
-import theme from '@/styles/theme';
-import { OrderBarDesc } from '@/components/pages/cart/OrderBar/style';
+import { getProductPrice } from '@/utils/price/getProductPrice';
+import { Skeleton } from '@mui/material';
+import { useTranslations } from 'next-intl';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { CartLink, MiniCartContainer } from './style';
 
 interface MiniCartProps {
   onClose: () => void;
@@ -83,11 +84,13 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
         if (!cartItem) return undefined;
 
         const quantity = cartItem ? cartItem.quantity || 0 : 0;
-        const price = product.price || 0;
-        const totalPrice = price * quantity;
+        const { finalPrice } = getProductPrice(product.price);
+
+        const totalPrice = finalPrice ? finalPrice * quantity : 0;
 
         return {
           ...product,
+          finalPrice,
           quantity,
           variation: cartItem?.variation_id || 0,
           product_id: cartItem?.product_id || product.id,
@@ -213,8 +216,10 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
                     <ProductPrice>
                       {extendedCurrency.rate ? (
                         <p>
-                          {item.price &&
-                            roundedPrice(item.price * extendedCurrency.rate)}
+                          {item.finalPrice &&
+                            roundedPrice(
+                              item.finalPrice * extendedCurrency.rate
+                            )}
                           &nbsp;
                           {extendedCurrency.code}
                         </p>

@@ -1,6 +1,6 @@
 import { Archive } from "@/components/shop/Archive";
 import { customRestApi } from "@/services/wpCustomApi";
-import { ProductType } from "@/types/pages/shop";
+import { ProductType } from "@/types/components/shop/product/products";
 import { ProductParamsType } from "@/types/services";
 import { findPageParam } from "@/utils/getCurrentPageNumber";
 import { sanitizeSearchParams } from "@/utils/sanitizeSearchParams";

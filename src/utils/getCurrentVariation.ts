@@ -1,4 +1,4 @@
-import { ProductVariation } from "@/types/pages/shop";
+import { ProductVariation } from "@/types/components/shop/product/products";
 
 interface CurrentAttributesType {
     [key: string]: string | string[] | undefined;

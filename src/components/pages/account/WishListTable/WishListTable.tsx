@@ -17,10 +17,14 @@ import { useResponsive } from '@/hooks/useResponsive';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { updateCart } from '@/store/slices/cartSlice';
 /* import theme from '@/styles/theme'; */
+import { useGetCurrenciesQuery } from '@/store/rtk-queries/wpCustomApi';
+import { LinkWrapper } from '@/styles/components';
 import { WishListTableProps } from '@/types/components/pages/myAccount/wishlist';
 import { ProductsMinimizedType } from '@/types/components/shop/product/products';
 import { CartItem } from '@/types/store/reducers/сartSlice';
 import { roundedPrice } from '@/utils/cart/roundedPrice';
+import { getProductPrice } from '@/utils/price/getProductPrice';
+import { Skeleton } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
@@ -30,9 +34,6 @@ import {
   WishlistCardAllWrapper,
   WishlistImgWrapper,
 } from './style';
-import { LinkWrapper } from '@/styles/components';
-import { useGetCurrenciesQuery } from '@/store/rtk-queries/wpCustomApi';
-import { Skeleton } from '@mui/material';
 
 const WishListTable: FC<WishListTableProps> = ({
   symbol,
@@ -109,6 +110,7 @@ const WishListTable: FC<WishListTableProps> = ({
             {!isLoading &&
               wishlist?.map(item => {
                 const isCartMatch = checkCartMatch(cartItems, item.id);
+                const { finalPrice } = getProductPrice(item.price);
 
                 return (
                   <WishlistCardAllWrapper key={item.id} padding="16px">
@@ -139,8 +141,8 @@ const WishListTable: FC<WishListTableProps> = ({
                       <OnePrice fontSize="1.1em">
                         {extendedCurrency.rate ? (
                           <p>
-                            {item.price &&
-                              roundedPrice(item.price * extendedCurrency.rate)}
+                            {finalPrice &&
+                              roundedPrice(finalPrice * extendedCurrency.rate)}
                             &nbsp;
                             {extendedCurrency.code}
                           </p>
@@ -168,6 +170,7 @@ const WishListTable: FC<WishListTableProps> = ({
             {!isLoading &&
               wishlist?.map(item => {
                 const isCartMatch = checkCartMatch(cartItems, item.id);
+                const { finalPrice } = getProductPrice(item.price);
                 return (
                   <CartCardAllWrapper key={item.id} padding="16px">
                     <CartCardWrapper>
@@ -200,9 +203,9 @@ const WishListTable: FC<WishListTableProps> = ({
                           <OnePrice fontSize="1.3em">
                             {extendedCurrency.rate ? (
                               <p>
-                                {item.price &&
+                                {finalPrice &&
                                   roundedPrice(
-                                    item.price * extendedCurrency.rate
+                                    finalPrice * extendedCurrency.rate
                                   )}
                                 &nbsp;
                                 {extendedCurrency.code}

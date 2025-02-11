@@ -165,7 +165,8 @@
     "descriptions": "Beschreibung",
     "days": "Tage",
     "hours": "Stunden",
-    "minutes": "Minuten"
+    "minutes": "Minuten",
+    "priceFrom": "ab {price}"
   },
   "Cart": {
     "cart": "Warenkorb",
