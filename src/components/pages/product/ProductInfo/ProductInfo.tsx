@@ -19,7 +19,7 @@ import {
 } from '@/types/components/shop/product/products';
 import { CartItem } from '@/types/store/reducers/сartSlice';
 import { getCookieValue } from '@/utils/auth/getCookieValue';
-import { decodeHTML } from '@/utils/decodeHtml';
+import { decodeHTML } from '@/utils/decodeHTML';
 import { getCurrentVariation } from '@/utils/getCurrentVariation';
 import { getProductPrice } from '@/utils/price/getProductPrice';
 import { Skeleton } from '@mui/material';
