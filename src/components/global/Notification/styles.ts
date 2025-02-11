@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 export const NotificationWrapper = styled.div<{
   type?: 'success' | 'warning' | 'info';
   marginBottom?: string;
+  isVisible?: boolean;
 }>`
   padding: 16px;
   margin-bottom: ${({ marginBottom = '24px' }) => marginBottom};
@@ -26,17 +27,14 @@ export const NotificationWrapper = styled.div<{
   font-size: 16px;
   line-height: 1.5;
   font-weight: 400;
+  opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
+  transition: opacity 0.5s ease-in-out;
 
-  <<<<<<<
-    HEAD
-    ${({ show }) =>
-      show &&
-      css`
-        animation: ${fadeOut} 3s ease-out forwards;
-      `}
-    =======>>>>>>>dev
-    @media
-    ${({ theme }) => theme.media.large} {
+  &.fade-out {
+    opacity: 1;
+  }
+
+  @media ${({ theme }) => theme.media.large} {
     font-size: 14px;
   }
 `;

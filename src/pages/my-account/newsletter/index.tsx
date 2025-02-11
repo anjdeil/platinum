@@ -1,5 +1,5 @@
 import AccountLayout from '@/components/pages/account/AccountLayout';
-import { GetServerSidePropsContext } from 'next';
+import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import {
   useGetSubscriberQuery,
@@ -7,17 +7,22 @@ import {
   useUnsubscribeMutation,
 } from '@/store/rtk-queries/mailpoetApi';
 import { useEffect, useState } from 'react';
-import {
-  CircularProgress,
-  Skeleton,
-  Switch,
-  ToggleButton,
-} from '@mui/material';
 import { FlexBox } from '@/styles/components';
-import axios from 'axios';
-import { CustomSwitch, SubscribeText, SubscriptionWrapper } from './style';
+import {
+  CustomSwitch,
+  SubscribeDescText,
+  SubscribeText,
+  SubscriptionCardWrapper,
+  SubscriptionWrapper,
+} from './style';
 import Notification from '@/components/global/Notification/Notification';
 import { MenuSkeleton } from '@/components/menus/MenuSkeleton';
+import theme from '@/styles/theme';
+import wpRestApi from '@/services/wpRestApi';
+import { decodeJwt } from 'jose';
+import { JwtDecodedDataType } from '@/types/services/wpRestApi/auth';
+import { validateJwtDecode } from '@/utils/zodValidators/validateJwtDecode';
+import wooCommerceRestApi from '@/services/wooCommerceRestApi';
 
 interface SubscriptionProps {
   email: string;
@@ -25,7 +30,7 @@ interface SubscriptionProps {
 
 export default function Subscription({ email }: SubscriptionProps) {
   const t = useTranslations('MyAccount');
-  const { data, isLoading, error, isSuccess } = useGetSubscriberQuery({
+  const { data, isLoading, error } = useGetSubscriberQuery({
     email,
   });
 
@@ -37,22 +42,26 @@ export default function Subscription({ email }: SubscriptionProps) {
     if (data?.subscriptions) {
       const filteredSubscriptions = data.subscriptions
         .filter(item => item.status === 'subscribed')
-        .map(item => item.id.toString());
+        .map(item => item.segment_id.toString());
       setSubscriptions(filteredSubscriptions);
     }
   }, [data]);
 
   const [showNotification, setShowNotification] = useState(false);
+  const [fadeOut, setFadeOut] = useState(false);
 
   useEffect(() => {
     if (isSubSuc || isUnSubSuc) {
       setShowNotification(true);
+      setFadeOut(false);
 
-      const timer = setTimeout(() => {
-        setShowNotification(false);
-      }, 3000);
+      const fadeTimer = setTimeout(() => setFadeOut(true), 2000);
+      const hideTimer = setTimeout(() => setShowNotification(false), 2500);
 
-      return () => clearTimeout(timer);
+      return () => {
+        clearTimeout(fadeTimer);
+        clearTimeout(hideTimer);
+      };
     }
   }, [isSubSuc, isUnSubSuc]);
 
@@ -83,57 +92,41 @@ export default function Subscription({ email }: SubscriptionProps) {
   return (
     <AccountLayout title={t('subscription')}>
       {error && (
-        <Notification type="info"> Couldn't get subscription data</Notification>
+        <Notification type="info">{t('subscriptionError')}</Notification>
       )}
       {isLoading ? (
         <MenuSkeleton
-          elements={3}
+          elements={1}
           direction="column"
           width="100%"
-          height="33px"
-          gap="15px"
+          height="137px"
+          gap="8px"
+          color={theme.background.skeletonSecondary}
         />
       ) : (
         <SubscriptionWrapper>
-          <FlexBox alignItems="center" gap="10px">
+          <SubscriptionCardWrapper>
             <CustomSwitch
-              checked={subscriptions.includes('13600')}
+              checked={subscriptions.includes('3')}
               onChange={event =>
-                handleSwitchChange(event, event.target.checked, '13600')
+                handleSwitchChange(event, event.target.checked, '3')
               }
             />
-            <SubscribeText>
-              Subscribe to mail sent N 13600 Subscribe to mail sent N 13600
-            </SubscribeText>
-          </FlexBox>
-          <FlexBox alignItems="center" gap="10px">
-            <CustomSwitch
-              checked={subscriptions.includes('13601')}
-              onChange={event =>
-                handleSwitchChange(event, event.target.checked, '13601')
-              }
-            />
-            <SubscribeText>
-              Subscribe to mail sent N 13601 Subscribe to mail sent N 13601
-            </SubscribeText>
-          </FlexBox>
-          <FlexBox alignItems="center" gap="10px">
-            <CustomSwitch
-              checked={subscriptions.includes('13604')}
-              onChange={event =>
-                handleSwitchChange(event, event.target.checked, '13604')
-              }
-            />
-            <SubscribeText>
-              Subscribe to mail sent N 13604 Subscribe to mail sent N 13604
-            </SubscribeText>
-          </FlexBox>
+            <FlexBox flexDirection="column" gap="10px">
+              <SubscribeText>{t('subscribeNewsletter')}</SubscribeText>
+              <SubscribeDescText>
+                {t('newsletterDescription')}
+              </SubscribeDescText>
+            </FlexBox>
+          </SubscriptionCardWrapper>
           <FlexBox margin="20px 0 0 0">
             {(isSubSuc || isUnSubSuc) && showNotification && (
-              <Notification type="success" show={showNotification}>
-                {isSubSuc
-                  ? 'You have successfully subscribed to the newsletter'
-                  : 'You have successfully unsubscribed from the newsletter'}
+              <Notification type="success" isVisible={fadeOut}>
+                {isSubSuc ? (
+                  <>{t('subscriptionSuccess')}</>
+                ) : (
+                  <>{t('unsubscriptionSuccess')}</>
+                )}
               </Notification>
             )}
           </FlexBox>
@@ -143,37 +136,49 @@ export default function Subscription({ email }: SubscriptionProps) {
   );
 }
 
-export const getServerSideProps = async (
+export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
+  const { locale } = context;
   const cookies = context.req.cookies;
-  const reqUrl =
-    process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3000';
 
   try {
     if (!cookies?.authToken)
       throw new Error('Invalid or missing authentication token');
-    const resp = await axios.get(`${reqUrl}/api/wooAuth/customers`, {
-      headers: {
-        Cookie: `authToken=${cookies.authToken}`,
-      },
-    });
 
-    if (!resp.data) throw new Error('Invalid or missing authentication token');
+    const authResp = await wpRestApi.post(
+      'jwt-auth/v1/token/validate',
+      {},
+      false,
+      `Bearer ${cookies.authToken}`
+    );
+    if (authResp?.data?.code !== 'jwt_auth_valid_token')
+      throw new Error('Invalid or missing authentication token');
 
-    console.log(resp);
+    const jwtDecodedData = decodeJwt(cookies.authToken) as JwtDecodedDataType;
+    const isJwtDecodedDataValid = await validateJwtDecode(jwtDecodedData);
+    if (!isJwtDecodedDataValid)
+      throw new Error('Invalid or missing authentication token');
+
+    const customerId = jwtDecodedData.data.user.id;
+    const customerResp = await wooCommerceRestApi.get(
+      `customers/${customerId}`
+    );
+    console.log(customerResp);
+
+    if (!customerResp?.data)
+      throw new Error('Invalid or missing authentication token');
 
     return {
       props: {
-        //@ts-ignore
-        email: resp.data.email,
+        email: customerResp.data.email,
       },
     };
   } catch (err) {
     console.error(err);
     return {
       redirect: {
-        destination: '/my-account/login',
+        destination: `/${locale}/my-account/login`,
         permanent: false,
       },
     };

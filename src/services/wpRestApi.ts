@@ -14,7 +14,7 @@ export class WpRestApi {
   private readonly _authConfig: AuthConfigType;
 
   constructor(authConfig: AuthConfigType) {
-    this._apiBase = `${process.env.WP_URL}/wp-json/`;
+    this._apiBase = `${process.env.NEXT_PUBLIC_WP_URL}/wp-json/`;
     this._authConfig = authConfig;
   }
 

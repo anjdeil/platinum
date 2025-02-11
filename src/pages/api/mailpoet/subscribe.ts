@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-const MAIL_POET_URL = `${process.env.WP_URL}/wp-json/v1/subscribe`;
+const MAIL_POET_URL = `${process.env.NEXT_PUBLIC_WP_URL}/wp-json/v1/subscribe`;
 
 export default async function handler(
   req: NextApiRequest,

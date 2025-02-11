@@ -9,6 +9,7 @@ export const subscriberResponseSchema = z.object({
   email: z.string().email(),
   first_name: z.string().optional(),
   last_name: z.string().optional(),
+  message: z.string().optional(),
   status: z.enum([
     'unconfirmed',
     'subscribed',

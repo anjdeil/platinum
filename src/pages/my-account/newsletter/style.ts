@@ -1,19 +1,31 @@
-import theme from '@/styles/theme';
 import styled from '@emotion/styled';
 import { Switch } from '@mui/material';
 
 export const SubscriptionWrapper = styled.div`
   display: flex;
   flex-direction: column;
+
   gap: 15px;
   margin-bottom: 80px;
+
   @media ${({ theme }) => theme.media.medium} {
     margin-top: 30px;
   }
 `;
+
+export const SubscriptionCardWrapper = styled.div`
+  border-radius: 24px;
+  display: flex;
+  align-items: start;
+  gap: 16px;
+  padding: 24px;
+  background-color: ${({ theme }) => theme.background.secondary};
+`;
 export const SubscribeText = styled.p`
+  font: ${({ theme }) => theme.fonts.titleH2SemiBold};
+`;
+export const SubscribeDescText = styled.p`
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
-  font-size: 1.1rem;
 `;
 
 export const CustomSwitch = styled(Switch)(() => ({

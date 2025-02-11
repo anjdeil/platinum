@@ -97,7 +97,12 @@
     "maxAttemptsExceeded": "Der bereitgestellte Reset-Code ist ungültig. Sie haben die maximal zulässige Anzahl von Versuchen überschritten. Sie müssen einen neuen Code anfordern.",
     "codeProvidedHasExpired": "Der angegebene Rücksetzungscode ist abgelaufen.",
     "Addresses": "Adressen",
-    "serverError": "Beim Server ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut oder wenden Sie sich an den Support."
+    "serverError": "Beim Server ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut oder wenden Sie sich an den Support.",
+    "subscriptionError": "Abonnementdaten konnten nicht abgerufen werden",
+    "subscribeNewsletter": "Abonniere unseren Newsletter!",
+    "newsletterDescription": "Bleiben Sie mit den neuesten Nachrichten, exklusiven Angeboten und speziellen Inhalten auf dem Laufenden – direkt in Ihrem Posteingang!",
+    "subscriptionSuccess": "Sie haben den Newsletter erfolgreich abonniert",
+    "unsubscriptionSuccess": "Sie haben den Newsletter erfolgreich abbestellt"
   },
   "TopBar": {
     "CallUs": "Kontakt"
