@@ -32,6 +32,7 @@ export const StyledSubscribeInput = styled(Input)`
   }
 
   @media ${({ theme }) => theme.media.medium} {
+    width: 100%;
     padding: 13px 10px;
     margin-bottom: 16px;
   }
@@ -42,7 +43,8 @@ export const StyledSubscribeButton = styled.button`
   right: 0;
   top: 0;
   bottom: 0;
-  width: 132px;
+  width: auto;
+  max-width: 45%;
   height: 56px;
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
   text-align: center;
@@ -53,6 +55,8 @@ export const StyledSubscribeButton = styled.button`
   padding: 0 16px;
   text-decoration: none;
   cursor: pointer;
+
+  overflow-wrap: break-word;
 
   &:hover {
     background-color: ${({ theme }) => theme.background.hover};
@@ -65,7 +69,8 @@ export const StyledSubscribeButton = styled.button`
 
   @media ${({ theme }) => theme.media.medium} {
     position: relative;
-    width: 239px;
+    width: 100%;
+    max-width: unset;
   }
 `;
 

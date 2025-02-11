@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export const BlogItemContainer = styled.div`
+  position: relative;
   grid-column: span 1;
   display: flex;
   flex-direction: column;
@@ -47,7 +48,6 @@ export const StyledImage = styled(Image)`
   height: 100%;
   object-fit: cover;
   object-position: center;
-  fill
   transition: filter 0.3s ease-in-out;
 
   &:hover {
@@ -103,5 +103,37 @@ export const StyledLink = styled(Link)`
 
   &:hover {
     opacity: 0.7;
+  }
+`;
+
+export const CategoriesTagWrapper = styled.div`
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
+  row-gap: 16px;
+
+  @media ${({ theme }) => theme.media.large} {
+    top: 8px;
+    left: 8px;
+  }
+`;
+
+export const StyledTag = styled.div`
+  padding: 10px 16px;
+  border-radius: 8px;
+  color: ${({ theme }) => theme.colors.black};
+  background-color: ${({ theme }) => theme.colors.lightBorder};
+  font: ${({ theme }) => theme.fonts.bodyMiddleReg};
+  text-transform: uppercase;
+
+  @media ${({ theme }) => theme.media.large} {
+    font-size: 10px;
+    line-height: 16px;
+    padding: 8px 16px;
+    border-radius: 4px;
   }
 `;

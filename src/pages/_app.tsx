@@ -1,17 +1,17 @@
-import Layout from "@/components/Layout/Layout";
-import { setupStore } from "@/store";
-import GlobalStyle from "@/styles/global";
-import muiTheme from "@/styles/muiTheme";
-import theme from "@/styles/theme";
-import { ThemeProvider as EmotionThemeProvider } from "@emotion/react";
-import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
-import { NextIntlClientProvider } from "next-intl";
-import App, { AppContext, AppProps } from "next/app";
-import { useRouter } from "next/router";
-import { Provider } from "react-redux";
-import { ThemeProvider } from "@emotion/react";
+import Layout from '@/components/Layout/Layout';
+import { setupStore } from '@/store';
+import GlobalStyle from '@/styles/global';
+import muiTheme from '@/styles/muiTheme';
+import theme from '@/styles/theme';
+import { ThemeProvider } from '@emotion/react';
+import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
+import { NextIntlClientProvider } from 'next-intl';
+import App, { AppContext, AppProps } from 'next/app';
+import { useRouter } from 'next/router';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 
-const store = setupStore();
+const { store, persistor } = setupStore();
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { locale } = useRouter();
@@ -23,14 +23,16 @@ function MyApp({ Component, pageProps }: AppProps) {
       timeZone="America/New_York"
     >
       <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <MuiThemeProvider theme={muiTheme}>
-            <GlobalStyle />
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
-          </MuiThemeProvider>
-        </ThemeProvider>
+        <PersistGate loading={null} persistor={persistor}>
+          <ThemeProvider theme={theme}>
+            <MuiThemeProvider theme={muiTheme}>
+              <GlobalStyle />
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+            </MuiThemeProvider>
+          </ThemeProvider>
+        </PersistGate>
       </Provider>
     </NextIntlClientProvider>
   );
@@ -38,11 +40,14 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 MyApp.getInitialProps = async (appContext: AppContext) => {
   const appProps = await App.getInitialProps(appContext);
+
   return {
     ...appProps,
     pageProps: {
       ...appProps.pageProps,
-      messages: (await import(`../translations/${appContext.router.locale}.json`)).default,
+      messages: (
+        await import(`../translations/${appContext.router.locale}.json`)
+      ).default,
     },
   };
 };

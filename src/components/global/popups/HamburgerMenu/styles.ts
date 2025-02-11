@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 export const NavWrap = styled.div`
-    padding: 50px 0;
+    padding: 50px 20px;
     max-width: fit-content;
     display: flex;
     flex-direction: column;

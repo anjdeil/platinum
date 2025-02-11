@@ -6,38 +6,19 @@ import {
   TextProps,
 } from '@/types/styles/components';
 import styled from '@emotion/styled';
-import { Pagination } from '@mui/material';
+import { Pagination, Skeleton } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
 
 interface FlexBoxProps {
   flexDirection?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
   justifyContent?:
-    | 'flex-start'
-    | 'flex-end'
-    | 'center'
-    | 'space-between'
-    | 'space-around'
-    | 'space-evenly';
-  alignItems?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
-  flexWrap?: 'nowrap' | 'wrap' | 'wrap-reverse';
-  gap?: string;
-  padding?: string;
-  margin?: string;
-  width?: string;
-  height?: string;
-  bgColor?: string;
-}
-
-interface FlexBoxProps {
-  flexDirection?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
-  justifyContent?:
-    | 'flex-start'
-    | 'flex-end'
-    | 'center'
-    | 'space-between'
-    | 'space-around'
-    | 'space-evenly';
+  | 'flex-start'
+  | 'flex-end'
+  | 'center'
+  | 'space-between'
+  | 'space-around'
+  | 'space-evenly';
   alignItems?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
   flexWrap?: 'nowrap' | 'wrap' | 'wrap-reverse';
   gap?: string;
@@ -57,6 +38,7 @@ interface TitleProps {
   textalign?: 'center' | 'left' | 'right';
   uppercase?: boolean;
   marginTop?: string;
+  lowercase?: boolean;
   marginBottom?: string;
   tabletMarginBottom?: number;
   mobMarginBottom?: number;
@@ -68,7 +50,8 @@ export const Title = styled.h1<TitleProps>`
   font: ${({ theme }) => theme.fonts.titleH2SemiBold};
   font-size: ${({ fontSize }) => fontSize};
   font-weight: ${({ fontWeight }) => fontWeight};
-  text-transform: ${({ uppercase }) => (uppercase ? 'uppercase' : 'none')};
+  text-transform: ${({ uppercase, lowercase }) =>
+    uppercase ? 'uppercase' : lowercase ? 'lowercase' : 'none'};
   text-align: ${({ textalign = 'center' }) => textalign};
   margin-top: ${({ marginTop = '0' }) => marginTop};
   margin-bottom: ${({ marginBottom = '0' }) => marginBottom};
@@ -84,7 +67,7 @@ export const Title = styled.h1<TitleProps>`
   }
 `;
 
-export const AccountTitle = styled(Title)<TitleProps>`
+export const AccountTitle = styled(Title) <TitleProps>`
   margin-top: 24px;
   margin-bottom: ${({ marginBottom = 48 }) => marginBottom}px;
 
@@ -124,7 +107,7 @@ export const AccountInfoWrapper = styled.div<AccountInfoWrapperProps>`
 
   @media ${({ theme }) => theme.media.medium} {
     flex-direction: ${({ mobileReverse = false }) =>
-      mobileReverse ? 'column-reverse' : 'column'};
+    mobileReverse ? 'column-reverse' : 'column'};
     margin-bottom: 64px;
   }
 `;
@@ -136,33 +119,50 @@ export const AccountInfoWrapper = styled.div<AccountInfoWrapperProps>`
 export const StyledButton = styled.button<StyledButtonProps>`
   box-sizing: border-box;
   width: ${({ width = '100%' }) => width};
+  height: ${({ height = '100%' }) => height};
   min-width: ${({ minWidthDesktop = 'auto' }) => minWidthDesktop};
   padding-inline: 16px;
   border-radius: 10px;
-  color: ${({ theme, secondary = false }) =>
-    secondary ? theme.colors.black : theme.colors.white};
-  background-color: ${({ notify = false, secondary = false, theme }) =>
+  color: ${({ theme, isDisabled = false, secondary = false }) =>
+    secondary
+      ? theme.colors.black
+      : isDisabled
+        ? theme.colors.black
+        : theme.colors.white};
+  background-color: ${({
+          isDisabled = false,
+          notify = false,
+          secondary = false,
+          theme,
+        }) =>
     notify
       ? theme.colors.secondary
       : secondary
-      ? 'transparent'
-      : theme.colors.primary};
+        ? 'transparent'
+        : isDisabled
+          ? theme.colors.grey
+          : theme.colors.primary};
   padding-block: 16px;
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
   text-transform: none;
-  border: ${({ theme }) => `1px solid ${theme.colors.secondary}`};
+  border: ${({ isDisabled = false, theme }) =>
+    isDisabled ? 'none' : `1px solid ${theme.colors.secondary}`};
   transition: all 0.3s ease;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
+  text-decoration: ${({ textDecoration = 'none' }) => textDecoration};
+  white-space: ${({ noWrap = false }) => (noWrap ? 'nowrap' : 'normal')};
 
   &:hover {
-    color: ${({ theme, hoverColor = theme.colors.white }) => hoverColor};
+    color: ${({ isDisabled, theme, hoverColor = theme.colors.white }) =>
+    !isDisabled && hoverColor};
     background-color: ${({
+      isDisabled,
       theme,
       hoverBackgroundColor = theme.background.hover,
-    }) => hoverBackgroundColor};
+    }) => !isDisabled && hoverBackgroundColor};
   }
 
   &:disabled {
@@ -181,7 +181,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
   }
 `;
 
-export const LogoLink = styled(Link)<LogoLinkProps>`
+export const LogoLink = styled(Link) <LogoLinkProps>`
   flex-shrink: 0;
   display: flex;
   position: relative;
@@ -233,7 +233,7 @@ export const StyledIconWrapper = styled.div`
   }
 `;
 
-export const LogoLinkImage = styled(Image)<LogoLinkImageProps>`
+export const LogoLinkImage = styled(Image) <LogoLinkImageProps>`
   width: 100%;
   height: 100%;
 `;
@@ -249,15 +249,26 @@ interface CustomFormProps {
 }
 
 export const CustomForm = styled.form<CustomFormProps>`
+  width: 100%;
   margin: 0 auto;
-  max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : '1100px')};
+  max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : '1000px')};
+  @media ${({ theme }) => theme.media.middle} {
+    margin: 0 auto;
+  }
 `;
 
-export const FormWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(49%, 1fr));
+interface CustomFormProps {
+  direction?: 'column' | 'grid';
+}
+export const FormWrapper = styled.div<CustomFormProps>`
+  display: ${({ direction }) => (direction === 'column' ? 'flex' : 'grid')};
+  flex-direction: ${({ direction }) =>
+    direction === 'column' ? 'column' : 'unset'};
+  grid-template-columns: ${({ direction }) =>
+    direction === 'column' ? 'unset' : 'repeat(auto-fill, minmax(49%, 1fr))'};
   column-gap: 1%;
-  row-gap: 15px;
+  gap: ${({ direction }) => (direction === 'column' ? '15px' : 'unset')};
+  row-gap: ${({ direction }) => (direction === 'column' ? 'unset' : '15px')};
   padding-bottom: 20px;
 
   @media ${({ theme }) => theme.media.medium} {
@@ -268,11 +279,26 @@ export const FormWrapper = styled.div`
 `;
 
 export const FormWrapperBottom = styled.div`
-  margin-top: 24px;
+  margin-top: 16px;
   margin-bottom: 16px;
   display: flex;
   flex-direction: column;
   gap: 20px;
+`;
+
+interface InfoCardProps {
+  marginBottom?: string;
+  marginTop?: string;
+}
+
+export const InfoCard = styled.div<InfoCardProps>`
+  margin: 0 auto;
+  margin-bottom: ${({ marginBottom = '24px' }) => marginBottom};
+
+  border-radius: 8px;
+  border: 1px solid ${({ theme }) => theme.colors.lightBorder};
+
+  padding: 32px;
 `;
 
 export const Overlay = styled.div`
@@ -314,4 +340,45 @@ export const StyledHeaderWrapper = styled.header`
   align-items: center;
   gap: 8px;
   margin: 24px 0;
+`;
+export const FormPageWrapper = styled.header`
+  min-height: 85vh;
+  padding: 24px 0;
+`;
+
+// ------------------RICH TEXT SLUG PAGE
+
+export const StyledSlugRichTextSection = styled.div`
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  margin-bottom: 72px;
+  @media ${({ theme }) => theme.media.medium} {
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-bottom: '64px';
+  }
+`;
+
+export const LinkWrapper = styled(Link)`
+  text-decoration: none;
+  color: ${({ theme }) => theme.colors.black};
+  padding-bottom: 10px;
+`;
+
+export const SkeletonWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`;
+
+export const SkeletonItem = styled(Skeleton)`
+  height: 130px;
+
+  @media ${({ theme }) => theme.media.large} {
+    height: 240px;
+  }
 `;

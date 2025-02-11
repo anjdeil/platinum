@@ -1,11 +1,11 @@
-import { MobilePopupPropsType } from "@/types/components/global/popups/mobilePopup";
-import { FC } from "react";
-import CloseIcon from "../../icons/CloseIcon/CloseIcon";
-import { Content, Header, Overlay, PopupContainer } from "./styles";
+import { MobilePopupPropsType } from '@/types/components/global/popups/mobilePopup';
+import { FC } from 'react';
+import CloseIcon from '../../icons/CloseIcon/CloseIcon';
+import { Content, Header, Overlay, PopupContainer } from './styles';
 
 const MobilePopup: FC<MobilePopupPropsType> = ({
   onClose,
-  title = "",
+  title = '',
   scroll,
   children,
   backgroundColor,
@@ -22,7 +22,6 @@ const MobilePopup: FC<MobilePopupPropsType> = ({
       onClose();
     }
   };
-  console.log("MobilePopup title:", title);
   return (
     <>
       {!disableOverlay ? (
@@ -36,13 +35,15 @@ const MobilePopup: FC<MobilePopupPropsType> = ({
             rowGap={rowGap}
             title={title}
             disableOverlay={false}
+            closeButton={closeButton}
           >
-            {title && (
-              <Header padding={padding}>
-                <>{title}</>
-                {closeButton && <CloseIcon onClick={onClose} />}
-              </Header>
-            )}
+            {title ||
+              (closeButton && (
+                <Header padding={padding} closeButton={closeButton}>
+                  <>{title}</>
+                  {closeButton && <CloseIcon onClick={onClose} />}
+                </Header>
+              ))}
             <Content padding={padding}>{children}</Content>
           </PopupContainer>
         </Overlay>

@@ -23,7 +23,7 @@ export default async function handler(
   let authorization = null;
   let response;
 
-  if (slug.includes('token/validate')) {
+  if (slug.includes('token/validate') || slug.includes('users')) {
     const authToken = getCookieValue(headers.cookie || '', 'authToken');
     authorization = authToken && `Bearer ${authToken}`;
   }
@@ -35,10 +35,12 @@ export default async function handler(
         break;
       case 'POST':
         response = await wpRestApi.post(slug, body, !v2 && v2, authorization);
-
+        break;
+      case 'PUT':
+        response = await wpRestApi.put(slug, body, authorization);
         break;
       default:
-        res.setHeader('Allow', ['POST', 'GET']);
+        res.setHeader('Allow', ['POST', 'GET', 'PUT']);
         return res.status(405).end(`Method ${method} Not Allowed`);
     }
 

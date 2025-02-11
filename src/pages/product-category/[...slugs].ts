@@ -1,7 +1,7 @@
 import { Archive } from "@/components/shop/Archive";
 import { customRestApi } from "@/services/wpCustomApi";
 import CategoryType from "@/types/components/shop/categories/categories";
-import { ProductType } from "@/types/pages/shop";
+import { ProductType } from "@/types/components/shop/product/products";
 import { CustomDataCategoriesType, ProductParamsType } from "@/types/services";
 import { findPageParam } from "@/utils/getCurrentPageNumber";
 import { sanitizeSearchParams } from "@/utils/sanitizeSearchParams";
@@ -36,9 +36,8 @@ export const getServerSideProps: GetServerSideProps = async ({
       const searchParamsString = sanitizeSearchParams(params);
       return {
         redirect: {
-          destination: `${locale === "en" ? "" : `/${locale}`}/product-category/${newPath}${
-            searchParamsString ? `?${searchParamsString}` : ""
-          }`,
+          destination: `${locale === "en" ? "" : `/${locale}`}/product-category/${newPath}${searchParamsString ? `?${searchParamsString}` : ""
+            }`,
           permanent: false,
         },
       };
@@ -139,7 +138,7 @@ export const getServerSideProps: GetServerSideProps = async ({
         page,
         categories,
         locale,
-        statistic: validatedProductsData?.data.statistic,
+        statistic: validatedProductsData?.data.statistic ?? null,
       },
     };
   } catch (error) {

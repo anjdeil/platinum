@@ -1,4 +1,14 @@
-import React from 'react';
+import { CustomFormInput } from '@/components/global/forms/CustomFormInput';
+import { useSendAnEmailMutation } from '@/store/rtk-queries/contactFrom7/contactFromApi7';
+import { Title } from '@/styles/components';
+import theme from '@/styles/theme';
+import {
+  ContactsFormType,
+  ContactsFormValidationSchema,
+} from '@/types/pages/contacts/ContactsForm';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useTranslations } from 'next-intl';
+import { useForm } from 'react-hook-form';
 import {
   ContactsStyledButton,
   ErrorMessage,
@@ -6,17 +16,6 @@ import {
   InputsWrapper,
   SuccessMessage,
 } from './style';
-import { useTranslations } from 'next-intl';
-import { useForm } from 'react-hook-form';
-import { CustomFormInput } from '@/components/global/forms/CustomFormInput';
-import {
-  ContactsFormType,
-  ContactsFormValidationSchema,
-} from '@/types/pages/contacts/ContactsForm';
-import { zodResolver } from '@hookform/resolvers/zod';
-import theme from '@/styles/theme';
-import { Title } from '@/styles/components';
-import { useSendAnEmailMutation } from '@/store/rtk-queries/contactFrom7/contactFromApi7';
 
 const ContactsForm = () => {
   const t = useTranslations('Contacts');
@@ -35,7 +34,7 @@ const ContactsForm = () => {
     reset,
   } = useForm<ContactsFormType>({
     resolver: zodResolver(schema),
-    mode: 'onBlur',
+    mode: 'onSubmit',
   });
 
   const onSubmit = async (data: ContactsFormType) => {

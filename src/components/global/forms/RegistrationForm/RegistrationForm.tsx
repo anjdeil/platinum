@@ -6,11 +6,17 @@ import 'react-international-phone/style.css';
 import { useRegisterCustomerMutation } from '@/store/rtk-queries/wooCustomApi';
 import { useRouter } from 'next/router';
 import { RegistrationFormSchema } from '@/types/components/global/forms/registrationForm';
-import { CustomForm, FormWrapper, FormWrapperBottom } from './styles';
 import { isAuthErrorResponseType } from '@/utils/isAuthErrorResponseType';
 import { CustomFormInput } from '../CustomFormInput';
 import { CustomError } from '../CustomFormInput/styles';
-import { StyledButton, Title } from '@/styles/components';
+import {
+  CustomForm,
+  FlexBox,
+  FormWrapper,
+  FormWrapperBottom,
+  StyledButton,
+  Title,
+} from '@/styles/components';
 import theme from '@/styles/theme';
 import { validateWooCustomer } from '@/utils/zodValidators/validateWooCustomer';
 import {
@@ -18,19 +24,31 @@ import {
   useGetTokenMutation,
 } from '@/store/rtk-queries/wpApi';
 import { CustomFormCheckbox } from '../CustomFormCheckbox';
+import { useTranslations } from 'next-intl';
+import { ActiveText } from '../LoginForm/styles';
+import CustomCountrySelect from '../../selects/CustomCountrySelect/CustomCountrySelect';
+import { countryOptions } from '@/utils/mockdata/countryOptions';
+import Notification from '../../Notification/Notification';
 
 export const RegistrationForm: FC = () => {
+  const tValidation = useTranslations('Validation');
+  const tMyAccount = useTranslations('MyAccount');
   const router = useRouter();
   const [customError, setCustomError] = useState<string>('');
 
   /** Form settings */
-  const formSchema = useMemo(() => RegistrationFormSchema(false), []);
+  const formSchema = useMemo(
+    () => RegistrationFormSchema(false, tValidation),
+    []
+  );
   type RegistrationFormType = z.infer<typeof formSchema>;
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isSubmitSuccessful },
     reset,
+    setValue,
+    control,
   } = useForm<RegistrationFormType>({
     resolver: zodResolver(formSchema),
   });
@@ -47,22 +65,24 @@ export const RegistrationForm: FC = () => {
     setCustomError('');
     const reqBody = {
       email: formData.email,
-      first_name: formData.name,
-      last_name: formData.lastName,
+      first_name: formData.first_name,
+      last_name: formData.last_name,
       password: formData.password,
       role: 'customer',
+
       username: formData.email,
       billing: {
-        first_name: formData.name,
-        last_name: formData.lastName,
-        // apartmentNumber
-        address_1: formData.address1,
-        address_2: formData.address2,
+        first_name: formData.first_name,
+        last_name: formData.last_name,
+        address_1: formData.address_1,
+        address_2: [formData.address_2, formData.apartmentNumber]
+          .filter(Boolean)
+          .join('/'),
         city: formData.city,
-        postcode: formData.postCode,
+        postcode: formData.postcode,
         country: formData.country,
         email: formData.email,
-        phone: formData.phoneNumber,
+        phone: formData.phone,
       },
     };
 
@@ -96,114 +116,67 @@ export const RegistrationForm: FC = () => {
     }
   }
 
+  const renderFormFields = () => (
+    <>
+      {['first_name', 'last_name', 'email', 'phone'].map(field => (
+        <CustomFormInput
+          key={field}
+          fieldName={tMyAccount(field)}
+          name={`${field}`}
+          register={register}
+          errors={errors}
+          inputTag="input"
+          inputType={field === 'phone' ? 'phone' : 'text'}
+          setValue={setValue}
+        />
+      ))}
+      <CustomCountrySelect
+        name={`country`}
+        control={control}
+        options={countryOptions}
+        label={tMyAccount('country')}
+        errors={errors}
+      />
+      {[
+        'city',
+        'address_1',
+        'address_2',
+        'apartmentNumber',
+        'postcode',
+        'password',
+        'confirmPassword',
+      ].map(field => (
+        <CustomFormInput
+          key={field}
+          fieldName={tMyAccount(field)}
+          name={`${field}`}
+          register={register}
+          errors={errors}
+          inputTag="input"
+          inputType={
+            field === 'postCode'
+              ? 'number'
+              : field == 'password' || field == 'confirmPassword'
+              ? 'newpassword'
+              : 'text'
+          }
+          setValue={setValue}
+        />
+      ))}
+    </>
+  );
+
   return (
-    <CustomForm onSubmit={handleSubmit(onSubmit)}>
+    <CustomForm onSubmit={handleSubmit(onSubmit)} maxWidth="850px">
       <Title as={'h2'} uppercase={true} marginBottom={'24px'}>
-        Register
+        {tMyAccount('registration')}
       </Title>
-      <FormWrapper>
-        <CustomFormInput
-          fieldName="Imię"
-          name="name"
-          register={register}
-          errors={errors}
-          inputTag={'input'}
-          inputType={'text'}
-        />
-        <CustomFormInput
-          fieldName="Nazwisko"
-          name="lastName"
-          register={register}
-          errors={errors}
-          inputTag={'input'}
-          inputType={'text'}
-        />
-        <CustomFormInput
-          fieldName="Adres e-mail"
-          name="email"
-          register={register}
-          errors={errors}
-          inputTag={'input'}
-          inputType={'text'}
-        />
-        <CustomFormInput
-          fieldName="phone number"
-          name="phoneNumber"
-          register={register}
-          errors={errors}
-          inputTag={'input'}
-          inputType={'text'}
-        />
-        <CustomFormInput
-          fieldName="Kraj / region"
-          name="country"
-          register={register}
-          errors={errors}
-          inputTag={'input'}
-          inputType={'text'}
-        />
-        <CustomFormInput
-          fieldName="Miasto"
-          name="city"
-          register={register}
-          errors={errors}
-          inputTag={'input'}
-          inputType={'text'}
-        />
-        <CustomFormInput
-          fieldName="Ulica"
-          name="address1"
-          register={register}
-          errors={errors}
-          inputTag={'input'}
-          inputType={'text'}
-        />
-        <CustomFormInput
-          fieldName="Building number"
-          name="address2"
-          register={register}
-          errors={errors}
-          inputTag={'input'}
-          inputType={'number'}
-        />
-        <CustomFormInput
-          fieldName="№ apartment/office"
-          name="apartmentNumber"
-          register={register}
-          errors={errors}
-          inputTag={'input'}
-          inputType={'number'}
-        />
-        <CustomFormInput
-          fieldName="Kod pocztowy"
-          name="postCode"
-          register={register}
-          errors={errors}
-          inputTag={'input'}
-          inputType={'text'}
-        />
-        <CustomFormInput
-          fieldName="Hasło"
-          name="password"
-          register={register}
-          errors={errors}
-          inputTag={'input'}
-          inputType={'password'}
-        />
-        <CustomFormInput
-          fieldName="Powtórz hasło"
-          name="confirmPassword"
-          register={register}
-          errors={errors}
-          inputTag={'input'}
-          inputType={'password'}
-        />
-      </FormWrapper>
+      <FormWrapper>{renderFormFields()} </FormWrapper>
       <CustomFormCheckbox
         name={'terms'}
         register={register}
         errors={errors}
-        label={'Wyrażam zgodę na przetwarzanie danych osobowych.'}
+        label={tMyAccount('agreePersonalData')}
       />
       <FormWrapperBottom>
         <StyledButton
@@ -211,7 +184,7 @@ export const RegistrationForm: FC = () => {
           type="submit"
           disabled={isSubmitting}
         >
-          Register
+          {tMyAccount('register')}
         </StyledButton>
         {error && customError && (
           <CustomError
@@ -221,9 +194,17 @@ export const RegistrationForm: FC = () => {
           ></CustomError>
         )}
         {isSubmitSuccessful && !error && customError && (
-          <p>Your account has been created successfully!</p>
+          <Notification type="success">
+            {tMyAccount('Your account has been created successfully!')}
+          </Notification>
         )}
       </FormWrapperBottom>
+      <FlexBox gap="10px" justifyContent="flex-end" margin="16px 0 0 0">
+        <div>{tMyAccount('AlreadyHaveAnAccount')} </div>
+        <ActiveText href="/my-account/login">
+          {tMyAccount('log-In')}!
+        </ActiveText>
+      </FlexBox>
     </CustomForm>
   );
 };

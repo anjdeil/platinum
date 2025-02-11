@@ -1,6 +1,6 @@
-import { ThumbnailSchema } from "@/types/pages/shop";
 import { z } from "zod";
 
+// Схеми продуктів
 export const ProductCategorySchema = z.object({
   id: z.number(),
   parent_id: z.number(),
@@ -8,6 +8,13 @@ export const ProductCategorySchema = z.object({
   slug: z.string(),
   description: z.string(),
   count: z.number(),
+});
+
+
+export const ThumbnailSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  src: z.string(),
 });
 
 export const ProductImageSchema = z.object({
@@ -35,6 +42,22 @@ export const ProductDefaultAttributesSchema = z.object({
   option: z.string(),
 });
 
+export const ProductPriceSchema = z.object({
+  min_price: z.number(),
+  max_price: z.number(),
+  regular_price: z.number().optional(),
+  sale_price: z.number().optional(),
+  sale_dates_from: z.string().optional(),
+  sale_dates_to: z.string().optional(),
+});
+
+export const VariationPriceSchema = z.object({
+  regular_price: z.number(),
+  sale_price: z.number().optional(),
+  sale_dates_from: z.string().optional(),
+  sale_dates_to: z.string().optional(),
+});
+
 export const ProductVariationSchema = z.object({
   id: z.number(),
   parent_id: z.number(),
@@ -44,15 +67,37 @@ export const ProductVariationSchema = z.object({
   description: z.string(),
   created: z.string(),
   modified: z.string(),
-  stock_quantity: z.number().nullable(),
-  price: z.number().nullable(),
+  stock_quantity: z.number().optional(),
+  price: VariationPriceSchema.nullable(),
+  total_sales: z.number(),
   image: z.string().nullable(),
   attributes: z.array(ProductDefaultAttributesSchema),
 });
 
-export const ProductsMinimizedSchema = ProductVariationSchema.extend({
+export const ProductsMinimizedSchema = z.object({
+  id: z.number(),
+  parent_id: z.number(),
+  sku: z.string().nullable(),
+  slug: z.string(),
+  parent_slug: z.string(),
+  name: z.string(),
   language_code: z.string().optional(),
+  stock_quantity: z.number().optional(),
   average_rating: z.number(),
+  price: z.union([ProductPriceSchema, VariationPriceSchema]),
+  weight: z.number(),
+  total_sales: z.number(),
+  image: z.object({
+    id: z.number(),
+    name: z.string(),
+    src: z.string(),
+  }),
+  attributes: z.array(ProductDefaultAttributesSchema),
+});
+
+export const ProductsWithCartDataSchema = ProductsMinimizedSchema.extend({
+  quantity: z.number().optional(),
+  variation: z.number().optional(),
 });
 
 export const ProductSchema = z.object({
@@ -66,8 +111,8 @@ export const ProductSchema = z.object({
   modified: z.string(),
   language_code: z.string(),
   stock_quantity: z.number().nullable(),
-  min_price: z.number().nullable(),
-  max_price: z.number().nullable(),
+  price: ProductPriceSchema.nullable(),
+  total_sales: z.number(),
   average_rating: z.number(),
   categories: z.array(ProductCategorySchema),
   thumbnail: ThumbnailSchema.nullable(),
@@ -104,7 +149,10 @@ export const LineItemSchema = z.object({
   price: z.number(),
 });
 
+// Типи
 export type ProductType = z.infer<typeof ProductSchema>;
+export type ProductPriceType = z.infer<typeof ProductPriceSchema>;
+export type VariationPriceType = z.infer<typeof VariationPriceSchema>;
 export type ProductVariation = z.infer<typeof ProductVariationSchema>;
 export type ProductDataResponseType = z.infer<typeof ProductDataResponseSchema>;
 export type defaultAttributesType = z.infer<typeof ProductDefaultAttributesSchema>;
@@ -112,3 +160,4 @@ export type ProductImageType = z.infer<typeof ProductImageSchema>;
 export type ProductVariationType = z.infer<typeof ProductVariationSchema>;
 export type ProductsMinimizedType = z.infer<typeof ProductsMinimizedSchema>;
 export type LineItemType = z.infer<typeof LineItemSchema>;
+export type ProductsWithCartDataType = z.infer<typeof ProductsWithCartDataSchema>;

@@ -1,13 +1,12 @@
-import { ProductsMinimizedType } from "@/types/components/shop/product/products";
-import { CartItem } from "@/types/store/reducers/сartSlice";
-import { log } from "console";
+import { ProductsMinimizedType } from '@/types/components/shop/product/products';
+import { CartItem } from '@/types/store/reducers/сartSlice';
 
 export default function checkProductAvailability(
   item: CartItem,
   productsSpecs: ProductsMinimizedType[]
 ) {
   if (!item || !item.product_id || !item.quantity) {
-    throw new Error("Invalid item object");
+    throw new Error('Invalid item object');
   }
 
   if (!productsSpecs) {
@@ -18,14 +17,18 @@ export default function checkProductAvailability(
   let productSpecs: ProductsMinimizedType | undefined;
 
   if (!item.variation_id) {
-    productSpecs = productsSpecs.find((spec) => spec.id === item.product_id);
+    productSpecs = productsSpecs.find(spec => spec.id === item.product_id);
   } else if (!Number.isNaN(item.variation_id)) {
-    productSpecs = productsSpecs.find((spec) => spec.id === item.variation_id);
+    productSpecs = productsSpecs.find(spec => spec.id === item.variation_id);
   }
 
   if (!productSpecs) {
     console.warn(`Product with ID ${item.product_id} not found`);
-    return { resolveCount: undefined };
+    return {
+      resolveCount: 0,
+      isAvailable: false,
+      message: 'Product not available',
+    };
   }
 
   const stockQuantity = productSpecs.stock_quantity ?? 0;

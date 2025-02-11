@@ -1,8 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
+import { WpUserType } from '@/types/store/rtk-queries/wpApi';
 import { JwtTokenResponseType } from '@/types/services';
 import { AuthConfigType } from '@/types/services/wpRestApi/auth';
-import { WpUserType } from '@/types/store/rtk-queries/wpApi';
 
 const getAuthTokenFromCookie = (cookies: string) => {
   const match = cookies.match(/authToken=([^;]+)/);
@@ -33,32 +32,19 @@ export const wpRtkApi = createApi({
       }),
     }),
 
-    fetchUserData: builder.query<WpUserType, void>({
+    fetchUserData: builder.query<WpUserType, string | void>({
       query: () => ({
         url: '/users/me',
         prepareHeaders: (headers: any) => {
           const token = getAuthTokenFromCookie(document.cookie);
           if (token) {
-            headers.set('Authorization', `Bearer ${token}`);
+            headers.set('Cookie', `authToken=${token}`);
           }
           return headers;
         },
       }),
       providesTags: ['User'],
     }),
-    fetchUserDataById: builder.query<
-      WpUserType,
-      { accessToken: string; id: number }
-    >({
-      query: ({ accessToken, id }) => ({
-        url: `/users/me`,
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }),
-      providesTags: ['User'],
-    }),
-
     fetchUserUpdate: builder.mutation({
       query: body => ({
         url: '/users/me',
@@ -67,7 +53,7 @@ export const wpRtkApi = createApi({
         prepareHeaders: (headers: any) => {
           const token = getAuthTokenFromCookie(document.cookie);
           if (token) {
-            headers.set('Authorization', `Bearer ${token}`);
+            headers.set('Cookie', `authToken=${token}`);
           }
           return headers;
         },
@@ -82,5 +68,4 @@ export const {
   useCheckTokenMutation,
   useLazyFetchUserDataQuery,
   useFetchUserUpdateMutation,
-  useLazyFetchUserDataByIdQuery,
 } = wpRtkApi;

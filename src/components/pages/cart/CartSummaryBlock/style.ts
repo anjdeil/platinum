@@ -1,5 +1,5 @@
-import { Title } from "@/styles/components";
-import styled from "@emotion/styled";
+import { Title } from '@/styles/components'
+import styled from '@emotion/styled'
 
 export const CartSummaryBlockWrapper = styled.div`
   display: flex;
@@ -8,19 +8,16 @@ export const CartSummaryBlockWrapper = styled.div`
   @media ${({ theme }) => theme.media.large} {
     flex-direction: column;
   }
-`;
+`
 export const CartCommentsWrapper = styled.div`
   display: flex;
   flex: 7;
   flex-direction: column;
   height: 100%;
-  @media ${({ theme }) => theme.media.large} {
-    padding-right: 32px;
-  }
-`;
+`
 export const CartSummaryWrapper = styled.div`
   flex: 4.4;
-`;
+`
 
 export const CartSummaryCard = styled.div`
   padding: 24px 35px;
@@ -29,7 +26,7 @@ export const CartSummaryCard = styled.div`
   border-bottom-right-radius: 8px;
   border-top: none;
   margin-bottom: 16px;
-`;
+`
 export const CartCommentInput = styled.textarea`
   min-height: 178px;
   height: 100%;
@@ -38,6 +35,7 @@ export const CartCommentInput = styled.textarea`
   border-radius: 8px;
   padding: 12px 16px;
   background: ${({ theme }) => theme.background.secondary};
+  resize: none;
 
   & placeholder {
     text-align: left;
@@ -58,7 +56,7 @@ export const CartCommentInput = styled.textarea`
     max-width: none;
     min-height: 100px;
   }
-`;
+`
 
 export const CartSummaryTitleWrapper = styled.div`
   margin-bottom: 24px;
@@ -67,14 +65,14 @@ export const CartSummaryTitleWrapper = styled.div`
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   margin-bottom: 0px;
-`;
+`
 export const CartCommentsTitle = styled(Title)`
   margin-bottom: 24px;
   @media ${({ theme }) => theme.media.large} {
     margin-bottom: 16px;
   }
-`;
+`
 export const CartCommentHint = styled.p`
   padding-top: 6px;
   font: ${({ theme }) => theme.fonts.bodypresmallReg};
-`;
+`

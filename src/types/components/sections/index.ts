@@ -133,6 +133,17 @@ export const SplitSectionSchema = z.object({
   split: z.array(InnerSectionSchema),
 });
 
+export const QuestionFormSectionSchema = z.object({
+  _type: z.literal('question_form'),
+  question_form_separator: z.string().optional(),
+});
+
+export const NetworksSectionSchema = z.object({
+  _type: z.literal('networks'),
+  subtitle: z.string().optional(),
+  title: z.string().optional(),
+});
+
 export const SectionsTypeSchema = z.union([
   SliderSectionSchema,
   ProductListSectionSchema,
@@ -148,6 +159,8 @@ export const SectionsTypeSchema = z.union([
   HeroSectionSchema,
   SplitSectionSchema,
   RichTextSectionSchema,
+  QuestionFormSectionSchema,
+  NetworksSectionSchema,
 ]);
 
 // export type SliderItem = z.infer<typeof SliderItemSchema>;
@@ -173,4 +186,6 @@ export type ApplicationFormSection = z.infer<
 >;
 export type InnerSectionData = z.infer<typeof InnerSectionSchema>;
 export type SplitSectionData = z.infer<typeof SplitSectionSchema>;
+export type QuestionFormSectionData = z.infer<typeof QuestionFormSectionSchema>;
+export type NetworksSectionData = z.infer<typeof NetworksSectionSchema>;
 export type SectionsType = z.infer<typeof SectionsTypeSchema>;

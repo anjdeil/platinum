@@ -1,21 +1,14 @@
-import { parsePhoneNumber } from 'awesome-phonenumber';
 import { z } from 'zod';
-
-const phoneSchema = (
-  t: (key: string, params?: Record<string, any>) => string
-) =>
-  z.string().refine((value) => parsePhoneNumber(value).valid, {
-    message: t('InvalidPhoneNumber'),
-  });
+import { phoneNumberValidation } from '../common';
 
 export const AmbassadorFormValidationSchema = (
   t: (key: string, params?: Record<string, any>) => string
 ) =>
   z.object({
     email: z.string().email(t('email')),
-    firstName: z.string().min(2, t('minChar', { count: 2 })),
-    lastName: z.string().min(2, t('minChar', { count: 2 })),
-    phoneNumber: phoneSchema(t),
+    first_name: z.string().min(3, t('RequiredField')),
+    last_name: z.string().min(3, t('RequiredField')),
+    phone: phoneNumberValidation(t),
     country: z.string().min(1, t('RequiredField')),
     city: z.string().min(1, t('RequiredField')),
     about: z.string().min(40, t('minChar', { count: 40 })),

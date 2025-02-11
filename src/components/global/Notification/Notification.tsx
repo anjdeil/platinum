@@ -4,12 +4,16 @@ import { NotificationWrapper } from './styles';
 interface NotificationPropsType {
   children: ReactNode;
   type?: 'success' | 'warning' | 'info';
-  show?: boolean;
+  marginBottom?: string;
 }
 
-const Notification: FC<NotificationPropsType> = ({ children, type, show }) => {
+const Notification: FC<NotificationPropsType> = ({
+  children,
+  type,
+  marginBottom,
+}) => {
   return (
-    <NotificationWrapper show={show} type={type}>
+    <NotificationWrapper marginBottom={marginBottom} type={type}>
       {children}
     </NotificationWrapper>
   );

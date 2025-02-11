@@ -1,27 +1,32 @@
-import { useResponsive } from "@/hooks/useResponsive";
+import { useResponsive } from '@/hooks/useResponsive';
 import {
   useGetCategoriesQuery,
   useGetMenusQuery,
   useGetThemeOptionsQuery,
-} from "@/store/rtk-queries/wpCustomApi";
-import { setThemeOptions } from "@/store/slices/themeOptionsSlice";
-import { WpMenuResponseType } from "@/types/menus/WpMenus";
-import { LangParamType } from "@/types/services/wpCustomApi";
-import Box from "@mui/material/Box";
-import { useRouter } from "next/router";
-import { createContext, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import PopupContainer from "../global/popups/PopupContainer/PopupContainer";
-import BottomMenu from "../widgets/BottomMenu";
-import { Footer } from "../widgets/Footer";
-import Header from "../widgets/Header/Header";
-import MobileHeader from "../widgets/MobileHeader/MobileHeader";
-import TopBar from "../widgets/TopBar/TopBar";
-import { setCategories, setLoading } from "@/store/slices/categoriesSlice";
-import CategoriesMenu from "../shop/categories/CategoriesMenu/CategoriesMenu";
+} from '@/store/rtk-queries/wpCustomApi';
+import { setCategories, setLoading } from '@/store/slices/categoriesSlice';
+import { setThemeOptions } from '@/store/slices/themeOptionsSlice';
+import { WpMenuResponseType } from '@/types/menus/WpMenus';
+import { LangParamType } from '@/types/services/wpCustomApi';
+import Box from '@mui/material/Box';
+import { useRouter } from 'next/router';
+import { createContext, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import WhatsAppButton from '../global/buttons/WhatsAppButton/WhatsAppButton';
+import PopupContainer from '../global/popups/PopupContainer/PopupContainer';
+import CategoriesMenu from '../shop/categories/CategoriesMenu/CategoriesMenu';
+import BottomMenu from '../widgets/BottomMenu';
+import { Footer } from '../widgets/Footer';
+import Header from '../widgets/Header/Header';
+import MobileHeader from '../widgets/MobileHeader/MobileHeader';
+import TopBar from '../widgets/TopBar/TopBar';
+import { initializeCart } from '@/store/slices/cartSlice';
+import {
+  languageSymbols,
+  setCurrentLanguage,
+} from '@/store/slices/languageSlice';
 
 export const MenusContext = createContext<WpMenuResponseType[] | []>([]);
-const currency = "USD";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const dispatch = useDispatch();
@@ -29,16 +34,22 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const { locale } = router;
   const langParam: LangParamType | object = locale ? { lang: locale } : {};
-  const langParamStr = locale ? locale : "";
+  const langParamStr = locale ? locale : '';
   const [menus, setMenus] = useState<WpMenuResponseType[] | []>([]);
 
-  const { data: menusResp, error, isLoading } = useGetMenusQuery(langParam);
-  const { data: themeOptions, error: themeOptionsError } = useGetThemeOptionsQuery();
-  const {
-    data: categoriesResp,
-    isLoading: isCategoriesLoading,
-    refetch: refetchCategories,
-  } = useGetCategoriesQuery(langParam);
+  const { data: menusResp } = useGetMenusQuery(langParam);
+  const { data: themeOptions } = useGetThemeOptionsQuery();
+  const { data: categoriesResp, isLoading: isCategoriesLoading } =
+    useGetCategoriesQuery(langParam);
+
+  useEffect(() => {
+    if (locale) {
+      const currentLanguage =
+        languageSymbols.find(lang => lang.code === locale)?.name || 'en';
+      dispatch(setCurrentLanguage({ name: currentLanguage }));
+      dispatch(initializeCart());
+    }
+  }, []);
 
   useEffect(() => {
     if (menusResp && menusResp.data && menusResp.data.items) {
@@ -69,6 +80,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         {children}
         <Footer />
         <CategoriesMenu isMenuVisible={true} shop={false} />
+        <WhatsAppButton />
       </MenusContext.Provider>
     </Box>
   );

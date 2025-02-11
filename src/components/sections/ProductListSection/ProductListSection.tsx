@@ -1,8 +1,8 @@
-import { ProductListSectionData } from '@/types/components/sections';
-import { useGetProductsQuery } from '@/store/rtk-queries/wpCustomApi';
-import { ProductType } from '@/types/pages/shop';
 import { RecommendContainer } from '@/components/pages/product/CustomProductList/styles';
 import { ProductCardList } from '@/components/shop/ProductCardsList';
+import { useGetProductsQuery } from '@/store/rtk-queries/wpCustomApi';
+import { ProductListSectionData } from '@/types/components/sections';
+import { ProductType } from '@/types/components/shop/product/products';
 import { useRouter } from 'next/router';
 import { SectionHeader } from '../SectionHeader';
 import { SectionContainer } from '../styles';
@@ -25,7 +25,7 @@ export const ProductListSection: React.FC<ProductListSectionProps> = ({
   const POPULAR_PARAMS = {
     lang: router.locale,
     per_page: PER_PAGE,
-    order_by: 'stock_quantity',
+    order_by: 'total_sales',
     order: 'desc' as const,
   };
 

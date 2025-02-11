@@ -27,15 +27,20 @@ export const ProductTitleWrapper = styled.div`
 `;
 
 export const ProductFlexWrapper = styled.div`
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+  @media ${({ theme }) => theme.media.preSmall} {
+    flex-direction: column;
+  }
 `;
 
 export const ProductImageWrapper = styled.div`
     grid-column: span 5;
     grid-row: 1 / 3;
     margin-top: 57px;
+    position: relative;
 
     @media ${({ theme }) => theme.media.large} {        
         margin-top: 0;

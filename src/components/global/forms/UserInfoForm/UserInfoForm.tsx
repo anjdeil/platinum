@@ -3,49 +3,43 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import 'react-international-phone/style.css';
-import {
-  CustomFormCheckboxStyled,
-  InfoCard,
-  OptionButton,
-  OptionButtonsContainer,
-  ProofSelect,
-} from './styles';
+import { CustomFormCheckboxStyled } from './styles';
 import {
   CustomForm,
   FlexBox,
   FormWrapper,
   FormWrapperBottom,
+  InfoCard,
   StyledButton,
 } from '@/styles/components';
 import { isAuthErrorResponseType } from '@/utils/isAuthErrorResponseType';
 import { UserInfoFormSchema } from '@/types/components/global/forms/userInfoForm';
 import { Title } from '@/styles/components';
-import {
-  useFetchCustomerQuery,
-  useUpdateCustomerMutation,
-} from '@/store/rtk-queries/wooCustomApi';
 import { CircularProgress } from '@mui/material';
 import CustomCountrySelect from '../../selects/CustomCountrySelect/CustomCountrySelect';
 import { useTranslations } from 'next-intl';
 import Notification from '../../Notification/Notification';
 import { CustomFormInput } from '../CustomFormInput';
+import { useUpdateCustomerInfoMutation } from '@/store/rtk-queries/wooCustomAuthApi';
+import { WooCustomerReqType } from '@/types/services/wooCustomApi/customer';
+import { countryOptions } from '@/utils/mockdata/countryOptions';
 
-export const UserInfoForm: FC = () => {
+interface UserInfoFormProps {
+  defaultCustomerData: WooCustomerReqType;
+}
+
+export const UserInfoForm: FC<UserInfoFormProps> = ({
+  defaultCustomerData: customer,
+}) => {
   const tValidation = useTranslations('Validation');
   const tMyAccount = useTranslations('MyAccount');
   const tForms = useTranslations('Forms');
-
+  const [initialData, setInitialData] = useState<any>(null);
   const [isShipping, setIsShipping] = useState(true);
-  const [hasChanges, setHasChanges] = useState(false);
+  const [isDataUnchanged, setIsDataUnchanged] = useState(false);
 
-  const {
-    data: customer,
-    error: customerError,
-    isLoading: isCustomerLoading,
-  } = useFetchCustomerQuery({ customerId: '14408' });
-
-  const [UpdateCustomerMutation, { error, isLoading, isSuccess }] =
-    useUpdateCustomerMutation();
+  const [UpdateCustomerMutation, { error, isSuccess }] =
+    useUpdateCustomerInfoMutation();
 
   const formSchema = useMemo(
     () => UserInfoFormSchema(isShipping, tValidation),
@@ -56,22 +50,16 @@ export const UserInfoForm: FC = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting, isSubmitted },
+    formState: { errors, isSubmitting },
     setValue,
-    watch,
     control,
   } = useForm<UserInfoFormType>({
     resolver: zodResolver(formSchema),
   });
 
-  useEffect(() => {
-    const subscription = watch((values, { type }) => {
-      if (type === 'change') {
-        setHasChanges(true);
-      }
-    });
-    return () => subscription.unsubscribe();
-  }, [watch]);
+  const handleShippingCheckboxChange = () => {
+    setIsShipping(prev => !prev);
+  };
 
   useEffect(() => {
     if (customer) {
@@ -79,58 +67,62 @@ export const UserInfoForm: FC = () => {
         !customer.shipping?.first_name &&
         !customer.shipping?.last_name &&
         !customer.shipping?.address_1;
+
       setIsShipping(!isShippingEmpty);
-      console.log('isShippingEmpty', isShippingEmpty);
-      console.log(isShipping);
+
+      setInitialData({
+        email: customer.email || '',
+        first_name: customer.first_name || '',
+        last_name: customer.last_name || '',
+        username: customer.email || '',
+        billing: {
+          first_name: customer.billing?.first_name || '',
+          last_name: customer.billing?.last_name || '',
+          address_1: customer.billing?.address_1 || '',
+          address_2: customer.billing?.address_2 || '',
+          city: customer.billing?.city || '',
+          postcode: customer.billing?.postcode || '',
+          country: customer.billing?.country || '',
+          email: customer.email || '',
+          phone: customer.billing?.phone || '',
+        },
+        shipping: isShipping
+          ? {
+              first_name: customer.shipping?.first_name || '',
+              last_name: customer.shipping?.last_name || '',
+              phone: customer.shipping?.phone || '',
+              address_1: customer.shipping?.address_1 || '',
+              address_2: customer.shipping?.address_2 || '',
+              city: customer.shipping?.city || '',
+              postcode: customer.shipping?.postcode || '',
+              country: customer.shipping?.country || '',
+            }
+          : {
+              first_name: '',
+              last_name: '',
+              phone: '',
+              address_1: '',
+              address_2: '',
+              city: '',
+              postcode: '',
+              country: '',
+              apartmentNumber: '',
+            },
+      });
     }
   }, [customer]);
-
-  /*   const proofOfPurchaseOptions = [
-    { code: "Receipt", name: "Receipt" },
-    { code: "VAT Invoice", name: "VAT Invoice" },
-    { code: "Bank transfer receipt", name: "Bank transfer receipt" },
-  ]; */
-  const countryOptions = [
-    { value: 'DE', label: 'Germany' },
-    { value: 'FR', label: 'France' },
-    { value: 'IT', label: 'Italy' },
-    { value: 'ES', label: 'Spain' },
-    { value: 'GB', label: 'United Kingdom' },
-    { value: 'RU', label: 'Russia' },
-    { value: 'PL', label: 'Poland' },
-    { value: 'NL', label: 'Netherlands' },
-    { value: 'BE', label: 'Belgium' },
-    { value: 'SE', label: 'Sweden' },
-    { value: 'NO', label: 'Norway' },
-    { value: 'AT', label: 'Austria' },
-    { value: 'CH', label: 'Switzerland' },
-    { value: 'DK', label: 'Denmark' },
-    { value: 'FI', label: 'Finland' },
-    { value: 'PT', label: 'Portugal' },
-    { value: 'GR', label: 'Greece' },
-    { value: 'CZ', label: 'Czech Republic' },
-    { value: 'HU', label: 'Hungary' },
-    { value: 'RO', label: 'Romania' },
-  ];
-
-  const handleShippingCheckboxChange = () => {
-    setIsShipping((prev) => !prev);
-    setHasChanges(true);
-  };
 
   const onSubmit = async (formData: UserInfoFormType) => {
     if (!customer) {
       console.error('Customer data is not available');
       return;
     }
-    console.log(isShipping);
 
     const updatedData = {
       email: formData.email,
       first_name: formData.first_name,
       last_name: formData.last_name,
       username: formData.email,
-      /* proofOfPurchase: formData.proofOfPurchase, //in process */
       billing: {
         first_name: formData.first_name,
         last_name: formData.last_name,
@@ -181,9 +173,36 @@ export const UserInfoForm: FC = () => {
           },
     };
 
+    // Сравниваем initialData с updatedData
+    const hasFormChanges = Object.keys(updatedData || {}).some(key => {
+      const initialValue = initialData?.[key as keyof typeof initialData];
+      const updatedValue = updatedData[key as keyof typeof updatedData];
+
+      const normalizeString = (str: string) => {
+        return str
+          .trim()
+          .replace(/\u200B/g, '')
+          .replace(/\s+/g, ' ');
+      };
+
+      if (
+        normalizeString(JSON.stringify(initialValue)) !==
+        normalizeString(JSON.stringify(updatedValue))
+      ) {
+        return true;
+      }
+
+      return false;
+    });
+
+    if (!hasFormChanges) {
+      setIsDataUnchanged(true);
+      return;
+    } else {
+      setIsDataUnchanged(false);
+    }
     try {
-      const response = await UpdateCustomerMutation({
-        id: customer.id,
+      await UpdateCustomerMutation({
         ...updatedData,
       });
     } catch (error) {
@@ -191,15 +210,13 @@ export const UserInfoForm: FC = () => {
     }
   };
 
-  /* const proofOfPurchaseValue = watch("proofOfPurchase"); */
-
   const renderFormShippingFields = (
     prefix: string = '',
     defaultValues: any = {}
   ) => (
     <>
       {prefix === 'Shipping' &&
-        ['first_name', 'last_name', 'phone'].map((field) => (
+        ['first_name', 'last_name', 'phone'].map(field => (
           <CustomFormInput
             key={field}
             fieldName={tMyAccount(field)}
@@ -226,7 +243,7 @@ export const UserInfoForm: FC = () => {
       />
 
       {['city', 'address_1', 'address_2', 'apartmentNumber', 'postcode'].map(
-        (field) => (
+        field => (
           <CustomFormInput
             key={field}
             fieldName={tMyAccount(field)}
@@ -254,7 +271,7 @@ export const UserInfoForm: FC = () => {
     defaultValues: any = {}
   ) => (
     <>
-      {['first_name', 'last_name', 'email', 'phone'].map((field) => (
+      {['first_name', 'last_name', 'email', 'phone'].map(field => (
         <CustomFormInput
           key={field}
           fieldName={tMyAccount(field)}
@@ -265,7 +282,7 @@ export const UserInfoForm: FC = () => {
           inputType={field === 'phone' ? 'phone' : 'text'}
           defaultValue={
             field === 'phone'
-              ? customer?.billing.phone
+              ? customer?.billing?.phone
               : defaultValues[field] || ''
           }
           setValue={setValue}
@@ -276,7 +293,7 @@ export const UserInfoForm: FC = () => {
 
   useEffect(() => {
     if (customer) {
-      setValue('country', customer.billing.country || '');
+      setValue('country', customer.billing?.country || '');
       setValue('countryShipping', customer.shipping?.country || '');
     }
   }, [customer, setValue]);
@@ -293,50 +310,16 @@ export const UserInfoForm: FC = () => {
         >
           {tForms('UserInfo')}
         </Title>
-        {isCustomerLoading && !customer ? (
+        {!customer ? (
           <FlexBox justifyContent="center" margin="40px 0">
             <CircularProgress />
           </FlexBox>
         ) : (
           <FormWrapper>
-            {renderFormInfoFields('', customer)}{' '}
+            {renderFormInfoFields('', customer)}
             {renderFormShippingFields('', customer?.billing)}
           </FormWrapper>
         )}
-        {/*   <ProofSelect>
-          <CustomFormSelect
-            label={tValidation("proofOfPurchase")}
-            name="proofOfPurchase"
-            setValue={setValue}
-            register={register}
-            errors={errors}
-            options={proofOfPurchaseOptions}
-            width="100%"
-            defaultValue={proofOfPurchaseOptions[0].name || ""}
-            borderRadius="8px"
-            background={theme.background.formElements}
-            padding="12px"
-            mobFontSize="14px"
-            mobPadding="12px"
-            tabletPadding="12px"
-            alignItem="flex-start"
-            paddingOptions="4px"
-          />
-        </ProofSelect>
-        <OptionButtonsContainer>
-          {proofOfPurchaseOptions.slice(0, 2).map((option) => (
-            <OptionButton
-              key={option.code}
-              type="button"
-              onClick={() => {
-                setValue("proofOfPurchase", option.code);
-              }}
-              isSelected={option.code === proofOfPurchaseValue}
-            >
-              {option.name}
-            </OptionButton>
-          ))}
-        </OptionButtonsContainer> */}
       </InfoCard>
       <InfoCard>
         <Title
@@ -362,18 +345,11 @@ export const UserInfoForm: FC = () => {
           </FormWrapper>
         )}
       </InfoCard>
-      {/*   <CustomFormInput
-        fieldName={tValidation('agreentment')}
-        name="terms"
-        register={register}
-        errors={errors}
-        inputTag={'input'}
-        inputType={'checkbox'}
-        width="100%"
-      /> */}
-
       <FormWrapperBottom>
-        <StyledButton type="submit" disabled={isSubmitting || !hasChanges}>
+        {isDataUnchanged && (
+          <Notification type="info">{tValidation('noChanges')}</Notification>
+        )}
+        <StyledButton type="submit" disabled={isSubmitting}>
           {isSubmitting ? tValidation('saving') : tValidation('saveChanges')}
         </StyledButton>
         {error && <div>{isAuthErrorResponseType(error)}</div>}

@@ -32,11 +32,12 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
   defaultValue,
   list,
   disabled,
+  autoComplete,
 }) => {
   const registerProps = register ? { ...register(name) } : {};
 
   const [isPasswordVisible, setPasswordVisible] = useState(false);
-  const togglePasswordVisibility = () => setPasswordVisible((prev) => !prev);
+  const togglePasswordVisibility = () => setPasswordVisible(prev => !prev);
   const passwordImagePath = useMemo(
     () =>
       isPasswordVisible ? '/images/show-pass.svg' : '/images/hidden-pass.svg',
@@ -60,6 +61,29 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
     }
   }, [defaultValue, setValue, name]);
 
+  const handleChange = (inputValue: any) => {
+    if (setValue) {
+      setValue(name, inputValue, { shouldValidate: false });
+    }
+  };
+
+  const handleBlur = (inputValue: any) => {
+    if (setValue) {
+      setValue(name, inputValue, { shouldValidate: true });
+    }
+  };
+
+  const getAutoCompleteValue = () => {
+    switch (true) {
+      case name === 'code':
+        return 'one-time-code';
+      case inputType === 'newpassword':
+        return 'new-password';
+      default:
+        return undefined;
+    }
+  };
+
   return (
     <CustomInputContainer isCheckbox={inputType === 'checkbox'} width={width}>
       <CustomInputStyle
@@ -81,32 +105,38 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
         <CustomInputWrapper>
           {inputType === 'phone' ? (
             <StyledPhoneInput
+              {...registerProps}
+              {...register(name)}
               defaultCountry="pl"
               value={value || defaultValue}
-              onChange={(phoneValue) => {
-                if (setValue) {
-                  setValue(name, phoneValue, { shouldValidate: true });
-                }
-              }}
+              onChange={handleChange}
+              onBlur={e => handleBlur(e.target.value)}
             />
           ) : (
             <Input
               as={inputTag}
               placeholder={placeholder ? placeholder : ''}
               {...register(name)}
-              type={isPasswordVisible ? 'text' : inputType}
+              type={
+                isPasswordVisible
+                  ? 'text'
+                  : inputType === 'newpassword'
+                  ? 'password'
+                  : inputType
+              }
               {...registerProps}
               height={height}
               background={background}
               isCheckbox={inputType === 'checkbox'}
+              autoComplete={getAutoCompleteValue()}
               {...(name === 'country' ? { list: list } : {})}
               disabled={disabled}
             />
           )}
-          {inputType === 'password' && (
+          {(inputType === 'password' || inputType === 'newpassword') && (
             <ShowPasswordImage
               src={passwordImagePath}
-              alt={'show or hidden password button'}
+              alt="show or hidden password button"
               width={24}
               height={24}
               onClick={togglePasswordVisibility}

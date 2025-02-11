@@ -1,6 +1,6 @@
-import Head from 'next/head';
+import { removeUserFromLocalStorage } from '@/utils/auth/userLocalStorage';
 import { GetServerSidePropsContext } from 'next';
-import wpRestApi from '@/services/wpRestApi';
+import Head from 'next/head';
 
 export default function Logout() {
   return (
@@ -13,15 +13,15 @@ export default function Logout() {
 export const getServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
-  const { res } = context;
+  const { res, locale } = context;
   res.setHeader(
     'Set-Cookie',
-    'authToken=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly'
+    'authToken=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; '
   );
-
+  removeUserFromLocalStorage();
   return {
     redirect: {
-      destination: '/my-account/login',
+      destination: `/${locale}/my-account/login`,
       permanent: false,
     },
   };

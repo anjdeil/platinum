@@ -1,21 +1,11 @@
 import styled from '@emotion/styled';
-import { keyframes, css } from '@emotion/react';
-
-export const fadeOut = keyframes`
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-`;
 
 export const NotificationWrapper = styled.div<{
   type?: 'success' | 'warning' | 'info';
-  show?: boolean;
+  marginBottom?: string;
 }>`
   padding: 16px;
-  margin-bottom: 24px;
+  margin-bottom: ${({ marginBottom = '24px' }) => marginBottom};
   border-radius: 8px;
   display: flex;
   justify-content: space-between;
@@ -37,13 +27,16 @@ export const NotificationWrapper = styled.div<{
   line-height: 1.5;
   font-weight: 400;
 
-  ${({ show }) =>
-    show &&
-    css`
-      animation: ${fadeOut} 3s ease-out forwards;
-    `}
-
-  @media ${({ theme }) => theme.media.large} {
+  <<<<<<<
+    HEAD
+    ${({ show }) =>
+      show &&
+      css`
+        animation: ${fadeOut} 3s ease-out forwards;
+      `}
+    =======>>>>>>>dev
+    @media
+    ${({ theme }) => theme.media.large} {
     font-size: 14px;
   }
 `;

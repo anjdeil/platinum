@@ -29,6 +29,11 @@ export const ContactCard = styled.div`
   & svg {
     margin-bottom: 26px;
   }
+
+  @media ${({ theme }) => theme.media.medium} {
+    max-width: 500px;
+    margin: 0 auto;
+  }
 `;
 
 export const ContactCardText = styled.div`
@@ -43,6 +48,10 @@ export const ContactCardText = styled.div`
   & div {
     margin-top: 16px;
   }
+
+  @media ${({ theme }) => theme.media.medium} {
+    word-break: break-all;
+  }
 `;
 
 export const ContactLink = styled(Link)`
@@ -50,4 +59,9 @@ export const ContactLink = styled(Link)`
   align-items: end;
   flex-grow: 1;
   color: ${({ theme }) => theme.colors.black};
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.7;
+  }
 `;

@@ -1,13 +1,14 @@
-import { useResponsive } from "@/hooks/useResponsive";
-import { Title } from "@/styles/components";
+import { useResponsive } from '@/hooks/useResponsive';
+import { Title } from '@/styles/components';
 import {
   BannerSliderProps,
   BannerSlideType,
   MainPageSlideType,
 } from '@/types/components/global/sliders/BannerSlider';
 import { useTranslations } from 'next-intl';
+import Link from 'next/link';
 import React, { useMemo } from 'react';
-import { Pagination } from 'swiper/modules';
+import { Autoplay, Pagination } from 'swiper/modules';
 import { SwiperSlide } from 'swiper/react';
 import AddToBasketButton from '../../buttons/AddToBasketButton/AddToBasketButton';
 import {
@@ -17,7 +18,6 @@ import {
   ImageStyled,
   StyledText,
 } from './styles';
-import Link from 'next/link';
 
 const BannerSlider: React.FC<BannerSliderProps> = ({
   slides,
@@ -54,20 +54,24 @@ const BannerSlider: React.FC<BannerSliderProps> = ({
       {!isMainPage && (
         <ContentWrapper>
           <StyledText>{t('welcomeToPlatinumShop')}</StyledText>
-          <Title as='h2' uppercase>
+          <Title as="h2" uppercase>
             {t('theBest')}
             <br />
             {t('productForYou')}
           </Title>
-          <AddToBasketButton maxWidth='250px'>Add to basket</AddToBasketButton>
+          <AddToBasketButton maxWidth="250px">Add to basket</AddToBasketButton>
         </ContentWrapper>
       )}
       <CustomSwiper
-        modules={slides.length > 1 ? [Pagination] : []}
+        modules={slides.length > 1 ? [Pagination, Autoplay] : [Autoplay]}
         pagination={slides.length > 1 ? { clickable: true } : false}
         spaceBetween={0}
         slidesPerView={1}
         loop={true}
+        autoplay={{
+          delay: 3000,
+          disableOnInteraction: false,
+        }}
       >
         {slides.map(
           (slide: BannerSlideType | MainPageSlideType, index: number) => (

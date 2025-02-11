@@ -10,15 +10,14 @@ interface MobileCategoriesMenuPropsType {
 
 const MobileSearchPopup: FC<MobileCategoriesMenuPropsType> = ({ onClose }) => {
     const {
-        searchTerm,
-        isFocused,
-        setFocused,
-        handleInputChange,
-        isLoading,
-        products,
-        childParentCategories,
-        routeToProduct,
-        routeToCategory
+      searchTerm,
+      setFocused,
+      handleInputChange,
+      isLoading,
+      products,
+      childParentCategories,
+      routeToProduct,
+      routeToCategory,
     } = useSearchLogic();
 
     const SearchInputRef = useRef<HTMLInputElement>(null);

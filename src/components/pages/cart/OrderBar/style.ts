@@ -1,4 +1,9 @@
-import styled from "@emotion/styled";
+import styled from '@emotion/styled';
+
+interface OrderBarDescProps {
+  textAlign?: 'left' | 'right';
+  marginBottom?: string;
+}
 
 export const OrderBarWrapper = styled.div`
   border-radius: 8px;
@@ -8,11 +13,19 @@ export const OrderBarWrapper = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-export const OrderBarTitle = styled.div`
-  display: inline-block;
-  text-transform: uppercase;
+export const OrderBarTitle = styled.div<{ miniCart: boolean }>`
+  display: flex;
+  align-items: ${({ miniCart }) => miniCart && 'end'};
+  justify-content: end;
+  margin-top: 2px;
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
+  flex-grow: ${({ miniCart }) => miniCart && 1};
+  text-align: ${({ miniCart }) => miniCart && 'right'};
+  margin-right: ${({ miniCart }) => miniCart && '10px'};
+  text-transform: ${({ miniCart }) => (miniCart ? 'lowercase' : 'uppercase')};
+  font-weight: ${({ miniCart }) => (miniCart ? '500' : '400')};
 `;
+
 export const OrderBarContent = styled.div`
   height: 100%;
   display: flex;
@@ -20,17 +33,27 @@ export const OrderBarContent = styled.div`
   justify-content: space-between;
   align-items: right;
 `;
-export const OrderBarSum = styled.p`
+export const OrderBarSum = styled.div`
   text-align: right;
-  display: inline-block;
+  display: flex;
+  justify-content: end;
   font: ${({ theme }) => theme.fonts.titleH2Medium};
   line-height: 24px;
-  margin-bottom: 8px;
+
   &:not(:last-child) {
     margin-bottom: 8px;
   }
 `;
-export const OrderBarDesc = styled.p`
+export const OrderBarDesc = styled.p<OrderBarDescProps>`
   color: ${({ theme }) => theme.colors.active};
-  text-align: right;
+  text-align: ${({ textAlign }) => textAlign};
+  margin-bottom: ${({ marginBottom = '0' }) => marginBottom};
+`;
+export const CrossedOut = styled.span`
+  position: relative;
+  font-size: 1rem;
+  line-height: 1.2rem;
+  color: ${({ theme }) => theme.colors.grey};
+  margin-right: 10px;
+  text-decoration: line-through;
 `;

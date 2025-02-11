@@ -1,5 +1,5 @@
-import styled from "@emotion/styled";
-import Link from "next/link";
+import styled from '@emotion/styled';
+import Link from 'next/link';
 
 interface OrderStepNumProps {
   active: boolean;
@@ -31,6 +31,9 @@ export const OrderProgressWrapper = styled.div`
     overflow-wrap: break-word;
     hyphens: auto;
     text-transform: uppercase;
+    @media ${({ theme }) => theme.media.medium} {
+      font: ${({ theme }) => theme.fonts.bodysmallReg};
+    }
   }
 `;
 
@@ -43,7 +46,7 @@ export const OrderStepWrapper = styled.div`
   padding: 5px;
 `;
 
-export const OrderStepWrapperLink = styled(Link)<{ completed: boolean }>`
+export const OrderStepWrapperLink = styled(Link)<{ completed: string }>`
   text-decoration: none;
   color: ${({ theme }) => theme.colors.black};
   display: flex;
@@ -55,10 +58,10 @@ export const OrderStepWrapperLink = styled(Link)<{ completed: boolean }>`
 
   border-radius: 8px;
   transition: background-color 0.2s;
-  cursor: ${({ completed }) => completed && "pointer"};
+  cursor: ${({ completed }) => completed === 'true' && 'pointer'};
   &:hover {
     background-color: ${({ completed, theme }) =>
-      completed && theme.background.secondary};
+      completed === 'true' && theme.background.secondary};
   }
 `;
 
@@ -73,7 +76,7 @@ export const OrderStepNum = styled.div<OrderStepNumProps>`
   height: 56px;
   font: ${({ theme }) => theme.fonts.titleH2SemiBold};
   background: ${({ theme, active }) =>
-    active ? theme.background.primaryGradient : "transparent"};
+    active ? theme.background.primaryGradient : 'transparent'};
 
   @media ${({ theme }) => theme.media.medium} {
     width: 40px;
