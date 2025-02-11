@@ -108,8 +108,6 @@ export const BillingForm: FC<BillingFormProps> = ({
 
       setValue('country', billing?.country || 'PL');
 
-      setValue('apartmentNumber', billing?.address_2?.split('/')[1] || '');
-
       if (invoice) {
         setValue('company', billing?.company || '');
       }
@@ -129,26 +127,11 @@ export const BillingForm: FC<BillingFormProps> = ({
   }, [customer]);
 
   useEffect(() => {
-    if (different_address) {
-      setValue('shipping_country', 'PL');
-      setValue('shipping_city', '');
-      setValue('shipping_address_1', '');
-      setValue('shipping_address_2', '');
-      setValue('shipping_apartmentNumber', '');
-      setValue('shipping_postcode', '');
-    }
-  }, [different_address]);
-
-  useEffect(() => {
     if (!different_address) {
       setValue('shipping_country', watchedFields?.country || 'PL');
       setValue('shipping_city', watchedFields?.city || '');
       setValue('shipping_address_1', watchedFields?.address_1 || '');
       setValue('shipping_address_2', watchedFields?.address_2 || '');
-      setValue(
-        'shipping_apartmentNumber',
-        watchedFields?.apartmentNumber || ''
-      );
       setValue('shipping_postcode', watchedFields?.postcode || '');
     }
   }, [
@@ -157,7 +140,6 @@ export const BillingForm: FC<BillingFormProps> = ({
     watchedFields.city,
     watchedFields.address_1,
     watchedFields.address_2,
-    watchedFields.apartmentNumber,
     watchedFields.postcode,
   ]);
 
@@ -238,42 +220,31 @@ export const BillingForm: FC<BillingFormProps> = ({
         setValue={setValue}
         defaultValue={customer?.billing?.city || ''}
         autocomplete="address-level2"
+        noPlaceholder={true}
       />
       <CustomTextField
         name={form === 'billing' ? 'address_1' : 'shipping_address_1'}
         register={register}
         inputType="text"
         errors={errors}
-        placeholder={tMyAccount('address_1')}
+        placeholder={`${tMyAccount('address_1')}, ${tMyAccount('address_2')}`}
         validation={getValidationSchema('address_1', tValidation)}
         setValue={setValue}
         defaultValue={customer?.billing?.address_1 || ''}
         autocomplete="address-line1"
+        noPlaceholder={true}
       />
       <CustomTextField
         name={form === 'billing' ? 'address_2' : 'shipping_address_2'}
         register={register}
         inputType="text"
         errors={errors}
-        placeholder={tMyAccount('address_2')}
+        placeholder={tValidation('apartment/office')}
         validation={getValidationSchema('address_2', tValidation)}
         setValue={setValue}
         defaultValue={customer?.billing?.address_2 || ''}
         autocomplete="address-line2"
-      />
-      <CustomTextField
-        name={
-          form === 'billing' ? 'apartmentNumber' : 'shipping_apartmentNumber'
-        }
-        register={register}
-        inputType="text"
-        errors={errors}
-        placeholder={tValidation('apartment/office')}
-        validation={getValidationSchema('apartmentNumber', tValidation)}
-        setValue={setValue}
-        defaultValue={customer?.billing.address_2?.split('/')[1] || ''}
-        notRequired={true}
-        autocomplete="address-line3"
+        noPlaceholder={true}
       />
       <CustomTextField
         name={form === 'billing' ? 'postcode' : 'shipping_postcode'}
@@ -285,6 +256,7 @@ export const BillingForm: FC<BillingFormProps> = ({
         setValue={setValue}
         defaultValue={customer?.billing?.postcode || ''}
         autocomplete="postal-code"
+        noPlaceholder={true}
       />
     </>
   );
@@ -383,7 +355,7 @@ export const BillingForm: FC<BillingFormProps> = ({
               </VariationFields>
               <StyledFormWrapper>{addressFields('billing')}</StyledFormWrapper>
               <VariationFields>
-                {watchedFields.registration && !isUserAlreadyExist && (
+                {watchedFields.registration && (
                   <>
                     <StyledFormWrapper>
                       <AnimatedWrapper isVisible={newCustomerRegistration}>
@@ -416,17 +388,18 @@ export const BillingForm: FC<BillingFormProps> = ({
                         />
                       </AnimatedWrapper>
                     </StyledFormWrapper>
-                    {/* <AnimatedWrapper isVisible={newCustomerRegistration}>
-                      <StyledSingleCheckBoxWrapper>
+                    <AnimatedWrapper isVisible={newCustomerRegistration}>
+                      <StyledSingleCheckBoxWrapper noBottom={true}>
                         <FormCheckbox
                           name={'terms'}
                           register={register}
                           errors={errors}
                           label={tMyAccount('agreePersonalData')}
                           validation={getValidationSchema('terms', tValidation)}
+                          noTop
                         />
                       </StyledSingleCheckBoxWrapper>
-                    </AnimatedWrapper> */}
+                    </AnimatedWrapper>
                   </>
                 )}
               </VariationFields>

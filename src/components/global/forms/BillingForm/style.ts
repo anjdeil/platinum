@@ -32,11 +32,15 @@ export const VariationFields = styled.div`
   margin-bottom: 16px;
 `;
 
-export const StyledCheckBoxWrapper = styled.div`
+interface StyledCheckBoxWrapperProps {
+  noTop: boolean;
+}
+
+export const StyledCheckBoxWrapper = styled.div<StyledCheckBoxWrapperProps>`
   display: flex;
   flex-direction: column;
   gap: 4px;
-  margin-top: 20px;
+  margin-top: ${({ noTop }) => (noTop ? '0' : '20px')};
 `;
 
 export const StyledCheckBoxContainer = styled.div`
@@ -146,8 +150,12 @@ export const StyledCheckbox = styled(Checkbox, {
   },
 }));
 
-export const StyledSingleCheckBoxWrapper = styled.div`
-  margin-bottom: 24px;
+type StyledCheckboxLabelProps = {
+  noBottom?: boolean;
+};
+
+export const StyledSingleCheckBoxWrapper = styled.div<StyledCheckboxLabelProps>`
+  margin-bottom: ${({ noBottom }) => (noBottom ? '0' : '20px')};
 `;
 
 export const CustomError = styled.p`

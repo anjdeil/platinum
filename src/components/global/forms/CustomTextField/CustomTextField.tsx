@@ -19,13 +19,14 @@ interface CustomTextFieldProps {
   inputType?: string;
   autocomplete?: string;
   errors: any;
-  placeholder: string;
+  placeholder?: string;
   validation?: RegisterOptions;
   setValue?: any;
   defaultValue?: string;
   onChange?: (value: string) => void;
   onBlur?: (value: string) => void;
   notRequired?: boolean;
+  noPlaceholder?: boolean;
 }
 
 const CustomTextField: React.FC<CustomTextFieldProps> = ({
@@ -41,6 +42,7 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
   setValue,
   defaultValue,
   notRequired,
+  noPlaceholder,
 }) => {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
 
@@ -128,7 +130,7 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
                   ? 'text'
                   : inputType
               }
-              placeholder={placeholder}
+              placeholder={noPlaceholder ? '' : placeholder}
               autoComplete={autoCompleteValue}
               error={!!errors[name]}
               helperText={

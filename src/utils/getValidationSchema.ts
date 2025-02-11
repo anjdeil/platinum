@@ -116,13 +116,6 @@ export const getValidationSchema = (
           message: t('yourBuildingNumberIsTooLong'),
         },
       };
-    case 'apartmentNumber':
-      return {
-        maxLength: {
-          value: 10,
-          message: t('yourApartmentNumberIsTooLong'),
-        },
-      };
     case 'postcode':
       return {
         required: t('pleaseFillInThePostcode'),
