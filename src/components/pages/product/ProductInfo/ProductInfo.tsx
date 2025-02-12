@@ -2,6 +2,7 @@ import AddToBasketButton from '@/components/global/buttons/AddToBasketButton/Add
 import FavoriteButton from '@/components/global/buttons/FavoriteButton/FavoriteButton';
 import DetailsAccordion from '@/components/global/DetailsAccordeon/DetailsAccordion';
 import Rating from '@/components/global/Rating/Rating';
+import { RichTextSection } from '@/components/sections/RichTextSection';
 import ProductBadge from '@/components/shop/product/ProductBadge/ProductBadge';
 import ProductBadgeWrapper from '@/components/shop/product/ProductBadgeWrapper/ProductBadgeWrapper';
 import { useResponsive } from '@/hooks/useResponsive';
@@ -18,10 +19,10 @@ import {
 } from '@/types/components/shop/product/products';
 import { CartItem } from '@/types/store/reducers/сartSlice';
 import { getCookieValue } from '@/utils/auth/getCookieValue';
+import { decodeHTML } from '@/utils/decodeHTML';
 import { getCurrentVariation } from '@/utils/getCurrentVariation';
 import { getProductPrice } from '@/utils/price/getProductPrice';
 import { Skeleton } from '@mui/material';
-import ReactHtmlParser from 'html-react-parser';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -242,13 +243,11 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
           {t('leaveAReviewAboutProduct')}
         </StyledButton>
         <DetailsAccordion summary={t('descriptions')}>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: ReactHtmlParser(
-                currentVariation?.description || product.description
-              ),
-            }}
-          ></div>
+          <RichTextSection
+            text={decodeHTML(
+              currentVariation?.description || product.description
+            )}
+          />
         </DetailsAccordion>
       </ProductInfoWrapper>
     </ProductWrapper>
