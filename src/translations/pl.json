@@ -97,7 +97,12 @@
     "maxAttemptsExceeded": "Podany kod resetowania jest nieprawidłowy. Wykorzystałeś maksymalną liczbę dozwolonych prób. Musisz poprosić o nowy kod.",
     "codeProvidedHasExpired": "Dostarczony kod resetowania wygasł.",
     "Addresses": "Adresy",
-    "serverError": "Coś poszło nie tak z serwerem. Spróbuj ponownie lub skontaktuj się z pomocą techniczną."
+    "serverError": "Coś poszło nie tak z serwerem. Spróbuj ponownie lub skontaktuj się z pomocą techniczną.",
+    "subscriptionError": "Nie można pobrać danych subskrypcji",
+    "subscribeNewsletter": "Zapisz się do naszego newslettera!",
+    "newsletterDescription": "Bądź na bieżąco z najnowszymi wiadomościami, ekskluzywnymi ofertami i specjalnymi treściami – prosto na Twoją skrzynkę!",
+    "subscriptionSuccess": "Pomyślnie zapisałeś się do newslettera",
+    "unsubscriptionSuccess": "Pomyślnie wypisałeś się z newslettera"
   },
   "TopBar": {
     "CallUs": "Kontakt"

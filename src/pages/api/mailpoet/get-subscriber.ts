@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-const MAIL_POET_URL = `${process.env.NEXT_PUBLIC_WP_URL}/wp-json/v1/subscribe`;
+const MAIL_POET_URL = `${process.env.NEXT_PUBLIC_WP_URL}/wp-json/v1/get-subscriber`;
 
 export default async function handler(
   req: NextApiRequest,
@@ -19,15 +19,19 @@ export default async function handler(
   }
 
   try {
-    const response = await axios.post(MAIL_POET_URL, body, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    const response = await axios.post(
+      MAIL_POET_URL,
+      { email: body.email },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
 
     return res.status(200).json(response.data);
   } catch (error) {
-    console.error('Error during subscription:', (error as any).message);
+    console.error('Error fetching subscriber:', (error as any).message);
     return res.status(500).json({ error: 'Internal Server Error' });
   }
 }
