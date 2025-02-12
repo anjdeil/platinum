@@ -9,13 +9,13 @@ export const getProductPrice = (priceData: ProductPriceType | VariationPriceType
     const isSaleActive =
         Boolean(priceData.sale_price &&
             (
-                // Безстрокова акція
+                // When date is not exists
                 (!saleFromDate && !saleToDate) ||
-                // Акція починається в майбутньому
+                // When sale date already started but never be gone
                 (saleFromDate && !saleToDate && saleFromDate <= now) ||
-                // Акція має початок і кінець
+                // When current date in sale range 
                 (saleFromDate && saleToDate && saleFromDate <= now && saleToDate >= now) ||
-                // Акція без початку, але з кінцевою датою
+                // When sale has only finish date
                 (!saleFromDate && saleToDate && saleToDate >= now)
             ));
 
