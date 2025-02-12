@@ -22,10 +22,11 @@ import {
   TitleWrapper,
 } from './styles';
 
+import { useResponsive } from '@/hooks/useResponsive';
 import { useWishlist } from '@/hooks/useWishlist';
 import { popupToggle } from '@/store/slices/PopupSlice';
+import { getCardProductPrice } from '@/utils/price/getCardProductPrice';
 import { Skeleton } from '@mui/material';
-import { useResponsive } from '@/hooks/useResponsive';
 
 const ProductCard: React.FC<ProductCardPropsType> = ({ product, currency }) => {
   const t = useTranslations('Product');
@@ -43,6 +44,8 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product, currency }) => {
   const { cartItems } = useAppSelector(state => state.cartSlice);
 
   const [isCartMatch, setIsCartMatch] = useState(false);
+
+  const { finalPrice, regularPrice, isSale } = getCardProductPrice(product);
 
   useEffect(() => {
     const cartMatchIndex = cartItems.findIndex(
@@ -98,19 +101,26 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product, currency }) => {
           <PriceWrapper>
             {currency.rate ? (
               <>
-                {product.min_price !== null &&
-                  product.max_price !== null &&
-                  product.min_price !== product.max_price && (
-                    <ProductMaxPrice>
-                      {(product.max_price * currency.rate).toFixed(2)}{' '}
-                      {currency.code}
-                    </ProductMaxPrice>
-                  )}
-                {product.min_price !== null && (
-                  <ProductPrice>
-                    {(product.min_price * currency.rate).toFixed(2)}{' '}
-                    {currency.code}
-                  </ProductPrice>
+                {product.type === 'variable' &&
+                product.variations.length > 1 ? (
+                  finalPrice !== regularPrice ? (
+                    <ProductPrice>
+                      {t('priceFrom', { price: finalPrice })} {currency.code}
+                    </ProductPrice>
+                  ) : (
+                    <ProductPrice>{`${finalPrice} ${currency.code}`}</ProductPrice>
+                  )
+                ) : (
+                  <>
+                    {isSale ? (
+                      <>
+                        <ProductMaxPrice>{`${regularPrice} ${currency.code}`}</ProductMaxPrice>
+                        <ProductPrice>{`${finalPrice} ${currency.code}`}</ProductPrice>
+                      </>
+                    ) : (
+                      <ProductPrice>{`${regularPrice} ${currency.code}`}</ProductPrice>
+                    )}
+                  </>
                 )}
               </>
             ) : (
@@ -119,9 +129,7 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product, currency }) => {
           </PriceWrapper>
         </TitleWrapper>
         <ProductBadgeWrapper>
-          {product.min_price !== product.max_price && (
-            <ProductBadge type="sale" />
-          )}
+          {isSale && <ProductBadge type="sale" />}
           <FavoriteButton
             onClick={() => handleWishlistToggle(product)}
             marginLeft="auto"

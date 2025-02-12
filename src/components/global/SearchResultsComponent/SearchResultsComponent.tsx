@@ -1,4 +1,5 @@
-import { CategoryType, ProductType } from '@/types/pages/shop';
+import CategoryType from '@/types/components/shop/categories/categories';
+import { ProductType } from '@/types/components/shop/product/products';
 import FindMiniIcon from '../icons/FindMiniIcon/FindMiniIcon';
 import {
   SearchButtonWrapper,

@@ -26,6 +26,7 @@ export const StyledButtonPropsSchema = z.object({
   padding: z.string().optional(),
   onClick: z.function().optional(),
   fontSize: z.string().optional(),
+  noWrap: z.boolean().optional(),
 });
 
 export const LogoLinkImagePropsSchema = z.object({

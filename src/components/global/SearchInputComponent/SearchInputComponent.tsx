@@ -1,9 +1,15 @@
 import IconButton from '@/components/global/buttons/IconButton/IconButton';
+import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import { FormEvent, KeyboardEvent } from 'react';
 import BackIcon from '../icons/BackIcon/BackIcon';
 import FindIcon from '../icons/FindIcon/FindIcon';
-import { SearchInput, SearchInputIcons, SearchInputLoadingIcon, SearchInputWrap } from './styles';
+import {
+  SearchInput,
+  SearchInputIcons,
+  SearchInputLoadingIcon,
+  SearchInputWrap,
+} from './styles';
 
 export default function SearchInputComponent({
   searchTerm,
@@ -12,7 +18,7 @@ export default function SearchInputComponent({
   onFocus,
   onBlur,
   onClose,
-  inputRef
+  inputRef,
 }: {
   searchTerm: string;
   isLoading: boolean;
@@ -21,10 +27,13 @@ export default function SearchInputComponent({
   onBlur: () => void;
   onClose: () => void;
   inputRef: React.RefObject<HTMLInputElement>;
-  }) {
+}) {
   const router = useRouter();
+  const t = useTranslations('Search');
 
-  const searchHref = `/${router.locale === 'en' ? '' : `${router.locale}/`}search/${encodeURIComponent(searchTerm)}`;
+  const searchHref = `/${
+    router.locale === 'en' ? '' : `${router.locale}/`
+  }search/${encodeURIComponent(searchTerm)}`;
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
@@ -36,17 +45,23 @@ export default function SearchInputComponent({
     <SearchInputWrap>
       <IconButton onClick={onClose} color="#252525" IconComponent={BackIcon} />
       <SearchInput
-        placeholder="Search"
+        placeholder={t('Placeholder')}
         ref={inputRef}
         onBlur={onBlur}
         onFocus={onFocus}
         onKeyDown={handleKeyDown}
-        onInput={(evt: FormEvent<HTMLInputElement>) => onChange(evt.currentTarget.value)}
+        onInput={(evt: FormEvent<HTMLInputElement>) =>
+          onChange(evt.currentTarget.value)
+        }
         value={searchTerm}
       />
       <SearchInputIcons>
         {isLoading && <SearchInputLoadingIcon size={24} color="inherit" />}
-        <IconButton href={searchHref} color="#252525" IconComponent={FindIcon} />
+        <IconButton
+          href={searchHref}
+          color="#252525"
+          IconComponent={FindIcon}
+        />
       </SearchInputIcons>
     </SearchInputWrap>
   );

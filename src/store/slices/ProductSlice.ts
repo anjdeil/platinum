@@ -1,4 +1,4 @@
-import { ProductType } from "@/types/pages/shop";
+import { ProductType } from "@/types/components/shop/product/products";
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface ProductSliceState {

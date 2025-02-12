@@ -1,26 +1,25 @@
-import { FC, useCallback, useMemo } from 'react';
-import React, { useState } from 'react';
-import {
-  BenefitsLayout,
-  BenefitsTitle,
-  BenefitsPrice,
-  BenefitsItem,
-  BenefitsAccordionStyled,
-  CustomAccordionSummary,
-  AccordionTitle,
-  AccordionHeader,
-  BenefitsAccordionDetails,
-} from './styles';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { useMediaQuery } from '@mui/material';
-import { CustomSvgMarker } from '../CustomSvgMarker';
-import { BenefitsList } from '../BenefitsList';
+import { useAppSelector } from '@/store';
 import {
   BenefitsProps,
   loyaltyDescriptionSchema,
 } from '@/types/components/pages/benefits/benefitsAccordion';
-import { useAppSelector } from '@/store';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { useMediaQuery } from '@mui/material';
+import { FC, useCallback, useMemo, useState } from 'react';
 import { MenuSkeleton } from '../../../menus/MenuSkeleton';
+import { BenefitsList } from '../BenefitsList';
+import { CustomSvgMarker } from '../CustomSvgMarker';
+import {
+  AccordionHeader,
+  AccordionTitle,
+  BenefitsAccordionDetails,
+  BenefitsAccordionStyled,
+  BenefitsItem,
+  BenefitsLayout,
+  BenefitsPrice,
+  BenefitsTitle,
+  CustomAccordionSummary,
+} from './styles';
 
 const renderDescriptionList = (
   description: string | undefined,
@@ -40,7 +39,7 @@ export const BenefitsAccordion: FC<BenefitsProps> = ({
   gapMedium,
   gapLg,
 }) => {
-  const isMobile = useMediaQuery('(max-width: 768px)');
+  const isMobile = useMediaQuery('(max-width: 767px)');
   const [expanded, setExpanded] = useState<string | false>(
     !isMobile ? 'expanded' : false
   );

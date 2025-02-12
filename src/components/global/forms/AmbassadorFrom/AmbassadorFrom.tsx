@@ -15,7 +15,6 @@ import {
   InfoCard,
   StyledButton,
 } from '@/styles/components';
-import { isAuthErrorResponseType } from '@/utils/isAuthErrorResponseType';
 import { Title } from '@/styles/components';
 import { useFetchCustomerQuery } from '@/store/rtk-queries/wooCustomApi';
 import { CircularProgress } from '@mui/material';
@@ -40,6 +39,7 @@ export const AmbassadorForm: FC = () => {
   const [fileErr, setFileErr] = useState<string>();
   const [preview, setPreview] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState<boolean>(false);
+  const [serverError, setServerError] = useState<boolean | undefined>();
 
   const t = useTranslations('Contacts');
   const tForms = useTranslations('Forms');
@@ -59,6 +59,15 @@ export const AmbassadorForm: FC = () => {
 
   const SEND_AMBASSADOR_FORM_ID = 26923;
 
+  const ALLOWED_FILE_TYPES = [
+    'image/png',
+    'image/jpeg',
+    'image/jpg',
+    'image/svg+xml',
+    'image/gif',
+    'application/pdf',
+  ];
+
   const {
     register,
     handleSubmit,
@@ -75,46 +84,37 @@ export const AmbassadorForm: FC = () => {
     useFetchCustomerQuery({ customerId: userId || '' }, { skip: !userId });
 
   const onSubmit = async (data: AmbassadorFormType) => {
-    const formData = {
-      _wpcf7_unit_tag:
-        process.env.NEXT_PUBLIC_SEND_AMBASSADOR_FORM_WPCF7_UNIT_TAG,
-      firstName: data.first_name,
-      lastName: data.last_name,
-      email: data.email,
-      phone: data.phone,
-      country: data.country,
-      city: data.city,
-      about: data.about,
-      file: '',
-    };
+    const formData = new FormData();
+
+    formData.append('_wpcf7_unit_tag', 'wpcf7-b970096-o1');
+    formData.append('firstName', data.first_name);
+    formData.append('lastName', data.last_name);
+    formData.append('email', data.email);
+    formData.append('phone', data.phone);
+    formData.append('country', data.country);
+    formData.append('city', data.city);
+    formData.append('about', data.about);
 
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = async () => {
-        const base64File = reader.result as string;
-        formData.file = base64File;
-        try {
-          await sendForm({
-            formId: SEND_AMBASSADOR_FORM_ID,
-            formData,
-          }).unwrap();
-          setValue('about', '');
-          setFile(null);
-          setPreview(null);
-          setHasChanges(false);
-        } catch (err) {
-          console.error('Error sending question form', err);
-        }
-      };
-      reader.readAsDataURL(file);
-    } else {
-      try {
-        await sendForm({ formId: SEND_AMBASSADOR_FORM_ID, formData }).unwrap();
-        setValue('about', '');
-        setHasChanges(false);
-      } catch (err) {
-        console.error('Error sending question form', err);
+      formData.append('file', file);
+    }
+
+    try {
+      const response = await sendForm({
+        formId: SEND_AMBASSADOR_FORM_ID,
+        formData,
+      }).unwrap();
+
+      if (response.status !== 'mail_sent') {
+        setServerError(true);
       }
+
+      setValue('about', '');
+      setFile(null);
+      setPreview(null);
+      setHasChanges(false);
+    } catch (err) {
+      console.error('Error sending form', err);
     }
   };
 
@@ -133,7 +133,7 @@ export const AmbassadorForm: FC = () => {
     }
   }, [customer, setValue]);
 
-  const MAX_FILE_SIZE = 3 * 1024 * 1024;
+  const MAX_FILE_SIZE = 2.9 * 1024 * 1024;
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const uploadedFile = e.target.files?.[0] || null;
@@ -142,6 +142,10 @@ export const AmbassadorForm: FC = () => {
 
   const validateAndSetFile = (uploadedFile: File | null) => {
     if (uploadedFile) {
+      if (!ALLOWED_FILE_TYPES.includes(uploadedFile.type)) {
+        setFileErr(tValidation('invalidFileType'));
+        return;
+      }
       if (uploadedFile.size > MAX_FILE_SIZE) {
         setFileErr(tValidation('fileTooLarge'));
         return;
@@ -266,9 +270,9 @@ export const AmbassadorForm: FC = () => {
                       <UploadIcon />
                       <p>
                         <span>{tValidation('clickToUpload')} </span>&nbsp;
-                        {tValidation('orDragAndDrop')} SVG, PNG, JPG{' '}
+                        {tValidation('orDragAndDrop')} SVG, PNG, JPG, PDF{' '}
                         {tValidation('or')} GIF ({tValidation('max')} 800x400px,
-                        3mb)
+                        3 mB)
                       </p>
                     </>
                   )}
@@ -276,7 +280,7 @@ export const AmbassadorForm: FC = () => {
                 <input
                   id="file-upload"
                   type="file"
-                  accept=".svg, .png, .jpg, .gif"
+                  accept=".pdf, .png, .jpg, .jpeg, .svg, .gif"
                   onChange={handleFileChange}
                   style={{ display: 'none' }}
                 />
@@ -291,15 +295,11 @@ export const AmbassadorForm: FC = () => {
                     ? tValidation('sending')
                     : tValidation('sendButton')}
                 </StyledButton>
-                {isSuccess && !isLoading && (
+                {isSuccess && !isLoading && !serverError && (
                   <SuccessMessage>{t('successMessage')}</SuccessMessage>
                 )}
-                {isError && (
-                  <CustomError
-                    dangerouslySetInnerHTML={{
-                      __html: isAuthErrorResponseType(errors),
-                    }}
-                  ></CustomError>
+                {(isError || serverError) && (
+                  <CustomError>{t('errorMessage')}</CustomError>
                 )}
               </FormWrapperBottom>
             </FlexBox>

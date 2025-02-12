@@ -2,7 +2,7 @@ import { ProductCardList } from '@/components/shop/ProductCardsList';
 import { useGetProductsQuery } from '@/store/rtk-queries/wpCustomApi';
 import { Title } from '@/styles/components';
 import { CustomProductListProps } from '@/types/components/shop';
-import { ProductType } from '@/types/pages/shop';
+import { ProductType } from '@/types/components/shop/product/products';
 import { useTranslations } from 'next-intl';
 import { RecommendContainer, StyledText, TitleBlock } from './styles';
 
