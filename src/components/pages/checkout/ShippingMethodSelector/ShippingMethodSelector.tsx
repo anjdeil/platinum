@@ -5,7 +5,6 @@ import {
   ShippingMethodSelectorMethodContent,
   ShippingMethodSelectorMethodCost,
   ShippingMethodSelectorMethodDetail,
-  ShippingMethodSelectorMethodEstimate,
   ShippingMethodSelectorMethodLocker,
   ShippingMethodSelectorMethodLockerAddress,
   ShippingMethodSelectorMethodLockerChangeButton,
