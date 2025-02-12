@@ -136,7 +136,7 @@
     "gift certificate": "Geschenkgutschein"
   },
   "Product": {
-    "addToBasket": "In den Warenkorb",
+    "addToBasket": "In den Warenkorb legen",
     "viewCart": "Warenkorb anzeigen",
     "chooseOptions": "Option wählen",
     "updateCart": "Menge aktualisieren",
@@ -211,8 +211,8 @@
     "Basket": "Warenkorb",
     "PersonalInformation": "Persönliche Informationen",
     "Confirmation": "Bestätigung",
-    "welcomeToPlatinumShop": "Willkommen im Platinum Shop",
-    "theBest": "Der beste",
+    "welcomeToPlatinumShop": "WILLKOMMEN IM PLATINUM LADEN",
+    "theBest": "DAS BESTE",
     "productForYou": "Produkt für Sie",
     "summary": "Summe",
     "UserLoyalityStatus": "Sie haben einen {validStatus} status und erhalten",
