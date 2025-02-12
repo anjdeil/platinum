@@ -294,6 +294,7 @@
     "emailInput": "Электронная почта",
     "phoneIsRequired": "Телефон",
     "apartmentNumber": "Номер квартиры",
+    "invalidFileType": "Недопустимый тип файла",
     "wrongEmailFormat": "Неправильный формат email",
     "cannotExceed254Characters": "Не может превышать 254 символа",
     "pleaseFillInThePassword": "Пожалуйста, введите пароль",

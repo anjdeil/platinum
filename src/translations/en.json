@@ -291,6 +291,7 @@
     "address1": "Street",
     "address2": "Building number",
     "postcode": "Postcode",
+    "invalidFileType": "Invalid file type",
     "emailInput": "E-Mail",
     "phoneIsRequired": "Phone number is required",
     "apartmentNumber": "Apartment number",

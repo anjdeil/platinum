@@ -282,6 +282,7 @@
     "parcelLocker": "Wybierz paczkomat",
     "shippingMethod": "Wybierz metodę wysyłki",
     "noChanges": "Dane nie uległy zmianie",
+    "invalidFileType": "Nieprawidłowy typ pliku",
     "noBillingInformation": "Proszę o podanie informacji rozliczeniowych",
     "isRequired": "Pole jest wymagane",
     "areRequired": "Pola wymagane",

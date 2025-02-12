@@ -294,6 +294,7 @@
     "emailInput": "E-Mail",
     "phoneIsRequired": "Telefon",
     "apartmentNumber": "Wohnungsnummer",
+    "invalidFileType": "Ungültiger Dateityp",
     "wrongEmailFormat": "Falsches E-Mail-Format",
     "cannotExceed254Characters": "Darf 254 Zeichen nicht überschreiten",
     "pleaseFillInThePassword": "Bitte geben Sie das Passwort ein",

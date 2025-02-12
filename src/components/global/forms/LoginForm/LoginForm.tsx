@@ -39,6 +39,7 @@ export const LoginForm: FC<LoginFormProps> = ({
 }) => {
   const router = useRouter();
   const t = useTranslations('MyAccount');
+  const tValidation = useTranslations('Validation');
   const [customError, setCustomError] = useState<string>('');
   const dispatch = useAppDispatch();
   /** Form settings */
@@ -48,7 +49,7 @@ export const LoginForm: FC<LoginFormProps> = ({
     formState: { errors, isSubmitting, isSubmitSuccessful, isLoading },
     reset,
   } = useForm<LoginFormType>({
-    resolver: zodResolver(LoginFormSchema),
+    resolver: zodResolver(LoginFormSchema(tValidation)),
   });
 
   /** API

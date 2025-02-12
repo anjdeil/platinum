@@ -16,6 +16,7 @@ import {
   InputsWrapper,
   SuccessMessage,
 } from './style';
+import { useState } from 'react';
 
 const ContactsForm = () => {
   const t = useTranslations('Contacts');
@@ -23,7 +24,7 @@ const ContactsForm = () => {
   const schema = ContactsFormValidationSchema(tValidation);
   const [sendAnEmail, { isLoading, isError, isSuccess }] =
     useSendAnEmailMutation();
-
+  const [serverError, setServerError] = useState<boolean | undefined>();
   const SEND_EMAIL_FORM_ID = 25798;
 
   const {
@@ -38,18 +39,23 @@ const ContactsForm = () => {
   });
 
   const onSubmit = async (data: ContactsFormType) => {
-    try {
-      const formData = {
-        formId: SEND_EMAIL_FORM_ID,
-        formData: {
-          _wpcf7_unit_tag: 'wpcf7-2ac395a-o1',
-          'your-name': data.name,
-          'your-email': data.email,
-          'your-message': data.question,
-        },
-      };
+    const formData = new FormData();
 
-      await sendAnEmail(formData).unwrap();
+    formData.append('_wpcf7_unit_tag', 'wpcf7-2ac395a-o1');
+
+    formData.append('your-name', data.name);
+    formData.append('your-email', data.email);
+    formData.append('your-message', data.question);
+
+    try {
+      const response = await sendAnEmail({
+        formId: SEND_EMAIL_FORM_ID,
+        formData,
+      }).unwrap();
+
+      if (response.status !== 'mail_sent') {
+        setServerError(true);
+      }
 
       reset();
     } catch (err) {
@@ -113,9 +119,10 @@ const ContactsForm = () => {
           {isSubmitting || isLoading ? t('sending') : t('sendButton')}
         </ContactsStyledButton>
 
-        {isError && <ErrorMessage>{t('errorMessage')}</ErrorMessage>}
-
-        {isSuccess && !isLoading && (
+        {(isError || serverError) && (
+          <ErrorMessage>{t('errorMessage')}</ErrorMessage>
+        )}
+        {isSuccess && !isLoading && !serverError && (
           <SuccessMessage>{t('successMessage')}</SuccessMessage>
         )}
       </form>

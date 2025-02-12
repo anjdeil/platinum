@@ -294,6 +294,7 @@
     "emailInput": "Електронна пошта",
     "phoneIsRequired": "Телефон",
     "apartmentNumber": "Номер квартири",
+    "invalidFileType": "Недійсний тип файлу",
     "wrongEmailFormat": "Неправильний формат електронної пошти",
     "cannotExceed254Characters": "Не може перевищувати 254 символи",
     "pleaseFillInThePassword": "Будь ласка, введіть пароль",
