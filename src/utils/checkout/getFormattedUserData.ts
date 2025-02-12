@@ -21,6 +21,8 @@ export interface ReqData {
   nip?: string;
   password?: string;
   confirm_password?: string;
+  shipping_first_name: string;
+  shipping_last_name: string;
   shipping_address_1: string;
   shipping_address_2: string;
   shipping_city: string;
@@ -62,6 +64,8 @@ export const getFormattedUserData = (billingData: ReqData) => {
     nip,
     password,
     confirm_password,
+    shipping_first_name,
+    shipping_last_name,
     shipping_address_1,
     shipping_address_2,
     shipping_city,
@@ -90,8 +94,8 @@ export const getFormattedUserData = (billingData: ReqData) => {
   ];
 
   const formattedShippingData: ShippingType = {
-    first_name: first_name,
-    last_name: last_name,
+    first_name: shipping_first_name,
+    last_name: shipping_last_name,
     address_1: shipping_address_1,
     address_2: shipping_address_2,
     city: shipping_city,

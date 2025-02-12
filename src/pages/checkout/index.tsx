@@ -208,7 +208,8 @@ export default function CheckoutPage() {
 
   // Get data from Billing/Shipping forms
   const [isValidForm, setIsValidForm] = useState<boolean>(false);
-  const [triggerValidationForm, setTriggerValidationForm] = useState(false);
+  const [isShippingAddressDifferent, setIsShippingAddressDifferent] =
+    useState<boolean>(false);
   const [formOrderData, setFormOrderData] = useState<{
     billing: BillingType | null;
     shipping: ShippingType | null;
@@ -283,23 +284,24 @@ export default function CheckoutPage() {
   const handlePayOrder = async () => {
     if (!order) return;
 
-    setTriggerValidationForm(true);
     setIsWarningsShown(true);
-
-    await new Promise(resolve => setTimeout(resolve, 100));
 
     let isOrderValid = true;
 
-    if (!isValidForm || !formOrderData.billing) {
-      if (!isValidForm) setValidationErrors('validationErrorsFields');
-      console.log('1');
+    if (
+      !isValidForm ||
+      !formOrderData.billing ||
+      (isShippingAddressDifferent && !formOrderData.shipping)
+    ) {
+      setValidationErrors('validationErrorsFields');
+
       isOrderValid = false;
     }
 
     const shippingValidationResult = validateOrder(order);
     if (!shippingValidationResult.isValid) {
       setWarnings(shippingValidationResult.messageKeys);
-      console.log('2');
+
       isOrderValid = false;
     } else {
       setWarnings([]);
@@ -314,8 +316,8 @@ export default function CheckoutPage() {
 
       if (!registrationError) {
         setIsRegistrationSuccessful(true);
-        setRegistrationErrorWarning(null); //?
-        setRegistrationData(null); //?
+        setRegistrationErrorWarning(null);
+        setRegistrationData(null);
       } else {
         isOrderValid = false;
         setRegistrationErrorWarning(registrationError);
@@ -325,7 +327,7 @@ export default function CheckoutPage() {
             'An account is already registered with your email address.'
           )
         ) {
-          setRegistrationData(null); //?
+          setRegistrationData(null);
         }
       }
     }
@@ -352,6 +354,7 @@ export default function CheckoutPage() {
       ...(formOrderData.billing &&
         orderStatus === 'pending' && { billing: formOrderData.billing }),
       ...(formOrderData.shipping &&
+        isShippingAddressDifferent &&
         orderStatus === 'pending' && { shipping: formOrderData.shipping }),
       ...(formOrderData.metaData &&
         orderStatus === 'pending' && { meta_data: formOrderData.metaData }),
@@ -394,8 +397,8 @@ export default function CheckoutPage() {
             setFormOrderData={setFormOrderData}
             setCurrentCountryCode={setCurrentCountryCode}
             setValidationErrors={setValidationErrors}
-            triggerValidationForm={triggerValidationForm}
-            setTriggerValidationForm={setTriggerValidationForm}
+            isWarningsShown={isWarningsShown}
+            setIsShippingAddressDifferent={setIsShippingAddressDifferent}
             isUserAlreadyExist={isUserAlreadyExist}
             setRegistrationErrorWarning={setRegistrationErrorWarning}
             setIsRegistration={setIsRegistration}
