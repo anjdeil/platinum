@@ -67,7 +67,7 @@ export const BillingForm: FC<BillingFormProps> = ({
 
   const {
     register,
-    formState: { errors, isValid, isDirty },
+    formState: { errors, isValid },
     setValue,
     control,
     watch,
