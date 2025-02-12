@@ -115,7 +115,10 @@ export const SearchResultsRowCat = styled.div`
 export const SearchResultsPrice = styled.div`
   font-size: 1em;
   opacity: 0.8;
-  margin-right: 1em;
+  min-width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: end;
 `;
 export const SearchButtonWrapper = styled.div`
   padding: 10px;
