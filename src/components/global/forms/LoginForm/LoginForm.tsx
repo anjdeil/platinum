@@ -10,7 +10,6 @@ import {
   useCheckTokenMutation,
   useGetTokenMutation,
 } from '@/store/rtk-queries/wpApi';
-import { CustomSuccess } from '../CustomFormInput/styles';
 import { CustomFormInput } from '../CustomFormInput';
 import { ActiveText, BottomWrapper, LoginFormWrapper } from './styles';
 import {
@@ -40,6 +39,7 @@ export const LoginForm: FC<LoginFormProps> = ({
 }) => {
   const router = useRouter();
   const t = useTranslations('MyAccount');
+  const tValidation = useTranslations('Validation');
   const [customError, setCustomError] = useState<string>('');
   const dispatch = useAppDispatch();
   /** Form settings */
@@ -49,7 +49,7 @@ export const LoginForm: FC<LoginFormProps> = ({
     formState: { errors, isSubmitting, isSubmitSuccessful, isLoading },
     reset,
   } = useForm<LoginFormType>({
-    resolver: zodResolver(LoginFormSchema),
+    resolver: zodResolver(LoginFormSchema(tValidation)),
   });
 
   /** API
@@ -139,7 +139,9 @@ export const LoginForm: FC<LoginFormProps> = ({
           </Notification>
         )}
         {isSubmitSuccessful && !customError && !isLoading && (
-          <CustomSuccess>{t('SuccessfullyLoggedIn')}</CustomSuccess>
+          <Notification type="success">
+            {t('SuccessfullyLoggedIn')}
+          </Notification>
         )}
       </FormWrapperBottom>
     </CustomForm>

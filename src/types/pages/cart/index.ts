@@ -2,7 +2,7 @@ import {
   ProductsMinimizedSchema,
   ProductsWithCartDataSchema,
 } from '@/types/components/shop/product/products';
-import { OrderTypeSchema } from '@/types/services';
+import { OrderTypeSchema } from '@/types/services/wooCustomApi/customer';
 import {
   CartItemSchema,
   lineOrderItemsSchema,

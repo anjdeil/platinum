@@ -2,9 +2,11 @@ import Signature from '@/components/global/signature/Signature';
 import VerticalSlider from '@/components/global/sliders/VerticalSliderMenu/VerticalSliderMenu';
 import Nav from '@/components/menus/Nav/Nav';
 import { Socials } from '@/components/menus/Socials';
+import { useAppSelector } from '@/store';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useMediaQuery } from '@mui/material';
 import AccordionDetails from '@mui/material/AccordionDetails';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FC, useState } from 'react';
@@ -26,10 +28,12 @@ import {
   PaymentAndDeliveryMethods,
   PaymentAndDeliveryMethodsContainer,
 } from './styles';
-import { useTranslations } from 'next-intl';
 
 export const Footer: FC = () => {
   const t = useTranslations('Footer');
+  const tContacts = useTranslations('Contacts');
+  const themeOptions = useAppSelector(state => state.themeOptions);
+  const ContactItems = themeOptions.data.item.contacts;
   const isMobile = useMediaQuery('(max-width: 768px)');
 
   const [expanded, setExpanded] = useState<string | false>(
@@ -163,11 +167,17 @@ export const Footer: FC = () => {
                       unoptimized={true}
                     />
                     <ContactLink
-                      href="https://www.google.com/maps?q=Poland,+Warsaw,+Kolejowa+45,+location+U6"
+                      href={
+                        ContactItems?.address
+                          ? `https://www.google.com/maps?q=${encodeURIComponent(
+                              ContactItems.address
+                            )}`
+                          : '#'
+                      }
                       passHref
                       target="_blank"
                     >
-                      Poland, Warsaw, Kolejowa 45, location U6
+                      {ContactItems.address}
                     </ContactLink>
                   </Contact>
                   <Contact>
@@ -178,8 +188,13 @@ export const Footer: FC = () => {
                       height={24}
                       unoptimized={true}
                     />
-                    <ContactLink href="tel:+48883462736" passHref>
-                      +48883462736
+                    <ContactLink
+                      href={
+                        ContactItems?.phone ? `tel:${ContactItems.phone}` : '#'
+                      }
+                      passHref
+                    >
+                      {ContactItems.phone}
                     </ContactLink>
                   </Contact>
                   <Contact>
@@ -191,10 +206,14 @@ export const Footer: FC = () => {
                       unoptimized={true}
                     />
                     <ContactLink
-                      href="mailto:polandplatinum@gmail.com"
+                      href={
+                        ContactItems?.email
+                          ? `mailto:${ContactItems.email}`
+                          : '#'
+                      }
                       passHref
                     >
-                      polandplatinum@gmail.com
+                      {ContactItems.email}
                     </ContactLink>
                   </Contact>
                   <Contact>
@@ -206,8 +225,17 @@ export const Footer: FC = () => {
                       unoptimized={true}
                     />
                     <p>
-                      Mon-Fri: from 9-00 to 18-00 <br />
-                      Sat-Sun day is a day off
+                      {tContacts('schedule', {
+                        from: ContactItems.schedule[0]?.from_time,
+                        to: ContactItems.schedule[0]?.to_time,
+                      })}
+                      <br />
+                      {ContactItems.schedule[1]?.not_working
+                        ? tContacts('dayOff')
+                        : `${tContacts('satSun', {
+                            from: ContactItems.schedule[1]?.from_time,
+                            to: ContactItems.schedule[1]?.to_time,
+                          })}`}
                     </p>
                   </Contact>
                   <Socials

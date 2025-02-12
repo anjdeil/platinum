@@ -4,6 +4,7 @@ import {
   CreateOrderRequestType,
   OrderType,
   retrieveCouponQueryType,
+  reviewQueryType,
   ReviewsRespType,
   WooCustomerReqType,
   WooCustomerType,
@@ -92,6 +93,13 @@ export const wooCustomRktApi = createApi({
         method: 'GET',
       }),
     }),
+    getProductReviews: builder.query<ReviewsRespType, reviewQueryType>({
+      query: ({ product }) => ({
+        url: `/products/reviews/`,
+        method: 'GET',
+        params: { product },
+      }),
+    }),
     getShippingZones: builder.query<ShippingZoneType[], void>({
       query: () => ({
         url: `/shipping/zones`,
@@ -120,6 +128,7 @@ export const {
   useListAllCouponsQuery,
   useAddCommentMutation,
   useGetProductsReviewsQuery,
+  useGetProductReviewsQuery,
   useFetchCustomerQuery,
   useUpdateCustomerMutation,
   useGetShippingZonesQuery,

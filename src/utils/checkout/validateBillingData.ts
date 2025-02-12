@@ -1,6 +1,14 @@
-import { AddressType } from '@/types/services/wooCustomApi/customer';
+import {
+  BillingType,
+  ShippingType,
+} from '@/types/services/wooCustomApi/customer';
+import { RegistrationType } from './getFormattedUserData';
 
-export default function validateBillingData(billingInfo: AddressType): {
+export default function validateBillingData(
+  billingInfo: BillingType,
+  shippingInfo: ShippingType,
+  registration: RegistrationType
+): {
   isValid: boolean;
   messageKeys: string[];
 } {
@@ -8,11 +16,12 @@ export default function validateBillingData(billingInfo: AddressType): {
     isValid: true,
     messageKeys: [] as string[],
   };
-  console.log(billingInfo, 'validation');
 
-  if (!billingInfo) {
+  const error = [];
+
+  if (!billingInfo || !shippingInfo) {
     result.isValid = false;
-    result.messageKeys.push('noBillingInformation');
+    error.push('noBillingInformation');
   }
 
   const requiredFields = [
@@ -28,14 +37,32 @@ export default function validateBillingData(billingInfo: AddressType): {
     'apartmentNumber',
   ];
 
+  if (registration) {
+    requiredFields.push('password');
+  }
+
   for (const field of requiredFields) {
     if (
-      !billingInfo[field as keyof AddressType] ||
-      billingInfo[field as keyof AddressType] === ''
+      !billingInfo[field as keyof BillingType] ||
+      billingInfo[field as keyof BillingType] === '' ||
+      !shippingInfo[field as keyof ShippingType] ||
+      shippingInfo[field as keyof ShippingType] === ''
     ) {
       result.isValid = false;
-      result.messageKeys.push(field);
+      error.push(field);
     }
+  }
+
+  if (
+    registration &&
+    (!registration.password || registration.password === '')
+  ) {
+    result.isValid = false;
+    error.push('password');
+  }
+
+  if (error.length > 0) {
+    result.messageKeys.push('noBillingInformation');
   }
 
   return result;

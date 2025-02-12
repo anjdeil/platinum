@@ -1,7 +1,7 @@
 import { LineItemSchema } from '@/types/components/shop/product/products';
+import { ShippingLineSchema } from '@/types/pages/checkout';
 import { lineOrderItemsSchema } from '@/types/store/reducers/сartSlice';
 import { z } from 'zod';
-import { ShippingLineSchema } from '@/types/pages/checkout';
 
 const currencies: [string, ...string[]] = ['EUR', 'USD', 'PLN'];
 
@@ -101,6 +101,22 @@ export const WooCustomerReqSchema = z.object({
     .optional(),
 });
 
+export const ShippingTypeSchema = z.object({
+  first_name: z.string(),
+  last_name: z.string(),
+  address_1: z.string(),
+  address_2: z.string(),
+  city: z.string(),
+  state: z.string().optional(),
+  postcode: z.string(),
+  country: z.string(),
+});
+
+export const BillingTypeSchema = ShippingTypeSchema.extend({
+  email: z.string().optional(),
+  phone: z.string().optional(),
+});
+
 export const AddressTypeSchema = z.object({
   first_name: z.string(),
   last_name: z.string(),
@@ -114,8 +130,8 @@ export const AddressTypeSchema = z.object({
   phone: z.string().optional(),
 });
 
-const metaDataSchema = z.object({
-  id: z.number(),
+export const metaDataSchema = z.object({
+  id: z.number().optional(),
   key: z.string(),
   value: z.string(),
 });
@@ -138,8 +154,8 @@ export const OrderTypeSchema = z.object({
   total_tax: z.string(),
   customer_id: z.number(),
   order_key: z.string(),
-  billing: AddressTypeSchema,
-  shipping: AddressTypeSchema,
+  billing: BillingTypeSchema,
+  shipping: ShippingTypeSchema,
   payment_method: z.string(),
   payment_method_title: z.string(),
   transaction_id: z.string(),
@@ -244,7 +260,9 @@ const LineItemReqSchema = z.object({
 
 const CreateOrderRequestSchema = z.object({
   line_items: z.array(LineItemReqSchema),
-  billing: AddressTypeSchema.optional(),
+  billing: BillingTypeSchema.optional(),
+  shipping: ShippingTypeSchema.optional(),
+  meta_data: z.array(metaDataSchema).optional(),
   customer_id: z.number().optional(),
   shipping_lines: z.array(ShippingLineSchema).optional(),
   coupon_lines: z
@@ -339,6 +357,10 @@ const retrieveCouponQuerySchema = z.object({
   id: z.number(),
 });
 
+const reviewQuerySchema = z.object({
+  product: z.number(),
+});
+
 export const WooCustomerUpdateSchema = z.object({
   email: z.string().optional(),
   first_name: z.string().optional(),
@@ -402,6 +424,9 @@ export const ReviewsRespSchema = z.array(ReviewRespSchema);
 
 export type OrderType = z.infer<typeof OrderTypeSchema>;
 export type AddressType = z.infer<typeof AddressTypeSchema>;
+export type BillingType = z.infer<typeof BillingTypeSchema>;
+export type ShippingType = z.infer<typeof ShippingTypeSchema>;
+export type MetaDataType = z.infer<typeof metaDataSchema>;
 export type WooCustomerType = z.infer<typeof WooCustomerSchema>;
 export type WooCustomerReqType = z.infer<typeof WooCustomerReqSchema>;
 export type ProductParamsType = z.infer<typeof ProductParamsSchema>;
@@ -409,6 +434,7 @@ export type CreateOrderResponseType = z.infer<typeof CreateOrderResponseSchema>;
 export type CreateOrderRequestType = z.infer<typeof CreateOrderRequestSchema>;
 export type couponRespType = z.infer<typeof couponRespSchema>;
 export type retrieveCouponQueryType = z.infer<typeof retrieveCouponQuerySchema>;
+export type reviewQueryType = z.infer<typeof reviewQuerySchema>;
 export type ReviewRespType = z.infer<typeof ReviewRespSchema>;
 export type ReviewsRespType = z.infer<typeof ReviewsRespSchema>;
 export type WooCustomerUpdateType = z.infer<typeof WooCustomerUpdateSchema>;

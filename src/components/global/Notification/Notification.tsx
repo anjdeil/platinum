@@ -6,6 +6,7 @@ interface NotificationPropsType {
   type?: 'success' | 'warning' | 'info';
   marginBottom?: string;
   marginTop?: string;
+  isVisible?: boolean;
 }
 
 const Notification: FC<NotificationPropsType> = ({
@@ -13,12 +14,14 @@ const Notification: FC<NotificationPropsType> = ({
   type,
   marginBottom,
   marginTop,
+  isVisible,
 }) => {
   return (
     <NotificationWrapper
       marginTop={marginTop}
       marginBottom={marginBottom}
       type={type}
+      className={!isVisible ? 'fade-out' : ''}
     >
       {children}
     </NotificationWrapper>
