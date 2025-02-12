@@ -97,13 +97,19 @@
     "maxAttemptsExceeded": "Podany kod resetowania jest nieprawidłowy. Wykorzystałeś maksymalną liczbę dozwolonych prób. Musisz poprosić o nowy kod.",
     "codeProvidedHasExpired": "Dostarczony kod resetowania wygasł.",
     "Addresses": "Adresy",
-    "serverError": "Coś poszło nie tak z serwerem. Spróbuj ponownie lub skontaktuj się z pomocą techniczną."
+    "serverError": "Coś poszło nie tak z serwerem. Spróbuj ponownie lub skontaktuj się z pomocą techniczną.",
+    "subscriptionError": "Nie można pobrać danych subskrypcji",
+    "subscribeNewsletter": "Zapisz się do naszego newslettera!",
+    "newsletterDescription": "Bądź na bieżąco z najnowszymi wiadomościami, ekskluzywnymi ofertami i specjalnymi treściami – prosto na Twoją skrzynkę!",
+    "subscriptionSuccess": "Pomyślnie zapisałeś się do newslettera",
+    "unsubscriptionSuccess": "Pomyślnie wypisałeś się z newslettera"
   },
   "TopBar": {
     "CallUs": "Kontakt"
   },
   "Search": {
     "Search": "Wyszukiwanie",
+    "showAll": "Pokaż wszystko",
     "Placeholder": "Wprowadź nazwę produktu"
   },
   "Archive": {
@@ -206,7 +212,7 @@
     "Basket": "Koszyk",
     "PersonalInformation": "Informacje osobiste",
     "Confirmation": "Potwierdzenie",
-    "welcomeToPlatinumShop": "Witamy w Platinum Shop",
+    "welcomeToPlatinumShop": "WITAMY W SKLEPIE PLATINUM",
     "theBest": "Najlepszy",
     "productForYou": "Produkt dla Ciebie",
     "summary": "Suma",
@@ -222,7 +228,7 @@
     "call": "Zadzwoń",
     "address": "Adres",
     "schedule": "Pon-Pt: od {from} do {to}",
-    "dayOff": "Sob-Ndz: Dzień wolny",
+    "dayOff": "Sob-Ndz: dzień wolny",
     "satSun": "Sob-Ndz: od {from} do {to}",
     "howToGetThere": "Jak dojechać?",
     "email": "E-mail",
@@ -277,6 +283,7 @@
     "parcelLocker": "Wybierz paczkomat",
     "shippingMethod": "Wybierz metodę wysyłki",
     "noChanges": "Dane nie uległy zmianie",
+    "invalidFileType": "Nieprawidłowy typ pliku",
     "noBillingInformation": "Proszę o podanie informacji rozliczeniowych",
     "isRequired": "Pole jest wymagane",
     "areRequired": "Pola wymagane",

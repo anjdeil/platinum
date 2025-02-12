@@ -1,6 +1,10 @@
-import { useTranslations } from "next-intl";
-import Image from "next/image";
-import { FC, useEffect, useRef, useState } from "react";
+import Rating from '@/components/global/Rating/Rating';
+import { ReviewRespType } from '@/types/services';
+import { parseHtmlContent } from '@/utils/blog/parseHtmlContent';
+import { useTranslations } from 'next-intl';
+import Image from 'next/image';
+import { FC, useEffect, useRef, useState } from 'react';
+import 'swiper/css';
 import {
   FlexWrapper,
   ImageWrapper,
@@ -8,11 +12,7 @@ import {
   ReviewContainer,
   ReviewName,
   ReviewText,
-} from "./styles";
-import { ReviewRespType } from "@/types/services";
-import Rating from "@/components/global/Rating/Rating";
-import "swiper/css";
-import { parseHtmlContent } from "@/utils/blog/parseHtmlContent";
+} from './styles';
 
 interface ReviewItemPropsType {
   review: ReviewRespType;
@@ -20,8 +20,12 @@ interface ReviewItemPropsType {
   setOpened: (id: number | null) => void;
 }
 
-const ReviewItem: FC<ReviewItemPropsType> = ({ review, isOpen, setOpened }) => {
-  const t = useTranslations("Product");
+const ReviewsCard: FC<ReviewItemPropsType> = ({
+  review,
+  isOpen,
+  setOpened,
+}) => {
+  const t = useTranslations('Product');
   const [showReadMore, setShowReadMore] = useState<boolean>(false);
   const reviewTextRef = useRef<HTMLParagraphElement | null>(null);
 
@@ -64,7 +68,7 @@ const ReviewItem: FC<ReviewItemPropsType> = ({ review, isOpen, setOpened }) => {
       <FlexWrapper>
         <ImageWrapper>
           <Image
-            src={reviewer_avatar_urls[96] || "/assets/images/avatar.png"}
+            src={reviewer_avatar_urls[96] || '/assets/images/avatar.png'}
             width={64}
             height={64}
             alt={reviewer}
@@ -82,10 +86,10 @@ const ReviewItem: FC<ReviewItemPropsType> = ({ review, isOpen, setOpened }) => {
         {parsedReview}
       </ReviewText>
       {showReadMore && !isOpen && (
-        <MoreButton onClick={() => setOpened(id)}>{t("readMore")}</MoreButton>
+        <MoreButton onClick={() => setOpened(id)}>{t('readMore')}</MoreButton>
       )}
     </ReviewContainer>
   );
 };
 
-export default ReviewItem;
+export default ReviewsCard;

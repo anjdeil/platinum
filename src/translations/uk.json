@@ -97,13 +97,19 @@
     "maxAttemptsExceeded": "Наданий код скидання неправильний. Ви використали максимальну кількість дозволених спроб. Вам потрібно запросити новий код.",
     "codeProvidedHasExpired": "Термін дії наданого коду скидання закінчився.",
     "Addresses": "Адреси",
-    "serverError": "Щось пішло не так із сервером. Спробуйте ще раз або зверніться до служби підтримки."
+    "serverError": "Щось пішло не так із сервером. Спробуйте ще раз або зверніться до служби підтримки.",
+    "subscriptionError": "Не вдалося отримати дані підписки",
+    "subscribeNewsletter": "Підпишіться на нашу розсилку!",
+    "newsletterDescription": "Будьте в курсі останніх новин, ексклюзивних пропозицій і спеціального контенту — прямо на вашу пошту!",
+    "subscriptionSuccess": "Ви успішно підписалися на розсилку",
+    "unsubscriptionSuccess": "Ви успішно відписалися від розсилки"
   },
   "TopBar": {
     "CallUs": "Контакт"
   },
   "Search": {
     "Search": "Пошук",
+    "showAll": "Показати все",
     "Placeholder": "Введіть назву товару"
   },
   "Archive": {
@@ -206,7 +212,7 @@
     "Basket": "Кошик",
     "PersonalInformation": "Особиста інформація",
     "Confirmation": "Підтвердження",
-    "welcomeToPlatinumShop": "Ласкаво просимо до Platinum Shop",
+    "welcomeToPlatinumShop": "ВІТАЄМО У МАГАЗИНІ PLATINUM",
     "theBest": "Найкращий",
     "productForYou": "Продукт для вас",
     "summary": "Сума",
@@ -289,6 +295,7 @@
     "emailInput": "Електронна пошта",
     "phoneIsRequired": "Телефон",
     "apartmentNumber": "Номер квартири",
+    "invalidFileType": "Недійсний тип файлу",
     "wrongEmailFormat": "Неправильний формат електронної пошти",
     "cannotExceed254Characters": "Не може перевищувати 254 символи",
     "pleaseFillInThePassword": "Будь ласка, введіть пароль",

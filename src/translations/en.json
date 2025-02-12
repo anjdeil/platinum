@@ -97,13 +97,19 @@
     "maxAttemptsExceeded": "The reset code provided is not valid. You have used the maximum number of attempts allowed. You must request a new code",
     "codeProvidedHasExpired": "The reset code provided has expired.",
     "Addresses": "Addresses",
-    "serverError": "Something went wrong with the server. Please try again or contact support."
+    "serverError": "Something went wrong with the server. Please try again or contact support.",
+    "subscriptionError": "Couldn't get subscription data",
+    "subscribeNewsletter": "Subscribe to our newsletter!",
+    "newsletterDescription": "Stay updated with the latest news, exclusive offers, and special content — straight to your inbox!",
+    "subscriptionSuccess": "You have successfully subscribed to the newsletter",
+    "unsubscriptionSuccess": "You have successfully unsubscribed from the newsletter"
   },
   "TopBar": {
     "CallUs": "Call us"
   },
   "Search": {
     "Search": "Search",
+    "showAll": "Show all",
     "Placeholder": "Enter the product name"
   },
   "Archive": {
@@ -286,6 +292,7 @@
     "address1": "Street",
     "address2": "Building number",
     "postcode": "Postcode",
+    "invalidFileType": "Invalid file type",
     "emailInput": "E-Mail",
     "phoneIsRequired": "Phone number is required",
     "apartmentNumber": "Apartment number",

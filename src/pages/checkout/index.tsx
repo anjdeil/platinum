@@ -207,7 +207,9 @@ export default function CheckoutPage() {
   );
 
   // Get data from Billing/Shipping forms
-  const [triggerValidationForm, setTriggerValidationForm] = useState(false);
+  const [isValidForm, setIsValidForm] = useState<boolean>(false);
+  const [isShippingAddressDifferent, setIsShippingAddressDifferent] =
+    useState<boolean>(false);
   const [formOrderData, setFormOrderData] = useState<{
     billing: BillingType | null;
     shipping: ShippingType | null;
@@ -217,6 +219,7 @@ export default function CheckoutPage() {
     shipping: null,
     metaData: null,
   });
+
   const [isRegistration, setIsRegistration] = useState(false);
   const [registrationData, setRegistrationData] =
     useState<RegistrationType | null>(null);
@@ -268,12 +271,11 @@ export default function CheckoutPage() {
   const [isRegistrationSuccessful, setIsRegistrationSuccessful] = useState<
     boolean | null
   >(null);
-  const [isValidForm, setIsValidForm] = useState<boolean>(false);
+
   const [warnings, setWarnings] = useState<string[]>();
   const [validationErrors, setValidationErrors] = useState<string | null>(null);
 
   const [isWarningsShown, setIsWarningsShown] = useState(false);
-
   /**
    * Validate billing data
    */
@@ -282,24 +284,31 @@ export default function CheckoutPage() {
   const handlePayOrder = async () => {
     if (!order) return;
 
-    setTriggerValidationForm(true);
     setIsWarningsShown(true);
 
     let isOrderValid = true;
 
-    if (!isValidForm) {
+    if (
+      !isValidForm ||
+      !formOrderData.billing ||
+      (isShippingAddressDifferent && !formOrderData.shipping)
+    ) {
+      setValidationErrors('validationErrorsFields');
+
       isOrderValid = false;
     }
 
     const shippingValidationResult = validateOrder(order);
     if (!shippingValidationResult.isValid) {
       setWarnings(shippingValidationResult.messageKeys);
+
       isOrderValid = false;
     } else {
       setWarnings([]);
     }
 
     setRegistrationErrorWarning(null);
+
     if (isRegistration && registrationData && isOrderValid) {
       setIsRegistrationSuccessful(false);
 
@@ -307,8 +316,8 @@ export default function CheckoutPage() {
 
       if (!registrationError) {
         setIsRegistrationSuccessful(true);
-        setRegistrationErrorWarning(null); //?
-        setRegistrationData(null); //?
+        setRegistrationErrorWarning(null);
+        setRegistrationData(null);
       } else {
         isOrderValid = false;
         setRegistrationErrorWarning(registrationError);
@@ -318,7 +327,7 @@ export default function CheckoutPage() {
             'An account is already registered with your email address.'
           )
         ) {
-          setRegistrationData(null); //?
+          setRegistrationData(null);
         }
       }
     }
@@ -345,6 +354,7 @@ export default function CheckoutPage() {
       ...(formOrderData.billing &&
         orderStatus === 'pending' && { billing: formOrderData.billing }),
       ...(formOrderData.shipping &&
+        isShippingAddressDifferent &&
         orderStatus === 'pending' && { shipping: formOrderData.shipping }),
       ...(formOrderData.metaData &&
         orderStatus === 'pending' && { meta_data: formOrderData.metaData }),
@@ -387,8 +397,8 @@ export default function CheckoutPage() {
             setFormOrderData={setFormOrderData}
             setCurrentCountryCode={setCurrentCountryCode}
             setValidationErrors={setValidationErrors}
-            triggerValidationForm={triggerValidationForm}
-            setTriggerValidationForm={setTriggerValidationForm}
+            isWarningsShown={isWarningsShown}
+            setIsShippingAddressDifferent={setIsShippingAddressDifferent}
             isUserAlreadyExist={isUserAlreadyExist}
             setRegistrationErrorWarning={setRegistrationErrorWarning}
             setIsRegistration={setIsRegistration}

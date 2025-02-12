@@ -97,13 +97,19 @@
     "maxAttemptsExceeded": "Предоставленный код сброса неверен. Вы использовали максимальное количество разрешенных попыток. Вам нужно запросить новый код.",
     "codeProvidedHasExpired": "Срок действия предоставленного кода сброса истек.",
     "Addresses": "Адреса",
-    "serverError": "Что-то пошло не так с сервером. Пожалуйста, попробуйте еще раз или обратитесь в службу поддержки."
+    "serverError": "Что-то пошло не так с сервером. Пожалуйста, попробуйте еще раз или обратитесь в службу поддержки.",
+    "subscriptionError": "Не удалось получить данные подписки",
+    "subscribeNewsletter": "Подпишитесь на нашу рассылку!",
+    "newsletterDescription": "Будьте в курсе последних новостей, эксклюзивных предложений и специального контента — прямо на вашу почту!",
+    "subscriptionSuccess": "Вы успешно подписались на рассылку",
+    "unsubscriptionSuccess": "Вы успешно отписались от рассылки"
   },
   "TopBar": {
     "CallUs": "Контакт"
   },
   "Search": {
     "Search": "Поиск",
+    "showAll": "Показать всё",
     "Placeholder": "Введите название товара"
   },
   "Archive": {
@@ -206,7 +212,7 @@
     "Basket": "Корзина",
     "PersonalInformation": "Личная информация",
     "Confirmation": "Подтверждение",
-    "welcomeToPlatinumShop": "Добро пожаловать в Platinum Shop",
+    "welcomeToPlatinumShop": "ПРИВЕТСТВУЕМ В МАГАЗИНЕ PLATINUM",
     "theBest": "Лучший",
     "productForYou": "Продукт для вас",
     "summary": "Сумма",
@@ -289,6 +295,7 @@
     "emailInput": "Электронная почта",
     "phoneIsRequired": "Телефон",
     "apartmentNumber": "Номер квартиры",
+    "invalidFileType": "Недопустимый тип файла",
     "wrongEmailFormat": "Неправильный формат email",
     "cannotExceed254Characters": "Не может превышать 254 символа",
     "pleaseFillInThePassword": "Пожалуйста, введите пароль",

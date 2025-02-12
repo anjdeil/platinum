@@ -5,11 +5,12 @@ import BurgerIconActive from '@/components/global/icons/BurgerIconActive/BurgerI
 import CartIcon from '@/components/global/icons/CartIcon/CartIcon';
 import CatalogIcon from '@/components/global/icons/CatalogIcon/CatalogIcon';
 import HeartIcon from '@/components/global/icons/HeartIcon/HeartIcon';
+import { useWishlist } from '@/hooks/useWishlist';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { popupToggle } from '@/store/slices/PopupSlice';
 import { useTheme } from '@emotion/react';
-import { BottomMenuNav, BottomMenuWrapper } from './styles';
 import { useEffect, useState } from 'react';
+import { BottomMenuNav, BottomMenuWrapper } from './styles';
 
 const BottomMenu = () => {
   const dispatch = useAppDispatch();
@@ -17,6 +18,7 @@ const BottomMenu = () => {
   const { cartItems } = useAppSelector(state => state.cartSlice);
   const popup = useAppSelector(state => state.popup);
   const [cartCount, setCartCount] = useState(0);
+  const { wishlist } = useWishlist();
 
   useEffect(() => {
     setCartCount(cartItems.length);
@@ -44,6 +46,7 @@ const BottomMenu = () => {
         <IconButton
           href="/my-account/wishlist"
           color={theme.colors.primary}
+          count={wishlist.length}
           IconComponent={HeartIcon}
         />
         <IconButton

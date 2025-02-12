@@ -12,7 +12,6 @@ export interface ReqData {
   last_name: string;
   address_1: string;
   address_2: string;
-  apartmentNumber?: string;
   city: string;
   postcode: string;
   country: string;
@@ -22,12 +21,13 @@ export interface ReqData {
   nip?: string;
   password?: string;
   confirm_password?: string;
+  shipping_first_name: string;
+  shipping_last_name: string;
   shipping_address_1: string;
   shipping_address_2: string;
   shipping_city: string;
   shipping_postcode: string;
   shipping_country: string;
-  shipping_apartmentNumber?: string;
 }
 
 export interface RegistrationType {
@@ -40,10 +40,10 @@ export interface RegistrationType {
   city: string;
   postcode: string;
   country: string;
-  apartmentNumber: string;
   terms: boolean;
   password?: string | undefined;
   confirmPassword?: string | undefined;
+  apartmentNumber: string;
 }
 
 export const getFormattedUserData = (billingData: ReqData) => {
@@ -55,7 +55,6 @@ export const getFormattedUserData = (billingData: ReqData) => {
     last_name,
     address_1,
     address_2,
-    apartmentNumber,
     city,
     postcode,
     country,
@@ -65,30 +64,29 @@ export const getFormattedUserData = (billingData: ReqData) => {
     nip,
     password,
     confirm_password,
+    shipping_first_name,
+    shipping_last_name,
     shipping_address_1,
     shipping_address_2,
     shipping_city,
     shipping_postcode,
     shipping_country,
-    shipping_apartmentNumber,
   } = billingData;
+
   const formattedBillingData: BillingType = {
     first_name,
     last_name,
-    address_1: `${address_1} ${address_2}`,
-    address_2: apartmentNumber || '',
+    address_1,
+    address_2,
     city,
     postcode,
     country,
     state: city,
     phone,
+    company: company || '',
   };
 
   const formattedMetaData: MetaDataType[] = [
-    {
-      key: 'company',
-      value: company || '',
-    },
     {
       key: 'nip',
       value: nip || '',
@@ -96,10 +94,10 @@ export const getFormattedUserData = (billingData: ReqData) => {
   ];
 
   const formattedShippingData: ShippingType = {
-    first_name: first_name,
-    last_name: last_name,
-    address_1: `${shipping_address_1} ${shipping_address_2}`,
-    address_2: shipping_apartmentNumber || '',
+    first_name: shipping_first_name,
+    last_name: shipping_last_name,
+    address_1: shipping_address_1,
+    address_2: shipping_address_2,
     city: shipping_city,
     postcode: shipping_postcode,
     country: shipping_country,
@@ -118,10 +116,10 @@ export const getFormattedUserData = (billingData: ReqData) => {
       city: city,
       postcode: postcode,
       country: country,
-      apartmentNumber: apartmentNumber || '',
       terms: registration,
       password: password,
       confirmPassword: confirm_password,
+      apartmentNumber: address_2 || '',
     };
   }
 

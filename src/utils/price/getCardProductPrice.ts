@@ -3,21 +3,30 @@ import { ProductPriceType, ProductType, VariationPriceType } from "@/types/compo
 export const getCardProductPrice = (product: ProductType) => {
     const now = new Date();
 
-    // Функція для перевірки, чи є акція у продукту або варіації
+    // ! I may be replaced with existing function getIsSaleActive
     const isSaleActive = (priceData: ProductPriceType | VariationPriceType) => {
-        if (!priceData || !priceData.sale_price) return false;
+        if (!priceData?.sale_price) return false;
 
         const saleFromDate = priceData.sale_dates_from ? new Date(priceData.sale_dates_from) : null;
         const saleToDate = priceData.sale_dates_to ? new Date(priceData.sale_dates_to) : null;
 
-        return (
-            priceData.sale_price &&
-            (saleFromDate ? saleFromDate <= now : false) &&
-            (saleToDate ? saleToDate >= now : false)
-        );
+        if (!saleFromDate && !saleToDate) {
+            return true; // Unlimited sale
+        }
+
+        if (saleFromDate && !saleToDate) {
+            return saleFromDate <= now; // If sale is started but never be gone
+        }
+
+        if (!saleFromDate && saleToDate) {
+            return saleToDate >= now;
+        }
+
+        return (saleFromDate ? saleFromDate <= now : false) &&
+            (saleToDate ? saleToDate >= now : false);
     };
 
-    // Для простих товарів
+    // Simple product condition
     if (product.type === 'simple') {
         const priceData = product.price;
         if (!priceData) return { finalPrice: 0, regularPrice: 0, isSale: false };
@@ -28,7 +37,7 @@ export const getCardProductPrice = (product: ProductType) => {
         return { finalPrice, regularPrice: priceData.regular_price || 0, isSale };
     }
 
-    // Для варіативних товарів
+    // Variable product condition
     if (product.type === 'variable') {
         let minPrice = Infinity;
         let maxPrice = -Infinity;
@@ -45,18 +54,13 @@ export const getCardProductPrice = (product: ProductType) => {
 
                 if (variationPriceData.sale_price && variationIsSale) {
                     minPrice = Math.min(minPrice, variationPriceData.sale_price);
-                    maxPrice = Math.max(maxPrice, variationPriceData.regular_price);
+                    maxPrice = Math.max(maxPrice, variationPriceData.sale_price);
                 } else {
                     minPrice = Math.min(minPrice, variationPriceData.regular_price || 0);
                     maxPrice = Math.max(maxPrice, variationPriceData.regular_price || 0);
                 }
             }
         });
-
-        if (minPrice === Infinity || maxPrice === -Infinity) {
-            minPrice = 0;
-            maxPrice = 0;
-        }
 
         return {
             finalPrice: minPrice,
