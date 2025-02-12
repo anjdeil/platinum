@@ -10,7 +10,6 @@ import {
   useCheckTokenMutation,
   useGetTokenMutation,
 } from '@/store/rtk-queries/wpApi';
-import { CustomSuccess } from '../CustomFormInput/styles';
 import { CustomFormInput } from '../CustomFormInput';
 import { ActiveText, BottomWrapper, LoginFormWrapper } from './styles';
 import {
@@ -140,7 +139,9 @@ export const LoginForm: FC<LoginFormProps> = ({
           </Notification>
         )}
         {isSubmitSuccessful && !customError && !isLoading && (
-          <CustomSuccess>{t('SuccessfullyLoggedIn')}</CustomSuccess>
+          <Notification type="success">
+            {t('SuccessfullyLoggedIn')}
+          </Notification>
         )}
       </FormWrapperBottom>
     </CustomForm>

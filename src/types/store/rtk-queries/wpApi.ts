@@ -1,12 +1,12 @@
-import { z } from "zod";
+import { z } from 'zod';
 
-export const userLoyalityStatusSchema = z.enum(["silver", "gold", "platinum"]);
+export const userLoyalityStatusSchema = z.enum(['silver', 'gold', 'platinum']);
 export type UserLoyalityStatusType = z.infer<typeof userLoyalityStatusSchema>;
 
 export const discountMapping: Record<UserLoyalityStatusType, string> = {
-  silver: "-5%",
-  gold: "-10%",
-  platinum: "-15%",
+  silver: '-5%',
+  gold: '-10%',
+  platinum: '-15%',
 };
 
 export const WishlistItemSchema = z.object({

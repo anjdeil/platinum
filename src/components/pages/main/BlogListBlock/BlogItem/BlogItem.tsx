@@ -1,23 +1,25 @@
+import { useTransformDate } from '@/hooks/useTransformDate';
 import { Title } from '@/styles/components';
 import { BlogItemUnionType } from '@/types/pages/blog';
+import { parseHtmlContent } from '@/utils/blog/parseHtmlContent';
+import { getPostUrl } from '@/utils/getPostUrl';
 import { useTranslations } from 'next-intl';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { FC } from 'react';
 import {
   BlogItemContainer,
   BottomContentBlock,
+  CategoriesTagWrapper,
   ContentBlock,
   ImageBlock,
   StyledDate,
   StyledImage,
   StyledLink,
+  StyledTag,
   StyledWrapperLink,
   TextContent,
 } from './styles';
-import { parseHtmlContent } from '@/utils/blog/parseHtmlContent';
-import { useRouter } from 'next/router';
-import { getPostUrl } from '@/utils/getPostUrl';
-import Link from 'next/link';
-import { useTransformDate } from '@/hooks/useTransformDate';
 
 interface BlogItemProps {
   post: BlogItemUnionType;
@@ -51,6 +53,14 @@ const BlogItem: FC<BlogItemProps> = ({ post }) => {
           />
         </Link>
       </ImageBlock>
+      <CategoriesTagWrapper>
+        {post.categories.map(
+          category =>
+            category.name !== 'Uncategorized' && (
+              <StyledTag key={category.id}>{category.name}</StyledTag>
+            )
+        )}
+      </CategoriesTagWrapper>
       <ContentBlock>
         <StyledWrapperLink href={POST_URL} passHref>
           <Title as="h4" fontWeight={500} uppercase textalign="left">

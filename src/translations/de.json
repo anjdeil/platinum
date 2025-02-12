@@ -49,12 +49,14 @@
     "first_name": "Vorname",
     "last_name": "Nachname",
     "company": "Firma",
+    "nip": "Steuernummer",
     "address_1": "Straße",
     "address_2": "Gebäudenummer",
     "city": "Stadt",
     "state": "Bundesland",
     "postcode": "Postleitzahl",
     "country": "Land",
+    "apartmentNumber": "Wohnungsnummer",
     "email": "E-Mail",
     "phone": "Telefon",
     "discountCode": "Rabattcode",
@@ -64,7 +66,6 @@
     "action": "Aktion",
     "availablePcs": "Verfügbar {quantity} Stk",
     "nothingInTheWishlist": "Auf der Wunschliste steht nichts...",
-    "apartmentNumber": "Wohnungsnummer",
     "login": "Einloggen",
     "log-In": "Einloggen",
     "password": "Passwort",
@@ -95,13 +96,20 @@
     "passwordResetRequired": "Sie müssen einen Passwort-Reset-Code anfordern, bevor Sie versuchen, ein neues Passwort festzulegen.",
     "maxAttemptsExceeded": "Der bereitgestellte Reset-Code ist ungültig. Sie haben die maximal zulässige Anzahl von Versuchen überschritten. Sie müssen einen neuen Code anfordern.",
     "codeProvidedHasExpired": "Der angegebene Rücksetzungscode ist abgelaufen.",
-    "Addresses": "Adressen"
+    "Addresses": "Adressen",
+    "serverError": "Beim Server ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut oder wenden Sie sich an den Support.",
+    "subscriptionError": "Abonnementdaten konnten nicht abgerufen werden",
+    "subscribeNewsletter": "Abonniere unseren Newsletter!",
+    "newsletterDescription": "Bleiben Sie mit den neuesten Nachrichten, exklusiven Angeboten und speziellen Inhalten auf dem Laufenden – direkt in Ihrem Posteingang!",
+    "subscriptionSuccess": "Sie haben den Newsletter erfolgreich abonniert",
+    "unsubscriptionSuccess": "Sie haben den Newsletter erfolgreich abbestellt"
   },
   "TopBar": {
     "CallUs": "Kontakt"
   },
   "Search": {
-    "Search": "Suche"
+    "Search": "Suche",
+    "Placeholder": "Geben Sie den Produktnamen ein"
   },
   "Archive": {
     "goHome": "Startseite",
@@ -144,25 +152,26 @@
     "color": "Farbe",
     "yourFeedback": "Ihr Feedback",
     "reviews": "Bewertungen",
+    "readMore": "Mehr erfahren",
     "bestForYou": "Das Beste für dich",
     "recommendProduct": "Empfohlene Waren",
     "bestSeller": "Bestseller",
     "newProduct": "Neue Produkte",
     "ourCategories": "Unsere Kategorien",
     "moreProduct": "Mehr Produkt",
-    "lastedArticles": "Neueste Artikel",
-    "readMore": "Mehr erfahren",
     "addComment": "Kommentar hinzufügen",
     "submitting": "Einreichen",
     "commentText1": "Haben Sie unser Produkt getestet? Teilen Sie Ihre Meinung mit;",
     "commentText2": "- Wir versuchen, das Beste für Sie zu sein, und Ihre Meinung wird uns sehr helfen!",
+    "lastedArticles": "Neueste Artikel",
     "thickness": "Dicke",
     "length": "Länge",
     "leaveAReviewAboutProduct": "Hinterlassen Sie eine Bewertung über die Ware",
     "descriptions": "Beschreibung",
     "days": "Tage",
     "hours": "Stunden",
-    "minutes": "Minuten"
+    "minutes": "Minuten",
+    "priceFrom": "ab {price}"
   },
   "Cart": {
     "cart": "Warenkorb",
@@ -210,8 +219,7 @@
     "nothingInTheCart": "Es ist nichts im Warenkorb...",
     "goToShop": "Zum Shop gehen",
     "nothingInTheCartText": "Sehen Sie sich unsere neuen Produkte an oder nutzen Sie die Suche, wenn Sie etwas Bestimmtes suchen",
-    "YouNeedToLoginForOrder": "Sie müssen sich anmelden, um eine Bestellung aufzugeben.",
-    "сoupon": "Coupon"
+    "YouNeedToLoginForOrder": "Sie müssen sich anmelden, um eine Bestellung aufzugeben."
   },
   "Contacts": {
     "contacts": "Kontakte",
@@ -261,6 +269,7 @@
     "saving": "Speichern...",
     "saveChanges": "Änderungen speichern",
     "InvalidPhoneNumber": "Ungültige Telefonnummer",
+    "yourPhoneNumberIsTooShort": "Ihre Telefonnummer ist zu kurz",
     "fileTooLarge": "Datei zu groß",
     "agreentment": "Ich stimme zu, Informationen über Neuigkeiten und Änderungen im Angebot des Geschäfts zu erhalten",
     "agreentmentTerms": "Sie müssen den Bedingungen zustimmen",
@@ -276,22 +285,60 @@
     "noBillingInformation": "Keine Rechnungsinformationen",
     "isRequired": "Feld ist erforderlich",
     "areRequired": "Felder sind erforderlich",
+    "pleaseFillInTheEmail": "Bitte geben Sie die E-Mail ein",
     "firstname": "Vorname",
     "lastname": "Nachname",
     "address1": "Straße und Hausnummer",
     "address2": "Gebäudenummer",
     "postcode": "Postleitzahl",
-    "emailI": "E-Mail",
+    "emailInput": "E-Mail",
     "phoneIsRequired": "Telefon",
     "apartmentNumber": "Wohnungsnummer",
-    "invalidFileType": "Ungültiger Dateityp"
+    "invalidFileType": "Ungültiger Dateityp",
+    "wrongEmailFormat": "Falsches E-Mail-Format",
+    "cannotExceed254Characters": "Darf 254 Zeichen nicht überschreiten",
+    "pleaseFillInThePassword": "Bitte geben Sie das Passwort ein",
+    "yourPasswordIsLessThan6Characters": "Ihr Passwort ist weniger als 6 Zeichen",
+    "yourPasswordIsTooLong": "Ihr Passwort ist zu lang",
+    "onlyLatinLettersNumbersAndSpecialCharacters": "Nur lateinische Buchstaben, Zahlen und Sonderzeichen",
+    "pleaseConfirmYourPassword": "Bitte bestätigen Sie Ihr Passwort",
+    "pleaseFillInTheFirstName": "Bitte geben Sie den Vornamen ein",
+    "yourFirstNameIsTooShort": "Ihr Vorname ist zu kurz",
+    "yourFirstNameIsTooLong": "Ihr Vorname ist zu lang",
+    "pleaseFillInTheLastName": "Bitte geben Sie den Nachnamen ein",
+    "yourLastNameIsTooShort": "Ihr Nachname ist zu kurz",
+    "yourLastNameIsTooLong": "Ihr Nachname ist zu lang",
+    "pleaseFillInThePhoneNumber": "Bitte geben Sie die Telefonnummer ein",
+    "invalidPhoneNumber": "Ungültige Telefonnummer",
+    "pleaseFillInTheCompanyName": "Bitte geben Sie den Firmennamen ein",
+    "yourCompanyNameIsTooShort": "Ihr Firmenname ist zu kurz",
+    "yourCompanyNameIsTooLong": "Ihr Firmenname ist zu lang",
+    "pleaseFillInTheNip": "Bitte geben Sie die Steuernummer ein",
+    "yourNipIsTooShort": "Ihre NIP ist zu kurz",
+    "yourNipIsTooLong": "Ihre NIP ist zu lang",
+    "invalidNipFormat": "Ungültiges NIP-Format",
+    "pleaseSelectACountry": "Bitte wählen Sie ein Land",
+    "pleaseFillInTheCity": "Bitte geben Sie die Stadt ein",
+    "yourCityNameIsTooShort": "Ihr Stadtname ist zu kurz",
+    "yourCityNameIsTooLong": "Ihr Stadtname ist zu lang",
+    "pleaseFillInTheStreetAddress": "Bitte geben Sie die Straßenadresse ein",
+    "yourStreetAddressIsTooShort": "Ihre Straßenadresse ist zu kurz",
+    "yourStreetAddressIsTooLong": "Ihre Straßenadresse ist zu lang",
+    "pleaseFillInTheBuildingNumber": "Bitte geben Sie die Hausnummer ein",
+    "yourBuildingNumberIsTooLong": "Ihre Gebäudenummer ist zu lang",
+    "pleaseFillInTheApartmentNumber": "Bitte geben Sie die Wohnungsnummer ein",
+    "yourApartmentNumberIsTooLong": "Ihre Wohnungsnummer ist zu lang",
+    "pleaseFillInThePostcode": "Bitte geben Sie die Postleitzahl ein",
+    "invalidPostcodeFormat": "Ungültiges Postleitzahlformat",
+    "validationErrorsFields": "Bitte füllen Sie die falschen Formularfelder aus",
+    "noRegistrationData": "Keine Registrierungsdaten"
   },
   "Forms": {
-    "applicationForm": "application form",
-    "UserInfo": "User information",
-    "ShippingInfo": "Shipping information",
-    "InvalidPhoneNumber": "Invalid phone number",
-    "fileTooLarge": "file too large"
+    "applicationForm": "Antragsformular",
+    "UserInfo": "Benutzerinformationen",
+    "ShippingInfo": "Lieferinformationen",
+    "InvalidPhoneNumber": "Ungültige Telefonnummer",
+    "fileTooLarge": "Datei zu groß"
   },
   "Breadcrumbs": {
     "homePage": "Hauptseite",
@@ -304,8 +351,8 @@
     "notFound": "Seite nicht gefunden",
     "description": "Es tut uns leid, wir können die Seite, die Sie suchen, nicht finden. Sie wurde möglicherweise verschoben, gelöscht oder hat nie existiert.",
     "backToHome": "Zurück zur Startseite",
-    "serverError": "Server error",
-    "serverErrorDescription": "Sorry, something went wrong. Please try again later."
+    "serverError": "Serverfehler",
+    "serverErrorDescription": "Es tut uns leid, es ist ein Serverfehler aufgetreten. Bitte versuchen Sie es später erneut."
   },
   "HomePage": {
     "aboutOurBrand": "Über unsere Marke",
@@ -334,7 +381,9 @@
     "previousPost": "Zurück",
     "nextPost": "Weiter",
     "blogPage": "Blog",
-    "blogSectionSubtitle": "Letzte artikel"
+    "blogSectionSubtitle": "Letzte artikel",
+    "selectCategory": "Kategorie auswählen",
+    "all": "Alle"
   },
   "ShippingMethodSelector": {
     "change": "Ändern",
@@ -360,7 +409,9 @@
     "vatInvoice": "VAT Rechnung",
     "company": "Vor- und Nachname/Firma",
     "nip": "Steuernummer",
-    "freeShipping": "Um Free Shipping zu erreichen, bleiben {cost}."
+    "freeShipping": "Um Free Shipping zu erreichen, bleiben {cost}.",
+    "shippingDifferentAddress": "Lieferadresse ist anders als Rechnungsadresse",
+    "inValidForm": "Das Formular ist ungültig"
   },
   "Footer": {
     "myAccount": "Mein Konto",
