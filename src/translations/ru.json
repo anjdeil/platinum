@@ -109,6 +109,7 @@
   },
   "Search": {
     "Search": "Поиск",
+    "showAll": "Показать всё",
     "Placeholder": "Введите название товара"
   },
   "Archive": {
