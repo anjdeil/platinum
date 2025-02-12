@@ -160,7 +160,6 @@ export default function SearchResultsComponent({
                                     price.min_price * extendedCurrency.rate
                                   ),
                                 })}
-                              &nbsp;
                             </>
                           )}
                           &nbsp;
