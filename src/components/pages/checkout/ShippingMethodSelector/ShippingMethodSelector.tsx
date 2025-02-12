@@ -58,63 +58,81 @@ export default function ShippingMethodSelector({
 
   return (
     <>
-      {isLoading ?
+      {isLoading ? (
         <ShippingMethodSelectorSkeleton />
-        : Boolean(methods.length) ?
-          <ShippingMethodSelectorMethods>
-            {methods.map((method) => (
-              <ShippingMethodSelectorMethod key={method.method_id}>
-                <ShippingMethodSelectorMethodRadio
-                  type="radio"
-                  name="shippingMethod"
-                  value={method.method_id}
-                  checked={currentMethodId === method.method_id}
-                  onChange={() => handleChangeShippingMethod(method)}
-                />
-                <ShippingMethodSelectorMethodContent className="ShippingMethodSelectorMethodContent">
-                  <ShippingMethodSelectorMethodDetail>
-                    <ShippingMethodSelectorMethodRadioBox className="ShippingMethodSelectorMethodRadioBox" />
-                    <ShippingMethodSelectorMethodNaming>
-                      <ShippingMethodSelectorMethodName>{method.title}</ShippingMethodSelectorMethodName>
-                      <ShippingMethodSelectorMethodEstimate>2 - 4 working days</ShippingMethodSelectorMethodEstimate>
-                    </ShippingMethodSelectorMethodNaming>
-                    <ShippingMethodSelectorMethodCost>{convertCurrency(getCalculatedMethodCost(method))} {currencyCode}</ShippingMethodSelectorMethodCost>
-                  </ShippingMethodSelectorMethodDetail>
-                  {isParcelMachineCollapsed(method.method_id) &&
-                    <ShippingMethodSelectorMethodLockerWrapper>
-                      {parcelMachine?.methodId === method.method_id ?
-                        <ShippingMethodSelectorMethodLocker>
-                          <ShippingMethodSelectorMethodLockerDetail>
-                            <ShippingMethodSelectorMethodLockerName>{parcelMachine.choosenParcelMachine.name}</ShippingMethodSelectorMethodLockerName>
-                            <ShippingMethodSelectorMethodLockerAddress>{parcelMachine.choosenParcelMachine.address}</ShippingMethodSelectorMethodLockerAddress>
-                            <ShippingMethodSelectorMethodLockerDescription>{parcelMachine.choosenParcelMachine.description}</ShippingMethodSelectorMethodLockerDescription>
-                          </ShippingMethodSelectorMethodLockerDetail>
-                          <ShippingMethodSelectorMethodLockerChangeButton
-                            onClick={() => onParcelMachineChange(method.method_id)}>
-                            {t('change')}
-                          </ShippingMethodSelectorMethodLockerChangeButton>
-                        </ShippingMethodSelectorMethodLocker>
-                        :
-                        <>
-                          <ShippingMethodSelectorLabel>
-                            {t('parcelLocker')} <CustomRequired>*</CustomRequired>
-                          </ShippingMethodSelectorLabel>
-                          <ShippingMethodSelectorMethodLockerChangeButton
-                            onClick={() => onParcelMachineChange(method.method_id)}>
-                            {t('selectParcelLocker')}
-                          </ShippingMethodSelectorMethodLockerChangeButton>
-                        </>
-                      }
-                    </ShippingMethodSelectorMethodLockerWrapper>
-                  }
-                </ShippingMethodSelectorMethodContent>
-              </ShippingMethodSelectorMethod>
-
-            ))}
-          </ShippingMethodSelectorMethods>
-          :
-          <ShippingMethodSelectorNotification>{t('deliveryUnavailable')}</ShippingMethodSelectorNotification>
-      }
+      ) : Boolean(methods.length) ? (
+        <ShippingMethodSelectorMethods>
+          {methods.map(method => (
+            <ShippingMethodSelectorMethod key={method.method_id}>
+              <ShippingMethodSelectorMethodRadio
+                type="radio"
+                name="shippingMethod"
+                value={method.method_id}
+                checked={currentMethodId === method.method_id}
+                onChange={() => handleChangeShippingMethod(method)}
+              />
+              <ShippingMethodSelectorMethodContent className="ShippingMethodSelectorMethodContent">
+                <ShippingMethodSelectorMethodDetail>
+                  <ShippingMethodSelectorMethodRadioBox className="ShippingMethodSelectorMethodRadioBox" />
+                  <ShippingMethodSelectorMethodNaming>
+                    <ShippingMethodSelectorMethodName>
+                      {method.title}
+                    </ShippingMethodSelectorMethodName>
+                    {/* <ShippingMethodSelectorMethodEstimate>2 - 4 working days</ShippingMethodSelectorMethodEstimate> */}
+                  </ShippingMethodSelectorMethodNaming>
+                  <ShippingMethodSelectorMethodCost>
+                    {convertCurrency(getCalculatedMethodCost(method))}{' '}
+                    {currencyCode}
+                  </ShippingMethodSelectorMethodCost>
+                </ShippingMethodSelectorMethodDetail>
+                {isParcelMachineCollapsed(method.method_id) && (
+                  <ShippingMethodSelectorMethodLockerWrapper>
+                    {parcelMachine?.methodId === method.method_id ? (
+                      <ShippingMethodSelectorMethodLocker>
+                        <ShippingMethodSelectorMethodLockerDetail>
+                          <ShippingMethodSelectorMethodLockerName>
+                            {parcelMachine.choosenParcelMachine.name}
+                          </ShippingMethodSelectorMethodLockerName>
+                          <ShippingMethodSelectorMethodLockerAddress>
+                            {parcelMachine.choosenParcelMachine.address}
+                          </ShippingMethodSelectorMethodLockerAddress>
+                          <ShippingMethodSelectorMethodLockerDescription>
+                            {parcelMachine.choosenParcelMachine.description}
+                          </ShippingMethodSelectorMethodLockerDescription>
+                        </ShippingMethodSelectorMethodLockerDetail>
+                        <ShippingMethodSelectorMethodLockerChangeButton
+                          onClick={() =>
+                            onParcelMachineChange(method.method_id)
+                          }
+                        >
+                          {t('change')}
+                        </ShippingMethodSelectorMethodLockerChangeButton>
+                      </ShippingMethodSelectorMethodLocker>
+                    ) : (
+                      <>
+                        <ShippingMethodSelectorLabel>
+                          {t('parcelLocker')} <CustomRequired>*</CustomRequired>
+                        </ShippingMethodSelectorLabel>
+                        <ShippingMethodSelectorMethodLockerChangeButton
+                          onClick={() =>
+                            onParcelMachineChange(method.method_id)
+                          }
+                        >
+                          {t('selectParcelLocker')}
+                        </ShippingMethodSelectorMethodLockerChangeButton>
+                      </>
+                    )}
+                  </ShippingMethodSelectorMethodLockerWrapper>
+                )}
+              </ShippingMethodSelectorMethodContent>
+            </ShippingMethodSelectorMethod>
+          ))}
+        </ShippingMethodSelectorMethods>
+      ) : (
+        <ShippingMethodSelectorNotification>
+          {t('deliveryUnavailable')}
+        </ShippingMethodSelectorNotification>
+      )}
     </>
   );
 }
