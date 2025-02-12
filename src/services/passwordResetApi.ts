@@ -4,10 +4,12 @@ class PasswordResetApi {
   private readonly _apiBase: string;
 
   constructor() {
-    if (!process.env.WP_URL) {
-      throw new Error('WP_URL is not defined in environment variables.');
+    if (!process.env.NEXT_PUBLIC_WP_URL) {
+      throw new Error(
+        'NEXT_PUBLIC_WP_URL is not defined in environment variables.'
+      );
     }
-    this._apiBase = `${process.env.WP_URL}/wp-json/bdpwr/v1/`;
+    this._apiBase = `${process.env.NEXT_PUBLIC_WP_URL}/wp-json/bdpwr/v1/`;
   }
 
   //  x-www-form-urlencoded

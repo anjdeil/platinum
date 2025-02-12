@@ -24,6 +24,7 @@ const CategoriesMenu: FC<CategoriesMenuPropsType> = ({
   const categoriesData: CategoryType[] | undefined = useAppSelector(
     state => state.categoriesSlice.categories
   );
+
   const categories = transformCategoriesMenu(categoriesData);
 
   const dispatch = useAppDispatch();

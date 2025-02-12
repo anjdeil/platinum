@@ -84,7 +84,6 @@ export const LinkWrapper = styled(Link, {
   shouldForwardProp: prop => !['isactive', 'isactivehover'].includes(prop),
 })<LinkWrapperProps>`
   display: block;
-
   span {
     box-sizing: border-box;
     width: 100%;
