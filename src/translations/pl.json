@@ -172,7 +172,8 @@
     "days": "Dni",
     "hours": "Godziny",
     "minutes": "Minuty",
-    "priceFrom": "od {price}"
+    "priceFrom": "od {price}",
+    "deliveryTime": "Zamów w ciągu {hour} godz. {minute} min, a zostanie wysłane dzisiaj"
   },
   "Cart": {
     "cart": "Koszyk",
