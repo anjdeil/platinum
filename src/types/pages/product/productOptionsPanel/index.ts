@@ -1,5 +1,5 @@
+import { ProductAttributesSchema, ProductDefaultAttributesSchema } from "@/types/components/shop/product/products";
 import { z } from "zod";
-import { ProductAttributesSchema, ProductDefaultAttributesSchema } from "../../shop";
 
 export const ProductOptionsPanelSchema = z.object({
     attributes: z.array(ProductAttributesSchema),
