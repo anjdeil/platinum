@@ -13,11 +13,11 @@ export const SubscriptionWrapper = styled.div`
 `;
 
 export const SubscriptionCardWrapper = styled.div`
-  border-radius: 24px;
+  border-radius: 8px;
   display: flex;
   align-items: start;
   gap: 16px;
-  padding: 24px;
+  padding: 24px 16px;
   background-color: ${({ theme }) => theme.background.secondary};
 `;
 export const SubscribeText = styled.p`

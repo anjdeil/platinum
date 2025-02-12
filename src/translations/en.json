@@ -102,7 +102,16 @@
     "subscribeNewsletter": "Subscribe to our newsletter!",
     "newsletterDescription": "Stay updated with the latest news, exclusive offers, and special content — straight to your inbox!",
     "subscriptionSuccess": "You have successfully subscribed to the newsletter",
-    "unsubscriptionSuccess": "You have successfully unsubscribed from the newsletter"
+    "unsubscriptionSuccess": "You have successfully unsubscribed from the newsletter",
+    "gold": "Gold",
+    "silver": "Silver",
+    "platinum": "Platinum",
+    "currentLevel": "Your current level",
+    "userInfoError": "Error fetching user information",
+    "nextLevelInfo": "You only need {amount} {code} to get {nextLevel} level",
+    "levelBenefits": "Level Benefits",
+    "loyalityProgram": "Loyalty Program",
+    "loyaltyLevelNotEarned": "You haven't earned a loyalty level yet, but there are plenty of exciting rewards waiting for you!"
   },
   "TopBar": {
     "CallUs": "Call us"

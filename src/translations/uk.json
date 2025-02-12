@@ -102,7 +102,16 @@
     "subscribeNewsletter": "Підпишіться на нашу розсилку!",
     "newsletterDescription": "Будьте в курсі останніх новин, ексклюзивних пропозицій і спеціального контенту — прямо на вашу пошту!",
     "subscriptionSuccess": "Ви успішно підписалися на розсилку",
-    "unsubscriptionSuccess": "Ви успішно відписалися від розсилки"
+    "unsubscriptionSuccess": "Ви успішно відписалися від розсилки",
+    "gold": "Золото",
+    "silver": "Срібло",
+    "platinum": "Платина",
+    "currentLevel": "Ваш поточний рівень",
+    "userInfoError": "Помилка під час отримання інформації про користувача",
+    "nextLevelInfo": "Вам потрібно всього {amount} {code}, щоб досягти рівня {nextLevel}",
+    "levelBenefits": "Переваги рівня",
+    "loyalityProgram": "Програма лояльності",
+    "loyaltyLevelNotEarned": "У вас ще немає рівня лояльності, але попереду багато захоплюючих нагород!"
   },
   "TopBar": {
     "CallUs": "Контакт"
