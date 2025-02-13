@@ -261,10 +261,13 @@ export const AmbassadorForm: FC = () => {
                 onDrop={handleDrop}
               >
                 <FileUploadLabel htmlFor="file-upload" isDragging={isDragging}>
-                  {preview ? (
+                  {preview &&
+                  ALLOWED_FILE_TYPES.slice(0, 5).includes(file?.type || '') ? (
                     <FileUploadPreview>
                       <img src={preview} alt={tValidation('preview')} />
                     </FileUploadPreview>
+                  ) : file ? (
+                    <p>{file.name}</p>
                   ) : (
                     <>
                       <UploadIcon />
@@ -277,6 +280,7 @@ export const AmbassadorForm: FC = () => {
                     </>
                   )}
                 </FileUploadLabel>
+
                 <input
                   id="file-upload"
                   type="file"
