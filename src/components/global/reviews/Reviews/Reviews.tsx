@@ -29,6 +29,10 @@ const Reviews: FC<ReviewsPropsType> = ({ product }) => {
 
   const reviews: ReviewRespType[] = data || [];
 
+  if (!reviews.length) {
+    return null;
+  }
+
   return (
     <ReviewsContainer>
       <TitleBlock>
