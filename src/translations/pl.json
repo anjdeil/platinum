@@ -102,7 +102,16 @@
     "subscribeNewsletter": "Zapisz się do naszego newslettera!",
     "newsletterDescription": "Bądź na bieżąco z najnowszymi wiadomościami, ekskluzywnymi ofertami i specjalnymi treściami – prosto na Twoją skrzynkę!",
     "subscriptionSuccess": "Pomyślnie zapisałeś się do newslettera",
-    "unsubscriptionSuccess": "Pomyślnie wypisałeś się z newslettera"
+    "unsubscriptionSuccess": "Pomyślnie wypisałeś się z newslettera",
+    "gold": "Złoty",
+    "silver": "Srebrny",
+    "platinum": "Platynowy",
+    "currentLevel": "Twój obecny poziom",
+    "userInfoError": "Błąd podczas pobierania informacji o użytkowniku",
+    "nextLevelInfo": "Potrzebujesz tylko {amount} {code}, aby osiągnąć poziom {nextLevel}",
+    "levelBenefits": "Korzyści poziomu",
+    "loyalityProgram": "Program lojalnościowy",
+    "loyaltyLevelNotEarned": "Jeszcze nie zdobyłeś poziomu lojalności, ale czeka na Ciebie mnóstwo ekscytujących nagród!"
   },
   "TopBar": {
     "CallUs": "Kontakt"
