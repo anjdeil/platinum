@@ -88,7 +88,7 @@ export const BenefitsAccordionDetails = styled(AccordionDetails)`
   &.platinum {
     min-height: 450px;
 
-    @media ${({ theme }) => theme.media.medium} {
+    @media ${({ theme }) => theme.media.large} {
       min-height: unset;
     }
   }
