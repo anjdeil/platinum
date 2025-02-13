@@ -14,7 +14,7 @@ export const phoneNumberValidation = (t: any) =>
     .nonempty({ message: t('InvalidPhoneNumber') })
     .refine(
       value => {
-        return !value || value.trim().length >= 13;
+        return !value || value.trim().length >= 9;
       },
       {
         message: t('InvalidPhoneNumber'),
