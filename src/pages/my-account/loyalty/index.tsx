@@ -39,6 +39,8 @@ export default function LoyaltyPage() {
   } = useFetchOrdersQuery(
     {
       customer: userData?.id,
+      status: ["processing", "completed"],
+      per_page: 100
     },
     { skip: !userData?.id }
   );
