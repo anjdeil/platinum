@@ -29,6 +29,7 @@ export const adaptItemToCartQuantity = (
 };
 
 const CartQuantity: React.FC<QuantityComponentProps> = ({
+  disabled,
   item,
   handleChangeQuantity,
   resolveCount,
@@ -76,7 +77,7 @@ const CartQuantity: React.FC<QuantityComponentProps> = ({
   };
 
   return (
-    <QuantityWrapper>
+    <QuantityWrapper isDisabled={disabled}>
       <QuantityBtn onClick={handleDecrease} disabled={inputValue <= 1}>
         <MinusIcon />
       </QuantityBtn>

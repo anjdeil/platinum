@@ -11,9 +11,11 @@ import { z } from 'zod';
 
 export const CartProductWarningSchema = z.object({
   onUpdate: z.function().returns(z.void()),
-  resolveCount: z.number(),
+  resolveCount: z.number().optional(),
+  isProductError: z.boolean().optional(),
 });
 export const QuantityComponentSchema = z.object({
+  disabled: z.boolean().optional(),
   resolveCount: z.number().optional(),
   item: lineOrderItemsSchema || ProductsWithCartDataSchema,
   inputWidth: z.string().optional(),
@@ -48,9 +50,10 @@ export const CartSummaryBlockSchema = z.object({
 export const CartTableSchema = z.object({
   symbol: z.string(),
   order: OrderTypeSchema.optional(),
+  filteredOutItems: z.array(lineOrderItemsSchema).optional(),
   isLoadingOrder: z.boolean(),
   firstLoad: z.boolean(),
-  /*  isLoadingProductsMin: z.boolean(), */
+  innercartItems: z.array(z.any()),
   productsSpecs: z.array(ProductsMinimizedSchema),
   cartItems: z.array(z.any()),
   roundedPrice: z.function().args(z.number()).returns(z.number()),
@@ -63,6 +66,10 @@ export const CartTableSchema = z.object({
       z.number().optional(), // variation_id
       z.union([z.number(), z.boolean()]).optional() // newQuantity
     )
+    .returns(z.void()),
+  handleDeleteItem: z
+    .function()
+    .args(z.number(), z.number()) // productId, variationId
     .returns(z.void()),
   loadingItems: z.array(z.number()).optional(),
 });

@@ -55,6 +55,8 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
   const { cartItems } = useAppSelector(state => state.cartSlice);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  console.log(product);
+
   const {
     handleWishlistToggle,
     isFetchingWishlist,
@@ -84,9 +86,9 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
 
   // Temporary code (whole useEffect) for assigning the current variation
   /* useEffect(() => {
-    setCurrentVariation(product?.variations[0]);
+    if (product.attributes.length == 0 && product.variations.length != 0)
+      setCurrentVariation(product?.variations[0]);
     console.log(currentVariation);
-    
   }, []); */
 
   useEffect(() => {
@@ -120,6 +122,8 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
   }
 
   function handleCartButtonClick() {
+    console.log(currentVariation);
+
     dispatch(
       updateCart({
         product_id: product.id,

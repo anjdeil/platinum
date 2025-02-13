@@ -1,8 +1,8 @@
-import styled from '@emotion/styled'
+import styled from '@emotion/styled';
 
 interface QuantityBlockProps {
-  inputWidth?: string
-  inputHeight?: string
+  inputWidth?: string;
+  inputHeight?: string;
 }
 
 export const QuantityBlock = styled.input<QuantityBlockProps>`
@@ -17,15 +17,22 @@ export const QuantityBlock = styled.input<QuantityBlockProps>`
   outline: none;
   border: none;
   text-align: center;
-`
-export const QuantityWrapper = styled.div`
+`;
+export const QuantityWrapper = styled.div<{ isDisabled?: boolean }>`
+  ${({ isDisabled }) =>
+    isDisabled &&
+    `
+    opacity: 0.5;
+    pointer-events: none;
+  `}
+
   display: flex;
   align-items: center;
   justify-content: center;
   @media ${({ theme }) => theme.media.medium} {
     margin: 16px 0;
   }
-`
+`;
 
 export const QuantityBtn = styled.button`
   display: block;
@@ -37,4 +44,4 @@ export const QuantityBtn = styled.button`
   &:hover {
     scale: 1.2;
   }
-`
+`;

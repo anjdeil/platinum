@@ -8,7 +8,7 @@ import theme from '@/styles/theme';
 import { CartTableProps } from '@/types/pages/cart';
 import checkProductAvailability from '@/utils/cart/checkProductAvailability';
 import { useTranslations } from 'next-intl';
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import CartProductWarning from '../CartProductWarning/CartProductWarning';
 import CartQuantity from '../CartQuantity/CartQuantity';
 import {
@@ -38,44 +38,21 @@ import { lineOrderItems } from '@/types/store/reducers/сartSlice';
 const CartTable: FC<CartTableProps> = ({
   symbol,
   order,
+  filteredOutItems,
   isLoadingOrder,
   firstLoad,
   productsSpecs,
   roundedPrice,
   hasConflict,
   cartItems,
+  innercartItems,
   handleChangeQuantity,
+  handleDeleteItem,
 }) => {
   const t = useTranslations('Cart');
   const { isMobile } = useResponsive();
-  const [innercartItems, setCartItems] = useState(order?.line_items || []);
-
-  useEffect(() => {
-    setCartItems(
-      order?.line_items.filter(lineItem =>
-        cartItems.some(
-          cartItem =>
-            cartItem.product_id === lineItem.product_id &&
-            (!cartItem.variation_id ||
-              cartItem.variation_id === lineItem.variation_id)
-        )
-      ) || []
-    );
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [order?.line_items, cartItems]);
-
-  const handleDeleteItem = (productId: number, variationId: number) => {
-    const updatedCartItems = innercartItems.filter(
-      item => item.product_id !== productId || item.variation_id !== variationId
-    );
-    setCartItems(updatedCartItems);
-
-    handleChangeQuantity(productId, 'value', variationId, 0);
-  };
 
   const findProductSpec = (
-    productsSpecs: ProductsMinimizedType[],
     item: lineOrderItems
   ): ProductsMinimizedType | undefined => {
     return productsSpecs.find(product =>
@@ -86,14 +63,175 @@ const CartTable: FC<CartTableProps> = ({
     );
   };
 
+  const renderMobileCartItems = (
+    items: lineOrderItems[],
+    isFiltered = false
+  ) => {
+    return items.map((item: lineOrderItems) => {
+      const { resolveCount, isAvailable } = checkProductAvailability(
+        item,
+        productsSpecs
+      );
+      const productSpec = findProductSpec(item);
+
+      return (
+        <CartCardAllWrapper key={item.id}>
+          <CartCardWrapper isLoadingItem={isLoadingOrder}>
+            <CartImgWrapper>
+              <CartItemImg src={item.image?.src} alt={item.name} width="50" />
+            </CartImgWrapper>
+            <CardContent>
+              <ProducTitle>
+                <LinkWrapper
+                  href={`/product/${
+                    productSpec?.parent_slug || productSpec?.slug
+                  }`}
+                >
+                  {productSpec?.name || item.name}
+                </LinkWrapper>
+                <CloseIcon
+                  onClick={() =>
+                    handleChangeQuantity(
+                      item.product_id,
+                      'value',
+                      item.variation_id,
+                      0
+                    )
+                  }
+                />
+              </ProducTitle>
+              <ProductPrice>
+                <p>
+                  {roundedPrice(Number(item.subtotal) / item.quantity)} {symbol}
+                </p>
+              </ProductPrice>
+              <CartQuantity
+                resolveCount={resolveCount}
+                item={item}
+                handleChangeQuantity={handleChangeQuantity}
+                disabled={isFiltered}
+              />
+              <ProductPrice>
+                <span>{t('summary')}</span>
+                <OnePrice>
+                  {roundedPrice(Number(item.subtotal))} {symbol}
+                </OnePrice>
+              </ProductPrice>
+            </CardContent>
+          </CartCardWrapper>
+          {(!isAvailable || isFiltered) && (
+            <CartProductWarning
+              onUpdate={() =>
+                handleChangeQuantity(
+                  item.product_id,
+                  'value',
+                  isFiltered ? undefined : item.variation_id,
+                  isFiltered ? 0 : resolveCount
+                )
+              }
+              resolveCount={resolveCount}
+              isProductError={isFiltered}
+            />
+          )}
+        </CartCardAllWrapper>
+      );
+    });
+  };
+  const renderCartItems = (items: lineOrderItems[], isFiltered = false) => {
+    return (
+      <>
+        {items.map((item: lineOrderItems) => {
+          const { resolveCount, isAvailable } = checkProductAvailability(
+            item,
+            productsSpecs
+          );
+          const productSpec = findProductSpec(item);
+
+          return (
+            <RowWrapper key={item.id} isLoadingItem={isLoadingOrder}>
+              <GridRow>
+                <DeleteCell>
+                  <DeleteIcon
+                    onClick={() =>
+                      handleDeleteItem(item.product_id, item.variation_id)
+                    }
+                  />
+                </DeleteCell>
+                <CartImgWrapper>
+                  <CartItemImg
+                    src={item.image?.src}
+                    alt={item.name}
+                    width="50"
+                  />
+                </CartImgWrapper>
+                <TextNameCell>
+                  <LinkWrapper
+                    href={`/product/${
+                      productSpec?.parent_slug || productSpec?.slug
+                    }`}
+                  >
+                    {productSpec?.name || item.name}
+                  </LinkWrapper>
+                </TextNameCell>
+                <TextCell>
+                  {roundedPrice(Number(item.subtotal) / item.quantity)} {symbol}
+                </TextCell>
+                <TextCell>
+                  <CartQuantity
+                    resolveCount={isFiltered ? undefined : resolveCount}
+                    item={item}
+                    handleChangeQuantity={handleChangeQuantity}
+                    disabled={isFiltered}
+                  />
+                </TextCell>
+                <TextCell>
+                  {roundedPrice(Number(item.subtotal))} {symbol}
+                </TextCell>
+              </GridRow>
+              {(!isAvailable || isFiltered) && (
+                <CartProductWarning
+                  onUpdate={() =>
+                    handleChangeQuantity(
+                      item.product_id,
+                      'value',
+                      isFiltered ? undefined : item.variation_id,
+                      isFiltered ? 0 : resolveCount
+                    )
+                  }
+                  resolveCount={isFiltered ? undefined : resolveCount}
+                  isProductError={isFiltered}
+                />
+              )}
+            </RowWrapper>
+          );
+        })}
+      </>
+    );
+  };
+
   return (
     <CartTableWrapper>
       {!!(
         !isLoadingOrder &&
         hasConflict &&
+        innercartItems.length > 0 &&
         firstLoad &&
-        cartItems.length !== 0
+        innercartItems.length === cartItems.length
       ) && <Notification type="warning">{t('cartConflict')}</Notification>}
+      {innercartItems.length !== cartItems.length && order && (
+        <>
+          <Notification type="warning" marginBottom="0">
+            Ошибка получения текущих товаров
+          </Notification>
+          <FlexBox
+            alignItems="center"
+            flexDirection="column"
+            width="100%"
+            margin="0 0 24px 0"
+          ></FlexBox>
+        </>
+      )}
+
       {cartItems.length == 0 && (
         <FlexBox flexDirection="column" margin="0 0 46px 0" alignItems="center">
           <Title fontSize="1.5em" as="h3" marginTop="46px" marginBottom="16px">
@@ -104,196 +242,39 @@ const CartTable: FC<CartTableProps> = ({
       )}
       {!isMobile ? (
         <>
-          {cartItems.length !== 0 && (
-            <CartTableGrid>
-              <GridHeader>
-                <GridRow>
-                  <div />
-                  <div />
-                  <TextCellHeader>{t('productName')}</TextCellHeader>
-                  <TextCellHeader>{t('price')}</TextCellHeader>
-                  <TextCellHeader>{t('quantity')}</TextCellHeader>
-                  <TextCellHeader>{t('value')}</TextCellHeader>
-                </GridRow>
-              </GridHeader>
-
-              {innercartItems.map(item => {
-                const { resolveCount, isAvailable } = checkProductAvailability(
-                  item,
-                  productsSpecs
-                );
-
-                const productSpec = findProductSpec(productsSpecs, item);
-
-                return (
-                  <RowWrapper key={item.id} isLoadingItem={isLoadingOrder}>
-                    <GridRow>
-                      <DeleteCell>
-                        <div>
-                          <DeleteIcon
-                            onClick={() =>
-                              handleDeleteItem(
-                                item.product_id,
-                                item.variation_id
-                              )
-                            }
-                          />
-                        </div>
-                      </DeleteCell>
-                      <CartImgWrapper>
-                        <CartItemImg
-                          src={item.image?.src}
-                          alt={item.name}
-                          width="50"
-                        />
-                      </CartImgWrapper>
-                      <TextNameCell>
-                        <LinkWrapper
-                          href={`/product/${
-                            productSpec?.parent_slug || productSpec?.slug
-                          }`}
-                        >
-                          {productSpec?.name || item.name}
-                        </LinkWrapper>
-                      </TextNameCell>
-                      <TextCell>
-                        {roundedPrice(Number(item.subtotal) / item.quantity)}
-                        &nbsp;
-                        {symbol}
-                      </TextCell>
-                      <TextCell>
-                        <CartQuantity
-                          resolveCount={resolveCount}
-                          item={item}
-                          handleChangeQuantity={handleChangeQuantity}
-                        />
-                      </TextCell>
-                      <TextCell>
-                        {roundedPrice(Number(item.subtotal))}&nbsp;
-                        {symbol}
-                      </TextCell>
-                    </GridRow>
-                    {isAvailable === false && (
-                      <GridRow padding="5px 16px 16px 16px">
-                        <CartProductWarning
-                          onUpdate={() =>
-                            handleChangeQuantity(
-                              item.product_id,
-                              'value',
-                              item.variation_id,
-                              resolveCount
-                            )
-                          }
-                          resolveCount={resolveCount}
-                        />
-                      </GridRow>
-                    )}
-                  </RowWrapper>
-                );
-              })}
-            </CartTableGrid>
-          )}
-
-          {!!(!order && cartItems.length !== 0) && (
-            <MenuSkeleton
-              elements={cartItems.length || 3}
-              direction="column"
-              width="100%"
-              height="78px"
-              gap="8px"
-              color={theme.background.skeletonSecondary}
-            />
-          )}
+          {filteredOutItems &&
+            (innercartItems.length > 0 || filteredOutItems?.length > 0) && (
+              <CartTableGrid>
+                <GridHeader>
+                  <GridRow>
+                    <div />
+                    <div />
+                    <TextCellHeader>{t('productName')}</TextCellHeader>
+                    <TextCellHeader>{t('price')}</TextCellHeader>
+                    <TextCellHeader>{t('quantity')}</TextCellHeader>
+                    <TextCellHeader>{t('value')}</TextCellHeader>
+                  </GridRow>
+                </GridHeader>
+                {renderCartItems(innercartItems)}
+                {filteredOutItems && renderCartItems(filteredOutItems, true)}
+              </CartTableGrid>
+            )}
         </>
       ) : (
         <>
-          {cartItems.length !== 0 &&
-            innercartItems.map(item => {
-              const { resolveCount, isAvailable } = checkProductAvailability(
-                item,
-                productsSpecs
-              );
-
-              const productSpec = findProductSpec(productsSpecs, item);
-
-              return (
-                <CartCardAllWrapper key={item.id}>
-                  <CartCardWrapper isLoadingItem={isLoadingOrder}>
-                    <CartImgWrapper>
-                      <CartItemImg
-                        src={item.image?.src}
-                        alt={item.name}
-                        width="50"
-                      />
-                    </CartImgWrapper>
-                    <CardContent>
-                      <ProducTitle>
-                        <LinkWrapper
-                          href={`/product/${
-                            productSpec?.parent_slug || productSpec?.slug
-                          }`}
-                        >
-                          {productSpec?.name || item.name}
-                        </LinkWrapper>
-                        <CloseIcon
-                          padding="8px"
-                          onClick={() =>
-                            handleChangeQuantity(
-                              item.product_id,
-                              'value',
-                              item.variation_id,
-                              0
-                            )
-                          }
-                        />
-                      </ProducTitle>
-                      <ProductPrice>
-                        <p>
-                          {roundedPrice(Number(item.subtotal) / item.quantity)}
-                          &nbsp;{symbol}
-                        </p>
-                      </ProductPrice>
-                      <CartQuantity
-                        resolveCount={resolveCount}
-                        item={item}
-                        handleChangeQuantity={handleChangeQuantity}
-                      />
-                      <ProductPrice>
-                        <span>{t('summary')}</span>
-                        <OnePrice>
-                          {roundedPrice(Number(item.subtotal))}&nbsp;
-                          {symbol}
-                        </OnePrice>
-                      </ProductPrice>
-                    </CardContent>
-                  </CartCardWrapper>
-                  {isAvailable === false && (
-                    <CartProductWarning
-                      onUpdate={() =>
-                        handleChangeQuantity(
-                          item.product_id,
-                          'value',
-                          item.variation_id,
-                          resolveCount
-                        )
-                      }
-                      resolveCount={resolveCount}
-                    />
-                  )}
-                </CartCardAllWrapper>
-              );
-            })}
-          {!!(!order && cartItems.length !== 0) && (
-            <MenuSkeleton
-              elements={cartItems.length}
-              direction="column"
-              width="100%"
-              height="230px"
-              gap="5px"
-              color={theme.background.skeletonSecondary}
-            />
-          )}
+          {renderMobileCartItems(innercartItems)}
+          {filteredOutItems && renderMobileCartItems(filteredOutItems, true)}
         </>
+      )}
+      {!!(!order && cartItems.length !== 0) && (
+        <MenuSkeleton
+          elements={isMobile ? 1 : 3}
+          direction="column"
+          width="100%"
+          height={isMobile ? '230px' : '78px'}
+          gap="5px"
+          color={theme.background.skeletonSecondary}
+        />
       )}
     </CartTableWrapper>
   );
