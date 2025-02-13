@@ -1,4 +1,18 @@
-import React, { FC, useState } from 'react';
+import { CustomFormInput } from '@/components/global/forms/CustomFormInput';
+import { MenuSkeleton } from '@/components/menus/MenuSkeleton';
+import { useResponsive } from '@/hooks/useResponsive';
+import { useAppDispatch } from '@/store';
+import { useListAllCouponsQuery } from '@/store/rtk-queries/wooCustomApi';
+import { addCoupon } from '@/store/slices/cartSlice';
+import theme from '@/styles/theme';
+import { CartCouponBlockProps } from '@/types/pages/cart';
+import {
+  discountMapping,
+  userLoyalityStatusSchema,
+} from '@/types/store/rtk-queries/wpApi';
+import { useTranslations } from 'next-intl';
+import { FC, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import {
   CouponBlock,
   CouponButton,
@@ -7,20 +21,6 @@ import {
   CouponSuccess,
   CouponText,
 } from './style';
-import theme from '@/styles/theme';
-import { useForm } from 'react-hook-form';
-import { useListAllCouponsQuery } from '@/store/rtk-queries/wooCustomApi';
-import { useTranslations } from 'next-intl';
-import { useAppDispatch } from '@/store';
-import { addCoupon } from '@/store/slices/cartSlice';
-import { CustomFormInput } from '@/components/global/forms/CustomFormInput';
-import { useResponsive } from '@/hooks/useResponsive';
-import { MenuSkeleton } from '@/components/menus/MenuSkeleton';
-import { CartCouponBlockProps } from '@/types/pages/cart';
-import {
-  discountMapping,
-  userLoyalityStatusSchema,
-} from '@/types/store/rtk-queries/wpApi';
 
 const CartCouponBlock: FC<CartCouponBlockProps> = ({
   symbol,
@@ -64,11 +64,12 @@ const CartCouponBlock: FC<CartCouponBlockProps> = ({
         <CouponText uppercase marginBottom="8px">
           {/*  need to add diff  DISCOUNT */}
           {t('LoginAnd')}
-          <span>&nbsp;-3%&nbsp;</span> {t('ForOrders')} {t('Above')}{' '}
-          <span>&nbsp;500 {symbol}&nbsp;</span>,<span>&nbsp;5%&nbsp;</span>{' '}
-          {t('Above')} <span>&nbsp;1000{symbol}&nbsp;</span>,{' '}
-          <span>&nbsp;-10%&nbsp;</span> {t('Above')}{' '}
-          <span>&nbsp;2000{symbol}&nbsp;</span>
+          <span>&nbsp;3%&nbsp;</span> {t('ForOrders')} {t('Above')}{' '}
+          <span>&nbsp;500 {t('CouponCurrencySymbol')}</span>,
+          <span>&nbsp;5%&nbsp;</span> {t('Above')}{' '}
+          <span>&nbsp;1000 {t('CouponCurrencySymbol')}</span>,{' '}
+          <span>&nbsp;10%&nbsp;</span> {t('Above')}{' '}
+          <span>&nbsp;2000 {t('CouponCurrencySymbol')}&nbsp;</span>
         </CouponText>
       )}
       {validStatus && (
