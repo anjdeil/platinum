@@ -165,7 +165,6 @@ export const getServerSideProps: GetServerSideProps = async (
     const customerResp = await wooCommerceRestApi.get(
       `customers/${customerId}`
     );
-    console.log(customerResp);
 
     if (!customerResp?.data)
       throw new Error('Invalid or missing authentication token');

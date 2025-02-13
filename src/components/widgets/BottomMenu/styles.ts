@@ -1,13 +1,13 @@
-import { BottomMenuWrapperProps } from "@/types/components/widgets/bottomMenu";
-import styled from "@emotion/styled";
+import { BottomMenuWrapperProps } from '@/types/components/widgets/bottomMenu';
+import styled from '@emotion/styled';
 
 export const BottomMenuWrapper = styled.div<BottomMenuWrapperProps>`
-  z-index: 100;
+  z-index: 1000;
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
-  padding-block: ${({ paddingBlock = "18px" }) => paddingBlock};
+  padding-block: ${({ paddingBlock = '18px' }) => paddingBlock};
   padding-bottom: 18px;
   display: flex;
   align-items: center;

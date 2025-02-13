@@ -25,6 +25,7 @@ export const StyledButtonPropsSchema = z.object({
   isDisabled: z.boolean().optional(),
   padding: z.string().optional(),
   onClick: z.function().optional(),
+  fontSize: z.string().optional(),
   noWrap: z.boolean().optional(),
 });
 

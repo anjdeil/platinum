@@ -118,6 +118,7 @@
   },
   "Search": {
     "Search": "Search",
+    "showAll": "Show all",
     "Placeholder": "Enter the product name"
   },
   "Archive": {
@@ -204,6 +205,7 @@
     "LoginAnd": "LOG IN AND TAKE ADVANTAGE OF",
     "Above": "ABOVE",
     "ForOrders": "FOR ORDERS",
+    "CouponCurrencySymbol": "PLN",
     "CouponApply": "Coupon successfully applied",
     "ErrorCoupon": "This coupon doesn't exist.",
     "CouponApplyBtn": "Apply coupon",

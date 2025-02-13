@@ -115,6 +115,7 @@ export const ShippingTypeSchema = z.object({
 export const BillingTypeSchema = ShippingTypeSchema.extend({
   email: z.string().optional(),
   phone: z.string().optional(),
+  company: z.string().optional(),
 });
 
 export const AddressTypeSchema = z.object({
