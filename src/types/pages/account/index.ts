@@ -41,6 +41,7 @@ const AccountInfoWrapperSchema = z.object({
 const AccountInfoBlockListSchema = z.object({
   ...OrderSummarySchema.shape,
   loyaltyProgram: z.string().nullable(),
+  isLoading: z.boolean(),
 });
 
 export const InfoLinePropsSchema = z.object({

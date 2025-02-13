@@ -2,26 +2,25 @@ import AccountInfoBlockList from '@/components/pages/account/AccountInfoBlockLis
 import AccountLayout from '@/components/pages/account/AccountLayout';
 import AccountLinkBlockList from '@/components/pages/account/AccountLinkBlockList/AccountLinkBlockList';
 import OrderTable from '@/components/pages/order/OrderTable/OrderTable';
-import { transformOrders } from '@/services/transformers/transformOrders';
-import { useAppSelector } from '@/store';
+import wooCommerceRestApi from '@/services/wooCommerceRestApi';
+import wpRestApi from '@/services/wpRestApi';
+import { useGetUserTotalsQuery } from '@/store/rtk-queries/userTotals/userTotals';
 import { useFetchOrdersQuery } from '@/store/rtk-queries/wooCustomApi';
-import { useGetCurrenciesQuery } from '@/store/rtk-queries/wpCustomApi';
 import { setUser } from '@/store/slices/userSlice';
 import { AccountInfoWrapper } from '@/styles/components';
+import { JwtDecodedDataType } from '@/types/services/wpRestApi/auth';
 import {
   getUserFromLocalStorage,
   saveUserToLocalStorage,
 } from '@/utils/auth/userLocalStorage';
 import { accountLinkList } from '@/utils/consts';
+import { getLoyaltyLevel } from '@/utils/getLoyaltyLevel';
+import { validateJwtDecode } from '@/utils/zodValidators/validateJwtDecode';
+import { decodeJwt } from 'jose';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import { FC } from 'react';
 import { useDispatch } from 'react-redux';
-import wpRestApi from '@/services/wpRestApi';
-import { decodeJwt } from 'jose';
-import { JwtDecodedDataType } from '@/types/services/wpRestApi/auth';
-import { validateJwtDecode } from '@/utils/zodValidators/validateJwtDecode';
-import wooCommerceRestApi from '@/services/wooCommerceRestApi';
 
 // Delete this interface when we have a user type
 interface UserType {
@@ -85,11 +84,13 @@ interface MyAccountPropsType {
 
 const MyAccount: FC<MyAccountPropsType> = ({ user }) => {
   const t = useTranslations('MyAccount');
-  const { data: currencies } = useGetCurrenciesQuery();
-  const selectedCurrency = useAppSelector(state => state.currencySlice.name);
+
+  const { data: userTotal, isLoading } = useGetUserTotalsQuery(user.id);
 
   const dispatch = useDispatch();
   const userLocal = getUserFromLocalStorage();
+
+  const { level } = getLoyaltyLevel(Number(userTotal?.total_spent));
 
   if (!userLocal) {
     const userData = {
@@ -116,18 +117,14 @@ const MyAccount: FC<MyAccountPropsType> = ({ user }) => {
     })
   );
 
-  const { orderCount, totalAmount } =
-    currencies && ordersData
-      ? transformOrders(ordersData, currencies, selectedCurrency)
-      : { orderCount: undefined, totalAmount: undefined };
-
   return (
     <AccountLayout title={t('clientPersonalAccount')}>
       <AccountInfoWrapper>
         <AccountInfoBlockList
-          orderCount={orderCount}
-          totalAmount={totalAmount}
-          loyaltyProgram={user.loyaltyProgram || null}
+          orderCount={userTotal?.order_count}
+          totalAmount={Number(userTotal?.total_spent)}
+          loyaltyProgram={level || null}
+          isLoading={isLoading}
         />
         <AccountLinkBlockList list={translatedAccountLinkList} />
       </AccountInfoWrapper>
