@@ -48,22 +48,10 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product, currency }) => {
 
   const { finalPrice, regularPrice, isSale } = getCardProductPrice(product);
 
-  const {
-    currentCurrency,
-    convertCurrency,
-    convertToDefaultCurrency,
-    currencyCode,
-    isLoading,
-  } = useCurrencyConverter();
+  const { convertCurrency } = useCurrencyConverter();
 
   const convertedFinalPrice = convertCurrency(finalPrice || 0);
   const convertedRegularPrice = convertCurrency(regularPrice);
-
-  console.log(
-    convertedFinalPrice,
-    convertedRegularPrice,
-    'convertedRegularPrice'
-  );
 
   useEffect(() => {
     const cartMatchIndex = cartItems.findIndex(
