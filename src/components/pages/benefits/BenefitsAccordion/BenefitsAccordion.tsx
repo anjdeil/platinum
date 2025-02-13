@@ -28,7 +28,10 @@ const renderDescriptionList = (
   if (!description) return null;
 
   return description.split('\r\n').map((item, index) => (
-    <li key={index}>
+    <li
+      key={index}
+      style={{ fontSize: '16px', lineHeight: '24px', fontWeight: '400' }}
+    >
       <CustomSvgMarker color={svgColor} /> {item}
     </li>
   ));
@@ -39,7 +42,7 @@ export const BenefitsAccordion: FC<BenefitsProps> = ({
   gapMedium,
   gapLg,
 }) => {
-  const isMobile = useMediaQuery('(max-width: 767px)');
+  const isMobile = useMediaQuery('(max-width: 1023px)');
   const [expanded, setExpanded] = useState<string | false>(
     !isMobile ? 'expanded' : false
   );
