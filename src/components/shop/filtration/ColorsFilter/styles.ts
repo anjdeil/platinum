@@ -33,6 +33,7 @@ export const StyledButtonGroup = styled.div`
 type StyledButtonProps = {
   color: string;
   selected: boolean;
+  isMulticolor?: boolean;
 };
 
 export const StyledButton = styled.button<StyledButtonProps>`
@@ -44,8 +45,10 @@ export const StyledButton = styled.button<StyledButtonProps>`
   width: 49px;
   height: 31px;
   border: 1px solid #E0EFFE;
-  background-color: ${({ color }) => color};
-
+  background: ${({ color, isMulticolor }) =>
+    isMulticolor
+      ? 'linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet)'
+      : color};
   border-radius: 8px
   outline: 2px solid transparent;
 
