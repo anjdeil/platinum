@@ -21,7 +21,7 @@ export const BenefitsLayout = styled(Box, {
   grid-template-columns: repeat(3, 1fr);
   gap: ${({ gapMedium = '16px' }) => gapMedium};
   margin-bottom: 80px;
-  @media ${({ theme }) => theme.media.medium} {
+  @media ${({ theme }) => theme.media.large} {
     display: flex;
     flex-direction: column;
     gap: ${({ gapLg = '24px' }) => gapLg};
@@ -41,7 +41,7 @@ export const BenefitsItem = styled(Box, {
   gap: ${({ gapMedium = '16px' }) => gapMedium};
   min-width: 30%;
 
-  @media ${({ theme }) => theme.media.medium} {
+  @media ${({ theme }) => theme.media.large} {
     :nth-of-type(1) {
       width: 50%;
     }
@@ -53,7 +53,7 @@ export const BenefitsItem = styled(Box, {
     }
     gap: ${({ gapSm = '8px' }) => gapSm};
   }
-  @media ${({ theme }) => theme.media.small} {
+  @media ${({ theme }) => theme.media.medium} {
     :nth-of-type(1),
     :nth-of-type(2),
     :nth-of-type(3) {
@@ -63,9 +63,8 @@ export const BenefitsItem = styled(Box, {
 `;
 
 export const BenefitsTitle = styled(Title)`
-  font: ${({ theme }) => theme.fonts.titleH2SemiBold};
+  font: ${({ theme }) => theme.fonts.titleH1SemiBold};
   text-transform: uppercase;
-  font-size: 48px;
   @media ${({ theme }) => theme.media.medium} {
     font: ${({ theme }) => theme.fonts.bodyMiddleSemiBold};
   }
@@ -97,7 +96,7 @@ export const BenefitsAccordionDetails = styled(AccordionDetails)`
 `;
 
 export const BenefitsPrice = styled.span`
-  font-size: 24px;
+  font: ${({ theme }) => theme.fonts.titleH2Medium};
   text-transform: uppercase;
   text-align: center;
   @media ${({ theme }) => theme.media.medium} {
@@ -141,7 +140,7 @@ export const BenefitsAccordionStyled = styled(Accordion) <{ level: Level }>`
   ::before {
     opacity: 0;
   }
-  @media ${({ theme }) => theme.media.medium} {
+  @media ${({ theme }) => theme.media.large} {
     .MuiAccordionSummary-expandIconWrapper {
       display: none;
     }
@@ -152,13 +151,19 @@ export const BenefitsAccordionStyled = styled(Accordion) <{ level: Level }>`
 export const CustomAccordionSummary = styled(AccordionSummary)`
   margin: 0;
   padding: 0;
-  @media ${({ theme }) => theme.media.medium} {
+  @media ${({ theme }) => theme.media.large} {
     margin-bottom: 10px;
     .MuiAccordionSummary-content {
       margin: 0;
       justify-content: center;
     }
   }
+`;
+
+export const StyledListItem = styled.li`
+  font: ${({ theme }) => theme.fonts.bodyMiddleReg};
+  display: flex;
+  align-items: center;
 `;
 
 export const AccordionTitle = styled.h3`
