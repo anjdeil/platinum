@@ -101,11 +101,11 @@ export default function ProductPage({
         {product && (
           <ProductInfo product={product} currency={extendedCurrency} />
         )}
+        <Reviews product={product} />
         <CustomProductList
           title="recommendProduct"
           productIds={recommendProducts}
         />
-        <Reviews product={product} />
       </Container>
     </>
   );
