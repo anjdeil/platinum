@@ -7,7 +7,12 @@ export const ReviewsContainer = styled.div`
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    row-gap: 24px;    
+    row-gap: 24px;
+    margin-bottom: 60px;
+
+    @media ${({ theme }) => theme.media.medium} {
+       margin-bottom: 48px;
+    }
 `;
 
 export const TitleBlock = styled.div`

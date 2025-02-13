@@ -223,6 +223,7 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
         )}
         {/* Options END*/}
         {isSale && saleEndDate && <ProductPromotion time={saleEndDate} />}
+        <DeliveryTimer />
         <AddToBasketWrapper>
           <ProductQuantity quantity={quantity} onChange={setQuantity} />
 
@@ -236,7 +237,6 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
             </StyledButton>
           )}
         </AddToBasketWrapper>
-        <DeliveryTimer />
         <PaymentList />
         <ShippingList />
         <StyledButton onClick={addComment}>
