@@ -10,6 +10,7 @@ import { FilterActionButtons } from '../filterActionButtons';
 import { FilterAttributes } from '../FilterAttributes/FilterAttributes';
 import { PriceFilter } from '../PriceFilter';
 import { FilterPanelWrap } from './styles';
+import { PriceFilterSkeleton } from '../priceFilterSkeleton/PriceFilterSkeleton';
 
 /**
  * @todo
@@ -51,6 +52,7 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
     min: minPrice,
     max: maxPrice,
   });
+  const [disabledApplyButton, setDisabledApplyButton] = useState(false);
 
   useEffect(() => {
     const initializePrices = async () => {
@@ -268,6 +270,12 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
     updateUrlParams();
   }, [chosenAttributes]);
 
+  const onApplyPriceFilterClick = useCallback(() => {
+    if (priceRange.max >= priceRange.min) {
+      updateUrlParams();
+    }
+  }, [chosenAttributes]);
+
   /** Reset params */
   const onResetClick = useCallback(async () => {
     const { slugs } = router.query;
@@ -303,6 +311,7 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
             paramKey !== 'max_price'
           ) {
             newQuery[paramKey] = params[paramKey];
+            setDisabledApplyButton(false);
           } else if (
             type === 'attributes' &&
             paramKey.startsWith('pa_') &&
@@ -355,7 +364,15 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
         newValue >= 0 &&
         newValue <= priceRange.max
       ) {
-        setPriceRange(prev => ({ ...prev, min: newValue }));
+        setPriceRange(prev => {
+          console.log(
+            'min',
+            newValue !== initialPriceRange.min,
+            newValue >= 0,
+            newValue <= priceRange.max
+          );
+          return { ...prev, min: newValue };
+        });
         setChosenAttributes(prev => {
           const updatedAttributes = new Map(prev);
           updatedAttributes.set('min_price', new Set([newValue.toString()]));
@@ -368,11 +385,8 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
 
   const updateMaxPrice = useCallback(
     (newValue: number) => {
-      if (
-        newValue !== priceRange.max &&
-        newValue >= 0 &&
-        newValue >= priceRange.min
-      ) {
+      if (newValue <= initialPriceRange.max) {
+        setDisabledApplyButton(false);
         setPriceRange(prev => ({ ...prev, max: newValue }));
         setChosenAttributes(prev => {
           const updatedAttributes = new Map(prev);
@@ -380,8 +394,11 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
           return updatedAttributes;
         });
       }
+      if (newValue < priceRange.min) {
+        setDisabledApplyButton(true);
+      }
     },
-    [priceRange]
+    [priceRange.min, initialPriceRange.max]
   );
 
   return (
@@ -389,7 +406,7 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
       <FilterPanelWrap>
         <CustomSingleAccordion title={t('price')}>
           {isLoading ? (
-            <p>Loading...</p>
+            <PriceFilterSkeleton />
           ) : (
             <PriceFilter
               currencyCode={currencyCode}
@@ -400,7 +417,8 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
               updateMaxPrice={updateMaxPrice}
               updateMinPrice={updateMinPrice}
               onReset={async () => await onResetParams('price', 'price')}
-              onApply={onApplyClick}
+              onApply={onApplyPriceFilterClick}
+              disabledApplyButton={disabledApplyButton}
             />
           )}
         </CustomSingleAccordion>

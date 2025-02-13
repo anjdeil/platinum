@@ -102,7 +102,16 @@
     "subscribeNewsletter": "Zapisz się do naszego newslettera!",
     "newsletterDescription": "Bądź na bieżąco z najnowszymi wiadomościami, ekskluzywnymi ofertami i specjalnymi treściami – prosto na Twoją skrzynkę!",
     "subscriptionSuccess": "Pomyślnie zapisałeś się do newslettera",
-    "unsubscriptionSuccess": "Pomyślnie wypisałeś się z newslettera"
+    "unsubscriptionSuccess": "Pomyślnie wypisałeś się z newslettera",
+    "gold": "Złoty",
+    "silver": "Srebrny",
+    "platinum": "Platynowy",
+    "currentLevel": "Twój obecny poziom",
+    "userInfoError": "Błąd podczas pobierania informacji o użytkowniku",
+    "nextLevelInfo": "Potrzebujesz tylko {amount} {code}, aby osiągnąć poziom {nextLevel}",
+    "levelBenefits": "Korzyści poziomu",
+    "loyalityProgram": "Program lojalnościowy",
+    "loyaltyLevelNotEarned": "Jeszcze nie zdobyłeś poziomu lojalności, ale czeka na Ciebie mnóstwo ekscytujących nagród!"
   },
   "TopBar": {
     "CallUs": "Kontakt"
@@ -172,7 +181,8 @@
     "days": "Dni",
     "hours": "Godziny",
     "minutes": "Minuty",
-    "priceFrom": "od {price}"
+    "priceFrom": "od {price}",
+    "deliveryTime": "Zamów w ciągu {hour} godz. {minute} min, a zostanie wysłane dzisiaj"
   },
   "Cart": {
     "cart": "Koszyk",
@@ -191,11 +201,12 @@
     "updateTo": "Zaktualizuj do",
     "priceToDelivery": "Aby otrzymać darmową dostawę, musisz dodać produkty o łącznej wartości {locale}",
     "discountText": "ZALOGUJ SIĘ I SKORZYSTAJ Z {discounts}",
-    "CouponText": "JEŚLI MASZ KUPON ZNIŻKOWY, UŻYJ GO I OTRZYMAJ ZNIŻKĘ!",
-    "ChooseCouponText": "Wybierz, jeśli masz kod rabatowy lub punkty premiowe, które chcesz użyć, lub chcesz oszacować koszt dostawy.",
+    "CouponText": "JEŚLI MASZ KUPON RABATOWY, UŻYJ GO I OTRZYMAJ ZNIŻKĘ!",
+    "ChooseCouponText": "Wybierz, czy masz kod rabatowy lub punkty lojalnościowe, które chcesz użyć, lub chcesz oszacować koszt dostawy.",
     "LoginAnd": "ZALOGUJ SIĘ I SKORZYSTAJ Z",
     "Above": "POWYŻEJ",
-    "ForOrders": "DLA ZAMÓWIEŃ",
+    "ForOrders": "NA ZAMÓWIENIA",
+    "CouponCurrencySymbol": "ZŁ",
     "CouponApply": "Kupon został pomyślnie zastosowany",
     "ErrorCoupon": "Ten kupon nie istnieje",
     "CouponApplyBtn": "Zastosuj kupon",

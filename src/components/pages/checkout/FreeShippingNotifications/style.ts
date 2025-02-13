@@ -4,6 +4,7 @@ import { NotificationWrapper } from '@/components/global/Notification/styles';
 
 export const FreeShippingNotification = styled(NotificationWrapper)<{
   type?: 'success' | 'warning' | 'info';
+  isVisible: boolean;
   marginBottom?: string;
 }>`
     display: flex;

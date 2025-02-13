@@ -27,6 +27,7 @@ import { useWishlist } from '@/hooks/useWishlist';
 import { popupToggle } from '@/store/slices/PopupSlice';
 import { getCardProductPrice } from '@/utils/price/getCardProductPrice';
 import { Skeleton } from '@mui/material';
+import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
 
 const ProductCard: React.FC<ProductCardPropsType> = ({ product, currency }) => {
   const t = useTranslations('Product');
@@ -46,6 +47,11 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product, currency }) => {
   const [isCartMatch, setIsCartMatch] = useState(false);
 
   const { finalPrice, regularPrice, isSale } = getCardProductPrice(product);
+
+  const { convertCurrency } = useCurrencyConverter();
+
+  const convertedFinalPrice = convertCurrency(finalPrice || 0);
+  const convertedRegularPrice = convertCurrency(regularPrice);
 
   useEffect(() => {
     const cartMatchIndex = cartItems.findIndex(
@@ -103,22 +109,25 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product, currency }) => {
               <>
                 {product.type === 'variable' &&
                 product.variations.length > 1 ? (
-                  finalPrice !== regularPrice ? (
+                  convertedFinalPrice !== convertedRegularPrice ? (
                     <ProductPrice>
-                      {t('priceFrom', { price: finalPrice })} {currency.code}
+                      {t('priceFrom', {
+                        price: convertedFinalPrice,
+                      })}{' '}
+                      {currency.code}
                     </ProductPrice>
                   ) : (
-                    <ProductPrice>{`${finalPrice} ${currency.code}`}</ProductPrice>
+                    <ProductPrice>{`${convertedFinalPrice} ${currency.code}`}</ProductPrice>
                   )
                 ) : (
                   <>
                     {isSale ? (
                       <>
-                        <ProductMaxPrice>{`${regularPrice} ${currency.code}`}</ProductMaxPrice>
-                        <ProductPrice>{`${finalPrice} ${currency.code}`}</ProductPrice>
+                        <ProductMaxPrice>{`${convertedRegularPrice} ${currency.code}`}</ProductMaxPrice>
+                        <ProductPrice>{`${convertedFinalPrice} ${currency.code}`}</ProductPrice>
                       </>
                     ) : (
-                      <ProductPrice>{`${regularPrice} ${currency.code}`}</ProductPrice>
+                      <ProductPrice>{`${convertedRegularPrice} ${currency.code}`}</ProductPrice>
                     )}
                   </>
                 )}

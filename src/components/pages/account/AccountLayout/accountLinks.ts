@@ -9,11 +9,11 @@ const accountLinks = [
     url: '/my-account/edit-account',
     isActive: false,
   },
-  {
+  /*   {
     name: 'shippingAddress',
     url: '/my-account/addresses',
     isActive: false,
-  },
+  }, */
   {
     name: 'orderHistory',
     url: '/my-account/orders',

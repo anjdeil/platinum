@@ -102,7 +102,16 @@
     "subscribeNewsletter": "Abonniere unseren Newsletter!",
     "newsletterDescription": "Bleiben Sie mit den neuesten Nachrichten, exklusiven Angeboten und speziellen Inhalten auf dem Laufenden – direkt in Ihrem Posteingang!",
     "subscriptionSuccess": "Sie haben den Newsletter erfolgreich abonniert",
-    "unsubscriptionSuccess": "Sie haben den Newsletter erfolgreich abbestellt"
+    "unsubscriptionSuccess": "Sie haben den Newsletter erfolgreich abbestellt",
+    "gold": "Gold",
+    "silver": "Silber",
+    "platinum": "Platin",
+    "currentLevel": "Ihr aktuelles Level",
+    "userInfoError": "Fehler beim Abrufen der Benutzerinformationen",
+    "nextLevelInfo": "Sie brauchen nur noch {amount} {code}, um das {nextLevel} zu erreichen",
+    "levelBenefits": "Level-Vorteile",
+    "loyalityProgram": "Treueprogramm",
+    "loyaltyLevelNotEarned": "Sie haben noch kein Loyalitätslevel erreicht, aber es warten viele spannende Belohnungen auf Sie!"
   },
   "TopBar": {
     "CallUs": "Kontakt"
@@ -172,7 +181,8 @@
     "days": "Tage",
     "hours": "Stunden",
     "minutes": "Minuten",
-    "priceFrom": "ab {price}"
+    "priceFrom": "ab {price}",
+    "deliveryTime": "Bestelle innerhalb von {hour} Std. {minute} Min. und es wird heute verschickt"
   },
   "Cart": {
     "cart": "Warenkorb",
@@ -192,10 +202,11 @@
     "priceToDelivery": "Um kostenlosen Versand zu erhalten, müssen Sie Artikel im Wert von insgesamt {locale} hinzufügen",
     "discountText": "MELDEN SIE SICH AN UND NUTZEN SIE {discounts}",
     "CouponText": "FALLS SIE EINEN RABATTGUTSCHEIN HABEN, VERWENDEN SIE IHN UND ERHALTEN SIE EINEN RABATT!",
-    "ChooseCouponText": "Wählen Sie, wenn Sie einen Rabattcode oder Bonuspunkte haben, die Sie verwenden möchten, oder möchten Sie Ihre Versandkosten schätzen.",
+    "ChooseCouponText": "Wählen Sie, ob Sie einen Rabattcode oder TREUEPUNKTE haben, die Sie verwenden möchten, oder möchten Sie Ihre Versandkosten schätzen.",
     "LoginAnd": "MELDEN SIE SICH AN UND NUTZEN SIE",
-    "Above": "OBEN",
+    "Above": "ÜBER",
     "ForOrders": "FÜR BESTELLUNGEN",
+    "CouponCurrencySymbol": "PLN",
     "CouponApply": "Coupon erfolgreich angewendet",
     "ErrorCoupon": "Dieser Gutschein existiert nicht",
     "CouponApplyBtn": "Gutschein anwenden",
