@@ -181,7 +181,8 @@
     "days": "Days",
     "hours": "Hours",
     "minutes": "Minutes",
-    "priceFrom": "from {price}"
+    "priceFrom": "from {price}",
+    "deliveryTime": "Order within {hour}h {minute}min and it will be shipped today"
   },
   "Cart": {
     "cart": "Cart",

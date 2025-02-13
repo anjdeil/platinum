@@ -26,6 +26,7 @@ import { Skeleton } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import DeliveryTimer from '../DeliveryTimer/DeliveryTimer';
 import PaymentList from '../PaymentList/PaymentList';
 import ProductAvailable from '../ProductAvailable/ProductAvailable';
 import { ProductOptionsPanel } from '../ProductOptionsPanel';
@@ -221,9 +222,7 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
           />
         )}
         {/* Options END*/}
-
         {isSale && saleEndDate && <ProductPromotion time={saleEndDate} />}
-
         <AddToBasketWrapper>
           <ProductQuantity quantity={quantity} onChange={setQuantity} />
 
@@ -237,6 +236,7 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
             </StyledButton>
           )}
         </AddToBasketWrapper>
+        <DeliveryTimer />
         <PaymentList />
         <ShippingList />
         <StyledButton onClick={addComment}>

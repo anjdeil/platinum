@@ -181,7 +181,8 @@
     "days": "Днів",
     "hours": "Годин",
     "minutes": "Хвилин",
-    "priceFrom": "від {price}"
+    "priceFrom": "від {price}",
+    "deliveryTime": "Замов упродовж {hour} год {minute} хв, і буде відправлено сьогодні"
   },
   "Cart": {
     "cart": "Кошик",
