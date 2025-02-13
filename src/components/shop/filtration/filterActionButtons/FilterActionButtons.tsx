@@ -5,19 +5,29 @@ type FilterActionButtonProps = {
   isApply?: boolean;
   onReset?: () => void;
   onApply?: () => void;
+  disabledApplyButton?: boolean;
 };
 
 export const FilterActionButtons = ({
   isApply = false,
   onReset = () => {},
   onApply = () => {},
+  disabledApplyButton,
 }: FilterActionButtonProps) => {
   const t = useTranslations('Archive');
+
   if (isApply) {
     return (
       <ButtonWrap>
         <ResetButton onClick={onReset}>{t('clearFilter')}</ResetButton>
-        <ApplyButton onClick={onApply}>{t('applyFilter')}</ApplyButton>
+        {disabledApplyButton ? (
+          <ApplyButton disabled onClick={onApply}>
+            {t('applyFilter')}
+          </ApplyButton>
+        ) : (
+          <ApplyButton onClick={onApply}>{t('applyFilter')}</ApplyButton>
+        )}
+        {/* <ApplyButton onClick={onApply}>{t('applyFilter')}</ApplyButton> */}
       </ButtonWrap>
     );
   }

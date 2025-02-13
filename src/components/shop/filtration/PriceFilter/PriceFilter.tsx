@@ -1,8 +1,11 @@
-import { FC, useCallback } from 'react';
-import { CustomInput } from '@/components/global/forms/CustomInput';
-import { Slider } from '@mui/material';
-import { Divider, PriceFilterContainer } from './styles';
+import { ChangeEvent, FC, useCallback } from 'react';
+import { Divider, PriceFilterContainer, StyledSlider } from './styles';
 import { FilterActionButtons } from '../filterActionButtons';
+import {
+  CustomInputStyle,
+  CustomInputWrapper,
+  Input,
+} from '@/components/global/forms/CustomFormInput/styles';
 
 interface PriceFilter {
   currencyCode: string;
@@ -14,6 +17,7 @@ interface PriceFilter {
   updateMaxPrice: (newValue: number) => void;
   onReset: () => void;
   onApply: () => void;
+  disabledApplyButton?: boolean;
 }
 
 export const PriceFilter: FC<PriceFilter> = props => {
@@ -27,6 +31,7 @@ export const PriceFilter: FC<PriceFilter> = props => {
     updateMaxPrice,
     onReset,
     onApply,
+    disabledApplyButton,
   } = props;
 
   const handleSliderChange = useCallback(
@@ -40,9 +45,27 @@ export const PriceFilter: FC<PriceFilter> = props => {
     [currentMin, currentMax, updateMinPrice, updateMaxPrice]
   );
 
+  const onMinInputChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const inputValue = event.target.value;
+      const newValue = inputValue ? Number(inputValue) : minPrice;
+      updateMinPrice(newValue);
+    },
+    [updateMinPrice, minPrice]
+  );
+
+  const onMaxInputChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const inputValue = event.target.value;
+      const newValue = Number(inputValue);
+      updateMaxPrice(newValue);
+    },
+    [updateMaxPrice, maxPrice]
+  );
+
   return (
     <>
-      <Slider
+      <StyledSlider
         getAriaLabel={() => 'Price filter range'}
         value={[currentMin, currentMax]}
         min={minPrice}
@@ -51,12 +74,51 @@ export const PriceFilter: FC<PriceFilter> = props => {
         step={1}
       />
       <PriceFilterContainer>
-        <CustomInput value={currentMin} onChange={updateMinPrice} />
+        <CustomInputStyle
+          as={'label'}
+          isError={false}
+          isTextArea={false}
+          isCheckbox={false}
+          isPhone={false}
+        >
+          <CustomInputWrapper>
+            <Input
+              as="input"
+              type="number"
+              isError={false}
+              value={currentMin.toString()}
+              defaultValue={minPrice.toString()}
+              onChange={onMinInputChange}
+            />
+          </CustomInputWrapper>
+        </CustomInputStyle>
         <Divider />
-        <CustomInput value={currentMax} onChange={updateMaxPrice} />
+        <CustomInputStyle
+          as={'label'}
+          isError={false}
+          isTextArea={false}
+          isCheckbox={false}
+          isPhone={false}
+        >
+          <CustomInputWrapper>
+            <Input
+              as="input"
+              type="number"
+              isError={false}
+              value={currentMax.toString()}
+              defaultValue={maxPrice.toString()}
+              onChange={onMaxInputChange}
+            />
+          </CustomInputWrapper>
+        </CustomInputStyle>
         <p>{currencyCode}</p>
       </PriceFilterContainer>
-      <FilterActionButtons onReset={onReset} onApply={onApply} isApply={true} />
+      <FilterActionButtons
+        onReset={onReset}
+        onApply={onApply}
+        isApply={true}
+        disabledApplyButton={disabledApplyButton}
+      />
     </>
   );
 };

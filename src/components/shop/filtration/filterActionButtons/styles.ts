@@ -9,6 +9,14 @@ export const ButtonWrap = styled.div`
 
 export const ApplyButton = styled(AddToBasketButtonStyled)`
   padding: 5px 10px;
+
+  &:disabled {
+    background-color: ${({ theme }) => theme.background.grey};
+    color: ${({ theme }) => theme.colors.primary};
+    cursor: default;
+    opacity: 0.6;
+    border: none;
+  }
 `;
 
 export const ResetButton = styled(AddToBasketButtonStyled)`

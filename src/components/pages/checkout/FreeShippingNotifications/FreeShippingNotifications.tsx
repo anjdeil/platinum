@@ -50,7 +50,7 @@ export default function FreeShippingNotifications({ methods, totalCost }: {
 
   return mergedNotifications.map(({ difference, titles }) => {
     return (
-      <FreeShippingNotification key={titles.join(' | ')}>
+      <FreeShippingNotification isVisible={true} key={titles.join(' | ')}>
         <FreeShippingIcon />
         <FreeShippingNotificationInfo>
           {t('freeShipping', { cost: `${convertCurrency(difference)} ${currencyCode}` })}
