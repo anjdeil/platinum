@@ -4,7 +4,7 @@ import {
   OrderBarSum,
   OrderBarWrapper,
   OrderBarTitle,
-  OrderBarDesc,
+  // OrderBarDesc,
   CrossedOut,
 } from './style';
 import { Skeleton } from '@mui/material';
@@ -57,11 +57,11 @@ const OrderBar: FC<OrderBarProps> = ({
             </div>
           )}
         </OrderBarSum>
-        {!miniCart && (
-          <OrderBarDesc textAlign="right">
-            {t('priceToDelivery', { locale: '26 zl' })}
-          </OrderBarDesc>
-        )}
+        {/*{!miniCart && (*/}
+        {/*  <OrderBarDesc textAlign="right">*/}
+        {/*    {t('priceToDelivery', { locale: '26 zl' })}*/}
+        {/*  </OrderBarDesc>*/}
+        {/*)}*/}
       </OrderBarContent>
     </OrderBarWrapper>
   );
