@@ -7,7 +7,6 @@ import CartQuantity, {
   adaptItemToCartQuantity,
 } from '@/components/pages/cart/CartQuantity/CartQuantity';
 import OrderBar from '@/components/pages/cart/OrderBar/OrderBar';
-import { OrderBarDesc } from '@/components/pages/cart/OrderBar/style';
 import {
   CardContent,
   CartCardWrapper,
@@ -161,9 +160,9 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
           </FlexBox>
           <CloseIcon onClick={handleClose} />
         </FlexBox>
-        <OrderBarDesc textAlign="left" marginBottom="40px">
+        {/* <OrderBarDesc textAlign="left" marginBottom="40px">
           {t('priceToDelivery', { locale: '26 zl' })}
-        </OrderBarDesc>
+        </OrderBarDesc> */}
         {hasConflict && productsWithCartData && productsData && (
           <Notification type="warning">{t('cartConflict')}</Notification>
         )}
