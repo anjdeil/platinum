@@ -5,14 +5,15 @@ import {
   CustomInputWrapper,
   Input,
 } from '@/components/global/forms/CustomFormInput/styles';
-import { useTranslations } from 'next-intl';
-import { ResetButton } from '../FilterPanel/styles';
 
-const useDebouncedCallback = (callback: Function, delay: number) => {
+const useDebouncedCallback = <T extends (...args: any[]) => void>(
+  callback: T,
+  delay: number
+) => {
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
 
   const debouncedCallback = useCallback(
-    (...args: any[]) => {
+    (...args: Parameters<T>) => {
       if (timeoutId) {
         clearTimeout(timeoutId);
       }
@@ -49,10 +50,7 @@ export const PriceFilter: FC<PriceFilter> = props => {
     maxPrice,
     updateMinPrice,
     updateMaxPrice,
-    onReset,
   } = props;
-
-  const t = useTranslations('Archive');
 
   const handleSliderChange = useCallback(
     (_: Event, newValue: number | number[]) => {
@@ -135,7 +133,7 @@ export const PriceFilter: FC<PriceFilter> = props => {
         </CustomInputStyle>
         <p>{currencyCode}</p>
       </PriceFilterContainer>
-      <ResetButton onClick={onReset}>{t('clearFilter')}</ResetButton>
+      {/* <ResetButton onClick={onReset}>{t('clearFilter')}</ResetButton> */}
     </>
   );
 };
