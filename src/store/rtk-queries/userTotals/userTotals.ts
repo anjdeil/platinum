@@ -15,4 +15,4 @@ export const userTotals = createApi({
   }),
 });
 
-export const { useGetUserTotalsQuery } = userTotals;
+export const { useGetUserTotalsQuery, useLazyGetUserTotalsQuery } = userTotals;
