@@ -155,16 +155,20 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
     convertPricesFromUrl();
   }, [router.query, initialPriceRange]);
 
-  const [prevCategory, setPrevCategory] = useState(router.asPath);
+  const [prevCategory, setPrevCategory] = useState(router.asPath.split('?')[0]);
 
   useEffect(() => {
-    const { slugs } = router.query;
-    const currentPath = router.asPath.split('?')[0]; // Получаем путь без параметров
+    const { slugs, page } = router.query;
+    const currentPath = router.asPath.split('?')[0];
 
-    if (currentPath !== prevCategory) {
-      console.log('Category changed, resetting filters...');
+    const cleanedCurrentPath = currentPath.replace(/\/page\/\d+$/, '');
+    const cleanedPrevCategory = prevCategory.replace(/\/page\/\d+$/, '');
 
-      setPriceRange({ min: initialPriceRange.min, max: initialPriceRange.max });
+    if (cleanedCurrentPath !== cleanedPrevCategory) {
+      setPriceRange({
+        min: initialPriceRange.min,
+        max: initialPriceRange.max,
+      });
 
       router.push({
         pathname: router.pathname,
@@ -172,16 +176,17 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
           slugs: Array.isArray(slugs)
             ? slugs.filter(slug => slug !== 'page' && Number.isNaN(+slug))
             : [],
+          ...(page ? { page } : {}),
         },
       });
 
-      setPrevCategory(currentPath); // Обновляем предыдущий путь
+      setPrevCategory(cleanedCurrentPath);
     }
-  }, [router.asPath]);
+  }, [router.asPath, prevCategory, initialPriceRange, router.query]);
 
   const updateMinPrice = async (newValue: number) => {
     const convertedValue = await convertToDefaultCurrency(newValue);
-    const { slugs, ...params } = router.query;
+    const { slugs, page, ...params } = router.query;
     const newSlugs = Array.isArray(slugs)
       ? slugs.filter(slug => slug !== 'page' && Number.isNaN(+slug))
       : [];
@@ -195,6 +200,7 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
         query: {
           ...params,
           slugs: newSlugs,
+          ...(page ? { page } : {}),
         },
       });
     } else {
@@ -206,6 +212,7 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
           ...params,
           slugs: newSlugs,
           min_price: convertedValue.toFixed(2),
+          ...(page ? { page } : {}),
         },
       });
     }
@@ -213,7 +220,7 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
 
   const updateMaxPrice = async (newValue: number) => {
     const convertedValue = await convertToDefaultCurrency(newValue);
-    const { slugs, ...params } = router.query;
+    const { slugs, page, ...params } = router.query;
     const newSlugs = Array.isArray(slugs)
       ? slugs.filter(slug => slug !== 'page' && Number.isNaN(+slug))
       : [];
@@ -227,6 +234,7 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
         query: {
           ...params,
           slugs: newSlugs,
+          ...(page ? { page } : {}),
         },
       });
     } else {
@@ -238,6 +246,7 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
           ...params,
           slugs: newSlugs,
           max_price: convertedValue.toFixed(2),
+          ...(page ? { page } : {}),
         },
       });
     }
@@ -267,7 +276,7 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
 
   //------------- Reset Filters
   const onResetParams = () => {
-    const { slugs } = router.query;
+    const { slugs, page } = router.query;
 
     router.push({
       pathname: router.pathname,
@@ -275,6 +284,7 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
         slugs: Array.isArray(slugs)
           ? slugs.filter(slug => slug !== 'page' && Number.isNaN(+slug))
           : [],
+        ...(page ? { page } : {}),
       },
     });
   };

@@ -16,7 +16,6 @@ import { useTranslations } from 'next-intl';
 import router from 'next/router';
 import { FC, useState } from 'react';
 import SelectParentCategory from '../categories/SelectParentCategoryMobile/SelectParentCategoryMobile';
-import { FilterPanel } from '../filtration/FilterPanel';
 import { ProductCardList } from '../ProductCardsList';
 import {
   CatalogContainer,
@@ -34,6 +33,7 @@ import {
   PagesNavigationFooterWrapper,
   PagesNavigationWrapper,
 } from './styles';
+import { FilterPanel } from '../filtration/FilterPanel';
 
 const switchPage = (page: number, maxPage: number) => {
   if (maxPage < page) return;
