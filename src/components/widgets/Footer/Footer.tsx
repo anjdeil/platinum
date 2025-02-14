@@ -28,6 +28,7 @@ import {
   PaymentAndDeliveryMethods,
   PaymentAndDeliveryMethodsContainer,
 } from './styles';
+import { NavLink } from '@/components/menus/Nav/styles';
 
 export const Footer: FC = () => {
   const t = useTranslations('Footer');
@@ -155,7 +156,9 @@ export const Footer: FC = () => {
                   aria-controls={`"panel4a-content"`}
                   id="panel4a-header"
                 >
-                  <FooterTitle>{t('contacts')}</FooterTitle>
+                  <NavLink href={'/contacts'} passHref>
+                    <FooterTitle>{t('contacts')}</FooterTitle>
+                  </NavLink>
                 </AccordionSummaryCustom>
                 <AccordionDetails>
                   <Contact>
