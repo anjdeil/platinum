@@ -5,12 +5,12 @@ import { Skeleton } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { FC } from 'react';
 import {
-  CrossedOut,
   OrderBarContent,
   OrderBarSum,
   OrderBarTitle,
   // OrderBarDesc,
   CrossedOut,
+  OrderBarWrapper,
 } from './style';
 
 const OrderBar: FC<OrderBarProps> = ({
