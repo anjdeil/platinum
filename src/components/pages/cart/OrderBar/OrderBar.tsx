@@ -9,7 +9,8 @@ import {
   OrderBarContent,
   OrderBarSum,
   OrderBarTitle,
-  OrderBarWrapper,
+  // OrderBarDesc,
+  CrossedOut,
 } from './style';
 
 const OrderBar: FC<OrderBarProps> = ({
