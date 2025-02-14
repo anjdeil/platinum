@@ -4,7 +4,7 @@ import { useAppSelector } from '@/store';
 import { FilterPanelPropsType } from '@/types/components/shop/filters';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
-import { FC, useCallback, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import ColorsFilter from '../ColorsFilter/ColorsFilter';
 import { FilterAttributes } from '../FilterAttributes/FilterAttributes';
 import { PriceFilter } from '../PriceFilter';
@@ -219,25 +219,25 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
     }
   };
 
-  const onResetPriceFilter = useCallback(() => {
-    setPriceRange({ min: minPrice, max: maxPrice }); // Сбросим в значения по умолчанию
+  // const onResetPriceFilter = useCallback(() => {
+  //   setPriceRange({ min: minPrice, max: maxPrice }); // Сбросим в значения по умолчанию
 
-    const { slugs, ...params } = router.query;
-    const newSlugs = Array.isArray(slugs)
-      ? slugs.filter(slug => slug !== 'page' && Number.isNaN(+slug))
-      : [];
+  //   const { slugs, ...params } = router.query;
+  //   const newSlugs = Array.isArray(slugs)
+  //     ? slugs.filter(slug => slug !== 'page' && Number.isNaN(+slug))
+  //     : [];
 
-    delete params.min_price;
-    delete params.max_price;
+  //   delete params.min_price;
+  //   delete params.max_price;
 
-    router.push({
-      pathname: router.pathname,
-      query: {
-        ...params,
-        slugs: newSlugs,
-      },
-    });
-  }, [minPrice, maxPrice, router]);
+  //   router.push({
+  //     pathname: router.pathname,
+  //     query: {
+  //       ...params,
+  //       slugs: newSlugs,
+  //     },
+  //   });
+  // }, [minPrice, maxPrice, router]);
 
   //------------- Price Filter
 
