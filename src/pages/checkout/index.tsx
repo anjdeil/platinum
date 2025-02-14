@@ -52,6 +52,8 @@ import BillingWarnings from '@/components/pages/checkout/BillingWarnings';
 import Notification from '@/components/global/Notification/Notification';
 import { useRegisterUser } from '@/hooks/useRegisterUser';
 import { RegistrationError } from '@/components/pages/checkout/RegistrationError/RegistrationError';
+import { useLazyGetUserTotalsQuery } from '@/store/rtk-queries/userTotals/userTotals';
+import { getLoyaltyLevel } from '@/utils/getLoyaltyLevel';
 
 export function getServerSideProps() {
   return {
@@ -148,7 +150,7 @@ export default function CheckoutPage() {
         const { title, method_id, instance_id } = shippingMethod;
 
         const shippingMethodCost = convertCurrency(
-          getCalculatedShippingMethodCost(shippingMethod)
+          getCalculatedShippingMethodCost(shippingMethod),
         );
 
         const meta: OrderLineMetaDataType[] = [];
@@ -170,7 +172,7 @@ export default function CheckoutPage() {
             {
               key: 'Description',
               value: parcelMachine.choosenParcelMachine.description,
-            }
+            },
           );
         }
 
@@ -203,7 +205,7 @@ export default function CheckoutPage() {
    * Order logic
    */
   const [orderStatus, setOrderStatus] = useState<'on-hold' | 'pending'>(
-    'on-hold'
+    'on-hold',
   );
 
   // Get data from Billing/Shipping forms
@@ -234,6 +236,30 @@ export default function CheckoutPage() {
   const [createOrder, { data: order, isLoading: isOrderLoading = true }] =
     useCreateOrderMutation();
   const [fetchUserData, { data: userData }] = useLazyFetchUserDataQuery();
+
+  /**
+   * Coupons and loyalty status
+   */
+  const [coupons, setCoupons] = useState(couponCodes);
+
+  const [fetchUserTotals, { data: userTotal }] = useLazyGetUserTotalsQuery();
+  useEffect(() => {
+    if (userData?.id) {
+      fetchUserTotals(userData?.id);
+    }
+  }, [userData?.id]);
+
+  useEffect(() => {
+    if (userTotal?.total_spent) {
+      const {level} = getLoyaltyLevel(Number(userTotal.total_spent));
+      if (level && !coupons?.includes(level)) {
+        setCoupons([
+          ...coupons,
+          level
+        ]);
+      }
+    }
+  }, [userTotal]);
 
   /* Check cart conflict */
   useEffect(() => {
@@ -324,7 +350,7 @@ export default function CheckoutPage() {
 
         if (
           registrationError.includes(
-            'An account is already registered with your email address.'
+            'An account is already registered with your email address.',
           )
         ) {
           setRegistrationData(null);
@@ -341,10 +367,7 @@ export default function CheckoutPage() {
 
   /* Update an order */
   useEffect(() => {
-    const couponLines = couponCodes.map(code => ({ code }));
-
-    const loyaltyStatus = userData?.meta?.loyalty;
-    if (loyaltyStatus) couponLines.push({ code: loyaltyStatus });
+    const couponLines = coupons.map(code => ({ code }));
 
     createOrder({
       status: orderStatus,
@@ -363,7 +386,7 @@ export default function CheckoutPage() {
     });
   }, [
     cartItems,
-    couponCodes,
+    coupons,
     orderStatus,
     currencyCode,
     userData,

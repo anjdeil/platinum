@@ -7,6 +7,7 @@ import OrderBar from '@/components/pages/cart/OrderBar/OrderBar';
 import OrderProgress from '@/components/pages/cart/OrderProgress/OrderProgress';
 import wpRestApi from '@/services/wpRestApi';
 import { useAppDispatch, useAppSelector } from '@/store';
+import { useGetUserTotalsQuery } from '@/store/rtk-queries/userTotals/userTotals';
 import { useCreateOrderMutation } from '@/store/rtk-queries/wooCustomApi';
 import { CartPageWrapper } from '@/styles/cart/style';
 import { Container, FlexBox, StyledButton } from '@/styles/components';
@@ -18,6 +19,7 @@ import getSubtotalByLineItems from '@/utils/cart/getSubtotalByLineItems';
 import getTotalByLineItems from '@/utils/cart/getTotalByLineItems';
 import { handleQuantityChange } from '@/utils/cart/handleQuantityChange';
 import { roundedPrice } from '@/utils/cart/roundedPrice';
+import { getLoyaltyLevel } from '@/utils/getLoyaltyLevel';
 import { validateJwtDecode } from '@/utils/zodValidators/validateJwtDecode';
 import { decodeJwt } from 'jose';
 import { debounce } from 'lodash';
@@ -36,6 +38,8 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   const [firstLoad, setfirstLoad] = useState<boolean>(false);
   const t = useTranslations('Cart');
 
+  const { data: userTotal } = useGetUserTotalsQuery(defaultCustomerData?.id);
+
   const [auth, setAuth] = useState<boolean>(false);
   const [userLoyalityStatus, setUserLoyalityStatus] = useState<
     string | undefined
@@ -44,9 +48,10 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   useEffect(() => {
     if (defaultCustomerData) {
       setAuth(true);
-      setUserLoyalityStatus(defaultCustomerData?.meta?.loyalty);
+      const { level } = getLoyaltyLevel(Number(userTotal?.total_spent));
+      setUserLoyalityStatus(level);
     }
-  }, [defaultCustomerData]);
+  }, [defaultCustomerData, userTotal]);
 
   const [createOrder, { data: orderItems, isLoading: isLoadingOrder }] =
     useCreateOrderMutation();
@@ -58,8 +63,8 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   const [cachedOrderItems, setCachedOrderItems] = useState(orderItems);
 
   const handleCreateOrder = async () => {
-    const userCoupons = defaultCustomerData?.meta.loyalty
-      ? [{ code: defaultCustomerData.meta.loyalty }]
+    const userCoupons = userLoyalityStatus
+      ? [{ code: userLoyalityStatus }]
       : [];
 
     const additionalCoupons = couponCodes.map((code: string) => ({ code }));
@@ -87,7 +92,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
     return () => {
       debouncedCreateOrder.cancel();
     };
-  }, [cartItems, couponCodes, code, defaultCustomerData]);
+  }, [cartItems, couponCodes, code, userLoyalityStatus]);
 
   useEffect(() => {
     if (orderItems?.currency_symbol) {

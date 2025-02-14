@@ -1,15 +1,6 @@
-import AccountLayout from '@/components/pages/account/AccountLayout';
-import { GetServerSideProps, GetServerSidePropsContext } from 'next';
-import { useTranslations } from 'next-intl';
-import { useEffect } from 'react';
-import { Title } from '@/styles/components';
 import Notification from '@/components/global/Notification/Notification';
 import { MenuSkeleton } from '@/components/menus/MenuSkeleton';
-import theme from '@/styles/theme';
-import wpRestApi from '@/services/wpRestApi';
-import { decodeJwt } from 'jose';
-import { JwtDecodedDataType } from '@/types/services/wpRestApi/auth';
-import { validateJwtDecode } from '@/utils/zodValidators/validateJwtDecode';
+import AccountLayout from '@/components/pages/account/AccountLayout';
 import {
   LevelCodeText,
   LevelText,
@@ -19,10 +10,20 @@ import {
   NextLevelText,
 } from '@/components/pages/account/Loyality/style';
 import { BenefitsAccordion } from '@/components/pages/benefits/BenefitsAccordion';
+import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
+import wpRestApi from '@/services/wpRestApi';
+import { useGetUserTotalsQuery } from '@/store/rtk-queries/userTotals/userTotals';
 import { useLazyFetchUserDataQuery } from '@/store/rtk-queries/wpApi';
-import { useAppSelector } from '@/store';
-import { useFetchOrdersQuery } from '@/store/rtk-queries/wooCustomApi';
-import { OrderType } from '@/types/services/wooCustomApi/shop';
+import { Title } from '@/styles/components';
+import theme from '@/styles/theme';
+import { JwtDecodedDataType } from '@/types/services/wpRestApi/auth';
+import { LOYALTY_LEVELS } from '@/utils/consts';
+import { getLoyaltyLevel } from '@/utils/getLoyaltyLevel';
+import { validateJwtDecode } from '@/utils/zodValidators/validateJwtDecode';
+import { decodeJwt } from 'jose';
+import { GetServerSideProps, GetServerSidePropsContext } from 'next';
+import { useTranslations } from 'next-intl';
+import { useEffect } from 'react';
 
 export default function LoyaltyPage() {
   const t = useTranslations('MyAccount');
@@ -32,67 +33,37 @@ export default function LoyaltyPage() {
     { data: userData, isFetching: isUserFetching, isError: isUserError },
   ] = useLazyFetchUserDataQuery();
 
-  const {
-    data: ordersData,
-    isError: isOrdersError,
-    refetch: fetchOrders,
-  } = useFetchOrdersQuery(
-    {
-      customer: userData?.id,
-      status: ["processing", "completed"],
-      per_page: 100
-    },
-    { skip: !userData?.id }
-  );
-
   useEffect(() => {
     fetchUserData();
   }, [fetchUserData]);
 
-  useEffect(() => {
-    if (userData?.id) {
-      fetchOrders();
-    }
-  }, [userData?.id, fetchOrders]);
+  const { data: userTotal, isLoading } = useGetUserTotalsQuery(userData?.id, {
+    skip: !userData?.id,
+  });
 
-  const { code } = useAppSelector(state => state.currencySlice);
+  const { convertCurrency, currencyCode: code } = useCurrencyConverter();
 
-  const loyaltyCode = userData?.meta?.loyalty?.toLowerCase();
+  const { level, nextLevelAmount } = getLoyaltyLevel(
+    Number(userTotal?.total_spent)
+  );
 
-  const levels = ['silver', 'gold', 'platinum'];
-  const levelsSums = [2500, 10000, 20000];
-
-  const currentLevelIndex = levels.findIndex(level => level === loyaltyCode);
+  const currentLevelIndex = LOYALTY_LEVELS.findIndex(
+    loyaltyLevel => loyaltyLevel.name === level
+  );
 
   const nextLevel =
-    currentLevelIndex !== -1 && currentLevelIndex < levels.length - 1
-      ? levels[currentLevelIndex + 1]
-      : loyaltyCode === ''
-      ? levels[0]
-      : null;
-
-  const orderSum =
-    ordersData?.reduce((sum: number, order: OrderType) => {
-      if (order.status !== 'on-hold') {
-        return sum + parseFloat(order.total);
-      }
-      return sum;
-    }, 0) || 0;
-
-  const amountToNextLevel =
-    currentLevelIndex !== -1 && currentLevelIndex < levels.length - 1
-      ? levelsSums[currentLevelIndex + 1] - orderSum
-      : loyaltyCode === ''
-      ? levelsSums[0] - orderSum
+    currentLevelIndex !== -1 && currentLevelIndex < LOYALTY_LEVELS.length - 1
+      ? LOYALTY_LEVELS[currentLevelIndex + 1]
+      : !level
+      ? LOYALTY_LEVELS[0]
       : null;
 
   return (
     <AccountLayout title={t('loyalityProgram')}>
-      {isUserError ||
-        (isOrdersError && (
-          <Notification type="info">{t('userInfoError')}</Notification>
-        ))}
-      {isUserFetching ? (
+      {isUserError && (
+        <Notification type="info">{t('userInfoError')}</Notification>
+      )}
+      {isUserFetching || isLoading ? (
         <MenuSkeleton
           elements={1}
           direction="column"
@@ -103,23 +74,23 @@ export default function LoyaltyPage() {
         />
       ) : (
         <LoyalityPageWrapper>
-          {userData && (
-            <LoyalityLevelCard isColumn={nextLevel === 'silver' && true}>
+          {userTotal && (
+            <LoyalityLevelCard isColumn={!level}>
               <LevelText>
-                {loyaltyCode ? (
+                {level ? (
                   <>{t('currentLevel')}</>
                 ) : (
                   <>{t('loyaltyLevelNotEarned')}</>
                 )}
               </LevelText>
               <LoyalityBox>
-                <LevelCodeText>{loyaltyCode && t(loyaltyCode)}</LevelCodeText>
-                {nextLevel && amountToNextLevel && (
+                <LevelCodeText>{level}</LevelCodeText>
+                {nextLevel && nextLevelAmount && (
                   <NextLevelText>
                     {t('nextLevelInfo', {
-                      amount: amountToNextLevel.toFixed(0),
+                      amount: convertCurrency(+nextLevelAmount),
                       code,
-                      nextLevel: t(nextLevel),
+                      nextLevel: nextLevel.name,
                     })}
                   </NextLevelText>
                 )}

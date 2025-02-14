@@ -1,17 +1,17 @@
+import { FlexBox } from '@/styles/components';
+import { OrderBarProps } from '@/types/pages/cart';
+import { roundedPrice } from '@/utils/cart/roundedPrice';
+import { Skeleton } from '@mui/material';
+import { useTranslations } from 'next-intl';
 import { FC } from 'react';
 import {
   OrderBarContent,
   OrderBarSum,
-  OrderBarWrapper,
   OrderBarTitle,
   // OrderBarDesc,
   CrossedOut,
+  OrderBarWrapper,
 } from './style';
-import { Skeleton } from '@mui/material';
-import { useTranslations } from 'next-intl';
-import { roundedPrice } from '@/utils/cart/roundedPrice';
-import { OrderBarProps } from '@/types/pages/cart';
-import { FlexBox } from '@/styles/components';
 
 const OrderBar: FC<OrderBarProps> = ({
   subtotal,
@@ -57,11 +57,11 @@ const OrderBar: FC<OrderBarProps> = ({
             </div>
           )}
         </OrderBarSum>
-        {/*{!miniCart && (*/}
-        {/*  <OrderBarDesc textAlign="right">*/}
-        {/*    {t('priceToDelivery', { locale: '26 zl' })}*/}
-        {/*  </OrderBarDesc>*/}
-        {/*)}*/}
+        {/* {!miniCart && (
+          <OrderBarDesc textAlign="right">
+            {t('priceToDelivery', { locale: '26 zl' })}
+          </OrderBarDesc>
+        )} */}
       </OrderBarContent>
     </OrderBarWrapper>
   );
