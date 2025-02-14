@@ -1,15 +1,16 @@
 import React, { FC } from 'react';
 import { StyledButtonGroup, StyledButton } from './styles';
 import { FilterAttributesPropsType } from '@/types/components/shop/filters';
-import { FilterActionButtons } from '../filterActionButtons';
 
 const ColorsFilter: FC<FilterAttributesPropsType> = ({
   attribute,
   onParamsChange,
   currentAttribute,
-  onReset,
-  onApply,
 }) => {
+  const handleChange = (slug: string) => {
+    onParamsChange(attribute.slug, slug, true);
+  };
+
   return (
     <div>
       <StyledButtonGroup>
@@ -17,7 +18,7 @@ const ColorsFilter: FC<FilterAttributesPropsType> = ({
           attribute.options.map(option => (
             <StyledButton
               key={option.slug}
-              onClick={() => onParamsChange(attribute.slug, option.slug, true)}
+              onClick={() => handleChange(option.slug)}
               aria-label={option.name}
               value={option.slug}
               color={option.color_hex || '#fff'}
@@ -26,7 +27,6 @@ const ColorsFilter: FC<FilterAttributesPropsType> = ({
             />
           ))}
       </StyledButtonGroup>
-      <FilterActionButtons onReset={onReset} onApply={onApply} isApply={true} />
     </div>
   );
 };
