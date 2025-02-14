@@ -15,6 +15,10 @@ export const getValidationSchema = (
           value: 50,
           message: t('yourFirstNameIsTooLong'),
         },
+        pattern: {
+          value: /^[\p{L}'-]+$/u,
+          message: t('invalidCharacters'),
+        },
       };
     case 'last_name':
       return {
@@ -26,6 +30,10 @@ export const getValidationSchema = (
         maxLength: {
           value: 50,
           message: t('yourLastNameIsTooLong'),
+        },
+        pattern: {
+          value: /^[\p{L}'-]+$/u,
+          message: t('invalidCharacters'),
         },
       };
     case 'email':
@@ -95,6 +103,10 @@ export const getValidationSchema = (
           value: 100,
           message: t('yourCityNameIsTooLong'),
         },
+        pattern: {
+          value: /^[\p{L}'-]+$/u,
+          message: t('invalidCharacters'),
+        },
       };
     case 'address_1':
       return {
@@ -107,6 +119,10 @@ export const getValidationSchema = (
           value: 100,
           message: t('yourStreetAddressIsTooLong'),
         },
+        pattern: {
+          value: /^(?:[\p{L}\d\s\-.,]+)$/u,
+          message: t('invalidCharacters'),
+        },
       };
     case 'address_2':
       return {
@@ -114,6 +130,10 @@ export const getValidationSchema = (
         maxLength: {
           value: 100,
           message: t('yourBuildingNumberIsTooLong'),
+        },
+        pattern: {
+          value: /^[0-9]+[\p{L}]?(\s?\/\s?[0-9]+)?$/u,
+          message: t('invalidCharacters'),
         },
       };
     case 'postcode':
