@@ -7,6 +7,7 @@ import CartQuantity, {
   adaptItemToCartQuantity,
 } from '@/components/pages/cart/CartQuantity/CartQuantity';
 import OrderBar from '@/components/pages/cart/OrderBar/OrderBar';
+// import { OrderBarDesc } from '@/components/pages/cart/OrderBar/style';
 import {
   CardContent,
   CartCardWrapper,

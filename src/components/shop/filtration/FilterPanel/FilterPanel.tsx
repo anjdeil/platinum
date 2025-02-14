@@ -155,6 +155,30 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
     convertPricesFromUrl();
   }, [router.query, initialPriceRange]);
 
+  const [prevCategory, setPrevCategory] = useState(router.asPath);
+
+  useEffect(() => {
+    const { slugs } = router.query;
+    const currentPath = router.asPath.split('?')[0]; // Получаем путь без параметров
+
+    if (currentPath !== prevCategory) {
+      console.log('Category changed, resetting filters...');
+
+      setPriceRange({ min: initialPriceRange.min, max: initialPriceRange.max });
+
+      router.push({
+        pathname: router.pathname,
+        query: {
+          slugs: Array.isArray(slugs)
+            ? slugs.filter(slug => slug !== 'page' && Number.isNaN(+slug))
+            : [],
+        },
+      });
+
+      setPrevCategory(currentPath); // Обновляем предыдущий путь
+    }
+  }, [router.asPath]);
+
   const updateMinPrice = async (newValue: number) => {
     const convertedValue = await convertToDefaultCurrency(newValue);
     const { slugs, ...params } = router.query;
