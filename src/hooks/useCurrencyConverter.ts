@@ -21,9 +21,6 @@ export const useCurrencyConverter = () => {
 
   const convertCurrency = (value: number) => {
     if (!extendedCurrency.rate) {
-      console.warn(
-        'Currency rate is not defined. Returning the original value.'
-      );
       return value;
     }
     const convertedValue = value * extendedCurrency.rate;
@@ -32,10 +29,7 @@ export const useCurrencyConverter = () => {
 
   const convertToDefaultCurrency = (value: number) => {
     if (!extendedCurrency.rate) {
-      console.warn(
-        'Currency rate is not defined. Returning the original value.'
-      );
-      return value; // Возвращаем оригинальное значение, если курс ещё не доступен
+      return value;
     }
     const convertedValue = value / extendedCurrency.rate;
     return roundedPrice(convertedValue);
