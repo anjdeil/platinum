@@ -77,7 +77,9 @@ export const PriceFilter: FC<PriceFilter> = props => {
       ) {
         updateMinPrice(newValue);
       } else {
-        updateMinPrice(minPrice);
+        if (currentMin !== minPrice) {
+          updateMinPrice(minPrice);
+        }
       }
     },
     [updateMinPrice, minPrice]
@@ -95,7 +97,9 @@ export const PriceFilter: FC<PriceFilter> = props => {
       ) {
         updateMaxPrice(newValue);
       } else {
-        updateMaxPrice(maxPrice);
+        if (currentMax !== maxPrice) {
+          updateMaxPrice(maxPrice);
+        }
       }
     },
     [updateMaxPrice, maxPrice]
