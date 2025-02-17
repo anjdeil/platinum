@@ -24,6 +24,8 @@ const ColorsFilter: FC<FilterAttributesPropsType> = ({
               color={option.color_hex || '#fff'}
               selected={currentAttribute.includes(option.slug)}
               isMulticolor={option.slug === 'multicolor'}
+              isTransparent={option.slug === 'transparent'}
+              title={option.name}
             />
           ))}
       </StyledButtonGroup>
