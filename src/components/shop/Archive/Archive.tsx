@@ -83,8 +83,6 @@ export const Archive: FC<ArchivePropsType> = props => {
 
   const t = useTranslations('Archive');
 
-  console.log('products...', products);
-
   const currentCategory = Array.isArray(categories)
     ? (categories[categories.length - 1] as CategoryType)
     : null;
