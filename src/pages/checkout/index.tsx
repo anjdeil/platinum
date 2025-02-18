@@ -235,7 +235,7 @@ export default function CheckoutPage() {
   const { name: currencyCode } = useAppSelector(state => state.currencySlice);
   const [createOrder, { data: order, isLoading: isOrderLoading = true }] =
     useCreateOrderMutation();
-  const [fetchUserData, { data: userData }] = useLazyFetchUserDataQuery();
+  const [fetchUserData, { data: userData, isLoading: isUserDataLoading }] = useLazyFetchUserDataQuery();
 
   /**
    * Coupons and loyalty status
@@ -367,6 +367,8 @@ export default function CheckoutPage() {
 
   /* Update an order */
   useEffect(() => {
+    if (isUserDataLoading) return;
+
     const couponLines = coupons.map(code => ({ code }));
 
     createOrder({
@@ -390,7 +392,7 @@ export default function CheckoutPage() {
     orderStatus,
     currencyCode,
     userData,
-    shippingLine,
+    shippingLine
   ]);
 
   useEffect(() => {
@@ -405,7 +407,7 @@ export default function CheckoutPage() {
 
   return (
     <>
-      <Head>{inPostHead},</Head>
+      <Head>{inPostHead}</Head>
       <OrderProgress />
 
       <CheckoutContainer>
