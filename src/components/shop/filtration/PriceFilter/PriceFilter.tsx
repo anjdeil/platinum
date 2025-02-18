@@ -69,7 +69,18 @@ export const PriceFilter: FC<PriceFilter> = props => {
     (event: ChangeEvent<HTMLInputElement>) => {
       const inputValue = event.target.value;
       const newValue = inputValue ? Number(inputValue) : minPrice;
-      updateMinPrice(newValue);
+
+      if (
+        newValue !== currentMin &&
+        newValue >= minPrice &&
+        newValue <= maxPrice
+      ) {
+        updateMinPrice(newValue);
+      } else {
+        if (currentMin !== minPrice) {
+          updateMinPrice(minPrice);
+        }
+      }
     },
     [updateMinPrice, minPrice]
   );
@@ -78,7 +89,18 @@ export const PriceFilter: FC<PriceFilter> = props => {
     (event: ChangeEvent<HTMLInputElement>) => {
       const inputValue = event.target.value;
       const newValue = Number(inputValue);
-      updateMaxPrice(newValue);
+
+      if (
+        newValue !== currentMax &&
+        newValue >= currentMin &&
+        newValue <= maxPrice
+      ) {
+        updateMaxPrice(newValue);
+      } else {
+        if (currentMax !== maxPrice) {
+          updateMaxPrice(maxPrice);
+        }
+      }
     },
     [updateMaxPrice, maxPrice]
   );

@@ -290,6 +290,8 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
   };
   //------------- Reset Filters
 
+  const hasPriceFilters = router.query.min_price || router.query.max_price;
+
   return (
     <FilterPanelWrap>
       <FilterPanelWrap>
@@ -332,7 +334,7 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
           );
         })}
       </FilterPanelWrap>
-      {Boolean(attributes.length) && (
+      {(Boolean(attributes.length) || hasPriceFilters) && (
         <ResetButton onClick={onResetParams}>{t('clearFilter')}</ResetButton>
       )}
     </FilterPanelWrap>
