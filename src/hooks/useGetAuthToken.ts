@@ -22,7 +22,7 @@ const useGetAuthToken = () => {
     return () => {
       window.removeEventListener('storage', handleCookieChange);
     };
-  }, []);
+  }, [document.cookie]);
 
   return authToken;
 };
