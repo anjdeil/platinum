@@ -420,11 +420,17 @@
     "shippingFormName": "Інформація про доставку",
     "proofSelect": "Виберіть спосіб підтвердження",
     "vatInvoice": "VAT-фактура",
-    "company": "Ім'я та прізвище/Підприємство",
+    "company": "Ім'я та прізвище/Компанія",
     "nip": "НІП",
     "freeShipping": "Вам потрібно ще {cost}, щоб отримати безкоштовну доставку.",
     "shippingDifferentAddress": "Та ж адреса, що й у даних клієнта",
-    "inValidForm": "Форма містить помилки:"
+    "inValidForm": "Форма містить помилки:",
+    "first_name": "Ім'я",
+    "last_name": "Прізвище",
+    "email": "E-mail",
+    "phone": "Номер телефону",
+    "address_2": "Номер будинку",
+    "postcode": "Поштовий індекс"
   },
   "Footer": {
     "myAccount": "Мій акаунт",

@@ -417,14 +417,20 @@
     "registerAccount": "Registrieren Sie ein Konto beim Kauf.",
     "billingFormName": "Rechnungsinformationen",
     "guestWarning": "Die Bestellung wird ohne Registrierung aufgegeben!",
-    "shippingFormName": "Lieferinformationen",
+    "shippingFormName": "Versandinformationen",
     "proofSelect": "Wählen Sie den Kaufnachweis",
     "vatInvoice": "VAT Rechnung",
     "company": "Name und Nachname/Firma",
     "nip": "Steuernummer (NIP)",
     "freeShipping": "Um Free Shipping zu erreichen, bleiben {cost}.",
     "shippingDifferentAddress": "Die gleiche Adresse wie in den Kundendaten",
-    "inValidForm": "Das Formular ist ungültig"
+    "inValidForm": "Das Formular ist ungültig",
+    "first_name": "Name",
+    "last_name": "Nachname",
+    "email": "E-Mail",
+    "phone": "Telefonnummer",
+    "address_2": "Hausnummer",
+    "postcode": "Postleitzahl"
   },
   "Footer": {
     "myAccount": "Mein Konto",

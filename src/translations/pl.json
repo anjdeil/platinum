@@ -420,11 +420,17 @@
     "shippingFormName": "Informacje o wysyłce",
     "proofSelect": "Dowód zakupu",
     "vatInvoice": "VAT Faktura",
-    "company": "Firma",
+    "company": "Imię i nazwisko/Firma",
     "nip": "NIP",
     "freeShipping": "Aby uzyskać darmową wysyłkę, pozostało {cost}.",
     "shippingDifferentAddress": "Ten sam adres co w danych klienta",
-    "inValidForm": "Formularz zawiera błędy"
+    "inValidForm": "Formularz zawiera błędy",
+    "first_name": "Imię",
+    "last_name": "Nazwisko",
+    "email": "E-Mail",
+    "phone": "Numer telefonu",
+    "address_2": "Numer budynku",
+    "postcode": "Kod pocztowy"
   },
   "Footer": {
     "myAccount": "Moje konto",

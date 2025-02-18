@@ -421,10 +421,16 @@
     "proofSelect": "Proof of purchase",
     "vatInvoice": "VAT invoice",
     "company": "Name and surname/Company",
-    "nip": "TIN",
+    "nip": "NIP",
     "freeShipping": "You need {cost} more to get free shipping.",
     "shippingDifferentAddress": "The same address as on customer information",
-    "inValidForm": "Place, fill customer information correctly"
+    "inValidForm": "Place, fill customer information correctly",
+    "first_name": "Name",
+    "last_name": "Surname",
+    "email": "e-mail",
+    "phone": "Phone number",
+    "address_2": "Building number",
+    "postcode": "Postal Code"
   },
   "Footer": {
     "myAccount": "My account",
