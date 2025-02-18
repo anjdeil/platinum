@@ -47,7 +47,7 @@ const Header: React.FC = () => {
               {t('allShop')}
             </CategoriesButton>
             <Nav
-              menuId={344}
+              menuId={19521}
               skeleton={{
                 elements: 3,
                 width: '80px',
