@@ -27,7 +27,13 @@ const Reviews: FC<ReviewsPropsType> = ({ product }) => {
     product: product?.id || 0,
   });
 
-  const reviews: ReviewRespType[] = data || [];
+  const reviews: ReviewRespType[] = data
+    ? [...data].sort(
+        (a, b) =>
+          new Date(b.date_created).getTime() -
+          new Date(a.date_created).getTime()
+      )
+    : [];
 
   if (!reviews.length) {
     return null;
