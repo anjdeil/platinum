@@ -14,8 +14,22 @@ export const RichTextSection: React.FC<RichTextSectionProps> = ({
     return <StyledError>Rich text section is empty</StyledError>;
   }
 
-  const cleanedContent = text.replace(/<br\s*\/?>/gi, '');
-  // .replace(/\s*t\s*/g, '');
+  const cleanedContent = text
+    .replace(/<br\s*\/?>/gi, '\n')
+    .replace(/\s*t\s*/g, '')
+    .split('\n')
+    .filter(line => line.length > 0)
+    .map(line => {
+      if (!line.match(/<(h[1-6]|ul|li)[^>]*>/i)) {
+        return `<p>${line.trim()}</p>`;
+      }
+      return line;
+    })
+    .join('')
+    .replace(/<p>(<\/?[^>]+>.*?|.*?<\/?[^>]+>)<\/p>/gi, '$1')
+    .replace(/^<p><\/p>/, '')
+    .replace(/<p><\/p>$/, '');
+
   const content = parse(cleanedContent);
 
   return (
