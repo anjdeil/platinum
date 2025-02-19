@@ -182,7 +182,8 @@
     "hours": "Stunden",
     "minutes": "Minuten",
     "priceFrom": "ab {price}",
-    "deliveryTime": "Bestelle innerhalb von {hour} Std. {minute} Min. und es wird heute verschickt"
+    "deliveryTime": "Bestelle innerhalb von {hour} Std. {minute} Min. und es wird heute verschickt",
+    "deliveryNextBusinessDay": "Die Bestellung wird am nächsten Werktag versandt"
   },
   "Cart": {
     "cart": "Warenkorb",

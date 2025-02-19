@@ -5,16 +5,17 @@ import { useEffect, useState } from 'react';
 import { StyledNotification } from './styles';
 
 const getRemainingTime = () => {
-  const now: number = new Date().getTime();
+  const now = new Date();
   const deadline = new Date();
   deadline.setHours(14, 0, 0, 0);
-  const deadlineTime: number = deadline.getTime();
 
-  const diff: number = deadlineTime - now;
-  const hours = String(Math.floor(diff / (1000 * 60 * 60)));
-  const minutes = String(Math.floor((diff / (1000 * 60)) % 60));
+  const diff = deadline.getTime() - now.getTime();
+  if (diff <= 0) return { hours: '0', minutes: '0' };
 
-  return { hours, minutes };
+  return {
+    hours: String(Math.floor(diff / (1000 * 60 * 60))),
+    minutes: String(Math.floor((diff / (1000 * 60)) % 60)),
+  };
 };
 
 const DeliveryTimer = () => {
@@ -29,15 +30,15 @@ const DeliveryTimer = () => {
     return () => clearInterval(interval);
   }, []);
 
-  if (!isWeekdayBeforeTwoPM()) return null;
-
   return (
     <StyledNotification>
       <DeliveryIcon />
-      {t('deliveryTime', {
-        hour: timeLeft.hours,
-        minute: timeLeft.minutes,
-      })}
+      {isWeekdayBeforeTwoPM()
+        ? t('deliveryTime', {
+            hour: timeLeft.hours,
+            minute: timeLeft.minutes,
+          })
+        : t('deliveryNextBusinessDay')}
     </StyledNotification>
   );
 };
