@@ -18,6 +18,7 @@ export const ReviewsSlider: FC<ReviewsPropsType> = ({ reviews }) => {
         modules={[Pagination]}
         pagination={{ clickable: true }}
         loop={true}
+        h-full
         breakpoints={{
           0: {
             slidesPerView: 1,
