@@ -360,6 +360,8 @@ const retrieveCouponQuerySchema = z.object({
 
 const reviewQuerySchema = z.object({
   product: z.number(),
+  orderby: z.string().optional(),
+  order: z.string().optional(),
 });
 
 export const WooCustomerUpdateSchema = z.object({
