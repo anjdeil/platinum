@@ -39,7 +39,7 @@ export const CustomSwiper = styled(Swiper)`
   }
 
   & .swiper-slide {
-    // height: 100%;
+    height: auto;
   }
 
   & .swiper-pagination {
