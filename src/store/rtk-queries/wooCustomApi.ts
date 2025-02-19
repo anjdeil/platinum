@@ -1,4 +1,9 @@
-import { ShippingLocationType, ShippingMethodType, ShippingZoneType, WooCustomerUpdateReqType } from '@/types/services';
+import {
+  ShippingLocationType,
+  ShippingMethodType,
+  ShippingZoneType,
+  WooCustomerUpdateReqType,
+} from '@/types/services';
 import {
   couponRespType,
   CreateOrderRequestType,
@@ -14,7 +19,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const wooCustomRktApi = createApi({
   reducerPath: 'wooCustomRktApi',
   baseQuery: fetchBaseQuery({ baseUrl: '/api/woo' }),
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     registerCustomer: builder.mutation<WooCustomerType, WooCustomerReqType>({
       query: (credentials: WooCustomerReqType) => ({
         url: '/customers',
@@ -35,7 +40,7 @@ export const wooCustomRktApi = createApi({
       }),
     }),
     createOrder: builder.mutation<OrderType, CreateOrderRequestType>({
-      query: (credentials) => ({
+      query: credentials => ({
         url: `/orders`,
         method: 'POST',
         body: credentials,
@@ -87,12 +92,20 @@ export const wooCustomRktApi = createApi({
         },
       }),
     }),
-    getProductsReviews: builder.query<ReviewsRespType, void>({
-      query: () => ({
+    getProductsReviews: builder.query<
+      ReviewsRespType,
+      { orderby?: string; order?: string }
+    >({
+      query: ({ orderby = 'date', order = 'desc' }) => ({
         url: `/products/reviews`,
         method: 'GET',
+        params: {
+          orderby,
+          order,
+        },
       }),
     }),
+
     getProductReviews: builder.query<ReviewsRespType, reviewQueryType>({
       query: ({ product }) => ({
         url: `/products/reviews/`,
@@ -133,5 +146,5 @@ export const {
   useUpdateCustomerMutation,
   useGetShippingZonesQuery,
   useLazyGetShippingZoneMethodsQuery,
-  useLazyGetShippingZoneLocationsQuery
+  useLazyGetShippingZoneLocationsQuery,
 } = wooCustomRktApi;
