@@ -24,7 +24,7 @@ import useInPostGeowidget from '@/hooks/useInPostGeowidget';
 import { ShippingMethodType } from '@/types/services';
 import { useCreateOrderMutation } from '@/store/rtk-queries/wooCustomApi';
 import { useGetProductsMinimizedMutation } from '@/store/rtk-queries/wpCustomApi';
-import { useAppSelector } from '@/store';
+import { useAppDispatch, useAppSelector } from '@/store';
 import useGetAuthToken from '@/hooks/useGetAuthToken';
 import { useLazyFetchUserDataQuery } from '@/store/rtk-queries/wpApi';
 import Link from 'next/link';
@@ -54,6 +54,7 @@ import { useRegisterUser } from '@/hooks/useRegisterUser';
 import { RegistrationError } from '@/components/pages/checkout/RegistrationError/RegistrationError';
 import { useLazyGetUserTotalsQuery } from '@/store/rtk-queries/userTotals/userTotals';
 import { getLoyaltyLevel } from '@/utils/getLoyaltyLevel';
+import { clearCart } from '@/store/slices/cartSlice';
 
 export function getServerSideProps() {
   return {
@@ -62,6 +63,7 @@ export function getServerSideProps() {
 }
 
 export default function CheckoutPage() {
+  const dispatch = useAppDispatch();
   const t = useTranslations('Checkout');
   const tMyAccount = useTranslations('MyAccount');
 
@@ -367,7 +369,7 @@ export default function CheckoutPage() {
 
   /* Update an order */
   useEffect(() => {
-    if (isUserDataLoading) return;
+    if (isUserDataLoading || (cartItems.length === 0)) return;
 
     const couponLines = coupons.map(code => ({ code }));
 
@@ -402,6 +404,7 @@ export default function CheckoutPage() {
       paymentUrlObj.pathname = '/' + langCode + paymentUrlObj.pathname;
 
       router.push(paymentUrlObj.toString());
+      dispatch(clearCart());
     }
   }, [order]);
 
