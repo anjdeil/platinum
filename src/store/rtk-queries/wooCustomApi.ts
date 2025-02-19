@@ -92,25 +92,17 @@ export const wooCustomRktApi = createApi({
         },
       }),
     }),
-    getProductsReviews: builder.query<
-      ReviewsRespType,
-      { orderby?: string; order?: string }
-    >({
-      query: ({ orderby = 'date', order = 'desc' }) => ({
+    getProductsReviews: builder.query<ReviewsRespType, void>({
+      query: () => ({
         url: `/products/reviews`,
         method: 'GET',
-        params: {
-          orderby,
-          order,
-        },
       }),
     }),
-
     getProductReviews: builder.query<ReviewsRespType, reviewQueryType>({
-      query: ({ product }) => ({
+      query: ({ product, orderby = 'date', order = 'desc' }) => ({
         url: `/products/reviews/`,
         method: 'GET',
-        params: { product },
+        params: { product, orderby, order },
       }),
     }),
     getShippingZones: builder.query<ShippingZoneType[], void>({
