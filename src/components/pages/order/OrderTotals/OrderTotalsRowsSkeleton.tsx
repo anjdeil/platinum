@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { Label, Row, Value } from "./styles";
 
 interface OrderTotalsRowsSkeletonProps {
-  noPaymentMethod: boolean;
+  noPaymentMethod?: boolean;
 }
 
 const OrderTotalsRowsSkeleton = ({
