@@ -59,7 +59,7 @@ export default function LoyaltyPage() {
       : null;
 
   return (
-    <AccountLayout title={t('loyalityProgram')}>
+    <AccountLayout title={t('loyaltyProgram')}>
       {isUserError && (
         <Notification type="info">{t('userInfoError')}</Notification>
       )}

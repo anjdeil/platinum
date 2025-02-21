@@ -64,24 +64,29 @@ const CartSummaryBlock: FC<CartSummaryBlockProps> = ({
           </Title>
         </CartSummaryTitleWrapper>
         <CartSummaryCard>
-          <OrderSummary symbol={symbol} order={order} isLoading={isLoading} />
+          <OrderSummary
+            symbol={symbol}
+            order={order}
+            isLoading={isLoading}
+            noPaymentMethod
+          />
         </CartSummaryCard>
 
         {!isLoading && (
           <>
-              <StyledButton
-                width="100%"
-                height="56px"
-                secondary={true}
-                hoverColor={theme.colors.white}
-                hoverBackgroundColor={theme.colors.primary}
-                onClick={() => {
-                  router.push('/checkout');
-                }}
-                disabled={isLoading || cartItems.length === 0}
-              >
-                {t('Continue')}
-              </StyledButton>
+            <StyledButton
+              width="100%"
+              height="56px"
+              secondary={true}
+              hoverColor={theme.colors.white}
+              hoverBackgroundColor={theme.colors.primary}
+              onClick={() => {
+                router.push('/checkout');
+              }}
+              disabled={isLoading || cartItems.length === 0}
+            >
+              {t('Continue')}
+            </StyledButton>
           </>
         )}
       </CartSummaryWrapper>

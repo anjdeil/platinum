@@ -25,3 +25,56 @@ export const RegistrationFormSchema = (isLoggedIn: boolean, t: any) => {
 
   return schema;
 };
+
+export const CheckoutRegistrationFormSchema = z.object({
+  email: z.string(),
+  first_name: z.string(),
+  last_name: z.string(),
+  role: z.string(),
+  username: z.string().optional(),
+  billing: z
+    .object({
+      first_name: z.string(),
+      last_name: z.string(),
+      company: z.string().optional(),
+      address_1: z.string().optional(),
+      address_2: z.string().optional(),
+      city: z.string().optional(),
+      postcode: z.string().optional(),
+      country: z.string().optional(),
+      state: z.string().optional(),
+      email: z.string(),
+      phone: z.string(),
+    })
+    .optional(),
+  shipping: z
+    .object({
+      first_name: z.string().optional(),
+      last_name: z.string().optional(),
+      company: z.string().optional(),
+      address_1: z.string().optional(),
+      address_2: z.string().optional(),
+      city: z.string().optional(),
+      postcode: z.string().optional(),
+      country: z.string().optional(),
+      state: z.string().optional(),
+      phone: z.string().optional(),
+    })
+    .optional(),
+  meta_data: z
+    .array(
+      z.object({
+        id: z.number().optional(),
+        key: z.string(),
+        value: z.string(),
+      })
+    )
+    .optional(),
+  password: z.string().optional(),
+  confirmPassword: z.string().optional(),
+  terms: z.boolean().optional(),
+});
+
+export type RegistrationFormType = z.infer<
+  typeof CheckoutRegistrationFormSchema
+>;
