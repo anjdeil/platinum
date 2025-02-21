@@ -110,8 +110,13 @@
     "userInfoError": "Error fetching user information",
     "nextLevelInfo": "You only need {amount} {code} to get {nextLevel} level",
     "levelBenefits": "Level Benefits",
-    "loyalityProgram": "Loyalty Program",
-    "loyaltyLevelNotEarned": "You haven't earned a loyalty level yet, but there are plenty of exciting rewards waiting for you!"
+    "loyaltyLevelNotEarned": "You haven't earned a loyalty level yet, but there are plenty of exciting rewards waiting for you!",
+    "registrationError": "Something went wrong with the server. Please try again or contact support.",
+    "tokenFailed": "Auth token validation failed.",
+    "noToken": "Auth token getting failed.",
+    "dataFailed": "Customer response data validation failed.",
+    "invalidResp": "Invalid customer response.",
+    "unknownError": "Unknown server error"
   },
   "TopBar": {
     "CallUs": "Call us"
@@ -221,9 +226,9 @@
     "products": "Products",
     "coupon": "Coupon",
     "paymentMethod": "Payment method",
-    "Basket": "Basket",
-    "PersonalInformation": "Personal Information",
-    "Confirmation": "Confirmation",
+    "Basket": "Cart",
+    "PersonalInformation": "Customer details",
+    "Confirmation": "Payment",
     "welcomeToPlatinumShop": "Welcome to Platinum Shop",
     "theBest": "The best",
     "productForYou": "Product for you",
@@ -421,17 +426,18 @@
     "shippingFormName": "Shipping information",
     "proofSelect": "Proof of purchase",
     "vatInvoice": "VAT invoice",
-    "company": "Name and surname/Company",
-    "nip": "NIP",
     "freeShipping": "You need {cost} more to get free shipping.",
-    "shippingDifferentAddress": "The same address as on customer information",
+    "shippingDifferentAddress": "Use a different address for shipping",
     "inValidForm": "Place, fill customer information correctly",
     "first_name": "Name",
     "last_name": "Surname",
     "email": "e-mail",
     "phone": "Phone number",
+    "company": "Name and surname/Company",
+    "nip": "NIP",
     "address_2": "Building number",
-    "postcode": "Postal Code"
+    "postcode": "Postal Code",
+    "placeholder": "Enter your"
   },
   "Footer": {
     "myAccount": "My account",
