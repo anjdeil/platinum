@@ -42,7 +42,7 @@ import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
 import getCartTotals from '@/utils/cart/getCartTotals';
 import FreeShippingNotifications from '@/components/pages/checkout/FreeShippingNotifications/FreeShippingNotifications';
 import { BillingForm } from '@/components/global/forms/BillingForm/BillingForm';
-import { RegistrationType } from '@/utils/checkout/getFormattedUserData';
+
 import {
   BillingType,
   MetaDataType,
@@ -55,6 +55,7 @@ import { RegistrationError } from '@/components/pages/checkout/RegistrationError
 import { useLazyGetUserTotalsQuery } from '@/store/rtk-queries/userTotals/userTotals';
 import { getLoyaltyLevel } from '@/utils/getLoyaltyLevel';
 import { clearCart } from '@/store/slices/cartSlice';
+import { RegistrationFormType } from '@/types/components/global/forms/registrationForm';
 
 export function getServerSideProps() {
   return {
@@ -66,6 +67,7 @@ export default function CheckoutPage() {
   const dispatch = useAppDispatch();
   const t = useTranslations('Checkout');
   const tMyAccount = useTranslations('MyAccount');
+  const tCart = useTranslations('Cart');
 
   const {
     currentCurrency: currency,
@@ -152,7 +154,7 @@ export default function CheckoutPage() {
         const { title, method_id, instance_id } = shippingMethod;
 
         const shippingMethodCost = convertCurrency(
-          getCalculatedShippingMethodCost(shippingMethod),
+          getCalculatedShippingMethodCost(shippingMethod)
         );
 
         const meta: OrderLineMetaDataType[] = [];
@@ -174,7 +176,7 @@ export default function CheckoutPage() {
             {
               key: 'Description',
               value: parcelMachine.choosenParcelMachine.description,
-            },
+            }
           );
         }
 
@@ -207,7 +209,7 @@ export default function CheckoutPage() {
    * Order logic
    */
   const [orderStatus, setOrderStatus] = useState<'on-hold' | 'pending'>(
-    'on-hold',
+    'on-hold'
   );
 
   // Get data from Billing/Shipping forms
@@ -226,7 +228,7 @@ export default function CheckoutPage() {
 
   const [isRegistration, setIsRegistration] = useState(false);
   const [registrationData, setRegistrationData] =
-    useState<RegistrationType | null>(null);
+    useState<RegistrationFormType | null>(null);
 
   useEffect(() => {
     if (!formOrderData.shipping?.country) return;
@@ -237,7 +239,8 @@ export default function CheckoutPage() {
   const { name: currencyCode } = useAppSelector(state => state.currencySlice);
   const [createOrder, { data: order, isLoading: isOrderLoading = true }] =
     useCreateOrderMutation();
-  const [fetchUserData, { data: userData, isLoading: isUserDataLoading }] = useLazyFetchUserDataQuery();
+  const [fetchUserData, { data: userData, isLoading: isUserDataLoading }] =
+    useLazyFetchUserDataQuery();
 
   /**
    * Coupons and loyalty status
@@ -253,12 +256,9 @@ export default function CheckoutPage() {
 
   useEffect(() => {
     if (userTotal?.total_spent) {
-      const {level} = getLoyaltyLevel(Number(userTotal.total_spent));
+      const { level } = getLoyaltyLevel(Number(userTotal.total_spent));
       if (level && !coupons?.includes(level)) {
-        setCoupons([
-          ...coupons,
-          level
-        ]);
+        setCoupons([...coupons, level]);
       }
     }
   }, [userTotal]);
@@ -352,7 +352,7 @@ export default function CheckoutPage() {
 
         if (
           registrationError.includes(
-            'An account is already registered with your email address.',
+            'An account is already registered with your email address.'
           )
         ) {
           setRegistrationData(null);
@@ -369,7 +369,7 @@ export default function CheckoutPage() {
 
   /* Update an order */
   useEffect(() => {
-    if (isUserDataLoading || (cartItems.length === 0)) return;
+    if (isUserDataLoading || cartItems.length === 0) return;
 
     const couponLines = coupons.map(code => ({ code }));
 
@@ -388,14 +388,7 @@ export default function CheckoutPage() {
       ...(userData?.id && { customer_id: userData.id }),
       ...(shippingLine && { shipping_lines: [shippingLine] }),
     });
-  }, [
-    cartItems,
-    coupons,
-    orderStatus,
-    currencyCode,
-    userData,
-    shippingLine
-  ]);
+  }, [cartItems, coupons, orderStatus, currencyCode, userData, shippingLine]);
 
   useEffect(() => {
     if (order?.status === 'pending' && order.payment_url) {
@@ -470,6 +463,7 @@ export default function CheckoutPage() {
               symbol={currencySymbol}
               order={order}
               isLoading={isOrderLoading}
+              noPaymentMethod
             />
           </CheckoutSummary>
           <CheckoutPayButtonWrapper>
@@ -477,7 +471,7 @@ export default function CheckoutPage() {
               disabled={isPayButtonDisabled}
               onClick={handlePayOrder}
             >
-              {t('pay')}
+              {tCart('Continue')}
             </CheckoutPayButton>
             <CheckoutAgreementWrapper>
               <CheckIcon />

@@ -10,6 +10,7 @@ import {
   StyledTextField,
 } from './styles';
 import { StyledPhoneInput } from '../CustomFormInput/styles';
+import { useTranslations } from 'next-intl';
 
 interface CustomTextFieldProps {
   isPhone?: boolean;
@@ -19,14 +20,13 @@ interface CustomTextFieldProps {
   inputType?: string;
   autocomplete?: string;
   errors: any;
-  placeholder?: string;
+  placeholder: string;
   validation?: RegisterOptions;
   setValue?: any;
   defaultValue?: string;
   onChange?: (value: string) => void;
   onBlur?: (value: string) => void;
   notRequired?: boolean;
-  noPlaceholder?: boolean;
 }
 
 const CustomTextField: React.FC<CustomTextFieldProps> = ({
@@ -42,10 +42,9 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
   setValue,
   defaultValue,
   notRequired,
-  noPlaceholder,
 }) => {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
-
+  const t = useTranslations('Checkout');
   const inputRef = useRef<HTMLInputElement>(null);
 
   const togglePasswordVisibility = () => {
@@ -81,6 +80,10 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
       setValue(name, defaultValue, { shouldValidate: false });
     }
   }, [defaultValue, name, setValue]);
+
+  const transformedPlaceholderValue = `${t(
+    'placeholder'
+  )} ${placeholder.toLowerCase()}`;
 
   return (
     <>
@@ -130,7 +133,7 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
                   ? 'text'
                   : inputType
               }
-              placeholder={noPlaceholder ? '' : placeholder}
+              placeholder={transformedPlaceholderValue}
               autoComplete={autoCompleteValue}
               error={!!errors[name]}
               helperText={

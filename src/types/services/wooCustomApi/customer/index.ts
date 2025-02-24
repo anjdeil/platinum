@@ -99,6 +99,15 @@ export const WooCustomerReqSchema = z.object({
       phone: z.string().optional(),
     })
     .optional(),
+  meta_data: z
+    .array(
+      z.object({
+        id: z.number().optional(),
+        key: z.string(),
+        value: z.string(),
+      })
+    )
+    .optional(),
 });
 
 export const ShippingTypeSchema = z.object({

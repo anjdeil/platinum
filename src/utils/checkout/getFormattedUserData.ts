@@ -1,3 +1,4 @@
+import { RegistrationFormType } from '@/types/components/global/forms/registrationForm';
 import {
   BillingType,
   MetaDataType,
@@ -12,6 +13,7 @@ export interface ReqData {
   last_name: string;
   address_1: string;
   address_2: string;
+  apartmentNumber?: string;
   city: string;
   postcode: string;
   country: string;
@@ -25,25 +27,10 @@ export interface ReqData {
   shipping_last_name: string;
   shipping_address_1: string;
   shipping_address_2: string;
+  shipping_apartmentNumber?: string;
   shipping_city: string;
   shipping_postcode: string;
   shipping_country: string;
-}
-
-export interface RegistrationType {
-  phone: string;
-  email: string;
-  first_name: string;
-  last_name: string;
-  address_1: string;
-  address_2: string;
-  city: string;
-  postcode: string;
-  country: string;
-  terms: boolean;
-  password?: string | undefined;
-  confirmPassword?: string | undefined;
-  apartmentNumber: string;
 }
 
 export const getFormattedUserData = (billingData: ReqData) => {
@@ -55,6 +42,7 @@ export const getFormattedUserData = (billingData: ReqData) => {
     last_name,
     address_1,
     address_2,
+    apartmentNumber,
     city,
     postcode,
     country,
@@ -68,6 +56,7 @@ export const getFormattedUserData = (billingData: ReqData) => {
     shipping_last_name,
     shipping_address_1,
     shipping_address_2,
+    shipping_apartmentNumber,
     shipping_city,
     shipping_postcode,
     shipping_country,
@@ -91,6 +80,14 @@ export const getFormattedUserData = (billingData: ReqData) => {
       key: 'nip',
       value: nip || '',
     },
+    {
+      key: 'apartmentNumber',
+      value: apartmentNumber || '',
+    },
+    {
+      key: 'shipping_apartmentNumber',
+      value: shipping_apartmentNumber || '',
+    },
   ];
 
   const formattedShippingData: ShippingType = {
@@ -103,23 +100,53 @@ export const getFormattedUserData = (billingData: ReqData) => {
     country: shipping_country,
   };
 
-  let formattedRegistrationData: RegistrationType | null = null;
+  let formattedRegistrationData: RegistrationFormType | null = null;
 
   if (registration && password && confirm_password) {
     formattedRegistrationData = {
-      phone,
       email,
       first_name,
       last_name,
-      address_1: address_1,
-      address_2: address_2,
-      city: city,
-      postcode: postcode,
-      country: country,
-      terms: registration,
-      password: password,
-      confirmPassword: confirm_password,
-      apartmentNumber: address_2 || '',
+      role: 'customer',
+      username: email,
+      billing: {
+        first_name,
+        last_name,
+        company,
+        address_1,
+        address_2,
+        city,
+        postcode,
+        country,
+        email,
+        phone,
+      },
+      shipping: {
+        first_name: shipping_first_name ? shipping_first_name : first_name,
+        last_name: shipping_last_name ? shipping_last_name : last_name,
+        company: company || '',
+        address_1: shipping_address_1 ? shipping_address_1 : address_1,
+        address_2: shipping_address_2 ? shipping_address_2 : address_2,
+        city: shipping_city ? shipping_city : city,
+        postcode: shipping_postcode ? shipping_postcode : postcode,
+        country: shipping_country ? shipping_country : country,
+        phone,
+      },
+      meta_data: [
+        {
+          key: 'apartmentNumber',
+          value: apartmentNumber || '',
+        },
+        {
+          key: 'shipping_apartmentNumber',
+          value: shipping_apartmentNumber || '',
+        },
+        {
+          key: 'nip',
+          value: nip || '',
+        },
+      ],
+      password,
     };
   }
 

@@ -1,5 +1,5 @@
-import { useTranslations } from 'next-intl'
-import React, { FC } from 'react'
+import { useTranslations } from 'next-intl';
+import React, { FC } from 'react';
 import {
   OrderSummaryLine,
   OrderSummaryLineName,
@@ -7,19 +7,26 @@ import {
   OrderSummaryTotalValue,
   OrderSummaryWrapper,
 } from './style';
-import getSubtotalByLineItems from '@/utils/cart/getSubtotalByLineItems'
-import formatPrice from '@/utils/cart/formatPrice'
-import OrderTotalsRowsSkeleton from '../../order/OrderTotals/OrderTotalsRowsSkeleton'
-import { OrderSummaryProps } from '@/types/pages/cart'
+import getSubtotalByLineItems from '@/utils/cart/getSubtotalByLineItems';
+import formatPrice from '@/utils/cart/formatPrice';
+import OrderTotalsRowsSkeleton from '../../order/OrderTotals/OrderTotalsRowsSkeleton';
+import { OrderSummaryProps } from '@/types/pages/cart';
 
-const OrderSummary: FC<OrderSummaryProps> = ({ order, symbol, isLoading = false }) => {
-  const t = useTranslations('Cart')
-  const subtotal = order?.line_items ? getSubtotalByLineItems(order.line_items) : 0
+const OrderSummary: FC<OrderSummaryProps> = ({
+  order,
+  symbol,
+  isLoading = false,
+  noPaymentMethod,
+}) => {
+  const t = useTranslations('Cart');
+  const subtotal = order?.line_items
+    ? getSubtotalByLineItems(order.line_items)
+    : 0;
 
   return (
     <OrderSummaryWrapper>
       {isLoading ? (
-        <OrderTotalsRowsSkeleton />
+        <OrderTotalsRowsSkeleton noPaymentMethod />
       ) : (
         <>
           {/* subtotal */}
@@ -31,7 +38,7 @@ const OrderSummary: FC<OrderSummaryProps> = ({ order, symbol, isLoading = false 
           </OrderSummaryLine>
 
           {/* delivery */}
-          {order?.shipping_lines?.map((line) => (
+          {order?.shipping_lines?.map(line => (
             <OrderSummaryLine key={line.id}>
               <OrderSummaryLineName>{line.method_title}</OrderSummaryLineName>
               <span>
@@ -41,10 +48,12 @@ const OrderSummary: FC<OrderSummaryProps> = ({ order, symbol, isLoading = false 
           ))}
 
           {/* сoupons */}
-          {order?.coupon_lines?.map((line) => {
+          {order?.coupon_lines?.map(line => {
             const name = `${t('coupon')} ${
-              line.discount_type === 'percent' ? `-${line.nominal_amount}% ` : ''
-            }`
+              line.discount_type === 'percent'
+                ? `-${line.nominal_amount}% `
+                : ''
+            }`;
             return (
               <OrderSummaryLine key={line.id}>
                 <OrderSummaryLineName>
@@ -55,11 +64,11 @@ const OrderSummary: FC<OrderSummaryProps> = ({ order, symbol, isLoading = false 
                   - {line.discount}&nbsp;{symbol}
                 </span>
               </OrderSummaryLine>
-            )
+            );
           })}
 
           {/* fees */}
-          {order?.fee_lines?.map((line) => (
+          {order?.fee_lines?.map(line => (
             <OrderSummaryLine key={line.id}>
               <OrderSummaryLineName>{line.name}</OrderSummaryLineName>
               <span>
@@ -69,7 +78,7 @@ const OrderSummary: FC<OrderSummaryProps> = ({ order, symbol, isLoading = false 
           ))}
 
           {/* Taxes */}
-          {order?.tax_lines?.map((line) => (
+          {order?.tax_lines?.map(line => (
             <OrderSummaryLine key={line.id}>
               <OrderSummaryLineName>
                 {line.label} ({line.rate_percent}%)
@@ -81,14 +90,18 @@ const OrderSummary: FC<OrderSummaryProps> = ({ order, symbol, isLoading = false 
           ))}
 
           {/*payment Method*/}
-          <OrderSummaryLine>
-            <OrderSummaryLineName>{t('paymentMethod')}</OrderSummaryLineName>
-            <span>{order?.payment_method_title || '—'}</span>
-          </OrderSummaryLine>
+          {noPaymentMethod === false && (
+            <OrderSummaryLine>
+              <OrderSummaryLineName>{t('paymentMethod')}</OrderSummaryLineName>
+              <span>{order?.payment_method_title || '—'}</span>
+            </OrderSummaryLine>
+          )}
 
           {/*Order Summary Total */}
           <OrderSummaryTotal>
-            <OrderSummaryLineName>{t('OrderSummaryTotal')}</OrderSummaryLineName>
+            <OrderSummaryLineName>
+              {t('OrderSummaryTotal')}
+            </OrderSummaryLineName>
             <OrderSummaryTotalValue>
               {order?.total || '—'}&nbsp;{symbol}
             </OrderSummaryTotalValue>
@@ -96,7 +109,7 @@ const OrderSummary: FC<OrderSummaryProps> = ({ order, symbol, isLoading = false 
         </>
       )}
     </OrderSummaryWrapper>
-  )
-}
+  );
+};
 
-export default OrderSummary
+export default OrderSummary;

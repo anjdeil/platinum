@@ -1,4 +1,5 @@
 import Layout from '@/components/Layout/Layout';
+import ProgressBar from '@/components/progressBar/ProgressBar';
 import { setupStore } from '@/store';
 import GlobalStyle from '@/styles/global';
 import muiTheme from '@/styles/muiTheme';
@@ -28,6 +29,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             <MuiThemeProvider theme={muiTheme}>
               <GlobalStyle />
               <Layout>
+                <ProgressBar />
                 <Component {...pageProps} />
               </Layout>
             </MuiThemeProvider>
