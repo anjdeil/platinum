@@ -102,6 +102,12 @@ export const BillingForm: FC<BillingFormProps> = ({
     ? getMetaDataValue(customer.meta_data, 'apartmentNumber')
     : '';
 
+  // TODO - shipping_apartmentNumber from customer.shipping
+
+  // const shipping_apartmentNumber = customer
+  //   ? getMetaDataValue(customer.meta_data, 'shipping_apartmentNumber')
+  //   : '';
+
   const nip = customer ? getMetaDataValue(customer.meta_data, 'nip') : '';
 
   useEffect(() => {
@@ -167,8 +173,11 @@ export const BillingForm: FC<BillingFormProps> = ({
     watchedFields.postcode,
   ]);
 
+  // TODO - shipping info from customer.shipping
+
   useEffect(() => {
     if (different_address) {
+      //if (!customer) {
       setValue('shipping_first_name', '');
       setValue('shipping_last_name', '');
       setValue('shipping_country', 'PL');
@@ -178,6 +187,15 @@ export const BillingForm: FC<BillingFormProps> = ({
       setValue('shipping_apartmentNumber', '');
       setValue('shipping_postcode', '');
     }
+    // } else {
+    //   setValue('shipping_first_name', customer?.shipping.first_name || '');
+    //   setValue('shipping_last_name', customer?.shipping.last_name || '');
+    //   setValue('shipping_country', customer?.shipping.country || 'PL');
+    //   setValue('shipping_city', customer?.shipping.city || '');
+    //   setValue('shipping_address_1', customer?.shipping.address_1 || '');
+    //   setValue('shipping_address_2', customer?.shipping.address_2 || '');
+    //   setValue('shipping_apartmentNumber', shipping_apartmentNumber);
+    // }
   }, [different_address]);
 
   useEffect(() => {
