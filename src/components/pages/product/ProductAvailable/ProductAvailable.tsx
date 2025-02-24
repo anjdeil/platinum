@@ -11,7 +11,7 @@ const ProductAvailable: React.FC<ProductAvailableProps> = ({ count }) => {
 
   return (
     <>
-      {!count ? (
+      {count === null || count === undefined ? (
         <Skeleton width="120px" height="24px" />
       ) : (
         <>
