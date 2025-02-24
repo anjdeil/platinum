@@ -223,12 +223,20 @@ export const BillingForm: FC<BillingFormProps> = ({
         getFormattedUserData(watchedFields as ReqData);
       setFormOrderData({
         billing: formattedBillingData as BillingType,
-        shipping: formattedShippingData as ShippingType,
+        shipping: different_address
+          ? (formattedShippingData as ShippingType)
+          : (formattedBillingData as ShippingType),
         metaData: formattedMetaData as MetaDataType[],
       });
       setValidationErrors(null);
+    } else {
+      setFormOrderData({
+        billing: null,
+        shipping: null,
+        metaData: null,
+      });
     }
-  }, [isValid]);
+  }, [isValid, different_address]);
 
   useEffect(() => {
     if (!isValid && isWarningsShown) {
