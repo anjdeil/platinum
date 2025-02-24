@@ -10,7 +10,6 @@ import {
   StyledTextField,
 } from './styles';
 import { StyledPhoneInput } from '../CustomFormInput/styles';
-import { useTranslations } from 'next-intl';
 
 interface CustomTextFieldProps {
   isPhone?: boolean;
@@ -20,6 +19,7 @@ interface CustomTextFieldProps {
   inputType?: string;
   autocomplete?: string;
   errors: any;
+  label: string;
   placeholder: string;
   validation?: RegisterOptions;
   setValue?: any;
@@ -37,6 +37,7 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
   inputType,
   autocomplete,
   errors,
+  label,
   placeholder,
   validation,
   setValue,
@@ -44,7 +45,6 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
   notRequired,
 }) => {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
-  const t = useTranslations('Checkout');
   const inputRef = useRef<HTMLInputElement>(null);
 
   const togglePasswordVisibility = () => {
@@ -65,7 +65,7 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
     ? '/images/show-pass.svg'
     : '/images/hidden-pass.svg';
 
-  const label = notRequired ? placeholder : `${placeholder} *`;
+  const labelValue = notRequired ? label : `${label} *`;
   const autocompleteName =
     name === 'password'
       ? 'new-password'
@@ -81,14 +81,10 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
     }
   }, [defaultValue, name, setValue]);
 
-  const transformedPlaceholderValue = `${t(
-    'placeholder'
-  )} ${placeholder.toLowerCase()}`;
-
   return (
     <>
       <StyledFormControl fullWidth>
-        <StyledFormLabel htmlFor={name}>{label}</StyledFormLabel>
+        <StyledFormLabel htmlFor={name}>{labelValue}</StyledFormLabel>
 
         {isPhone ? (
           <>
@@ -101,6 +97,7 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
                   render={({ field }) => (
                     <StyledPhoneInput
                       {...field}
+                      placeholder={placeholder}
                       defaultCountry="pl"
                       onChange={value => {
                         if (value !== defaultPhoneValue) {
@@ -133,7 +130,7 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
                   ? 'text'
                   : inputType
               }
-              placeholder={transformedPlaceholderValue}
+              placeholder={placeholder}
               autoComplete={autoCompleteValue}
               error={!!errors[name]}
               helperText={
@@ -143,6 +140,7 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
               }
               inputRef={inputType === 'password' ? inputRef : undefined}
               defaultValue={defaultValue}
+              isPassword={inputType === 'password'}
             />
             {inputType === 'password' && (
               <ShowPasswordImage

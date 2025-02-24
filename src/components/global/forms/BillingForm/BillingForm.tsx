@@ -286,7 +286,8 @@ export const BillingForm: FC<BillingFormProps> = ({
           register={register}
           inputType="text"
           errors={errors}
-          placeholder={tMyAccount('city')}
+          label={tMyAccount('city')}
+          placeholder={tValidation('cityPlaceholder')}
           validation={getValidationSchema('city', tValidation)}
           setValue={setValue}
           defaultValue={customer?.billing?.city || ''}
@@ -297,7 +298,8 @@ export const BillingForm: FC<BillingFormProps> = ({
           register={register}
           inputType="text"
           errors={errors}
-          placeholder={tMyAccount('address_1')}
+          label={tMyAccount('address_1')}
+          placeholder={tValidation('streetPlaceholder')}
           validation={getValidationSchema('address_1', tValidation)}
           setValue={setValue}
           defaultValue={customer?.billing?.address_1 || ''}
@@ -308,7 +310,8 @@ export const BillingForm: FC<BillingFormProps> = ({
           register={register}
           inputType="text"
           errors={errors}
-          placeholder={tCheckout('address_2')}
+          label={tCheckout('address_2')}
+          placeholder={tValidation('buildingPlaceholder')}
           validation={getValidationSchema('address_2', tValidation)}
           setValue={setValue}
           defaultValue={customer?.billing?.address_2 || ''}
@@ -321,7 +324,8 @@ export const BillingForm: FC<BillingFormProps> = ({
           register={register}
           inputType="text"
           errors={errors}
-          placeholder={tValidation('apartment/office')}
+          label={tValidation('apartment/office')}
+          placeholder={tValidation('apartmentPlaceholder')}
           validation={getValidationSchema('apartmentNumber', tValidation)}
           setValue={setValue}
           defaultValue={apartmentNumber}
@@ -333,7 +337,8 @@ export const BillingForm: FC<BillingFormProps> = ({
           register={register}
           inputType="text"
           errors={errors}
-          placeholder={tCheckout('postcode')}
+          label={tCheckout('postcode')}
+          placeholder={tValidation('postCodePlaceholder')}
           validation={getValidationSchema('postcode', tValidation)}
           setValue={setValue}
           defaultValue={customer?.billing?.postcode || ''}
@@ -358,31 +363,42 @@ export const BillingForm: FC<BillingFormProps> = ({
           <>
             <CustomForm maxWidth="850px">
               <StyledFormWrapper>
-                {['first_name', 'last_name', 'email'].map(name => (
-                  <CustomTextField
-                    key={name}
-                    name={name}
-                    register={register}
-                    inputType="text"
-                    errors={errors}
-                    placeholder={tCheckout(name)}
-                    validation={getValidationSchema(name, tValidation)}
-                    setValue={setValue}
-                    defaultValue={
-                      customer?.billing?.[
-                        name as keyof typeof customer.billing
-                      ] || ''
-                    }
-                    autocomplete={
-                      name === 'first_name'
-                        ? 'given-name'
-                        : name === 'last_name'
-                        ? 'family-name'
-                        : name
-                    }
-                  />
-                ))}
-
+                <CustomTextField
+                  name="first_name"
+                  register={register}
+                  inputType="text"
+                  errors={errors}
+                  label={tCheckout('first_name')}
+                  placeholder={tValidation('firstNamePlaceholder')}
+                  validation={getValidationSchema('first_name', tValidation)}
+                  setValue={setValue}
+                  defaultValue={customer?.billing?.first_name || ''}
+                  autocomplete="given-name"
+                />
+                <CustomTextField
+                  name="last_name"
+                  register={register}
+                  inputType="text"
+                  errors={errors}
+                  label={tCheckout('last_name')}
+                  placeholder={tValidation('lastNamePlaceholder')}
+                  validation={getValidationSchema('last_name', tValidation)}
+                  setValue={setValue}
+                  defaultValue={customer?.billing?.last_name || ''}
+                  autocomplete="family-name"
+                />
+                <CustomTextField
+                  name="email"
+                  register={register}
+                  inputType="email"
+                  errors={errors}
+                  label={tCheckout('email')}
+                  placeholder={tValidation('emailPlaceholder')}
+                  validation={getValidationSchema('email', tValidation)}
+                  setValue={setValue}
+                  defaultValue={customer?.billing.email || ''}
+                  autocomplete="email"
+                />
                 <StyledPhoneWrapper>
                   <CustomTextField
                     isPhone={true}
@@ -392,7 +408,8 @@ export const BillingForm: FC<BillingFormProps> = ({
                     inputType="text"
                     autocomplete="tel"
                     errors={errors}
-                    placeholder={tCheckout('phone')}
+                    label={tCheckout('phone')}
+                    placeholder={tValidation('phonePlaceholder')}
                     validation={getValidationSchema('phone', tValidation)}
                     setValue={setValue}
                     defaultValue={customer?.billing?.phone || ''}
@@ -415,7 +432,8 @@ export const BillingForm: FC<BillingFormProps> = ({
                         register={register}
                         inputType="text"
                         errors={errors}
-                        placeholder={tCheckout('company')}
+                        label={tCheckout('company')}
+                        placeholder={tValidation('companyPlaceholder')}
                         validation={getValidationSchema('company', tValidation)}
                         setValue={setValue}
                         defaultValue={customer?.billing?.company || ''}
@@ -427,7 +445,8 @@ export const BillingForm: FC<BillingFormProps> = ({
                         register={register}
                         inputType="nip"
                         errors={errors}
-                        placeholder={tCheckout('nip')}
+                        label={tCheckout('nip')}
+                        placeholder={tValidation('nipPlaceholder')}
                         validation={getValidationSchema('nip', tValidation)}
                         setValue={setValue}
                         defaultValue={''}
@@ -448,7 +467,8 @@ export const BillingForm: FC<BillingFormProps> = ({
                           inputType="password"
                           autocomplete="new-password"
                           errors={errors}
-                          placeholder={tMyAccount('password')}
+                          label={tMyAccount('password')}
+                          placeholder={tValidation('passwordPlaceholder')}
                           validation={getValidationSchema(
                             'password',
                             tValidation
@@ -462,7 +482,10 @@ export const BillingForm: FC<BillingFormProps> = ({
                           inputType="password"
                           autocomplete="off"
                           errors={errors}
-                          placeholder={tMyAccount('confirmPassword')}
+                          label={tMyAccount('confirmPassword')}
+                          placeholder={tValidation(
+                            'confirmPasswordPlaceholder'
+                          )}
                           validation={getValidationSchema(
                             'confirm_password',
                             tValidation,
@@ -511,7 +534,8 @@ export const BillingForm: FC<BillingFormProps> = ({
                   register={register}
                   inputType="text"
                   errors={errors}
-                  placeholder={tMyAccount('first_name')}
+                  label={tMyAccount('first_name')}
+                  placeholder={tValidation('firstNamePlaceholder')}
                   validation={getValidationSchema('first_name', tValidation)}
                   setValue={setValue}
                   defaultValue={customer?.shipping.first_name || ''}
@@ -522,7 +546,8 @@ export const BillingForm: FC<BillingFormProps> = ({
                   register={register}
                   inputType="text"
                   errors={errors}
-                  placeholder={tMyAccount('last_name')}
+                  label={tMyAccount('last_name')}
+                  placeholder={tValidation('lastNamePlaceholder')}
                   validation={getValidationSchema('last_name', tValidation)}
                   setValue={setValue}
                   defaultValue={customer?.shipping.last_name || ''}
