@@ -6,7 +6,7 @@ export const UserInfoFormSchema = (isShipping: boolean, t: any) => {
     .min(1, { message: t('pleaseFillInTheFirstName') })
     .min(2, { message: t('yourFirstNameIsTooShort') })
     .max(50, { message: t('yourFirstNameIsTooLong') })
-    .regex(/^[a-zA-Zа-яА-ЯёЁіІїЇєЄ'’-]+$/i, {
+    .regex(/^[\p{L}'-]+$/u, {
       message: t('invalidCharacters'),
     });
 
@@ -15,7 +15,7 @@ export const UserInfoFormSchema = (isShipping: boolean, t: any) => {
     .min(1, { message: t('pleaseFillInTheLastName') })
     .min(2, { message: t('yourLastNameIsTooShort') })
     .max(50, { message: t('yourLastNameIsTooLong') })
-    .regex(/^[a-zA-Zа-яА-ЯёЁіІїЇєЄ'’-]+$/i, {
+    .regex(/^[\p{L}'-]+$/u, {
       message: t('invalidCharacters'),
     });
 
@@ -32,7 +32,7 @@ export const UserInfoFormSchema = (isShipping: boolean, t: any) => {
     .min(1, { message: t('pleaseFillInTheCity') })
     .min(3, { message: t('yourCityNameIsTooShort') })
     .max(100, { message: t('yourCityNameIsTooLong') })
-    .regex(/^[a-zA-Zа-яА-ЯёЁіІїЇєЄ'’-]+(?:\s[a-zA-Zа-яА-ЯёЁіІїЇєЄ'’-]+)*$/, {
+    .regex(/^[\p{L}'-]+$/u, {
       message: t('invalidCharacters'),
     });
 
@@ -41,21 +41,17 @@ export const UserInfoFormSchema = (isShipping: boolean, t: any) => {
     .min(1, { message: t('pleaseFillInTheStreetAddress') })
     .min(2, { message: t('yourStreetAddressIsTooShort') })
     .max(150, { message: t('yourStreetAddressIsTooLong') })
-    .regex(
-      /^(?!.*--)(?!.*\.\.)(?!.*,$)(?!.*\.$)[a-zA-Zа-яА-ЯёЁіІїЇєЄ\d\s\-.,]+$/,
-      { message: t('invalidCharacters') }
-    );
+    .regex(/^(?!.*--)(?!.*\.\.)(?!.*,$)(?!.*\.$)[\p{L}\d\s\-.,]+$/u, {
+      message: t('invalidCharacters'),
+    });
 
   const address2Validation = z
     .string()
     .min(1, { message: t('pleaseFillInTheBuildingNumber') })
     .max(10, { message: t('yourBuildingNumberIsTooLong') })
-    .regex(
-      /^[0-9]+[a-zA-Zа-яА-ЯёЁіІїЇєЄ]?(\s?\/\s?[0-9a-zA-Zа-яА-ЯёЁіІїЇєЄ]+)?$/,
-      {
-        message: t('invalidCharacters'),
-      }
-    );
+    .regex(/^[0-9]+[\p{L}]?(\s?\/\s?[0-9\p{L}]+)?$/u, {
+      message: t('invalidCharacters'),
+    });
 
   const apartmentNumberValidation = z
     .string()

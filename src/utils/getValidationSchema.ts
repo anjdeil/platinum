@@ -16,7 +16,7 @@ export const getValidationSchema = (
           message: t('yourFirstNameIsTooLong'),
         },
         pattern: {
-          value: /^[a-zA-Zа-яА-ЯёЁіІїЇєЄ'’-]+$/i,
+          value: /^[\p{L}'-]+$/u,
           message: t('invalidCharacters'),
         },
       };
@@ -32,7 +32,7 @@ export const getValidationSchema = (
           message: t('yourLastNameIsTooLong'),
         },
         pattern: {
-          value: /^[a-zA-Zа-яА-ЯёЁіІїЇєЄ'’-]+$/i,
+          value: /^[\p{L}'-]+$/u,
           message: t('invalidCharacters'),
         },
       };
@@ -104,8 +104,7 @@ export const getValidationSchema = (
           message: t('yourCityNameIsTooLong'),
         },
         pattern: {
-          value:
-            /^[a-zA-Zа-яА-ЯёЁіІїЇєЄ'’-]+(?:\s[a-zA-Zа-яА-ЯёЁіІїЇєЄ'’-]+)*$/,
+          value: /^[\p{L}'-]+$/u,
           message: t('invalidCharacters'),
         },
       };
@@ -121,8 +120,7 @@ export const getValidationSchema = (
           message: t('yourStreetAddressIsTooLong'),
         },
         pattern: {
-          value:
-            /^(?!.*--)(?!.*\.\.)(?!.*,$)(?!.*\.$)[a-zA-Zа-яА-ЯёЁіІїЇєЄ\d\s\-.,]+$/,
+          value: /^(?!.*--)(?!.*\.\.)(?!.*,$)(?!.*\.$)[\p{L}\d\s\-.,]+$/u,
           message: t('invalidCharacters'),
         },
       };
@@ -134,8 +132,7 @@ export const getValidationSchema = (
           message: t('yourBuildingNumberIsTooLong'),
         },
         pattern: {
-          value:
-            /^[0-9]+[a-zA-Zа-яА-ЯёЁіІїЇєЄ]?(\s?\/\s?[0-9a-zA-Zа-яА-ЯёЁіІїЇєЄ]+)?$/,
+          value: /^[0-9]+[\p{L}]?(\s?\/\s?[0-9\p{L}]+)?$/u,
           message: t('invalidCharacters'),
         },
       };
@@ -146,7 +143,7 @@ export const getValidationSchema = (
           message: t('yourApartmentNumberIsTooLong'),
         },
         pattern: {
-          value: /^[a-zA-Zа-яА-ЯёЁіІїЇєЄ0-9\s\-\/#]+$/,
+          value: /^[\p{L}0-9\s\-\/#]+$/u,
           message: t('invalidCharacters'),
         },
       };
@@ -158,7 +155,7 @@ export const getValidationSchema = (
           message: t('yourApartmentNumberIsTooLong'),
         },
         pattern: {
-          value: /^[a-zA-Zа-яА-ЯёЁіІїЇєЄ0-9\s\-\/#]+$/,
+          value: /^[\p{L}0-9\s\-\/#]+$/u,
           message: t('invalidCharacters'),
         },
       };
