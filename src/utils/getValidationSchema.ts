@@ -16,7 +16,7 @@ export const getValidationSchema = (
           message: t('yourFirstNameIsTooLong'),
         },
         pattern: {
-          value: /^[\p{L}'-]+$/u,
+          value: /^[a-zA-Zа-яА-ЯёЁіІїЇєЄ'’-]+$/i,
           message: t('invalidCharacters'),
         },
       };
@@ -32,7 +32,7 @@ export const getValidationSchema = (
           message: t('yourLastNameIsTooLong'),
         },
         pattern: {
-          value: /^[\p{L}'-]+$/u,
+          value: /^[a-zA-Zа-яА-ЯёЁіІїЇєЄ'’-]+$/i,
           message: t('invalidCharacters'),
         },
       };
@@ -104,7 +104,8 @@ export const getValidationSchema = (
           message: t('yourCityNameIsTooLong'),
         },
         pattern: {
-          value: /^[\p{L}'-]+$/u,
+          value:
+            /^[a-zA-Zа-яА-ЯёЁіІїЇєЄ'’-]+(?:\s[a-zA-Zа-яА-ЯёЁіІїЇєЄ'’-]+)*$/,
           message: t('invalidCharacters'),
         },
       };
@@ -120,7 +121,8 @@ export const getValidationSchema = (
           message: t('yourStreetAddressIsTooLong'),
         },
         pattern: {
-          value: /^(?!.*--)(?!.*\.\.)(?!.*,$)(?!.*\.$)[\p{L}\d\s\-.,]+$/u,
+          value:
+            /^(?!.*--)(?!.*\.\.)(?!.*,$)(?!.*\.$)[a-zA-Zа-яА-ЯёЁіІїЇєЄ\d\s\-.,]+$/,
           message: t('invalidCharacters'),
         },
       };
@@ -128,11 +130,12 @@ export const getValidationSchema = (
       return {
         required: t('pleaseFillInTheBuildingNumber'),
         maxLength: {
-          value: 6,
+          value: 10,
           message: t('yourBuildingNumberIsTooLong'),
         },
         pattern: {
-          value: /^[0-9]+[\p{L}]?(\s?\/\s?[0-9\p{L}]+)?$/u,
+          value:
+            /^[0-9]+[a-zA-Zа-яА-ЯёЁіІїЇєЄ]?(\s?\/\s?[0-9a-zA-Zа-яА-ЯёЁіІїЇєЄ]+)?$/,
           message: t('invalidCharacters'),
         },
       };
@@ -143,7 +146,7 @@ export const getValidationSchema = (
           message: t('yourApartmentNumberIsTooLong'),
         },
         pattern: {
-          value: /^[\p{L}0-9\s\-\/#]+$/u,
+          value: /^[a-zA-Zа-яА-ЯёЁіІїЇєЄ0-9\s\-\/#]+$/,
           message: t('invalidCharacters'),
         },
       };
@@ -155,7 +158,7 @@ export const getValidationSchema = (
           message: t('yourApartmentNumberIsTooLong'),
         },
         pattern: {
-          value: /^[\p{L}0-9\s\-\/#]+$/u,
+          value: /^[a-zA-Zа-яА-ЯёЁіІїЇєЄ0-9\s\-\/#]+$/,
           message: t('invalidCharacters'),
         },
       };

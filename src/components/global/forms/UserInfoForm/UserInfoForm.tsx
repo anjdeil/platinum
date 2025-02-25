@@ -274,6 +274,7 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
                   : apartmentNumberFromMeta
                 : defaultValues[field] || ''
             }
+            isRequire={field === 'apartmentNumber' ? false : true}
             setValue={setValue}
           />
         )
