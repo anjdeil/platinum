@@ -1,10 +1,10 @@
-import { RegistrationForm } from '@/components/global/forms/RegistrationForm';
 import { Container, FormPageWrapper } from '@/styles/components';
 import { GetServerSidePropsContext } from 'next';
 import wpRestApi from '@/services/wpRestApi';
 import { FormContainer } from '@/components/pages/account/styles';
 import { useTranslations } from 'next-intl';
 import Breadcrumbs from '@/components/global/Breadcrumbs/Breadcrumbs';
+import { RegistrationForm } from '@/components/global/forms/RegistrationForm';
 
 export default function Registration() {
   const t = useTranslations('MyAccount');

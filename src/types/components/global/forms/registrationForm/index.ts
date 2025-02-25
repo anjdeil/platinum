@@ -26,6 +26,97 @@ export const RegistrationFormSchema = (isLoggedIn: boolean, t: any) => {
   return schema;
 };
 
+export const RegistrationFormSchema2 = (isLoggedIn: boolean, t: any) => {
+  const schema = z
+    .object({
+      first_name: z
+        .string()
+        .nonempty(t('pleaseFillInTheFirstName'))
+        .min(2, t('yourFirstNameIsTooShort'))
+        .max(50, t('yourFirstNameIsTooLong'))
+        .regex(/^[\p{L}'-]+$/u, t('invalidCharacters')),
+      last_name: z
+        .string()
+        .nonempty(t('pleaseFillInTheLastName'))
+        .min(2, t('yourLastNameIsTooShort'))
+        .max(50, t('yourLastNameIsTooLong'))
+        .regex(/^[\p{L}'-]+$/u, t('invalidCharacters')),
+      email: z
+        .string()
+        .nonempty(t('pleaseFillInTheEmail'))
+        .email(t('wrongEmailFormat'))
+        .max(254, t('cannotExceed254Characters')),
+      phone: z
+        .string()
+        .nonempty(t('pleaseFillInThePhoneNumber'))
+        .min(12, t('yourPhoneNumberIsTooShort'))
+        .regex(
+          /^\+?[1-9]\d{0,2}[-\s]?\d{3}[-\s]?\d{3}[-\s]?\d{3,4}$/g,
+          t('invalidPhoneNumber')
+        ),
+      country: z.string().nonempty(t('pleaseSelectACountry')),
+      city: z
+        .string()
+        .nonempty(t('pleaseFillInTheCity'))
+        .min(3, t('yourCityNameIsTooShort'))
+        .max(100, t('yourCityNameIsTooLong'))
+        .regex(/^[\p{L}'-]+$/u, t('invalidCharacters')),
+      address_1: z
+        .string()
+        .nonempty(t('pleaseFillInTheStreetAddress'))
+        .min(2, t('yourStreetAddressIsTooShort'))
+        .max(150, t('yourStreetAddressIsTooLong'))
+        .regex(
+          /^(?!.*--)(?!.*\.\.)(?!.*,$)(?!.*\.$)[\p{L}\d\s\-.,]+$/u,
+          t('invalidCharacters')
+        ),
+      address_2: z
+        .string()
+        .nonempty(t('pleaseFillInTheBuildingNumber'))
+        .max(6, t('yourBuildingNumberIsTooLong'))
+        .regex(
+          /^[0-9]+[\p{L}]?(\s?\/\s?[0-9\p{L}]+)?$/u,
+          t('invalidCharacters')
+        ),
+      apartmentNumber: z
+        .string()
+        .nonempty(t('pleaseFillInTheBuildingNumber'))
+        .max(10, t('yourBuildingNumberIsTooLong'))
+        .regex(/^[\p{L}0-9\s\-\/#]+$/u, t('invalidCharacters')),
+      postcode: z
+        .string()
+        .nonempty(t('pleaseFillInThePostcode'))
+        .regex(
+          /^(\d{2}-\d{3}|\d{1}-\d{4}|\d{3}-\d{2}|\d{5})$/,
+          t('invalidPostcodeFormat')
+        ),
+      password: !isLoggedIn
+        ? z
+            .string()
+            .nonempty(t('pleaseFillInThePassword'))
+            .min(8, t('minChar', { count: 8 }))
+            .max(25, t('yourPasswordIsTooLong'))
+            .refine(value => /[A-Z]/.test(value), t('PasswordCapitalLetter'))
+            .refine(value => /[a-z]/.test(value), t('PasswordLowercaseLetter'))
+            .refine(value => /[0-9]/.test(value), t('PasswordDigit'))
+            .refine(
+              value => /[^A-Za-z0-9]/.test(value),
+              t('PasswordSpecialChar')
+            )
+        : z.string().optional(),
+      confirmPassword: !isLoggedIn
+        ? z.string().nonempty(t('pleaseConfirmYourPassword'))
+        : z.string().optional(),
+      terms: z.boolean().refine(val => val === true, t('agreentmentTerms')),
+    })
+    .refine(data => data.password === data.confirmPassword, {
+      message: t('PasswordsDoNotMatch'),
+      path: ['confirmPassword'],
+    });
+
+  return schema;
+};
+
 export const CheckoutRegistrationFormSchema = z.object({
   email: z.string(),
   first_name: z.string(),

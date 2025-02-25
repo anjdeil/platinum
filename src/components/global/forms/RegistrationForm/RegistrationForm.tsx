@@ -1,5 +1,4 @@
 import { FC, useMemo, useState } from 'react';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import 'react-international-phone/style.css';
@@ -7,12 +6,9 @@ import { useRegisterCustomerMutation } from '@/store/rtk-queries/wooCustomApi';
 import { useRouter } from 'next/router';
 import { RegistrationFormSchema } from '@/types/components/global/forms/registrationForm';
 import { isAuthErrorResponseType } from '@/utils/isAuthErrorResponseType';
-import { CustomFormInput } from '../CustomFormInput';
 import { CustomError } from '../CustomFormInput/styles';
 import {
-  CustomForm,
   FlexBox,
-  FormWrapper,
   FormWrapperBottom,
   StyledButton,
   Title,
@@ -23,16 +19,20 @@ import {
   useCheckTokenMutation,
   useGetTokenMutation,
 } from '@/store/rtk-queries/wpApi';
-import { CustomFormCheckbox } from '../CustomFormCheckbox';
 import { useTranslations } from 'next-intl';
 import { ActiveText } from '../LoginForm/styles';
 import CustomCountrySelect from '../../selects/CustomCountrySelect/CustomCountrySelect';
 import { countryOptions } from '@/utils/mockdata/countryOptions';
 import Notification from '../../Notification/Notification';
+import CustomTextField from '../CustomTextField/CustomTextField';
+import { getValidationSchema } from '@/utils/getValidationSchema';
+import { FormCheckbox } from '../BillingForm/FormCheckbox';
+import { CustomForm, StyledFieldsWrapper } from './styles';
 
 export const RegistrationForm: FC = () => {
   const tValidation = useTranslations('Validation');
   const tMyAccount = useTranslations('MyAccount');
+  const tCheckout = useTranslations('Checkout');
   const router = useRouter();
   const [customError, setCustomError] = useState<string>('');
 
@@ -46,11 +46,11 @@ export const RegistrationForm: FC = () => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isSubmitSuccessful },
-    reset,
     setValue,
     control,
+    watch,
   } = useForm<RegistrationFormType>({
-    resolver: zodResolver(formSchema),
+    mode: 'onChange',
   });
 
   /** API
@@ -64,26 +64,31 @@ export const RegistrationForm: FC = () => {
   async function onSubmit(formData: RegistrationFormType) {
     setCustomError('');
     const reqBody = {
-      email: formData.email,
       first_name: formData.first_name,
       last_name: formData.last_name,
-      password: formData.password,
+      email: formData.email,
       role: 'customer',
-
       username: formData.email,
+      password: formData.password,
+
       billing: {
         first_name: formData.first_name,
         last_name: formData.last_name,
         address_1: formData.address_1,
-        address_2: [formData.address_2, formData.apartmentNumber]
-          .filter(Boolean)
-          .join('/'),
+        address_2: formData.address_2,
         city: formData.city,
         postcode: formData.postcode,
         country: formData.country,
         email: formData.email,
         phone: formData.phone,
       },
+
+      meta_data: [
+        {
+          key: 'apartmentNumber',
+          value: formData.apartmentNumber,
+        },
+      ],
     };
 
     try {
@@ -111,58 +116,151 @@ export const RegistrationForm: FC = () => {
       setCustomError(
         'Oops! Something went wrong with the server. Please try again or contact support.'
       );
-    } finally {
-      reset();
     }
   }
 
   const renderFormFields = () => (
     <>
-      {['first_name', 'last_name', 'email', 'phone'].map(field => (
-        <CustomFormInput
-          key={field}
-          fieldName={tMyAccount(field)}
-          name={`${field}`}
-          register={register}
-          errors={errors}
-          inputTag="input"
-          inputType={field === 'phone' ? 'phone' : 'text'}
-          setValue={setValue}
-        />
-      ))}
+      <CustomTextField
+        name="first_name"
+        register={register}
+        inputType="text"
+        errors={errors}
+        label={tCheckout('first_name')}
+        placeholder={tValidation('firstNamePlaceholder')}
+        validation={getValidationSchema('first_name', tValidation)}
+        setValue={setValue}
+        defaultValue={''}
+        autocomplete="given-name"
+      />
+      <CustomTextField
+        name="last_name"
+        register={register}
+        inputType="text"
+        errors={errors}
+        label={tCheckout('last_name')}
+        placeholder={tValidation('lastNamePlaceholder')}
+        validation={getValidationSchema('last_name', tValidation)}
+        setValue={setValue}
+        defaultValue={''}
+        autocomplete="family-name"
+      />
+      <CustomTextField
+        name="email"
+        register={register}
+        inputType="email"
+        errors={errors}
+        label={tCheckout('email')}
+        placeholder={tValidation('emailPlaceholder')}
+        validation={getValidationSchema('email', tValidation)}
+        setValue={setValue}
+        defaultValue={''}
+        autocomplete="email"
+      />
+      <CustomTextField
+        isPhone={true}
+        isReg={true}
+        name="phone"
+        control={control}
+        register={register}
+        inputType="text"
+        autocomplete="tel"
+        errors={errors}
+        label={tCheckout('phone')}
+        placeholder={tValidation('phonePlaceholder')}
+        validation={getValidationSchema('phone', tValidation)}
+        setValue={setValue}
+        defaultValue={''}
+      />
       <CustomCountrySelect
-        name={`country`}
+        name="country"
         control={control}
         options={countryOptions}
         label={tMyAccount('country')}
         errors={errors}
+        defaultValue={'PL'}
+        noPaddings={true}
       />
-      {[
-        'city',
-        'address_1',
-        'address_2',
-        'apartmentNumber',
-        'postcode',
-        'password',
-        'confirmPassword',
-      ].map(field => (
-        <CustomFormInput
-          key={field}
-          fieldName={tMyAccount(field)}
-          name={`${field}`}
-          register={register}
-          errors={errors}
-          inputTag="input"
-          inputType={
-            field === 'postCode'
-              ? 'number'
-              : field == 'password' || field == 'confirmPassword'
-              ? 'newpassword'
-              : 'text'
-          }
-          setValue={setValue}
-        />
-      ))}
+      <CustomTextField
+        name="city"
+        register={register}
+        inputType="text"
+        errors={errors}
+        label={tMyAccount('city')}
+        placeholder={tValidation('cityPlaceholder')}
+        validation={getValidationSchema('city', tValidation)}
+        setValue={setValue}
+        defaultValue={''}
+        autocomplete="address-level2"
+      />
+      <CustomTextField
+        name="address_1"
+        register={register}
+        inputType="text"
+        errors={errors}
+        label={tMyAccount('address_1')}
+        placeholder={tValidation('streetPlaceholder')}
+        validation={getValidationSchema('address_1', tValidation)}
+        setValue={setValue}
+        defaultValue={''}
+        autocomplete="address-line1"
+      />
+      <CustomTextField
+        name="address_2"
+        register={register}
+        inputType="text"
+        errors={errors}
+        label={tCheckout('address_2')}
+        placeholder={tValidation('buildingPlaceholder')}
+        validation={getValidationSchema('address_2', tValidation)}
+        setValue={setValue}
+        defaultValue={''}
+        autocomplete="address-line2"
+      />
+      <CustomTextField
+        name="apartmentNumber"
+        register={register}
+        inputType="text"
+        errors={errors}
+        label={tValidation('apartment/office')}
+        placeholder={tValidation('apartmentPlaceholder')}
+        validation={getValidationSchema('apartmentNumberRequired', tValidation)}
+        setValue={setValue}
+        defaultValue={''}
+        autocomplete="address-line3"
+      />
+      <CustomTextField
+        name="postcode"
+        register={register}
+        inputType="text"
+        errors={errors}
+        label={tCheckout('postcode')}
+        placeholder={tValidation('postCodePlaceholder')}
+        validation={getValidationSchema('postcode', tValidation)}
+        setValue={setValue}
+        defaultValue={''}
+        autocomplete="postal-code"
+      />
+      <CustomTextField
+        name="password"
+        register={register}
+        inputType="password"
+        autocomplete="new-password"
+        errors={errors}
+        label={tMyAccount('password')}
+        placeholder={tValidation('passwordPlaceholder')}
+        validation={getValidationSchema('password', tValidation)}
+      />
+      <CustomTextField
+        name="confirm_password"
+        register={register}
+        inputType="password"
+        autocomplete="off"
+        errors={errors}
+        label={tMyAccount('confirmPassword')}
+        placeholder={tValidation('confirmPasswordPlaceholder')}
+        validation={getValidationSchema('confirm_password', tValidation, watch)}
+      />
     </>
   );
 
@@ -171,12 +269,14 @@ export const RegistrationForm: FC = () => {
       <Title as={'h2'} uppercase={true} marginBottom={'24px'}>
         {tMyAccount('registration')}
       </Title>
-      <FormWrapper>{renderFormFields()} </FormWrapper>
-      <CustomFormCheckbox
+      <StyledFieldsWrapper>{renderFormFields()} </StyledFieldsWrapper>
+      <FormCheckbox
         name={'terms'}
         register={register}
         errors={errors}
         label={tMyAccount('agreePersonalData')}
+        validation={getValidationSchema('terms', tValidation)}
+        noTop
       />
       <FormWrapperBottom>
         <StyledButton

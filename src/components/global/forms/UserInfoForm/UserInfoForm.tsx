@@ -190,7 +190,10 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
       const initialValue = initialData?.[key as keyof typeof initialData];
       const updatedValue = updatedData[key as keyof typeof updatedData];
 
-      const normalizeString = (str: string) => {
+      const normalizeString = (str: string | undefined) => {
+        if (str === undefined) {
+          return '';
+        }
         return str
           .trim()
           .replace(/\u200B/g, '')
@@ -271,6 +274,7 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
                   : apartmentNumberFromMeta
                 : defaultValues[field] || ''
             }
+            isRequire={field === 'apartmentNumber' ? false : true}
             setValue={setValue}
           />
         )
