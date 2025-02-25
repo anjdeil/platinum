@@ -7,7 +7,12 @@ export const ReviewsContainer = styled.div`
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    row-gap: 24px;    
+    row-gap: 24px;
+    margin-bottom: 60px;
+
+    @media ${({ theme }) => theme.media.medium} {
+       margin-bottom: 48px;
+    }
 `;
 
 export const TitleBlock = styled.div`
@@ -26,29 +31,29 @@ export const StyledText = styled(Text)`
 `;
 
 export const CustomSwiper = styled(Swiper)`
+  width: 100%;
+
+  & .swiper-wrapper {
+    position: relative;
     width: 100%;
+  }
 
-    & .swiper-wrapper {
-        position: relative;
-        width: 100%;
+  & .swiper-slide {
+    height: auto;
+  }
+
+  & .swiper-pagination {
+    margin-top: 8px;
+    position: relative;
+
+    &-bullet {
+      border-radius: 10px;
+      width: 34px;
+      height: 2px;
+      background-color: ${({ theme }) => theme.colors.lightBorder};
+      &-active {
+        background-color: ${({ theme }) => theme.colors.active};
+      }
     }
-
-    & .swiper-slide {
-        height: 100%;
-    }
-
-    & .swiper-pagination {
-        margin-top: 8px;
-        position: relative;
-
-        &-bullet {
-            border-radius: 10px;
-            width: 34px;
-            height: 2px;
-            background-color: ${({ theme }) => theme.colors.lightBorder};
-            &-active {
-                background-color: ${({ theme }) => theme.colors.active};
-            }
-        }
-    }
+  }
 `;

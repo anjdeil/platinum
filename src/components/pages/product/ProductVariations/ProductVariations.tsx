@@ -1,12 +1,12 @@
 import { VariationTitle } from '@/styles/components';
 import { ColorVariationsProps } from '@/types/components/shop/product/productVariations';
+import { useTranslations } from 'next-intl';
 import React from 'react';
 import {
   ProductVariationsContainer,
   VariationListBlock,
   VariationsButton,
 } from './styles';
-import { useTranslations } from 'next-intl';
 
 const ProductVariations: React.FC<ColorVariationsProps> = ({
   attr,
@@ -25,7 +25,7 @@ const ProductVariations: React.FC<ColorVariationsProps> = ({
               active={item.slug === currentVariation}
               onClick={() => onChange(attr.slug, item.slug)}
             >
-              {item.slug}
+              {item.name}
             </VariationsButton>
           ))}
       </VariationListBlock>

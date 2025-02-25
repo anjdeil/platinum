@@ -98,12 +98,17 @@ export const StyledTextField = styled(TextField, {
     border-radius: 8px;
     margin: 0;
     transition: border 0.1s ease-in-out;
+    & input {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
 
     // Default state
     & fieldset {
       border: 1px solid transparent;
       ${props =>
-        props.isError ? `box-shadow: 0px 0px 4px 0px #be414180;` : ''}
+        props.isError ? `box-shadow: 0px 0px 4px 0px #be414180;` : ''};
     }
 
     // Hover effect

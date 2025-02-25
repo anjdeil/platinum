@@ -24,7 +24,7 @@ import useInPostGeowidget from '@/hooks/useInPostGeowidget';
 import { ShippingMethodType } from '@/types/services';
 import { useCreateOrderMutation } from '@/store/rtk-queries/wooCustomApi';
 import { useGetProductsMinimizedMutation } from '@/store/rtk-queries/wpCustomApi';
-import { useAppSelector } from '@/store';
+import { useAppDispatch, useAppSelector } from '@/store';
 import useGetAuthToken from '@/hooks/useGetAuthToken';
 import { useLazyFetchUserDataQuery } from '@/store/rtk-queries/wpApi';
 import Link from 'next/link';
@@ -42,7 +42,7 @@ import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
 import getCartTotals from '@/utils/cart/getCartTotals';
 import FreeShippingNotifications from '@/components/pages/checkout/FreeShippingNotifications/FreeShippingNotifications';
 import { BillingForm } from '@/components/global/forms/BillingForm/BillingForm';
-import { RegistrationType } from '@/utils/checkout/getFormattedUserData';
+
 import {
   BillingType,
   MetaDataType,
@@ -52,6 +52,10 @@ import BillingWarnings from '@/components/pages/checkout/BillingWarnings';
 import Notification from '@/components/global/Notification/Notification';
 import { useRegisterUser } from '@/hooks/useRegisterUser';
 import { RegistrationError } from '@/components/pages/checkout/RegistrationError/RegistrationError';
+import { useLazyGetUserTotalsQuery } from '@/store/rtk-queries/userTotals/userTotals';
+import { getLoyaltyLevel } from '@/utils/getLoyaltyLevel';
+import { clearCart } from '@/store/slices/cartSlice';
+import { RegistrationFormType } from '@/types/components/global/forms/registrationForm';
 
 export function getServerSideProps() {
   return {
@@ -60,8 +64,10 @@ export function getServerSideProps() {
 }
 
 export default function CheckoutPage() {
+  const dispatch = useAppDispatch();
   const t = useTranslations('Checkout');
   const tMyAccount = useTranslations('MyAccount');
+  const tCart = useTranslations('Cart');
 
   const {
     currentCurrency: currency,
@@ -207,7 +213,9 @@ export default function CheckoutPage() {
   );
 
   // Get data from Billing/Shipping forms
-  const [triggerValidationForm, setTriggerValidationForm] = useState(false);
+  const [isValidForm, setIsValidForm] = useState<boolean>(false);
+  const [isShippingAddressDifferent, setIsShippingAddressDifferent] =
+    useState<boolean>(false);
   const [formOrderData, setFormOrderData] = useState<{
     billing: BillingType | null;
     shipping: ShippingType | null;
@@ -217,9 +225,10 @@ export default function CheckoutPage() {
     shipping: null,
     metaData: null,
   });
+
   const [isRegistration, setIsRegistration] = useState(false);
   const [registrationData, setRegistrationData] =
-    useState<RegistrationType | null>(null);
+    useState<RegistrationFormType | null>(null);
 
   useEffect(() => {
     if (!formOrderData.shipping?.country) return;
@@ -230,7 +239,29 @@ export default function CheckoutPage() {
   const { name: currencyCode } = useAppSelector(state => state.currencySlice);
   const [createOrder, { data: order, isLoading: isOrderLoading = true }] =
     useCreateOrderMutation();
-  const [fetchUserData, { data: userData }] = useLazyFetchUserDataQuery();
+  const [fetchUserData, { data: userData, isLoading: isUserDataLoading }] =
+    useLazyFetchUserDataQuery();
+
+  /**
+   * Coupons and loyalty status
+   */
+  const [coupons, setCoupons] = useState(couponCodes);
+
+  const [fetchUserTotals, { data: userTotal }] = useLazyGetUserTotalsQuery();
+  useEffect(() => {
+    if (userData?.id) {
+      fetchUserTotals(userData?.id);
+    }
+  }, [userData?.id]);
+
+  useEffect(() => {
+    if (userTotal?.total_spent) {
+      const { level } = getLoyaltyLevel(Number(userTotal.total_spent));
+      if (level && !coupons?.includes(level)) {
+        setCoupons([...coupons, level]);
+      }
+    }
+  }, [userTotal]);
 
   /* Check cart conflict */
   useEffect(() => {
@@ -268,12 +299,11 @@ export default function CheckoutPage() {
   const [isRegistrationSuccessful, setIsRegistrationSuccessful] = useState<
     boolean | null
   >(null);
-  const [isValidForm, setIsValidForm] = useState<boolean>(false);
+
   const [warnings, setWarnings] = useState<string[]>();
   const [validationErrors, setValidationErrors] = useState<string | null>(null);
 
   const [isWarningsShown, setIsWarningsShown] = useState(false);
-
   /**
    * Validate billing data
    */
@@ -282,24 +312,31 @@ export default function CheckoutPage() {
   const handlePayOrder = async () => {
     if (!order) return;
 
-    setTriggerValidationForm(true);
     setIsWarningsShown(true);
 
     let isOrderValid = true;
 
-    if (!isValidForm) {
+    if (
+      !isValidForm ||
+      !formOrderData.billing ||
+      (isShippingAddressDifferent && !formOrderData.shipping)
+    ) {
+      setValidationErrors('validationErrorsFields');
+
       isOrderValid = false;
     }
 
     const shippingValidationResult = validateOrder(order);
     if (!shippingValidationResult.isValid) {
       setWarnings(shippingValidationResult.messageKeys);
+
       isOrderValid = false;
     } else {
       setWarnings([]);
     }
 
     setRegistrationErrorWarning(null);
+
     if (isRegistration && registrationData && isOrderValid) {
       setIsRegistrationSuccessful(false);
 
@@ -307,8 +344,8 @@ export default function CheckoutPage() {
 
       if (!registrationError) {
         setIsRegistrationSuccessful(true);
-        setRegistrationErrorWarning(null); //?
-        setRegistrationData(null); //?
+        setRegistrationErrorWarning(null);
+        setRegistrationData(null);
       } else {
         isOrderValid = false;
         setRegistrationErrorWarning(registrationError);
@@ -318,7 +355,7 @@ export default function CheckoutPage() {
             'An account is already registered with your email address.'
           )
         ) {
-          setRegistrationData(null); //?
+          setRegistrationData(null);
         }
       }
     }
@@ -332,10 +369,9 @@ export default function CheckoutPage() {
 
   /* Update an order */
   useEffect(() => {
-    const couponLines = couponCodes.map(code => ({ code }));
+    if (isUserDataLoading || cartItems.length === 0) return;
 
-    const loyaltyStatus = userData?.meta?.loyalty;
-    if (loyaltyStatus) couponLines.push({ code: loyaltyStatus });
+    const couponLines = coupons.map(code => ({ code }));
 
     createOrder({
       status: orderStatus,
@@ -345,30 +381,29 @@ export default function CheckoutPage() {
       ...(formOrderData.billing &&
         orderStatus === 'pending' && { billing: formOrderData.billing }),
       ...(formOrderData.shipping &&
+        isShippingAddressDifferent &&
         orderStatus === 'pending' && { shipping: formOrderData.shipping }),
       ...(formOrderData.metaData &&
         orderStatus === 'pending' && { meta_data: formOrderData.metaData }),
       ...(userData?.id && { customer_id: userData.id }),
       ...(shippingLine && { shipping_lines: [shippingLine] }),
     });
-  }, [
-    cartItems,
-    couponCodes,
-    orderStatus,
-    currencyCode,
-    userData,
-    shippingLine,
-  ]);
+  }, [cartItems, coupons, orderStatus, currencyCode, userData, shippingLine]);
 
   useEffect(() => {
     if (order?.status === 'pending' && order.payment_url) {
-      router.push(order.payment_url);
+      const paymentUrlObj = new URL(order.payment_url);
+      const langCode = router.locale === 'en' ? '' : router.locale;
+      paymentUrlObj.pathname = '/' + langCode + paymentUrlObj.pathname;
+
+      router.push(paymentUrlObj.toString());
+      dispatch(clearCart());
     }
   }, [order]);
 
   return (
     <>
-      <Head>{inPostHead},</Head>
+      <Head>{inPostHead}</Head>
       <OrderProgress />
 
       <CheckoutContainer>
@@ -387,8 +422,8 @@ export default function CheckoutPage() {
             setFormOrderData={setFormOrderData}
             setCurrentCountryCode={setCurrentCountryCode}
             setValidationErrors={setValidationErrors}
-            triggerValidationForm={triggerValidationForm}
-            setTriggerValidationForm={setTriggerValidationForm}
+            isWarningsShown={isWarningsShown}
+            setIsShippingAddressDifferent={setIsShippingAddressDifferent}
             isUserAlreadyExist={isUserAlreadyExist}
             setRegistrationErrorWarning={setRegistrationErrorWarning}
             setIsRegistration={setIsRegistration}
@@ -428,6 +463,7 @@ export default function CheckoutPage() {
               symbol={currencySymbol}
               order={order}
               isLoading={isOrderLoading}
+              noPaymentMethod
             />
           </CheckoutSummary>
           <CheckoutPayButtonWrapper>
@@ -435,7 +471,7 @@ export default function CheckoutPage() {
               disabled={isPayButtonDisabled}
               onClick={handlePayOrder}
             >
-              {t('pay')}
+              {tCart('Continue')}
             </CheckoutPayButton>
             <CheckoutAgreementWrapper>
               <CheckIcon />

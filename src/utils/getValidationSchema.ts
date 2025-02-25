@@ -15,6 +15,10 @@ export const getValidationSchema = (
           value: 50,
           message: t('yourFirstNameIsTooLong'),
         },
+        pattern: {
+          value: /^[\p{L}'-]+$/u,
+          message: t('invalidCharacters'),
+        },
       };
     case 'last_name':
       return {
@@ -26,6 +30,10 @@ export const getValidationSchema = (
         maxLength: {
           value: 50,
           message: t('yourLastNameIsTooLong'),
+        },
+        pattern: {
+          value: /^[\p{L}'-]+$/u,
+          message: t('invalidCharacters'),
         },
       };
     case 'email':
@@ -95,39 +103,56 @@ export const getValidationSchema = (
           value: 100,
           message: t('yourCityNameIsTooLong'),
         },
+        pattern: {
+          value: /^[\p{L}'-]+$/u,
+          message: t('invalidCharacters'),
+        },
       };
     case 'address_1':
       return {
         required: t('pleaseFillInTheStreetAddress'),
         minLength: {
-          value: 5,
+          value: 2,
           message: t('yourStreetAddressIsTooShort'),
         },
         maxLength: {
-          value: 100,
+          value: 150,
           message: t('yourStreetAddressIsTooLong'),
+        },
+        pattern: {
+          value: /^(?!.*--)(?!.*\.\.)(?!.*,$)(?!.*\.$)[\p{L}\d\s\-.,]+$/u,
+          message: t('invalidCharacters'),
         },
       };
     case 'address_2':
       return {
         required: t('pleaseFillInTheBuildingNumber'),
         maxLength: {
-          value: 100,
+          value: 6,
           message: t('yourBuildingNumberIsTooLong'),
+        },
+        pattern: {
+          value: /^[0-9]+[\p{L}]?(\s?\/\s?[0-9\p{L}]+)?$/u,
+          message: t('invalidCharacters'),
         },
       };
     case 'apartmentNumber':
       return {
+        required: t('pleaseFillInTheBuildingNumber'),
         maxLength: {
           value: 10,
-          message: t('yourApartmentNumberIsTooLong'),
+          message: t('yourBuildingNumberIsTooLong'),
+        },
+        pattern: {
+          value: /^[\p{L}0-9\s\-\/#]+$/u,
+          message: t('invalidCharacters'),
         },
       };
     case 'postcode':
       return {
         required: t('pleaseFillInThePostcode'),
         pattern: {
-          value: /^[0-9]{5}$/,
+          value: /^(\d{2}-\d{3}|\d{1}-\d{4}|\d{3}-\d{2}|\d{5})$/,
           message: t('invalidPostcodeFormat'),
         },
       };

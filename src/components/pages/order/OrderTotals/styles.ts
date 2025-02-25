@@ -10,6 +10,11 @@ export const Row = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    &>*:nth-of-type(3) {
+        margin-top: 0.8rem;
+        flex-basis: 100%;
+    }
 `;
 
 export const Label = styled.div`
@@ -41,7 +46,7 @@ export const Value = styled.div`
 
 
 export const LastRow = styled(Row)`
-    margin-top: 8;
+    margin-top: 8px;
 
     & div:last-of-type {
         font-weight: 500;

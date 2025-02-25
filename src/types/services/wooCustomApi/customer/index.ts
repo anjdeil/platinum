@@ -99,6 +99,15 @@ export const WooCustomerReqSchema = z.object({
       phone: z.string().optional(),
     })
     .optional(),
+  meta_data: z
+    .array(
+      z.object({
+        id: z.number().optional(),
+        key: z.string(),
+        value: z.string(),
+      })
+    )
+    .optional(),
 });
 
 export const ShippingTypeSchema = z.object({
@@ -115,6 +124,7 @@ export const ShippingTypeSchema = z.object({
 export const BillingTypeSchema = ShippingTypeSchema.extend({
   email: z.string().optional(),
   phone: z.string().optional(),
+  company: z.string().optional(),
 });
 
 export const AddressTypeSchema = z.object({
@@ -359,6 +369,8 @@ const retrieveCouponQuerySchema = z.object({
 
 const reviewQuerySchema = z.object({
   product: z.number(),
+  orderby: z.string().optional(),
+  order: z.string().optional(),
 });
 
 export const WooCustomerUpdateSchema = z.object({

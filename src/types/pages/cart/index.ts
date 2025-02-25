@@ -85,6 +85,7 @@ export const OrderSummarySchema = z.object({
   order: OrderTypeSchema.nullable().optional(),
   symbol: z.string(),
   isLoading: z.boolean().optional(),
+  noPaymentMethod: z.boolean().optional(),
 });
 
 export type OrderSummaryProps = z.infer<typeof OrderSummarySchema>;

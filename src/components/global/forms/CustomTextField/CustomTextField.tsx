@@ -10,6 +10,7 @@ import {
   StyledTextField,
 } from './styles';
 import { StyledPhoneInput } from '../CustomFormInput/styles';
+import { useTranslations } from 'next-intl';
 
 interface CustomTextFieldProps {
   isPhone?: boolean;
@@ -43,7 +44,7 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
   notRequired,
 }) => {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
-
+  const t = useTranslations('Checkout');
   const inputRef = useRef<HTMLInputElement>(null);
 
   const togglePasswordVisibility = () => {
@@ -79,6 +80,10 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
       setValue(name, defaultValue, { shouldValidate: false });
     }
   }, [defaultValue, name, setValue]);
+
+  const transformedPlaceholderValue = `${t(
+    'placeholder'
+  )} ${placeholder.toLowerCase()}`;
 
   return (
     <>
@@ -128,7 +133,7 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
                   ? 'text'
                   : inputType
               }
-              placeholder={placeholder}
+              placeholder={transformedPlaceholderValue}
               autoComplete={autoCompleteValue}
               error={!!errors[name]}
               helperText={

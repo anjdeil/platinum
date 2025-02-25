@@ -1,3 +1,4 @@
+import { RegistrationFormType } from '@/types/components/global/forms/registrationForm';
 import {
   BillingType,
   MetaDataType,
@@ -22,28 +23,13 @@ export interface ReqData {
   nip?: string;
   password?: string;
   confirm_password?: string;
+  shipping_first_name: string;
+  shipping_last_name: string;
   shipping_address_1: string;
   shipping_address_2: string;
   shipping_city: string;
   shipping_postcode: string;
   shipping_country: string;
-  shipping_apartmentNumber?: string;
-}
-
-export interface RegistrationType {
-  phone: string;
-  email: string;
-  first_name: string;
-  last_name: string;
-  address_1: string;
-  address_2: string;
-  city: string;
-  postcode: string;
-  country: string;
-  apartmentNumber: string;
-  terms: boolean;
-  password?: string | undefined;
-  confirmPassword?: string | undefined;
 }
 
 export const getFormattedUserData = (billingData: ReqData) => {
@@ -65,30 +51,29 @@ export const getFormattedUserData = (billingData: ReqData) => {
     nip,
     password,
     confirm_password,
+    shipping_first_name,
+    shipping_last_name,
     shipping_address_1,
     shipping_address_2,
     shipping_city,
     shipping_postcode,
     shipping_country,
-    shipping_apartmentNumber,
   } = billingData;
+
   const formattedBillingData: BillingType = {
     first_name,
     last_name,
-    address_1: `${address_1} ${address_2}`,
-    address_2: apartmentNumber || '',
+    address_1,
+    address_2,
     city,
     postcode,
     country,
     state: city,
     phone,
+    company: company || '',
   };
 
   const formattedMetaData: MetaDataType[] = [
-    {
-      key: 'company',
-      value: company || '',
-    },
     {
       key: 'nip',
       value: nip || '',
@@ -96,32 +81,58 @@ export const getFormattedUserData = (billingData: ReqData) => {
   ];
 
   const formattedShippingData: ShippingType = {
-    first_name: first_name,
-    last_name: last_name,
-    address_1: `${shipping_address_1} ${shipping_address_2}`,
-    address_2: shipping_apartmentNumber || '',
+    first_name: shipping_first_name,
+    last_name: shipping_last_name,
+    address_1: shipping_address_1,
+    address_2: shipping_address_2,
     city: shipping_city,
     postcode: shipping_postcode,
     country: shipping_country,
   };
 
-  let formattedRegistrationData: RegistrationType | null = null;
+  let formattedRegistrationData: RegistrationFormType | null = null;
 
   if (registration && password && confirm_password) {
     formattedRegistrationData = {
-      phone,
       email,
       first_name,
       last_name,
-      address_1: address_1,
-      address_2: address_2,
-      city: city,
-      postcode: postcode,
-      country: country,
-      apartmentNumber: apartmentNumber || '',
-      terms: registration,
-      password: password,
-      confirmPassword: confirm_password,
+      role: 'customer',
+      username: email,
+      billing: {
+        first_name,
+        last_name,
+        company,
+        address_1,
+        address_2,
+        city,
+        postcode,
+        country,
+        email,
+        phone,
+      },
+      shipping: {
+        first_name: shipping_first_name ? shipping_first_name : first_name,
+        last_name: shipping_last_name ? shipping_last_name : last_name,
+        company: company || '',
+        address_1: shipping_address_1 ? shipping_address_1 : address_1,
+        address_2: shipping_address_2 ? shipping_address_2 : address_2,
+        city: shipping_city ? shipping_city : city,
+        postcode: shipping_postcode ? shipping_postcode : postcode,
+        country: shipping_country ? shipping_country : country,
+        phone,
+      },
+      meta_data: [
+        {
+          key: 'apartmentNumber',
+          value: apartmentNumber || '',
+        },
+        {
+          key: 'nip',
+          value: nip || '',
+        },
+      ],
+      password,
     };
   }
 

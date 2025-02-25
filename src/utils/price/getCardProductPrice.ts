@@ -1,23 +1,9 @@
-import { ProductPriceType, ProductType, VariationPriceType } from "@/types/components/shop/product/products";
+import { ProductType } from "@/types/components/shop/product/products";
+import { isSaleActive } from "./isSaleActive";
 
 export const getCardProductPrice = (product: ProductType) => {
-    const now = new Date();
 
-    // Функція для перевірки, чи є акція у продукту або варіації
-    const isSaleActive = (priceData: ProductPriceType | VariationPriceType) => {
-        if (!priceData || !priceData.sale_price) return false;
-
-        const saleFromDate = priceData.sale_dates_from ? new Date(priceData.sale_dates_from) : null;
-        const saleToDate = priceData.sale_dates_to ? new Date(priceData.sale_dates_to) : null;
-
-        return (
-            priceData.sale_price &&
-            (saleFromDate ? saleFromDate <= now : false) &&
-            (saleToDate ? saleToDate >= now : false)
-        );
-    };
-
-    // Для простих товарів
+    // Simple product condition
     if (product.type === 'simple') {
         const priceData = product.price;
         if (!priceData) return { finalPrice: 0, regularPrice: 0, isSale: false };
@@ -28,35 +14,29 @@ export const getCardProductPrice = (product: ProductType) => {
         return { finalPrice, regularPrice: priceData.regular_price || 0, isSale };
     }
 
-    // Для варіативних товарів
+    // Variable product condition
     if (product.type === 'variable') {
         let minPrice = Infinity;
         let maxPrice = -Infinity;
         let isSale = false;
 
-        product.variations.forEach((variation) => {
-            if (variation.price) {
-                const variationPriceData = variation.price;
-                const variationIsSale = isSaleActive(variationPriceData);
+        product.variations.forEach(({ price }) => {
+            if (!price) return;
 
-                if (variationIsSale) {
-                    isSale = true;
-                }
+            const variationIsSale = isSaleActive(price);
 
-                if (variationPriceData.sale_price && variationIsSale) {
-                    minPrice = Math.min(minPrice, variationPriceData.sale_price);
-                    maxPrice = Math.max(maxPrice, variationPriceData.regular_price);
-                } else {
-                    minPrice = Math.min(minPrice, variationPriceData.regular_price || 0);
-                    maxPrice = Math.max(maxPrice, variationPriceData.regular_price || 0);
-                }
+            if (variationIsSale) {
+                isSale = true;
+            }
+
+            if (price.sale_price && variationIsSale) {
+                minPrice = Math.min(minPrice, price.sale_price);
+                maxPrice = Math.max(maxPrice, price.sale_price);
+            } else {
+                minPrice = Math.min(minPrice, price.regular_price || 0);
+                maxPrice = Math.max(maxPrice, price.regular_price || 0);
             }
         });
-
-        if (minPrice === Infinity || maxPrice === -Infinity) {
-            minPrice = 0;
-            maxPrice = 0;
-        }
 
         return {
             finalPrice: minPrice,

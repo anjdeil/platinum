@@ -6,6 +6,7 @@ export const CustomFormCheckboxSchema = z.object({
   register: z.any(),
   errors: z.any(),
   validation: z.any().optional(),
+  noTop: z.boolean().optional(),
 });
 
 export type CustomFormCheckboxType = z.infer<typeof CustomFormCheckboxSchema>;

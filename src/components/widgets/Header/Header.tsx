@@ -4,6 +4,7 @@ import CartIcon from '@/components/global/icons/CartIcon/CartIcon';
 import FindIcon from '@/components/global/icons/FindIcon/FindIcon';
 import HeartIcon from '@/components/global/icons/HeartIcon/HeartIcon';
 import SearchBar from '@/components/global/SearchBar/SearchBar';
+import { useWishlist } from '@/hooks/useWishlist';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { popupSet, popupToggle } from '@/store/slices/PopupSlice';
 import { fetchUser } from '@/utils/auth/authService';
@@ -25,6 +26,7 @@ const Header: React.FC = () => {
   const { cartItems } = useAppSelector(state => state.cartSlice);
   const [cartCount, setCartCount] = useState(0);
   const t = useTranslations('HomePage');
+  const { wishlist } = useWishlist();
 
   useEffect(() => {
     setCartCount(cartItems.length);
@@ -45,7 +47,7 @@ const Header: React.FC = () => {
               {t('allShop')}
             </CategoriesButton>
             <Nav
-              menuId={344}
+              menuId={19521}
               skeleton={{
                 elements: 3,
                 width: '80px',
@@ -69,7 +71,11 @@ const Header: React.FC = () => {
               />
             )}
             <IconButton href="/my-account" IconComponent={AccountIcon} />
-            <IconButton href="/my-account/wishlist" IconComponent={HeartIcon} />
+            <IconButton
+              href="/my-account/wishlist"
+              count={wishlist.length}
+              IconComponent={HeartIcon}
+            />
             <IconButton
               onClick={() => dispatch(popupToggle('mini-cart'))}
               count={cartCount}

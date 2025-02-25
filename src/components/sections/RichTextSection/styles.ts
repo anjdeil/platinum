@@ -1,4 +1,4 @@
-import styled from "@emotion/styled";
+import styled from '@emotion/styled';
 type StyledRichTextSectionProps = {
   is_reverse?: boolean;
   fullSize?: boolean;
@@ -23,6 +23,7 @@ export const StyledTitle = styled.h1`
 
 export const StyledRichTextSection = styled.div<StyledRichTextSectionProps>`
   width: 100%;
+  line-height: 1.5;
   h1 {
     font: ${({ theme }) => theme.fonts.titleH2SemiBold};
     color: ${({ theme }) => theme.colors.black};
@@ -71,8 +72,9 @@ export const StyledRichTextSection = styled.div<StyledRichTextSectionProps>`
   p {
     font: ${({ theme }) => theme.fonts.bodyMiddleReg};
     color: ${({ theme }) => theme.colors.black};
+    line-height: 1.5em;
     margin-bottom: 16px;
-
+    max-width: 600px;
     @media ${({ theme }) => theme.media.medium} {
       font: ${({ theme }) => theme.fonts.bodypresmallReg};
       line-height: 1.5;

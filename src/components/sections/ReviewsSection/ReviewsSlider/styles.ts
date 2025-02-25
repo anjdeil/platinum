@@ -35,12 +35,8 @@ export const CustomSwiper = styled(Swiper)`
     width: 100%;
   }
 
-  & .swiper-slide {
-    height: auto !important;
-  }
-
   & .swiper-pagination {
-    margin-top: 8px;
+    margin-top: 16px;
     position: relative;
     display: flex;
     justify-content: center;

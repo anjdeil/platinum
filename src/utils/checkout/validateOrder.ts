@@ -17,17 +17,5 @@ export default function validateOrder(order: OrderType): {
   if (!shippingLinesValidationResult.isValid) result.isValid = false;
   result.messageKeys.push(...shippingLinesValidationResult.messageKeys);
 
-  /**
-   * Validate billing/shipping data
-   */
-
-  // const billingValidationResult = validateBillingData(
-  //   order.billing,
-  //   order.shipping,
-  //   registration as RegistrationType
-  // );
-  // if (!billingValidationResult.isValid) result.isValid = false;
-  // result.messageKeys.push(...billingValidationResult.messageKeys);
-
   return result;
 }
