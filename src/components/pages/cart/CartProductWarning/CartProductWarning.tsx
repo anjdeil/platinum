@@ -29,7 +29,7 @@ const CartProductWarning: React.FC<CartProductWarningProps> = ({
       )}
       {!resolveCount && isProductError && (
         <>
-          <span>Ошибка получения данных о товаре</span>
+          <span>{t('errorFetchingProducts')}</span>
           <UpdateButton onClick={onUpdate}>{t('delete')}</UpdateButton>
         </>
       )}

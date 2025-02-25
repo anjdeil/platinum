@@ -77,7 +77,6 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
       coupon_lines: combinedCoupons,
       currency: code,
     };
-    console.log(requestData);
 
     try {
       await createOrder(requestData);
@@ -154,7 +153,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
 
   //check cart items and order coincidence
 
-  const [innercartItems, setCartItems] = useState(
+  const [innercartItems, setInnerCartItems] = useState(
     currentOrderItems?.line_items || []
   );
 
@@ -184,10 +183,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
         )
     );
 
-    console.log('filteredItems', filteredItems);
-    console.log('notFilteredItems', notFilteredItems);
-
-    setCartItems(filteredItems);
+    setInnerCartItems(filteredItems);
     setFilteredOutItems(notFilteredItems);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -197,7 +193,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
     const updatedCartItems = innercartItems.filter(
       item => item.product_id !== productId || item.variation_id !== variationId
     );
-    setCartItems(updatedCartItems);
+    setInnerCartItems(updatedCartItems);
 
     handleChangeQuantity(productId, 'value', variationId, 0);
   };

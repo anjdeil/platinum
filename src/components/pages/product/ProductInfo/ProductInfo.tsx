@@ -55,8 +55,6 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
   const { cartItems } = useAppSelector(state => state.cartSlice);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  console.log(product);
-
   const {
     handleWishlistToggle,
     isFetchingWishlist,
@@ -122,8 +120,6 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
   }
 
   function handleCartButtonClick() {
-    console.log(currentVariation);
-
     dispatch(
       updateCart({
         product_id: product.id,

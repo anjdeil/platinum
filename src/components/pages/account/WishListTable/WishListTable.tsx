@@ -36,7 +36,6 @@ import {
 } from './style';
 
 const WishListTable: FC<WishListTableProps> = ({
-  symbol,
   wishlist,
   isLoading,
   onDelete,
@@ -95,6 +94,7 @@ const WishListTable: FC<WishListTableProps> = ({
 
   const handleDelete = (item: ProductsMinimizedType) => {
     const { id, parent_id } = item;
+
     if (parent_id === 0) {
       onDelete({ product_id: id });
     } else {
@@ -176,7 +176,9 @@ const WishListTable: FC<WishListTableProps> = ({
                 ?.filter(item => item.stock_quantity !== null)
                 .map(item => {
                   const isCartMatch = checkCartMatch(cartItems, item.id);
+
                   const { finalPrice } = getProductPrice(item.price);
+
                   return (
                     <CartCardAllWrapper key={item.id} padding="16px">
                       <CartCardWrapper>

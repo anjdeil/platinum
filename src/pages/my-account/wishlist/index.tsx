@@ -1,10 +1,7 @@
 import AccountLayout from '@/components/pages/account/AccountLayout';
 import WishListTable from '@/components/pages/account/WishListTable/WishListTable';
 import { useAppSelector } from '@/store';
-import {
-  useFetchUserUpdateMutation,
-  useLazyFetchUserDataQuery,
-} from '@/store/rtk-queries/wpApi';
+import { useFetchUserUpdateMutation } from '@/store/rtk-queries/wpApi';
 import { useGetProductsMinimizedMutation } from '@/store/rtk-queries/wpCustomApi';
 import { ProductsMinimizedType } from '@/types/components/shop/product/products';
 import { useTranslations } from 'next-intl';
@@ -39,17 +36,9 @@ const Wishlist: FC<WishlistPageProps> = ({ defaultCustomerData }) => {
     defaultCustomerData?.meta.wishlist || []
   );
 
-  const [
-    fetchUserData,
-    {
-      data: userData,
-      isLoading: isUserDataLoading,
-      isFetching: isUserFetching,
-    },
-  ] = useLazyFetchUserDataQuery();
-
-  const [fetchUserUpdate, { isLoading: isUserUpdateLoading }] =
+  const [fetchUserUpdate, { data: userData, isLoading: isUserUpdateLoading }] =
     useFetchUserUpdateMutation();
+
   const [
     getProductsMinimized,
     { data: productsSpecsData, isLoading: isProductsLoading },
@@ -76,7 +65,7 @@ const Wishlist: FC<WishlistPageProps> = ({ defaultCustomerData }) => {
       setWishListProducts([]);
       setIsLoadingWishlist(false);
     }
-  }, [wishlist, getProductsMinimized, code, userData]);
+  }, [wishlist, code]);
 
   useEffect(() => {
     if (productsSpecsData?.data.items) {
@@ -97,24 +86,19 @@ const Wishlist: FC<WishlistPageProps> = ({ defaultCustomerData }) => {
 
       const userUpdateRequestBody = { meta: { wishlist: updatedWishlist } };
 
-      if (userData?.id) {
+      if (userData?.id || defaultCustomerData?.id) {
         fetchUserUpdate(userUpdateRequestBody).then(() => {
-          fetchUserData();
           setIsLoadingWishlist(true);
         });
       }
     },
-    [wishlist, fetchUserUpdate, fetchUserData, userData?.id]
+    [wishlist, fetchUserUpdate, userData?.id]
   );
 
   const isLoading =
-    isProductsLoading ||
-    isUserDataLoading ||
-    isUserUpdateLoading ||
-    isUserFetching ||
-    isLoadingWishlist;
+    isProductsLoading || isUserUpdateLoading || isLoadingWishlist;
 
-  const skeletonsCount = wishListProducts.length || 1;
+  const skeletonsCount = wishListProducts.length - 1 || 1;
 
   const Skeletons = Array.from({ length: skeletonsCount }, (_, index) => (
     <SkeletonItem key={index} variant="rounded" />
