@@ -158,18 +158,22 @@ export const CustomInputContainer = styled.div<CustomInputContainerProps>`
   }
 `;
 
-export const StyledPhoneInput = styled(PhoneInput)`
+type StyledPhoneInputProps = {
+  isReg?: boolean;
+};
+export const StyledPhoneInput = styled(PhoneInput)<StyledPhoneInputProps>`
   && input {
     display: flex;
     align-items: center;
     background-color: ${({ theme }) => theme.background.formElements};
     border: none;
-    border-radius: 10px;
+    border-radius: 8px;
+    margin-top: ${({ isReg }) => (isReg ? '4px;' : '0px')};
     padding: 10px 15px;
     font-size: 16px;
 
     width: 100%;
-    height: 49px;
+    height: 48px;
     padding-left: 60px;
 
     &:focus {

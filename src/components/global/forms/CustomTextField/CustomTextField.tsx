@@ -13,6 +13,7 @@ import { StyledPhoneInput } from '../CustomFormInput/styles';
 
 interface CustomTextFieldProps {
   isPhone?: boolean;
+  isReg?: boolean;
   name: string;
   register: any;
   control?: any;
@@ -31,6 +32,7 @@ interface CustomTextFieldProps {
 
 const CustomTextField: React.FC<CustomTextFieldProps> = ({
   isPhone,
+  isReg,
   name,
   register,
   control,
@@ -108,6 +110,7 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
                       }}
                       value={field.value || ''}
                       onBlur={() => field.onBlur()}
+                      isReg={isReg}
                     />
                   )}
                 />
