@@ -1,5 +1,5 @@
-import { AddToBasketButtonProps } from '@/types/components/global/buttons/addToBasketButton'
-import { AddToBasketButtonStyled } from './styles'
+import { AddToBasketButtonProps } from '@/types/components/global/buttons/addToBasketButton';
+import { AddToBasketButtonStyled } from './styles';
 
 const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({
   mobFontSize,
@@ -16,6 +16,7 @@ const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({
   children,
   onClick,
   active,
+  disabled = false,
 }) => {
   return (
     <AddToBasketButtonStyled
@@ -32,10 +33,11 @@ const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({
       maxWidth={maxWidth}
       onClick={onClick}
       active={active}
+      disabled={disabled}
     >
       {children}
     </AddToBasketButtonStyled>
-  )
-}
+  );
+};
 
-export default AddToBasketButton
+export default AddToBasketButton;

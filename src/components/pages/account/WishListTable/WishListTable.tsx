@@ -114,6 +114,7 @@ const WishListTable: FC<WishListTableProps> = ({
                   const isCartMatch = checkCartMatch(cartItems, item.id);
                   const { finalPrice } = getProductPrice(item.price);
 
+                  const notAvaible = finalPrice === null;
                   return (
                     <WishlistCardAllWrapper key={item.id} padding="16px">
                       <DeleteCell>
@@ -158,11 +159,14 @@ const WishListTable: FC<WishListTableProps> = ({
                       <AddToBasketButton
                         active={isCartMatch}
                         onClick={() => handleCartButtonClick(item, isCartMatch)}
+                        disabled={notAvaible}
                       >
                         {item.parent_id !== 0
                           ? tProduct('chooseOptions')
                           : isCartMatch
                           ? tProduct('viewCart')
+                          : notAvaible
+                          ? tProduct('notAvailable')
                           : tProduct('addToBasket')}
                       </AddToBasketButton>
                     </WishlistCardAllWrapper>
@@ -178,7 +182,7 @@ const WishListTable: FC<WishListTableProps> = ({
                   const isCartMatch = checkCartMatch(cartItems, item.id);
 
                   const { finalPrice } = getProductPrice(item.price);
-
+                  const notAvaible = finalPrice === null;
                   return (
                     <CartCardAllWrapper key={item.id} padding="16px">
                       <CartCardWrapper>
@@ -230,11 +234,14 @@ const WishListTable: FC<WishListTableProps> = ({
                       <AddToBasketButton
                         active={isCartMatch}
                         onClick={() => handleCartButtonClick(item, isCartMatch)}
+                        disabled={notAvaible}
                       >
                         {item.parent_id !== 0
                           ? tProduct('chooseOptions')
                           : isCartMatch
                           ? tProduct('viewCart')
+                          : notAvaible
+                          ? tProduct('notAvailable')
                           : tProduct('addToBasket')}
                       </AddToBasketButton>
                     </CartCardAllWrapper>
