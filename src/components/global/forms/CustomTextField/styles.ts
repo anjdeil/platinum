@@ -86,12 +86,13 @@ export const StyledError = styled.div`
 `;
 
 export const StyledTextField = styled(TextField, {
-  shouldForwardProp: prop => prop !== 'isError',
-})<{ isError?: boolean }>`
+  shouldForwardProp: prop => prop !== 'isError' && prop !== 'isPassword',
+})<{ isError?: boolean; isPassword?: boolean }>`
   box-sizing: border-box;
   margin-top: 4px !important;
   transition: border 0.1s ease-in-out, outline-color 0.1s ease-in-out;
   margin-bottom: 24px;
+
   & .MuiOutlinedInput-root {
     color: ${({ theme }) => theme.colors.black};
     background-color: ${({ theme }) => theme.background.secondary};
@@ -129,7 +130,8 @@ export const StyledTextField = styled(TextField, {
   & .MuiInputBase-input {
     height: 1.5rem;
     font: ${({ theme }) => theme.fonts.bodyMiddleReg};
-    padding: 12px 16px;
+    padding: ${({ isPassword }) =>
+      isPassword ? '12px 36px 12px 16px' : '12px 16px'};
   }
 
   // Error message styling

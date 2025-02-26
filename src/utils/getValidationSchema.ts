@@ -128,7 +128,7 @@ export const getValidationSchema = (
       return {
         required: t('pleaseFillInTheBuildingNumber'),
         maxLength: {
-          value: 6,
+          value: 10,
           message: t('yourBuildingNumberIsTooLong'),
         },
         pattern: {
@@ -138,10 +138,21 @@ export const getValidationSchema = (
       };
     case 'apartmentNumber':
       return {
-        required: t('pleaseFillInTheBuildingNumber'),
         maxLength: {
           value: 10,
-          message: t('yourBuildingNumberIsTooLong'),
+          message: t('yourApartmentNumberIsTooLong'),
+        },
+        pattern: {
+          value: /^[\p{L}0-9\s\-\/#]+$/u,
+          message: t('invalidCharacters'),
+        },
+      };
+    case 'apartmentNumberRequired':
+      return {
+        required: t('pleaseFillInTheApartmentNumber'),
+        maxLength: {
+          value: 10,
+          message: t('yourApartmentNumberIsTooLong'),
         },
         pattern: {
           value: /^[\p{L}0-9\s\-\/#]+$/u,

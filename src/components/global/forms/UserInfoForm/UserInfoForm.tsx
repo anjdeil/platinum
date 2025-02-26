@@ -23,6 +23,7 @@ import { CustomFormInput } from '../CustomFormInput';
 import { useUpdateCustomerInfoMutation } from '@/store/rtk-queries/wooCustomAuthApi';
 import { WooCustomerReqType } from '@/types/services/wooCustomApi/customer';
 import { countryOptions } from '@/utils/mockdata/countryOptions';
+import { getMetaDataValue } from '@/utils/myAcc/getMetaDataValue';
 
 interface UserInfoFormProps {
   defaultCustomerData: WooCustomerReqType;
@@ -60,6 +61,14 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
   const handleShippingCheckboxChange = () => {
     setIsShipping(prev => !prev);
   };
+
+  const apartmentNumberFromMeta = customer
+    ? getMetaDataValue(customer.meta_data || [], 'apartmentNumber')
+    : '';
+
+  const shippingApartmentNumberFromMeta = customer
+    ? getMetaDataValue(customer.meta_data || [], 'shipping_apartmentNumber')
+    : '';
 
   useEffect(() => {
     if (customer) {
@@ -106,8 +115,9 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
               city: '',
               postcode: '',
               country: '',
-              apartmentNumber: '',
             },
+        apartmentNumber: apartmentNumberFromMeta,
+        apartmentNumberShipping: shippingApartmentNumberFromMeta,
       });
     }
   }, [customer]);
@@ -127,9 +137,7 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
         first_name: formData.first_name,
         last_name: formData.last_name,
         address_1: formData.address_1,
-        address_2: [formData.address_2, formData.apartmentNumber]
-          .filter(Boolean)
-          .join('/'),
+        address_2: formData.address_2,
         city: formData.city,
         postcode: formData.postcode,
         country: formData.country,
@@ -148,13 +156,7 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
             address_1:
               (isShipping && formData.address_1Shipping) || formData.address_1,
             address_2:
-              (isShipping &&
-                [formData.address_2Shipping, formData.apartmentNumberShipping]
-                  .filter(Boolean)
-                  .join('/')) ||
-              [formData.address_2, formData.apartmentNumber]
-                .filter(Boolean)
-                .join('/'),
+              (isShipping && formData.address_2Shipping) || formData.address_2,
             city: (isShipping && formData.cityShipping) || formData.city,
             postcode:
               (isShipping && formData.postcodeShipping) || formData.postcode,
@@ -171,14 +173,27 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
             postcode: '',
             country: '',
           },
+      meta_data: [
+        {
+          key: 'apartmentNumber',
+          value: formData.apartmentNumber,
+        },
+        {
+          key: 'shipping_apartmentNumber',
+          value: formData.apartmentNumberShipping,
+        },
+      ],
     };
 
-    // Сравниваем initialData с updatedData
+    // Comparing initialData with updatedData
     const hasFormChanges = Object.keys(updatedData || {}).some(key => {
       const initialValue = initialData?.[key as keyof typeof initialData];
       const updatedValue = updatedData[key as keyof typeof updatedData];
 
-      const normalizeString = (str: string) => {
+      const normalizeString = (str: string | undefined) => {
+        if (str === undefined) {
+          return '';
+        }
         return str
           .trim()
           .replace(/\u200B/g, '')
@@ -253,12 +268,13 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
             inputTag="input"
             inputType={field === 'postCode' ? 'number' : 'text'}
             defaultValue={
-              field === 'address_2'
-                ? defaultValues.address_2?.split('/')[0] || ''
-                : field === 'apartmentNumber'
-                ? defaultValues.address_2?.split('/')[1] || ''
+              field === 'apartmentNumber'
+                ? prefix === 'Shipping'
+                  ? shippingApartmentNumberFromMeta
+                  : apartmentNumberFromMeta
                 : defaultValues[field] || ''
             }
+            isRequire={field === 'apartmentNumber' ? false : true}
             setValue={setValue}
           />
         )
