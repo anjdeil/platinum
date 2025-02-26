@@ -414,7 +414,8 @@
     "previousPost": "Предыдущий",
     "nextPost": "Следующий",
     "blogPage": "Блог",
-    "blogSectionTitle": "Последние статьи",
+    "blogSectionRelatedTitle": "Похожие статьи",
+    "blogSectionLatestTitle": "Последние статьи",
     "selectCategory": "Выберите категорию",
     "all": "Все"
   },

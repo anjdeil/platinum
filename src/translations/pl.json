@@ -414,7 +414,8 @@
     "previousPost": "Poprzedni",
     "nextPost": "Następny",
     "blogPage": "Blog",
-    "blogSectionTitle": "Ostatnie artykuły",
+    "blogSectionRelatedTitle": "Powiązane artykuły",
+    "blogSectionLatestTitle": "Najnowsze artykuły",
     "selectCategory": "Wybierz kategorię",
     "all": "Wszystkie"
   },
