@@ -27,7 +27,6 @@ import {
   StyledTag,
 } from '@/components/pages/main/BlogListBlock/BlogItem/styles';
 import BlogListBlock from '@/components/pages/main/BlogListBlock/BlogListBlock';
-import { orderBy } from 'lodash';
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
