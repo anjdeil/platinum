@@ -45,7 +45,7 @@ export const cartSlice = createSlice({
         state.needsProductDataUpdate = true;
       }
     },
-    clearCart: (state) => {
+    clearCart: state => {
       state.cartItems = [];
     },
     setProductsData: (
@@ -78,12 +78,13 @@ export const cartSlice = createSlice({
 
 export const {
   updateCart,
-  clearCart,
+
   addCoupon,
   removeCoupon,
   setCommentToOrder,
   clearCommentToOrder,
   initializeCart,
+  clearCart,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

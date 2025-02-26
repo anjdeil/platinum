@@ -237,7 +237,9 @@
     "nothingInTheCart": "There's nothing in the cart...",
     "goToShop": "Go to shop",
     "nothingInTheCartText": "Check out our new products or use the search, if you're looking for something specific",
-    "YouNeedToLoginForOrder": "You need to log in to place an order."
+    "YouNeedToLoginForOrder": "You need to log in to place an order.",
+    "errorFetchingProducts": "Error fetching current products",
+    "clearCart": "Clear cart"
   },
   "Contacts": {
     "contacts": "Contacts",
