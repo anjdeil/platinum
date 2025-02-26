@@ -414,7 +414,8 @@
     "previousPost": "Попередній",
     "nextPost": "Наступний",
     "blogPage": "Блог",
-    "blogSectionTitle": "Останні статті",
+    "blogSectionRelatedTitle": "Схожі статті",
+    "blogSectionLatestTitle": "Останні статті",
     "selectCategory": "Виберіть категорію",
     "all": "Всі"
   },

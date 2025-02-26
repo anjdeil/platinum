@@ -413,7 +413,8 @@
     "previousPost": "Previous",
     "nextPost": "Next",
     "blogPage": "Blog",
-    "blogSectionTitle": "Lasted articles",
+    "blogSectionRelatedTitle": "Related Articles",
+    "blogSectionLatestTitle": "Lasted Articles",
     "selectCategory": "Select category",
     "all": "All"
   },
