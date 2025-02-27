@@ -64,12 +64,14 @@ const CartCouponBlock: FC<CartCouponBlockProps> = ({
         <CouponText uppercase marginBottom="8px">
           {/*  need to add diff  DISCOUNT */}
           {t('LoginAnd')}
-          <span>&nbsp;3%&nbsp;</span> {t('ForOrders')} {t('Above')}{' '}
-          <span>&nbsp;500 {t('CouponCurrencySymbol')}</span>,
-          <span>&nbsp;5%&nbsp;</span> {t('Above')}{' '}
-          <span>&nbsp;1000 {t('CouponCurrencySymbol')}</span>,{' '}
-          <span>&nbsp;10%&nbsp;</span> {t('Above')}{' '}
-          <span>&nbsp;2000 {t('CouponCurrencySymbol')}&nbsp;</span>
+          <span>&nbsp;-3%&nbsp;</span>
+          {t('ForOrders')} {t('Above')}{' '}
+          <span>&nbsp;500&nbsp;{t('CouponCurrencySymbol')}</span>,
+          &nbsp;5%&nbsp;
+          {t('Above')} <span>&nbsp;1000&nbsp;{t('CouponCurrencySymbol')}</span>,{' '}
+          &nbsp;10%&nbsp;
+          {t('Above')}{' '}
+          <span>&nbsp;2000&nbsp;{t('CouponCurrencySymbol')}&nbsp;</span>
         </CouponText>
       )}
       {validStatus && (
