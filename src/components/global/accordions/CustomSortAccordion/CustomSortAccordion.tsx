@@ -60,8 +60,14 @@ export const CustomSortAccordion = () => {
     const getMaxWidth = () => {
       if (detailsRef.current) {
         const items = Array.from(detailsRef.current.children) as HTMLElement[];
-        const maxWidth = Math.max(...items.map(item => item.offsetWidth || 0));
+        detailsRef.current.style.whiteSpace = 'no-wrap';
+        const maxWidth = Math.min(
+          Math.max(...items.map(item => item.offsetWidth || 0)),
+          window.innerWidth * 0.765
+        );
         setAccordionWidth(maxWidth);
+
+        detailsRef.current.style.whiteSpace = 'normal';
       }
     };
 
@@ -82,7 +88,7 @@ export const CustomSortAccordion = () => {
       const newSlugs = slugs.filter(
         slug => slug !== 'page' && Number.isNaN(+slug)
       );
-      
+
       if (sort === 'stocks') {
         const { order_by, order, ...restParams } = params;
         router.push({
@@ -159,12 +165,13 @@ export const CustomSortAccordion = () => {
           {sorts.find(sort => sort.name === currentSort)?.label}
         </StyledText>
       </StyledSortAccordionSummary>
-      <StyledSortDetails ref={detailsRef}>
+      <StyledSortDetails ref={detailsRef} style={{ minWidth: accordionWidth }}>
         {sorts.map((sort, index) => (
           <StyledSortItem
             key={sort.name}
             isSelected={currentSort === sort.name}
             onClick={() => handleSortChange(sort.name)}
+            style={{ minWidth: accordionWidth }}
           >
             {sort.label}
           </StyledSortItem>

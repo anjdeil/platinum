@@ -63,6 +63,7 @@ export const StyledLink = styled(Link)`
   transition: opacity 0.2s ease;
   text-transform: uppercase;
   text-align: center;
+  hyphens: auto;
   color: ${({ theme }) => theme.colors.black};
   font: ${({ theme }) => theme.fonts.bodyMiddleMedium};
 

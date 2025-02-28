@@ -24,7 +24,8 @@ export const StyledSortAccordion = styled(Accordion)`
 export const StyledSortAccordionSummary = styled(AccordionSummary) <{ expanded: boolean }>`
   display: flex;
   justify-content: space-between;
-  gap: 24px;
+  /* gap: 24px; */
+  gap: 8px;
   align-items: center;
   cursor: pointer;
   padding-inline: 10px;
@@ -66,6 +67,7 @@ export const StyledSortItem = styled.div<{ isSelected: boolean }>`
     
   @media ${({ theme }) => theme.media.large} {
     font-size: 14px;
+    line-height: 1.5rem;
   }
 
   &:hover {
