@@ -26,6 +26,7 @@ export const StyledFormWrapper = styled.div`
 
 export const VariationFields = styled.div`
   width: 100%;
+  max-width: 600px;
   display: flex;
   flex-direction: column;
   row-gap: 16px;

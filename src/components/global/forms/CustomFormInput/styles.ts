@@ -67,7 +67,7 @@ export const Input = styled.input<CustomInputProps>`
     isCheckbox ? '24px' : height};
 
   border: ${({ isCheckbox }) => (isCheckbox ? '1px solid #ccc' : 'none')};
-  border-radius: ${({ isCheckbox }) => (isCheckbox ? '5px' : '10px')};
+  border-radius: ${({ isCheckbox }) => (isCheckbox ? '5px' : '8px')};
   font-size: 16px;
   outline: 1px solid
     ${({ theme, isError }) =>

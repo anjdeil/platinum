@@ -1,9 +1,8 @@
 import { FC, useEffect, useMemo, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { z } from 'zod';
 import 'react-international-phone/style.css';
-import { CustomFormCheckboxStyled } from './styles';
 import {
   CustomForm,
   FlexBox,
@@ -24,6 +23,8 @@ import { useUpdateCustomerInfoMutation } from '@/store/rtk-queries/wooCustomAuth
 import { WooCustomerReqType } from '@/types/services/wooCustomApi/customer';
 import { countryOptions } from '@/utils/mockdata/countryOptions';
 import { getMetaDataValue } from '@/utils/myAcc/getMetaDataValue';
+import { FormCheckbox } from '../BillingForm/FormCheckbox';
+import { AnimatedWrapper, VariationFields } from '../BillingForm/style';
 
 interface UserInfoFormProps {
   defaultCustomerData: WooCustomerReqType;
@@ -36,14 +37,15 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
   const tMyAccount = useTranslations('MyAccount');
   const tForms = useTranslations('Forms');
   const [initialData, setInitialData] = useState<any>(null);
-  const [isShipping, setIsShipping] = useState(true);
+  const [isShipping, setIsShipping] = useState<boolean | undefined>(false);
+  const [isInvoice, setIsInvoice] = useState<boolean | undefined>(false);
   const [isDataUnchanged, setIsDataUnchanged] = useState(false);
 
   const [UpdateCustomerMutation, { error, isSuccess }] =
     useUpdateCustomerInfoMutation();
 
   const formSchema = useMemo(
-    () => UserInfoFormSchema(isShipping, tValidation),
+    () => UserInfoFormSchema(isShipping, isInvoice, tValidation),
     [isShipping]
   );
   type UserInfoFormType = z.infer<typeof formSchema>;
@@ -58,10 +60,6 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
     resolver: zodResolver(formSchema),
   });
 
-  const handleShippingCheckboxChange = () => {
-    setIsShipping(prev => !prev);
-  };
-
   const apartmentNumberFromMeta = customer
     ? getMetaDataValue(customer.meta_data || [], 'apartmentNumber')
     : '';
@@ -70,6 +68,11 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
     ? getMetaDataValue(customer.meta_data || [], 'shipping_apartmentNumber')
     : '';
 
+  const nipFromMeta = customer
+    ? getMetaDataValue(customer.meta_data || [], 'nip')
+    : '';
+
+  console.log(customer);
   useEffect(() => {
     if (customer) {
       const isShippingEmpty =
@@ -87,37 +90,39 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
         billing: {
           first_name: customer.billing?.first_name || '',
           last_name: customer.billing?.last_name || '',
-          address_1: customer.billing?.address_1 || '',
-          address_2: customer.billing?.address_2 || '',
-          city: customer.billing?.city || '',
-          postcode: customer.billing?.postcode || '',
-          country: customer.billing?.country || '',
           email: customer.email || '',
           phone: customer.billing?.phone || '',
+          country: customer.billing?.country || '',
+          city: customer.billing?.city || '',
+          address_1: customer.billing?.address_1 || '',
+          address_2: customer.billing?.address_2 || '',
+          apartmentNumber: apartmentNumberFromMeta,
+          postcode: customer.billing?.postcode || '',
+          company: customer.billing?.company || '',
+          nip: nipFromMeta,
         },
         shipping: isShipping
           ? {
               first_name: customer.shipping?.first_name || '',
               last_name: customer.shipping?.last_name || '',
               phone: customer.shipping?.phone || '',
+              country: customer.shipping?.country || '',
+              city: customer.shipping?.city || '',
               address_1: customer.shipping?.address_1 || '',
               address_2: customer.shipping?.address_2 || '',
-              city: customer.shipping?.city || '',
+              apartmentNumberShipping: shippingApartmentNumberFromMeta,
               postcode: customer.shipping?.postcode || '',
-              country: customer.shipping?.country || '',
             }
           : {
               first_name: '',
               last_name: '',
               phone: '',
+              country: '',
+              city: '',
               address_1: '',
               address_2: '',
-              city: '',
               postcode: '',
-              country: '',
             },
-        apartmentNumber: apartmentNumberFromMeta,
-        apartmentNumberShipping: shippingApartmentNumberFromMeta,
       });
     }
   }, [customer]);
@@ -143,6 +148,7 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
         country: formData.country,
         email: formData.email,
         phone: formData.phone,
+        company: formData.company,
       },
       shipping: isShipping
         ? {
@@ -181,6 +187,10 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
         {
           key: 'shipping_apartmentNumber',
           value: formData.apartmentNumberShipping,
+        },
+        {
+          key: 'nip',
+          value: formData.nip,
         },
       ],
     };
@@ -234,12 +244,19 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
         ['first_name', 'last_name', 'phone'].map(field => (
           <CustomFormInput
             key={field}
-            fieldName={tMyAccount(field)}
+            fieldName={tForms(field)}
             name={`${field}${prefix}`}
             register={register}
             errors={errors}
             inputTag="input"
             inputType={field === 'phone' ? 'phone' : 'text'}
+            placeholder={
+              field === 'first_name'
+                ? tValidation('firstNamePlaceholder')
+                : field === 'last_name'
+                ? tValidation('lastNamePlaceholder')
+                : tValidation('phonePlaceholder')
+            }
             defaultValue={defaultValues[field] || ''}
             setValue={setValue}
           />
@@ -248,29 +265,43 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
         name={`country${prefix}`}
         control={control}
         options={countryOptions}
-        label={tMyAccount('country')}
+        label={tForms('country')}
         errors={errors}
         defaultValue={
           prefix === 'Shipping'
             ? customer?.shipping?.country
             : customer?.billing?.country
         }
+        placeholder={tValidation('countryPlaceholder')}
       />
 
       {['city', 'address_1', 'address_2', 'apartmentNumber', 'postcode'].map(
         field => (
           <CustomFormInput
             key={field}
-            fieldName={tMyAccount(field)}
+            fieldName={tForms(field)}
             name={`${field}${prefix}`}
             register={register}
             errors={errors}
             inputTag="input"
             inputType={field === 'postCode' ? 'number' : 'text'}
+            placeholder={
+              field === 'city'
+                ? tValidation('cityPlaceholder')
+                : field === 'address_1'
+                ? tValidation('streetPlaceholder')
+                : field === 'address_2'
+                ? tValidation('buildingPlaceholder')
+                : field === 'apartmentNumber'
+                ? tValidation('apartmentPlaceholder')
+                : tValidation('postCodePlaceholder')
+            }
             defaultValue={
               field === 'apartmentNumber'
-                ? prefix === 'Shipping'
+                ? prefix === 'Shipping' && isShipping === false
                   ? shippingApartmentNumberFromMeta
+                  : prefix === 'Shipping' && isShipping === true
+                  ? ''
                   : apartmentNumberFromMeta
                 : defaultValues[field] || ''
             }
@@ -290,12 +321,21 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
       {['first_name', 'last_name', 'email', 'phone'].map(field => (
         <CustomFormInput
           key={field}
-          fieldName={tMyAccount(field)}
+          fieldName={tForms(field)}
           name={`${prefix}${field}`}
           register={register}
           errors={errors}
           inputTag="input"
           inputType={field === 'phone' ? 'phone' : 'text'}
+          placeholder={
+            field === 'first_name'
+              ? tValidation('firstNamePlaceholder')
+              : field === 'last_name'
+              ? tValidation('lastNamePlaceholder')
+              : field === 'email'
+              ? tValidation('emailPlaceholder')
+              : tValidation('phonePlaceholder')
+          }
           defaultValue={
             field === 'phone'
               ? customer?.billing?.phone
@@ -307,12 +347,57 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
     </>
   );
 
+  const renderInvoiceFields = (
+    <>
+      <AnimatedWrapper isVisible={true}>
+        <CustomFormInput
+          fieldName={tForms('company')}
+          name="company"
+          register={register}
+          errors={errors}
+          inputTag="input"
+          inputType="text"
+          placeholder={tValidation('companyPlaceholder')}
+          defaultValue={customer?.billing?.company || ''}
+          setValue={setValue}
+        />
+      </AnimatedWrapper>
+      <AnimatedWrapper isVisible={true}>
+        <CustomFormInput
+          fieldName={tForms('nip')}
+          name="nip"
+          register={register}
+          errors={errors}
+          inputTag="input"
+          inputType="text"
+          placeholder={tValidation('nipPlaceholder')}
+          defaultValue={nipFromMeta || ''}
+          setValue={setValue}
+        />
+      </AnimatedWrapper>
+    </>
+  );
+
   useEffect(() => {
     if (customer) {
       setValue('country', customer.billing?.country || '');
       setValue('countryShipping', customer.shipping?.country || '');
     }
   }, [customer, setValue]);
+
+  const watchedFields = useWatch({ control });
+
+  const { invoice, shipping } = watchedFields;
+
+  useEffect(() => {
+    setIsInvoice(invoice);
+  }, [invoice]);
+
+  useEffect(() => {
+    setIsShipping(shipping);
+  }, [shipping]);
+
+  console.log('isShipping', isShipping);
 
   return (
     <CustomForm onSubmit={handleSubmit(onSubmit)} maxWidth="760px">
@@ -331,10 +416,21 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
             <CircularProgress />
           </FlexBox>
         ) : (
-          <FormWrapper>
-            {renderFormInfoFields('', customer)}
-            {renderFormShippingFields('', customer?.billing)}
-          </FormWrapper>
+          <>
+            <FormWrapper>
+              {renderFormInfoFields('', customer)}
+              {renderFormShippingFields('', customer?.billing)}
+            </FormWrapper>
+            <VariationFields>
+              <FormCheckbox
+                name={'invoice'}
+                register={register}
+                errors={errors}
+                label={tForms('vatInvoice')}
+              />
+            </VariationFields>
+            <FormWrapper>{invoice && renderInvoiceFields}</FormWrapper>
+          </>
         )}
       </InfoCard>
       <InfoCard>
@@ -347,18 +443,38 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
         >
           {tForms('ShippingInfo')}
         </Title>
-        <FlexBox alignItems="center" margin="0 0 16px 0">
+        <VariationFields>
+          <FormCheckbox
+            name={'shipping'}
+            register={register}
+            errors={errors}
+            label={tForms('shippingDifferentAddress')}
+            noTop
+          />
+        </VariationFields>
+        {/* <FlexBox alignItems="center" margin="0 0 16px 0">
           <CustomFormCheckboxStyled
             checked={!isShipping}
             type="checkbox"
             onChange={() => handleShippingCheckboxChange()}
           />
           {tValidation('theSameAddress')}
-        </FlexBox>
+        </FlexBox> */}
         {customer && isShipping && (
-          <FormWrapper>
-            {renderFormShippingFields('Shipping', customer?.shipping)}
-          </FormWrapper>
+          <AnimatedWrapper isVisible={true}>
+            <FormWrapper>
+              {renderFormShippingFields('Shipping', customer?.shipping)}
+            </FormWrapper>
+            <VariationFields>
+              <FormCheckbox
+                name={'newsletter'}
+                register={register}
+                errors={errors}
+                label={tForms('agreement')}
+                noTop
+              />
+            </VariationFields>
+          </AnimatedWrapper>
         )}
       </InfoCard>
       <FormWrapperBottom>

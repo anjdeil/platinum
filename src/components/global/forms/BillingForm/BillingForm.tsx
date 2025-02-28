@@ -443,7 +443,7 @@ export const BillingForm: FC<BillingFormProps> = ({
                       <CustomTextField
                         name="nip"
                         register={register}
-                        inputType="nip"
+                        inputType="text"
                         errors={errors}
                         label={tCheckout('nip')}
                         placeholder={tValidation('nipPlaceholder')}

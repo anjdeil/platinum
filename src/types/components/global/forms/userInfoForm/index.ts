@@ -1,6 +1,10 @@
 import { z } from 'zod';
 
-export const UserInfoFormSchema = (isShipping: boolean, t: any) => {
+export const UserInfoFormSchema = (
+  isShipping: boolean | undefined,
+  isInvoice: boolean | undefined,
+  t: any
+) => {
   const firstNameValidation = z
     .string()
     .min(1, { message: t('pleaseFillInTheFirstName') })
@@ -82,6 +86,25 @@ export const UserInfoFormSchema = (isShipping: boolean, t: any) => {
     address_2: address2Validation,
     apartmentNumber: apartmentNumberValidation,
     postcode: postCodeValidation,
+    invoice: z.boolean().optional(),
+    company: isInvoice
+      ? z
+          .string()
+          .min(1, { message: t('pleaseFillInTheCompanyName') })
+          .min(2, { message: t('yourCompanyNameIsTooShort') })
+          .max(100, { message: t('yourCompanyNameIsTooLong') })
+      : z.string().optional(),
+    nip: isInvoice
+      ? z
+          .string()
+          .min(1, { message: t('pleaseFillInTheNip') })
+          .min(10, { message: t('yourNipIsTooShort') })
+          .max(20, { message: t('yourNipIsTooLong') })
+          .regex(/^[0-9\\-]*$/, {
+            message: t('invalidNipFormat'),
+          })
+      : z.string().optional(),
+    shipping: z.boolean().optional(),
     first_nameShipping: isShipping
       ? firstNameValidation
       : z.string().optional(),
@@ -97,6 +120,7 @@ export const UserInfoFormSchema = (isShipping: boolean, t: any) => {
     apartmentNumberShipping: isShipping
       ? apartmentNumberValidation
       : z.string().optional(),
+    newsletter: z.boolean().optional(),
   });
 
   return schema;
