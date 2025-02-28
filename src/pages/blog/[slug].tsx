@@ -1,33 +1,32 @@
-import { customRestApi } from '@/services/wpCustomApi';
-import { Container, StyledHeaderWrapper, Title } from '@/styles/components';
-import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import {
   RecommendContainer,
   SectionContainer,
   StyledError,
 } from '@/components/sections/styles';
+import { customRestApi } from '@/services/wpCustomApi';
+import { Container, StyledHeaderWrapper, Title } from '@/styles/components';
 import {
   BlogItemType,
   BlogPostResponseType,
   BlogPostType,
 } from '@/types/pages/blog';
+import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 
+import { BlogHeader } from '@/components/pages/blog/blogHeader';
 import { BlogPostContent } from '@/components/pages/blog/blogPostContent';
-import { PostPageBreadcrumbs } from '@/components/pages/blog/postPageBreadcrumbs';
 import { BlogTitle } from '@/components/pages/blog/blogTitle';
 import { PostGroupNavigationButton } from '@/components/pages/blog/postGroupNavigationButton';
-import { BlogHeader } from '@/components/pages/blog/blogHeader';
-import {
-  StyledBox,
-  StyledContainer,
-  StyledHeroImage,
-} from '@/styles/blog/styles';
+import { PostPageBreadcrumbs } from '@/components/pages/blog/postPageBreadcrumbs';
 import {
   CategoriesTagWrapper,
   StyledTag,
 } from '@/components/pages/main/BlogListBlock/BlogItem/styles';
 import BlogListBlock from '@/components/pages/main/BlogListBlock/BlogListBlock';
-import { orderBy } from 'lodash';
+import {
+  StyledBox,
+  StyledContainer,
+  StyledHeroImage,
+} from '@/styles/blog/styles';
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
