@@ -133,7 +133,7 @@ export const AmbassadorForm: FC = () => {
     }
   }, [customer, setValue]);
 
-  const MAX_FILE_SIZE = 2.9 * 1024 * 1024;
+  const MAX_FILE_SIZE = 3 * 1024 * 1024;
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const uploadedFile = e.target.files?.[0] || null;
