@@ -22,7 +22,6 @@ import { getCookieValue } from '@/utils/auth/getCookieValue';
 import { decodeHTML } from '@/utils/decodeHTML';
 import { getCurrentVariation } from '@/utils/getCurrentVariation';
 import { getProductPrice } from '@/utils/price/getProductPrice';
-import { Skeleton } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -46,7 +45,7 @@ import {
   ProductWrapper,
 } from './styles';
 
-const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
+const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
   const { images, thumbnail } = product;
   const t = useTranslations('Product');
   const { isMobile } = useResponsive();
@@ -203,15 +202,10 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
             ))}
           <Rating rating={product.average_rating} />
         </ProductFlexWrapper>
-        {currency.rate ? (
-          <ProductPrice
-            currency={currency}
-            minPrice={finalPrice ? finalPrice * currency.rate : 0}
-            maxPrice={regularPrice ? regularPrice * currency.rate : 0}
-          />
-        ) : (
-          <Skeleton width="80px" height="40px" />
-        )}
+        <ProductPrice
+          minPrice={finalPrice ? finalPrice : 0}
+          maxPrice={regularPrice ? regularPrice : 0}
+        />
       </ProductTitleWrapper>
       <ProductInfoWrapper>
         {/* Options */}

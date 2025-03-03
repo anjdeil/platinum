@@ -1,5 +1,9 @@
+import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
+import { OrderSummaryProps } from '@/types/pages/cart';
+import getSubtotalByLineItems from '@/utils/cart/getSubtotalByLineItems';
 import { useTranslations } from 'next-intl';
-import React, { FC } from 'react';
+import { FC } from 'react';
+import OrderTotalsRowsSkeleton from '../../order/OrderTotals/OrderTotalsRowsSkeleton';
 import {
   OrderSummaryLine,
   OrderSummaryLineName,
@@ -7,10 +11,6 @@ import {
   OrderSummaryTotalValue,
   OrderSummaryWrapper,
 } from './style';
-import getSubtotalByLineItems from '@/utils/cart/getSubtotalByLineItems';
-import formatPrice from '@/utils/cart/formatPrice';
-import OrderTotalsRowsSkeleton from '../../order/OrderTotals/OrderTotalsRowsSkeleton';
-import { OrderSummaryProps } from '@/types/pages/cart';
 
 const OrderSummary: FC<OrderSummaryProps> = ({
   order,
@@ -23,6 +23,8 @@ const OrderSummary: FC<OrderSummaryProps> = ({
     ? getSubtotalByLineItems(order.line_items)
     : 0;
 
+  const { formatPrice } = useCurrencyConverter();
+
   return (
     <OrderSummaryWrapper>
       {isLoading ? (
@@ -32,18 +34,14 @@ const OrderSummary: FC<OrderSummaryProps> = ({
           {/* subtotal */}
           <OrderSummaryLine>
             <OrderSummaryLineName>{t('products')}</OrderSummaryLineName>
-            <span>
-              {formatPrice(subtotal)}&nbsp;{symbol}
-            </span>
+            <span>{formatPrice(subtotal)}</span>
           </OrderSummaryLine>
 
           {/* delivery */}
           {order?.shipping_lines?.map(line => (
             <OrderSummaryLine key={line.id}>
               <OrderSummaryLineName>{line.method_title}</OrderSummaryLineName>
-              <span>
-                {line.total}&nbsp;{symbol}
-              </span>
+              <span>{formatPrice(+line.total)}</span>
             </OrderSummaryLine>
           ))}
 
@@ -60,9 +58,7 @@ const OrderSummary: FC<OrderSummaryProps> = ({
                   {name} <br />
                   <span>{line.code}</span>
                 </OrderSummaryLineName>
-                <span>
-                  - {line.discount}&nbsp;{symbol}
-                </span>
+                <span>- {formatPrice(+line.discount)}</span>
               </OrderSummaryLine>
             );
           })}
@@ -71,9 +67,7 @@ const OrderSummary: FC<OrderSummaryProps> = ({
           {order?.fee_lines?.map(line => (
             <OrderSummaryLine key={line.id}>
               <OrderSummaryLineName>{line.name}</OrderSummaryLineName>
-              <span>
-                {line.total}&nbsp;{symbol}
-              </span>
+              <span>{formatPrice(+line.total)}</span>
             </OrderSummaryLine>
           ))}
 
@@ -83,9 +77,7 @@ const OrderSummary: FC<OrderSummaryProps> = ({
               <OrderSummaryLineName>
                 {line.label} ({line.rate_percent}%)
               </OrderSummaryLineName>
-              <span>
-                {line.tax_total}&nbsp;{symbol}
-              </span>
+              <span>{formatPrice(+line.tax_total)}</span>
             </OrderSummaryLine>
           ))}
 
@@ -103,7 +95,7 @@ const OrderSummary: FC<OrderSummaryProps> = ({
               {t('OrderSummaryTotal')}
             </OrderSummaryLineName>
             <OrderSummaryTotalValue>
-              {order?.total || '—'}&nbsp;{symbol}
+              {order?.total ? formatPrice(+order.total) : `—\u00A0${symbol}`}
             </OrderSummaryTotalValue>
           </OrderSummaryTotal>
         </>

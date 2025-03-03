@@ -18,7 +18,6 @@ export const CommonTextPropsSchema = z.object({
 
 export const ProductCardPropsTypeShema = z.object({
   product: ProductSchema,
-  currency: CurrencySchema,
 });
 
 export type CommonTextProps = z.infer<typeof CommonTextPropsSchema>;

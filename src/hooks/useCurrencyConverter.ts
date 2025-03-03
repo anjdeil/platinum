@@ -10,14 +10,16 @@ export const useCurrencyConverter = () => {
   const currentCurrency =
     currencies && !isCurrenciesLoading
       ? currencies?.data?.items.find(
-          currency => currency.code === selectedCurrency.name
-        )
+        currency => currency.code === selectedCurrency.name
+      )
       : undefined;
 
   const extendedCurrency = {
     ...selectedCurrency,
     rate: currentCurrency ? currentCurrency.rate || 1 : undefined,
   };
+
+  console.log('extendedCurrency...', extendedCurrency);
 
   const convertCurrency = (value: number) => {
     if (!extendedCurrency.rate) {
@@ -35,10 +37,17 @@ export const useCurrencyConverter = () => {
     return roundedPrice(convertedValue);
   };
 
+  const formatPrice = (price: number): string => {
+    const rounded = (Math.round(price * 100) / 100).toFixed(2);
+    return `${rounded.replace('.', ',')}\u00A0${extendedCurrency.code}`;
+  };
+
   return {
+    formatPrice,
     currentCurrency,
     convertCurrency,
     convertToDefaultCurrency,
+    currencyName: extendedCurrency.name,
     currencyCode: extendedCurrency.code,
     isLoading: isCurrenciesLoading || !extendedCurrency.rate,
   };

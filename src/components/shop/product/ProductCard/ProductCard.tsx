@@ -22,14 +22,14 @@ import {
   TitleWrapper,
 } from './styles';
 
+import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
 import { useResponsive } from '@/hooks/useResponsive';
 import { useWishlist } from '@/hooks/useWishlist';
 import { popupToggle } from '@/store/slices/PopupSlice';
 import { getCardProductPrice } from '@/utils/price/getCardProductPrice';
 import { Skeleton } from '@mui/material';
-import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
 
-const ProductCard: React.FC<ProductCardPropsType> = ({ product, currency }) => {
+const ProductCard: React.FC<ProductCardPropsType> = ({ product }) => {
   const t = useTranslations('Product');
   const { isMobile } = useResponsive();
   const router = useRouter();
@@ -48,7 +48,7 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product, currency }) => {
 
   const { finalPrice, regularPrice, isSale } = getCardProductPrice(product);
 
-  const { convertCurrency } = useCurrencyConverter();
+  const { isLoading, convertCurrency, formatPrice } = useCurrencyConverter();
 
   const convertedFinalPrice = convertCurrency(finalPrice || 0);
   const convertedRegularPrice = convertCurrency(regularPrice);
@@ -105,29 +105,36 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product, currency }) => {
             {product.name}
           </StyledLink>
           <PriceWrapper>
-            {currency.rate ? (
+            {!isLoading ? (
               <>
                 {product.type === 'variable' &&
                 product.variations.length > 1 ? (
                   convertedFinalPrice !== convertedRegularPrice ? (
                     <ProductPrice>
                       {t('priceFrom', {
-                        price: convertedFinalPrice,
-                      })}{' '}
-                      {currency.code}
+                        price: formatPrice(convertedFinalPrice),
+                      })}
                     </ProductPrice>
                   ) : (
-                    <ProductPrice>{`${convertedFinalPrice} ${currency.code}`}</ProductPrice>
+                    <ProductPrice>{`${formatPrice(
+                      convertedFinalPrice
+                    )}`}</ProductPrice>
                   )
                 ) : (
                   <>
                     {isSale ? (
                       <>
-                        <ProductMaxPrice>{`${convertedRegularPrice} ${currency.code}`}</ProductMaxPrice>
-                        <ProductPrice>{`${convertedFinalPrice} ${currency.code}`}</ProductPrice>
+                        <ProductMaxPrice>{`${formatPrice(
+                          convertedRegularPrice
+                        )}`}</ProductMaxPrice>
+                        <ProductPrice>{`${formatPrice(
+                          convertedFinalPrice
+                        )}`}</ProductPrice>
                       </>
                     ) : (
-                      <ProductPrice>{`${convertedRegularPrice} ${currency.code}`}</ProductPrice>
+                      <ProductPrice>{`${formatPrice(
+                        convertedRegularPrice
+                      )}`}</ProductPrice>
                     )}
                   </>
                 )}

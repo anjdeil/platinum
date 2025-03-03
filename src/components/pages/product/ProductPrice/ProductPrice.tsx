@@ -1,4 +1,5 @@
-import { CurrencyType } from '@/types/components/shop';
+import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
+import { Skeleton } from '@mui/material';
 import {
   ProductPriceOldStyled,
   ProductPriceStyled,
@@ -6,26 +7,29 @@ import {
 } from './styles';
 
 interface ProductPriceProps {
-  currency?: CurrencyType;
   minPrice: number;
   maxPrice: number;
 }
 
-const ProductPrice: React.FC<ProductPriceProps> = ({
-  currency,
-  minPrice,
-  maxPrice,
-}) => {
+const ProductPrice: React.FC<ProductPriceProps> = ({ minPrice, maxPrice }) => {
+  const { isLoading, convertCurrency, formatPrice } = useCurrencyConverter();
+
   return (
     <ProductPriceWrapper>
-      {maxPrice !== minPrice && (
-        <ProductPriceOldStyled>{`${maxPrice.toFixed(2)}  ${
-          currency ? currency.code : 'zl'
-        }`}</ProductPriceOldStyled>
+      {!isLoading ? (
+        <>
+          {maxPrice !== minPrice && (
+            <ProductPriceOldStyled>{`${formatPrice(
+              convertCurrency(maxPrice)
+            )}`}</ProductPriceOldStyled>
+          )}
+          <ProductPriceStyled>{`${formatPrice(
+            convertCurrency(minPrice)
+          )}`}</ProductPriceStyled>
+        </>
+      ) : (
+        <Skeleton width="80px" height="40px" />
       )}
-      <ProductPriceStyled>{`${minPrice.toFixed(2)}  ${
-        currency ? currency.code : 'zl'
-      }`}</ProductPriceStyled>
     </ProductPriceWrapper>
   );
 };

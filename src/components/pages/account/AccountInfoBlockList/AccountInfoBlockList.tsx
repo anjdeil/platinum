@@ -1,8 +1,7 @@
 import LoyaltyIcon from '@/components/global/icons/LoyaltyIcon/LoyaltyIcon';
 import MoneyBagIcon from '@/components/global/icons/MoneyBagIcon/MoneyBagIcon';
 import OrderIcon from '@/components/global/icons/OrderIcon/OrderIcon';
-import { useAppSelector } from '@/store';
-import { useGetCurrenciesQuery } from '@/store/rtk-queries/wpCustomApi';
+import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
 import { AccountInfoBlockListProps } from '@/types/pages/account';
 import { LOYALTY_LEVELS } from '@/utils/consts';
 import { useTheme } from '@emotion/react';
@@ -19,26 +18,11 @@ const AccountInfoBlockList: React.FC<AccountInfoBlockListProps> = ({
   const t = useTranslations('MyAccount');
   const theme = useTheme();
 
-  const { data: currencies, isLoading: isCurrenciesLoading } =
-    useGetCurrenciesQuery();
-  const selectedCurrency = useAppSelector(state => state.currencySlice);
-
-  const currentCurrency =
-    currencies && !isCurrenciesLoading
-      ? currencies?.data?.items.find(
-          currency => currency.code === selectedCurrency.name
-        )
-      : undefined;
-
-  const extendedCurrency = {
-    ...selectedCurrency,
-    rate: currentCurrency ? currentCurrency.rate || 1 : undefined,
-  };
-
-  const formatTotalAmount = (amount?: number, currencyCode?: string) => {
-    if (amount === undefined || !extendedCurrency.rate) return undefined;
-    return `${(amount * extendedCurrency.rate).toFixed(2)} ${currencyCode}`;
-  };
+  const {
+    isLoading: isLoadingCurrency,
+    convertCurrency,
+    formatPrice,
+  } = useCurrencyConverter();
 
   return (
     <StyledListContainer>
@@ -51,7 +35,11 @@ const AccountInfoBlockList: React.FC<AccountInfoBlockListProps> = ({
       <AccountInfoBlock
         icon={MoneyBagIcon}
         title={t('totalOrderAmount')}
-        value={formatTotalAmount(totalAmount, selectedCurrency.code)}
+        value={
+          !isLoadingCurrency && totalAmount
+            ? formatPrice(convertCurrency(totalAmount))
+            : undefined
+        }
         background={theme.background.infoGradient}
       />
       {!isLoading ? (

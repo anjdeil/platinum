@@ -17,12 +17,11 @@ import { useResponsive } from '@/hooks/useResponsive';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { updateCart } from '@/store/slices/cartSlice';
 /* import theme from '@/styles/theme'; */
-import { useGetCurrenciesQuery } from '@/store/rtk-queries/wpCustomApi';
+import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
 import { LinkWrapper } from '@/styles/components';
 import { WishListTableProps } from '@/types/components/pages/myAccount/wishlist';
 import { ProductsMinimizedType } from '@/types/components/shop/product/products';
 import { CartItem } from '@/types/store/reducers/сartSlice';
-import { roundedPrice } from '@/utils/cart/roundedPrice';
 import { getProductPrice } from '@/utils/price/getProductPrice';
 import { Skeleton } from '@mui/material';
 import { useTranslations } from 'next-intl';
@@ -48,21 +47,11 @@ const WishListTable: FC<WishListTableProps> = ({
 
   const { cartItems } = useAppSelector(state => state.cartSlice);
 
-  const { data: currencies, isLoading: isCurrenciesLoading } =
-    useGetCurrenciesQuery();
-  const selectedCurrency = useAppSelector(state => state.currencySlice);
-
-  const currentCurrency =
-    currencies && !isCurrenciesLoading
-      ? currencies?.data?.items.find(
-          currency => currency.code === selectedCurrency.name
-        )
-      : undefined;
-
-  const extendedCurrency = {
-    ...selectedCurrency,
-    rate: currentCurrency ? currentCurrency.rate || 1 : undefined,
-  };
+  const {
+    isLoading: currencyLoading,
+    convertCurrency,
+    formatPrice,
+  } = useCurrencyConverter();
 
   const checkCartMatch = (cartItems: CartItem[], productId: number) => {
     return cartItems.some(({ product_id }) => product_id === productId);
@@ -114,6 +103,8 @@ const WishListTable: FC<WishListTableProps> = ({
                   const isCartMatch = checkCartMatch(cartItems, item.id);
                   const { finalPrice } = getProductPrice(item.price);
 
+                  const convertedFinalPrice = convertCurrency(finalPrice || 0);
+
                   const notAvaible = finalPrice === null;
                   return (
                     <WishlistCardAllWrapper key={item.id} padding="16px">
@@ -142,14 +133,9 @@ const WishListTable: FC<WishListTableProps> = ({
                           {item.stock_quantity}
                         </QuantityRow>
                         <OnePrice fontSize="1.1em">
-                          {extendedCurrency.rate ? (
+                          {!currencyLoading ? (
                             <p>
-                              {finalPrice &&
-                                roundedPrice(
-                                  finalPrice * extendedCurrency.rate
-                                )}
-                              &nbsp;
-                              {extendedCurrency.code}
+                              {finalPrice && formatPrice(convertedFinalPrice)}
                             </p>
                           ) : (
                             <Skeleton width="50px" />
@@ -182,6 +168,9 @@ const WishListTable: FC<WishListTableProps> = ({
                   const isCartMatch = checkCartMatch(cartItems, item.id);
 
                   const { finalPrice } = getProductPrice(item.price);
+
+                  const convertedFinalPrice = convertCurrency(finalPrice || 0);
+
                   const notAvaible = finalPrice === null;
                   return (
                     <CartCardAllWrapper key={item.id} padding="16px">
@@ -215,14 +204,10 @@ const WishListTable: FC<WishListTableProps> = ({
                           </QuantityRow>
                           <ProductPrice>
                             <OnePrice fontSize="1.3em">
-                              {extendedCurrency.rate ? (
+                              {!currencyLoading ? (
                                 <p>
                                   {finalPrice &&
-                                    roundedPrice(
-                                      finalPrice * extendedCurrency.rate
-                                    )}
-                                  &nbsp;
-                                  {extendedCurrency.code}
+                                    formatPrice(convertedFinalPrice)}
                                 </p>
                               ) : (
                                 <Skeleton width="50px" />
