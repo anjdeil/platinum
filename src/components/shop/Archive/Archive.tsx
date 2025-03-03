@@ -11,11 +11,13 @@ import { useAppSelector } from '@/store';
 import { PagesNavigation, Title } from '@/styles/components';
 import { ArchivePropsType } from '@/types/components/shop/archive';
 import { CategoryType } from '@/types/pages/shop';
+import { getPluralForm } from '@/utils/getPluralForm';
 import { Skeleton } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import router from 'next/router';
 import { FC, useState } from 'react';
 import SelectParentCategory from '../categories/SelectParentCategoryMobile/SelectParentCategoryMobile';
+import { FilterPanel } from '../filtration/FilterPanel';
 import { ProductCardList } from '../ProductCardsList';
 import {
   CatalogContainer,
@@ -33,7 +35,6 @@ import {
   PagesNavigationFooterWrapper,
   PagesNavigationWrapper,
 } from './styles';
-import { FilterPanel } from '../filtration/FilterPanel';
 
 const switchPage = (page: number, maxPage: number) => {
   if (maxPage < page) return;
@@ -218,7 +219,8 @@ export const Archive: FC<ArchivePropsType> = props => {
             <CountProduct>
               {statistic.products_count !== 0 && (
                 <>
-                  {statistic.products_count}&nbsp;{t('products')}
+                  {statistic.products_count}&nbsp;
+                  {getPluralForm(statistic.products_count, locale)}
                 </>
               )}
             </CountProduct>

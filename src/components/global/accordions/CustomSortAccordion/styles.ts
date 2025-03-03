@@ -24,7 +24,8 @@ export const StyledSortAccordion = styled(Accordion)`
 export const StyledSortAccordionSummary = styled(AccordionSummary) <{ expanded: boolean }>`
   display: flex;
   justify-content: space-between;
-  gap: 24px;
+  /* gap: 24px; */
+  gap: 8px;
   align-items: center;
   cursor: pointer;
   padding-inline: 10px;
@@ -54,6 +55,13 @@ export const StyledText = styled(Text)`
   @media ${({ theme }) => theme.media.large} {
     font-size: 14px;
   }
+
+  @media ${({ theme }) => theme.media.small} {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `;
 
 export const StyledSortItem = styled.div<{ isSelected: boolean }>`
@@ -63,9 +71,10 @@ export const StyledSortItem = styled.div<{ isSelected: boolean }>`
   color: ${({ theme }) => theme.colors.black};
   background-color: ${({ isSelected, theme }) =>
     isSelected ? theme.background.secondary : 'transparent'};
-    
+
   @media ${({ theme }) => theme.media.large} {
     font-size: 14px;
+    line-height: 1.5rem;
   }
 
   &:hover {
