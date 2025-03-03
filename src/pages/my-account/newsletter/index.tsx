@@ -66,11 +66,18 @@ export default function Subscription({ email }: SubscriptionProps) {
     }
   }, [isSubSuc, isUnSubSuc]);
 
+  const [isSwitchDisabled, setIsSwitchDisabled] = useState<boolean>(false);
+
   const handleSwitchChange = async (
     event: React.ChangeEvent<HTMLInputElement>,
     checked: boolean,
     id: string
   ) => {
+    if (isSwitchDisabled) return;
+
+    setIsSwitchDisabled(true);
+    setTimeout(() => setIsSwitchDisabled(false), 3000);
+
     if (checked) {
       try {
         await subscribe({ email });
@@ -108,6 +115,7 @@ export default function Subscription({ email }: SubscriptionProps) {
         <SubscriptionWrapper>
           <SubscriptionCardWrapper>
             <CustomSwitch
+              disabled={isSwitchDisabled}
               checked={subscriptions.includes('3')}
               onChange={event =>
                 handleSwitchChange(event, event.target.checked, '3')
