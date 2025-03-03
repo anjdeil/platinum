@@ -82,6 +82,8 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
    */
   const [currentVariation, setCurrentVariation] = useState<ProductVariation>();
 
+  const router = useRouter();
+
   // Temporary code (whole useEffect) for assigning the current variation
   /* useEffect(() => {
     if (product.attributes.length == 0 && product.variations.length != 0)
@@ -139,8 +141,6 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
     if (product?.stock_quantity) return product?.stock_quantity;
     return 0;
   }, [currentVariation, product]);
-
-  const router = useRouter();
 
   /** Set default attributes */
   useEffect(() => {
@@ -219,6 +219,7 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
           <ProductOptionsPanel
             attributes={product.attributes}
             defaultAttributes={product.default_attributes || []}
+            variations={product.variations}
           />
         )}
         {/* Options END*/}
