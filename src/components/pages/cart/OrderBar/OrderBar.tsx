@@ -1,15 +1,16 @@
 import { FlexBox } from '@/styles/components';
 import { OrderBarProps } from '@/types/pages/cart';
 import { roundedPrice } from '@/utils/cart/roundedPrice';
+import { formatPrice } from '@/utils/price/formatPrice';
 import { Skeleton } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { FC } from 'react';
 import {
+  // OrderBarDesc,
+  CrossedOut,
   OrderBarContent,
   OrderBarSum,
   OrderBarTitle,
-  // OrderBarDesc,
-  CrossedOut,
   OrderBarWrapper,
 } from './style';
 
@@ -38,18 +39,20 @@ const OrderBar: FC<OrderBarProps> = ({
             <div>
               {!totalDisc ? (
                 <>
-                  {roundedPrice(subtotal)} &nbsp;{symbol}
+                  {formatPrice(roundedPrice(subtotal))} &nbsp;{symbol}
                 </>
               ) : (
                 <>
                   {subtotal !== totalDisc ? (
                     <FlexBox alignItems="flex-end">
-                      <CrossedOut>{roundedPrice(subtotal)}</CrossedOut>
-                      {roundedPrice(totalDisc)}&nbsp;{symbol}
+                      <CrossedOut>
+                        {formatPrice(roundedPrice(subtotal))}
+                      </CrossedOut>
+                      {formatPrice(roundedPrice(totalDisc))}&nbsp;{symbol}
                     </FlexBox>
                   ) : (
                     <>
-                      {roundedPrice(subtotal)} &nbsp;{symbol}
+                      {formatPrice(roundedPrice(subtotal))} &nbsp;{symbol}
                     </>
                   )}
                 </>

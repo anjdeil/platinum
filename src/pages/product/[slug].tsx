@@ -4,8 +4,6 @@ import CustomProductList from '@/components/pages/product/CustomProductList/Cust
 import ProductInfo from '@/components/pages/product/ProductInfo/ProductInfo';
 import transformCategoriesIntoLinks from '@/services/transformers/transformCategoriesIntoLinks';
 import { customRestApi } from '@/services/wpCustomApi';
-import { useAppSelector } from '@/store';
-import { useGetCurrenciesQuery } from '@/store/rtk-queries/wpCustomApi';
 import { Container } from '@/styles/components';
 import { BreadcrumbType } from '@/types/components/global/breadcrumbs';
 import { ProductPageType } from '@/types/pages/product';
@@ -46,22 +44,6 @@ export default function ProductPage({
     []
   );
 
-  const { data: currencies, isLoading: isCurrenciesLoading } =
-    useGetCurrenciesQuery();
-  const selectedCurrency = useAppSelector(state => state.currencySlice);
-
-  const currentCurrency =
-    currencies && !isCurrenciesLoading
-      ? currencies?.data?.items.find(
-          currency => currency.code === selectedCurrency.name
-        )
-      : undefined;
-
-  const extendedCurrency = {
-    ...selectedCurrency,
-    rate: currentCurrency ? currentCurrency.rate || 1 : undefined,
-  };
-
   useEffect(() => {
     const categoriesWithLang = product.categories.map(item => ({
       ...item,
@@ -98,9 +80,7 @@ export default function ProductPage({
         >
           <Breadcrumbs links={breadcrumbsLinks} />
         </Box>
-        {product && (
-          <ProductInfo product={product} currency={extendedCurrency} />
-        )}
+        {product && <ProductInfo product={product} />}
         <Reviews product={product} />
         <CustomProductList
           title="recommendProduct"

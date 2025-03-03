@@ -17,13 +17,12 @@ import {
   ProducTitle,
   ProductPrice,
 } from '@/components/pages/cart/styles/index';
+import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
 import { useAppDispatch, useAppSelector } from '@/store';
-import { useGetCurrenciesQuery } from '@/store/rtk-queries/wpCustomApi';
 import { FlexBox, LinkWrapper, StyledButton, Title } from '@/styles/components';
 import theme from '@/styles/theme';
 import checkCartConflict from '@/utils/cart/checkCartConflict';
 import { handleQuantityChange } from '@/utils/cart/handleQuantityChange';
-import { roundedPrice } from '@/utils/cart/roundedPrice';
 import { getProductPrice } from '@/utils/price/getProductPrice';
 import { Skeleton } from '@mui/material';
 import { useTranslations } from 'next-intl';
@@ -42,21 +41,8 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
   const [hasConflict, setHasConflict] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
-  const { data: currencies, isLoading: isCurrenciesLoading } =
-    useGetCurrenciesQuery();
-  const selectedCurrency = useAppSelector(state => state.currencySlice);
-
-  const currentCurrency =
-    currencies && !isCurrenciesLoading
-      ? currencies?.data?.items.find(
-          currency => currency.code === selectedCurrency.name
-        )
-      : undefined;
-
-  const extendedCurrency = {
-    ...selectedCurrency,
-    rate: currentCurrency ? currentCurrency.rate || 1 : undefined,
-  };
+  const { currentCurrency, currencyCode, convertCurrency, formatPrice } =
+    useCurrencyConverter();
 
   const productsWithCartData = useMemo(() => {
     if (!productsData || !cartItems) {
@@ -139,6 +125,8 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
     }
   }, [cartItems, productsData]);
 
+  const convertedTotalCartPrice = convertCurrency(totalCartPrice);
+
   return (
     <PopupOverlay
       onClick={e => {
@@ -184,6 +172,9 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
           productsWithCartData?.map(item => {
             const resolveCount = item.stock_quantity;
 
+            const convertedFinalPrice = convertCurrency(item.finalPrice || 0);
+            const convertedTotalPrice = convertCurrency(item.totalPrice || 0);
+
             return (
               <CartCardWrapper key={item.id} marginBottom="68px" gap="16px">
                 <CartImgWrapper maxHeight="140px" maxWidth="140px">
@@ -214,14 +205,9 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
                   </ProducTitle>
                   <FlexBox justifyContent="space-between" margin="0 0 16px 0">
                     <ProductPrice>
-                      {extendedCurrency.rate ? (
+                      {currentCurrency ? (
                         <p>
-                          {item.finalPrice &&
-                            roundedPrice(
-                              item.finalPrice * extendedCurrency.rate
-                            )}
-                          &nbsp;
-                          {extendedCurrency.code}
+                          {item.finalPrice && formatPrice(convertedFinalPrice)}
                         </p>
                       ) : (
                         <Skeleton width="50px" />
@@ -238,12 +224,9 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
                   <ProductPrice>
                     <span>{t('summary')}</span>
 
-                    {extendedCurrency.rate ? (
+                    {currentCurrency ? (
                       <OnePrice fontSize="1.2em">
-                        {item.price &&
-                          roundedPrice(item.totalPrice * extendedCurrency.rate)}
-                        &nbsp;
-                        {extendedCurrency.code}
+                        {item.totalPrice && formatPrice(convertedTotalPrice)}
                       </OnePrice>
                     ) : (
                       <Skeleton width="50px" />
@@ -267,11 +250,11 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
         <OrderBar
           productsData={productsData}
           subtotal={
-            extendedCurrency?.rate !== undefined
-              ? totalCartPrice * extendedCurrency.rate
+            currentCurrency?.rate !== undefined
+              ? convertedTotalCartPrice
               : undefined
           }
-          symbol={extendedCurrency.code}
+          symbol={currencyCode}
           miniCart
         />
 

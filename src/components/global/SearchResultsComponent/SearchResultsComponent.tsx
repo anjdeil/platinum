@@ -1,5 +1,12 @@
+import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
+import { FlexBox, StyledButton } from '@/styles/components';
 import CategoryType from '@/types/components/shop/categories/categories';
 import { ProductType } from '@/types/components/shop/product/products';
+import { getCardProductPrice } from '@/utils/price/getCardProductPrice';
+import { Skeleton } from '@mui/material';
+import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/router';
+import { useMemo } from 'react';
 import FindMiniIcon from '../icons/FindMiniIcon/FindMiniIcon';
 import {
   SearchButtonWrapper,
@@ -15,15 +22,6 @@ import {
   SearchResultsRows,
   SearchResultsTitle,
 } from './styles';
-import { FlexBox, StyledButton } from '@/styles/components';
-import { useGetCurrenciesQuery } from '@/store/rtk-queries/wpCustomApi';
-import { useAppSelector } from '@/store';
-import { Skeleton } from '@mui/material';
-import { roundedPrice } from '@/utils/cart/roundedPrice';
-import { useRouter } from 'next/router';
-import { useMemo } from 'react';
-import { useTranslations } from 'next-intl';
-import { getProductPrice } from '@/utils/price/getProductPrice';
 
 export default function SearchResultsComponent({
   products = [],
@@ -42,21 +40,8 @@ export default function SearchResultsComponent({
 
   const t = useTranslations('Search');
   const tProduct = useTranslations('Product');
-  const { data: currencies, isLoading: isCurrenciesLoading } =
-    useGetCurrenciesQuery();
-  const selectedCurrency = useAppSelector(state => state.currencySlice);
 
-  const currentCurrency =
-    currencies && !isCurrenciesLoading
-      ? currencies?.data?.items.find(
-          currency => currency.code === selectedCurrency.name
-        )
-      : undefined;
-
-  const extendedCurrency = {
-    ...selectedCurrency,
-    rate: currentCurrency ? currentCurrency.rate || 1 : undefined,
-  };
+  const { isLoading, convertCurrency, formatPrice } = useCurrencyConverter();
 
   const router = useRouter();
 
@@ -97,81 +82,72 @@ export default function SearchResultsComponent({
         <SearchResultsGroup>
           <SearchResultsTitle>Products</SearchResultsTitle>
           <SearchResultsRows>
-            {products
-              .slice(0, 5)
-              .map(({ id, name, thumbnail, slug, categories, price }) => {
-                let finalPrice, regularPrice, isSale;
+            {products.slice(0, 5).map(product => {
+              const { id, name, thumbnail, slug, categories, price } = product;
+              let finalPrice, regularPrice, isSale;
 
-                if (price) {
-                  ({ finalPrice, regularPrice, isSale } =
-                    getProductPrice(price));
-                }
+              if (price) {
+                ({ finalPrice, regularPrice, isSale } =
+                  getCardProductPrice(product));
+              }
 
-                return (
-                  <SearchResultsRow
-                    key={id}
-                    onMouseDown={() => onProductSelect(slug)}
+              const convertedFinalPrice = convertCurrency(finalPrice || 0);
+              const convertedRegularPrice = convertCurrency(regularPrice || 0);
+
+              return (
+                <SearchResultsRow
+                  key={id}
+                  onMouseDown={() => onProductSelect(slug)}
+                >
+                  {thumbnail?.src && (
+                    <SearchResultsRowImage
+                      src={thumbnail.src}
+                      alt={name}
+                      width={40}
+                      height={40}
+                    />
+                  )}
+                  <FlexBox
+                    justifyContent="space-between"
+                    alignItems="center"
+                    width="100%"
+                    gap="10px"
                   >
-                    {thumbnail?.src && (
-                      <SearchResultsRowImage
-                        src={thumbnail.src}
-                        alt={name}
-                        width={40}
-                        height={40}
-                      />
+                    <SearchResultsRowCaptionWrap>
+                      <SearchResultsRowCaption>{name}</SearchResultsRowCaption>
+                      <SearchResultsRowCat>
+                        {categories.map(
+                          (cat, i) => (i > 0 ? ' | ' : '') + cat.name
+                        )}
+                      </SearchResultsRowCat>
+                    </SearchResultsRowCaptionWrap>
+                    {!isLoading ? (
+                      <SearchResultsPrice>
+                        {regularPrice ? (
+                          <>
+                            {formatPrice(convertedRegularPrice)}
+                            {isSale && (
+                              <>
+                                {finalPrice && formatPrice(convertedFinalPrice)}
+                              </>
+                            )}
+                          </>
+                        ) : (
+                          <>
+                            {price?.min_price &&
+                              tProduct('priceFrom', {
+                                price: formatPrice(convertedFinalPrice),
+                              })}
+                          </>
+                        )}
+                      </SearchResultsPrice>
+                    ) : (
+                      <Skeleton width="50px" />
                     )}
-                    <FlexBox
-                      justifyContent="space-between"
-                      alignItems="center"
-                      width="100%"
-                      gap="10px"
-                    >
-                      <SearchResultsRowCaptionWrap>
-                        <SearchResultsRowCaption>
-                          {name}
-                        </SearchResultsRowCaption>
-                        <SearchResultsRowCat>
-                          {categories.map(
-                            (cat, i) => (i > 0 ? ' | ' : '') + cat.name
-                          )}
-                        </SearchResultsRowCat>
-                      </SearchResultsRowCaptionWrap>
-                      {extendedCurrency.rate ? (
-                        <SearchResultsPrice>
-                          {regularPrice ? (
-                            <>
-                              {roundedPrice(
-                                regularPrice * extendedCurrency.rate
-                              )}
-                              {isSale && (
-                                <>
-                                  {finalPrice &&
-                                    roundedPrice(
-                                      finalPrice * extendedCurrency.rate
-                                    )}
-                                </>
-                              )}
-                            </>
-                          ) : (
-                            <>
-                              {price?.min_price &&
-                                tProduct('priceFrom', {
-                                  price: roundedPrice(
-                                    price.min_price * extendedCurrency.rate
-                                  ),
-                                })}
-                            </>
-                          )}
-                          &nbsp;
-                          {extendedCurrency.code}
-                        </SearchResultsPrice>
-                      ) : (
-                        <Skeleton width="50px" />
-                      )}
-                    </FlexBox>
-                  </SearchResultsRow>
-                );
-              })}
+                  </FlexBox>
+                </SearchResultsRow>
+              );
+            })}
           </SearchResultsRows>
           {products.length > 5 && (
             <SearchButtonWrapper>

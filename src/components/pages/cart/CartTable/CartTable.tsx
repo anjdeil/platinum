@@ -2,10 +2,13 @@ import CloseIcon from '@/components/global/icons/CloseIcon/CloseIcon';
 import DeleteIcon from '@/components/global/icons/DeleteIcon/DeleteIcon';
 import Notification from '@/components/global/Notification/Notification';
 import { MenuSkeleton } from '@/components/menus/MenuSkeleton';
+import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
 import { useResponsive } from '@/hooks/useResponsive';
 import { FlexBox, LinkWrapper, Title } from '@/styles/components';
 import theme from '@/styles/theme';
+import { ProductsMinimizedType } from '@/types/components/shop/product/products';
 import { CartTableProps } from '@/types/pages/cart';
+import { lineOrderItems } from '@/types/store/reducers/сartSlice';
 import checkProductAvailability from '@/utils/cart/checkProductAvailability';
 import { useTranslations } from 'next-intl';
 import { FC } from 'react';
@@ -32,8 +35,6 @@ import {
   TextCell,
   TextCellHeader,
 } from './style';
-import { ProductsMinimizedType } from '@/types/components/shop/product/products';
-import { lineOrderItems } from '@/types/store/reducers/сartSlice';
 
 const CartTable: FC<CartTableProps> = ({
   symbol,
@@ -51,6 +52,8 @@ const CartTable: FC<CartTableProps> = ({
 }) => {
   const t = useTranslations('Cart');
   const { isMobile } = useResponsive();
+
+  const { formatPrice } = useCurrencyConverter();
 
   const findProductSpec = (
     item: lineOrderItems
@@ -101,9 +104,7 @@ const CartTable: FC<CartTableProps> = ({
                 />
               </ProducTitle>
               <ProductPrice>
-                <p>
-                  {roundedPrice(Number(item.subtotal) / item.quantity)} {symbol}
-                </p>
+                <p>{formatPrice(Number(item.subtotal) / item.quantity)}</p>
               </ProductPrice>
               <CartQuantity
                 resolveCount={resolveCount}
@@ -113,9 +114,7 @@ const CartTable: FC<CartTableProps> = ({
               />
               <ProductPrice>
                 <span>{t('summary')}</span>
-                <OnePrice>
-                  {roundedPrice(Number(item.subtotal))} {symbol}
-                </OnePrice>
+                <OnePrice>{formatPrice(Number(item.subtotal))}</OnePrice>
               </ProductPrice>
             </CardContent>
           </CartCardWrapper>
@@ -174,7 +173,7 @@ const CartTable: FC<CartTableProps> = ({
                   </LinkWrapper>
                 </TextNameCell>
                 <TextCell>
-                  {roundedPrice(Number(item.subtotal) / item.quantity)} {symbol}
+                  {formatPrice(Number(item.subtotal) / item.quantity)}
                 </TextCell>
                 <TextCell>
                   <CartQuantity
@@ -184,9 +183,7 @@ const CartTable: FC<CartTableProps> = ({
                     disabled={isFiltered}
                   />
                 </TextCell>
-                <TextCell>
-                  {roundedPrice(Number(item.subtotal))} {symbol}
-                </TextCell>
+                <TextCell>{formatPrice(Number(item.subtotal))}</TextCell>
               </GridRow>
               {(!isAvailable || isFiltered) && (
                 <CartProductWarning
