@@ -19,8 +19,6 @@ export const useCurrencyConverter = () => {
     rate: currentCurrency ? currentCurrency.rate || 1 : undefined,
   };
 
-  console.log('extendedCurrency...', extendedCurrency);
-
   const convertCurrency = (value: number) => {
     if (!extendedCurrency.rate) {
       return value;
@@ -47,7 +45,6 @@ export const useCurrencyConverter = () => {
     currentCurrency,
     convertCurrency,
     convertToDefaultCurrency,
-    currencyName: extendedCurrency.name,
     currencyCode: extendedCurrency.code,
     isLoading: isCurrenciesLoading || !extendedCurrency.rate,
   };
