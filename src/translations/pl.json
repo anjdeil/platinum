@@ -188,7 +188,9 @@
     "minutes": "Minuty",
     "priceFrom": "od {price}",
     "deliveryTime": "Zamów w ciągu {hour} godz. {minute} min, a zostanie wysłane dzisiaj",
-    "deliveryNextBusinessDay": "Zamówienie zostanie wysłane w następny dzień roboczy"
+    "deliveryNextBusinessDay": "Zamówienie zostanie wysłane w następny dzień roboczy",
+    "yourOpinion": "Twoja opinia",
+    "comment": "Komentarz"
   },
   "Cart": {
     "cart": "Koszyk",

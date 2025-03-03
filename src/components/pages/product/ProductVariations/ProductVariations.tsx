@@ -7,6 +7,7 @@ import {
   VariationListBlock,
   VariationsButton,
 } from './styles';
+import { useAppSelector } from '@/store';
 
 const ProductVariations: React.FC<ColorVariationsProps> = ({
   attr,
@@ -14,6 +15,17 @@ const ProductVariations: React.FC<ColorVariationsProps> = ({
   onChange,
 }) => {
   const t = useTranslations('Product');
+  const language = useAppSelector(state => state.languageSlice.code);
+
+  const processName = (name: string) => {
+    if (language === 'uk' || language === 'ru') {
+      if (name.slice(-2).toLowerCase() === 'mm') {
+        return name.slice(0, -2) + 'мм';
+      }
+    }
+    return name;
+  };
+
   return (
     <ProductVariationsContainer>
       <VariationTitle>{t(attr.slug)}</VariationTitle>
@@ -25,7 +37,7 @@ const ProductVariations: React.FC<ColorVariationsProps> = ({
               active={item.slug === currentVariation}
               onClick={() => onChange(attr.slug, item.slug)}
             >
-              {item.name}
+              {processName(item.name)}
             </VariationsButton>
           ))}
       </VariationListBlock>
