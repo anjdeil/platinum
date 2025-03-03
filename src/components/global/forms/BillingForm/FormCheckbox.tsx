@@ -15,11 +15,20 @@ export const FormCheckbox: FC<CustomFormCheckboxType> = ({
   register,
   validation,
   noTop,
+  defaultValue,
+  checked,
+  onChange,
 }) => {
   return (
     <StyledCheckBoxWrapper noTop={noTop || false}>
       <StyledCheckBoxContainer>
-        <StyledCheckbox {...register(name, validation)} error={errors[name]} />
+        <StyledCheckbox
+          {...register(name, validation)}
+          error={errors[name]}
+          defaultChecked={defaultValue}
+          checked={checked}
+          onChange={onChange}
+        />
         <CustomCheckboxLabel>{label}</CustomCheckboxLabel>
       </StyledCheckBoxContainer>
       {errors && name && <CustomError>{errors[name]?.message}</CustomError>}

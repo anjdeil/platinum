@@ -1,10 +1,6 @@
 import { z } from 'zod';
 
-export const UserInfoFormSchema = (
-  isShipping: boolean | undefined,
-  isInvoice: boolean | undefined,
-  t: any
-) => {
+export const UserInfoFormSchema = (isShipping: boolean, t: any) => {
   const firstNameValidation = z
     .string()
     .min(1, { message: t('pleaseFillInTheFirstName') })
@@ -59,10 +55,16 @@ export const UserInfoFormSchema = (
 
   const apartmentNumberValidation = z
     .string()
-    .max(10, { message: t('yourApartmentNumberIsTooLong') })
-    .regex(/^[a-zA-Zа-яА-ЯёЁіІїЇєЄ0-9\s\-\/#]+$/, {
-      message: t('invalidCharacters'),
-    });
+    .optional()
+    .refine(value => !value || value.length <= 10, {
+      message: t('yourApartmentNumberIsTooLong'),
+    })
+    .refine(
+      value => !value || /^[a-zA-Zа-яА-ЯёЁіІїЇєЄ0-9\s\-\/#]+$/.test(value),
+      {
+        message: t('invalidCharacters'),
+      }
+    );
 
   const postCodeValidation = z
     .string()
@@ -71,57 +73,69 @@ export const UserInfoFormSchema = (
       message: t('invalidPostcodeFormat'),
     });
 
-  const schema = z.object({
-    first_name: firstNameValidation,
-    last_name: lastNameValidation,
-    email: z
-      .string()
-      .min(1, { message: t('pleaseFillInTheEmail') })
-      .max(254, { message: t('cannotExceed254Characters') })
-      .email({ message: t('wrongEmailFormat') }),
-    phone: phoneValidation,
-    country: z.string().min(1, t('pleaseSelectACountry')),
-    city: cityValidation,
-    address_1: address1Validation,
-    address_2: address2Validation,
-    apartmentNumber: apartmentNumberValidation,
-    postcode: postCodeValidation,
-    invoice: z.boolean().optional(),
-    company: isInvoice
-      ? z
-          .string()
-          .min(1, { message: t('pleaseFillInTheCompanyName') })
-          .min(2, { message: t('yourCompanyNameIsTooShort') })
-          .max(100, { message: t('yourCompanyNameIsTooLong') })
-      : z.string().optional(),
-    nip: isInvoice
-      ? z
-          .string()
-          .min(1, { message: t('pleaseFillInTheNip') })
-          .min(10, { message: t('yourNipIsTooShort') })
-          .max(20, { message: t('yourNipIsTooLong') })
-          .regex(/^[0-9\\-]*$/, {
-            message: t('invalidNipFormat'),
-          })
-      : z.string().optional(),
-    shipping: z.boolean().optional(),
-    first_nameShipping: isShipping
-      ? firstNameValidation
-      : z.string().optional(),
-    last_nameShipping: isShipping ? lastNameValidation : z.string().optional(),
-    phoneShipping: isShipping ? phoneValidation : z.string().optional(),
-    address_1Shipping: isShipping ? address1Validation : z.string().optional(),
-    address_2Shipping: isShipping ? address2Validation : z.string().optional(),
-    postcodeShipping: isShipping ? postCodeValidation : z.string().optional(),
-    cityShipping: isShipping ? cityValidation : z.string().optional(),
-    countryShipping: isShipping
-      ? z.string().min(1, t('pleaseSelectACountry'))
-      : z.string().optional(),
-    apartmentNumberShipping: isShipping
-      ? apartmentNumberValidation
-      : z.string().optional(),
-    newsletter: z.boolean().optional(),
-  });
+  const schema = z
+    .object({
+      first_name: firstNameValidation,
+      last_name: lastNameValidation,
+      email: z
+        .string()
+        .min(1, { message: t('pleaseFillInTheEmail') })
+        .max(254, { message: t('cannotExceed254Characters') })
+        .email({ message: t('wrongEmailFormat') }),
+      phone: phoneValidation,
+      country: z.string().min(1, t('pleaseSelectACountry')),
+      city: cityValidation,
+      address_1: address1Validation,
+      address_2: address2Validation,
+      apartmentNumber: apartmentNumberValidation,
+      postcode: postCodeValidation,
+      invoice: z.boolean().optional(),
+      company: z.string().optional(),
+      nip: z.string().optional(),
+      shippingAddress: z.boolean().optional(),
+      first_nameShipping: isShipping
+        ? firstNameValidation
+        : z.string().optional(),
+      last_nameShipping: isShipping
+        ? lastNameValidation
+        : z.string().optional(),
+      phoneShipping: isShipping ? phoneValidation : z.string().optional(),
+      address_1Shipping: isShipping
+        ? address1Validation
+        : z.string().optional(),
+      address_2Shipping: isShipping
+        ? address2Validation
+        : z.string().optional(),
+      postcodeShipping: isShipping ? postCodeValidation : z.string().optional(),
+      cityShipping: isShipping ? cityValidation : z.string().optional(),
+      countryShipping: isShipping
+        ? z.string().min(1, t('pleaseSelectACountry'))
+        : z.string().optional(),
+      apartmentNumberShipping: apartmentNumberValidation,
+      newsletter: z.boolean().optional(),
+    })
+    .refine(
+      data => {
+        if (!data.invoice) return true;
+        if (data.company && data.company.trim() !== '') {
+          return data.company.length >= 2 && data.company.length <= 100;
+        }
+
+        return true;
+      },
+      { path: ['company'], message: t('pleaseFillInTheCorrectCompanyName') }
+    )
+    .refine(
+      data => {
+        if (!data.invoice) return true;
+        if (data.nip && data.nip.trim() !== '') {
+          return /^[0-9\-]{10,20}$/.test(data.nip);
+        }
+
+        return true;
+      },
+      { path: ['nip'], message: t('wrongNipFormat') }
+    );
 
   return schema;
 };

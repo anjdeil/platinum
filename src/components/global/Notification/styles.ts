@@ -34,6 +34,7 @@ export const NotificationWrapper = styled.div<{
 
   &.fade-out {
     opacity: 1;
+    transition: opacity 0.5s ease-in-out;
   }
 
   @media ${({ theme }) => theme.media.large} {

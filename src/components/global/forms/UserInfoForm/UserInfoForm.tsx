@@ -26,26 +26,42 @@ import { getMetaDataValue } from '@/utils/myAcc/getMetaDataValue';
 import { FormCheckbox } from '../BillingForm/FormCheckbox';
 import { AnimatedWrapper, VariationFields } from '../BillingForm/style';
 
+const customerShippingInfo = (customer: WooCustomerReqType) => {
+  if (!customer) {
+    return false;
+  }
+  const isShippingEmpty =
+    !customer.shipping?.first_name &&
+    !customer.shipping?.last_name &&
+    !customer.shipping?.city &&
+    !customer.shipping?.address_1;
+
+  return !isShippingEmpty;
+};
+
 interface UserInfoFormProps {
   defaultCustomerData: WooCustomerReqType;
 }
 
 export const UserInfoForm: FC<UserInfoFormProps> = ({
-  defaultCustomerData: customer,
+  defaultCustomerData: initialCustomer,
 }) => {
   const tValidation = useTranslations('Validation');
   const tMyAccount = useTranslations('MyAccount');
   const tForms = useTranslations('Forms');
-  const [initialData, setInitialData] = useState<any>(null);
-  const [isShipping, setIsShipping] = useState<boolean | undefined>(false);
-  const [isInvoice, setIsInvoice] = useState<boolean | undefined>(false);
-  const [isDataUnchanged, setIsDataUnchanged] = useState(false);
 
-  const [UpdateCustomerMutation, { error, isSuccess }] =
+  const [customer, setCustomer] = useState<WooCustomerReqType>(initialCustomer);
+  const [initialData, setInitialData] = useState<any>(null);
+  const [isShipping, setIsShipping] = useState<boolean>(false);
+  const [isInvoice, setIsInvoice] = useState<boolean>(false);
+  const [isDataUnchanged, setIsDataUnchanged] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
+
+  const [UpdateCustomerMutation, { error, isSuccess, reset }] =
     useUpdateCustomerInfoMutation();
 
   const formSchema = useMemo(
-    () => UserInfoFormSchema(isShipping, isInvoice, tValidation),
+    () => UserInfoFormSchema(isShipping, tValidation),
     [isShipping]
   );
   type UserInfoFormType = z.infer<typeof formSchema>;
@@ -72,60 +88,67 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
     ? getMetaDataValue(customer.meta_data || [], 'nip')
     : '';
 
-  console.log(customer);
+  const invoiceData = customer?.billing?.company || nipFromMeta;
+
   useEffect(() => {
     if (customer) {
-      const isShippingEmpty =
-        !customer.shipping?.first_name &&
-        !customer.shipping?.last_name &&
-        !customer.shipping?.address_1;
+      const isShippingInfo = customerShippingInfo(customer);
 
-      setIsShipping(!isShippingEmpty);
+      setIsShipping(isShippingInfo);
 
       setInitialData({
+        address_1: customer.billing?.address_1 || '',
+        address_1Shipping: customer.shipping?.address_1 || '',
+        address_2: customer.billing?.address_2 || '',
+        address_2Shipping: customer.shipping?.address_2 || '',
+        apartmentNumber: apartmentNumberFromMeta,
+        apartmentNumberShipping: shippingApartmentNumberFromMeta,
+        city: customer.billing?.city || '',
+        cityShipping: customer.shipping?.city || '',
+        country: customer.billing?.country || '',
+        countryShipping: customer.shipping?.country || '',
         email: customer.email || '',
         first_name: customer.first_name || '',
+        first_nameShipping: customer.shipping?.first_name || '',
+        invoice: invoiceData || '',
         last_name: customer.last_name || '',
-        username: customer.email || '',
-        billing: {
-          first_name: customer.billing?.first_name || '',
-          last_name: customer.billing?.last_name || '',
-          email: customer.email || '',
-          phone: customer.billing?.phone || '',
-          country: customer.billing?.country || '',
-          city: customer.billing?.city || '',
-          address_1: customer.billing?.address_1 || '',
-          address_2: customer.billing?.address_2 || '',
-          apartmentNumber: apartmentNumberFromMeta,
-          postcode: customer.billing?.postcode || '',
-          company: customer.billing?.company || '',
-          nip: nipFromMeta,
-        },
-        shipping: isShipping
-          ? {
-              first_name: customer.shipping?.first_name || '',
-              last_name: customer.shipping?.last_name || '',
-              phone: customer.shipping?.phone || '',
-              country: customer.shipping?.country || '',
-              city: customer.shipping?.city || '',
-              address_1: customer.shipping?.address_1 || '',
-              address_2: customer.shipping?.address_2 || '',
-              apartmentNumberShipping: shippingApartmentNumberFromMeta,
-              postcode: customer.shipping?.postcode || '',
-            }
-          : {
-              first_name: '',
-              last_name: '',
-              phone: '',
-              country: '',
-              city: '',
-              address_1: '',
-              address_2: '',
-              postcode: '',
-            },
+        last_nameShipping: customer.shipping?.last_name || '',
+        // newsletter: false,
+        phone: customer.billing?.phone || '',
+        phoneShipping: customer.shipping?.phone || '',
+        postcode: customer.billing?.postcode || '',
+        postcodeShipping: customer.shipping?.postcode || '',
+        shippingAddress: isShippingInfo,
+        company: customer.billing?.company || '',
+        nip: nipFromMeta,
       });
     }
   }, [customer]);
+
+  useEffect(() => {
+    if (customer) {
+      setValue('country', customer.billing?.country || '');
+      setValue('countryShipping', customer.shipping?.country || '');
+    }
+  }, [customer, setValue]);
+
+  const watchedFields = useWatch({ control });
+
+  const { shippingAddress } = watchedFields;
+
+  useEffect(() => {
+    setIsInvoice(invoiceData ? true : false);
+  }, [customer]);
+
+  useEffect(() => {
+    setIsShipping(shippingAddress ?? false);
+  }, [shippingAddress]);
+
+  const isShippingInfo = customerShippingInfo(customer);
+
+  useEffect(() => {
+    setIsShipping(isShippingInfo);
+  }, [isShippingInfo]);
 
   const onSubmit = async (formData: UserInfoFormType) => {
     if (!customer) {
@@ -134,6 +157,33 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
     }
 
     const updatedData = {
+      address_1: formData.address_1,
+      address_1Shipping: customer.shipping?.address_1 || '',
+      address_2: formData.address_2,
+      address_2Shipping: formData.address_2Shipping,
+      apartmentNumber: formData.apartmentNumber,
+      apartmentNumberShipping: formData.apartmentNumberShipping,
+      city: formData.city,
+      cityShipping: formData.cityShipping,
+      country: formData.country,
+      countryShipping: formData.countryShipping,
+      email: formData.email,
+      first_name: formData.first_name,
+      first_nameShipping: formData.first_nameShipping,
+      invoice: formData.invoice,
+      last_name: formData.last_name,
+      last_nameShipping: formData.last_nameShipping,
+      // newsletter: formData.newsletter,
+      phone: formData.phone,
+      phoneShipping: formData.phoneShipping,
+      postcode: formData.postcode,
+      postcodeShipping: formData.postcodeShipping,
+      shippingAddress: formData.shippingAddress,
+      company: formData.company,
+      nip: formData.nip,
+    };
+
+    const preparedData = {
       email: formData.email,
       first_name: formData.first_name,
       last_name: formData.last_name,
@@ -141,44 +191,30 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
       billing: {
         first_name: formData.first_name,
         last_name: formData.last_name,
-        address_1: formData.address_1,
-        address_2: formData.address_2,
-        city: formData.city,
-        postcode: formData.postcode,
-        country: formData.country,
         email: formData.email,
         phone: formData.phone,
+        country: formData.country,
+        city: formData.city,
+        address_1: formData.address_1,
+        address_2: formData.address_2,
+        postcode: formData.postcode,
         company: formData.company,
       },
-      shipping: isShipping
-        ? {
-            first_name:
-              (isShipping && formData.first_nameShipping) ||
-              formData.first_name,
-            last_name:
-              (isShipping && formData.last_nameShipping) || formData.last_name,
-            phone:
-              (isShipping && formData.phoneShipping) || formData.phoneShipping,
-            address_1:
-              (isShipping && formData.address_1Shipping) || formData.address_1,
-            address_2:
-              (isShipping && formData.address_2Shipping) || formData.address_2,
-            city: (isShipping && formData.cityShipping) || formData.city,
-            postcode:
-              (isShipping && formData.postcodeShipping) || formData.postcode,
-            country:
-              (isShipping && formData.countryShipping) || formData.country,
-          }
-        : {
-            first_name: '',
-            last_name: '',
-            phone: '',
-            address_1: '',
-            address_2: '',
-            city: '',
-            postcode: '',
-            country: '',
-          },
+      shipping: {
+        first_name:
+          (isShipping && formData.first_nameShipping) || formData.first_name,
+        last_name:
+          (isShipping && formData.last_nameShipping) || formData.last_name,
+        phone: (isShipping && formData.phoneShipping) || formData.phoneShipping,
+        country: (isShipping && formData.countryShipping) || formData.country,
+        city: (isShipping && formData.cityShipping) || formData.city,
+        address_1:
+          (isShipping && formData.address_1Shipping) || formData.address_1,
+        address_2:
+          (isShipping && formData.address_2Shipping) || formData.address_2,
+        postcode:
+          (isShipping && formData.postcodeShipping) || formData.postcode,
+      },
       meta_data: [
         {
           key: 'apartmentNumber',
@@ -197,27 +233,23 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
 
     // Comparing initialData with updatedData
     const hasFormChanges = Object.keys(updatedData || {}).some(key => {
+      if (key === 'invoice') return false;
+
       const initialValue = initialData?.[key as keyof typeof initialData];
       const updatedValue = updatedData[key as keyof typeof updatedData];
 
-      const normalizeString = (str: string | undefined) => {
-        if (str === undefined) {
-          return '';
+      const normalizeValue = (value: any) => {
+        if (value === undefined) return '';
+        if (typeof value === 'string') {
+          return value
+            .trim()
+            .replace(/\u200B/g, '')
+            .replace(/\s+/g, ' ');
         }
-        return str
-          .trim()
-          .replace(/\u200B/g, '')
-          .replace(/\s+/g, ' ');
+        return value;
       };
 
-      if (
-        normalizeString(JSON.stringify(initialValue)) !==
-        normalizeString(JSON.stringify(updatedValue))
-      ) {
-        return true;
-      }
-
-      return false;
+      return normalizeValue(initialValue) !== normalizeValue(updatedValue);
     });
 
     if (!hasFormChanges) {
@@ -226,14 +258,35 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
     } else {
       setIsDataUnchanged(false);
     }
+
     try {
-      await UpdateCustomerMutation({
-        ...updatedData,
+      const response = await UpdateCustomerMutation({
+        ...preparedData,
       });
+
+      if (response.data) {
+        setCustomer(response.data);
+      }
     } catch (error) {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    if (isSuccess || isDataUnchanged) {
+      setShowNotification(true);
+
+      const hideTimer = setTimeout(() => {
+        setShowNotification(false);
+        setIsDataUnchanged(false);
+        reset();
+      }, 5000);
+
+      return () => {
+        clearTimeout(hideTimer);
+      };
+    }
+  }, [isSuccess, isDataUnchanged]);
 
   const renderFormShippingFields = (
     prefix: string = '',
@@ -298,9 +351,9 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
             }
             defaultValue={
               field === 'apartmentNumber'
-                ? prefix === 'Shipping' && isShipping === false
+                ? prefix === 'Shipping' && isShipping === true
                   ? shippingApartmentNumberFromMeta
-                  : prefix === 'Shipping' && isShipping === true
+                  : prefix === 'Shipping' && isShipping === false
                   ? ''
                   : apartmentNumberFromMeta
                 : defaultValues[field] || ''
@@ -378,27 +431,6 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
     </>
   );
 
-  useEffect(() => {
-    if (customer) {
-      setValue('country', customer.billing?.country || '');
-      setValue('countryShipping', customer.shipping?.country || '');
-    }
-  }, [customer, setValue]);
-
-  const watchedFields = useWatch({ control });
-
-  const { invoice, shipping } = watchedFields;
-
-  useEffect(() => {
-    setIsInvoice(invoice);
-  }, [invoice]);
-
-  useEffect(() => {
-    setIsShipping(shipping);
-  }, [shipping]);
-
-  console.log('isShipping', isShipping);
-
   return (
     <CustomForm onSubmit={handleSubmit(onSubmit)} maxWidth="760px">
       <InfoCard>
@@ -427,9 +459,14 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
                 register={register}
                 errors={errors}
                 label={tForms('vatInvoice')}
+                checked={isInvoice}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setIsInvoice(e.target.checked)
+                }
+                noTop
               />
             </VariationFields>
-            <FormWrapper>{invoice && renderInvoiceFields}</FormWrapper>
+            <FormWrapper>{isInvoice && renderInvoiceFields}</FormWrapper>
           </>
         )}
       </InfoCard>
@@ -445,27 +482,20 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
         </Title>
         <VariationFields>
           <FormCheckbox
-            name={'shipping'}
+            name={'shippingAddress'}
             register={register}
             errors={errors}
             label={tForms('shippingDifferentAddress')}
+            defaultValue={isShippingInfo}
             noTop
           />
         </VariationFields>
-        {/* <FlexBox alignItems="center" margin="0 0 16px 0">
-          <CustomFormCheckboxStyled
-            checked={!isShipping}
-            type="checkbox"
-            onChange={() => handleShippingCheckboxChange()}
-          />
-          {tValidation('theSameAddress')}
-        </FlexBox> */}
         {customer && isShipping && (
           <AnimatedWrapper isVisible={true}>
             <FormWrapper>
               {renderFormShippingFields('Shipping', customer?.shipping)}
             </FormWrapper>
-            <VariationFields>
+            {/* <VariationFields>
               <FormCheckbox
                 name={'newsletter'}
                 register={register}
@@ -473,23 +503,25 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
                 label={tForms('agreement')}
                 noTop
               />
-            </VariationFields>
+            </VariationFields> */}
           </AnimatedWrapper>
         )}
       </InfoCard>
       <FormWrapperBottom>
-        {isDataUnchanged && (
-          <Notification type="info">{tValidation('noChanges')}</Notification>
+        {isDataUnchanged && showNotification && (
+          <Notification type="warning" marginBottom="0">
+            {tValidation('noChanges')}
+          </Notification>
         )}
         <StyledButton type="submit" disabled={isSubmitting}>
           {isSubmitting ? tValidation('saving') : tValidation('saveChanges')}
         </StyledButton>
-        {error && <div>{isAuthErrorResponseType(error)}</div>}
-        {isSuccess && (
-          <Notification type="success">
+        {isSuccess && showNotification && (
+          <Notification type="success" marginBottom="0">
             {tMyAccount('successUpdate')}
           </Notification>
         )}
+        {error && <div>{isAuthErrorResponseType(error)}</div>}
       </FormWrapperBottom>
     </CustomForm>
   );
