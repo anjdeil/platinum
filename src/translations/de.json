@@ -116,7 +116,8 @@
     "noToken": "Auth token getting failed.",
     "dataFailed": "Validierung der Kundenantwortdaten fehlgeschlagen.",
     "invalidResp": "Ungültige Kundenantwort.",
-    "unknownError": "Unbekannter Serverfehler."
+    "unknownError": "Unbekannter Serverfehler.",
+    "customerPanel": "Kundenpanel"
   },
   "TopBar": {
     "CallUs": "Kontakt"
