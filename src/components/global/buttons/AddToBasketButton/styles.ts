@@ -26,9 +26,9 @@ export const AddToBasketButtonStyled = styled.button<AddToBasketButtonProps>`
   @media (hover: hover) {
     &:hover {
       background-color: ${({
-        theme,
-        hoverBackground = theme.background.hover,
-      }) => hoverBackground};
+      theme,
+      hoverBackground = theme.background.hover,
+    }) => hoverBackground};
       color: ${({ theme, hoverColor = theme.colors.white }) => hoverColor};
     }
 
@@ -40,9 +40,9 @@ export const AddToBasketButtonStyled = styled.button<AddToBasketButtonProps>`
   @media (hover: none) {
     &:active {
       background-color: ${({
-        theme,
-        hoverBackground = theme.background.hover,
-      }) => hoverBackground};
+      theme,
+      hoverBackground = theme.background.hover,
+    }) => hoverBackground};
       color: ${({ theme, hoverColor = theme.colors.white }) => hoverColor};
     }
   }
@@ -57,8 +57,8 @@ export const AddToBasketButtonStyled = styled.button<AddToBasketButtonProps>`
     line-height: ${({ mobLineHeight = '1.5em' }) => mobLineHeight};
   }
   @media ${({ theme }) => theme.media.smallest} {
-    height: 52px;
-    padding: 6px 16px;
+    height: 56px;
+    padding: 0 16px;
     font-size: ${({ mobFontSize = '14px' }) => mobFontSize};
     line-height: 1.2em;
   }

@@ -22,7 +22,6 @@ import { getCookieValue } from '@/utils/auth/getCookieValue';
 import { decodeHTML } from '@/utils/decodeHTML';
 import { getCurrentVariation } from '@/utils/getCurrentVariation';
 import { getProductPrice } from '@/utils/price/getProductPrice';
-import { Skeleton } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -46,7 +45,7 @@ import {
   ProductWrapper,
 } from './styles';
 
-const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
+const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
   const { images, thumbnail } = product;
   const t = useTranslations('Product');
   const { isMobile } = useResponsive();
@@ -82,11 +81,13 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
    */
   const [currentVariation, setCurrentVariation] = useState<ProductVariation>();
 
+  const router = useRouter();
+
   // Temporary code (whole useEffect) for assigning the current variation
   /* useEffect(() => {
-    setCurrentVariation(product?.variations[0]);
+    if (product.attributes.length == 0 && product.variations.length != 0)
+      setCurrentVariation(product?.variations[0]);
     console.log(currentVariation);
-    
   }, []); */
 
   useEffect(() => {
@@ -139,8 +140,6 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
     if (product?.stock_quantity) return product?.stock_quantity;
     return 0;
   }, [currentVariation, product]);
-
-  const router = useRouter();
 
   /** Set default attributes */
   useEffect(() => {
@@ -203,15 +202,10 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
             ))}
           <Rating rating={product.average_rating} />
         </ProductFlexWrapper>
-        {currency.rate ? (
-          <ProductPrice
-            currency={currency}
-            minPrice={finalPrice ? finalPrice * currency.rate : 0}
-            maxPrice={regularPrice ? regularPrice * currency.rate : 0}
-          />
-        ) : (
-          <Skeleton width="80px" height="40px" />
-        )}
+        <ProductPrice
+          minPrice={finalPrice ? finalPrice : 0}
+          maxPrice={regularPrice ? regularPrice : 0}
+        />
       </ProductTitleWrapper>
       <ProductInfoWrapper>
         {/* Options */}
@@ -219,6 +213,7 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product, currency }) => {
           <ProductOptionsPanel
             attributes={product.attributes}
             defaultAttributes={product.default_attributes || []}
+            variations={product.variations}
           />
         )}
         {/* Options END*/}

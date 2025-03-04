@@ -31,6 +31,11 @@ export const StyledHeaderWrapper = styled.header`
   margin-top: 24px;
 `;
 
+export const StyledBox = styled.div`
+  width: 100%;
+  position: relative;
+`;
+
 export const StyledHeroImage = styled(Image)`
   width: 100%;
   height: 477px;

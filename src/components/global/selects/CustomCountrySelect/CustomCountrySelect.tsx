@@ -18,6 +18,7 @@ interface CustomSelectProps {
   rules?: any;
   defaultValue?: string;
   noPaddings?: boolean;
+  placeholder?: string;
 }
 const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
 
@@ -30,6 +31,7 @@ const CustomCountrySelect: React.FC<CustomSelectProps> = ({
   rules,
   defaultValue,
   noPaddings,
+  placeholder,
 }) => {
   const tValidation = useTranslations('Validation');
   const selectRef = useRef<any>(null);
@@ -54,7 +56,7 @@ const CustomCountrySelect: React.FC<CustomSelectProps> = ({
             onChange={(selectedOption: any) =>
               field.onChange(selectedOption?.value)
             }
-            placeholder=""
+            placeholder={placeholder || ''}
             ref={selectRef}
             styles={{
               control: (base, state) => ({

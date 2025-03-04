@@ -1,7 +1,5 @@
 import useGetAuthToken from '@/hooks/useGetAuthToken';
-import { useAppSelector } from '@/store';
 import { useLazyFetchUserDataQuery } from '@/store/rtk-queries/wpApi';
-import { useGetCurrenciesQuery } from '@/store/rtk-queries/wpCustomApi';
 import { ProductCardListProps } from '@/types/components/shop';
 import { FC, useEffect } from 'react';
 import ProductCard from '../product/ProductCard/ProductCard';
@@ -18,22 +16,6 @@ export const ProductCardList: FC<ProductCardListProps> = ({
   const authToken = useGetAuthToken();
 
   const [fetchUserData] = useLazyFetchUserDataQuery();
-
-  const { data: currencies, isLoading: isCurrenciesLoading } =
-    useGetCurrenciesQuery();
-  const selectedCurrency = useAppSelector(state => state.currencySlice);
-
-  const currentCurrency =
-    currencies && !isCurrenciesLoading
-      ? currencies?.data?.items.find(
-          currency => currency.code === selectedCurrency.name
-        )
-      : undefined;
-
-  const extendedCurrency = {
-    ...selectedCurrency,
-    rate: currentCurrency ? currentCurrency.rate || 1 : undefined,
-  };
 
   useEffect(() => {
     if (authToken) {
@@ -104,11 +86,7 @@ export const ProductCardList: FC<ProductCardListProps> = ({
       desktopColumns={columns?.desktopColumns}
     >
       {products?.map((product, i) => (
-        <ProductCard
-          key={product.id}
-          product={product}
-          currency={extendedCurrency}
-        />
+        <ProductCard key={product.id} product={product} />
       ))}
     </StyledProductCardList>
   );

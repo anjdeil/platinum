@@ -19,6 +19,16 @@ export default function SearchBar({ onClose }: { onClose: () => void }) {
 
   const SearchInputRef = useRef<HTMLInputElement>(null);
 
+  const handleCategorySelect = (slug: string) => {
+    routeToCategory(slug);
+    onClose();
+  };
+
+  const handleProductSelect = (slug: string) => {
+    routeToProduct(slug);
+    onClose();
+  };
+
   useEffect(() => {
     SearchInputRef?.current?.focus();
   }, []);
@@ -42,8 +52,8 @@ export default function SearchBar({ onClose }: { onClose: () => void }) {
               products={products || []}
               searchTerm={searchTerm}
               categories={childParentCategories || []}
-              onCategorySelect={slug => routeToCategory(slug)}
-              onProductSelect={slug => routeToProduct(slug)}
+              onCategorySelect={handleCategorySelect}
+              onProductSelect={handleProductSelect}
             />
           )}
       </SearchForm>
