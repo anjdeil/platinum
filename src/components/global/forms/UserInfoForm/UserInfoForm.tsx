@@ -16,7 +16,7 @@ import { UserInfoFormSchema } from '@/types/components/global/forms/userInfoForm
 import { Title } from '@/styles/components';
 import { CircularProgress } from '@mui/material';
 import CustomCountrySelect from '../../selects/CustomCountrySelect/CustomCountrySelect';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import Notification from '../../Notification/Notification';
 import { CustomFormInput } from '../CustomFormInput';
 import { useUpdateCustomerInfoMutation } from '@/store/rtk-queries/wooCustomAuthApi';
@@ -49,6 +49,7 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
   const tValidation = useTranslations('Validation');
   const tMyAccount = useTranslations('MyAccount');
   const tForms = useTranslations('Forms');
+  const locale = useLocale();
 
   const [customer, setCustomer] = useState<WooCustomerReqType>(initialCustomer);
   const [initialData, setInitialData] = useState<any>(null);
@@ -62,8 +63,9 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
 
   const formSchema = useMemo(
     () => UserInfoFormSchema(isShipping, tValidation),
-    [isShipping]
+    [isShipping, locale]
   );
+
   type UserInfoFormType = z.infer<typeof formSchema>;
 
   const {
@@ -123,7 +125,7 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
         nip: nipFromMeta,
       });
     }
-  }, [customer]);
+  }, [customer, locale]);
 
   useEffect(() => {
     if (customer) {
@@ -132,17 +134,15 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
     }
   }, [customer, setValue]);
 
-  const watchedFields = useWatch({ control });
-
-  const { shippingAddress } = watchedFields;
-
   useEffect(() => {
     setIsInvoice(invoiceData ? true : false);
   }, [customer]);
 
-  useEffect(() => {
-    setIsShipping(shippingAddress ?? false);
-  }, [shippingAddress]);
+  // const watchedFields = useWatch({ control });
+  // const { shippingAddress } = watchedFields;
+  // useEffect(() => {
+  //   setIsShipping(shippingAddress ?? false);
+  // }, [shippingAddress]);
 
   const isShippingInfo = customerShippingInfo(customer);
 
@@ -244,7 +244,8 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
           return value
             .trim()
             .replace(/\u200B/g, '')
-            .replace(/\s+/g, ' ');
+            .replace(/\s+/g, ' ')
+            .replace(/^\+48$/, '');
         }
         return value;
       };
@@ -432,7 +433,7 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
   );
 
   return (
-    <CustomForm onSubmit={handleSubmit(onSubmit)} maxWidth="760px">
+    <CustomForm onSubmit={handleSubmit(onSubmit)} maxWidth="760px" key={locale}>
       <InfoCard>
         <Title
           as="h2"
@@ -486,7 +487,10 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
             register={register}
             errors={errors}
             label={tForms('shippingDifferentAddress')}
-            defaultValue={isShippingInfo}
+            checked={isShipping}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setIsShipping(e.target.checked)
+            }
             noTop
           />
         </VariationFields>
