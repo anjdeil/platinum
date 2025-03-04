@@ -34,8 +34,6 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product }) => {
   const { isMobile } = useResponsive();
   const router = useRouter();
 
-  console.log('product...', product);
-
   const {
     handleWishlistToggle,
     isFetchingWishlist,
