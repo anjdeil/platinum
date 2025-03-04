@@ -62,4 +62,10 @@ export const AddToBasketButtonStyled = styled.button<AddToBasketButtonProps>`
     font-size: ${({ mobFontSize = '14px' }) => mobFontSize};
     line-height: 1.2em;
   }
+
+  &:disabled {
+    color: ${({ theme }) => theme.colors.grey};
+    background-color: transparent;
+    border: none;
+  }
 `;

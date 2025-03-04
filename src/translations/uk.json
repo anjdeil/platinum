@@ -153,6 +153,7 @@
   "Product": {
     "addToBasket": "Додати до кошика",
     "viewCart": "Переглянути кошик",
+    "outOfStock": "Немає в наявності",
     "chooseOptions": "Виберіть варіант",
     "updateCart": "Оновити кількість",
     "sortBy": "Сортувати за",

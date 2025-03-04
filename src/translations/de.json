@@ -153,6 +153,7 @@
   "Product": {
     "addToBasket": "In den Warenkorb legen",
     "viewCart": "Warenkorb anzeigen",
+    "outOfStock": "Nicht auf Lager",
     "chooseOptions": "Option wählen",
     "updateCart": "Menge aktualisieren",
     "sortBy": "Sortieren nach",

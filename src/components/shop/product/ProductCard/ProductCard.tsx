@@ -34,6 +34,8 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product }) => {
   const { isMobile } = useResponsive();
   const router = useRouter();
 
+  console.log('product...', product);
+
   const {
     handleWishlistToggle,
     isFetchingWishlist,
@@ -155,8 +157,13 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product }) => {
         </ProductBadgeWrapper>
       </ProductWrapper>
       <>
-        <AddToBasketButton onClick={handleCartButtonClick}>
-          {product?.type !== 'variable'
+        <AddToBasketButton
+          onClick={handleCartButtonClick}
+          disabled={product.stock_quantity === 0}
+        >
+          {product.stock_quantity === 0
+            ? t('outOfStock')
+            : product?.type !== 'variable'
             ? isCartMatch
               ? t('viewCart')
               : t('addToBasket')
