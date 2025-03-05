@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import 'react-international-phone/style.css';
@@ -19,22 +19,29 @@ import {
   useCheckTokenMutation,
   useGetTokenMutation,
 } from '@/store/rtk-queries/wpApi';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { ActiveText } from '../LoginForm/styles';
 import CustomCountrySelect from '../../selects/CustomCountrySelect/CustomCountrySelect';
 import { countryOptions } from '@/utils/mockdata/countryOptions';
 import Notification from '../../Notification/Notification';
 import CustomTextField from '../CustomTextField/CustomTextField';
 import { getValidationSchema } from '@/utils/getValidationSchema';
-import { FormCheckbox } from '../BillingForm/FormCheckbox';
 import { CustomForm, StyledFieldsWrapper } from './styles';
+import { FormCheckboxUnControlled } from '../BillingForm/FormCheckboxUnControlled';
 
 export const RegistrationForm: FC = () => {
   const tValidation = useTranslations('Validation');
   const tMyAccount = useTranslations('MyAccount');
   const tCheckout = useTranslations('Checkout');
   const router = useRouter();
+  const locale = useLocale();
+
   const [customError, setCustomError] = useState<string>('');
+
+  const validationSchema = useMemo(() => {
+    return (name: string, watch?: any) =>
+      getValidationSchema(name, tValidation, watch);
+  }, [locale]);
 
   /** Form settings */
   const formSchema = useMemo(
@@ -49,9 +56,14 @@ export const RegistrationForm: FC = () => {
     setValue,
     control,
     watch,
+    clearErrors,
   } = useForm<RegistrationFormType>({
     mode: 'onChange',
   });
+
+  useEffect(() => {
+    clearErrors();
+  }, [locale]);
 
   /** API
    * Register a new customer
@@ -128,7 +140,7 @@ export const RegistrationForm: FC = () => {
         errors={errors}
         label={tCheckout('first_name')}
         placeholder={tValidation('firstNamePlaceholder')}
-        validation={getValidationSchema('first_name', tValidation)}
+        validation={validationSchema('first_name')}
         setValue={setValue}
         defaultValue={''}
         autocomplete="given-name"
@@ -140,7 +152,7 @@ export const RegistrationForm: FC = () => {
         errors={errors}
         label={tCheckout('last_name')}
         placeholder={tValidation('lastNamePlaceholder')}
-        validation={getValidationSchema('last_name', tValidation)}
+        validation={validationSchema('last_name')}
         setValue={setValue}
         defaultValue={''}
         autocomplete="family-name"
@@ -152,7 +164,7 @@ export const RegistrationForm: FC = () => {
         errors={errors}
         label={tCheckout('email')}
         placeholder={tValidation('emailPlaceholder')}
-        validation={getValidationSchema('email', tValidation)}
+        validation={validationSchema('email')}
         setValue={setValue}
         defaultValue={''}
         autocomplete="email"
@@ -168,7 +180,7 @@ export const RegistrationForm: FC = () => {
         errors={errors}
         label={tCheckout('phone')}
         placeholder={tValidation('phonePlaceholder')}
-        validation={getValidationSchema('phone', tValidation)}
+        validation={validationSchema('phone')}
         setValue={setValue}
         defaultValue={''}
       />
@@ -188,7 +200,7 @@ export const RegistrationForm: FC = () => {
         errors={errors}
         label={tMyAccount('city')}
         placeholder={tValidation('cityPlaceholder')}
-        validation={getValidationSchema('city', tValidation)}
+        validation={validationSchema('city')}
         setValue={setValue}
         defaultValue={''}
         autocomplete="address-level2"
@@ -200,7 +212,7 @@ export const RegistrationForm: FC = () => {
         errors={errors}
         label={tMyAccount('address_1')}
         placeholder={tValidation('streetPlaceholder')}
-        validation={getValidationSchema('address_1', tValidation)}
+        validation={validationSchema('address_1')}
         setValue={setValue}
         defaultValue={''}
         autocomplete="address-line1"
@@ -212,7 +224,7 @@ export const RegistrationForm: FC = () => {
         errors={errors}
         label={tCheckout('address_2')}
         placeholder={tValidation('buildingPlaceholder')}
-        validation={getValidationSchema('address_2', tValidation)}
+        validation={validationSchema('address_2')}
         setValue={setValue}
         defaultValue={''}
         autocomplete="address-line2"
@@ -224,7 +236,7 @@ export const RegistrationForm: FC = () => {
         errors={errors}
         label={tValidation('apartment/office')}
         placeholder={tValidation('apartmentPlaceholder')}
-        validation={getValidationSchema('apartmentNumberRequired', tValidation)}
+        validation={validationSchema('apartmentNumberRequired')}
         setValue={setValue}
         defaultValue={''}
         autocomplete="address-line3"
@@ -236,7 +248,7 @@ export const RegistrationForm: FC = () => {
         errors={errors}
         label={tCheckout('postcode')}
         placeholder={tValidation('postCodePlaceholder')}
-        validation={getValidationSchema('postcode', tValidation)}
+        validation={validationSchema('postcode')}
         setValue={setValue}
         defaultValue={''}
         autocomplete="postal-code"
@@ -249,7 +261,7 @@ export const RegistrationForm: FC = () => {
         errors={errors}
         label={tMyAccount('password')}
         placeholder={tValidation('passwordPlaceholder')}
-        validation={getValidationSchema('password', tValidation)}
+        validation={validationSchema('password')}
       />
       <CustomTextField
         name="confirm_password"
@@ -259,7 +271,7 @@ export const RegistrationForm: FC = () => {
         errors={errors}
         label={tMyAccount('confirmPassword')}
         placeholder={tValidation('confirmPasswordPlaceholder')}
-        validation={getValidationSchema('confirm_password', tValidation, watch)}
+        validation={validationSchema('confirm_password', watch)}
       />
     </>
   );
@@ -270,13 +282,12 @@ export const RegistrationForm: FC = () => {
         {tMyAccount('registration')}
       </Title>
       <StyledFieldsWrapper>{renderFormFields()} </StyledFieldsWrapper>
-      <FormCheckbox
+      <FormCheckboxUnControlled
         name={'terms'}
         register={register}
         errors={errors}
         label={tMyAccount('agreePersonalData')}
-        validation={getValidationSchema('terms', tValidation)}
-        noTop
+        validation={validationSchema('terms')}
       />
       <FormWrapperBottom>
         <StyledButton
