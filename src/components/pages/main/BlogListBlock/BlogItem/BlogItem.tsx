@@ -1,4 +1,3 @@
-import { useTransformDate } from '@/hooks/useTransformDate';
 import { Title } from '@/styles/components';
 import { BlogItemUnionType } from '@/types/pages/blog';
 import { parseHtmlContent } from '@/utils/blog/parseHtmlContent';
@@ -13,24 +12,23 @@ import {
   CategoriesTagWrapper,
   ContentBlock,
   ImageBlock,
-  StyledDate,
   StyledImage,
   StyledLink,
   StyledTag,
   StyledWrapperLink,
   TextContent,
 } from './styles';
+import BlogInfo from '../BlogInfo/BlogInfo';
 
 interface BlogItemProps {
   post: BlogItemUnionType;
 }
 
 const BlogItem: FC<BlogItemProps> = ({ post }) => {
-  const { title, thumbnail, slug, created } = post;
+  const { title, thumbnail, slug, created, views_count } = post;
   const src = thumbnail?.src || '/assets/images/no-image.jpg';
   const router = useRouter();
   const t = useTranslations('Product');
-  const formatDate = useTransformDate(created);
 
   const displayContent =
     'parsedContent' in post
@@ -67,7 +65,7 @@ const BlogItem: FC<BlogItemProps> = ({ post }) => {
             {post.title}
           </Title>
         </StyledWrapperLink>
-        <StyledDate>{formatDate}</StyledDate>
+        <BlogInfo created={created} views_count={views_count} />
       </ContentBlock>
       <BottomContentBlock>
         <TextContent>{displayContent}</TextContent>

@@ -27,6 +27,7 @@ import {
   StyledContainer,
   StyledHeroImage,
 } from '@/styles/blog/styles';
+import BlogInfo from '@/components/pages/main/BlogListBlock/BlogInfo/BlogInfo';
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
@@ -51,9 +52,6 @@ export const getServerSideProps: GetServerSideProps = async (
     }
 
     // Get recommended posts
-    // TODO if categories.length === 1
-    // ? related posts = posts from the same category
-    // : related posts = posts from 1 or 2 or more categories
 
     const PER_PAGE = 5;
     const selectedCategory = postData.categories[0]?.slug || null;
@@ -84,36 +82,36 @@ export const getServerSideProps: GetServerSideProps = async (
 
     const recommendedPosts: BlogItemType[] = filteredRecommendedPosts || [];
 
-    // Get lasted posts
-    const lastedResponse = await customRestApi.get(`posts`, {
+    // Get most viewed posts - popular posts
+
+    const popularResponse = await customRestApi.get(`posts`, {
       lang: locale,
       per_page: PER_PAGE,
-      orderby: 'created',
+      orderby: 'views_count',
       order: 'desc',
-      status: 'publish',
     });
 
-    const lastedItems = lastedResponse?.data?.data?.items || [];
+    const popularItems = popularResponse?.data?.data?.items || [];
 
-    let filteredLastedItems = [];
+    let filteredPopularItems = [];
 
-    if (lastedItems && lastedItems.length > 0) {
-      filteredLastedItems = lastedItems.filter(
+    if (popularItems && popularItems.length > 0) {
+      filteredPopularItems = popularItems.filter(
         (post: BlogItemType) => post.id !== postData.id
       );
     }
 
-    if (filteredLastedItems && filteredLastedItems.length > 4) {
-      filteredLastedItems = filteredLastedItems.slice(0, 4);
+    if (filteredPopularItems && filteredPopularItems.length > 4) {
+      filteredPopularItems = filteredPopularItems.slice(0, 4);
     }
 
-    const lastedPosts: BlogItemType[] = filteredLastedItems || [];
+    const popularPosts: BlogItemType[] = filteredPopularItems || [];
 
     return {
       props: {
         post: postData,
         recommendedPosts,
-        lastedPosts,
+        popularPosts,
       },
     };
   } catch (error) {
@@ -130,22 +128,31 @@ export const getServerSideProps: GetServerSideProps = async (
 interface PageProps {
   post: BlogPostType;
   recommendedPosts: BlogItemType[];
-  lastedPosts: BlogItemType[];
+  popularPosts: BlogItemType[];
 }
 
-const BlogPostPage = ({ post, recommendedPosts, lastedPosts }: PageProps) => {
+const BlogPostPage = ({ post, recommendedPosts, popularPosts }: PageProps) => {
   if (!post) {
     return <StyledError>No Post found</StyledError>;
   }
 
-  const { title, content, thumbnail, prev_post, next_post, categories } = post;
+  const {
+    title,
+    content,
+    thumbnail,
+    prev_post,
+    next_post,
+    categories,
+    created,
+    views_count,
+  } = post;
 
-  const postsInStock =
-    lastedPosts.length > 0 ? (
+  const mostViewedPosts =
+    popularPosts.length > 0 ? (
       <Container>
         <RecommendContainer>
-          <BlogHeader title={'blogSectionLatestTitle'} subtitle={'blogPage'} />
-          <BlogListBlock posts={lastedPosts} />
+          <BlogHeader title={'blogSectionPopularTitle'} subtitle={'blogPage'} />
+          <BlogListBlock posts={popularPosts} />
         </RecommendContainer>
       </Container>
     ) : null;
@@ -177,6 +184,7 @@ const BlogPostPage = ({ post, recommendedPosts, lastedPosts }: PageProps) => {
             )}
           </CategoriesTagWrapper>
         </StyledBox>
+        <BlogInfo created={created} views_count={views_count} postPage />
         <BlogPostContent content={content} />
         <PostGroupNavigationButton
           prev_post={prev_post}
@@ -194,7 +202,7 @@ const BlogPostPage = ({ post, recommendedPosts, lastedPosts }: PageProps) => {
           </RecommendContainer>
         </Container>
       ) : (
-        postsInStock
+        mostViewedPosts
       )}
     </SectionContainer>
   );
