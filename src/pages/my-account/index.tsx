@@ -105,7 +105,7 @@ const MyAccount: FC<MyAccountPropsType> = ({ user }) => {
     saveUserToLocalStorage(userData);
   }
 
-  const { data: ordersData } = useFetchOrdersQuery({
+  const { isLoading: ordersLoading, data: ordersData } = useFetchOrdersQuery({
     customer: user.id,
     per_page: 100,
   });
@@ -128,7 +128,13 @@ const MyAccount: FC<MyAccountPropsType> = ({ user }) => {
         />
         <AccountLinkBlockList list={translatedAccountLinkList} />
       </AccountInfoWrapper>
-      <OrderTable orderList={ordersData} title={t('recentOrders')} />
+      {ordersLoading ? (
+        <OrderTable title={t('recentOrders')} />
+      ) : (
+        Boolean(ordersData?.length) && (
+          <OrderTable orderList={ordersData} title={t('recentOrders')} />
+        )
+      )}
     </AccountLayout>
   );
 };
