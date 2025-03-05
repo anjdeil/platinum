@@ -116,7 +116,8 @@
     "noToken": "Pobieranie tokena uwierzytelniania nie powiodło się.",
     "dataFailed": "Walidacja danych odpowiedzi klienta nie powiodła się.",
     "invalidResp": "Nieprawidłowa odpowiedź klienta.",
-    "unknownError": "Nieznany błąd serwera."
+    "unknownError": "Nieznany błąd serwera.",
+    "customerPanel": "Panel klienta"
   },
   "TopBar": {
     "CallUs": "Kontakt"
