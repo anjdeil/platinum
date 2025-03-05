@@ -6,7 +6,7 @@
   "MyAccount": {
     "order": "Замовлення",
     "clientPersonalAccount": "Особистий кабінет клієнта",
-    "dashboard": "Інформаційна панель",
+    "dashboard": "Панель керування",
     "userInformation": "Інформація користувача",
     "shippingAddress": "Адреса для доставки",
     "orderHistory": "Історія замовлень",

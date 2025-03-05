@@ -6,7 +6,7 @@
   "MyAccount": {
     "order": "Bestellung",
     "clientPersonalAccount": "Kundenkonto",
-    "dashboard": "Übersicht",
+    "dashboard": "Steuerungsübersicht",
     "userInformation": "Benutzerinformationen",
     "shippingAddress": "Lieferadresse",
     "orderHistory": "Bestellverlauf",

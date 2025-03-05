@@ -72,14 +72,19 @@ const OrderTable: React.FC<TableProps> = ({ orderList, title }) => {
                     second: '2-digit',
                   })
                   .replace(/\./g, '-')
-                  .replace(/\,/g, ' ');
+                  .replace(/\,/g, ' ')
+                  .split('  ');
 
               return (
                 <StyledBodyTr key={item.id}>
                   <StyledTd>
                     <StyledNoAndDate>
                       <StyledSpan>#{item.id}</StyledSpan>
-                      <StyledSpan>{dateCreated}</StyledSpan>
+                      <StyledSpan>
+                        {`
+                        ${dateCreated[0]} ${dateCreated[1]}
+                        `}
+                      </StyledSpan>
                     </StyledNoAndDate>
                   </StyledTd>
                   <StyledDetailesTd>
@@ -93,7 +98,11 @@ const OrderTable: React.FC<TableProps> = ({ orderList, title }) => {
                       {formatPrice(+item.total)} {item.currency_symbol}
                     </StyledTotalSpan>
                   </StyledDetailesTd>
-                  <StyledDateTd>{dateCreated}</StyledDateTd>
+                  <StyledDateTd>
+                    {dateCreated[0]}
+                    <br />
+                    {dateCreated[1]}
+                  </StyledDateTd>
                   <StyledTd>
                     <StyledOrderWrapper>
                       <StyledOrderSpan>{t('status')}</StyledOrderSpan>

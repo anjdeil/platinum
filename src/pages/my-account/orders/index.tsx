@@ -1,5 +1,6 @@
 import AccountLayout from '@/components/pages/account/AccountLayout';
 import OrderTable from '@/components/pages/order/OrderTable/OrderTable';
+import { useResponsive } from '@/hooks/useResponsive';
 import wpRestApi from '@/services/wpRestApi';
 import { useFetchOrdersQuery } from '@/store/rtk-queries/wooCustomApi';
 import { redirectToLogin } from '@/utils/consts';
@@ -50,14 +51,18 @@ interface OrdersPropsType {
 
 const Orders: FC<OrdersPropsType> = ({ user }) => {
   const t = useTranslations('MyAccount');
+  const { isTablet } = useResponsive();
 
   const { data: ordersData } = useFetchOrdersQuery({
     customer: user.id,
   });
 
   return (
-    <AccountLayout title={t('orderHistory')}>
-      <OrderTable orderList={ordersData} />
+    <AccountLayout title={isTablet ? t('recentOrders') : ''}>
+      <OrderTable
+        orderList={ordersData}
+        title={!isTablet ? t('recentOrders') : ''}
+      />
     </AccountLayout>
   );
 };
