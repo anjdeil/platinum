@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo, useState } from 'react';
+import { FC, use, useEffect, useMemo, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -56,14 +56,15 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
   const [isShipping, setIsShipping] = useState<boolean>(false);
   const [isInvoice, setIsInvoice] = useState<boolean>(false);
   const [isDataUnchanged, setIsDataUnchanged] = useState(false);
-  const [showNotification, setShowNotification] = useState(false);
+  const [showWarningNotification, setShowWarningNotification] = useState(false);
+  const [showSuccessNotification, setShowSuccessNotification] = useState(false);
 
   const [UpdateCustomerMutation, { error, isSuccess, reset }] =
     useUpdateCustomerInfoMutation();
 
   const formSchema = useMemo(
-    () => UserInfoFormSchema(isShipping, tValidation),
-    [isShipping, locale]
+    () => UserInfoFormSchema(isShipping, tValidation, isInvoice),
+    [isShipping, isInvoice, locale]
   );
 
   type UserInfoFormType = z.infer<typeof formSchema>;
@@ -78,19 +79,67 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
     resolver: zodResolver(formSchema),
   });
 
-  const apartmentNumberFromMeta = customer
-    ? getMetaDataValue(customer.meta_data || [], 'apartmentNumber')
-    : '';
+  const apartmentNumberFromMeta = useMemo(() => {
+    return customer
+      ? getMetaDataValue(customer.meta_data || [], 'apartmentNumber')
+      : '';
+  }, [customer]);
 
-  const shippingApartmentNumberFromMeta = customer
-    ? getMetaDataValue(customer.meta_data || [], 'shipping_apartmentNumber')
-    : '';
+  const shippingApartmentNumberFromMeta = useMemo(() => {
+    return customer
+      ? getMetaDataValue(customer.meta_data || [], 'shipping_apartmentNumber')
+      : '';
+  }, [customer]);
 
-  const nipFromMeta = customer
-    ? getMetaDataValue(customer.meta_data || [], 'nip')
-    : '';
+  const nipFromMeta = useMemo(() => {
+    return customer ? getMetaDataValue(customer.meta_data || [], 'nip') : '';
+  }, [customer]);
 
-  const invoiceData = customer?.billing?.company || nipFromMeta;
+  const invoiceData = useMemo(() => {
+    return customer?.billing?.company || nipFromMeta;
+  }, [customer]);
+
+  useEffect(() => {
+    setIsInvoice(!!invoiceData);
+  }, [invoiceData]);
+
+  useEffect(() => {
+    if (!isInvoice) {
+      setValue('company', '');
+      setValue('nip', '');
+    }
+  }, [isInvoice]);
+
+  useEffect(() => {
+    if (!isShipping) {
+      setValue('first_nameShipping', '');
+      setValue('last_nameShipping', '');
+      setValue('phoneShipping', '');
+      setValue('countryShipping', '');
+      setValue('cityShipping', '');
+      setValue('address_1Shipping', '');
+      setValue('address_2Shipping', '');
+      setValue('postcodeShipping', '');
+      setValue('apartmentNumberShipping', '');
+    }
+  }, [isShipping]);
+
+  const isShippingInfo = customerShippingInfo(customer);
+
+  useEffect(() => {
+    setIsShipping(isShippingInfo);
+  }, [isShippingInfo]);
+
+  useEffect(() => {
+    if (customer) {
+      setValue('country', customer.billing?.country || '');
+      setValue('countryShipping', customer.shipping?.country || '');
+    }
+  }, [customer]);
+
+  useEffect(() => {
+    setValue('apartmentNumberShipping', shippingApartmentNumberFromMeta);
+  }, [shippingApartmentNumberFromMeta]);
 
   useEffect(() => {
     if (customer) {
@@ -103,7 +152,7 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
         address_1Shipping: customer.shipping?.address_1 || '',
         address_2: customer.billing?.address_2 || '',
         address_2Shipping: customer.shipping?.address_2 || '',
-        apartmentNumber: apartmentNumberFromMeta,
+        apartmentNumber: apartmentNumberFromMeta || '',
         apartmentNumberShipping: shippingApartmentNumberFromMeta,
         city: customer.billing?.city || '',
         cityShipping: customer.shipping?.city || '',
@@ -112,7 +161,7 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
         email: customer.email || '',
         first_name: customer.first_name || '',
         first_nameShipping: customer.shipping?.first_name || '',
-        invoice: invoiceData || '',
+        invoice: isInvoice,
         last_name: customer.last_name || '',
         last_nameShipping: customer.shipping?.last_name || '',
         // newsletter: false,
@@ -127,29 +176,6 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
     }
   }, [customer, locale]);
 
-  useEffect(() => {
-    if (customer) {
-      setValue('country', customer.billing?.country || '');
-      setValue('countryShipping', customer.shipping?.country || '');
-    }
-  }, [customer, setValue]);
-
-  useEffect(() => {
-    setIsInvoice(invoiceData ? true : false);
-  }, [customer]);
-
-  // const watchedFields = useWatch({ control });
-  // const { shippingAddress } = watchedFields;
-  // useEffect(() => {
-  //   setIsShipping(shippingAddress ?? false);
-  // }, [shippingAddress]);
-
-  const isShippingInfo = customerShippingInfo(customer);
-
-  useEffect(() => {
-    setIsShipping(isShippingInfo);
-  }, [isShippingInfo]);
-
   const onSubmit = async (formData: UserInfoFormType) => {
     if (!customer) {
       console.error('Customer data is not available');
@@ -158,7 +184,7 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
 
     const updatedData = {
       address_1: formData.address_1,
-      address_1Shipping: customer.shipping?.address_1 || '',
+      address_1Shipping: formData.address_1Shipping,
       address_2: formData.address_2,
       address_2Shipping: formData.address_2Shipping,
       apartmentNumber: formData.apartmentNumber,
@@ -198,22 +224,17 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
         address_1: formData.address_1,
         address_2: formData.address_2,
         postcode: formData.postcode,
-        company: formData.company,
+        company: (isInvoice && formData.company) || '',
       },
       shipping: {
-        first_name:
-          (isShipping && formData.first_nameShipping) || formData.first_name,
-        last_name:
-          (isShipping && formData.last_nameShipping) || formData.last_name,
-        phone: (isShipping && formData.phoneShipping) || formData.phoneShipping,
-        country: (isShipping && formData.countryShipping) || formData.country,
-        city: (isShipping && formData.cityShipping) || formData.city,
-        address_1:
-          (isShipping && formData.address_1Shipping) || formData.address_1,
-        address_2:
-          (isShipping && formData.address_2Shipping) || formData.address_2,
-        postcode:
-          (isShipping && formData.postcodeShipping) || formData.postcode,
+        first_name: (isShipping && formData.first_nameShipping) || '',
+        last_name: (isShipping && formData.last_nameShipping) || '',
+        phone: (isShipping && formData.phoneShipping) || '',
+        country: (isShipping && formData.countryShipping) || '',
+        city: (isShipping && formData.cityShipping) || '',
+        address_1: (isShipping && formData.address_1Shipping) || '',
+        address_2: (isShipping && formData.address_2Shipping) || '',
+        postcode: (isShipping && formData.postcodeShipping) || '',
       },
       meta_data: [
         {
@@ -222,18 +243,17 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
         },
         {
           key: 'shipping_apartmentNumber',
-          value: formData.apartmentNumberShipping,
+          value: (isShipping && formData.apartmentNumberShipping) || '',
         },
         {
           key: 'nip',
-          value: formData.nip,
+          value: (isInvoice && formData.nip) || '',
         },
       ],
     };
 
     // Comparing initialData with updatedData
     const hasFormChanges = Object.keys(updatedData || {}).some(key => {
-      if (key === 'invoice') return false;
 
       const initialValue = initialData?.[key as keyof typeof initialData];
       const updatedValue = updatedData[key as keyof typeof updatedData];
@@ -274,11 +294,27 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
   };
 
   useEffect(() => {
-    if (isSuccess || isDataUnchanged) {
-      setShowNotification(true);
+    if (isSuccess) {
+      setShowSuccessNotification(true);
 
       const hideTimer = setTimeout(() => {
-        setShowNotification(false);
+        reset();
+        setShowSuccessNotification(false);
+        reset();
+      }, 5000);
+
+      return () => {
+        clearTimeout(hideTimer);
+      };
+    }
+  }, [isSuccess]);
+
+  useEffect(() => {
+    if (isDataUnchanged) {
+      setShowWarningNotification(true);
+
+      const hideTimer = setTimeout(() => {
+        setShowWarningNotification(false);
         setIsDataUnchanged(false);
         reset();
       }, 5000);
@@ -287,7 +323,7 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
         clearTimeout(hideTimer);
       };
     }
-  }, [isSuccess, isDataUnchanged]);
+  }, [isDataUnchanged]);
 
   const renderFormShippingFields = (
     prefix: string = '',
@@ -352,10 +388,8 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
             }
             defaultValue={
               field === 'apartmentNumber'
-                ? prefix === 'Shipping' && isShipping === true
+                ? prefix === 'Shipping'
                   ? shippingApartmentNumberFromMeta
-                  : prefix === 'Shipping' && isShipping === false
-                  ? ''
                   : apartmentNumberFromMeta
                 : defaultValues[field] || ''
             }
@@ -512,7 +546,7 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
         )}
       </InfoCard>
       <FormWrapperBottom>
-        {isDataUnchanged && showNotification && (
+        {isDataUnchanged && showWarningNotification && (
           <Notification type="warning" marginBottom="0">
             {tValidation('noChanges')}
           </Notification>
@@ -520,7 +554,7 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
         <StyledButton type="submit" disabled={isSubmitting}>
           {isSubmitting ? tValidation('saving') : tValidation('saveChanges')}
         </StyledButton>
-        {isSuccess && showNotification && (
+        {isSuccess && showSuccessNotification && (
           <Notification type="success" marginBottom="0">
             {tMyAccount('successUpdate')}
           </Notification>

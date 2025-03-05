@@ -1,6 +1,10 @@
 import { z } from 'zod';
 
-export const UserInfoFormSchema = (isShipping: boolean, t: any) => {
+export const UserInfoFormSchema = (
+  isShipping: boolean,
+  t: any,
+  isInvoice?: boolean
+) => {
   const firstNameValidation = z
     .string()
     .min(1, { message: t('pleaseFillInTheFirstName') })
@@ -73,69 +77,56 @@ export const UserInfoFormSchema = (isShipping: boolean, t: any) => {
       message: t('invalidPostcodeFormat'),
     });
 
-  const schema = z
-    .object({
-      first_name: firstNameValidation,
-      last_name: lastNameValidation,
-      email: z
-        .string()
-        .min(1, { message: t('pleaseFillInTheEmail') })
-        .max(254, { message: t('cannotExceed254Characters') })
-        .email({ message: t('wrongEmailFormat') }),
-      phone: phoneValidation,
-      country: z.string().min(1, t('pleaseSelectACountry')),
-      city: cityValidation,
-      address_1: address1Validation,
-      address_2: address2Validation,
-      apartmentNumber: apartmentNumberValidation,
-      postcode: postCodeValidation,
-      invoice: z.boolean().optional(),
-      company: z.string().optional(),
-      nip: z.string().optional(),
-      shippingAddress: z.boolean().optional(),
-      first_nameShipping: isShipping
-        ? firstNameValidation
-        : z.string().optional(),
-      last_nameShipping: isShipping
-        ? lastNameValidation
-        : z.string().optional(),
-      phoneShipping: isShipping ? phoneValidation : z.string().optional(),
-      address_1Shipping: isShipping
-        ? address1Validation
-        : z.string().optional(),
-      address_2Shipping: isShipping
-        ? address2Validation
-        : z.string().optional(),
-      postcodeShipping: isShipping ? postCodeValidation : z.string().optional(),
-      cityShipping: isShipping ? cityValidation : z.string().optional(),
-      countryShipping: isShipping
-        ? z.string().min(1, t('pleaseSelectACountry'))
-        : z.string().optional(),
-      apartmentNumberShipping: apartmentNumberValidation,
-      newsletter: z.boolean().optional(),
-    })
-    .refine(
-      data => {
-        if (!data.invoice) return true;
-        if (data.company && data.company.trim() !== '') {
-          return data.company.length >= 2 && data.company.length <= 100;
-        }
+  const companyValidation = z
+    .string()
+    .min(1, { message: t('pleaseFillInTheCorrectCompanyName') })
+    .max(100, { message: t('yourCompanyNameIsTooLong') })
+    .regex(/^(?!.*--)(?!.*\.\.)(?!.*,$)(?!.*\.$)[\p{L}\d\s\-.,]+$/u, {
+      message: t('invalidCharacters'),
+    });
 
-        return true;
-      },
-      { path: ['company'], message: t('pleaseFillInTheCorrectCompanyName') }
-    )
-    .refine(
-      data => {
-        if (!data.invoice) return true;
-        if (data.nip && data.nip.trim() !== '') {
-          return /^[0-9\-]{10,20}$/.test(data.nip);
-        }
+  const nipValidation = z
+    .string()
+    .min(1, { message: t('pleaseFillInTheNip') })
+    .regex(/^[0-9\-]{10,20}$/, {
+      message: t('wrongNipFormat'),
+    });
 
-        return true;
-      },
-      { path: ['nip'], message: t('wrongNipFormat') }
-    );
+  console.log('isInvoice', isInvoice);
+  const schema = z.object({
+    first_name: firstNameValidation,
+    last_name: lastNameValidation,
+    email: z
+      .string()
+      .min(1, { message: t('pleaseFillInTheEmail') })
+      .max(254, { message: t('cannotExceed254Characters') })
+      .email({ message: t('wrongEmailFormat') }),
+    phone: phoneValidation,
+    country: z.string().min(1, t('pleaseSelectACountry')),
+    city: cityValidation,
+    address_1: address1Validation,
+    address_2: address2Validation,
+    apartmentNumber: apartmentNumberValidation,
+    postcode: postCodeValidation,
+    invoice: z.boolean().optional(),
+    company: isInvoice ? companyValidation : z.string().optional(),
+    nip: isInvoice ? nipValidation : z.string().optional(),
+    shippingAddress: z.boolean().optional(),
+    first_nameShipping: isShipping
+      ? firstNameValidation
+      : z.string().optional(),
+    last_nameShipping: isShipping ? lastNameValidation : z.string().optional(),
+    phoneShipping: isShipping ? phoneValidation : z.string().optional(),
+    address_1Shipping: isShipping ? address1Validation : z.string().optional(),
+    address_2Shipping: isShipping ? address2Validation : z.string().optional(),
+    postcodeShipping: isShipping ? postCodeValidation : z.string().optional(),
+    cityShipping: isShipping ? cityValidation : z.string().optional(),
+    countryShipping: isShipping
+      ? z.string().min(1, t('pleaseSelectACountry'))
+      : z.string().optional(),
+    apartmentNumberShipping: apartmentNumberValidation,
+    newsletter: z.boolean().optional(),
+  });
 
   return schema;
 };
