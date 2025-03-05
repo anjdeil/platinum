@@ -153,6 +153,7 @@
   "Product": {
     "addToBasket": "Add to basket",
     "viewCart": "View cart",
+    "outOfStock": "Out of stock",
     "chooseOptions": "Choose an option",
     "updateCart": "Update quantity",
     "sortBy": "Sort by",

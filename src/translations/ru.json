@@ -153,6 +153,7 @@
   "Product": {
     "addToBasket": "Добавить в корзину",
     "viewCart": "Просмотр корзины",
+    "outOfStock": "Нет в наличии",
     "chooseOptions": "Выбрать опцию",
     "updateCart": "Обновить количество",
     "sortBy": "Сортировать по",

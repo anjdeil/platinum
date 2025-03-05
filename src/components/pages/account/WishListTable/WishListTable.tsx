@@ -145,9 +145,11 @@ const WishListTable: FC<WishListTableProps> = ({
                       <AddToBasketButton
                         active={isCartMatch}
                         onClick={() => handleCartButtonClick(item, isCartMatch)}
-                        disabled={notAvaible}
+                        disabled={notAvaible || item.stock_quantity === 0}
                       >
-                        {item.parent_id !== 0
+                        {item.stock_quantity === 0
+                          ? tProduct('outOfStock')
+                          : item.parent_id !== 0
                           ? tProduct('chooseOptions')
                           : isCartMatch
                           ? tProduct('viewCart')

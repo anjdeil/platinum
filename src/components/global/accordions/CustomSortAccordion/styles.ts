@@ -62,6 +62,7 @@ export const StyledText = styled(Text)`
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
 `;
 
 export const StyledSortItem = styled.div<{ isSelected: boolean }>`
