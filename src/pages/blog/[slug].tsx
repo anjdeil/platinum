@@ -87,7 +87,7 @@ export const getServerSideProps: GetServerSideProps = async (
     const popularResponse = await customRestApi.get(`posts`, {
       lang: locale,
       per_page: PER_PAGE,
-      orderby: 'views_count',
+      order_by: 'views_count',
       order: 'desc',
     });
 
