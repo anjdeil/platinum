@@ -153,6 +153,7 @@
   "Product": {
     "addToBasket": "Добавить в корзину",
     "viewCart": "Просмотр корзины",
+    "outOfStock": "Нет в наличии",
     "chooseOptions": "Выбрать опцию",
     "updateCart": "Обновить количество",
     "sortBy": "Сортировать по",
@@ -439,7 +440,7 @@
     "nextPost": "Следующий",
     "blogPage": "Блог",
     "blogSectionRelatedTitle": "Похожие статьи",
-    "blogSectionLatestTitle": "Последние статьи",
+    "blogSectionPopularTitle": "Популярные статьи",
     "selectCategory": "Выберите категорию",
     "all": "Все"
   },

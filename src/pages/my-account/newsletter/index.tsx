@@ -6,7 +6,7 @@ import {
   useSubscribeMutation,
   useUnsubscribeMutation,
 } from '@/store/rtk-queries/mailpoetApi';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FlexBox } from '@/styles/components';
 
 import Notification from '@/components/global/Notification/Notification';
@@ -38,7 +38,8 @@ export default function Subscription({ email }: SubscriptionProps) {
   const [subscribe, { isSuccess: isSubSuc }] = useSubscribeMutation();
   const [unsubscribe, { isSuccess: isUnSubSuc }] = useUnsubscribeMutation();
   const [subscriptions, setSubscriptions] = useState<string[]>([]);
-
+  const [notificationMessage, setNotificationMessage] = useState('');
+  const [isSwitchDisabled, setIsSwitchDisabled] = useState<boolean>(false);
   useEffect(() => {
     if (data?.subscriptions) {
       const filteredSubscriptions = data.subscriptions
@@ -51,10 +52,18 @@ export default function Subscription({ email }: SubscriptionProps) {
   const [showNotification, setShowNotification] = useState(false);
   const [fadeOut, setFadeOut] = useState(false);
 
+  const lastAction = useRef<'subscribe' | 'unsubscribe' | null>(null);
+
   useEffect(() => {
     if (isSubSuc || isUnSubSuc) {
       setShowNotification(true);
       setFadeOut(false);
+
+      if (lastAction.current === 'subscribe') {
+        setNotificationMessage(t('subscriptionSuccess'));
+      } else if (lastAction.current === 'unsubscribe') {
+        setNotificationMessage(t('unsubscriptionSuccess'));
+      }
 
       const fadeTimer = setTimeout(() => setFadeOut(true), 2000);
       const hideTimer = setTimeout(() => setShowNotification(false), 2500);
@@ -71,7 +80,13 @@ export default function Subscription({ email }: SubscriptionProps) {
     checked: boolean,
     id: string
   ) => {
+    if (isSwitchDisabled) return;
+
+    setIsSwitchDisabled(true);
+    setTimeout(() => setIsSwitchDisabled(false), 2500);
+
     if (checked) {
+      lastAction.current = 'subscribe';
       try {
         await subscribe({ email });
         setSubscriptions(prevSubscriptions => [...prevSubscriptions, id]);
@@ -79,6 +94,7 @@ export default function Subscription({ email }: SubscriptionProps) {
         console.error('Error subscribing:', error);
       }
     } else {
+      lastAction.current = 'unsubscribe';
       try {
         await unsubscribe({ email });
         setSubscriptions(prevSubscriptions =>
@@ -108,6 +124,7 @@ export default function Subscription({ email }: SubscriptionProps) {
         <SubscriptionWrapper>
           <SubscriptionCardWrapper>
             <CustomSwitch
+              disabled={isSwitchDisabled}
               checked={subscriptions.includes('3')}
               onChange={event =>
                 handleSwitchChange(event, event.target.checked, '3')
@@ -121,13 +138,9 @@ export default function Subscription({ email }: SubscriptionProps) {
             </FlexBox>
           </SubscriptionCardWrapper>
           <FlexBox margin="20px 0 0 0">
-            {(isSubSuc || isUnSubSuc) && showNotification && (
+            {showNotification && (
               <Notification type="success" isVisible={fadeOut}>
-                {isSubSuc ? (
-                  <>{t('subscriptionSuccess')}</>
-                ) : (
-                  <>{t('unsubscriptionSuccess')}</>
-                )}
+                {notificationMessage}
               </Notification>
             )}
           </FlexBox>

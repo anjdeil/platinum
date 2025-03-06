@@ -153,6 +153,7 @@
   "Product": {
     "addToBasket": "Додати до кошика",
     "viewCart": "Переглянути кошик",
+    "outOfStock": "Немає в наявності",
     "chooseOptions": "Виберіть варіант",
     "updateCart": "Оновити кількість",
     "sortBy": "Сортувати за",
@@ -439,7 +440,7 @@
     "nextPost": "Наступний",
     "blogPage": "Блог",
     "blogSectionRelatedTitle": "Схожі статті",
-    "blogSectionLatestTitle": "Останні статті",
+    "blogSectionPopularTitle": "Популярні статті",
     "selectCategory": "Виберіть категорію",
     "all": "Всі"
   },

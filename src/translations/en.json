@@ -153,6 +153,7 @@
   "Product": {
     "addToBasket": "Add to basket",
     "viewCart": "View cart",
+    "outOfStock": "Out of stock",
     "chooseOptions": "Choose an option",
     "updateCart": "Update quantity",
     "sortBy": "Sort by",
@@ -439,7 +440,7 @@
     "nextPost": "Next",
     "blogPage": "Blog",
     "blogSectionRelatedTitle": "Related Articles",
-    "blogSectionLatestTitle": "Lasted Articles",
+    "blogSectionPopularTitle": "Popular Articles",
     "selectCategory": "Select category",
     "all": "All"
   },

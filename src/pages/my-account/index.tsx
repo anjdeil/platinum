@@ -119,7 +119,7 @@ const MyAccount: FC<MyAccountPropsType> = ({ user }) => {
 
   return (
     <AccountLayout title={t('clientPersonalAccount')}>
-      <AccountInfoWrapper>
+      <AccountInfoWrapper mobileReverse={true}>
         <AccountInfoBlockList
           orderCount={userTotal?.order_count}
           totalAmount={Number(userTotal?.total_spent)}
