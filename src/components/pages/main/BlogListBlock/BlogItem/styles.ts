@@ -61,23 +61,11 @@ export const ContentBlock = styled.div`
   align-items: flex-start;
   justify-content: space-between;
   row-gap: 8px;
+  width: 100%;
 `;
 
 export const BottomContentBlock = styled(ContentBlock)`
   flex-grow: 1;
-`;
-
-export const StyledDate = styled(Text)`
-  color: ${({ theme }) => theme.colors.grey};
-  text-transform: uppercase;
-
-  @media ${({ theme }) => theme.media.large} {
-    font: ${({ theme }) => theme.fonts.bodysmallReg};
-  }
-
-  @media ${({ theme }) => theme.media.medium} {
-    font-size: 10px;
-  }
 `;
 
 export const TextContent = styled(Text)`
@@ -86,6 +74,7 @@ export const TextContent = styled(Text)`
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  hyphens: auto;
 
   @media ${({ theme }) => theme.media.large} {
     font-size: 14px;
