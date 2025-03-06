@@ -43,6 +43,7 @@ export const StyledInfoWrapper = styled.div`
 
     @media ${({ theme }) => theme.media.medium} {
         gap: 10px;
+        flex-grow: 1;
     }
 `;
 

@@ -101,7 +101,7 @@
     "subscriptionError": "Abonnementdaten konnten nicht abgerufen werden",
     "subscribeNewsletter": "Abonniere unseren Newsletter!",
     "newsletterDescription": "Bleiben Sie mit den neuesten Nachrichten, exklusiven Angeboten und speziellen Inhalten auf dem Laufenden – direkt in Ihrem Posteingang!",
-    "subscriptionSuccess": "Sie haben den Newsletter erfolgreich abonniert",
+    "subscriptionSuccess": "Sie haben sich erfolgreich für den Newsletter angemeldet.",
     "unsubscriptionSuccess": "Sie haben den Newsletter erfolgreich abbestellt",
     "gold": "Gold",
     "silver": "Silber",
@@ -154,6 +154,7 @@
   "Product": {
     "addToBasket": "In den Warenkorb legen",
     "viewCart": "Warenkorb anzeigen",
+    "outOfStock": "Nicht auf Lager",
     "chooseOptions": "Option wählen",
     "updateCart": "Menge aktualisieren",
     "sortBy": "Sortieren nach",
@@ -440,7 +441,7 @@
     "nextPost": "Weiter",
     "blogPage": "Blog",
     "blogSectionRelatedTitle": "Verwandte Artikel",
-    "blogSectionLatestTitle": "Neueste Artikel",
+    "blogSectionPopularTitle": "Beliebte Artikel",
     "selectCategory": "Kategorie auswählen",
     "all": "Alle"
   },

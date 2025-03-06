@@ -154,6 +154,7 @@
   "Product": {
     "addToBasket": "Dodaj do koszyka",
     "viewCart": "Wyświetl koszyk",
+    "outOfStock": "Brak w magazynie",
     "chooseOptions": "Wybierz opcję",
     "updateCart": "Zaktualizuj ilość",
     "sortBy": "Sortuj według",
@@ -440,7 +441,7 @@
     "nextPost": "Następny",
     "blogPage": "Blog",
     "blogSectionRelatedTitle": "Powiązane artykuły",
-    "blogSectionLatestTitle": "Najnowsze artykuły",
+    "blogSectionPopularTitle": "Popularne artykuły",
     "selectCategory": "Wybierz kategorię",
     "all": "Wszystkie"
   },
