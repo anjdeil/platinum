@@ -10,6 +10,7 @@
     "userInformation": "Dane użytkownika",
     "shippingAddress": "Adres do wysyłki",
     "orderHistory": "Historia zamówień",
+    "noOrders": "Nie znaleziono zamówień",
     "wishlist": "Obserwowane",
     "subscription": "Subskrypcja",
     "loyaltyProgram": "Program lojalnościowy",

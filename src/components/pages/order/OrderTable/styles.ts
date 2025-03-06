@@ -91,7 +91,7 @@ export const StyledBodyTr = styled(StyledTr)`
         flex-direction: column;        
         row-gap: 16px;
         border-radius: 8px;
-        border-top: ${({ theme }) => `1px solid ${theme.colors.lightBorder}`};;
+        border-top: ${({ theme }) => `1px solid ${theme.colors.lightBorder}`};
     }
 `;
 
@@ -119,6 +119,15 @@ export const StyledTd = styled.td`
     & a {
         text-decoration: none;
     }
+
+    @media ${({ theme }) => theme.media.mediumLarge} {
+        width: 100%;
+    }
+`;
+
+export const StyledEmptyTd = styled.td`
+    text-align: center;
+    color: ${({ theme }) => theme.colors.grey};
 
     @media ${({ theme }) => theme.media.mediumLarge} {
         width: 100%;
