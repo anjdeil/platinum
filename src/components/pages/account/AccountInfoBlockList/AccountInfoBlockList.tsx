@@ -36,7 +36,7 @@ const AccountInfoBlockList: React.FC<AccountInfoBlockListProps> = ({
         icon={MoneyBagIcon}
         title={t('totalOrderAmount')}
         value={
-          !isLoadingCurrency && totalAmount
+          !isLoadingCurrency && totalAmount != null && !isNaN(totalAmount)
             ? formatPrice(convertCurrency(totalAmount))
             : undefined
         }

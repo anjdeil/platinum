@@ -70,6 +70,6 @@ export type AccountInfoBlockLinkProps = {
 };
 
 export type TableProps = {
-  orderList: OrderType[];
+  orderList?: OrderType[];
   title?: string;
 };

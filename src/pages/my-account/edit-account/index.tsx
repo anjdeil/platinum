@@ -1,21 +1,19 @@
 import { UserInfoForm } from '@/components/global/forms/UserInfoForm';
 import AccountLayout from '@/components/pages/account/AccountLayout';
-import { WooCustomerReqType } from '@/types/services/wooCustomApi/customer';
-import { GetServerSidePropsContext } from 'next';
-import { useTranslations } from 'next-intl';
+import wooCommerceRestApi from '@/services/wooCommerceRestApi';
 import wpRestApi from '@/services/wpRestApi';
-import { decodeJwt } from 'jose';
+import { WooCustomerReqType } from '@/types/services/wooCustomApi/customer';
 import { JwtDecodedDataType } from '@/types/services/wpRestApi/auth';
 import { validateJwtDecode } from '@/utils/zodValidators/validateJwtDecode';
-import wooCommerceRestApi from '@/services/wooCommerceRestApi';
+import { decodeJwt } from 'jose';
+import { GetServerSidePropsContext } from 'next';
 interface Props {
   defaultCustomerData: WooCustomerReqType;
 }
 
 export default function UserInformation({ defaultCustomerData }: Props) {
-  const t = useTranslations('MyAccount');
   return (
-    <AccountLayout title={t('EditUserInfo')}>
+    <AccountLayout>
       <UserInfoForm defaultCustomerData={defaultCustomerData} />
     </AccountLayout>
   );

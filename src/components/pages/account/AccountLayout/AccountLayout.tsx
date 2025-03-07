@@ -13,7 +13,7 @@ export default function AccountLayout({
   title,
   children,
 }: {
-  title: string;
+  title?: string;
   children: ReactNode;
 }) {
   const t = useTranslations('MyAccount');
@@ -32,9 +32,11 @@ export default function AccountLayout({
         <title>{title}</title>
       </Head>
 
-      <AccountTitle as={'h1'} textalign="center" uppercase>
-        {title}
-      </AccountTitle>
+      {title && (
+        <AccountTitle as={'h1'} textalign="center" uppercase>
+      {title}
+        </AccountTitle>
+      )}
       <AccountContainer>
         <SideListContainer>
           {isMobile ? (

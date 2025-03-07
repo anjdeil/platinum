@@ -16,6 +16,7 @@ export const StyledInfoContainer = styled(Link) <StyledInfoContainerProps>`
     cursor: pointer;
     text-decoration: none;
     transition: all 0.2s ease;
+    align-self: stretch;
 
     @media ${({ theme }) => theme.media.large} {
         padding: 20px 2px;
