@@ -1,4 +1,6 @@
+import { CustomSingleAccordion } from '@/components/global/accordions/CustomSingleAccordion';
 import SideList from '@/components/global/SideList/SideList';
+import { useResponsive } from '@/hooks/useResponsive';
 import { AccountTitle } from '@/styles/components';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
@@ -17,6 +19,7 @@ export default function AccountLayout({
   const t = useTranslations('MyAccount');
   const router = useRouter();
   const activeLink = router.pathname;
+  const { isMobile } = useResponsive();
 
   const translatedAccountLinks = accountLinks.map(({ name, ...props }) => ({
     name: t(name),
@@ -31,16 +34,29 @@ export default function AccountLayout({
 
       {title && (
         <AccountTitle as={'h1'} textalign="center" uppercase>
-          {title}
+      {title}
         </AccountTitle>
       )}
       <AccountContainer>
         <SideListContainer>
-          <SideList
-            links={translatedAccountLinks}
-            activeLink={activeLink}
-            borderRadius="10px"
-          />
+          {isMobile ? (
+            <CustomSingleAccordion
+              title={t('customerPanel')}
+              detailsPadding="16px 0 0"
+            >
+              <SideList
+                links={translatedAccountLinks}
+                activeLink={activeLink}
+                borderRadius="10px"
+              />
+            </CustomSingleAccordion>
+          ) : (
+            <SideList
+              links={translatedAccountLinks}
+              activeLink={activeLink}
+              borderRadius="10px"
+            />
+          )}
         </SideListContainer>
         <AccountContent>{children}</AccountContent>
       </AccountContainer>
