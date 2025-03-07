@@ -1,3 +1,3 @@
 export const formatPrice = (price: number): string => {
-  return String(price).replace('.', ',');
+  return price.toFixed(2).replace('.', ',');
 };

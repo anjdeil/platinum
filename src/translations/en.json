@@ -10,6 +10,7 @@
     "userInformation": "User information",
     "shippingAddress": "Shipping address",
     "orderHistory": "Order history",
+    "noOrders": "No orders found",
     "wishlist": "Wishlist",
     "subscription": "Subscription",
     "loyaltyProgram": "Loyalty program",

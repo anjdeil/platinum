@@ -6,10 +6,11 @@
   "MyAccount": {
     "order": "Замовлення",
     "clientPersonalAccount": "Особистий кабінет клієнта",
-    "dashboard": "Інформаційна панель",
+    "dashboard": "Панель керування",
     "userInformation": "Інформація користувача",
     "shippingAddress": "Адреса для доставки",
     "orderHistory": "Історія замовлень",
+    "noOrders": "Замовлення не знайдено",
     "wishlist": "Список бажань",
     "subscription": "Підписка на розсилку",
     "loyaltyProgram": "Програма лояльності",

@@ -6,10 +6,11 @@
   "MyAccount": {
     "order": "Bestellung",
     "clientPersonalAccount": "Kundenkonto",
-    "dashboard": "Übersicht",
+    "dashboard": "Steuerungsübersicht",
     "userInformation": "Benutzerinformationen",
     "shippingAddress": "Lieferadresse",
     "orderHistory": "Bestellverlauf",
+    "noOrders": "Keine Bestellungen gefunden",
     "wishlist": "Wunschzettel",
     "subscription": "Anmeldung zum Newsletter",
     "loyaltyProgram": "Treueprogramm",
