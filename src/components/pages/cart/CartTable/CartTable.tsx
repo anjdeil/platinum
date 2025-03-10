@@ -95,7 +95,7 @@ const CartTable: FC<CartTableProps> = ({
                         productSpec.attributes?.length
                           ? ' - ' +
                             productSpec.attributes
-                              .map(attr => attr.option)
+                              .map(attr => attr.option_name)
                               .join(', ')
                           : ''
                       }`
@@ -183,7 +183,7 @@ const CartTable: FC<CartTableProps> = ({
                           productSpec.attributes?.length
                             ? ' - ' +
                               productSpec.attributes
-                                .map(attr => attr.option)
+                                .map(attr => attr.option_name)
                                 .join(', ')
                             : ''
                         }`

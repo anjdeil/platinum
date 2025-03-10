@@ -192,7 +192,15 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
           {`${product.name}${
             currentVariation
               ? ` - ${currentVariation.attributes
-                  .map(attr => attr.option)
+                  .map(attr => {
+                    const productAttribute = product.attributes.find(
+                      attribute => attribute.slug === attr.slug
+                    );
+                    const option = productAttribute?.options.find(
+                      option => option.slug === attr.option
+                    );
+                    return option ? option.name : attr.option;
+                  })
                   .join(', ')}`
               : ''
           }`}

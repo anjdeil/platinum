@@ -195,7 +195,7 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
                             item.attributes?.length
                               ? ' - ' +
                                 item.attributes
-                                  .map(attr => attr.option)
+                                  .map(attr => attr.option_name)
                                   .join(', ')
                               : ''
                           }`
