@@ -40,7 +40,7 @@ export const ProductDefaultAttributesSchema = z.object({
   id: z.number(),
   slug: z.string(),
   option: z.string(),
-  option_name: z.string(),
+  option_name: z.string().optional(),
 });
 
 export const ProductPriceSchema = z.object({
