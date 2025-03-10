@@ -189,7 +189,13 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
       </ProductImageWrapper>
       <ProductTitleWrapper>
         <Title as="h1" uppercase textalign="left">
-          {currentVariation?.name || product.name}
+          {`${product.name}${
+            currentVariation
+              ? ` - ${currentVariation.attributes
+                  .map(attr => attr.option)
+                  .join(', ')}`
+              : ''
+          }`}
         </Title>
         <ProductFlexWrapper>
           <ProductAvailable count={stockQuantity} />
