@@ -17,12 +17,15 @@ interface BlogInfoProps {
 const BlogInfo: FC<BlogInfoProps> = ({ created, views_count, postPage }) => {
   const formatDate = useTransformDate(created);
 
-  const formatViewCount = (count: number): string => {
-    if (count >= 1000) {
-      return (count / 1000).toFixed(1) + 'K';
-    }
-    return count.toString();
-  };
+    const formatViewCount = (count?: number): string => {
+      if (count === undefined || count === null) {
+        return '0';
+      }
+      if (count >= 1000) {
+        return (count / 1000).toFixed(1) + 'K';
+      }
+      return count.toString();
+    };
 
   return (
     <StyledInfo postPage={postPage}>
