@@ -40,6 +40,7 @@ export const ProductDefaultAttributesSchema = z.object({
   id: z.number(),
   slug: z.string(),
   option: z.string(),
+  option_name: z.string().optional(),
 });
 
 export const ProductPriceSchema = z.object({
@@ -67,7 +68,7 @@ export const ProductVariationSchema = z.object({
   description: z.string(),
   created: z.string(),
   modified: z.string(),
-  stock_quantity: z.number().optional(),
+  stock_quantity: z.number().nullable(),
   price: VariationPriceSchema.nullable(),
   total_sales: z.number(),
   image: z.string().nullable(),
@@ -80,6 +81,7 @@ export const ProductsMinimizedSchema = z.object({
   sku: z.string().nullable(),
   slug: z.string(),
   parent_slug: z.string(),
+  parent_name: z.string(),
   name: z.string(),
   language_code: z.string().optional(),
   stock_quantity: z.number().optional(),

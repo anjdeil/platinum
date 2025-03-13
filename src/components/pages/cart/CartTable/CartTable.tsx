@@ -90,7 +90,16 @@ const CartTable: FC<CartTableProps> = ({
                     productSpec?.parent_slug || productSpec?.slug
                   }`}
                 >
-                  {productSpec?.name || item.name}
+                  {productSpec?.parent_name
+                    ? `${productSpec.parent_name}${
+                        productSpec.attributes?.length
+                          ? ' - ' +
+                            productSpec.attributes
+                              .map(attr => attr.option_name)
+                              .join(', ')
+                          : ''
+                      }`
+                    : productSpec?.name || item.name}
                 </LinkWrapper>
                 <CloseIcon
                   onClick={() =>
@@ -169,7 +178,16 @@ const CartTable: FC<CartTableProps> = ({
                       productSpec?.parent_slug || productSpec?.slug
                     }`}
                   >
-                    {productSpec?.name || item.name}
+                    {productSpec?.parent_name
+                      ? `${productSpec.parent_name}${
+                          productSpec.attributes?.length
+                            ? ' - ' +
+                              productSpec.attributes
+                                .map(attr => attr.option_name)
+                                .join(', ')
+                            : ''
+                        }`
+                      : productSpec?.name || item.name}
                   </LinkWrapper>
                 </TextNameCell>
                 <TextCell>
