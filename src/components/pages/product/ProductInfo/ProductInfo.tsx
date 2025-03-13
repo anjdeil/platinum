@@ -75,6 +75,7 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
 
   const [quantity, setQuantity] = useState<number>(1);
   const [cartMatch, setCartMatch] = useState<CartItem>();
+  const [viewing, setViewing] = useState<number>(0);
 
   /**
    * Choosen variation
@@ -173,6 +174,22 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
         ]
       : [...images];
 
+  useEffect(() => {
+    if (stockQuantity === 0) {
+      setViewing(1);
+    } else if (stockQuantity < 10) {
+      const maxReduction = stockQuantity * 0.2;
+      const randomReduction = Math.ceil(Math.random() * maxReduction);
+      const finalValue = Math.max(1, stockQuantity - randomReduction);
+      setViewing(finalValue);
+    } else {
+      const randomValue = Math.random();
+      const adjustedValue = Math.pow(randomValue, 0.5);
+      const finalValue = Math.max(1, Math.floor(adjustedValue * 10));
+      setViewing(finalValue);
+    }
+  }, [stockQuantity]);
+
   return (
     <ProductWrapper>
       <ProductImageWrapper>
@@ -193,7 +210,7 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
         </Title>
         <ProductFlexWrapper>
           <ProductAvailable count={stockQuantity} />
-          <ProductViewing count={stockQuantity} />
+          <ProductViewing count={viewing} />
         </ProductFlexWrapper>
         <ProductFlexWrapper>
           {currentVariation?.sku ||
