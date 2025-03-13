@@ -206,7 +206,21 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
       </ProductImageWrapper>
       <ProductTitleWrapper>
         <Title as="h1" uppercase textalign="left">
-          {currentVariation?.name || product.name}
+          {`${product.name}${
+            currentVariation
+              ? ` - ${currentVariation.attributes
+                  .map(attr => {
+                    const productAttribute = product.attributes.find(
+                      attribute => attribute.slug === attr.slug
+                    );
+                    const option = productAttribute?.options.find(
+                      option => option.slug === attr.option
+                    );
+                    return option ? option.name : attr.option;
+                  })
+                  .join(', ')}`
+              : ''
+          }`}
         </Title>
         <ProductFlexWrapper>
           <ProductAvailable count={stockQuantity} />
