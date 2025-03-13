@@ -67,7 +67,7 @@ export const ProductVariationSchema = z.object({
   description: z.string(),
   created: z.string(),
   modified: z.string(),
-  stock_quantity: z.number().optional(),
+  stock_quantity: z.number().nullable(),
   price: VariationPriceSchema.nullable(),
   total_sales: z.number(),
   image: z.string().nullable(),

@@ -121,8 +121,16 @@ export const getServerSideProps: GetServerSideProps = async ({
 
     if (validatedProductsData) {
       products = validatedProductsData.data.items;
-      const productsCount = validatedProductsData.data.statistic?.products_count;
+      const productsCount =
+        validatedProductsData.data.statistic?.products_count;
       pagesCount = Math.ceil(productsCount / productsPerPage);
+    } else {      
+      return {
+        redirect: {
+          destination: '/500',
+          permanent: false,
+        },
+      };
     }
 
     /* Do not open if pagination page number is more than pages count */
