@@ -169,7 +169,7 @@ const BlogPostPage = ({ post, recommendedPosts, popularPosts }: PageProps) => {
         </StyledHeaderWrapper>
         <StyledBox>
           <StyledHeroImage
-            src={thumbnail?.src || 'assets/images/no-image.jpg'}
+            src={thumbnail?.src || '/assets/images/no-image.jpg'}
             alt={title}
             width={1280}
             height={477}

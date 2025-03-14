@@ -51,10 +51,9 @@ export const IconWrapper = styled.div`
 export const InstagramPhotoWrapper = styled(Link)`
   display: inline-block;
   max-width: 308px;
-  max-height: 306px;
   width: 100%;
   height: auto;
-  aspect-ratio: 308 / 306;
+  aspect-ratio: 1 / 1;
   position: relative;
   &::before {
     content: '';
@@ -77,6 +76,7 @@ export const InstagramPhoto = styled(Image)`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  background: ${({ theme }) => theme.background.secondary};
 `;
 
 export const StyledSkeletonContainer = styled.div`
