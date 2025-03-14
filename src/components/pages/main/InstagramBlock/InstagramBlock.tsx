@@ -7,14 +7,14 @@ import {
   InstagramPhotoWrapper,
   StyledSkeleton,
   StyledSkeletonContainer,
-} from "./styles";
+} from './styles';
 import {
   InstagramApiResponseSchema,
   MediaInfoResponse,
-} from "@/types/services";
+} from '@/types/services';
 
-import { useGetInstagramMediaQuery } from "@/store/rtk-queries/instagramMedia";
-import { SectionContainer, StyledError } from "@/components/sections/styles";
+import { useGetInstagramMediaQuery } from '@/store/rtk-queries/instagramMedia';
+import { SectionContainer, StyledError } from '@/components/sections/styles';
 
 const InstagramBlock = () => {
   const { data, error, isFetching, isLoading } = useGetInstagramMediaQuery();
@@ -31,7 +31,7 @@ const InstagramBlock = () => {
   if (data) {
     const validationResult = InstagramApiResponseSchema.safeParse(data);
     if (!validationResult.success) {
-      console.error("Invalid data format:", validationResult.error);
+      console.error('Invalid data format:', validationResult.error);
       return (
         <SectionContainer>
           <StyledError>Invalid Instagram Media data</StyledError>
@@ -71,7 +71,7 @@ const InstagramBlock = () => {
         </InstagramAccountWrapper>
         {media &&
           media.length > 0 &&
-          media.map((item) => (
+          media.map(item => (
             <InstagramPhotoWrapper
               href={item.permalink}
               key={item.id}
@@ -80,12 +80,13 @@ const InstagramBlock = () => {
               <InstagramPhoto
                 src={
                   item.media_type === 'VIDEO'
-                    ? item.thumbnail_url || ''
-                    : item.media_url || ''
+                    ? item.thumbnail_url ||
+                      '/assets/images/product-placeholder.jpg'
+                    : item.media_url || '/assets/images/product-placeholder.jpg'
                 }
                 alt={item.username}
                 width={308}
-                height={306}
+                height={308}
                 priority
               />
             </InstagramPhotoWrapper>
