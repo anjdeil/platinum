@@ -191,7 +191,9 @@
     "minutes": "Minuten",
     "priceFrom": "ab {price}",
     "deliveryTime": "Bestelle innerhalb von {hour} Std. {minute} Min. und es wird heute verschickt",
-    "deliveryNextBusinessDay": "Die Bestellung wird am nächsten Werktag versandt"
+    "deliveryNextBusinessDay": "Die Bestellung wird am nächsten Werktag versandt",
+    "yourOpinion": "Ihre Meinung",
+    "comment": "Kommentar"
   },
   "Cart": {
     "cart": "Warenkorb",
