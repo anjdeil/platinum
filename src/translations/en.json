@@ -191,7 +191,9 @@
     "minutes": "Minutes",
     "priceFrom": "from {price}",
     "deliveryTime": "Order within {hour}h {minute}min and it will be shipped today",
-    "deliveryNextBusinessDay": "The order will be shipped on the next business day"
+    "deliveryNextBusinessDay": "The order will be shipped on the next business day",
+    "yourOpinion": "Your opinion",
+    "comment": "Comment"
   },
   "Cart": {
     "cart": "Cart",
