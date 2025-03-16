@@ -25,11 +25,11 @@ export const NavList = styled.ul<NavListProps>`
   }
 
   @media ${({ theme }) => theme.media.large} {
-    column-gap: ${({ mobGap = '48px' }) => mobGap};
+    gap: ${({ mobGap = '48px' }) => mobGap};
   }
 
   @media ${({ theme }) => theme.media.mediumLarge} {
-    column-gap: ${({ mobGap = '16px' }) => mobGap};
+    gap: ${({ mobGap = '16px' }) => mobGap};
   }
 `;
 export const CustomNav = styled.nav`
@@ -47,6 +47,7 @@ export const NavLink = styled(Link)<NavLinkProps>`
   transition: all 0.2s ease;
   color: ${({ theme, color = theme.colors.white }) => color};
   text-transform: ${({ texttransform = 'none' }) => texttransform};
+  line-height: ${({ lineHeight }) => lineHeight};
   hyphens: auto;
 
   &.active {
