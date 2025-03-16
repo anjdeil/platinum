@@ -21,6 +21,12 @@ export const FooterSecondTitle = styled.h3`
   text-transform: uppercase;
   margin: 0;
   margin-right: 24px;
+  @media ${({ theme }) => theme.media.medium} {
+    margin-right: 75vw;
+  }
+  @media ${({ theme }) => theme.media.small} {
+    margin-right: 50vw;
+  }
 `;
 //---------------LOGO-------------
 export const FooterLogoImage = styled(Image)`
@@ -108,10 +114,9 @@ export const PaymentAndDeliveryMethods = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 5px;
-  > * {
-    margin-right: 21px;
-  }
+  column-gap: 34px;
+  row-gap: 16px;
+
   &:not(:last-of-type) {
     margin-bottom: 20px;
   }

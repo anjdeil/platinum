@@ -371,7 +371,7 @@ export const Footer: FC = () => {
             </FooterGridContainer>
           )}
         </FooterMainContentWrapper>
-        {!isTablet && !isMobile && (
+        {(!isTablet || isMobile) && (
           <PaymentAndDeliveryMethodsContainer>
             <PaymentAndDeliveryMethods>
               <FooterSecondTitle>{t('delivery')}</FooterSecondTitle>
