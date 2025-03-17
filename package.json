@@ -23,6 +23,7 @@
     "awesome-phonenumber": "^7.2.0",
     "axios": "^1.7.9",
     "cookie": "^1.0.1",
+    "dompurify": "^3.2.4",
     "dotenv": "^16.4.5",
     "html-react-parser": "^5.1.18",
     "i": "^0.3.7",
