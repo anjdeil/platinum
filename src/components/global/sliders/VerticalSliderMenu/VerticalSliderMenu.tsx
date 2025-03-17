@@ -47,6 +47,7 @@ const VerticalSlider: FC<wpMenuProps> = ({ menuId, skeleton }) => {
         gap={skeleton.gap}
         dark={skeleton.dark}
         leftSide={skeleton.leftSide}
+        verticalSlider={skeleton.verticalSlider}
       />
     );
   }

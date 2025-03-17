@@ -13,6 +13,7 @@ export const MenuSkeleton: FC<MenuSkeletonProps> = ({
   light,
   dark,
   leftSide,
+  verticalSlider,
 }) => {
   const skeletonItems = Array.from({ length: elements }).map((_, index) => (
     <SkeletonElement
@@ -26,7 +27,12 @@ export const MenuSkeleton: FC<MenuSkeletonProps> = ({
   ));
 
   return (
-    <SkeletonContainer direction={direction} gap={gap} leftSide={leftSide}>
+    <SkeletonContainer
+      direction={direction}
+      gap={gap}
+      leftSide={leftSide}
+      verticalSlider={verticalSlider}
+    >
       {skeletonItems}
     </SkeletonContainer>
   );

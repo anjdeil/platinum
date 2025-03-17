@@ -38,6 +38,7 @@ export const SkeletonContainer = styled.div<SkeletonContainerProps>`
   gap: ${({ gap }) => gap || '10px'};
 
   @media ${({ theme }) => theme.media.medium} {
-    align-items: center;
+    align-items: ${({ verticalSlider }) =>
+      verticalSlider ? 'center' : 'flex-start'};
   }
 `;
