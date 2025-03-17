@@ -43,9 +43,10 @@ export default function LoyaltyPage() {
 
   const { convertCurrency, currencyCode: code } = useCurrencyConverter();
 
-  const { level, nextLevelAmount } = getLoyaltyLevel(
+  const { level, nextLevelAmount } = getLoyaltyLevel(2600);
+  /*   const { level, nextLevelAmount } = getLoyaltyLevel(
     Number(userTotal?.total_spent)
-  );
+  ); */
 
   const currentLevelIndex = LOYALTY_LEVELS.findIndex(
     loyaltyLevel => loyaltyLevel.name === level
@@ -76,25 +77,28 @@ export default function LoyaltyPage() {
         <LoyalityPageWrapper>
           {userTotal && (
             <LoyalityLevelCard isColumn={!level}>
-              <LevelText>
-                {level ? (
-                  <>{t('currentLevel')}</>
-                ) : (
-                  <>{t('loyaltyLevelNotEarned')}</>
-                )}
-              </LevelText>
-              <LoyalityBox>
-                <LevelCodeText>{level}</LevelCodeText>
-                {nextLevel && nextLevelAmount && (
-                  <NextLevelText>
-                    {t('nextLevelInfo', {
-                      amount: convertCurrency(+nextLevelAmount),
-                      code,
-                      nextLevel: nextLevel.name,
-                    })}
-                  </NextLevelText>
-                )}
-              </LoyalityBox>
+              <div>
+                <LevelText>
+                  {level ? (
+                    <>{t('currentLevel')}</>
+                  ) : (
+                    <>{t('loyaltyLevelNotEarned')}</>
+                  )}
+                </LevelText>
+                <LoyalityBox>
+                  <LevelCodeText>{level}</LevelCodeText>
+                </LoyalityBox>
+              </div>
+
+              {nextLevel && nextLevelAmount && (
+                <NextLevelText>
+                  {t('nextLevelInfo', {
+                    amount: convertCurrency(+nextLevelAmount),
+                    code,
+                    nextLevel: nextLevel.name,
+                  })}
+                </NextLevelText>
+              )}
             </LoyalityLevelCard>
           )}
 
@@ -103,6 +107,8 @@ export default function LoyaltyPage() {
             as="h2"
             textalign="left"
             marginBottom="16px"
+            uppercase
+            mobTextalign="center"
           >
             {t('levelBenefits')}
           </Title>

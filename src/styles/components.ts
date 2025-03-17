@@ -36,6 +36,7 @@ interface TitleProps {
   fontSize?: string;
   mobFontSize?: string;
   textalign?: 'center' | 'left' | 'right';
+  mobTextalign?: 'center' | 'left' | 'right';
   uppercase?: boolean;
   marginTop?: string;
   lowercase?: boolean;
@@ -63,7 +64,9 @@ export const Title = styled.h1<TitleProps>`
     font-weight: ${({ fontWeight }) => fontWeight};
     font-size: ${({ fontSize }) => fontSize};
   }
-
+  @media ${({ theme }) => theme.media.medium} {
+    text-align: ${({ mobTextalign }) => mobTextalign};
+  }
   @media ${({ theme }) => theme.media.small} {
     font-size: ${({ mobFontSize }) => mobFontSize};
   }
