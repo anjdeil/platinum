@@ -92,3 +92,4 @@ export type BlogParsedItemType = z.infer<typeof BlogParsedItemSchema>;
 export type BlogItemUnionType = z.infer<typeof BlogItemUnionSchema>;
 export type BlogPostType = z.infer<typeof BlogPostSchema>;
 export type BlogPostResponseType = z.infer<typeof BlogResponseTypeSchema>;
+export type BlogPageDataFullType = z.infer<typeof BlogPageDataFullSchema>;

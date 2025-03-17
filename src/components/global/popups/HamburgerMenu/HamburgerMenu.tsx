@@ -21,6 +21,7 @@ const HamburgerMenu: FC<MobilePopupPropsType> = ({ onClose }) => {
             width: '200px',
             height: '24px',
             gap: '20px',
+            light: true,
           }}
           color={theme.colors.black}
           direction="column"

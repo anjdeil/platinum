@@ -50,9 +50,10 @@ const Header: React.FC = () => {
               menuId={19521}
               skeleton={{
                 elements: 3,
-                width: '80px',
+                width: '100px',
                 height: '24px',
                 gap: '48px',
+                dark: true,
               }}
               texttransform="uppercase"
               justify="space-between"

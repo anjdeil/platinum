@@ -29,6 +29,7 @@ import {
   PaymentAndDeliveryMethodsContainer,
 } from './styles';
 import { NavLink } from '@/components/menus/Nav/styles';
+import { MenuSkeleton } from '@/components/menus/MenuSkeleton';
 
 export const Footer: FC = () => {
   const t = useTranslations('Footer');
@@ -77,9 +78,11 @@ export const Footer: FC = () => {
                     skeleton={{
                       direction: 'column',
                       elements: 4,
-                      width: '160px',
+                      width: '200px',
                       height: '24px',
                       gap: '10px',
+                      dark: true,
+                      leftSide: true,
                     }}
                     menuId={19409}
                     direction="column"
@@ -108,9 +111,12 @@ export const Footer: FC = () => {
                     skeleton={{
                       direction: 'column',
                       elements: 4,
-                      width: '160px',
+                      width: '200px',
                       height: '24px',
                       gap: '10px',
+                      dark: true,
+                      leftSide: true,
+                      verticalSlider: true,
                     }}
                   />
                 </AccordionDetailsSlider>
@@ -134,9 +140,11 @@ export const Footer: FC = () => {
                     skeleton={{
                       direction: 'column',
                       elements: 4,
-                      width: '160px',
+                      width: '200px',
                       height: '24px',
                       gap: '10px',
+                      dark: true,
+                      leftSide: true,
                     }}
                     direction="column"
                     gap="16px"
@@ -161,92 +169,108 @@ export const Footer: FC = () => {
                   </NavLink>
                 </AccordionSummaryCustom>
                 <AccordionDetails>
-                  <Contact>
-                    <Image
-                      src="/assets/icons/contact_place.svg"
-                      alt="contact place"
-                      width={24}
-                      height={24}
-                      unoptimized={true}
+                  {!ContactItems || !ContactItems.address ? (
+                    <MenuSkeleton
+                      elements={4}
+                      direction={'column'}
+                      width="200px"
+                      height="24px"
+                      gap="10px"
+                      dark={true}
+                      leftSide={true}
                     />
-                    <ContactLink
-                      href={
-                        ContactItems?.address
-                          ? `https://www.google.com/maps?q=${encodeURIComponent(
-                              ContactItems.address
-                            )}`
-                          : '#'
-                      }
-                      passHref
-                      target="_blank"
-                    >
-                      {ContactItems.address}
-                    </ContactLink>
-                  </Contact>
-                  <Contact>
-                    <Image
-                      src="/assets/icons/contact_phone.svg"
-                      alt="contact phone"
-                      width={24}
-                      height={24}
-                      unoptimized={true}
-                    />
-                    <ContactLink
-                      href={
-                        ContactItems?.phone ? `tel:${ContactItems.phone}` : '#'
-                      }
-                      passHref
-                    >
-                      {ContactItems.phone}
-                    </ContactLink>
-                  </Contact>
-                  <Contact>
-                    <Image
-                      src="/assets/icons/contact_mail.svg"
-                      alt="contact mail"
-                      width={24}
-                      height={24}
-                      unoptimized={true}
-                    />
-                    <ContactLink
-                      href={
-                        ContactItems?.email
-                          ? `mailto:${ContactItems.email}`
-                          : '#'
-                      }
-                      passHref
-                    >
-                      {ContactItems.email}
-                    </ContactLink>
-                  </Contact>
-                  <Contact>
-                    <Image
-                      src="/assets/icons/contact_time.svg"
-                      alt="contact time"
-                      width={24}
-                      height={24}
-                      unoptimized={true}
-                    />
-                    <p>
-                      {tContacts('schedule', {
-                        from: ContactItems.schedule[0]?.from_time,
-                        to: ContactItems.schedule[0]?.to_time,
-                      })}
-                      <br />
-                      {ContactItems.schedule[1]?.not_working
-                        ? tContacts('dayOff')
-                        : `${tContacts('satSun', {
-                            from: ContactItems.schedule[1]?.from_time,
-                            to: ContactItems.schedule[1]?.to_time,
-                          })}`}
-                    </p>
-                  </Contact>
-                  <Socials
-                    iconscolor="white"
-                    margin="16px 0 0 0"
-                    text={false}
-                    itemmargin="16px"
-                  />
+                  ) : (
+                    <>
+                      <Contact>
+                        <Image
+                          src="/assets/icons/contact_place.svg"
+                          alt="contact place"
+                          width={24}
+                          height={24}
+                          unoptimized={true}
+                        />
+                        <ContactLink
+                          href={
+                            ContactItems?.address
+                              ? `https://www.google.com/maps?q=${encodeURIComponent(
+                                  ContactItems.address
+                                )}`
+                              : '#'
+                          }
+                          passHref
+                          target="_blank"
+                        >
+                          {ContactItems.address}
+                        </ContactLink>
+                      </Contact>
+                      <Contact>
+                        <Image
+                          src="/assets/icons/contact_phone.svg"
+                          alt="contact phone"
+                          width={24}
+                          height={24}
+                          unoptimized={true}
+                        />
+                        <ContactLink
+                          href={
+                            ContactItems?.phone
+                              ? `tel:${ContactItems.phone}`
+                              : '#'
+                          }
+                          passHref
+                        >
+                          {ContactItems.phone}
+                        </ContactLink>
+                      </Contact>
+                      <Contact>
+                        <Image
+                          src="/assets/icons/contact_mail.svg"
+                          alt="contact mail"
+                          width={24}
+                          height={24}
+                          unoptimized={true}
+                        />
+                        <ContactLink
+                          href={
+                            ContactItems?.email
+                              ? `mailto:${ContactItems.email}`
+                              : '#'
+                          }
+                          passHref
+                        >
+                          {ContactItems.email}
+                        </ContactLink>
+                      </Contact>
+                      <Contact>
+                        <Image
+                          src="/assets/icons/contact_time.svg"
+                          alt="contact time"
+                          width={24}
+                          height={24}
+                          unoptimized={true}
+                        />
+                        <p>
+                          {tContacts('schedule', {
+                            from: ContactItems.schedule[0]?.from_time,
+                            to: ContactItems.schedule[0]?.to_time,
+                          })}
+                          <br />
+                          {ContactItems.schedule[1]?.not_working
+                            ? tContacts('dayOff')
+                            : `${tContacts('satSun', {
+                                from: ContactItems.schedule[1]?.from_time,
+                                to: ContactItems.schedule[1]?.to_time,
+                              })}`}
+                        </p>
+                      </Contact>
+                      <Socials
+                        iconscolor="white"
+                        margin="16px 0 0 0"
+                        text={false}
+                        itemmargin="16px"
+                      />
+                    </>
+                  )}
                 </AccordionDetails>
               </FooterAccordion>
             </FooterColumn>

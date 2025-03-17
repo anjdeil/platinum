@@ -1,9 +1,16 @@
-import { BlogPageDataFullSchema } from '@/types/pages/blog';
+import {
+  BlogPageDataFullSchema,
+  BlogPageDataFullType,
+} from '@/types/pages/blog';
 
-export const validateWpBlogPage = (data: any) => {
-  const validSectionsData = BlogPageDataFullSchema.safeParse(data);
-  if (!validSectionsData.success) {
-    console.error('Invalid data format:', validSectionsData.error);
-    throw new Error('Invalid Blog data');
+export const validateWpBlogPage = (data: any): BlogPageDataFullType | null => {
+  const validationResult = BlogPageDataFullSchema.safeParse(data);
+
+  if (!validationResult.success) {
+    console.error('Validation failed:', validationResult.error);
+    return null;
+  } else {
+    const validatedData = validationResult.data as BlogPageDataFullType;
+    return validatedData;
   }
 };
