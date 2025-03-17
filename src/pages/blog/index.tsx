@@ -46,7 +46,17 @@ export const getServerSideProps: GetServerSideProps = async (
     }
 
     if (responseData) {
-      validateWpBlogPage(responseData.data);
+      try {
+        validateWpBlogPage(responseData.data);
+      } catch (error) {
+        console.error('Server Error:', error);
+        return {
+          redirect: {
+            destination: '/500',
+            permanent: false,
+          },
+        };
+      }
     }
 
     const categories = Array.isArray(categoriesResponseData?.data?.data?.items)

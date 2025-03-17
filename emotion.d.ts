@@ -47,6 +47,8 @@ declare module '@emotion/react' {
       hover: string;
       skeleton: string;
       skeletonSecondary: string;
+      skeletonLight: string;
+      skeletonDark: string;
       grey: string;
       success: string;
       warning: string;

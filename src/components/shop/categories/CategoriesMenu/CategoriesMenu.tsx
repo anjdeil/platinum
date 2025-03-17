@@ -57,18 +57,6 @@ const CategoriesMenu: FC<CategoriesMenuPropsType> = ({
     activeCategoryHover?.subcategories &&
     activeCategoryHover.subcategories.length > 0;
 
-  if (!categories || categories.length === 0) {
-    return (
-      <MenuSkeleton
-        elements={7}
-        direction="column"
-        width="100%"
-        height="40px"
-        gap="30px"
-      />
-    );
-  }
-
   return (
     <>
       {!isMenuVisible && (
@@ -91,33 +79,43 @@ const CategoriesMenu: FC<CategoriesMenuPropsType> = ({
         }
       >
         <ListWrapper shop={shop}>
-          <List>
-            {categories.map(category => (
-              <li key={category.id}>
-                <LinkWrapper
-                  href={category.url}
-                  onMouseEnter={() => dispatch(setCategory(category.id))}
-                  onClick={onLinkClick}
-                  isactive={
-                    selectedCategories?.some(
-                      selected => selected.id === category.id
-                    )
-                      ? true
-                      : undefined
-                  }
-                  isactivehover={
-                    activeCategoryHover?.id === category.id ? true : undefined
-                  }
-                >
-                  <span>
-                    {category.subcategories &&
-                      category.subcategories.length > 0 && <ForwardArrow />}
-                    {category.categoryName}
-                  </span>
-                </LinkWrapper>
-              </li>
-            ))}
-          </List>
+          {!categories || categories.length === 0 ? (
+            <MenuSkeleton
+              elements={8}
+              direction="column"
+              width="100%"
+              height="40px"
+              gap="30px"
+            />
+          ) : (
+            <List>
+              {categories.map(category => (
+                <li key={category.id}>
+                  <LinkWrapper
+                    href={category.url}
+                    onMouseEnter={() => dispatch(setCategory(category.id))}
+                    onClick={onLinkClick}
+                    isactive={
+                      selectedCategories?.some(
+                        selected => selected.id === category.id
+                      )
+                        ? true
+                        : undefined
+                    }
+                    isactivehover={
+                      activeCategoryHover?.id === category.id ? true : undefined
+                    }
+                  >
+                    <span>
+                      {category.subcategories &&
+                        category.subcategories.length > 0 && <ForwardArrow />}
+                      {category.categoryName}
+                    </span>
+                  </LinkWrapper>
+                </li>
+              ))}
+            </List>
+          )}
         </ListWrapper>
         {hasSubcategories && (
           <ChildListWrapper shop={shop} isVisible={true} isSubcategories={true}>

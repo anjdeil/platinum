@@ -47,9 +47,10 @@ const TopBar: React.FC = () => {
             menuId={335}
             skeleton={{
               elements: 4,
-              width: '90px',
+              width: '100px',
               height: '22px',
               gap: '20px',
+              light: true,
             }}
             justify="space-between"
             color={theme.colors.black}
