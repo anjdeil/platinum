@@ -191,7 +191,9 @@
     "minutes": "Минут",
     "priceFrom": "от {price}",
     "deliveryTime": "Закажи в течение {hour} ч {minute} мин, и он будет отправлен сегодня",
-    "deliveryNextBusinessDay": "Заказ будет отправлен на следующий рабочий день"
+    "deliveryNextBusinessDay": "Заказ будет отправлен на следующий рабочий день",
+    "yourOpinion": "Ваше мнение",
+    "comment": "Комментарий"
   },
   "Cart": {
     "cart": "Корзина",
