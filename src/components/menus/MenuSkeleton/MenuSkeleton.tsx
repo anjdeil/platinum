@@ -10,13 +10,23 @@ export const MenuSkeleton: FC<MenuSkeletonProps> = ({
   height,
   gap,
   color,
+  light,
+  dark,
+  leftSide,
 }) => {
   const skeletonItems = Array.from({ length: elements }).map((_, index) => (
-    <SkeletonElement key={index} width={width} height={height} color={color} />
+    <SkeletonElement
+      key={index}
+      width={width}
+      height={height}
+      color={color}
+      light={light}
+      dark={dark}
+    />
   ));
 
   return (
-    <SkeletonContainer direction={direction} gap={gap}>
+    <SkeletonContainer direction={direction} gap={gap} leftSide={leftSide}>
       {skeletonItems}
     </SkeletonContainer>
   );

@@ -77,9 +77,11 @@ export const Footer: FC = () => {
                     skeleton={{
                       direction: 'column',
                       elements: 4,
-                      width: '160px',
+                      width: '200px',
                       height: '24px',
                       gap: '10px',
+                      dark: true,
+                      leftSide: true,
                     }}
                     menuId={19409}
                     direction="column"
@@ -108,9 +110,11 @@ export const Footer: FC = () => {
                     skeleton={{
                       direction: 'column',
                       elements: 4,
-                      width: '160px',
+                      width: '200px',
                       height: '24px',
                       gap: '10px',
+                      dark: true,
+                      leftSide: true,
                     }}
                   />
                 </AccordionDetailsSlider>
@@ -134,9 +138,11 @@ export const Footer: FC = () => {
                     skeleton={{
                       direction: 'column',
                       elements: 4,
-                      width: '160px',
+                      width: '200px',
                       height: '24px',
                       gap: '10px',
+                      dark: true,
+                      leftSide: true,
                     }}
                     direction="column"
                     gap="16px"

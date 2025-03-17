@@ -15,7 +15,15 @@ const waveAnimation = keyframes`
 `;
 
 export const SkeletonElement = styled.div<SkeletonElementProps>`
-  background: ${({ color, theme }) => color || theme.background.skeleton};
+  // background: ${({ color, theme }) => color || theme.background.skeleton};
+  background: ${({ color, light, dark, theme }) => {
+    if (color) return color;
+    if (light)
+      return 'linear-gradient(90deg, #f0f0f052 25%, #f3f0f096 50%, #f0f0f07a 75%)';
+    if (dark)
+      return 'linear-gradient(90deg, #061d5e63 20%, #061d5e70 50%, #061d5e40 75%)';
+    return theme.background.skeleton;
+  }};
   background-size: 200% 100%;
   animation: ${waveAnimation} 1.5s infinite ease-in-out;
   width: ${({ width }) => width};
@@ -25,6 +33,11 @@ export const SkeletonElement = styled.div<SkeletonElementProps>`
 
 export const SkeletonContainer = styled.div<SkeletonContainerProps>`
   display: flex;
-  flex-direction: ${({ direction = "row" }) => direction};
-  gap: ${({ gap }) => gap || "10px"};
+  flex-direction: ${({ direction = 'row' }) => direction};
+  align-items: ${({ leftSide }) => (leftSide ? 'flex-start' : 'center')};
+  gap: ${({ gap }) => gap || '10px'};
+
+  @media ${({ theme }) => theme.media.medium} {
+    align-items: center;
+  }
 `;

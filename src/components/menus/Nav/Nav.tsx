@@ -30,18 +30,9 @@ const Nav: FC<wpMenuProps> = ({
         width={skeleton.width}
         height={skeleton.height}
         gap={skeleton.gap}
-      />
-    );
-  }
-
-  if (!menuItems && skeleton) {
-    return (
-      <MenuSkeleton
-        elements={skeleton.elements}
-        direction={skeleton.direction}
-        width={skeleton.width}
-        height={skeleton.height}
-        gap={skeleton.gap}
+        light={skeleton.light}
+        dark={skeleton.dark}
+        leftSide={skeleton.leftSide}
       />
     );
   }

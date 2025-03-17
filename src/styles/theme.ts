@@ -33,7 +33,8 @@ const theme: Theme = {
     active: '#1E71BE',
     error: '#d92d20',
     silver: '#E0EFFE',
-    platinum: 'radial-gradient(79.43% 79.43% at 49.95% 64.07%, #024584 0%, #0B233D 100%)',
+    platinum:
+      'radial-gradient(79.43% 79.43% at 49.95% 64.07%, #024584 0%, #0B233D 100%)',
     shadow: '',
     border: '#738EBC',
     lightBorder: '#E0EFFE',
@@ -54,6 +55,10 @@ const theme: Theme = {
     skeletonSecondary:
       'linear-gradient(90deg, #f2f8fe 25%, #DFEAF4  50%, #f2f8fe 75%)',
     grey: '#BEBEBE',
+    skeletonLight:
+      'linear-gradient(90deg, #f0f0f052 25%, #f3f0f096 50%, #f0f0f07a 75%)',
+    skeletonDark:
+      'linear-gradient(90deg, #061d5e63 20%, #061d5e70 50%, #061d5e40 75%)',
     success: '#82E1A9',
     warning: '#ffe8ae',
     primaryGradient:
