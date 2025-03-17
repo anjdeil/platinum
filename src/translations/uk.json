@@ -68,6 +68,7 @@
     "availablePcs": "У наявності {quantity} шт",
     "nothingInTheWishlist": "У списку бажань нічого немає...",
     "login": "Увійти",
+    "loggingIn": "Вхід",
     "log-In": "Увійти",
     "password": "Пароль",
     "confirmPassword": "Повторіть пароль",
@@ -247,7 +248,7 @@
   },
   "Contacts": {
     "contacts": "Контакти",
-    "telephone": "Телефон",
+    "telephone": "ТЕЛЕФОН",
     "call": "Зателефонувати",
     "address": "Адреса",
     "schedule": "Пн-Пт: з {from} до {to}",

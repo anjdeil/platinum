@@ -68,6 +68,7 @@
     "availablePcs": "Available {quantity} pcs",
     "nothingInTheWishlist": "There's nothing in the wishlist...",
     "login": "Login",
+    "loggingIn": "Logging in",
     "log-In": "Log in",
     "password": "Password",
     "confirmPassword": "Repeat password",
