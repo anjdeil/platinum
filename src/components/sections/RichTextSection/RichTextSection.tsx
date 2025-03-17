@@ -3,6 +3,7 @@ import parse from 'html-react-parser';
 import { StyledTitle } from '../AboutPlatinumSection/styles';
 import { StyledError } from '../styles';
 import { StyledRichTextSection } from './styles';
+import DOMPurify from 'dompurify';
 
 export const RichTextSection: React.FC<RichTextSectionProps> = ({
   title,
@@ -30,7 +31,8 @@ export const RichTextSection: React.FC<RichTextSectionProps> = ({
     .replace(/^<p><\/p>/, '')
     .replace(/<p><\/p>$/, '');
 
-  const content = parse(cleanedContent);
+  const sanitizedContent = DOMPurify.sanitize(cleanedContent);
+  const content = parse(sanitizedContent);
 
   return (
     <StyledRichTextSection is_reverse={is_reverse} fullSize={fullSize}>
