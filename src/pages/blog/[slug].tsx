@@ -184,7 +184,7 @@ const BlogPostPage = ({ post, recommendedPosts, popularPosts }: PageProps) => {
             )}
           </CategoriesTagWrapper>
         </StyledBox>
-        <BlogInfo created={created} views_count={views_count} postPage />
+        <BlogInfo created={created} views_count={views_count ?? 0} postPage />
         <BlogPostContent content={content} />
         <PostGroupNavigationButton
           prev_post={prev_post}
