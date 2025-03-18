@@ -224,17 +224,19 @@ export const Archive: FC<ArchivePropsType> = props => {
                 </>
               )}
             </CountProduct>
-            <PagesNavigationWrapper>
-              <PagesNavigation
-                page={+page}
-                count={pagesCount}
-                siblingCount={0}
-                shape="rounded"
-                hidePrevButton
-                hideNextButton
-                onChange={handlePageChange}
-              />
-            </PagesNavigationWrapper>
+            {pagesCount > 1 && (
+              <PagesNavigationWrapper>
+                <PagesNavigation
+                  page={+page}
+                  count={pagesCount}
+                  siblingCount={0}
+                  shape="rounded"
+                  hidePrevButton
+                  hideNextButton
+                  onChange={handlePageChange}
+                />
+              </PagesNavigationWrapper>
+            )}
           </CatalogTopWrapper>
           <CatalogListBlock>
             {products?.length > 0 && (
@@ -252,17 +254,19 @@ export const Archive: FC<ArchivePropsType> = props => {
               <Notification>{t('productsNotFound')}</Notification>
             )}
           </CatalogListBlock>
-          <PagesNavigationFooterWrapper>
-            <PagesNavigation
-              page={+page}
-              count={pagesCount}
-              siblingCount={0}
-              shape="rounded"
-              hidePrevButton
-              hideNextButton
-              onChange={handlePageChange}
-            />
-          </PagesNavigationFooterWrapper>
+          {pagesCount > 1 && (
+            <PagesNavigationFooterWrapper>
+              <PagesNavigation
+                page={+page}
+                count={pagesCount}
+                siblingCount={0}
+                shape="rounded"
+                hidePrevButton
+                hideNextButton
+                onChange={handlePageChange}
+              />
+            </PagesNavigationFooterWrapper>
+          )}
         </CatalogRightWrapper>
       </CatalogLayout>
     </CatalogContainer>

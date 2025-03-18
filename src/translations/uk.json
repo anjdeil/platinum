@@ -191,7 +191,9 @@
     "minutes": "Хвилин",
     "priceFrom": "від {price}",
     "deliveryTime": "Замов упродовж {hour} год {minute} хв, і буде відправлено сьогодні",
-    "deliveryNextBusinessDay": "Замовлення буде відправлено наступного робочого дня"
+    "deliveryNextBusinessDay": "Замовлення буде відправлено наступного робочого дня",
+    "yourOpinion": "Ваша думка",
+    "comment": "Коментар"
   },
   "Cart": {
     "cart": "Кошик",

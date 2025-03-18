@@ -34,7 +34,7 @@ export const BaseBlogItemSchema = z.object({
   language_code: z.string(),
   menu_order: z.number(),
   categories: z.array(BlogCategorySchema),
-  views_count: z.number(),
+  views_count: z.number().optional(),
 });
 
 export const BlogItemSchema = BaseBlogItemSchema.extend({
