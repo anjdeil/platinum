@@ -14,7 +14,8 @@ class CustomRestApi {
     url: string,
     method: Method,
     params?: ParamsType,
-    body?: object
+    body?: object,
+    headers?: object
   ) {
     const maxRetries = 3;
     let attempt = 0;
@@ -26,6 +27,7 @@ class CustomRestApi {
           url: this._apiBase + url,
           params: params,
           data: body,
+          headers: headers,
         });
 
         if (response.status >= 200 && response.status < 300) {
@@ -51,8 +53,8 @@ class CustomRestApi {
     throw new Error(`Failed to fetch ${url} after ${maxRetries} attempts`);
   }
 
-  async get(url: string, params?: ParamsType) {
-    return this.getResource(url, 'GET', params);
+  async get(url: string, params?: ParamsType, headers?: object) {
+    return this.getResource(url, 'GET', params, undefined, headers);
   }
 
   async post(url: string, body: object, params?: ParamsType) {
