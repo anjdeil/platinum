@@ -31,6 +31,7 @@ import {
   TabletWrapper,
 } from './styles';
 import { NavLink } from '@/components/menus/Nav/styles';
+import { MenuSkeleton } from '@/components/menus/MenuSkeleton';
 
 export const Footer: FC = () => {
   const t = useTranslations('Footer');

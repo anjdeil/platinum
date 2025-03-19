@@ -34,7 +34,7 @@ export const BaseBlogItemSchema = z.object({
   language_code: z.string(),
   menu_order: z.number(),
   categories: z.array(BlogCategorySchema),
-  views_count: z.number(),
+  views_count: z.number().optional(),
 });
 
 export const BlogItemSchema = BaseBlogItemSchema.extend({
@@ -92,3 +92,4 @@ export type BlogParsedItemType = z.infer<typeof BlogParsedItemSchema>;
 export type BlogItemUnionType = z.infer<typeof BlogItemUnionSchema>;
 export type BlogPostType = z.infer<typeof BlogPostSchema>;
 export type BlogPostResponseType = z.infer<typeof BlogResponseTypeSchema>;
+export type BlogPageDataFullType = z.infer<typeof BlogPageDataFullSchema>;

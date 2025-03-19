@@ -17,6 +17,7 @@ export const RegistrationFormSchema = (isLoggedIn: boolean, t: any) => {
       password: !isLoggedIn ? passwordSchema(t) : z.string().optional(),
       confirmPassword: !isLoggedIn ? z.string() : z.string().optional(),
       terms: termsSchema(t),
+      subscription: z.boolean().optional(),
     })
     .refine(data => data.password === data.confirmPassword, {
       message: t('PasswordsDoNotMatch'),

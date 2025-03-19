@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from '@/store';
 import { popupSet, popupToggle } from '@/store/slices/PopupSlice';
 import { fetchUser } from '@/utils/auth/authService';
 import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import Nav from '../../menus/Nav/Nav';
 import {
@@ -27,6 +28,11 @@ const Header: React.FC = () => {
   const [cartCount, setCartCount] = useState(0);
   const t = useTranslations('HomePage');
   const { wishlist } = useWishlist();
+  const router = useRouter();
+
+  useEffect(() => {
+    setDisplayedSearchBar(false);
+  }, [router]);
 
   useEffect(() => {
     setCartCount(cartItems.length);
@@ -50,9 +56,10 @@ const Header: React.FC = () => {
               menuId={19521}
               skeleton={{
                 elements: 3,
-                width: '80px',
+                width: '100px',
                 height: '24px',
                 gap: '48px',
+                dark: true,
               }}
               texttransform="uppercase"
               justify="space-between"

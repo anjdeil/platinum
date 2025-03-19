@@ -2,7 +2,7 @@ import DeliveryIcon from '@/components/global/icons/DeliveryIcon/DeliveryIcon';
 import { isWeekdayBeforeTwoPM } from '@/utils/isWeekdayBeforeTwoPM';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
-import { StyledNotification } from './styles';
+import { StyledIcon, StyledNotification, StyledText } from './styles';
 
 const getRemainingTime = () => {
   const now = new Date();
@@ -32,13 +32,21 @@ const DeliveryTimer = () => {
 
   return (
     <StyledNotification>
-      <DeliveryIcon />
-      {isWeekdayBeforeTwoPM()
-        ? t('deliveryTime', {
-            hour: timeLeft.hours,
-            minute: timeLeft.minutes,
-          })
-        : t('deliveryNextBusinessDay')}
+      <StyledIcon>
+        <DeliveryIcon />
+      </StyledIcon>
+      <StyledText>
+        {isWeekdayBeforeTwoPM() ? (
+          <span>
+            {t('deliveryTime', {
+              hour: timeLeft.hours,
+              minute: timeLeft.minutes,
+            })}
+          </span>
+        ) : (
+          <span>{t('deliveryNextBusinessDay')}</span>
+        )}
+      </StyledText>
     </StyledNotification>
   );
 };
