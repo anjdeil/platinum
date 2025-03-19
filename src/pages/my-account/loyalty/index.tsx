@@ -14,7 +14,7 @@ import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
 import wpRestApi from '@/services/wpRestApi';
 import { useGetUserTotalsQuery } from '@/store/rtk-queries/userTotals/userTotals';
 import { useLazyFetchUserDataQuery } from '@/store/rtk-queries/wpApi';
-import { Title } from '@/styles/components';
+import { AccountTitle, Title } from '@/styles/components';
 import theme from '@/styles/theme';
 import { JwtDecodedDataType } from '@/types/services/wpRestApi/auth';
 import { LOYALTY_LEVELS } from '@/utils/consts';
@@ -60,7 +60,10 @@ export default function LoyaltyPage() {
       : null;
 
   return (
-    <AccountLayout title={t('loyaltyProgram')}>
+    <AccountLayout>
+      <AccountTitle as={'h1'} textalign="center" uppercase marginBottom="24">
+        {t('loyaltyProgram')}
+      </AccountTitle>
       {isUserError && (
         <Notification type="info">{t('userInfoError')}</Notification>
       )}

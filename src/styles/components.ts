@@ -73,8 +73,8 @@ export const Title = styled.h1<TitleProps>`
 `;
 
 export const AccountTitle = styled(Title)<TitleProps>`
-  margin-top: 24px;
   margin-bottom: ${({ marginBottom = 48 }) => marginBottom}px;
+  margin-top: ${({ marginTop }) => marginTop}px;
 
   @media ${({ theme }) => theme.media.large} {
     margin-bottom: ${({ tabletMarginBottom = 24 }) => tabletMarginBottom}px;

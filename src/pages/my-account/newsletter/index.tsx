@@ -7,7 +7,7 @@ import {
   useUnsubscribeMutation,
 } from '@/store/rtk-queries/mailpoetApi';
 import { useEffect, useRef, useState } from 'react';
-import { FlexBox } from '@/styles/components';
+import { AccountTitle, FlexBox } from '@/styles/components';
 
 import Notification from '@/components/global/Notification/Notification';
 import { MenuSkeleton } from '@/components/menus/MenuSkeleton';
@@ -107,7 +107,10 @@ export default function Subscription({ email }: SubscriptionProps) {
   };
 
   return (
-    <AccountLayout title={t('subscription')}>
+    <AccountLayout>
+      <AccountTitle as={'h1'} textalign="center" uppercase marginBottom="24">
+        {t('subscription')}
+      </AccountTitle>
       {error && (
         <Notification type="info">{t('subscriptionError')}</Notification>
       )}
