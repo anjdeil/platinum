@@ -16,7 +16,7 @@ const shouldForwardProp = (prop: string) =>
 
 export const BenefitsLayout = styled(Box, {
   shouldForwardProp,
-}) <BenefitsGapProps>`
+})<BenefitsGapProps>`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: ${({ gapMedium = '16px' }) => gapMedium};
@@ -33,7 +33,7 @@ export const BenefitsLayout = styled(Box, {
 
 export const BenefitsItem = styled(Box, {
   shouldForwardProp,
-}) <BenefitsGapProps>`
+})<BenefitsGapProps>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -79,20 +79,20 @@ export const BenefitsAccordionDetails = styled(AccordionDetails)`
     }
   }
   &.gold {
-    min-height: 350px;
+    min-height: 450px;
 
     @media ${({ theme }) => theme.media.medium} {
       min-height: unset;
     }
   }
   &.platinum {
-    min-height: 450px;
+    min-height: 550px;
 
     @media ${({ theme }) => theme.media.large} {
       min-height: unset;
     }
   }
-  margin-top: ${({ theme }) => theme.spacing.medium};  
+  margin-top: ${({ theme }) => theme.spacing.medium};
 `;
 
 export const BenefitsPrice = styled.span`
@@ -104,7 +104,7 @@ export const BenefitsPrice = styled.span`
   }
 `;
 
-export const BenefitsAccordionStyled = styled(Accordion) <{ level: Level }>`
+export const BenefitsAccordionStyled = styled(Accordion)<{ level: Level }>`
   border-radius: 8px !important;
   width: 100%;
   margin: 0;
@@ -116,8 +116,8 @@ export const BenefitsAccordionStyled = styled(Accordion) <{ level: Level }>`
     level === 'silver'
       ? theme.colors.primaryBlue200
       : level === 'gold'
-        ? theme.colors.primaryBlue500
-        : theme.colors.primaryBlue700};
+      ? theme.colors.primaryBlue500
+      : theme.colors.primaryBlue700};
   color: ${({ level }) => (level === 'silver' ? 'black' : 'white')};
   .MuiAccordionSummary-content.Mui-expanded {
     margin: 0;
@@ -173,7 +173,7 @@ export const AccordionTitle = styled.h3`
 
 export const AccordionHeader = styled(Box, {
   shouldForwardProp,
-}) <BenefitsGapProps>`
+})<BenefitsGapProps>`
   display: flex;
   flex-direction: column;
   align-items: center;

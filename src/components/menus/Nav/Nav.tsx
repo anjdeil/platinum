@@ -18,6 +18,7 @@ const Nav: FC<wpMenuProps> = ({
   align,
   gap,
   mobGap,
+  lineHeight,
 }) => {
   const menus: menuItemsType[] | undefined = useContext(MenusContext);
   const menuItems = menus?.find(({ id }) => id === menuId)?.items;
@@ -36,6 +37,9 @@ const Nav: FC<wpMenuProps> = ({
       />
     );
   }
+  const sortedMenuItems = menuItems
+    ? [...menuItems].sort((a, b) => a.menu_order - b.menu_order)
+    : [];
 
   return (
     <StyleNav>
@@ -47,7 +51,7 @@ const Nav: FC<wpMenuProps> = ({
         mobGap={mobGap}
       >
         {menuItems &&
-          menuItems.map(({ title, url }) => (
+          sortedMenuItems.map(({ title, url }) => (
             <li key={title}>
               <NavLink
                 href={url}
@@ -56,6 +60,7 @@ const Nav: FC<wpMenuProps> = ({
                 textalign={textalign}
                 fontsizemob={fontsizemob}
                 fontSize={fontSize}
+                lineHeight={lineHeight}
               >
                 {title}
               </NavLink>

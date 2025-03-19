@@ -10,7 +10,7 @@ interface SocialTextProps {
 }
 export const SocialsContainer = styled.div<SocialsContainerProps>`
   display: flex;
-  justify-content: center;
+  justify-content: start;
   margin: ${({ margin = '0 0 0 0' }) => margin};
   flex-wrap: wrap;
   gap: 8px;
@@ -27,7 +27,6 @@ export const SocialsContainer = styled.div<SocialsContainerProps>`
     }
   `}
 `;
-
 export const SocialItemLink = styled(Link)<SocialItemLinkProps>`
   display: flex;
   align-items: center;
