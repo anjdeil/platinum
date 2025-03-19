@@ -12,8 +12,8 @@ export const currencySymbols: CurrencyState[] = [
 ];
 
 const initialState: CurrencyState = {
-    name: 'EUR',
-    code: '€',
+  name: 'PLN',
+  code: 'zł',
 };
 
 const currencySlice = createSlice({
