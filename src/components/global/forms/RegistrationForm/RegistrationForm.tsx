@@ -28,6 +28,9 @@ import CustomTextField from '../CustomTextField/CustomTextField';
 import { getValidationSchema } from '@/utils/getValidationSchema';
 import { CustomForm, StyledFieldsWrapper } from './styles';
 import { FormCheckboxUnControlled } from '../BillingForm/FormCheckboxUnControlled';
+import { FormCheckbox } from '../BillingForm/FormCheckbox';
+import { VariationFields } from '../BillingForm/style';
+import { useSubscribeMutation } from '@/store/rtk-queries/mailpoetApi';
 
 export const RegistrationForm: FC = () => {
   const tValidation = useTranslations('Validation');
@@ -72,6 +75,8 @@ export const RegistrationForm: FC = () => {
   const [registerCustomerMutation, { error }] = useRegisterCustomerMutation();
   const [fetchToken] = useGetTokenMutation();
   const [checkToken] = useCheckTokenMutation();
+  const [subscribe, { isSuccess: isSubscribed, error: subscribeError }] =
+    useSubscribeMutation();
 
   async function onSubmit(formData: RegistrationFormType) {
     setCustomError('');
@@ -123,6 +128,18 @@ export const RegistrationForm: FC = () => {
       /** Validate auth token */
       const isTokenValid = await checkToken({});
       if (!isTokenValid) throw new Error('Auth token validation failed.');
+
+      // Subscribe to the newsletter
+      const { subscription, email } = formData;
+
+      if (isTokenValid && subscription) {
+        try {
+          await subscribe({ email });
+        } catch (error) {
+          console.error('Error subscribing:', error);
+        }
+      }
+
       router.push('/my-account');
     } catch (err) {
       setCustomError(
@@ -289,6 +306,14 @@ export const RegistrationForm: FC = () => {
         label={tMyAccount('agreePersonalData')}
         validation={validationSchema('terms')}
       />
+      <VariationFields>
+        <FormCheckbox
+          name={'subscription'}
+          register={register}
+          errors={errors}
+          label={tValidation('agreentment')}
+        />
+      </VariationFields>
       <FormWrapperBottom>
         <StyledButton
           color={theme.colors.white}
@@ -304,9 +329,19 @@ export const RegistrationForm: FC = () => {
             }}
           ></CustomError>
         )}
-        {isSubmitSuccessful && !error && customError && (
+        {isSubmitSuccessful && !error && !customError && (
           <Notification type="success">
-            {tMyAccount('Your account has been created successfully!')}
+            {tMyAccount('YourAccountHasBeenCreated')}
+          </Notification>
+        )}
+        {isSubscribed && (
+          <Notification type="success">
+            {tMyAccount('subscriptionSuccess')}
+          </Notification>
+        )}
+        {subscribeError && (
+          <Notification type="info">
+            {tMyAccount('subscriptionError')}
           </Notification>
         )}
       </FormWrapperBottom>
