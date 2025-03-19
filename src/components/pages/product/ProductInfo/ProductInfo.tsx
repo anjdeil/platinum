@@ -134,6 +134,11 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
     }
   }
 
+  function handleNotifyButtonClick() {
+    console.log('Notify button clicked');
+    // dispatch(popupToggle('notify'));
+  }
+
   const stockQuantity = useMemo(() => {
     if (!currentVariation?.stock_quantity && !product.stock_quantity) return 0;
     if (currentVariation?.stock_quantity)
@@ -258,7 +263,7 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
               {renderCartButtonInnerText()}
             </AddToBasketButton>
           ) : (
-            <StyledButton notify={true}>
+            <StyledButton notify={true} onClick={handleNotifyButtonClick}>
               {t('notifyWhenAvailable')}
             </StyledButton>
           )}
