@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   i18n: {
     locales: ['en', 'ru', 'pl', 'uk', 'de'],
-    defaultLocale: 'en',
+    defaultLocale: 'pl',
     localeDetection: false,
   },
   images: {
@@ -12,6 +12,7 @@ const nextConfig = {
       'secure.gravatar.com',
       'instagram.fwaw3-2.fna.fbcdn.net',
       'scontent.cdninstagram.com',
+      'admin.platinumchetvertinovskaya.com',
     ],
     remotePatterns: [
       {

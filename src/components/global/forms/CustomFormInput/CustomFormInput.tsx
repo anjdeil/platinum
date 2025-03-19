@@ -6,6 +6,7 @@ import {
   CustomInputWrapper,
   CustomRequired,
   Input,
+  LabelWrapper,
   ShowPasswordImage,
   StyledPhoneInput,
 } from './styles';
@@ -96,10 +97,12 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
         font={font}
       >
         {label && (
-          <span>
-            {fieldName}
-            {isRequire && <CustomRequired>*</CustomRequired>}
-          </span>
+          <LabelWrapper>
+            <span>
+              {fieldName}
+              {isRequire && <CustomRequired>*</CustomRequired>}
+            </span>
+          </LabelWrapper>
         )}
 
         <CustomInputWrapper>

@@ -89,9 +89,9 @@ const CommentPopup: React.FC<SwiperPopupProps> = ({ onClose }) => {
           </Text>
           <StyledForm onSubmit={handleSubmit(onSubmit)}>
             <CustomFormInput
-              fieldName="Your opinion"
+              fieldName={t('yourOpinion')}
               name="comment"
-              placeholder="Comment"
+              placeholder={t('comment')}
               register={register}
               errors={errors}
               inputTag="textarea"

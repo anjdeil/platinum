@@ -436,7 +436,6 @@ export const BillingForm: FC<BillingFormProps> = ({
                   register={register}
                   errors={errors}
                   label={tCheckout('vatInvoice')}
-                  noTop
                 />
                 {invoice && (
                   <StyledFormWrapper>

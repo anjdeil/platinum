@@ -79,14 +79,14 @@ export const BenefitsAccordionDetails = styled(AccordionDetails)`
     }
   }
   &.gold {
-    min-height: 350px;
+    min-height: 450px;
 
     @media (max-width: 1024px) {
       min-height: unset;
     }
   }
   &.platinum {
-    min-height: 450px;
+    min-height: 550px;
 
     @media (max-width: 1024px) {
       min-height: unset;

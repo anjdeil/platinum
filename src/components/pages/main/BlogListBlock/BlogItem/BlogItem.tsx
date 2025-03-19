@@ -65,7 +65,7 @@ const BlogItem: FC<BlogItemProps> = ({ post }) => {
             {post.title}
           </Title>
         </StyledWrapperLink>
-        <BlogInfo created={created} views_count={views_count} />
+        <BlogInfo created={created} views_count={views_count ?? 0} />
       </ContentBlock>
       <BottomContentBlock>
         <TextContent>{displayContent}</TextContent>
