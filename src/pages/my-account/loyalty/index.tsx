@@ -103,6 +103,7 @@ export default function LoyaltyPage() {
             as="h2"
             textalign="left"
             marginBottom="16px"
+            uppercase
           >
             {t('levelBenefits')}
           </Title>

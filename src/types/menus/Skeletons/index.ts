@@ -11,6 +11,7 @@ export const SkeletonElementPropsSchema = z.object({
 export const SkeletonContainerPropsSchema = z.object({
   direction: z.enum(['row', 'column']).optional(),
   gap: z.string().optional(),
+  marginTop: z.string().optional(),
   leftSide: z.boolean().optional(),
   verticalSlider: z.boolean().optional(),
 });
