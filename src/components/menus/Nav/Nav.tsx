@@ -37,6 +37,9 @@ const Nav: FC<wpMenuProps> = ({
       />
     );
   }
+  const sortedMenuItems = menuItems
+    ? [...menuItems].sort((a, b) => a.menu_order - b.menu_order)
+    : [];
 
   return (
     <StyleNav>
@@ -48,7 +51,7 @@ const Nav: FC<wpMenuProps> = ({
         mobGap={mobGap}
       >
         {menuItems &&
-          menuItems.map(({ title, url }) => (
+          sortedMenuItems.map(({ title, url }) => (
             <li key={title}>
               <NavLink
                 href={url}

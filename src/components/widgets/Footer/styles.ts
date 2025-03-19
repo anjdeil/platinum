@@ -12,7 +12,7 @@ export const FooterTitle = styled.h3`
   white-space: nowrap;
   @media ${({ theme }) => theme.media.mediumLarge} {
     font-size: 1rem;
-    line-height: 2rem;
+    line-height: 1.5rem;
   }
 `;
 export const FooterSecondTitle = styled.h3`
@@ -47,7 +47,6 @@ export const FooterLogoWrapper = styled.div`
 //---------------GRID & CONTAINERS-------------
 export const FooterGridContainer = styled.div`
   width: 100%;
-
   margin-bottom: 24px;
   display: grid;
   grid-template-columns: repeat(3, 1fr) 1.5fr;
@@ -59,7 +58,8 @@ export const FooterGridContainer = styled.div`
     grid-template-rows: 1fr;
   }
   @media ${({ theme }) => theme.media.medium} {
-    margin-top: 24px;
+    margin: 32px 0;
+    row-gap: 32px;
     display: flex;
     flex-direction: column;
   }
@@ -137,6 +137,7 @@ export const FooterAccordion = styled(Accordion)`
   border: none;
   box-shadow: none;
   width: auto;
+  margin: 0;
   .MuiAccordionDetails-root {
     padding: 0;
   }
@@ -154,15 +155,15 @@ export const FooterAccordion = styled(Accordion)`
   }
 `;
 export const AccordionSummaryCustom = styled(AccordionSummary)`
-  margin-bottom: 23px;
   padding: 0;
   min-height: fit-content !important;
+  margin: 0;
   .MuiAccordionSummary-content.Mui-expanded {
     color: ${({ theme }) => theme.colors.white};
     margin: 0;
   }
   @media ${({ theme }) => theme.media.medium} {
-    margin-bottom: 16px;
+    margin-bottom: 0;
     .MuiAccordionSummary-content {
       margin: 0;
     }
@@ -172,6 +173,12 @@ export const AccordionDetailsSlider = styled(AccordionDetails)`
   @media ${({ theme }) => theme.media.medium} {
     display: flex;
     justify-content: center;
+  }
+`;
+export const AccordionDetailsWrapper = styled.div`
+  margin-top: 24px;
+  @media ${({ theme }) => theme.media.medium} {
+    margin-top: 16px;
   }
 `;
 

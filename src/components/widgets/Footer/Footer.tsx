@@ -12,6 +12,7 @@ import Link from 'next/link';
 import { FC, useState } from 'react';
 import {
   AccordionDetailsSlider,
+  AccordionDetailsWrapper,
   AccordionSummaryCustom,
   Contact,
   ContactLink,
@@ -63,22 +64,24 @@ export const Footer: FC = () => {
           <FooterTitle>{t('myAccount')}</FooterTitle>
         </AccordionSummaryCustom>
         <AccordionDetails>
-          <Nav
-            skeleton={{
-              direction: 'column',
-              elements: 4,
-              width: '160px',
-              height: '24px',
-              gap: '10px',
-            }}
-            lineHeight="22px"
-            menuId={19409}
-            direction="column"
-            gap="16px"
-            mobGap="8px"
-            align="flex-start"
-            textalign="left"
-          ></Nav>
+          <AccordionDetailsWrapper>
+            <Nav
+              skeleton={{
+                direction: 'column',
+                elements: 4,
+                width: '160px',
+                height: '24px',
+                gap: '10px',
+              }}
+              lineHeight="22px"
+              menuId={19409}
+              direction="column"
+              gap="16px"
+              mobGap="8px"
+              align="flex-start"
+              textalign="left"
+            ></Nav>
+          </AccordionDetailsWrapper>
         </AccordionDetails>
       </FooterAccordion>
     </FooterColumn>
@@ -97,16 +100,18 @@ export const Footer: FC = () => {
           <FooterTitle>{t('categories')}</FooterTitle>
         </AccordionSummaryCustom>
         <AccordionDetailsSlider>
-          <VerticalSlider
-            menuId={344}
-            skeleton={{
-              direction: 'column',
-              elements: 4,
-              width: '160px',
-              height: '24px',
-              gap: '10px',
-            }}
-          />
+          <AccordionDetailsWrapper>
+            <VerticalSlider
+              menuId={344}
+              skeleton={{
+                direction: 'column',
+                elements: 4,
+                width: '100%',
+                height: '24px',
+                gap: '10px',
+              }}
+            />
+          </AccordionDetailsWrapper>
         </AccordionDetailsSlider>
       </FooterAccordion>
     </FooterColumn>
@@ -126,22 +131,24 @@ export const Footer: FC = () => {
           <FooterTitle>{t('information')}</FooterTitle>
         </AccordionSummaryCustom>
         <AccordionDetails>
-          <Nav
-            menuId={19450}
-            skeleton={{
-              direction: 'column',
-              elements: 4,
-              width: '160px',
-              height: '24px',
-              gap: '10px',
-            }}
-            lineHeight="22px"
-            direction="column"
-            gap="16px"
-            mobGap="8px"
-            align="flex-start"
-            textalign="left"
-          ></Nav>
+          <AccordionDetailsWrapper>
+            <Nav
+              menuId={19450}
+              skeleton={{
+                direction: 'column',
+                elements: 4,
+                width: '160px',
+                height: '24px',
+                gap: '10px',
+              }}
+              lineHeight="22px"
+              direction="column"
+              gap="16px"
+              mobGap="8px"
+              align="flex-start"
+              textalign="left"
+            ></Nav>
+          </AccordionDetailsWrapper>
         </AccordionDetails>
       </FooterAccordion>
     </FooterColumn>
@@ -157,100 +164,134 @@ export const Footer: FC = () => {
           aria-controls={`"panel4a-content"`}
           id="panel4a-header"
         >
-          <NavLink href={'/contacts'} passHref>
+          {isMobile ? (
             <FooterTitle>{t('contacts')}</FooterTitle>
-          </NavLink>
+          ) : (
+            <NavLink href={'/contacts'} passHref>
+              <FooterTitle>{t('contacts')}</FooterTitle>
+            </NavLink>
+          )}
         </AccordionSummaryCustom>
         <AccordionDetails>
-          <ContactsContent>
-            <div>
-              <Contact>
-                <Image
-                  src="/assets/icons/contact_place.svg"
-                  alt="contact place"
-                  width={24}
-                  height={24}
-                  unoptimized={true}
-                />
-                <ContactLink
-                  href={
-                    ContactItems?.address
-                      ? `https://www.google.com/maps?q=${encodeURIComponent(
-                          ContactItems.address
-                        )}`
-                      : '#'
-                  }
-                  passHref
-                  target="_blank"
-                >
-                  {ContactItems.address}
-                </ContactLink>
-              </Contact>
-              <Contact>
-                <Image
-                  src="/assets/icons/contact_phone.svg"
-                  alt="contact phone"
-                  width={24}
-                  height={24}
-                  unoptimized={true}
-                />
-                <ContactLink
-                  href={ContactItems?.phone ? `tel:${ContactItems.phone}` : '#'}
-                  passHref
-                >
-                  {ContactItems.phone}
-                </ContactLink>
-              </Contact>
-            </div>
-
-            <div>
-              <Contact>
-                <Image
-                  src="/assets/icons/contact_mail.svg"
-                  alt="contact mail"
-                  width={24}
-                  height={24}
-                  unoptimized={true}
-                />
-                <ContactLink
-                  href={
-                    ContactItems?.email ? `mailto:${ContactItems.email}` : '#'
-                  }
-                  passHref
-                >
-                  {ContactItems.email}
-                </ContactLink>
-              </Contact>
-              <Contact>
-                <Image
-                  src="/assets/icons/contact_time.svg"
-                  alt="contact time"
-                  width={24}
-                  height={24}
-                  unoptimized={true}
-                />
-                <p>
-                  {tContacts('schedule', {
-                    from: ContactItems.schedule[0]?.from_time,
-                    to: ContactItems.schedule[0]?.to_time,
-                  })}
-                  <br />
-                  {ContactItems.schedule[1]?.not_working
-                    ? tContacts('dayOff')
-                    : `${tContacts('satSun', {
-                        from: ContactItems.schedule[1]?.from_time,
-                        to: ContactItems.schedule[1]?.to_time,
-                      })}`}
-                </p>
-              </Contact>
-              <Socials
-                iconscolor="white"
-                margin="16px 0 0 0"
-                text={false}
-                itemmargin="16px"
-              />
-            </div>
-          </ContactsContent>
+          <AccordionDetailsWrapper>
+            <ContactsContent>
+              {ContactItems ? (
+                <div>
+                  <Contact>
+                    <Image
+                      src="/assets/icons/contact_place.svg"
+                      alt="contact place"
+                      width={24}
+                      height={24}
+                      unoptimized={true}
+                    />
+                    <ContactLink
+                      href={
+                        ContactItems?.address
+                          ? `https://www.google.com/maps?q=${encodeURIComponent(
+                              ContactItems.address
+                            )}`
+                          : '#'
+                      }
+                      passHref
+                      target="_blank"
+                    >
+                      {ContactItems.address}
+                    </ContactLink>
+                  </Contact>
+                  <Contact>
+                    <Image
+                      src="/assets/icons/contact_phone.svg"
+                      alt="contact phone"
+                      width={24}
+                      height={24}
+                      unoptimized={true}
+                    />
+                    <ContactLink
+                      href={
+                        ContactItems?.phone ? `tel:${ContactItems.phone}` : '#'
+                      }
+                      passHref
+                    >
+                      {ContactItems.phone}
+                    </ContactLink>
+                  </Contact>
+                </div>
+              ) : (
+                <div>
+                  <MenuSkeleton
+                    elements={2}
+                    direction="column"
+                    width="200px"
+                    height="24px"
+                    gap="16px"
+                  />
+                </div>
+              )}
+              {ContactItems ? (
+                <div>
+                  <Contact>
+                    <Image
+                      src="/assets/icons/contact_mail.svg"
+                      alt="contact mail"
+                      width={24}
+                      height={24}
+                      unoptimized={true}
+                    />
+                    <ContactLink
+                      href={
+                        ContactItems?.email
+                          ? `mailto:${ContactItems.email}`
+                          : '#'
+                      }
+                      passHref
+                    >
+                      {ContactItems.email}
+                    </ContactLink>
+                  </Contact>
+                  <Contact>
+                    <Image
+                      src="/assets/icons/contact_time.svg"
+                      alt="contact time"
+                      width={24}
+                      height={24}
+                      unoptimized={true}
+                    />
+                    <p>
+                      {tContacts('schedule', {
+                        from: ContactItems.schedule[0]?.from_time,
+                        to: ContactItems.schedule[0]?.to_time,
+                      })}
+                      <br />
+                      {ContactItems.schedule[1]?.not_working
+                        ? tContacts('dayOff')
+                        : `${tContacts('satSun', {
+                            from: ContactItems.schedule[1]?.from_time,
+                            to: ContactItems.schedule[1]?.to_time,
+                          })}`}
+                    </p>
+                  </Contact>
+                  <Socials
+                    iconscolor="white"
+                    margin="16px 0 0 0"
+                    text={false}
+                    itemmargin="16px"
+                  />
+                </div>
+              ) : (
+                <div>
+                  <MenuSkeleton
+                    marginTop="16px"
+                    elements={2}
+                    direction="column"
+                    width="200px"
+                    height="24px"
+                    gap="16px"
+                  />
+                </div>
+              )}
+            </ContactsContent>
+          </AccordionDetailsWrapper>
         </AccordionDetails>
       </FooterAccordion>
     </FooterColumn>
