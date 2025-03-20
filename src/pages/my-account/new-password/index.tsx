@@ -3,6 +3,7 @@ import { FormContainer } from '@/components/pages/account/styles';
 import { useTranslations } from 'next-intl';
 import Breadcrumbs from '@/components/global/Breadcrumbs/Breadcrumbs';
 import { NewPasswordForm } from '@/components/global/forms/password/NewPasswordForm';
+import { GetServerSidePropsContext } from 'next';
 
 export default function ResetPassword() {
   const t = useTranslations('MyAccount');
@@ -25,3 +26,13 @@ export default function ResetPassword() {
     </FormPageWrapper>
   );
 }
+
+export const getServerSideProps = async ({
+  locale,
+}: GetServerSidePropsContext) => {
+  return {
+    props: {
+      messages: (await import(`../../../translations/${locale}.json`)).default,
+    },
+  };
+};

@@ -33,8 +33,8 @@ export default function AccountLayout({
       </Head>
 
       {title && (
-        <AccountTitle as={'h1'} textalign="center" uppercase>
-      {title}
+        <AccountTitle as={'h1'} textalign="center" uppercase marginTop="24">
+          {title}
         </AccountTitle>
       )}
       <AccountContainer>

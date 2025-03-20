@@ -43,13 +43,13 @@ export const BenefitsItem = styled(Box, {
 
   @media ${({ theme }) => theme.media.large} {
     :nth-of-type(1) {
-      width: 50%;
+      width: 74%;
     }
     :nth-of-type(2) {
-      width: 65%;
+      width: 87%;
     }
     :nth-of-type(3) {
-      width: 80%;
+      width: 100%;
     }
     gap: ${({ gapSm = '8px' }) => gapSm};
   }
@@ -74,21 +74,21 @@ export const BenefitsAccordionDetails = styled(AccordionDetails)`
   &.silver {
     min-height: 200px;
 
-    @media ${({ theme }) => theme.media.medium} {
+    @media (max-width: 1024px) {
       min-height: unset;
     }
   }
   &.gold {
     min-height: 450px;
 
-    @media ${({ theme }) => theme.media.medium} {
+    @media (max-width: 1024px) {
       min-height: unset;
     }
   }
   &.platinum {
     min-height: 550px;
 
-    @media ${({ theme }) => theme.media.large} {
+    @media (max-width: 1024px) {
       min-height: unset;
     }
   }
@@ -179,9 +179,16 @@ export const AccordionHeader = styled(Box, {
   align-items: center;
   gap: ${({ gapMedium = '16px' }) => gapMedium};
   width: 100%;
-  @media ${({ theme }) => theme.media.medium} {
-    flex-direction: row;
+
+  @media (max-width: 768px) {
+    flex-direction: row-reverse;
     justify-content: space-between;
     gap: 0;
+  }
+  span {
+    @media (max-width: 768px) {
+      font-size: 1rem;
+      font-weight: 600;
+    }
   }
 `;

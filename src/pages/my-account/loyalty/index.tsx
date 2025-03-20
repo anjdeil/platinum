@@ -14,7 +14,7 @@ import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
 import wpRestApi from '@/services/wpRestApi';
 import { useGetUserTotalsQuery } from '@/store/rtk-queries/userTotals/userTotals';
 import { useLazyFetchUserDataQuery } from '@/store/rtk-queries/wpApi';
-import { Title } from '@/styles/components';
+import { AccountTitle, Title } from '@/styles/components';
 import theme from '@/styles/theme';
 import { JwtDecodedDataType } from '@/types/services/wpRestApi/auth';
 import { LOYALTY_LEVELS } from '@/utils/consts';
@@ -43,9 +43,10 @@ export default function LoyaltyPage() {
 
   const { convertCurrency, currencyCode: code } = useCurrencyConverter();
 
-  const { level, nextLevelAmount } = getLoyaltyLevel(
+  const { level, nextLevelAmount } = getLoyaltyLevel(2600);
+  /*   const { level, nextLevelAmount } = getLoyaltyLevel(
     Number(userTotal?.total_spent)
-  );
+  ); */
 
   const currentLevelIndex = LOYALTY_LEVELS.findIndex(
     loyaltyLevel => loyaltyLevel.name === level
@@ -59,7 +60,10 @@ export default function LoyaltyPage() {
       : null;
 
   return (
-    <AccountLayout title={t('loyaltyProgram')}>
+    <AccountLayout>
+      <AccountTitle as={'h1'} textalign="center" uppercase marginBottom="24">
+        {t('loyaltyProgram')}
+      </AccountTitle>
       {isUserError && (
         <Notification type="info">{t('userInfoError')}</Notification>
       )}
@@ -76,25 +80,28 @@ export default function LoyaltyPage() {
         <LoyalityPageWrapper>
           {userTotal && (
             <LoyalityLevelCard isColumn={!level}>
-              <LevelText>
-                {level ? (
-                  <>{t('currentLevel')}</>
-                ) : (
-                  <>{t('loyaltyLevelNotEarned')}</>
-                )}
-              </LevelText>
-              <LoyalityBox>
-                <LevelCodeText>{level}</LevelCodeText>
-                {nextLevel && nextLevelAmount && (
-                  <NextLevelText>
-                    {t('nextLevelInfo', {
-                      amount: convertCurrency(+nextLevelAmount),
-                      code,
-                      nextLevel: nextLevel.name,
-                    })}
-                  </NextLevelText>
-                )}
-              </LoyalityBox>
+              <div>
+                <LevelText>
+                  {level ? (
+                    <>{t('currentLevel')}</>
+                  ) : (
+                    <>{t('loyaltyLevelNotEarned')}</>
+                  )}
+                </LevelText>
+                <LoyalityBox>
+                  <LevelCodeText>{level}</LevelCodeText>
+                </LoyalityBox>
+              </div>
+
+              {nextLevel && nextLevelAmount && (
+                <NextLevelText>
+                  {t('nextLevelInfo', {
+                    amount: convertCurrency(+nextLevelAmount),
+                    code,
+                    nextLevel: nextLevel.name,
+                  })}
+                </NextLevelText>
+              )}
             </LoyalityLevelCard>
           )}
 
@@ -104,6 +111,7 @@ export default function LoyaltyPage() {
             textalign="left"
             marginBottom="16px"
             uppercase
+            mobTextalign="center"
           >
             {t('levelBenefits')}
           </Title>
