@@ -68,6 +68,7 @@
     "availablePcs": "В наличии {quantity} шт",
     "nothingInTheWishlist": "В списке желаний ничего нет ...",
     "login": "Войти",
+    "loggingIn": "Вход",
     "log-In": "Войти",
     "password": "Пароль",
     "confirmPassword": "Повторите пароль",
@@ -249,7 +250,7 @@
   },
   "Contacts": {
     "contacts": "Контакты",
-    "telephone": "Номер телефона",
+    "telephone": "ТЕЛЕФОН",
     "call": "Позвонить",
     "address": "Адрес",
     "schedule": "Пн-Пт: c {from} до {to}",

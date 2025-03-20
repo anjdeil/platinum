@@ -15,6 +15,17 @@ export const SocialsContainer = styled.div<SocialsContainerProps>`
   flex-wrap: wrap;
   gap: 8px;
   width: 100%;
+
+  ${({ secondary }) =>
+    secondary &&
+    `
+    @media (max-width: 768px) {
+    margin-top: 8px;
+    row-gap: 24px;
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  `}
 `;
 export const SocialItemLink = styled(Link)<SocialItemLinkProps>`
   display: flex;
