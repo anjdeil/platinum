@@ -165,7 +165,7 @@
     "theEndOfThePromotion": "Koniec promocji",
     "available": "Dostępny: {count} szt",
     "notAvailable": "Nie dostępny",
-    "viewingThisProduct": "Jest obecnie oglądany: {count}",
+    "viewingThisProduct": "Teraz ogląda: {count}",
     "fastShipping": "Szybka wysyłka",
     "freeDeliveryOver": "Darmowa dostawa od {price}",
     "color": "Kolor",
