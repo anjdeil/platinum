@@ -17,7 +17,7 @@ export const RichTextSection: React.FC<RichTextSectionProps> = ({
 
   const cleanedContent = text
     .replace(/<br\s*\/?>/gi, '\n')
-    .replace(/\s*t\s*/g, '')
+    .replace(/\bT\b/gi, '')
     .split('\n')
     .filter(line => line.length > 0)
     .map(line => {

@@ -353,7 +353,7 @@ export const FormPageWrapper = styled.header`
 
 export const StyledSlugRichTextSection = styled.div`
   width: 100%;
-  max-width: 800px;
+  max-width: 752px;
   display: flex;
   flex-direction: column;
   align-items: center;

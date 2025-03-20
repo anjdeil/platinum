@@ -8,7 +8,7 @@ const nextConfig = {
   },
   images: {
     domains: [
-      'platinum.digiway-dev.online',
+      'admin.platinumchetvertinovskaya.com',
       'secure.gravatar.com',
       'instagram.fwaw3-2.fna.fbcdn.net',
       'scontent.cdninstagram.com',
