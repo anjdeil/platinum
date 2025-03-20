@@ -1,13 +1,13 @@
-import { useAppSelector } from "@/store";
-import { FC } from "react";
-import { SocialItemLink, SocialsContainer, SocialText } from "./styles";
-import { SocialsProps } from "@/types/menus/Socials";
-import FacebookIcon from "@/components/global/icons/socials/FacebookIcon/FacebookIcon";
-import InstagramIcon from "@/components/global/icons/socials/InstagramIcon/InstagramIcon";
-import PinterestIcon from "@/components/global/icons/socials/PinterestIcon/PinterestIcon";
-import TikTokIcon from "@/components/global/icons/socials/TikTokIcon/TikTokIcon";
-import YouTubeIcon from "@/components/global/icons/socials/YouTubeIcon/YouTubeIcon";
-import { Skeleton } from "@mui/material";
+import { useAppSelector } from '@/store';
+import { FC } from 'react';
+import { SocialItemLink, SocialsContainer, SocialText } from './styles';
+import { SocialsProps } from '@/types/menus/Socials';
+import FacebookIcon from '@/components/global/icons/socials/FacebookIcon/FacebookIcon';
+import InstagramIcon from '@/components/global/icons/socials/InstagramIcon/InstagramIcon';
+import PinterestIcon from '@/components/global/icons/socials/PinterestIcon/PinterestIcon';
+import TikTokIcon from '@/components/global/icons/socials/TikTokIcon/TikTokIcon';
+import YouTubeIcon from '@/components/global/icons/socials/YouTubeIcon/YouTubeIcon';
+import { Skeleton } from '@mui/material';
 import WhatsAppIcon from '@/components/global/icons/socials/WhatsAppIcon/WhatsAppIcon';
 
 export const Socials: FC<SocialsProps> = ({
@@ -16,6 +16,7 @@ export const Socials: FC<SocialsProps> = ({
   margin,
   itemmargin,
   textcolor,
+  secondary = false,
 }) => {
   const themeOptions = useAppSelector(state => state.themeOptions);
   const SocialItems = themeOptions.data.item.contacts.socials;
@@ -42,7 +43,7 @@ export const Socials: FC<SocialsProps> = ({
   const isSocialsDataAvailable = SocialItems && SocialItems.length > 0;
 
   return (
-    <SocialsContainer margin={margin}>
+    <SocialsContainer margin={margin} secondary={secondary}>
       {isSocialsDataAvailable ? (
         SocialItems.map(({ social, link }) => (
           <SocialItemLink
