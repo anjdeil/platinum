@@ -1,4 +1,4 @@
-import styled from "@emotion/styled";
+import styled from '@emotion/styled';
 
 interface InnerSectionProps {
   isNarrow?: boolean;
@@ -6,7 +6,7 @@ interface InnerSectionProps {
 
 export const StyledInnerSection = styled.div<InnerSectionProps>`
   width: 100%;
-  max-width: ${({ isNarrow }) => (isNarrow ? '800px' : '100%')};
+  max-width: ${({ isNarrow }) => (isNarrow ? '752px' : '100%')};
   @media ${({ theme }) => theme.media.largePlus} {
     display: flex;
     flex-direction: column;

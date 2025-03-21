@@ -74,14 +74,16 @@ export const StyledRichTextSection = styled.div<StyledRichTextSectionProps>`
     color: ${({ theme }) => theme.colors.black};
     line-height: 1.5em;
     margin-bottom: 16px;
-    max-width: 600px;
+    max-width: 752px;
     @media ${({ theme }) => theme.media.medium} {
       font: ${({ theme }) => theme.fonts.bodypresmallReg};
       line-height: 1.5;
       margin-bottom: 8px;
     }
   }
-
+  p.wide-text {
+    max-width: 752px;
+  }
   a {
     font: ${({ theme }) => theme.fonts.bodyMiddleReg};
     color: ${({ theme }) => theme.colors.black};
