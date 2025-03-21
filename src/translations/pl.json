@@ -136,6 +136,8 @@
     "new": "Sortuj według najnowszych",
     "cheapest": "Sortuj według najtańszych",
     "expensive": "Sortuj według najdroższych",
+    "nameAsc": "Sortuj według nazwy rosnąco",
+    "nameDesc": "Sortuj według nazwy malejąco",
     "clearFilters": "Wyczyść filtry",
     "clearFilter": "Wyczyść",
     "applyFilter": "Zastosuj",
@@ -150,7 +152,8 @@
     "Size": "Rozmiar",
     "Volumes": "Objemy",
     "view": "Widok",
-    "gift certificate": "Certyfikat podarunkowy"
+    "gift certificate": "Certyfikat podarunkowy",
+    "mattress-cover": "Pokrowiec na materac"
   },
   "Product": {
     "addToBasket": "Dodaj do koszyka",
@@ -266,7 +269,8 @@
     "errorMessage": "Coś poszło nie tak. Spróbuj ponownie.",
     "successMessage": "Twoja wiadomość została wysłana pomyślnie!",
     "sending": "Wysyłanie...",
-    "sendButton": "Wyślij pytanie"
+    "sendButton": "Wyślij pytanie",
+    "whatsApp": "Masz pytania?"
   },
   "Validation": {
     "emailValidation": "Proszę wprowadzić poprawny adres e-mail.",

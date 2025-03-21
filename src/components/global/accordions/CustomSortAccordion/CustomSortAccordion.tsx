@@ -28,6 +28,9 @@ export const CustomSortAccordion = () => {
     if (orderBy === 'created') {
       return 'new';
     }
+    if (orderBy === 'name') {
+      return order === 'asc' ? 'nameAsc' : 'nameDesc';
+    }
 
     return 'stocks';
   }, [searchParams]);
@@ -48,6 +51,14 @@ export const CustomSortAccordion = () => {
     {
       name: 'expensive',
       label: t('expensive'),
+    },
+    {
+      name: 'nameAsc',
+      label: t('nameAsc'),
+    },
+    {
+      name: 'nameDesc',
+      label: t('nameDesc'),
     },
   ];
 
@@ -110,6 +121,12 @@ export const CustomSortAccordion = () => {
           break;
         case 'expensive':
           newSortParams = { order_by: 'min_price', order: 'desc' };
+          break;
+        case 'nameAsc':
+          newSortParams = { order_by: 'name', order: 'asc' };
+          break;
+        case 'nameDesc':
+          newSortParams = { order_by: 'name', order: 'desc' };
           break;
         default:
           break;

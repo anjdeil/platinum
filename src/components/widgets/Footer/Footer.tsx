@@ -306,6 +306,7 @@ export const Footer: FC = () => {
     contacts,
     categories,
   };
+
   return (
     <FooterWrapper>
       <FooterContainer>
@@ -323,7 +324,9 @@ export const Footer: FC = () => {
           {isTablet && !isMobile ? (
             <TabletWrapper>
               <FooterGridContainer>
-                {tabletColumns.map(col => columnComponents[col])}
+                {tabletColumns.map(col => (
+                  <div key={col}>{columnComponents[col]}</div>
+                ))}
               </FooterGridContainer>
               {contacts}
               <PaymentAndDeliveryMethodsContainer>
@@ -408,8 +411,12 @@ export const Footer: FC = () => {
           ) : (
             <FooterGridContainer>
               {isMobile
-                ? mobColumns.map(col => columnComponents[col])
-                : columns.map(col => columnComponents[col])}
+                ? mobColumns.map(col => (
+                    <div key={col}>{columnComponents[col]}</div>
+                  ))
+                : columns.map(col => (
+                    <div key={col}>{columnComponents[col]}</div>
+                  ))}
             </FooterGridContainer>
           )}
         </FooterMainContentWrapper>
