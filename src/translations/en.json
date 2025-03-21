@@ -137,6 +137,8 @@
     "new": "Sort by newest",
     "cheapest": "Sort by cheapest",
     "expensive": "Sort by most expensive",
+    "nameAsc": "Sort by name ascending",
+    "nameDesc": "Sort by name descending",
     "clearFilters": "Clear All",
     "clearFilter": "Clear",
     "applyFilter": "Apply",
@@ -151,7 +153,8 @@
     "Size": "Size",
     "Volumes": "Volumes",
     "view": "View",
-    "gift certificate": "Gift certificate"
+    "gift certificate": "Gift certificate",
+    "mattress-cover": "Mattress cover"
   },
   "Product": {
     "addToBasket": "Add to basket",
@@ -267,7 +270,8 @@
     "errorMessage": "Something went wrong. Please try again.",
     "successMessage": "Your message has been sent successfully!",
     "sending": "Sending...",
-    "sendButton": "Send a question"
+    "sendButton": "Send a question",
+    "whatsApp": "Have a question?"
   },
   "Validation": {
     "emailValidation": "Please enter a valid email.",
