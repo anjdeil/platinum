@@ -453,7 +453,13 @@
     "change": "Zmień",
     "parcelLocker": "Paczkomat",
     "selectParcelLocker": "Wybierz paczkomat",
-    "deliveryUnavailable": "Metody dostawy nie są dostępne dla wybranego regionu. Sprawdź swój kraj."
+    "deliveryUnavailable": "Metody dostawy nie są dostępne dla wybranego regionu. Sprawdź swój kraj.",
+    "easypack_parcel_machines": "InPost Paczkomat 24/7",
+    "easypack_shipping_courier": "InPost Kurier",
+    "easypack_cod_shipping_courier":  "InPost Kurier – Płatność za pobraniem",
+    "local_pickup": "Odbiór",
+    "flexible_shipping_single":  "Poczta Polska",
+    "gls": "GLS"
   },
   "InPostGeowidget": {
     "close": "Zamknij"

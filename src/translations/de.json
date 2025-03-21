@@ -453,7 +453,13 @@
     "change": "Ändern",
     "parcelLocker": "Paketstation",
     "selectParcelLocker": "Paketstation auswählen",
-    "deliveryUnavailable": "Für die ausgewählte Region sind keine Liefermethoden verfügbar. Bitte überprüfen Sie Ihr Land."
+    "deliveryUnavailable": "Für die ausgewählte Region sind keine Liefermethoden verfügbar. Bitte überprüfen Sie Ihr Land.",
+    "easypack_parcel_machines": "InPost Paketautomat 24/7",
+    "easypack_shipping_courier": "InPost Kurier",
+    "easypack_cod_shipping_courier":  "InPost Kurier – Nachnahme",
+    "local_pickup": "Abholung",
+    "flexible_shipping_single":  "Poczta Polska",
+    "gls": "GLS"
   },
   "InPostGeowidget": {
     "close": "Schließen"

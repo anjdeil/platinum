@@ -66,17 +66,15 @@ export const ShippingMethodSelectorMethodRadioBox = styled.div`
 
 export const ShippingMethodSelectorMethodNaming = styled.div`
     display: flex;
+    flex-direction: column;
     gap: 10px;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
 `;
 
 export const ShippingMethodSelectorMethodName = styled.div`
     max-width: 250px;
 `;
 
-export const ShippingMethodSelectorMethodEstimate = styled.div`
+export const ShippingMethodSelectorMethodDescription = styled.div`
     font-size: 0.9rem;
     color: ${({ theme }) => theme.colors.grey};
 `;
