@@ -274,8 +274,7 @@ export const AmbassadorForm: FC = () => {
                       <p>
                         <span>{tValidation('clickToUpload')} </span>&nbsp;
                         {tValidation('orDragAndDrop')} SVG, PNG, JPG, PDF{' '}
-                        {tValidation('or')} GIF ({tValidation('max')} 800x400px,
-                        3 mB)
+                        {tValidation('or')} GIF ({tValidation('max')}&nbsp;3 mB)
                       </p>
                     </>
                   )}
