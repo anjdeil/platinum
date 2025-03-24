@@ -10,7 +10,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import ProductBadge from '../ProductBadge/ProductBadge';
-import ProductBadgeWrapper from '../ProductBadgeWrapper/ProductBadgeWrapper';
 import {
   PriceWrapper,
   ProductImageWrapper,
@@ -28,6 +27,7 @@ import { useWishlist } from '@/hooks/useWishlist';
 import { popupToggle } from '@/store/slices/PopupSlice';
 import { getCardProductPrice } from '@/utils/price/getCardProductPrice';
 import { Skeleton } from '@mui/material';
+import ProductCardBadgeWrapper from '../ProductCardBadgeWrapper/ProductCardBadgeWrapper';
 
 const ProductCard: React.FC<ProductCardPropsType> = ({ product }) => {
   const t = useTranslations('Product');
@@ -144,15 +144,19 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product }) => {
             )}
           </PriceWrapper>
         </TitleWrapper>
-        <ProductBadgeWrapper>
+        <ProductCardBadgeWrapper>
           {isSale && <ProductBadge type="sale" />}
+          {Boolean(product.tags.length) &&
+            product.tags.map(tag => (
+              <ProductBadge key={tag.id} type={tag.slug} />
+            ))}
           <FavoriteButton
             onClick={() => handleWishlistToggle(product)}
             marginLeft="auto"
             active={checkDesired(product.id)}
             isLoading={isUpdatingWishlist || isFetchingWishlist}
           />
-        </ProductBadgeWrapper>
+        </ProductCardBadgeWrapper>
       </ProductWrapper>
       <>
         <AddToBasketButton

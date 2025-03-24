@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-export const BadgeWrapper = styled.div`
+export const BadgeCardWrapper = styled.div`
   box-sizing: border-box;
   width: 100%;
   display: flex;
@@ -8,7 +8,6 @@ export const BadgeWrapper = styled.div`
   gap: 12px;
   align-items: center;
   position: absolute;
-  padding: 16px;
   top: 0;
   z-index: 10;
 `;

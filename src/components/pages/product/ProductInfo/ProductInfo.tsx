@@ -195,12 +195,18 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
     }
   }, [stockQuantity]);
 
+  console.log('product...', product);
+
   return (
     <ProductWrapper>
       <ProductImageWrapper>
         <ProductSwiper data={galleryImages} />
         <ProductBadgeWrapper>
           {isSale && <ProductBadge type="sale" />}
+          {Boolean(product.tags.length) &&
+            product.tags.map(tag => (
+              <ProductBadge key={tag.id} type={tag.slug} />
+            ))}
           <FavoriteButton
             onClick={() => handleWishlistToggle(product)}
             marginLeft="auto"

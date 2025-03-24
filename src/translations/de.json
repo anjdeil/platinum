@@ -510,5 +510,10 @@
     "contacts": "Kontakt",
     "delivery": "Lieferung",
     "payments": "Zahlungen"
+  },
+  "Loyalty": {
+    "silverBenefits": "Silver-level-vorteile",
+    "goldBenefits": "Gold-level-vorteile",
+    "platinumBenefits": "Platinum-level-vorteile"
   }
 }

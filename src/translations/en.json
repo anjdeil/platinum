@@ -470,9 +470,9 @@
     "deliveryUnavailable": "Delivery methods are not available for the selected region. Please check your country.",
     "easypack_parcel_machines": "InPost Locker 24/7",
     "easypack_shipping_courier": "InPost Courier",
-    "easypack_cod_shipping_courier":  "InPost Courier – Cash on delivery",
+    "easypack_cod_shipping_courier": "InPost Courier – Cash on delivery",
     "local_pickup": "Pickup",
-    "flexible_shipping_single":  "Poczta Polska",
+    "flexible_shipping_single": "Poczta Polska",
     "gls": "GLS"
   },
   "InPostGeowidget": {
@@ -510,5 +510,10 @@
     "contacts": "Contacts",
     "delivery": "Delivery",
     "payments": "Payments"
+  },
+  "Loyalty": {
+    "silverBenefits": "Silver Level Benefits",
+    "goldBenefits": "Gold Level Benefits",
+    "platinumBenefits": "Platinum Level Benefits"
   }
 }

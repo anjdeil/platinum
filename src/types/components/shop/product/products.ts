@@ -29,6 +29,12 @@ export const ProductAttrOptionSchema = z.object({
   name: z.string(),
 });
 
+export const ProductTagsSchema = z.object({
+  id: z.number(),
+  slug: z.string(),
+  name: z.string(),
+});
+
 export const ProductAttributesSchema = z.object({
   id: z.number(),
   slug: z.string(),
@@ -113,6 +119,7 @@ export const ProductSchema = z.object({
   modified: z.string(),
   language_code: z.string(),
   stock_quantity: z.number().nullable(),
+  tags: z.array(ProductTagsSchema),
   price: ProductPriceSchema.nullable(),
   total_sales: z.number(),
   average_rating: z.number(),
