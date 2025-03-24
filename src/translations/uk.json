@@ -154,7 +154,9 @@
     "Volumes": "Об'єми",
     "view": "Вид",
     "gift certificate": "Подарунковий сертифікат",
-    "mattress-cover": "Чехол на матрац"
+    "mattress-cover": "Чехол на матрац",
+    "Twist": "Підкручення",
+    "Volume": "Об'єм"
   },
   "Product": {
     "addToBasket": "Додати до кошика",
@@ -186,8 +188,6 @@
     "commentText1": "Ви протестували наш продукт? Поділіться своєю думкою;",
     "commentText2": "- Ми намагаємося бути найкращими для вас, і ваша думка дуже нам допоможе!",
     "lastedArticles": "Останні статті",
-    "thickness": "товщина",
-    "length": "довжина",
     "leaveAReviewAboutProduct": "Залиште відгук про товар",
     "descriptions": "Опис",
     "days": "Днів",
@@ -197,7 +197,17 @@
     "deliveryTime": "Замов упродовж {hour} год {minute} хв, і буде відправлено сьогодні",
     "deliveryNextBusinessDay": "Замовлення буде відправлено наступного робочого дня",
     "yourOpinion": "Ваша думка",
-    "comment": "Коментар"
+    "comment": "Коментар",
+    "chehol-matras": "Чохол на матрац",
+    "colour": "Колір",
+    "gift-certificate": "Подарунковий сертифікат",
+    "length": "Довжина",
+    "size": "Розмір",
+    "thickness": "Товщина",
+    "twist": "Підкручення",
+    "view": "Вид",
+    "volume": "Об'єм",
+    "volumes": "Об'єми"
   },
   "Cart": {
     "cart": "Кошик",
@@ -460,9 +470,9 @@
     "deliveryUnavailable": "Способи доставки недоступні для обраного регіону. Будь ласка, перевірте свою країну.",
     "easypack_parcel_machines": "InPost Поштомат 24/7",
     "easypack_shipping_courier": "InPost Кур'єр",
-    "easypack_cod_shipping_courier":  "InPost Кур'єр – Накладений платіж",
+    "easypack_cod_shipping_courier": "InPost Кур'єр – Накладений платіж",
     "local_pickup": "Самовивіз",
-    "flexible_shipping_single":  "Poczta Polska",
+    "flexible_shipping_single": "Poczta Polska",
     "gls": "GLS"
   },
   "InPostGeowidget": {
