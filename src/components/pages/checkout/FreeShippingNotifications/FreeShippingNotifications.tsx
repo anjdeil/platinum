@@ -29,11 +29,11 @@ function mergeFreeShippingNotifications(
     if (matchedNotification) {
       return accumulator.map((notification) =>
         notification.difference === methodDifference
-          ? { ...notification, titles: [...notification.titles, method.title] }
+          ? { ...notification, titles: [...notification.titles, method.method_id] }
           : notification,
       );
     } else {
-      return [...accumulator, { difference: methodDifference, titles: [method.title] }];
+      return [...accumulator, { difference: methodDifference, titles: [method.method_id] }];
     }
   }, []);
 
@@ -44,11 +44,15 @@ export default function FreeShippingNotifications({ methods, totalCost }: {
   totalCost: number
 }) {
   const t = useTranslations('Checkout');
+  const tShippingMethodSelector = useTranslations('ShippingMethodSelector');
+
   const { convertCurrency, currencyCode } = useCurrencyConverter();
 
   const mergedNotifications = mergeFreeShippingNotifications(methods, totalCost);
 
   return mergedNotifications.map(({ difference, titles }) => {
+    titles = titles.map((title) => tShippingMethodSelector(title));
+
     return (
       <FreeShippingNotification isVisible={true} key={titles.join(' | ')}>
         <FreeShippingIcon />
