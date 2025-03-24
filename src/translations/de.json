@@ -137,6 +137,8 @@
     "new": "Nach Neuheiten sortieren",
     "cheapest": "Nach günstigstem Preis sortieren",
     "expensive": "Nach höchstem Preis sortieren",
+    "nameAsc": "Nach Namen aufsteigend sortieren",
+    "nameDesc": "Nach Namen absteigend sortieren",
     "clearFilters": "Alle löschen",
     "clearFilter": "Löschen",
     "applyFilter": "Anwenden",
@@ -151,7 +153,8 @@
     "Size": "Größe",
     "Volumes": "Volumen",
     "view": "Ansicht",
-    "gift certificate": "Geschenkgutschein"
+    "gift certificate": "Geschenkgutschein",
+    "mattress-cover": "Matratzenbezug"
   },
   "Product": {
     "addToBasket": "In den Warenkorb legen",
@@ -267,7 +270,8 @@
     "errorMessage": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
     "successMessage": "Ihre Nachricht wurde erfolgreich gesendet!",
     "sending": "Senden...",
-    "sendButton": "Frage senden"
+    "sendButton": "Frage senden",
+    "whatsApp": "Haben Sie eine Frage?"
   },
   "Validation": {
     "emailValidation": "Geben Sie eine gültige E-Mail-Adresse ein",
