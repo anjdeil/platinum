@@ -188,8 +188,6 @@
     "commentText1": "Have you tested our product? Share an opinion;",
     "commentText2": "- we try to be best for you, and your opinion will help us a lot!",
     "lastedArticles": "Lasted Articles",
-    "thickness": "thickness",
-    "length": "length",
     "leaveAReviewAboutProduct": "Leave a review about product",
     "descriptions": "Descriptions",
     "days": "Days",
@@ -199,7 +197,17 @@
     "deliveryTime": "Order within {hour}h {minute}min and it will be shipped today",
     "deliveryNextBusinessDay": "The order will be shipped on the next business day",
     "yourOpinion": "Your opinion",
-    "comment": "Comment"
+    "comment": "Comment",
+    "chehol-matras": "Mattress cover",
+    "colour": "Colour",
+    "gift-certificate": "Gift certificate",
+    "length": "length",
+    "size": "Size",
+    "thickness": "thickness",
+    "twist": "Twist",
+    "view": "View",
+    "volume": "Volume",
+    "volumes": "Volumes"
   },
   "Cart": {
     "cart": "Cart",

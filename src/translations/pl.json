@@ -188,8 +188,6 @@
     "commentText1": "Czy przetestowałeś nasz produkt? Podziel się swoją opinią;",
     "commentText2": "- Staramy się być najlepsi dla Ciebie, a Twoja opinia bardzo nam pomoże!",
     "lastedArticles": "Najnowsze artykuły",
-    "thickness": "grubość",
-    "length": "długość",
     "leaveAReviewAboutProduct": "Zostaw recenzję o towarze",
     "descriptions": "Opis",
     "days": "Dni",
@@ -199,7 +197,17 @@
     "deliveryTime": "Zamów w ciągu {hour} godz. {minute} min, a zostanie wysłane dzisiaj",
     "deliveryNextBusinessDay": "Zamówienie zostanie wysłane w następny dzień roboczy",
     "yourOpinion": "Twoja opinia",
-    "comment": "Komentarz"
+    "comment": "Komentarz",
+    "chehol-matras": "Pokrowiec na materac",
+    "colour": "Kolor",
+    "gift-certificate": "Bon podarunkowy",
+    "length": "Długość",
+    "size": "Rozmiar",
+    "thickness": "Grubość",
+    "twist": "Skręt",
+    "view": "Widok",
+    "volume": "Pojemność",
+    "volumes": "Objętość"
   },
   "Cart": {
     "cart": "Koszyk",

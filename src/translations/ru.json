@@ -188,8 +188,6 @@
     "commentText1": "Вы протестировали наш продукт? Поделитесь своим мнением;",
     "commentText2": "- Мы стараемся быть лучшими для вас, и ваше мнение очень нам поможет!",
     "lastedArticles": "Последние статьи",
-    "thickness": "толщина",
-    "length": "длина",
     "leaveAReviewAboutProduct": "Оставьте отзыв о товаре",
     "descriptions": "Описание",
     "days": "Дней",
@@ -199,7 +197,17 @@
     "deliveryTime": "Закажи в течение {hour} ч {minute} мин, и он будет отправлен сегодня",
     "deliveryNextBusinessDay": "Заказ будет отправлен на следующий рабочий день",
     "yourOpinion": "Ваше мнение",
-    "comment": "Комментарий"
+    "comment": "Комментарий",
+    "chehol-matras": "Чехол на матрас",
+    "colour": "Цвет",
+    "gift-certificate": "Подарочный сертификат",
+    "length": "Длина",
+    "size": "Размер",
+    "thickness": "Толщина",
+    "twist": "Подкрутка",
+    "view": "Вид",
+    "volume": "Объем",
+    "volumes": "Объемы"
   },
   "Cart": {
     "cart": "Корзина",
@@ -462,9 +470,9 @@
     "deliveryUnavailable": "Способы доставки недоступны для выбранного региона. Пожалуйста, проверьте свою страну.",
     "easypack_parcel_machines": "InPost Почтомат 24/7",
     "easypack_shipping_courier": "InPost Курьер",
-    "easypack_cod_shipping_courier":  "InPost Курьер – Наложенный платеж",
+    "easypack_cod_shipping_courier": "InPost Курьер – Наложенный платеж",
     "local_pickup": "Самовывоз",
-    "flexible_shipping_single":  "Poczta Polska",
+    "flexible_shipping_single": "Poczta Polska",
     "gls": "GLS"
   },
   "InPostGeowidget": {
