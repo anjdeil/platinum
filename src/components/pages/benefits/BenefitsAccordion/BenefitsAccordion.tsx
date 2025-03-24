@@ -20,6 +20,7 @@ import {
   BenefitsTitle,
   CustomAccordionSummary,
 } from './styles';
+import { useTranslations } from 'next-intl';
 
 const renderDescriptionList = (
   description: string | undefined,
@@ -42,6 +43,7 @@ export const BenefitsAccordion: FC<BenefitsProps> = ({
   gapMedium,
   gapLg,
 }) => {
+  const t = useTranslations('Loyalty');
   const isMobile = useMediaQuery('(max-width: 1023px)');
   const [expanded, setExpanded] = useState<string | false>(
     !isMobile ? 'expanded' : false
@@ -92,7 +94,7 @@ export const BenefitsAccordion: FC<BenefitsProps> = ({
             aria-controls="accordion1-content"
             id="accordion1-header"
           >
-            <AccordionTitle>Silver Level Benefits</AccordionTitle>
+            <AccordionTitle>{t('silverBenefits')}</AccordionTitle>
           </CustomAccordionSummary>
           <BenefitsAccordionDetails
             className="silver"
@@ -129,7 +131,7 @@ export const BenefitsAccordion: FC<BenefitsProps> = ({
             aria-controls="accordion2-content"
             id="accordion2-header"
           >
-            <AccordionTitle>Gold Level Benefits</AccordionTitle>
+            <AccordionTitle>{t('goldBenefits')}</AccordionTitle>
           </CustomAccordionSummary>
           <BenefitsAccordionDetails
             className="gold"
@@ -166,7 +168,7 @@ export const BenefitsAccordion: FC<BenefitsProps> = ({
             aria-controls="accordion3-content"
             id="accordion3-header"
           >
-            <AccordionTitle>Platinum Level Benefits</AccordionTitle>
+            <AccordionTitle>{t('platinumBenefits')}</AccordionTitle>
           </CustomAccordionSummary>
           <BenefitsAccordionDetails
             className="platinum"

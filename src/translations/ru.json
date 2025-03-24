@@ -460,9 +460,9 @@
     "deliveryUnavailable": "Способы доставки недоступны для выбранного региона. Пожалуйста, проверьте свою страну.",
     "easypack_parcel_machines": "InPost Почтомат 24/7",
     "easypack_shipping_courier": "InPost Курьер",
-    "easypack_cod_shipping_courier":  "InPost Курьер – Наложенный платеж",
+    "easypack_cod_shipping_courier": "InPost Курьер – Наложенный платеж",
     "local_pickup": "Самовывоз",
-    "flexible_shipping_single":  "Poczta Polska",
+    "flexible_shipping_single": "Poczta Polska",
     "gls": "GLS"
   },
   "InPostGeowidget": {
@@ -500,5 +500,10 @@
     "contacts": "Контакты",
     "delivery": "Доставка",
     "payments": "Оплата"
+  },
+  "Loyalty": {
+    "silverBenefits": "ПРЕИМУЩЕСТВА УРОВНЯ SILVER",
+    "goldBenefits": "ПРЕИМУЩЕСТВА УРОВНЯ GOLD",
+    "platinumBenefits": "ПРЕИМУЩЕСТВА УРОВНЯ PLATINUM"
   }
 }

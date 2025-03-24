@@ -460,9 +460,9 @@
     "deliveryUnavailable": "Für die ausgewählte Region sind keine Liefermethoden verfügbar. Bitte überprüfen Sie Ihr Land.",
     "easypack_parcel_machines": "InPost Paketautomat 24/7",
     "easypack_shipping_courier": "InPost Kurier",
-    "easypack_cod_shipping_courier":  "InPost Kurier – Nachnahme",
+    "easypack_cod_shipping_courier": "InPost Kurier – Nachnahme",
     "local_pickup": "Abholung",
-    "flexible_shipping_single":  "Poczta Polska",
+    "flexible_shipping_single": "Poczta Polska",
     "gls": "GLS"
   },
   "InPostGeowidget": {
@@ -500,5 +500,10 @@
     "contacts": "Kontakt",
     "delivery": "Lieferung",
     "payments": "Zahlungen"
+  },
+  "Loyalty": {
+    "silverBenefits": "SILVER-LEVEL-VORTEILE",
+    "goldBenefits": "GOLD-LEVEL-VORTEILE",
+    "platinumBenefits": "PLATINUM-LEVEL-VORTEILE"
   }
 }
