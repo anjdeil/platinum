@@ -510,5 +510,10 @@
     "contacts": "Контакти",
     "delivery": "Доставка",
     "payments": "Оплата"
+  },
+  "Loyalty": {
+    "silverBenefits": "Переваги рівня silver",
+    "goldBenefits": "Переваги рівня gold",
+    "platinumBenefits": "Переваги рівня platinum"
   }
 }
