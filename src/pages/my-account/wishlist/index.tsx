@@ -10,6 +10,7 @@ import { FC, useCallback, useEffect, useState } from 'react';
 import Notification from '@/components/global/Notification/Notification';
 import { CartLink } from '@/components/global/popups/MiniCart/style';
 import {
+  AccountTitle,
   SkeletonItem,
   SkeletonWrapper,
   StyledButton,
@@ -105,7 +106,10 @@ const Wishlist: FC<WishlistPageProps> = ({ defaultCustomerData }) => {
   ));
 
   return (
-    <AccountLayout title={tMyAccount('wishlist')}>
+    <AccountLayout>
+      <AccountTitle as={'h1'} textalign="center" uppercase marginBottom="24">
+        {tMyAccount('wishlist')}
+      </AccountTitle>
       {isLoading && <SkeletonWrapper>{Skeletons}</SkeletonWrapper>}
 
       {!isLoading && (

@@ -3,7 +3,7 @@ import {
   ShippingMethodSelectorLabel,
   ShippingMethodSelectorMethod,
   ShippingMethodSelectorMethodContent,
-  ShippingMethodSelectorMethodCost,
+  ShippingMethodSelectorMethodCost, ShippingMethodSelectorMethodDescription,
   ShippingMethodSelectorMethodDetail,
   ShippingMethodSelectorMethodLocker,
   ShippingMethodSelectorMethodLockerAddress,
@@ -24,6 +24,7 @@ import ShippingMethodSelectorSkeleton from './ShippingMethodSelectorSkeleton';
 import { ParcelMachineType } from '@/types/pages/checkout';
 import { CustomRequired } from '@/components/global/forms/CustomFormInput/styles';
 import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
+import { useAppSelector } from '@/store';
 
 export default function ShippingMethodSelector({
                                                  methods,
@@ -45,7 +46,9 @@ export default function ShippingMethodSelector({
   getCalculatedMethodCost: (method: ShippingMethodType) => number
 }) {
   const t = useTranslations('ShippingMethodSelector');
-  const {convertCurrency, currencyCode} = useCurrencyConverter();
+  const { convertCurrency, currencyCode } = useCurrencyConverter();
+
+  const {address} = useAppSelector(state => state.themeOptions.data.item.contacts);
 
   const handleChangeShippingMethod = (method: ShippingMethodType) => {
     onChange(method);
@@ -75,9 +78,11 @@ export default function ShippingMethodSelector({
                   <ShippingMethodSelectorMethodRadioBox className="ShippingMethodSelectorMethodRadioBox" />
                   <ShippingMethodSelectorMethodNaming>
                     <ShippingMethodSelectorMethodName>
-                      {method.title}
+                      {t(method.method_id)}
                     </ShippingMethodSelectorMethodName>
-                    {/* <ShippingMethodSelectorMethodEstimate>2 - 4 working days</ShippingMethodSelectorMethodEstimate> */}
+                    {method.method_id === 'local_pickup' &&
+                      <ShippingMethodSelectorMethodDescription>{address}</ShippingMethodSelectorMethodDescription>
+                    }
                   </ShippingMethodSelectorMethodNaming>
                   <ShippingMethodSelectorMethodCost>
                     {convertCurrency(getCalculatedMethodCost(method))}{' '}

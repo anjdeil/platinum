@@ -14,7 +14,7 @@ export const NetworksSection: React.FC<NetworksSectionProps> = ({
     <SectionContainer>
       <RecommendContainer>
         <SectionHeader title={title} subtitle={subtitle} />
-        <Socials text={true} textcolor={theme.colors.black}></Socials>
+        <Socials secondary text={true} textcolor={theme.colors.black}></Socials>
       </RecommendContainer>
     </SectionContainer>
   );

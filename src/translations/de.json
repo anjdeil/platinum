@@ -68,6 +68,7 @@
     "availablePcs": "Verfügbar {quantity} Stk",
     "nothingInTheWishlist": "Auf der Wunschliste steht nichts...",
     "login": "Einloggen",
+    "loggingIn": "Einloggen",
     "log-In": "Einloggen",
     "password": "Passwort",
     "confirmPassword": "Passwort wiederholen",
@@ -136,6 +137,8 @@
     "new": "Nach Neuheiten sortieren",
     "cheapest": "Nach günstigstem Preis sortieren",
     "expensive": "Nach höchstem Preis sortieren",
+    "nameAsc": "Nach Namen aufsteigend sortieren",
+    "nameDesc": "Nach Namen absteigend sortieren",
     "clearFilters": "Alle löschen",
     "clearFilter": "Löschen",
     "applyFilter": "Anwenden",
@@ -150,7 +153,10 @@
     "Size": "Größe",
     "Volumes": "Volumen",
     "view": "Ansicht",
-    "gift certificate": "Geschenkgutschein"
+    "gift certificate": "Geschenkgutschein",
+    "mattress-cover": "Matratzenbezug",
+    "Twist": "Twist",
+    "Volume": "Volumen"
   },
   "Product": {
     "addToBasket": "In den Warenkorb legen",
@@ -182,8 +188,6 @@
     "commentText1": "Haben Sie unser Produkt getestet? Teilen Sie Ihre Meinung mit;",
     "commentText2": "- Wir versuchen, das Beste für Sie zu sein, und Ihre Meinung wird uns sehr helfen!",
     "lastedArticles": "Neueste Artikel",
-    "thickness": "Dicke",
-    "length": "Länge",
     "leaveAReviewAboutProduct": "Hinterlassen Sie eine Bewertung über die Ware",
     "descriptions": "Beschreibung",
     "days": "Tage",
@@ -193,7 +197,17 @@
     "deliveryTime": "Bestelle innerhalb von {hour} Std. {minute} Min. und es wird heute verschickt",
     "deliveryNextBusinessDay": "Die Bestellung wird am nächsten Werktag versandt",
     "yourOpinion": "Ihre Meinung",
-    "comment": "Kommentar"
+    "comment": "Kommentar",
+    "chehol-matras": "Matratzenbezug",
+    "colour": "Farbe",
+    "gift-certificate": "Geschenkgutschein",
+    "length": "Länge",
+    "size": "Größe",
+    "thickness": "Dicke",
+    "twist": "Twist",
+    "view": "Ansicht",
+    "volume": "Volumen",
+    "volumes": "Bände"
   },
   "Cart": {
     "cart": "Warenkorb",
@@ -266,7 +280,8 @@
     "errorMessage": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
     "successMessage": "Ihre Nachricht wurde erfolgreich gesendet!",
     "sending": "Senden...",
-    "sendButton": "Frage senden"
+    "sendButton": "Frage senden",
+    "whatsApp": "Haben Sie eine Frage?"
   },
   "Validation": {
     "emailValidation": "Geben Sie eine gültige E-Mail-Adresse ein",
@@ -452,7 +467,13 @@
     "change": "Ändern",
     "parcelLocker": "Paketstation",
     "selectParcelLocker": "Paketstation auswählen",
-    "deliveryUnavailable": "Für die ausgewählte Region sind keine Liefermethoden verfügbar. Bitte überprüfen Sie Ihr Land."
+    "deliveryUnavailable": "Für die ausgewählte Region sind keine Liefermethoden verfügbar. Bitte überprüfen Sie Ihr Land.",
+    "easypack_parcel_machines": "InPost Paketautomat 24/7",
+    "easypack_shipping_courier": "InPost Kurier",
+    "easypack_cod_shipping_courier": "InPost Kurier – Nachnahme",
+    "local_pickup": "Abholung",
+    "flexible_shipping_single": "Poczta Polska",
+    "gls": "GLS"
   },
   "InPostGeowidget": {
     "close": "Schließen"
@@ -489,5 +510,10 @@
     "contacts": "Kontakt",
     "delivery": "Lieferung",
     "payments": "Zahlungen"
+  },
+  "Loyalty": {
+    "silverBenefits": "Silver-level-vorteile",
+    "goldBenefits": "Gold-level-vorteile",
+    "platinumBenefits": "Platinum-level-vorteile"
   }
 }

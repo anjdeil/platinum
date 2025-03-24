@@ -8,18 +8,20 @@ export const LoyalityPageWrapper = styled.div`
 export const LoyalityLevelCard = styled.div<{ isColumn?: boolean }>`
   margin-bottom: 24px;
   border-radius: 8px;
-  display: flex;
-  align-items: start;
-  gap: ${({ isColumn }) => (isColumn ? '0' : '16px')};
   padding: 12px 16px;
-  justify-content: space-between;
   align-items: flex-start;
   background-color: ${({ theme }) => theme.background.secondary};
-  flex-direction: ${({ isColumn }) => (isColumn ? 'column' : 'row')};
 
-  @media ${({ theme }) => theme.media.medium} {
-    flex-direction: column;
-    align-items: center;
+  div {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: ${({ isColumn }) => (isColumn ? '0' : '16px')};
+    flex-direction: ${({ isColumn }) => (isColumn ? 'column' : 'row')};
+    @media ${({ theme }) => theme.media.medium} {
+      flex-direction: column;
+      align-items: center;
+    }
   }
 `;
 export const LoyalityBox = styled.div`
@@ -39,6 +41,9 @@ export const LevelText = styled.p`
 export const NextLevelText = styled.p`
   color: ${({ theme }) => theme.colors.active};
   text-align: right;
+  @media ${({ theme }) => theme.media.medium} {
+    text-align: center;
+  }
 `;
 export const LevelCodeText = styled.p`
   font: ${({ theme }) => theme.fonts.titleH2SemiBold};

@@ -129,7 +129,7 @@ export const PriceFilter: FC<PriceFilter> = props => {
               type="number"
               isError={false}
               value={currentMin.toString()}
-              defaultValue={minPrice.toString()}
+              // defaultValue={minPrice.toString()}
               onChange={onMinInputChange}
             />
           </CustomInputWrapper>
@@ -148,7 +148,7 @@ export const PriceFilter: FC<PriceFilter> = props => {
               type="number"
               isError={false}
               value={currentMax.toString()}
-              defaultValue={maxPrice.toString()}
+              // defaultValue={maxPrice.toString()}
               onChange={onMaxInputChange}
             />
           </CustomInputWrapper>

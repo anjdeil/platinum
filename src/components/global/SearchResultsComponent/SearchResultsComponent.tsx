@@ -24,12 +24,12 @@ import {
 } from './styles';
 
 export default function SearchResultsComponent({
-  products = [],
-  categories = [],
-  onCategorySelect,
-  onProductSelect,
-  searchTerm,
-}: {
+                                                 products = [],
+                                                 categories = [],
+                                                 onCategorySelect,
+                                                 onProductSelect,
+                                                 searchTerm,
+                                               }: {
   products: ProductType[];
   categories: CategoryType[];
   onCategorySelect: (slug: string) => void;
@@ -82,7 +82,7 @@ export default function SearchResultsComponent({
         <SearchResultsGroup>
           <SearchResultsTitle>Products</SearchResultsTitle>
           <SearchResultsRows>
-            {products.slice(0, 5).map(product => {
+            {products.map(product => {
               const { id, name, thumbnail, slug, categories, price } = product;
               let finalPrice, regularPrice, isSale;
 
@@ -117,7 +117,7 @@ export default function SearchResultsComponent({
                       <SearchResultsRowCaption>{name}</SearchResultsRowCaption>
                       <SearchResultsRowCat>
                         {categories.map(
-                          (cat, i) => (i > 0 ? ' | ' : '') + cat.name
+                          (cat, i) => (i > 0 ? ' | ' : '') + cat.name,
                         )}
                       </SearchResultsRowCat>
                     </SearchResultsRowCaptionWrap>
@@ -149,18 +149,16 @@ export default function SearchResultsComponent({
               );
             })}
           </SearchResultsRows>
-          {products.length > 5 && (
-            <SearchButtonWrapper>
-              <StyledButton
-                height="40px"
-                secondary
-                fontSize="0.85rem"
-                onMouseDown={handleSearch}
-              >
-                {t('showAll')}
-              </StyledButton>
-            </SearchButtonWrapper>
-          )}
+          <SearchButtonWrapper>
+            <StyledButton
+              height="40px"
+              secondary
+              fontSize="0.85rem"
+              onMouseDown={handleSearch}
+            >
+              {t('showAll')}
+            </StyledButton>
+          </SearchButtonWrapper>
         </SearchResultsGroup>
       )}
     </SearchResults>

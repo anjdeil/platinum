@@ -16,20 +16,12 @@ export const RichTextSection: React.FC<RichTextSectionProps> = ({
   }
 
   const cleanedContent = text
-    .replace(/<br\s*\/?>/gi, '\n')
-    .replace(/\bT\b/gi, '')
-    .split('\n')
-    .filter(line => line.length > 0)
-    .map(line => {
-      if (!line.match(/<(h[1-6]|ul|li)[^>]*>/i)) {
-        return `<p>${line.trim()}</p>`;
-      }
-      return line;
-    })
-    .join('')
-    .replace(/<p>(<\/?[^>]+>.*?|.*?<\/?[^>]+>)<\/p>/gi, '$1')
-    .replace(/^<p><\/p>/, '')
-    .replace(/<p><\/p>$/, '');
+    .replace(/<p>\s*<br\s*\/?>\s*<\/p>/gi, '') // Удаляем <p><br></p>
+    .replace(/<\/h3>\s*<br\s*\/?>\s*<ul>/gi, '</h3><ul>') // Удаляем <br/> после </h3> перед <ul>
+    .replace(/<ul>\s*<br\s*\/?>?\s*t?\s*<li>/gi, '<ul><li>') // Удаляем <br/>, " t" внутри <ul> перед <li>
+    .replace(/<\/li>\s*<br\s*\/?>?\s*t?\s*<li>/gi, '</li><li>') // Удаляем <br/>, " t" между </li> и <li>
+    .replace(/<\/li>\s*<br\s*\/?>\s*<\/ul>/gi, '</li></ul>') // Удаляем <br/> перед </ul>
+    .replace(/<ul>\s*<\/ul>/gi, ''); // Удаляем пустые списки <ul></ul>
 
   const sanitizedContent = DOMPurify.sanitize(cleanedContent);
   const content = parse(sanitizedContent);

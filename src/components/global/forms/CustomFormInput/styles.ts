@@ -24,6 +24,7 @@ interface CustomInputProps {
 }
 
 export const CustomInputStyle = styled.div<CustomInputStyleProps>`
+  height: 100%;
   padding: ${({ padding = '5px' }) => padding};
   display: flex;
   flex-direction: ${({ isCheckbox }) => (isCheckbox ? 'row' : 'column')};
@@ -116,6 +117,11 @@ export const Input = styled.input<CustomInputProps>`
   }
 `;
 
+export const LabelWrapper = styled.div`
+  display: flex;
+  align-items: flex-end;
+  flex-grow: 1;
+`;
 export const CustomInputWrapper = styled.div`
   position: relative;
   display: flex;
@@ -152,7 +158,7 @@ export const CustomSuccess = styled(CustomError)`
 
 export const CustomInputContainer = styled.div<CustomInputContainerProps>`
   width: ${({ isCheckbox, width = '100%' }) => (isCheckbox ? '100%' : width)};
-
+  height: 100%;
   @media ${({ theme }) => theme.media.medium} {
     margin-top: 10px;
   }

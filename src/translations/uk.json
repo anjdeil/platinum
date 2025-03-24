@@ -68,6 +68,7 @@
     "availablePcs": "У наявності {quantity} шт",
     "nothingInTheWishlist": "У списку бажань нічого немає...",
     "login": "Увійти",
+    "loggingIn": "Вхід",
     "log-In": "Увійти",
     "password": "Пароль",
     "confirmPassword": "Повторіть пароль",
@@ -136,6 +137,8 @@
     "new": "Сортувати за новизною",
     "cheapest": "Сортувати за ціною: від найдешевших",
     "expensive": "Сортувати за ціною: від найдорожчих",
+    "nameAsc": "Сортувати за назвою за зростанням",
+    "nameDesc": "Сортувати за назвою за спаданням",
     "clearFilters": "Очистити всі",
     "clearFilter": "Очистити",
     "applyFilter": "Застосувати",
@@ -150,7 +153,10 @@
     "Size": "Розмір",
     "Volumes": "Об'єми",
     "view": "Вид",
-    "gift certificate": "Подарунковий сертифікат"
+    "gift certificate": "Подарунковий сертифікат",
+    "mattress-cover": "Чехол на матрац",
+    "Twist": "Підкручення",
+    "Volume": "Об'єм"
   },
   "Product": {
     "addToBasket": "Додати до кошика",
@@ -182,8 +188,6 @@
     "commentText1": "Ви протестували наш продукт? Поділіться своєю думкою;",
     "commentText2": "- Ми намагаємося бути найкращими для вас, і ваша думка дуже нам допоможе!",
     "lastedArticles": "Останні статті",
-    "thickness": "товщина",
-    "length": "довжина",
     "leaveAReviewAboutProduct": "Залиште відгук про товар",
     "descriptions": "Опис",
     "days": "Днів",
@@ -193,7 +197,17 @@
     "deliveryTime": "Замов упродовж {hour} год {minute} хв, і буде відправлено сьогодні",
     "deliveryNextBusinessDay": "Замовлення буде відправлено наступного робочого дня",
     "yourOpinion": "Ваша думка",
-    "comment": "Коментар"
+    "comment": "Коментар",
+    "chehol-matras": "Чохол на матрац",
+    "colour": "Колір",
+    "gift-certificate": "Подарунковий сертифікат",
+    "length": "Довжина",
+    "size": "Розмір",
+    "thickness": "Товщина",
+    "twist": "Підкручення",
+    "view": "Вид",
+    "volume": "Об'єм",
+    "volumes": "Об'єми"
   },
   "Cart": {
     "cart": "Кошик",
@@ -249,7 +263,7 @@
   },
   "Contacts": {
     "contacts": "Контакти",
-    "telephone": "Телефон",
+    "telephone": "ТЕЛЕФОН",
     "call": "Зателефонувати",
     "address": "Адреса",
     "schedule": "Пн-Пт: з {from} до {to}",
@@ -266,7 +280,8 @@
     "errorMessage": "Щось пішло не так. Будь ласка, спробуйте ще раз.",
     "successMessage": "Ваше повідомлення успішно відправлено!",
     "sending": "Надсилається...",
-    "sendButton": "Надіслати питання"
+    "sendButton": "Надіслати питання",
+    "whatsApp": "Чи є питання?"
   },
   "Validation": {
     "emailValidation": "Будь ласка, введіть правильну електронну адресу.",
@@ -452,7 +467,13 @@
     "change": "Змінити",
     "parcelLocker": "Поштомат",
     "selectParcelLocker": "Вибрати поштомат",
-    "deliveryUnavailable": "Способи доставки недоступні для обраного регіону. Будь ласка, перевірте свою країну."
+    "deliveryUnavailable": "Способи доставки недоступні для обраного регіону. Будь ласка, перевірте свою країну.",
+    "easypack_parcel_machines": "InPost Поштомат 24/7",
+    "easypack_shipping_courier": "InPost Кур'єр",
+    "easypack_cod_shipping_courier": "InPost Кур'єр – Накладений платіж",
+    "local_pickup": "Самовивіз",
+    "flexible_shipping_single": "Poczta Polska",
+    "gls": "GLS"
   },
   "InPostGeowidget": {
     "close": "Закрити"
@@ -489,5 +510,10 @@
     "contacts": "Контакти",
     "delivery": "Доставка",
     "payments": "Оплата"
+  },
+  "Loyalty": {
+    "silverBenefits": "Переваги рівня silver",
+    "goldBenefits": "Переваги рівня gold",
+    "platinumBenefits": "Переваги рівня platinum"
   }
 }

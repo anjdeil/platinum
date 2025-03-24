@@ -53,6 +53,12 @@ export const ProductListSection: React.FC<ProductListSectionProps> = ({
             products={newestProducts}
             isLoading={isNewestLoading}
             isError={!!newestError}
+            columns={{
+              mobileColumns: 2,
+              tabletColumns: 4,
+              mintabletColumns: 4,
+              desktopColumns: 4,
+            }}
             length={PER_PAGE}
           />
         )}
@@ -61,6 +67,12 @@ export const ProductListSection: React.FC<ProductListSectionProps> = ({
             products={popularProducts}
             isLoading={isPopularLoading}
             isError={!!popularError}
+            columns={{
+              mobileColumns: 2,
+              tabletColumns: 4,
+              mintabletColumns: 4,
+              desktopColumns: 4,
+            }}
             length={PER_PAGE}
           />
         )}

@@ -36,6 +36,7 @@ interface TitleProps {
   fontSize?: string;
   mobFontSize?: string;
   textalign?: 'center' | 'left' | 'right';
+  mobTextalign?: 'center' | 'left' | 'right';
   uppercase?: boolean;
   marginTop?: string;
   lowercase?: boolean;
@@ -63,15 +64,17 @@ export const Title = styled.h1<TitleProps>`
     font-weight: ${({ fontWeight }) => fontWeight};
     font-size: ${({ fontSize }) => fontSize};
   }
-
+  @media ${({ theme }) => theme.media.medium} {
+    text-align: ${({ mobTextalign }) => mobTextalign};
+  }
   @media ${({ theme }) => theme.media.small} {
     font-size: ${({ mobFontSize }) => mobFontSize};
   }
 `;
 
 export const AccountTitle = styled(Title)<TitleProps>`
-  margin-top: 24px;
   margin-bottom: ${({ marginBottom = 48 }) => marginBottom}px;
+  margin-top: ${({ marginTop }) => marginTop}px;
 
   @media ${({ theme }) => theme.media.large} {
     margin-bottom: ${({ tabletMarginBottom = 24 }) => tabletMarginBottom}px;

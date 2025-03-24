@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 import {
   LoginFormSchema,
@@ -41,6 +41,8 @@ export const LoginForm: FC<LoginFormProps> = ({
   const t = useTranslations('MyAccount');
   const tValidation = useTranslations('Validation');
   const [customError, setCustomError] = useState<string>('');
+  const [customSuccess, setcustomSuccess] = useState<boolean>(true);
+  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
   const dispatch = useAppDispatch();
   /** Form settings */
   const {
@@ -76,18 +78,32 @@ export const LoginForm: FC<LoginFormProps> = ({
         router.push('/my-account');
       }
 
+      setcustomSuccess(true);
       if (onClose) {
         fetchUser(dispatch);
-        setTimeout(() => {
+        const id = setTimeout(() => {
           onClose();
         }, 500);
+        setTimeoutId(id);
       }
     } catch (err) {
       if (err instanceof Error) setCustomError(err.message);
     } finally {
       reset();
+      const id = setTimeout(() => {
+        setcustomSuccess(false);
+      }, 1000);
+      setTimeoutId(id);
     }
   }
+
+  useEffect(() => {
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [timeoutId]);
 
   return (
     <CustomForm onSubmit={handleSubmit(onSubmit)} maxWidth="550px">
@@ -118,7 +134,7 @@ export const LoginForm: FC<LoginFormProps> = ({
           type="submit"
           disabled={isSubmitting}
         >
-          {t('login')}
+          {t('loggingIn')}
         </StyledButton>
 
         <BottomWrapper>
@@ -138,7 +154,7 @@ export const LoginForm: FC<LoginFormProps> = ({
             {t('ErrorLoggedIn')}
           </Notification>
         )}
-        {isSubmitSuccessful && !customError && !isLoading && (
+        {isSubmitSuccessful && !customError && !isLoading && customSuccess && (
           <Notification type="success">
             {t('SuccessfullyLoggedIn')}
           </Notification>

@@ -68,6 +68,7 @@
     "availablePcs": "Available {quantity} pcs",
     "nothingInTheWishlist": "There's nothing in the wishlist...",
     "login": "Login",
+    "loggingIn": "Logging in",
     "log-In": "Log in",
     "password": "Password",
     "confirmPassword": "Repeat password",
@@ -136,6 +137,8 @@
     "new": "Sort by newest",
     "cheapest": "Sort by cheapest",
     "expensive": "Sort by most expensive",
+    "nameAsc": "Sort by name ascending",
+    "nameDesc": "Sort by name descending",
     "clearFilters": "Clear All",
     "clearFilter": "Clear",
     "applyFilter": "Apply",
@@ -150,7 +153,10 @@
     "Size": "Size",
     "Volumes": "Volumes",
     "view": "View",
-    "gift certificate": "Gift certificate"
+    "gift certificate": "Gift certificate",
+    "mattress-cover": "Mattress cover",
+    "Twist": "Twist",
+    "Volume": "Volume"
   },
   "Product": {
     "addToBasket": "Add to basket",
@@ -182,8 +188,6 @@
     "commentText1": "Have you tested our product? Share an opinion;",
     "commentText2": "- we try to be best for you, and your opinion will help us a lot!",
     "lastedArticles": "Lasted Articles",
-    "thickness": "thickness",
-    "length": "length",
     "leaveAReviewAboutProduct": "Leave a review about product",
     "descriptions": "Descriptions",
     "days": "Days",
@@ -193,7 +197,17 @@
     "deliveryTime": "Order within {hour}h {minute}min and it will be shipped today",
     "deliveryNextBusinessDay": "The order will be shipped on the next business day",
     "yourOpinion": "Your opinion",
-    "comment": "Comment"
+    "comment": "Comment",
+    "chehol-matras": "Mattress cover",
+    "colour": "Colour",
+    "gift-certificate": "Gift certificate",
+    "length": "length",
+    "size": "Size",
+    "thickness": "thickness",
+    "twist": "Twist",
+    "view": "View",
+    "volume": "Volume",
+    "volumes": "Volumes"
   },
   "Cart": {
     "cart": "Cart",
@@ -266,7 +280,8 @@
     "errorMessage": "Something went wrong. Please try again.",
     "successMessage": "Your message has been sent successfully!",
     "sending": "Sending...",
-    "sendButton": "Send a question"
+    "sendButton": "Send a question",
+    "whatsApp": "Have a question?"
   },
   "Validation": {
     "emailValidation": "Please enter a valid email.",
@@ -382,7 +397,7 @@
     "fileTooLarge": "File too large",
     "first_name": "Name",
     "last_name": "Surname",
-    "email": "e-mail",
+    "email": "E-mail",
     "phone": "Phone number",
     "country": "Country",
     "city": "Town/City",
@@ -452,7 +467,13 @@
     "change": "Change",
     "parcelLocker": "Parcel locker",
     "selectParcelLocker": "Select a parcel locker",
-    "deliveryUnavailable": "Delivery methods are not available for the selected region. Please check your country."
+    "deliveryUnavailable": "Delivery methods are not available for the selected region. Please check your country.",
+    "easypack_parcel_machines": "InPost Locker 24/7",
+    "easypack_shipping_courier": "InPost Courier",
+    "easypack_cod_shipping_courier": "InPost Courier – Cash on delivery",
+    "local_pickup": "Pickup",
+    "flexible_shipping_single": "Poczta Polska",
+    "gls": "GLS"
   },
   "InPostGeowidget": {
     "close": "Close"
@@ -489,5 +510,10 @@
     "contacts": "Contacts",
     "delivery": "Delivery",
     "payments": "Payments"
+  },
+  "Loyalty": {
+    "silverBenefits": "Silver Level Benefits",
+    "goldBenefits": "Gold Level Benefits",
+    "platinumBenefits": "Platinum Level Benefits"
   }
 }

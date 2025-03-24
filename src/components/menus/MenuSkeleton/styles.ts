@@ -2,8 +2,8 @@ import {
   SkeletonContainerProps,
   SkeletonElementProps,
 } from '@/types/menus/Skeletons';
-import { keyframes } from "@emotion/react";
-import styled from "@emotion/styled";
+import { keyframes } from '@emotion/react';
+import styled from '@emotion/styled';
 
 const waveAnimation = keyframes`
   0% {
@@ -34,9 +34,13 @@ export const SkeletonElement = styled.div<SkeletonElementProps>`
 export const SkeletonContainer = styled.div<SkeletonContainerProps>`
   display: flex;
   flex-direction: ${({ direction = 'row' }) => direction};
+  margin-top: ${({ marginTop }) => marginTop};
   align-items: ${({ leftSide }) => (leftSide ? 'flex-start' : 'center')};
   gap: ${({ gap }) => gap || '10px'};
 
+  @media ${({ theme }) => theme.media.largePlus} {
+    margin-top: 0;
+  }
   @media ${({ theme }) => theme.media.medium} {
     align-items: ${({ verticalSlider }) =>
       verticalSlider ? 'center' : 'flex-start'};

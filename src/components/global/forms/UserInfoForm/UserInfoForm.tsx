@@ -472,6 +472,7 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
           as="h2"
           fontWeight={600}
           fontSize="24px"
+          mobFontSize="16px"
           uppercase
           marginBottom="16px"
         >
@@ -509,6 +510,7 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
           as="h2"
           fontWeight={600}
           fontSize="24px"
+          mobFontSize="16px"
           uppercase
           marginBottom="16px"
         >
