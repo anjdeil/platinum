@@ -1,10 +1,8 @@
 import { BadgeStyledProps, ProductBadgeProps } from "@/types/components/shop";
 import styled from "@emotion/styled";
 
-const getBackgroundColor = (type: ProductBadgeProps['type']) =>
-{
-    switch (type)
-    {
+const getBackgroundColor = (type: ProductBadgeProps['type']) => {
+    switch (type) {
         case "new":
             return (props: any) => props.theme.colors.new;
         case "best":
@@ -14,7 +12,7 @@ const getBackgroundColor = (type: ProductBadgeProps['type']) =>
         case "sale":
             return (props: any) => props.theme.colors.sale;
         default:
-            return (props: any) => props.theme.colors.new;
+            return (props: any) => props.theme.colors.best;
     }
 };
 
