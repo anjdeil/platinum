@@ -502,8 +502,8 @@
     "payments": "Płatności"
   },
   "Loyalty": {
-    "silverBenefits": "KORZYŚCI NA POZIOMIE SILVER",
-    "goldBenefits": "KORZYŚCI NA POZIOMIE GOLD",
-    "platinumBenefits": "KORZYŚCI NA POZIOMIE PLATINUM"
+    "silverBenefits": "Korzyści na poziomie silver",
+    "goldBenefits": "Korzyści na poziomie gold",
+    "platinumBenefits": "Korzyści na poziomie platinum"
   }
 }

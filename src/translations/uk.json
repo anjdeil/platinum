@@ -502,8 +502,8 @@
     "payments": "Оплата"
   },
   "Loyalty": {
-    "silverBenefits": "ПЕРЕВАГИ РІВНЯ SILVER",
-    "goldBenefits": "ПЕРЕВАГИ РІВНЯ GOLD",
-    "platinumBenefits": "ПЕРЕВАГИ РІВНЯ PLATINUM"
+    "silverBenefits": "Переваги рівня silver",
+    "goldBenefits": "Переваги рівня gold",
+    "platinumBenefits": "Переваги рівня platinum"
   }
 }

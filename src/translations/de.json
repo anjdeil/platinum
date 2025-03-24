@@ -502,8 +502,8 @@
     "payments": "Zahlungen"
   },
   "Loyalty": {
-    "silverBenefits": "SILVER-LEVEL-VORTEILE",
-    "goldBenefits": "GOLD-LEVEL-VORTEILE",
-    "platinumBenefits": "PLATINUM-LEVEL-VORTEILE"
+    "silverBenefits": "Silver-level-vorteile",
+    "goldBenefits": "Gold-level-vorteile",
+    "platinumBenefits": "Platinum-level-vorteile"
   }
 }
