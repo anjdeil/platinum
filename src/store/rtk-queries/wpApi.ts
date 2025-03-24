@@ -19,16 +19,22 @@ export const wpRtkApi = createApi({
       query: credentials => ({
         url: '/jwt-auth/v1/token',
         method: 'POST',
-        body: credentials,
+        body: {
+          username: credentials.username,
+          password: credentials.password,
+          rememberMe: credentials.rememberMe,
+        },
         headers: {
           'Content-Type': 'application/json',
         },
       }),
     }),
+
     checkToken: builder.mutation({
-      query: () => ({
+      query: (rememberMe: boolean) => ({
         url: '/jwt-auth/v1/token/validate',
         method: 'POST',
+        body: { rememberMe },
       }),
     }),
 

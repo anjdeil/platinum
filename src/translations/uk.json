@@ -4,6 +4,7 @@
     "link": "Просто посилання на ішну перекладену сторінку"
   },
   "MyAccount": {
+    "rememberMe": "Запам’ятати мене",
     "order": "Замовлення",
     "clientPersonalAccount": "Особистий кабінет клієнта",
     "dashboard": "Панель керування",
@@ -460,9 +461,9 @@
     "deliveryUnavailable": "Способи доставки недоступні для обраного регіону. Будь ласка, перевірте свою країну.",
     "easypack_parcel_machines": "InPost Поштомат 24/7",
     "easypack_shipping_courier": "InPost Кур'єр",
-    "easypack_cod_shipping_courier":  "InPost Кур'єр – Накладений платіж",
+    "easypack_cod_shipping_courier": "InPost Кур'єр – Накладений платіж",
     "local_pickup": "Самовивіз",
-    "flexible_shipping_single":  "Poczta Polska",
+    "flexible_shipping_single": "Poczta Polska",
     "gls": "GLS"
   },
   "InPostGeowidget": {
