@@ -17,7 +17,8 @@ export function useSearchLogic() {
         isFetching: isProductsFetching
     } = useGetProductsQuery({
         search: searchTerm,
-        lang: router.locale
+        lang: router.locale,
+        per_page: 5
     }, {
         skip: checkSkipping()
     });
