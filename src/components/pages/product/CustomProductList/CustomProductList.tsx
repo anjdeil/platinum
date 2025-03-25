@@ -9,6 +9,7 @@ import { RecommendContainer, StyledText, TitleBlock } from './styles';
 const CustomProductList: React.FC<CustomProductListProps> = ({
   title,
   productIds,
+  isLoadingProducts,
 }) => {
   const t = useTranslations('Product');
 
@@ -24,7 +25,16 @@ const CustomProductList: React.FC<CustomProductListProps> = ({
           {t(title)}
         </Title>
       </TitleBlock>
-      <ProductCardList products={products} />
+      <ProductCardList
+        products={products}
+        isLoading={isLoadingProducts}
+        columns={{
+          mobileColumns: 2,
+          tabletColumns: 4,
+          mintabletColumns: 4,
+          desktopColumns: 4,
+        }}
+      />
     </RecommendContainer>
   );
 };

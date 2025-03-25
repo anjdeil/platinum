@@ -21,6 +21,7 @@ import PopupSlice from './slices/PopupSlice';
 import ProductSlice from './slices/ProductSlice';
 import themeOptionsSlice from './slices/themeOptionsSlice';
 import userSlice from './slices/userSlice';
+import { instockNotifierAPI } from './rtk-queries/instockNotifier';
 
 const persistConfig = {
   key: 'root',
@@ -37,6 +38,7 @@ const rootReducer = combineReducers({
   [mailpoetApi.reducerPath]: mailpoetApi.reducer,
   [wooCustomAuthRktApi.reducerPath]: wooCustomAuthRktApi.reducer,
   [instagramCustomRtkApi.reducerPath]: instagramCustomRtkApi.reducer,
+  [instockNotifierAPI.reducerPath]: instockNotifierAPI.reducer,
   [passwordResetApi.reducerPath]: passwordResetApi.reducer,
   cartSlice: cartSlice,
   languageSlice: languageSlice,
@@ -72,6 +74,7 @@ export const setupStore = () => {
         mailpoetApi.middleware,
         wooCustomAuthRktApi.middleware,
         instagramCustomRtkApi.middleware,
+        instockNotifierAPI.middleware,
         passwordResetApi.middleware,
         cartListenerMiddleware.middleware
       ),

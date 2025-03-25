@@ -48,7 +48,10 @@ const Header: React.FC = () => {
         {!displayedSearchBar ? (
           <MenuWrapper>
             <CategoriesButton
-              onMouseEnter={() => dispatch(popupSet('categories-menu'))}
+              // onMouseEnter={() => dispatch(popupSet('categories-menu'))}
+              onMouseEnter={() =>
+                dispatch(popupSet({ popupType: 'categories-menu' }))
+              }
             >
               {t('allShop')}
             </CategoriesButton>
@@ -84,7 +87,8 @@ const Header: React.FC = () => {
               IconComponent={HeartIcon}
             />
             <IconButton
-              onClick={() => dispatch(popupToggle('mini-cart'))}
+              // onClick={() => dispatch(popupToggle('mini-cart'))}
+              onClick={() => dispatch(popupToggle({ popupType: 'mini-cart' }))}
               count={cartCount}
               IconComponent={CartIcon}
             />
