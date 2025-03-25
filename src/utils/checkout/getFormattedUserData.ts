@@ -70,6 +70,7 @@ export const getFormattedUserData = (billingData: ReqData) => {
     city,
     postcode,
     country,
+    email,
     state: city,
     phone,
     company: company || '',
