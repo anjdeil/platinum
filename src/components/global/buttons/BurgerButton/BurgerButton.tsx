@@ -6,14 +6,18 @@ import { StyledIconButton } from '../IconButton/styles';
 export default function BurgerButton()
 {
   const dispatch = useAppDispatch();
-  const popup = useAppSelector(state => state.popup);
+  const { popupType } = useAppSelector(state => state.popup);
 
   return (
     <StyledIconButton
-      onClick={() => dispatch(popupToggle('hamburger-menu'))}
-      aria-label="Open hamburger">
+      // onClick={() => dispatch(popupToggle('hamburger-menu'))}
+      onClick={() => dispatch(popupToggle({ popupType: 'hamburger-menu' }))}
+      aria-label="Open hamburger"
+    >
       <Image
-        src={`/assets/icons/burger${popup === 'hamburger-menu' ? '-active' : ''}.svg`}
+        src={`/assets/icons/burger${
+          popupType === 'hamburger-menu' ? '-active' : ''
+        }.svg`}
         alt={'Menu'}
         width={24}
         height={24}

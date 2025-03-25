@@ -16,7 +16,7 @@ const BottomMenu = () => {
   const dispatch = useAppDispatch();
   const theme = useTheme();
   const { cartItems } = useAppSelector(state => state.cartSlice);
-  const popup = useAppSelector(state => state.popup);
+  const { popupType } = useAppSelector(state => state.popup);
   const [cartCount, setCartCount] = useState(0);
   const { wishlist } = useWishlist();
 
@@ -28,16 +28,18 @@ const BottomMenu = () => {
     <BottomMenuWrapper>
       <BottomMenuNav aria-label="Bottom navigation">
         <IconButton
-          onClick={() => dispatch(popupToggle('hamburger-menu'))}
+          onClick={() => dispatch(popupToggle({ popupType: 'hamburger-menu' }))}
           color={theme.colors.primary}
           IconComponent={
-            popup === 'hamburger-menu' ? BurgerIconActive : BurgerIcon
+            popupType === 'hamburger-menu' ? BurgerIconActive : BurgerIcon
           }
         />
         <IconButton
-          onClick={() => dispatch(popupToggle('mobile-categories'))}
+          onClick={() =>
+            dispatch(popupToggle({ popupType: 'mobile-categories' }))
+          }
           color={
-            popup === 'mobile-categories'
+            popupType === 'mobile-categories'
               ? theme.colors.active
               : theme.colors.primary
           }

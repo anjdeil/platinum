@@ -28,7 +28,7 @@ export const useWishlist = () => {
 
   const handleWishlistToggle = (product: ProductType) => {
     if (!userSlice) {
-      dispatch(popupToggle('login'));
+      dispatch(popupToggle({ popupType: 'login' }));
       return;
     }
 

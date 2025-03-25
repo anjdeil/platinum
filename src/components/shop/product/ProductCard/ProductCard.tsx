@@ -78,7 +78,7 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product }) => {
         })
       );
       if (!isMobile) {
-        dispatch(popupToggle('mini-cart'));
+        dispatch(popupToggle({ popupType: 'mini-cart' }));
       }
     } else {
       router.push(`/${router.locale === 'en' ? '' : router.locale}/cart`);
