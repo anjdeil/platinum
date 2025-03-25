@@ -10,6 +10,7 @@ import { ProductsMinimizedType } from '@/types/components/shop/product/products'
 import { CartTableProps } from '@/types/pages/cart';
 import { lineOrderItems } from '@/types/store/reducers/сartSlice';
 import checkProductAvailability from '@/utils/cart/checkProductAvailability';
+import getProductSlug from '@/utils/cart/getProductSlug';
 import { useTranslations } from 'next-intl';
 import { FC } from 'react';
 import CartProductWarning from '../CartProductWarning/CartProductWarning';
@@ -77,6 +78,8 @@ const CartTable: FC<CartTableProps> = ({
       );
       const productSpec = findProductSpec(item);
 
+      const slug = getProductSlug(productSpec);
+
       return (
         <CartCardAllWrapper key={item.id}>
           <CartCardWrapper isLoadingItem={isLoadingOrder}>
@@ -85,11 +88,7 @@ const CartTable: FC<CartTableProps> = ({
             </CartImgWrapper>
             <CardContent>
               <ProducTitle>
-                <LinkWrapper
-                  href={`/product/${
-                    productSpec?.parent_slug || productSpec?.slug
-                  }`}
-                >
+                <LinkWrapper href={`/product/${slug}`}>
                   {productSpec?.parent_name
                     ? `${productSpec.parent_name}${
                         productSpec.attributes?.length
@@ -155,6 +154,8 @@ const CartTable: FC<CartTableProps> = ({
           );
           const productSpec = findProductSpec(item);
 
+          const slug = getProductSlug(productSpec);
+
           return (
             <RowWrapper key={item.id} isLoadingItem={isLoadingOrder}>
               <GridRow>
@@ -173,11 +174,7 @@ const CartTable: FC<CartTableProps> = ({
                   />
                 </CartImgWrapper>
                 <TextNameCell>
-                  <LinkWrapper
-                    href={`/product/${
-                      productSpec?.parent_slug || productSpec?.slug
-                    }`}
-                  >
+                  <LinkWrapper href={`/product/${slug}`}>
                     {productSpec?.parent_name
                       ? `${productSpec.parent_name}${
                           productSpec.attributes?.length

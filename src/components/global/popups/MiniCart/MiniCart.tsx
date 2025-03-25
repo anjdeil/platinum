@@ -22,6 +22,7 @@ import { useAppDispatch, useAppSelector } from '@/store';
 import { FlexBox, LinkWrapper, StyledButton, Title } from '@/styles/components';
 import theme from '@/styles/theme';
 import checkCartConflict from '@/utils/cart/checkCartConflict';
+import getProductSlug from '@/utils/cart/getProductSlug';
 import { handleQuantityChange } from '@/utils/cart/handleQuantityChange';
 import { getProductPrice } from '@/utils/price/getProductPrice';
 import { Skeleton } from '@mui/material';
@@ -175,6 +176,8 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
             const convertedFinalPrice = convertCurrency(item.finalPrice || 0);
             const convertedTotalPrice = convertCurrency(item.totalPrice || 0);
 
+            const slug = getProductSlug(item);
+
             return (
               <CartCardWrapper key={item.id} marginBottom="68px" gap="16px">
                 <CartImgWrapper maxHeight="140px" maxWidth="140px">
@@ -186,9 +189,7 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
                 </CartImgWrapper>
                 <CardContent padding="8px 0" gap="1px">
                   <ProducTitle>
-                    <LinkWrapper
-                      href={`/product/${item?.parent_slug || item?.slug}`}
-                    >
+                    <LinkWrapper href={`/product/${slug}`}>
                       {item?.parent_name
                         ? `${item.parent_name}${
                             item.attributes?.length
