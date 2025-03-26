@@ -304,7 +304,7 @@ export const getServerSideProps = async (
 
     const resp = await wpRestApi.get(
       'users/me',
-      undefined,
+      { path: ['users', 'me'] },
       `Bearer ${cookies.authToken}`
     );
 
