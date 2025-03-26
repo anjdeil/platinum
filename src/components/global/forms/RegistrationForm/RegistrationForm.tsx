@@ -122,11 +122,12 @@ export const RegistrationForm: FC = () => {
       const tokenResp = await fetchToken({
         password: formData.password || '',
         username: formData.email,
+        rememberMe: true,
       });
       if (!tokenResp.data) throw new Error('Auth token getting failed.');
 
       /** Validate auth token */
-      const isTokenValid = await checkToken({});
+      const isTokenValid = await checkToken(true);
       if (!isTokenValid) throw new Error('Auth token validation failed.');
 
       // Subscribe to the newsletter

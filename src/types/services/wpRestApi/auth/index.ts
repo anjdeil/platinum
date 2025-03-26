@@ -3,6 +3,7 @@ import { z } from 'zod';
 export const AuthConfigSchema = z.object({
   username: z.string(),
   password: z.string(),
+  rememberMe: z.boolean(),
 });
 
 export const JwtTokenResSchema = z.object({

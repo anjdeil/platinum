@@ -5,6 +5,7 @@ import axios from 'axios';
 const authConfig: AuthConfigType = {
   username: process.env.WP_USER || '',
   password: process.env.WP_PASSWORD || '',
+  rememberMe: true,
 };
 
 const wpV2 = 'wp/v2/';

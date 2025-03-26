@@ -6,6 +6,7 @@ export const LoginFormSchema = (
   z.object({
     email: z.string().email(t('emailValidation')),
     password: z.string(),
+    rememberMe: z.boolean(),
   });
 
 export type LoginFormType = z.infer<ReturnType<typeof LoginFormSchema>>;
