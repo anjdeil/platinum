@@ -26,7 +26,7 @@ export const getServerSideProps: GetServerSideProps = async (
   try {
     const userResponse = await wpRestApi.get(
       `users/me`,
-      {},
+      { path: ['users', 'me'] },
       `Bearer ${cookieRows.authToken}`
     );
 
