@@ -1,18 +1,19 @@
 import styled from "@emotion/styled";
 
 export const QuantityContainer = styled.div`
-    box-sizing: border-box;
-    display: flex;
-    justify-content: space-between;
-    gap: 16px;
-    align-items: center;
-    width: min-content;
-    flex-grow: 0;    
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  width: min-content;
+  flex-grow: 0;
 
-    @media ${({ theme }) => theme.media.medium} {
-        width: 100%;
-        padding-inline: 19px; 
-    }
+  @media ${({ theme }) => theme.media.medium} {
+    width: 100%;
+    max-width: 309px;
+    padding-inline: 19px;
+  }
 `;
 
 export const QuantityButton = styled.button`

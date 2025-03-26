@@ -28,10 +28,11 @@ const CategoriesMenu: FC<CategoriesMenuPropsType> = ({
   const categories = transformCategoriesMenu(categoriesData);
 
   const dispatch = useAppDispatch();
-  const popup = useAppSelector(state => state.popup);
+  const { popupType } = useAppSelector(state => state.popup);
+
   useEffect(() => {
-    console.log(popup);
-  }, [popup]);
+    console.log(popupType);
+  }, [popupType]);
 
   const { isOpen, CategoryActiveHover } = useAppSelector(
     state => state.MenuCategoriesSlice
@@ -75,7 +76,7 @@ const CategoriesMenu: FC<CategoriesMenuPropsType> = ({
         onMouseLeave={onMouseLeave}
         shop={shop}
         className={
-          popup === 'categories-menu' ? 'active hover close-outside' : ''
+          popupType === 'categories-menu' ? 'active hover close-outside' : ''
         }
       >
         <ListWrapper shop={shop}>

@@ -13,6 +13,7 @@ export const AddToBasketButtonPropsSchema = z.object({
   lineHeight: z.string().optional(),
   fontSize: z.string().optional(),
   maxWidth: z.string().optional(),
+  height: z.string().optional(),
   children: z.any().optional(),
   onClick: z.custom<MouseEventHandler<HTMLButtonElement>>().optional(),
   active: z.boolean().optional(),

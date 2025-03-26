@@ -1,7 +1,7 @@
 import HamburgerMenu from '@/components/global/popups/HamburgerMenu';
 import { switchCategory } from '@/components/shop/Archive';
 import { useAppSelector } from '@/store';
-import { popupClosed } from '@/store/slices/PopupSlice';
+import { popupClosed, popupClosedByType } from '@/store/slices/PopupSlice';
 import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
@@ -11,6 +11,7 @@ import MobileCategoriesMenu from '../MobileCategoriesMenu/MobileCategoriesMenu';
 import MobileSearchPopup from '../MobileSearchPopup/MobileSearchPopup';
 import SwiperPopup from '../SwiperPopup/SwiperPopup';
 import LoginPopup from '../LoginPopup/LoginPopup';
+import NotifyPopup from '../NotifyPopup/NotifyPopup';
 
 const unscrollablePopups = [
   'mobile-search',
@@ -19,13 +20,14 @@ const unscrollablePopups = [
   'mobile-cart',
   'mobile-categories',
   'login',
+  'notify',
 ];
 
 const PopupContainer = () => {
   const dispatch = useDispatch();
   const pathname = usePathname();
 
-  const popup = useAppSelector(state => state.popup);
+  const { popupType, data } = useAppSelector(state => state.popup);
 
   useEffect(() => {
     dispatch(popupClosed());
@@ -66,18 +68,24 @@ const PopupContainer = () => {
   }, [pathname]);
 
   useEffect(() => {
-    if (unscrollablePopups.some(popupName => popup === popupName)) {
+    if (popupType && unscrollablePopups.includes(popupType)) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'auto';
     }
-  }, [popup]);
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [popupType]);
 
   const closePopup = () => {
-    dispatch(popupClosed());
+    if (popupType) {
+      dispatch(popupClosedByType(popupType));
+    }
   };
 
-  switch (popup) {
+  switch (popupType) {
     case 'hamburger-menu': {
       return <HamburgerMenu onClose={closePopup} />;
     }
@@ -106,6 +114,9 @@ const PopupContainer = () => {
     }
     case 'login': {
       return <LoginPopup onClose={closePopup} />;
+    }
+    case 'notify': {
+      return <NotifyPopup onClose={closePopup} data={data || {}} />;
     }
   }
 };

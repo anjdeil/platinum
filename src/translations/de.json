@@ -207,7 +207,13 @@
     "twist": "Twist",
     "view": "Ansicht",
     "volume": "Volumen",
-    "volumes": "Bände"
+    "volumes": "Bände",
+    "notify": "Benachrichtigen",
+    "sending": "Senden...",
+    "successNotify": "Sie werden benachrichtigt, wenn das Produkt wieder im Geschäft ist!",
+    "failedNotify": "Abonnieren des Produkts fehlgeschlagen",
+    "userAlreadyNotified": "Sie haben sich bereits für dieses Produkt angemeldet",
+    "notValidData": "Das Produkt konnte nicht abonniert werden. Bitte geben Sie gültige Daten an"
   },
   "Cart": {
     "cart": "Warenkorb",

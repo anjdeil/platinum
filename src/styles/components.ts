@@ -388,3 +388,7 @@ export const SkeletonItem = styled(Skeleton)`
     height: 240px;
   }
 `;
+
+export const StyledSectionWrapper = styled.div`
+  margin-bottom: 24px;
+`;
