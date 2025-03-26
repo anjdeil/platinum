@@ -131,10 +131,14 @@ export const NotifyPopupForm: FC<NotifyPopupFormProps> = ({ data }) => {
       </StyledNotifyButton>
 
       {errorMessage && (
-        <StyledError>{translatedErrorMessage(errorMessage)}</StyledError>
+        <StyledError isVisible={!!errorMessage}>
+          {translatedErrorMessage(errorMessage)}
+        </StyledError>
       )}
       {successMessage && (
-        <StyledSuccessMessage>{t('successNotify')}</StyledSuccessMessage>
+        <StyledSuccessMessage isVisible={!!successMessage}>
+          {t('successNotify')}
+        </StyledSuccessMessage>
       )}
     </StyledNotifyForm>
   );

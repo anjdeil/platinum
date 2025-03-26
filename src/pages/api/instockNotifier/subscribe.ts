@@ -30,7 +30,6 @@ export default async function handler(
       },
     });
 
-    console.log('response', response.data);
     return res.status(200).json(response.data);
   } catch (error) {
     console.error('Error during subscription:', (error as any).message);

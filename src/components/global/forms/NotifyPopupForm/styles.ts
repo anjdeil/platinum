@@ -1,4 +1,5 @@
 import { Input } from '@/components/global/forms/CustomFormInput/styles';
+import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 
 export const StyledNotifyForm = styled.form`
@@ -60,12 +61,26 @@ export const StyledNotifyButton = styled.button`
   }
 `;
 
-export const StyledError = styled.p`
+const fadeIn = keyframes`
+  from { opacity: 0; }
+  to { opacity: 1; }
+`;
+
+const fadeOut = keyframes`
+  from { opacity: 1; }
+  to { opacity: 0; }
+`;
+
+export const StyledError = styled.p<{ isVisible: boolean }>`
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
   font-weight: 500;
   color: ${({ theme }) => theme.colors.error};
   padding-top: 16px;
   align-self: center;
+  opacity: 0;
+  animation: ${({ isVisible }) => (isVisible ? fadeIn : fadeOut)} 0.5s
+    ease-in-out;
+  opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
 
   @media ${({ theme }) => theme.media.medium} {
     font: ${({ theme }) => theme.fonts.bodypresmallReg};
@@ -74,12 +89,16 @@ export const StyledError = styled.p`
   }
 `;
 
-export const StyledSuccessMessage = styled.p`
+export const StyledSuccessMessage = styled.p<{ isVisible: boolean }>`
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
   font-weight: 500;
   color: ${({ theme }) => theme.colors.new};
   padding-top: 16px;
   align-self: center;
+  opacity: 0;
+  animation: ${({ isVisible }) => (isVisible ? fadeIn : fadeOut)} 0.5s
+    ease-in-out;
+  opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
 
   @media ${({ theme }) => theme.media.medium} {
     font: ${({ theme }) => theme.fonts.bodypresmallReg};
