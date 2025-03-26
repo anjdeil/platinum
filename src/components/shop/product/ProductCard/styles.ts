@@ -63,9 +63,10 @@ export const StyledLink = styled(Link)`
   transition: opacity 0.2s ease;
   text-transform: uppercase;
   text-align: center;
-  hyphens: auto;
+  // hyphens: manual;
   color: ${({ theme }) => theme.colors.black};
   font: ${({ theme }) => theme.fonts.bodyMiddleMedium};
+  word-break: break-word;
 
   @media ${({ theme }) => theme.media.large} {
     font-size: 14px;

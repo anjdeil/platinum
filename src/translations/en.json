@@ -208,7 +208,13 @@
     "twist": "Twist",
     "view": "View",
     "volume": "Volume",
-    "volumes": "Volumes"
+    "volumes": "Volumes",
+    "notify": "Notify me",
+    "sending": "Sending...",
+    "successNotify": "You will be notified when the product is back in the store!",
+    "failedNotify": "Failed to subscribe to the product",
+    "userAlreadyNotified": "You already subscribed to this product",
+    "notValidData": "Failed to subscribe to the product. Please provide valid data"
   },
   "Cart": {
     "cart": "Cart",

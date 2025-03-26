@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 export const AddToBasketButtonStyled = styled.button<AddToBasketButtonProps>`
   width: 100%;
   max-width: ${({ maxWidth = '' }) => maxWidth};
-
+  height: ${({ height = '' }) => height};
   background-color: ${({ theme, active }) =>
     active ? theme.colors.white : theme.colors.primary};
 
@@ -52,6 +52,7 @@ export const AddToBasketButtonStyled = styled.button<AddToBasketButtonProps>`
   }
 
   @media screen and (max-width: 848px) {
+    height: ${({ height }) => (height === '56px' ? '48px' : height)};
     padding: 12px 6px;
     font-size: ${({ mobFontSize = '14px' }) => mobFontSize};
   }
@@ -63,6 +64,7 @@ export const AddToBasketButtonStyled = styled.button<AddToBasketButtonProps>`
   }
   @media ${({ theme }) => theme.media.smallest} {
     height: 56px;
+    height: ${({ height }) => (height === '56px' ? '48px' : height)};
     padding: 0 16px;
     font-size: ${({ mobFontSize = '14px' }) => mobFontSize};
     line-height: 1.2em;

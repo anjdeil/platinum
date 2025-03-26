@@ -131,13 +131,18 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
       })
     );
     if (!isMobile) {
-      dispatch(popupToggle('mini-cart'));
+      dispatch(popupToggle({ popupType: 'mini-cart' }));
     }
   }
 
   function handleNotifyButtonClick() {
     console.log('Notify button clicked');
-    // dispatch(popupToggle('notify'));
+    dispatch(
+      popupToggle({
+        popupType: 'notify',
+        data: { productId: product.id, variationId: currentVariation?.id || 0 },
+      })
+    );
   }
 
   const stockQuantity = useMemo(() => {
@@ -166,9 +171,9 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
   const addComment = () => {
     if (isAuthenticated) {
       updateProductState(product);
-      dispatch(popupSet('add-comment'));
+      dispatch(popupSet({ popupType: 'add-comment' }));
     } else {
-      dispatch(popupToggle('login'));
+      dispatch(popupToggle({ popupType: 'login' }));
     }
   };
 
@@ -268,7 +273,11 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
           <ProductQuantity quantity={quantity} onChange={setQuantity} />
 
           {stockQuantity !== null && stockQuantity > 0 ? (
-            <AddToBasketButton maxWidth="309px" onClick={handleCartButtonClick}>
+            <AddToBasketButton
+              maxWidth="309px"
+              height="56px"
+              onClick={handleCartButtonClick}
+            >
               {renderCartButtonInnerText()}
             </AddToBasketButton>
           ) : (

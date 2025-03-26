@@ -5,6 +5,7 @@ import {
 } from '@/store/rtk-queries/wooCustomApi';
 import { ShippingMethodType } from '@/types/services';
 import { useEffect, useState } from 'react';
+
 type UseShippingMethodsResult = {
   shippingMethods: ShippingMethodType[];
   isLoading: boolean;
@@ -21,7 +22,7 @@ export default function useShippingMethods(countryCode?: string): UseShippingMet
   const [currentShippingMethods, setCurrentShippingMethods] = useState<ShippingMethodType[]>([]);
 
   useEffect(() => {
-    if (!shippingZones) return;
+    if (!shippingZones || !countryCode) return;
 
     const getTargetShippingZoneId = async () => {
       setIsShippingMethodsLoading(true);
@@ -49,9 +50,6 @@ export default function useShippingMethods(countryCode?: string): UseShippingMet
 
     getTargetShippingZoneId();
   }, [shippingZones, countryCode]);
-
-  useEffect(() => {
-  }, [ isShippingZonesLoading])
 
   return {
     shippingMethods: currentShippingMethods,

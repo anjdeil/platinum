@@ -1,15 +1,23 @@
 import Breadcrumbs from '@/components/global/Breadcrumbs/Breadcrumbs';
 import Reviews from '@/components/global/reviews/Reviews/Reviews';
-import CustomProductList from '@/components/pages/product/CustomProductList/CustomProductList';
 import ProductInfo from '@/components/pages/product/ProductInfo/ProductInfo';
+import {
+  RecommendContainer,
+  StyledText,
+  TitleBlock,
+} from '@/components/sections/styles';
+import { ProductCardList } from '@/components/shop/ProductCardsList';
 import transformCategoriesIntoLinks from '@/services/transformers/transformCategoriesIntoLinks';
 import { customRestApi } from '@/services/wpCustomApi';
-import { Container } from '@/styles/components';
+import { useGetProductsQuery } from '@/store/rtk-queries/wpCustomApi';
+import { Container, StyledSectionWrapper, Title } from '@/styles/components';
 import { BreadcrumbType } from '@/types/components/global/breadcrumbs';
+import { ProductType } from '@/types/components/shop/product/products';
 import { ProductPageType } from '@/types/pages/product';
 import { validateCustomSingleProduct } from '@/utils/zodValidators/validateCustomSingleProduct';
 import { Box } from '@mui/material';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
+import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 
@@ -43,6 +51,7 @@ export default function ProductPage({
   const [breadcrumbsLinks, setBreadcrumbsLinks] = useState<BreadcrumbType[]>(
     []
   );
+  const t = useTranslations('Product');
 
   useEffect(() => {
     const categoriesWithLang = product.categories.map(item => ({
@@ -57,6 +66,40 @@ export default function ProductPage({
     categoriesBreadcrumbsLinks.push({ name: product.name, url: '/' });
     setBreadcrumbsLinks(categoriesBreadcrumbsLinks);
   }, [product.categories]);
+
+  const PER_PAGE = 5;
+  const selectedCategory = product.categories[0].slug || null;
+
+  const baseCategory = selectedCategory
+    ? selectedCategory.replace(/-(uk|ru|de|pl|en)$/, '')
+    : null;
+
+  const RECOMMENDED_PARAMS = {
+    lang: locale,
+    per_page: PER_PAGE,
+    category: baseCategory || undefined,
+  };
+  const {
+    data: recommendedData,
+    isLoading,
+    isError,
+  } = useGetProductsQuery(RECOMMENDED_PARAMS);
+
+  const popularProducts: ProductType[] = recommendedData?.data?.items || [];
+
+  let filteredRecommendedProducts = [] as ProductType[];
+
+  if (popularProducts && popularProducts.length > 0) {
+    filteredRecommendedProducts = popularProducts.filter(
+      (popularProduct: ProductType) => popularProduct.id !== product.id
+    );
+  }
+
+  if (filteredRecommendedProducts && filteredRecommendedProducts.length > 4) {
+    filteredRecommendedProducts = filteredRecommendedProducts.slice(0, 4);
+  }
+
+  const products: ProductType[] = filteredRecommendedProducts || [];
 
   return (
     <>
@@ -82,16 +125,31 @@ export default function ProductPage({
         </Box>
         {product && <ProductInfo product={product} />}
         <Reviews product={product} />
-        <CustomProductList
-          title="recommendProduct"
-          productIds={recommendProducts}
-        />
+        <StyledSectionWrapper>
+          <RecommendContainer>
+            <TitleBlock>
+              <StyledText>{t('bestForYou')}</StyledText>
+              <Title as="h4" uppercase>
+                {t('recommendProduct')}
+              </Title>
+            </TitleBlock>
+            <ProductCardList
+              products={products}
+              isLoading={isLoading}
+              isError={isError}
+              columns={{
+                mobileColumns: 2,
+                tabletColumns: 4,
+                mintabletColumns: 4,
+                desktopColumns: 4,
+              }}
+            />
+          </RecommendContainer>
+        </StyledSectionWrapper>
       </Container>
     </>
   );
 }
-
-const recommendProducts = [24707, 24777, 24737, 24717];
 
 export const getServerSideProps: GetServerSideProps = async ({
   query,
