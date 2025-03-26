@@ -9,7 +9,10 @@ const MobileSearchButton = () => {
   const t = useTranslations('Search');
 
   return (
-    <ButtonStyled onClick={() => dispatch(popupSet('mobile-search'))}>
+    <ButtonStyled
+      // <ButtonStyled onClick={() => dispatch(popupSet('mobile-search'))}>
+      onClick={() => dispatch(popupSet({ popupType: 'mobile-search' }))}
+    >
       {t('Search')}
       <IconStyled
         src={'/assets/icons/search.svg'}

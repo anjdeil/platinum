@@ -31,7 +31,7 @@ export const RegistrationError = ({
       <Notification type={'warning'}>
         <FlexBox justifyContent="flex-end" alignItems="center">
           <StyledText>{tMyAccount('AlreadyHaveAnAccount')} </StyledText>
-          <Button onClick={() => dispatch(popupToggle('login'))}>
+          <Button onClick={() => dispatch(popupToggle({ popupType: 'login' }))}>
             {tMyAccount('log-In')}!
           </Button>
         </FlexBox>

@@ -20,7 +20,7 @@ export const ConfirmationRegCard: FC<ConfirmationRegCardType> = ({
   const t = useTranslations('Checkout');
 
   const handleOpenLoginPopUp = async () => {
-    dispatch(popupToggle('login'));
+    dispatch(popupToggle({ popupType: 'login' }));
   };
 
   return (

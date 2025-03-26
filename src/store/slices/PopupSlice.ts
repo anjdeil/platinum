@@ -1,20 +1,45 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+interface PopupState {
+  popupType: string;
+  data?: Record<string, string | number>;
+}
+
+const initialState: PopupState = {
+  popupType: '',
+  data: undefined,
+};
 
 export const PopupSlice = createSlice({
   name: 'popup',
-  initialState: '',
+  initialState,
   reducers: {
-    popupSet: (_state, action) => {
-      return action.payload;
+    popupSet: (state, action: PayloadAction<PopupState>) => {
+      state.popupType = action.payload.popupType;
+      state.data = action.payload.data;
     },
-    popupClosed: () => {
-      return '';
+    popupClosed: state => {
+      state.popupType = '';
+      state.data = undefined;
     },
-    popupToggle: (state, action) => {
-      return action.payload !== state ? action.payload : '';
+    popupClosedByType: (state, action: PayloadAction<string>) => {
+      if (state.popupType === action.payload) {
+        state.popupType = '';
+        state.data = undefined;
+      }
+    },
+    popupToggle: (state, action: PayloadAction<PopupState>) => {
+      if (state.popupType !== action.payload.popupType) {
+        state.popupType = action.payload.popupType;
+        state.data = action.payload.data;
+      } else {
+        state.popupType = '';
+        state.data = undefined;
+      }
     },
   },
 });
 
-export const { popupSet, popupClosed, popupToggle } = PopupSlice.actions;
+export const { popupSet, popupClosed, popupClosedByType, popupToggle } =
+  PopupSlice.actions;
 export default PopupSlice.reducer;

@@ -30,6 +30,7 @@ const ProductCardListSkeletonPropsSchema = z.object({
 const CustomProductListPropsSchema = z.object({
   title: z.string(),
   productIds: z.array(z.number()),
+  isLoadingProducts: z.boolean().optional(),
 });
 
 export type ProductCardListSkeletonProps = z.infer<

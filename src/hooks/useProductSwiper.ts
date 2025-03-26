@@ -18,8 +18,9 @@ const useProductSwiper = ({ data }: SwiperProps) => {
     }, [dispatch]);
 
     const handlerOpen = () => {
-        updateSwiperState(data, activeSlide);
-        dispatch(popupSet('swiper-popup'));
+      updateSwiperState(data, activeSlide);
+      // dispatch(popupSet('swiper-popup'));
+      dispatch(popupSet({ popupType: 'swiper-popup' }));
     };
 
     const handleSlideChange = (swiper: any) => {

@@ -13,6 +13,7 @@ const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({
   lineHeight,
   fontSize,
   maxWidth,
+  height,
   children,
   onClick,
   active,
@@ -31,6 +32,7 @@ const AddToBasketButton: React.FC<AddToBasketButtonProps> = ({
       lineHeight={lineHeight}
       fontSize={fontSize}
       maxWidth={maxWidth}
+      height={height}
       onClick={onClick}
       active={active}
       disabled={disabled}

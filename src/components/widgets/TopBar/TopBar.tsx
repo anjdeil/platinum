@@ -22,7 +22,7 @@ import {
 const TopBar: React.FC = () => {
   const dispatch = useAppDispatch();
   const theme = useTheme();
-  const popup = useAppSelector(state => state.popup);
+  const { popupType } = useAppSelector(state => state.popup);
   const t = useTranslations('TopBar');
 
   return (
@@ -63,10 +63,12 @@ const TopBar: React.FC = () => {
         </SelectsWrapper>
         <BurgerButtonWrapper>
           <IconButton
-            onClick={() => dispatch(popupToggle('hamburger-menu'))}
+            onClick={() =>
+              dispatch(popupToggle({ popupType: 'hamburger-menu' }))
+            }
             color={theme.colors.primary}
             IconComponent={
-              popup === 'hamburger-menu' ? BurgerIconActive : BurgerIcon
+              popupType === 'hamburger-menu' ? BurgerIconActive : BurgerIcon
             }
           />
         </BurgerButtonWrapper>
