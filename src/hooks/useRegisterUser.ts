@@ -57,6 +57,7 @@ export const useRegisterUser = () => {
       const tokenResp = await fetchToken({
         password: registrationData.password || '',
         username: registrationData.email,
+        rememberMe: true,
       });
       if (!tokenResp.data) {
         const errorMessage = tMyAcc('noToken');
@@ -65,7 +66,7 @@ export const useRegisterUser = () => {
       }
 
       // Validate auth token
-      const isTokenValid = await checkToken({});
+      const isTokenValid = await checkToken(true);
       if (!isTokenValid) {
         const errorMessage = tMyAcc('tokenFailed');
         setCustomError(errorMessage);

@@ -12,8 +12,9 @@ export default async function handler(
   let slug = req.query.path;
   let v2: boolean = true;
 
-  if (!slug || slug.length === 0)
+  if (!slug || slug.length === 0) {
     return res.status(400).json({ error: 'Slug parameter is missing' });
+  }
 
   if (Array.isArray(slug)) slug = slug.join('/');
 
@@ -23,9 +24,16 @@ export default async function handler(
   let authorization = null;
   let response;
 
+  const rememberMe = req.body.rememberMe;
+
   if (slug.includes('token/validate') || slug.includes('users')) {
     const authToken = getCookieValue(headers.cookie || '', 'authToken');
-    authorization = authToken && `Bearer ${authToken}`;
+
+    if (authToken) {
+      authorization = `Bearer ${authToken}`;
+    } else {
+      console.log('Error: No auth token found in cookies');
+    }
   }
 
   try {
@@ -34,7 +42,12 @@ export default async function handler(
         response = await wpRestApi.get(slug, params, authorization);
         break;
       case 'POST':
-        response = await wpRestApi.post(slug, body, !v2 && v2, authorization);
+        response = await wpRestApi.post(
+          slug,
+          { ...body, rememberMe },
+          !v2 && v2,
+          authorization
+        );
         break;
       case 'PUT':
         response = await wpRestApi.put(slug, body, authorization);
@@ -45,11 +58,16 @@ export default async function handler(
     }
 
     if (response && response.data) {
-      if ('token' in response.data) setAuthCookie(res, response.data.token);
+      console.log('Response received:', response.data);
+
+      if ('token' in response.data) {
+        setAuthCookie(res, response.data.token, rememberMe);
+      }
 
       return res.status(200).json(response?.data);
     }
   } catch (error) {
+    console.log('Error occurred during API request:', error);
     validateApiError(error, res);
   }
 }

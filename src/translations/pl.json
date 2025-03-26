@@ -4,6 +4,7 @@
     "link": "Wystarczy link do innej przetłumaczonej strony"
   },
   "MyAccount": {
+    "rememberMe": "Zapamiętaj mnie",
     "order": "Zamówienie",
     "clientPersonalAccount": "Konto osobiste klienta",
     "dashboard": "Kokpit",
@@ -190,6 +191,7 @@
     "lastedArticles": "Najnowsze artykuły",
     "leaveAReviewAboutProduct": "Zostaw recenzję o towarze",
     "descriptions": "Opis",
+    "characteristics": "Cechy",
     "days": "Dni",
     "hours": "Godziny",
     "minutes": "Minuty",

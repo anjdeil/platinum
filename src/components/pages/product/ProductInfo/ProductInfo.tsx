@@ -28,6 +28,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import DeliveryTimer from '../DeliveryTimer/DeliveryTimer';
 import PaymentList from '../PaymentList/PaymentList';
 import ProductAvailable from '../ProductAvailable/ProductAvailable';
+import ProductCharacteristics from '../ProductCharacteristics/ProductCharacteristics';
 import { ProductOptionsPanel } from '../ProductOptionsPanel';
 import ProductPrice from '../ProductPrice/ProductPrice';
 import ProductPromotion from '../ProductPromotion/ProductPromotion';
@@ -200,6 +201,10 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
     }
   }, [stockQuantity]);
 
+  const showAttributes = product.attributes.filter(attr =>
+    product.variations.some(v => v.attributes.some(va => va.id === attr.id))
+  );
+
   return (
     <ProductWrapper>
       <ProductImageWrapper>
@@ -254,9 +259,9 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
       </ProductTitleWrapper>
       <ProductInfoWrapper>
         {/* Options */}
-        {product.attributes && (
+        {showAttributes && (
           <ProductOptionsPanel
-            attributes={product.attributes}
+            attributes={showAttributes}
             defaultAttributes={product.default_attributes || []}
             variations={product.variations}
           />
@@ -286,6 +291,11 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
         <StyledButton onClick={addComment}>
           {t('leaveAReviewAboutProduct')}
         </StyledButton>
+        {Boolean(product.attributes.length) && (
+          <DetailsAccordion summary={t('characteristics')}>
+            <ProductCharacteristics attributes={product.attributes} />
+          </DetailsAccordion>
+        )}
         <DetailsAccordion summary={t('descriptions')}>
           <RichTextSection
             text={decodeHTML(

@@ -4,6 +4,7 @@
     "link": "Просто посилання на ішну перекладену сторінку"
   },
   "MyAccount": {
+    "rememberMe": "Запам’ятати мене",
     "order": "Замовлення",
     "clientPersonalAccount": "Особистий кабінет клієнта",
     "dashboard": "Панель керування",
@@ -190,6 +191,7 @@
     "lastedArticles": "Останні статті",
     "leaveAReviewAboutProduct": "Залиште відгук про товар",
     "descriptions": "Опис",
+    "characteristics": "Характеристики",
     "days": "Днів",
     "hours": "Годин",
     "minutes": "Хвилин",

@@ -17,16 +17,34 @@ export const ProductOptionsPanel: FC<ProductOptionsPanelType> = ({
   const setDefaultAttributes = useCallback(() => {
     const newMap = new Map();
 
-    const saleVariation = getSaleVariation(variations);
-    if (saleVariation) {
-      saleVariation.attributes.forEach(item =>
-        newMap.set(item.slug, item.option)
-      );
-    } else {
-      defaultAttributes.forEach(item => newMap.set(item.slug, item.option));
+    const urlParams = router.query;
+
+    let hasUrlParams = false;
+
+    Object.entries(urlParams).forEach(([key, value]) => {
+      if (key !== 'slug' && typeof value === 'string') {
+        newMap.set(key, value);
+        hasUrlParams = true;
+      }
+    });
+
+    if (!hasUrlParams) {
+      const saleVariation = getSaleVariation(variations);
+      if (saleVariation) {
+        saleVariation.attributes.forEach(item =>
+          newMap.set(item.slug, item.option)
+        );
+      } else {
+        defaultAttributes.forEach(item => newMap.set(item.slug, item.option));
+      }
     }
-    setChosenOptions(newMap);
-  }, []);
+    setChosenOptions(prev => {
+      const prevStr = JSON.stringify(Array.from(prev.entries()));
+      const newStr = JSON.stringify(Array.from(newMap.entries()));
+
+      return prevStr !== newStr ? newMap : prev;
+    });
+  }, [router.query, variations, defaultAttributes]);
 
   useEffect(() => {
     setDefaultAttributes();

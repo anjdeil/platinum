@@ -25,6 +25,7 @@ import { useTranslations } from 'next-intl';
 import Notification from '../../Notification/Notification';
 import { fetchUser } from '@/utils/auth/authService';
 import { useAppDispatch } from '@/store';
+import { CustomFormCheckbox } from '../CustomFormCheckbox';
 
 interface LoginFormProps {
   border?: boolean;
@@ -64,16 +65,18 @@ export const LoginForm: FC<LoginFormProps> = ({
     setCustomError('');
 
     try {
-      /** Fetching auth token */
       const tokenResp = await fetchToken({
         password: formData.password,
         username: formData.email,
+        rememberMe: formData.rememberMe,
       });
+
       if (!tokenResp.data) throw new Error('Auth token getting failed.');
 
-      /** Validate auth token */
-      const isTokenValid = await checkToken({});
+      const isTokenValid = await checkToken(formData.rememberMe);
+
       if (!isTokenValid) throw new Error('Auth token validation failed.');
+
       if (redirect) {
         router.push('/my-account');
       }
@@ -128,6 +131,14 @@ export const LoginForm: FC<LoginFormProps> = ({
           inputType={'password'}
         />
       </LoginFormWrapper>
+
+      <CustomFormCheckbox
+        label={t('rememberMe')}
+        name="rememberMe"
+        register={register}
+        errors={errors}
+      />
+
       <FormWrapperBottom>
         <StyledButton
           color={theme.colors.white}
