@@ -377,24 +377,28 @@ export default function CheckoutPage() {
       status: orderStatus,
       line_items: cartItems,
       coupon_lines: couponLines,
+      meta_data: [
+        {
+          key: 'wpml_language',
+          value: router.locale || '',
+        },
+        ...(Array.isArray(formOrderData.metaData) && orderStatus === 'pending' ? formOrderData.metaData : [])
+      ],
       ...(currencyCode && { currency: currencyCode }),
       ...(formOrderData.billing &&
         orderStatus === 'pending' && { billing: formOrderData.billing }),
       ...(formOrderData.shipping &&
         isShippingAddressDifferent &&
         orderStatus === 'pending' && { shipping: formOrderData.shipping }),
-      ...(formOrderData.metaData &&
-        orderStatus === 'pending' && { meta_data: formOrderData.metaData }),
       ...(userData?.id && { customer_id: userData.id }),
       ...(shippingLine && { shipping_lines: [shippingLine] }),
     });
-  }, [cartItems, coupons, orderStatus, currencyCode, userData, shippingLine]);
+  }, [cartItems, coupons, orderStatus, currencyCode, userData, shippingLine, router.locale]);
 
   useEffect(() => {
     if (order?.status === 'pending' && order.payment_url) {
       const paymentUrlObj = new URL(order.payment_url);
-      const langCode = router.locale === 'en' ? '' : router.locale;
-      paymentUrlObj.pathname = '/' + langCode + paymentUrlObj.pathname;
+      paymentUrlObj.pathname = '/' + router.locale + paymentUrlObj.pathname;
 
       router.push(paymentUrlObj.toString());
       dispatch(clearCart());
@@ -405,7 +409,6 @@ export default function CheckoutPage() {
     <>
       <Head>{inPostHead}</Head>
       <OrderProgress />
-
       <CheckoutContainer>
         <CheckoutFormsWrapper>
           {/* Billing and shipping forms */}
