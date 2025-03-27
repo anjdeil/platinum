@@ -43,10 +43,9 @@ export default function LoyaltyPage() {
 
   const { convertCurrency, currencyCode: code } = useCurrencyConverter();
 
-  const { level, nextLevelAmount } = getLoyaltyLevel(2600);
-  /*   const { level, nextLevelAmount } = getLoyaltyLevel(
-    Number(userTotal?.total_spent)
-  ); */
+  const { level, nextLevelAmount } = getLoyaltyLevel(
+    Number(userTotal?.total_spent) || 0
+  );
 
   const currentLevelIndex = LOYALTY_LEVELS.findIndex(
     loyaltyLevel => loyaltyLevel.name === level
