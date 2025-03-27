@@ -9,11 +9,16 @@ export const StyledFomContainer = styled.div`
   margin-bottom: 24px;
 `;
 
-export const StyledFormWrapper = styled.div`
+type StyledFormTitleProps = {
+  alignFlexEnd?: boolean;
+};
+export const StyledFormWrapper = styled.div<StyledFormTitleProps>`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(49%, 1fr));
   column-gap: 2%;
-  align-items: baseline;
+
+  align-items: ${({ alignFlexEnd }) =>
+    alignFlexEnd ? 'flex-end' : 'baseline'};
   row-gap: 16px;
 
   @media ${({ theme }) => theme.media.preSmall} {
