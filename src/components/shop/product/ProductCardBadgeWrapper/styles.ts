@@ -6,7 +6,7 @@ export const BadgeCardWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 12px;
-  align-items: center;
+  align-items: start;
   position: absolute;
   top: 0;
   z-index: 10;
