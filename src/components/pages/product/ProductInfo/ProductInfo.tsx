@@ -45,6 +45,7 @@ import {
   ProductTitleWrapper,
   ProductWrapper,
 } from './styles';
+import { ProductBadgeBox } from '@/components/shop/product/ProductBadgeWrapper/styles';
 
 const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
   const { images, thumbnail } = product;
@@ -210,11 +211,13 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
       <ProductImageWrapper>
         <ProductSwiper data={galleryImages} />
         <ProductBadgeWrapper>
-          {isSale && <ProductBadge type="sale" />}
-          {Boolean(product.tags.length) &&
-            product.tags.map(tag => (
-              <ProductBadge key={tag.id} type={tag.slug} />
-            ))}
+          <ProductBadgeBox>
+            {isSale && <ProductBadge type="sale" />}
+            {Boolean(product.tags.length) &&
+              product.tags.map(tag => (
+                <ProductBadge key={tag.id} type={tag.slug} name={tag.name} />
+              ))}
+          </ProductBadgeBox>
           <FavoriteButton
             onClick={() => handleWishlistToggle(product)}
             marginLeft="auto"

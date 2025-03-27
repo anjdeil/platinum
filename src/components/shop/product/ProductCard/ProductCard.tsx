@@ -28,6 +28,7 @@ import { popupToggle } from '@/store/slices/PopupSlice';
 import { getCardProductPrice } from '@/utils/price/getCardProductPrice';
 import { Skeleton } from '@mui/material';
 import ProductCardBadgeWrapper from '../ProductCardBadgeWrapper/ProductCardBadgeWrapper';
+import { ProductBadgeBox } from '../ProductBadgeWrapper/styles';
 
 const ProductCard: React.FC<ProductCardPropsType> = ({ product }) => {
   const t = useTranslations('Product');
@@ -145,11 +146,13 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product }) => {
           </PriceWrapper>
         </TitleWrapper>
         <ProductCardBadgeWrapper>
-          {isSale && <ProductBadge type="sale" />}
-          {Boolean(product.tags.length) &&
-            product.tags.map(tag => (
-              <ProductBadge key={tag.id} type={tag.slug} />
-            ))}
+          <ProductBadgeBox>
+            {isSale && <ProductBadge type="sale" />}
+            {Boolean(product.tags.length) &&
+              product.tags.map(tag => (
+                <ProductBadge key={tag.id} type={tag.slug} name={tag.name} />
+              ))}
+          </ProductBadgeBox>
           <FavoriteButton
             onClick={() => handleWishlistToggle(product)}
             marginLeft="auto"

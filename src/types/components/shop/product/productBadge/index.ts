@@ -1,7 +1,8 @@
 import { z } from 'zod';
 
 export const ProductBadgePropsSchema = z.object({
-    type: z.string(),
+  type: z.string(),
+  name: z.string().optional(),
 });
 
 export const BadgeStyledPropsSchema = ProductBadgePropsSchema.extend({

@@ -215,7 +215,8 @@
     "successNotify": "Sie werden benachrichtigt, wenn das Produkt wieder im Geschäft ist!",
     "failedNotify": "Abonnieren des Produkts fehlgeschlagen",
     "userAlreadyNotified": "Sie haben sich bereits für dieses Produkt angemeldet",
-    "notValidData": "Das Produkt konnte nicht abonniert werden. Bitte geben Sie gültige Daten an"
+    "notValidData": "Das Produkt konnte nicht abonniert werden. Bitte geben Sie gültige Daten an",
+    "saleTag": "Verkauf"
   },
   "Cart": {
     "cart": "Warenkorb",
