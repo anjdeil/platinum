@@ -16,7 +16,7 @@ export function setAuthCookie(
 
   if (rememberMe === undefined || rememberMe) {
     // 7 days
-    expiresDate = Math.floor(decodedToken.exp - Date.now() / 1000);
+    expiresDate = Math.max(0, decodedToken.exp - Math.floor(Date.now() / 1000));
   } else {
     // session cookie
     expiresDate = 0;
@@ -26,7 +26,7 @@ export function setAuthCookie(
 
   const cookieHeader = `authToken=${encodedToken}; Path=/; ${
     expiresDate === 0 ? '' : `Max-Age=${expiresDate}`
-  }; Secure; HttpOnly`;
+  }; Secure`;
 
   res.setHeader('Set-Cookie', cookieHeader);
 }
