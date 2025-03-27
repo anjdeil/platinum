@@ -4,7 +4,7 @@ export const postSchemaOptional = (t: any) =>
   z
     .string()
     .optional()
-    .refine(value => !value || /^[0-9-]+$/.test(value), {
+    .refine(value => !value || /^[A-Z0-9\s-]{3,10}$/i.test(value), {
       message: t('PostcodeInvalid'),
     });
 

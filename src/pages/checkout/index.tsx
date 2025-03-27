@@ -373,6 +373,14 @@ export default function CheckoutPage() {
 
     const couponLines = coupons.map(code => ({ code }));
 
+    const filteredMetaData = Array.isArray(formOrderData.metaData)
+      ? formOrderData.metaData.filter(meta =>
+          isShippingAddressDifferent
+            ? true
+            : meta.key !== 'shipping_apartmentNumber'
+        )
+      : [];
+
     createOrder({
       status: orderStatus,
       line_items: cartItems,
@@ -382,7 +390,7 @@ export default function CheckoutPage() {
           key: 'wpml_language',
           value: router.locale || '',
         },
-        ...(Array.isArray(formOrderData.metaData) && orderStatus === 'pending' ? formOrderData.metaData : [])
+        ...(orderStatus === 'pending' ? filteredMetaData : []),
       ],
       ...(currencyCode && { currency: currencyCode }),
       ...(formOrderData.billing &&
@@ -393,7 +401,15 @@ export default function CheckoutPage() {
       ...(userData?.id && { customer_id: userData.id }),
       ...(shippingLine && { shipping_lines: [shippingLine] }),
     });
-  }, [cartItems, coupons, orderStatus, currencyCode, userData, shippingLine, router.locale]);
+  }, [
+    cartItems,
+    coupons,
+    orderStatus,
+    currencyCode,
+    userData,
+    shippingLine,
+    router.locale,
+  ]);
 
   useEffect(() => {
     if (order?.status === 'pending' && order.payment_url) {
