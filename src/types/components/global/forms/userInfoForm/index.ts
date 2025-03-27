@@ -73,7 +73,7 @@ export const UserInfoFormSchema = (
   const postCodeValidation = z
     .string()
     .min(1, { message: t('pleaseFillInThePostcode') })
-    .regex(/^(\d{2}-\d{3}|\d{1}-\d{4}|\d{3}-\d{2}|\d{5})$/, {
+    .regex(/^[A-Z0-9\s-]{3,10}$/i, {
       message: t('invalidPostcodeFormat'),
     });
 

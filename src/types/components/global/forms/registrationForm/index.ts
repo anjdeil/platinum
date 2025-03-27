@@ -13,7 +13,7 @@ export const RegistrationFormSchema = (isLoggedIn: boolean, t: any) => {
       address_1: z.string().min(3, t('RequiredField')),
       address_2: z.string().min(1, t('RequiredField')),
       apartmentNumber: z.string().min(1, t('RequiredField')),
-      postcode: z.string().min(4, t('minChar', { count: 4 })),
+      postcode: z.string().min(3, t('minChar', { count: 3 })),
       password: !isLoggedIn ? passwordSchema(t) : z.string().optional(),
       confirmPassword: !isLoggedIn ? z.string() : z.string().optional(),
       terms: termsSchema(t),
@@ -87,10 +87,7 @@ export const RegistrationFormSchema2 = (isLoggedIn: boolean, t: any) => {
       postcode: z
         .string()
         .nonempty(t('pleaseFillInThePostcode'))
-        .regex(
-          /^(\d{2}-\d{3}|\d{1}-\d{4}|\d{3}-\d{2}|\d{5})$/,
-          t('invalidPostcodeFormat')
-        ),
+        .regex(/^[A-Z0-9\s-]{3,10}$/i, t('invalidPostcodeFormat')),
       password: !isLoggedIn
         ? z
             .string()

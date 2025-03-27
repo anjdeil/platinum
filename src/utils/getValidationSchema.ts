@@ -163,7 +163,7 @@ export const getValidationSchema = (
       return {
         required: t('pleaseFillInThePostcode'),
         pattern: {
-          value: /^(\d{2}-\d{3}|\d{1}-\d{4}|\d{3}-\d{2}|\d{5})$/,
+          value: /^[A-Z0-9\s-]{3,10}$/i,
           message: t('invalidPostcodeFormat'),
         },
       };
