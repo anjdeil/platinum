@@ -507,7 +507,7 @@
     "last_name": "Nazwisko",
     "email": "E-Mail",
     "phone": "Numer telefonu",
-    "company": "Imię i nazwisko/Firma",
+    "company": "Imię i nazwisko/ Firma",
     "nip": "NIP",
     "address_2": "Numer budynku",
     "postcode": "Kod pocztowy"

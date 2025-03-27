@@ -96,6 +96,8 @@ export const BillingForm: FC<BillingFormProps> = ({
     different_address,
     password,
     shipping_country,
+    company,
+    nip,
   } = watchedFields;
 
   useEffect(() => {
@@ -119,7 +121,9 @@ export const BillingForm: FC<BillingFormProps> = ({
   //   ? getMetaDataValue(customer.meta_data, 'shipping_apartmentNumber')
   //   : '';
 
-  const nip = customer ? getMetaDataValue(customer.meta_data, 'nip') : '';
+  const nipFromMeta = customer
+    ? getMetaDataValue(customer.meta_data, 'nip')
+    : '';
 
   useEffect(() => {
     if (customer) {
@@ -143,11 +147,6 @@ export const BillingForm: FC<BillingFormProps> = ({
 
       setValue('country', billing?.country || 'PL');
 
-      if (invoice) {
-        setValue('company', billing?.company || '');
-        setValue('nip', nip);
-      }
-
       setValue('apartmentNumber', apartmentNumber);
 
       setValue('shipping_first_name', billing.first_name);
@@ -159,7 +158,19 @@ export const BillingForm: FC<BillingFormProps> = ({
       setValue('shipping_apartmentNumber', apartmentNumber);
       setValue('shipping_postcode', billing.postcode);
     }
-  }, [customer, invoice]);
+  }, [customer]);
+
+  useEffect(() => {
+    if (invoice && customer) {
+      setValue('company', customer.billing?.company || '');
+      setValue('nip', nipFromMeta);
+    }
+
+    if (!invoice) {
+      setValue('company', '');
+      setValue('nip', '');
+    }
+  }, [invoice, customer]);
 
   useEffect(() => {
     if (!different_address) {
@@ -250,6 +261,7 @@ export const BillingForm: FC<BillingFormProps> = ({
     if (isValid) {
       const { formattedBillingData, formattedShippingData, formattedMetaData } =
         getFormattedUserData(watchedFields as ReqData);
+
       setFormOrderData({
         billing: formattedBillingData as BillingType,
         shipping: different_address
@@ -265,7 +277,7 @@ export const BillingForm: FC<BillingFormProps> = ({
         metaData: null,
       });
     }
-  }, [isValid, different_address]);
+  }, [isValid, different_address, company, nip]);
 
   useEffect(() => {
     if (!isValid && isWarningsShown) {
@@ -438,7 +450,7 @@ export const BillingForm: FC<BillingFormProps> = ({
                   label={tCheckout('vatInvoice')}
                 />
                 {invoice && (
-                  <StyledFormWrapper>
+                  <StyledFormWrapper alignFlexEnd>
                     <AnimatedWrapper isVisible={true}>
                       <CustomTextField
                         name="company"
