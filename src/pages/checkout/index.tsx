@@ -414,7 +414,9 @@ export default function CheckoutPage() {
   useEffect(() => {
     if (order?.status === 'pending' && order.payment_url) {
       const paymentUrlObj = new URL(order.payment_url);
-      paymentUrlObj.pathname = '/' + router.locale + paymentUrlObj.pathname;
+
+      const langCode = router.locale === 'en' ? '' : router.locale;
+      paymentUrlObj.pathname = '/' + langCode + paymentUrlObj.pathname;
 
       router.push(paymentUrlObj.toString());
       dispatch(clearCart());
