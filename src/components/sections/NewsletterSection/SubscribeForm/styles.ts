@@ -89,7 +89,7 @@ export const StyledError = styled.p`
 export const StyledSuccessMessage = styled.p`
   font: ${({ theme }) => theme.fonts.bodypresmallReg};
   font-weight: 600;
-  color: ${({ theme }) => theme.background.success};
+  color: ${({ theme }) => theme.colors.success};
   padding-top: 8px;
 
   @media ${({ theme }) => theme.media.medium} {

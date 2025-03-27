@@ -60,6 +60,7 @@ const CommentPopup: React.FC<SwiperPopupProps> = ({ onClose }) => {
       reviewer: `${user?.first_name} ${user?.last_name}`,
       reviewer_email: user?.email,
       rating,
+      status: 'hold',
     };
 
     try {
