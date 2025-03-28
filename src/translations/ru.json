@@ -59,6 +59,7 @@
     "postcode": "Почтовый индекс",
     "country": "Страна",
     "apartmentNumber": "Номер квартиры/офиса",
+    "shipping_apartmentNumber": "Номер квартиры/офиса",
     "email": "E-mail",
     "phone": "Номер телефона",
     "discountCode": "Промокод",

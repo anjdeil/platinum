@@ -59,6 +59,7 @@
     "postcode": "Postleitzahl",
     "country": "Land",
     "apartmentNumber": "Wohnung/Büro Nr.",
+    "shipping_apartmentNumber": "Wohnung/Büro Nr.",
     "email": "E-Mail",
     "phone": "Telefon",
     "discountCode": "Rabattcode",

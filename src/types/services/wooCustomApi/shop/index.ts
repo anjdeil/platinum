@@ -127,5 +127,6 @@ const ProductParamsSchema = z.object({
 })
 
 export type OrderType = z.infer<typeof OrderTypeSchema>;
+export type MetaDataType = z.infer<typeof metaDataSchema>;
 export type AddressType = z.infer<typeof AddressTypeSchema>;
 export type ProductParamsType = z.infer<typeof ProductParamsSchema>;
