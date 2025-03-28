@@ -243,7 +243,9 @@ export const AmbassadorForm: FC = () => {
           </FlexBox>
         ) : (
           <>
-            <FormWrapper>{renderFormInfoFields('', customer)}</FormWrapper>
+            <FormWrapper paddingBottom="16px">
+              {renderFormInfoFields('', customer)}
+            </FormWrapper>
             <FlexBox flexDirection="column" gap="16px">
               <CustomFormInput
                 fieldName={tValidation('aboutYourself')}
@@ -287,9 +289,10 @@ export const AmbassadorForm: FC = () => {
                   onChange={handleFileChange}
                   style={{ display: 'none' }}
                 />
+                <CustomError> {fileErr}</CustomError>
               </FileUploadWrapper>
-              <CustomError> {fileErr}</CustomError>
-              <FormWrapperBottom>
+
+              <FormWrapperBottom margin="none" gap="0">
                 <StyledButton
                   type="submit"
                   disabled={isSubmitting || !hasChanges}

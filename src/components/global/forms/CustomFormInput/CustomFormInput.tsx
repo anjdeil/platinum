@@ -33,6 +33,7 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
   defaultValue,
   list,
   disabled,
+  xlarea,
   autoComplete,
 }) => {
   const registerProps = register ? { ...register(name) } : {};
@@ -135,6 +136,7 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
               autoComplete={getAutoCompleteValue()}
               {...(name === 'country' ? { list: list } : {})}
               disabled={disabled}
+              xlarea={xlarea}
             />
           )}
           {(inputType === 'password' || inputType === 'newpassword') && (
