@@ -59,6 +59,7 @@
     "postcode": "Postcode",
     "country": "Country",
     "apartmentNumber": "# apartment/office",
+    "shipping_apartmentNumber": "# apartment/office",
     "email": "E-mail",
     "phone": "Phone number",
     "discountCode": "Discount code",

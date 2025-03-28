@@ -8,7 +8,7 @@ import OrderProductList from '@/components/pages/order/OrderProductList/OrderPro
 import OrderTotals from '@/components/pages/order/OrderTotals/OrderTotals';
 import wooCommerceRestApi from '@/services/wooCommerceRestApi';
 import { AccountInfoWrapper, AccountTitle } from '@/styles/components';
-import { OrderType } from '@/types/services/wooCustomApi/shop';
+import { MetaDataType, OrderType } from '@/types/services/wooCustomApi/shop';
 import areBillingAndShippingEqual from '@/utils/areBillingAndShippingEqual';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { useTranslations } from 'next-intl';
@@ -56,6 +56,18 @@ const Order: FC<OrderPropsType> = ({ order }) => {
     order.shipping
   );
 
+  const apartmentNumber = order.meta_data.find(({key}) => key === 'apartmentNumber');
+  const shippingApartmentNumber = order.meta_data.find(({key}) => key === 'shipping_apartmentNumber');
+  const nip = order.meta_data.find(({key}) => key === 'nip');
+
+  const additionalBillingFields: MetaDataType[] = [];
+  const additionalShippingFields: MetaDataType[] = [];
+
+  if (apartmentNumber) additionalBillingFields.push(apartmentNumber);
+  if (nip) additionalBillingFields.push(nip);
+
+  if (shippingApartmentNumber) additionalShippingFields.push(shippingApartmentNumber);
+
   return (
     <AccountLayout title={t('clientPersonalAccount')}>
       <AccountTitle as={'h1'} textalign="center" uppercase marginBottom="24">
@@ -77,11 +89,11 @@ const Order: FC<OrderPropsType> = ({ order }) => {
           <OrderTotals order={order} />
         </OrderInfo>
         <OrderInfo title="customerData">
-          <BillingShippingAddress address={order.billing} />
+          <BillingShippingAddress address={order.billing} additionalFields={additionalBillingFields} />
         </OrderInfo>
         {!billingAndShippingEqual && (
           <OrderInfo title="shippingAddress">
-            <BillingShippingAddress address={order.shipping} />
+            <BillingShippingAddress address={order.shipping} additionalFields={additionalShippingFields} />
           </OrderInfo>
         )}
       </AccountInfoWrapper>
