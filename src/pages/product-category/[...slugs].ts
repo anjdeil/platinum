@@ -151,10 +151,16 @@ export const getServerSideProps: GetServerSideProps = async ({
     };
   } catch (error) {
     console.error(error);
+    // return {
+    //   redirect: {
+    //     destination: '/500',
+    //     permanent: false,
+    //   },
+    // };
     return {
       props: {
         error: {
-          message: "Server Error",
+          message: 'Server Error',
         },
       },
     };

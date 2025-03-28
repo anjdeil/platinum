@@ -18,6 +18,7 @@ interface CustomSelectProps {
   rules?: any;
   defaultValue?: string;
   noPaddings?: boolean;
+  noBottom?: boolean;
   placeholder?: string;
 }
 const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
@@ -31,6 +32,7 @@ const CustomCountrySelect: React.FC<CustomSelectProps> = ({
   rules,
   defaultValue,
   noPaddings,
+  noBottom,
   placeholder,
 }) => {
   const tValidation = useTranslations('Validation');
@@ -62,7 +64,8 @@ const CustomCountrySelect: React.FC<CustomSelectProps> = ({
               control: (base, state) => ({
                 ...base,
                 marginTop: '6px',
-                marginBottom: noPaddings ? '24px' : '8px',
+                // marginBottom: noPaddings ? '24px' : '8px',
+                marginBottom: noBottom ? '0' : noPaddings ? '24px' : '8px',
                 border: 'none',
                 height: noPaddings ? '48px' : '50px',
                 padding: noPaddings ? '0' : '5px',

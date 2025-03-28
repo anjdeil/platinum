@@ -19,12 +19,12 @@ import CustomCountrySelect from '../../selects/CustomCountrySelect/CustomCountry
 import { useLocale, useTranslations } from 'next-intl';
 import Notification from '../../Notification/Notification';
 import { CustomFormInput } from '../CustomFormInput';
-import { useUpdateCustomerInfoMutation } from '@/store/rtk-queries/wooCustomAuthApi';
 import { WooCustomerReqType } from '@/types/services/wooCustomApi/customer';
 import { countryOptions } from '@/utils/mockdata/countryOptions';
 import { getMetaDataValue } from '@/utils/myAcc/getMetaDataValue';
 import { FormCheckbox } from '../BillingForm/FormCheckbox';
 import { AnimatedWrapper, VariationFields } from '../BillingForm/style';
+import { useUpdateCustomerMutation } from '@/store/rtk-queries/wooCustomApi';
 
 const customerShippingInfo = (customer: WooCustomerReqType) => {
   if (!customer) {
@@ -56,11 +56,14 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
   const [isShipping, setIsShipping] = useState<boolean>(false);
   const [isInvoice, setIsInvoice] = useState<boolean>(false);
   const [isDataUnchanged, setIsDataUnchanged] = useState(false);
+  const [isNoCustomerData, setIsNoCustomerData] = useState(false);
   const [showWarningNotification, setShowWarningNotification] = useState(false);
+  const [showCustomerErrorNotification, setCustomerErrorNotification] =
+    useState(false);
   const [showSuccessNotification, setShowSuccessNotification] = useState(false);
 
-  const [UpdateCustomerMutation, { error, isSuccess, reset }] =
-    useUpdateCustomerInfoMutation();
+  const [updateCustomer, { error, isSuccess, reset }] =
+    useUpdateCustomerMutation();
 
   const formSchema = useMemo(
     () => UserInfoFormSchema(isShipping, tValidation, isInvoice),
@@ -177,8 +180,9 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
   }, [customer, locale]);
 
   const onSubmit = async (formData: UserInfoFormType) => {
-    if (!customer) {
-      console.error('Customer data is not available');
+    if (!customer || !customer.id) {
+      console.log('Customer data is not available');
+      setIsNoCustomerData(true);
       return;
     }
 
@@ -280,7 +284,8 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
     }
 
     try {
-      const response = await UpdateCustomerMutation({
+      const response = await updateCustomer({
+        id: customer.id,
         ...preparedData,
       });
 
@@ -324,6 +329,22 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
     }
   }, [isDataUnchanged]);
 
+  useEffect(() => {
+    if (isNoCustomerData) {
+      setCustomerErrorNotification(true);
+
+      const hideTimer = setTimeout(() => {
+        setCustomerErrorNotification(false);
+        setIsNoCustomerData(false);
+        reset();
+      }, 5000);
+
+      return () => {
+        clearTimeout(hideTimer);
+      };
+    }
+  }, [isNoCustomerData]);
+
   const renderFormShippingFields = (
     prefix: string = '',
     defaultValues: any = {}
@@ -362,6 +383,7 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
             : customer?.billing?.country
         }
         placeholder={tValidation('countryPlaceholder')}
+        noBottom={true}
       />
 
       {['city', 'address_1', 'address_2', 'apartmentNumber', 'postcode'].map(
@@ -547,6 +569,11 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
         )}
       </InfoCard>
       <FormWrapperBottom>
+        {isNoCustomerData && showCustomerErrorNotification && (
+          <Notification type="warning" marginBottom="0">
+            {tForms('customerError')}
+          </Notification>
+        )}
         {isDataUnchanged && showWarningNotification && (
           <Notification type="warning" marginBottom="0">
             {tValidation('noChanges')}
