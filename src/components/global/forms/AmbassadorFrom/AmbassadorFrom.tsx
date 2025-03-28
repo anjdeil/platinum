@@ -207,6 +207,7 @@ export const AmbassadorForm: FC = () => {
             ? customer?.shipping?.country
             : customer?.billing?.country
         }
+        noBottom={true}
       />
       <CustomFormInput
         fieldName={tValidation('city')}

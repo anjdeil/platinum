@@ -13,7 +13,7 @@ export const FileUploadLabel = styled.label<{ isDragging: boolean }>`
   background-color: ${({ theme, isDragging }) =>
     isDragging ? theme.colors.secondary : theme.background.formElements};
   color: ${({ theme, isDragging }) => isDragging && theme.colors.white};
-  height: 120px;
+  min-height: 120px;
   transition: background-color 0.3s;
   & p {
     max-width: 400px;
