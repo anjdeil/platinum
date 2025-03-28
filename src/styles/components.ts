@@ -265,6 +265,7 @@ export const CustomForm = styled.form<CustomFormProps>`
 
 interface CustomFormProps {
   direction?: 'column' | 'grid';
+  paddingBottom?: string;
 }
 export const FormWrapper = styled.div<CustomFormProps>`
   display: ${({ direction }) => (direction === 'column' ? 'flex' : 'grid')};
@@ -275,7 +276,7 @@ export const FormWrapper = styled.div<CustomFormProps>`
   column-gap: 1%;
   gap: ${({ direction }) => (direction === 'column' ? '15px' : 'unset')};
   row-gap: ${({ direction }) => (direction === 'column' ? 'unset' : '15px')};
-  padding-bottom: 20px;
+  padding-bottom: ${({ paddingBottom = '20px' }) => paddingBottom};
 
   @media ${({ theme }) => theme.media.medium} {
     display: flex;
@@ -284,12 +285,11 @@ export const FormWrapper = styled.div<CustomFormProps>`
   }
 `;
 
-export const FormWrapperBottom = styled.div`
-  margin-top: 16px;
-  margin-bottom: 16px;
+export const FormWrapperBottom = styled.div<{ margin?: string; gap?: string }>`
+  margin: ${({ margin = '16px 0' }) => margin};
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: ${({ gap = '20px' }) => gap};
 `;
 
 interface InfoCardProps {

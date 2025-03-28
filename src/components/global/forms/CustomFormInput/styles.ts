@@ -21,6 +21,7 @@ interface CustomInputProps {
   background?: string;
   isCheckbox?: boolean;
   isError?: boolean;
+  xlarea?: boolean;
 }
 
 export const CustomInputStyle = styled.div<CustomInputStyleProps>`
@@ -60,7 +61,9 @@ export const CustomInputStyle = styled.div<CustomInputStyleProps>`
   }
 `;
 export const Input = styled.input<CustomInputProps>`
-  ${props => props.as === 'textarea' && 'min-height: 150px;'};
+  ${props => props.as === 'textarea' && 'min-height: 120px;'};
+
+  min-height: ${({ xlarea }) => xlarea && '150px'};
   margin-right: ${({ isCheckbox }) => (isCheckbox ? '15px' : '0')};
   padding: ${({ isCheckbox }) => (isCheckbox ? '0' : '15px')};
   width: ${({ isCheckbox }) => (isCheckbox ? '24px' : '100%')};
@@ -145,8 +148,6 @@ export const ShowPasswordImage = styled(Image)`
 `;
 
 export const CustomError = styled.p`
-  margin-top: 5px;
-
   color: ${({ theme }) => theme.colors.error};
   @media ${({ theme }) => theme.media.medium} {
     margin-top: 10px;
