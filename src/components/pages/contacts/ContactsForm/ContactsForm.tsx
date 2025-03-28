@@ -106,6 +106,7 @@ const ContactsForm = () => {
           setValue={setValue}
           placeholder={t('yourQuestionPlaceholder')}
           background={theme.colors.white}
+          xlarea
         />
         <ContactsStyledButton
           type="submit"
