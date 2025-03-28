@@ -424,7 +424,8 @@
     "registration": "Register an account when making a purchase.",
     "withoutRegistration": "The order will be placed without registration!",
     "proofOfPurchase": "Proof of purchase",
-    "shippingDifferentAddress": "Use a different address for shipping"
+    "shippingDifferentAddress": "Use a different address for shipping",
+    "customerError": "Error fetching customer data"
   },
   "Breadcrumbs": {
     "homePage": "Home Page",
@@ -448,7 +449,8 @@
     "newArrivals": "Join our WhatsApp newsletter to receive exclusive discounts, great offers, and stay up-to-date.",
     "joinToWhatsApp": "Join to WhatsApp",
     "subscribe": "Join now",
-    "allShop": "All shop"
+    "allShop": "All shop",
+    "instagramNotFound": "Instagram Media not found"
   },
   "SubscriptionForm": {
     "subscribe": "Join now",

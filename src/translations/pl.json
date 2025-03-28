@@ -424,7 +424,8 @@
     "registration": "Zarejestruj się podczas zakupu.",
     "withoutRegistration": "Zamówienie zostanie złożone bez rejestracji!",
     "proofOfPurchase": "Dowód zakupu",
-    "shippingDifferentAddress": "Użyj innego adresu dostawy"
+    "shippingDifferentAddress": "Użyj innego adresu dostawy",
+    "customerError": "Błąd pobierania danych klienta"
   },
   "Breadcrumbs": {
     "homePage": "Strona Główna",
@@ -448,7 +449,8 @@
     "newArrivals": "Dołącz do naszego newslettera WhatsApp, aby otrzymywać ekskluzywne rabaty, świetne oferty i być zawsze na bieżąco.",
     "joinToWhatsApp": "Dołącz do nas na WhatsApp",
     "subscribe": "Dołącz teraz",
-    "allShop": "Wszystkie produkty"
+    "allShop": "Wszystkie produkty",
+    "instagramNotFound": "Instagram Media not found"
   },
   "SubscriptionForm": {
     "subscribe": "Dołącz teraz",

@@ -424,7 +424,8 @@
     "registration": "Зарегистрируйтесь при совершении покупки.",
     "withoutRegistration": "Заказ будет оформлен без регистрации!",
     "proofOfPurchase": "Подтверждение покупки",
-    "shippingDifferentAddress": "Использовать другой адрес для доставки"
+    "shippingDifferentAddress": "Использовать другой адрес для доставки",
+    "customerError": "Ошибка при получении данных о клиенте"
   },
   "Breadcrumbs": {
     "homePage": "Главная",
@@ -448,7 +449,8 @@
     "newArrivals": "Присоединяйтесь к нашей рассылке в WhatsApp, чтобы получать эксклюзивные скидки, отличные предложения и быть всегда в курсе новинок.",
     "joinToWhatsApp": "Присоединяйтесь к WhatsApp",
     "subscribe": "Присоединиться сейчас",
-    "allShop": "Весь магазин"
+    "allShop": "Весь магазин",
+    "instagramNotFound": "Instagram Media not found"
   },
   "SubscriptionForm": {
     "subscribe": "Присоединиться сейчас",

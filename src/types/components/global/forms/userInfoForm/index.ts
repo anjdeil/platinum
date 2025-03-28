@@ -92,7 +92,6 @@ export const UserInfoFormSchema = (
       message: t('wrongNipFormat'),
     });
 
-  console.log('isInvoice', isInvoice);
   const schema = z.object({
     first_name: firstNameValidation,
     last_name: lastNameValidation,

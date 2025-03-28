@@ -58,8 +58,6 @@ export default async function handler(
     }
 
     if (response && response.data) {
-      console.log('Response received:', response.data);
-
       if ('token' in response.data) {
         setAuthCookie(res, response.data.token, rememberMe);
       }

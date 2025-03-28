@@ -81,7 +81,6 @@ export const Archive: FC<ArchivePropsType> = props => {
     statistic,
     locale,
   } = props;
-
   const t = useTranslations('Archive');
 
   const currentCategory = Array.isArray(categories)
@@ -157,7 +156,7 @@ export const Archive: FC<ArchivePropsType> = props => {
                   />
                 ) : (
                   <>
-                    {categories.length !== 0 ? (
+                    {categories?.length !== 0 ? (
                       <>
                         {isLoading ? (
                           <Skeleton
@@ -197,15 +196,18 @@ export const Archive: FC<ArchivePropsType> = props => {
               </>
             )}
           </>
-
-          <Title as="h3" uppercase textalign="left" marginBottom="24px">
-            {t('filters')}
-          </Title>
-          <FilterPanel
-            attributes={statistic.attributes}
-            minPrice={statistic.min_price || 0}
-            maxPrice={statistic.max_price || 0}
-          />
+          {statistic && statistic?.attributes && (
+            <>
+              <Title as="h3" uppercase textalign="left" marginBottom="24px">
+                {t('filters')}
+              </Title>
+              <FilterPanel
+                attributes={statistic?.attributes}
+                minPrice={statistic?.min_price || 0}
+                maxPrice={statistic?.max_price || 0}
+              />
+            </>
+          )}
         </CatalogFilterBlock>
         <FilterOverlay visible={isMenuVisible} onClick={toggleMenu} />
         <CatalogRightWrapper>
@@ -217,7 +219,7 @@ export const Archive: FC<ArchivePropsType> = props => {
               <CustomSortAccordion />
             </FilterSortWrapper>
             <CountProduct>
-              {statistic.products_count !== 0 && (
+              {statistic && statistic?.products_count !== 0 && (
                 <>
                   {statistic.products_count}&nbsp;
                   {getPluralForm(statistic.products_count, locale)}
@@ -239,7 +241,7 @@ export const Archive: FC<ArchivePropsType> = props => {
             )}
           </CatalogTopWrapper>
           <CatalogListBlock>
-            {products?.length > 0 && (
+            {products?.length > 0 ? (
               <ProductCardList
                 products={products}
                 columns={{
@@ -249,8 +251,7 @@ export const Archive: FC<ArchivePropsType> = props => {
                   desktopColumns: 3,
                 }}
               />
-            )}
-            {products.length === 0 && (
+            ) : (
               <Notification>{t('productsNotFound')}</Notification>
             )}
           </CatalogListBlock>

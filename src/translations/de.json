@@ -424,7 +424,8 @@
     "registration": "Registrieren Sie ein Konto beim Kauf.",
     "withoutRegistration": "Die Bestellung wird ohne Registrierung aufgegeben!",
     "proofOfPurchase": "Kaufbeleg",
-    "shippingDifferentAddress": "Verwenden Sie eine andere Adresse für den Versand"
+    "shippingDifferentAddress": "Verwenden Sie eine andere Adresse für den Versand",
+    "customerError": "Fehler beim Abrufen des Kunden"
   },
   "Breadcrumbs": {
     "homePage": "Hauptseite",
@@ -448,7 +449,8 @@
     "newArrivals": "Treten Sie unserem WhatsApp-Newsletter bei, um exklusive Rabatte, tolle Angebote zu erhalten und immer auf dem neuesten Stand zu sein.",
     "joinToWhatsApp": "Beitritt zu WhatsApp",
     "subscribe": "Jetzt beitreten",
-    "allShop": "Alle Geschäfte"
+    "allShop": "Alle Geschäfte",
+    "instagramNotFound": "Instagram Media not found"
   },
   "SubscriptionForm": {
     "subscribe": "Jetzt beitreten",
