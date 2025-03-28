@@ -277,7 +277,7 @@ export const BillingForm: FC<BillingFormProps> = ({
         metaData: null,
       });
     }
-  }, [isValid, different_address, company, nip]);
+  }, [isValid, different_address, company, nip, watchedFields]);
 
   useEffect(() => {
     if (!isValid && isWarningsShown) {
