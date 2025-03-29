@@ -13,6 +13,7 @@ import { useTranslations } from 'next-intl';
 import { FC } from 'react';
 import OrderTotalsRowsSkeleton from './OrderTotalsRowsSkeleton';
 import { Label, LabelCode, LastRow, Row, TotalsTable, Value } from './styles';
+import { useAppSelector } from '@/store';
 
 interface OrderTotalsPropsType {
   order: OrderType | undefined | null;
@@ -23,6 +24,8 @@ const OrderTotals: FC<OrderTotalsPropsType> = ({
   order,
   isLoading = false,
 }) => {
+  const {address} = useAppSelector(state => state.themeOptions.data.item.contacts);
+
   const subtotal = order?.line_items
     ? getSubtotalByLineItems(order.line_items)
     : 0;
@@ -58,6 +61,15 @@ const OrderTotals: FC<OrderTotalsPropsType> = ({
                     <ShippingMethodSelectorMethodLockerDescription>
                       {line?.meta_data && line.meta_data[2]?.value}
                     </ShippingMethodSelectorMethodLockerDescription>
+                  </ShippingMethodSelectorMethodLockerDetail>
+                </ShippingMethodSelectorMethodLocker>
+              )}
+              {line.method_id === 'local_pickup' && (
+                <ShippingMethodSelectorMethodLocker>
+                  <ShippingMethodSelectorMethodLockerDetail>
+                    <ShippingMethodSelectorMethodLockerAddress>
+                      {address}
+                    </ShippingMethodSelectorMethodLockerAddress>
                   </ShippingMethodSelectorMethodLockerDetail>
                 </ShippingMethodSelectorMethodLocker>
               )}
