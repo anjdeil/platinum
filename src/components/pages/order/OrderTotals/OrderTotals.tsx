@@ -30,6 +30,7 @@ const OrderTotals: FC<OrderTotalsPropsType> = ({
     ? getSubtotalByLineItems(order.line_items)
     : 0;
   const t = useTranslations('MyAccount');
+  const tShippingMethodSelector = useTranslations('ShippingMethodSelector');
 
   return (
     <TotalsTable>
@@ -45,7 +46,7 @@ const OrderTotals: FC<OrderTotalsPropsType> = ({
           </Row>
           {order?.shipping_lines?.map(line => (
             <Row key={line.id}>
-              <Label>{line.method_title}</Label>
+              <Label>{tShippingMethodSelector(line.method_id)}</Label>
               <Value>
                 {formatPrice(+line.total)}&nbsp;{order?.currency_symbol}
               </Value>
