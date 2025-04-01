@@ -16,8 +16,9 @@ import { JwtDecodedDataType } from '@/types/services/wpRestApi/auth';
 import { lineOrderItems } from '@/types/store/reducers/сartSlice';
 import { WpUserType } from '@/types/store/rtk-queries/wpApi';
 import checkCartConflict from '@/utils/cart/checkCartConflict';
-import getSubtotalByLineItems from '@/utils/cart/getSubtotalByLineItems';
-import getTotalByLineItems from '@/utils/cart/getTotalByLineItems';
+import getCartTotals from '@/utils/cart/getCartTotals';
+// import getSubtotalByLineItems from '@/utils/cart/getSubtotalByLineItems';
+// import getTotalByLineItems from '@/utils/cart/getTotalByLineItems';
 import { handleQuantityChange } from '@/utils/cart/handleQuantityChange';
 import { roundedPrice } from '@/utils/cart/roundedPrice';
 import { getLoyaltyLevel } from '@/utils/getLoyaltyLevel';
@@ -26,7 +27,7 @@ import { decodeJwt } from 'jose';
 import { debounce } from 'lodash';
 import { GetServerSidePropsContext } from 'next';
 import { useTranslations } from 'next-intl';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 interface CartPageProps {
   defaultCustomerData: WpUserType | null;
@@ -62,6 +63,8 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   );
 
   const [cachedOrderItems, setCachedOrderItems] = useState(orderItems);
+
+  const { totalCost: cartCost } = getCartTotals(productsData, cartItems);
 
   const handleCreateOrder = async () => {
     const userCoupons = userLoyalityStatus
@@ -122,18 +125,18 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
     [cartItems, dispatch]
   );
 
-  const subtotal = useMemo(
-    () =>
-      orderItems?.line_items
-        ? getSubtotalByLineItems(orderItems.line_items)
-        : 0,
-    [orderItems]
-  );
-  const total = useMemo(
-    () =>
-      orderItems?.line_items ? getTotalByLineItems(orderItems.line_items) : 0,
-    [orderItems]
-  );
+  // const subtotal = useMemo(
+  //   () =>
+  //     orderItems?.line_items
+  //       ? getSubtotalByLineItems(orderItems.line_items)
+  //       : 0,
+  //   [orderItems]
+  // );
+  // const total = useMemo(
+  //   () =>
+  //     orderItems?.line_items ? getTotalByLineItems(orderItems.line_items) : 0,
+  //   [orderItems]
+  // );
 
   // Conflict detection
   const [hasConflict, setHasConflict] = useState(false);
@@ -238,8 +241,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
               <OrderBar
                 miniCart={false}
                 isLoadingOrder={isLoadingOrder}
-                totalDisc={total}
-                subtotal={subtotal}
+                subtotal={cartCost}
                 symbol={symbol}
               />
             )}
