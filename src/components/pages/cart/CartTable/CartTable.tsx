@@ -67,6 +67,14 @@ const CartTable: FC<CartTableProps> = ({
     );
   };
 
+  const getItemUnitPrice = (item: lineOrderItems): string => {
+    return formatPrice((+item.subtotal + +item.subtotal_tax) / item.quantity);
+  };
+
+  const getItemTotalPrice = (item: lineOrderItems): string => {
+    return formatPrice(+item.subtotal + +item.subtotal_tax);
+  };
+
   const renderMobileCartItems = (
     items: lineOrderItems[],
     isFiltered = false
@@ -112,7 +120,7 @@ const CartTable: FC<CartTableProps> = ({
                 />
               </ProducTitle>
               <ProductPrice>
-                <p>{formatPrice(Number(item.subtotal) / item.quantity)}</p>
+                <p>{getItemUnitPrice(item)}</p>
               </ProductPrice>
               <CartQuantity
                 resolveCount={resolveCount}
@@ -122,7 +130,7 @@ const CartTable: FC<CartTableProps> = ({
               />
               <ProductPrice>
                 <span>{t('summary')}</span>
-                <OnePrice>{formatPrice(Number(item.subtotal))}</OnePrice>
+                <OnePrice>{getItemTotalPrice(item)}</OnePrice>
               </ProductPrice>
             </CardContent>
           </CartCardWrapper>
@@ -187,9 +195,7 @@ const CartTable: FC<CartTableProps> = ({
                       : productSpec?.name || item.name}
                   </LinkWrapper>
                 </TextNameCell>
-                <TextCell>
-                  {formatPrice(Number(item.subtotal) / item.quantity)}
-                </TextCell>
+                <TextCell>{getItemUnitPrice(item)}</TextCell>
                 <TextCell>
                   <CartQuantity
                     resolveCount={isFiltered ? undefined : resolveCount}
@@ -198,7 +204,7 @@ const CartTable: FC<CartTableProps> = ({
                     disabled={isFiltered}
                   />
                 </TextCell>
-                <TextCell>{formatPrice(Number(item.subtotal))}</TextCell>
+                <TextCell>{getItemTotalPrice(item)}</TextCell>
               </GridRow>
               {(!isAvailable || isFiltered) && (
                 <CartProductWarning

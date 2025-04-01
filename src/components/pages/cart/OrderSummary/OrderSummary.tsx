@@ -5,10 +5,16 @@ import { useTranslations } from 'next-intl';
 import { FC } from 'react';
 import OrderTotalsRowsSkeleton from '../../order/OrderTotals/OrderTotalsRowsSkeleton';
 import {
+  OrderCouponName,
+  OrderCouponNamesBox,
+  OrderCouponWrapper,
   OrderSummaryLine,
+  OrderSummaryLineCoupons,
   OrderSummaryLineName,
   OrderSummaryTotal,
+  OrderSummaryTotalTax,
   OrderSummaryTotalValue,
+  OrderSummaryTotalWrapper,
   OrderSummaryWrapper,
 } from './style';
 
@@ -25,6 +31,29 @@ const OrderSummary: FC<OrderSummaryProps> = ({
 
   const { formatPrice } = useCurrencyConverter();
 
+  const discountTotal = order ? +order.discount_total + +order.discount_tax : 0;
+
+  // Function for displaying the summary line
+  const renderOrderTotal = () => {
+    if (!order?.total) {
+      return `—\u00A0${symbol}`;
+    }
+
+    const formattedPrice = formatPrice(+order.total);
+    const formattedTax = formatPrice(+order.total_tax);
+
+    return (
+      <OrderSummaryTotalWrapper>
+        <OrderSummaryTotalValue>{formattedPrice}</OrderSummaryTotalValue>
+        <OrderSummaryTotalTax>
+          {t('includesVat', {
+            cost: formattedTax,
+          })}
+        </OrderSummaryTotalTax>
+      </OrderSummaryTotalWrapper>
+    );
+  };
+
   return (
     <OrderSummaryWrapper>
       {isLoading ? (
@@ -37,28 +66,36 @@ const OrderSummary: FC<OrderSummaryProps> = ({
             <span>{formatPrice(subtotal)}</span>
           </OrderSummaryLine>
 
-          {/* delivery */}
-          {order?.shipping_lines?.map(line => (
-            <OrderSummaryLine key={line.id}>
-              <OrderSummaryLineName>{line.method_title}</OrderSummaryLineName>
-              <span>{formatPrice(+line.total)}</span>
-            </OrderSummaryLine>
-          ))}
-
           {/* сoupons */}
-          {order?.coupon_lines?.map(line => {
-            const name = `${t('coupon')} ${
-              line.discount_type === 'percent'
-                ? `-${line.nominal_amount}% `
-                : ''
-            }`;
+          {discountTotal > 0 &&
+            order?.coupon_lines?.map(line => {
+              const name = `${t('coupon')} ${
+                line.discount_type === 'percent'
+                  ? `-${line.nominal_amount}% `
+                  : ''
+              }`;
+              return (
+                <OrderSummaryLineCoupons key={line.id}>
+                  <OrderCouponWrapper>
+                    <OrderSummaryLineName>{t('discount')}</OrderSummaryLineName>
+                    <span>– {formatPrice(discountTotal)}</span>
+                  </OrderCouponWrapper>
+                  <OrderCouponNamesBox>
+                    <OrderCouponName>
+                      {name} {line.code}
+                    </OrderCouponName>
+                  </OrderCouponNamesBox>
+                </OrderSummaryLineCoupons>
+              );
+            })}
+
+          {/* delivery */}
+          {order?.shipping_lines?.map(line => {
+            const shippingLineTotal = +line.total + +line.total_tax;
             return (
               <OrderSummaryLine key={line.id}>
-                <OrderSummaryLineName>
-                  {name} <br />
-                  <span>{line.code}</span>
-                </OrderSummaryLineName>
-                <span>- {formatPrice(+line.discount)}</span>
+                <OrderSummaryLineName>{line.method_title}</OrderSummaryLineName>
+                <span>{formatPrice(+shippingLineTotal)}</span>
               </OrderSummaryLine>
             );
           })}
@@ -72,14 +109,14 @@ const OrderSummary: FC<OrderSummaryProps> = ({
           ))}
 
           {/* Taxes */}
-          {order?.tax_lines?.map(line => (
+          {/* {order?.tax_lines?.map(line => (
             <OrderSummaryLine key={line.id}>
               <OrderSummaryLineName>
                 {line.label} ({line.rate_percent}%)
               </OrderSummaryLineName>
               <span>{formatPrice(+line.tax_total)}</span>
             </OrderSummaryLine>
-          ))}
+          ))} */}
 
           {/*payment Method*/}
           {noPaymentMethod === false && (
@@ -95,7 +132,7 @@ const OrderSummary: FC<OrderSummaryProps> = ({
               {t('OrderSummaryTotal')}
             </OrderSummaryLineName>
             <OrderSummaryTotalValue>
-              {order?.total ? formatPrice(+order.total) : `—\u00A0${symbol}`}
+              {order?.total && renderOrderTotal()}
             </OrderSummaryTotalValue>
           </OrderSummaryTotal>
         </>

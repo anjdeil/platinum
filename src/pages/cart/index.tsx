@@ -16,6 +16,7 @@ import { JwtDecodedDataType } from '@/types/services/wpRestApi/auth';
 import { lineOrderItems } from '@/types/store/reducers/сartSlice';
 import { WpUserType } from '@/types/store/rtk-queries/wpApi';
 import checkCartConflict from '@/utils/cart/checkCartConflict';
+import getCartTotals from '@/utils/cart/getCartTotals';
 import getSubtotalByLineItems from '@/utils/cart/getSubtotalByLineItems';
 import getTotalByLineItems from '@/utils/cart/getTotalByLineItems';
 import { handleQuantityChange } from '@/utils/cart/handleQuantityChange';
@@ -62,6 +63,8 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   );
 
   const [cachedOrderItems, setCachedOrderItems] = useState(orderItems);
+
+  const { totalCost: cartCost } = getCartTotals(productsData, cartItems);
 
   const handleCreateOrder = async () => {
     const userCoupons = userLoyalityStatus
@@ -238,8 +241,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
               <OrderBar
                 miniCart={false}
                 isLoadingOrder={isLoadingOrder}
-                totalDisc={total}
-                subtotal={subtotal}
+                subtotal={cartCost}
                 symbol={symbol}
               />
             )}
