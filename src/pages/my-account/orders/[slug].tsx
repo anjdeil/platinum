@@ -56,9 +56,9 @@ const Order: FC<OrderPropsType> = ({ order }) => {
     order.shipping
   );
 
-  const apartmentNumber = order.meta_data.find(({key}) => key === 'apartmentNumber');
-  const shippingApartmentNumber = order.meta_data.find(({key}) => key === 'shipping_apartmentNumber');
-  const nip = order.meta_data.find(({key}) => key === 'nip');
+  const apartmentNumber = order.meta_data.find(({key, value}) => key === 'apartmentNumber' && value);
+  const shippingApartmentNumber = order.meta_data.find(({key, value}) => key === 'shipping_apartmentNumber' && value);
+  const nip = order.meta_data.find(({key, value}) => key === 'nip' && value);
 
   const additionalBillingFields: MetaDataType[] = [];
   const additionalShippingFields: MetaDataType[] = [];
