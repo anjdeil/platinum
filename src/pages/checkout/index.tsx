@@ -24,7 +24,7 @@ import useInPostGeowidget from '@/hooks/useInPostGeowidget';
 import { ShippingMethodType } from '@/types/services';
 import { useCreateOrderMutation } from '@/store/rtk-queries/wooCustomApi';
 import { useGetProductsMinimizedMutation } from '@/store/rtk-queries/wpCustomApi';
-import { useAppDispatch, useAppSelector } from '@/store';
+import { useAppSelector } from '@/store';
 import useGetAuthToken from '@/hooks/useGetAuthToken';
 import { useLazyFetchUserDataQuery } from '@/store/rtk-queries/wpApi';
 import Link from 'next/link';
@@ -54,7 +54,6 @@ import { useRegisterUser } from '@/hooks/useRegisterUser';
 import { RegistrationError } from '@/components/pages/checkout/RegistrationError/RegistrationError';
 import { useLazyGetUserTotalsQuery } from '@/store/rtk-queries/userTotals/userTotals';
 import { getLoyaltyLevel } from '@/utils/getLoyaltyLevel';
-import { clearCart } from '@/store/slices/cartSlice';
 import { RegistrationFormType } from '@/types/components/global/forms/registrationForm';
 
 export function getServerSideProps() {
@@ -64,7 +63,6 @@ export function getServerSideProps() {
 }
 
 export default function CheckoutPage() {
-  const dispatch = useAppDispatch();
   const t = useTranslations('Checkout');
   const tMyAccount = useTranslations('MyAccount');
   const tCart = useTranslations('Cart');
