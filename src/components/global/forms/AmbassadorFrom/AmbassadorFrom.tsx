@@ -251,7 +251,7 @@ export const AmbassadorForm: FC = () => {
               <CustomFormInput
                 fieldName={tValidation('aboutYourself')}
                 name="about"
-                placeholder="Text about yourself"
+                placeholder={tValidation('aboutYourselfPlaceholder')}
                 register={register}
                 errors={errors}
                 inputTag={'textarea'}
