@@ -4,7 +4,7 @@ export const ProductNotifierReqDataSchema = z.object({
   subscriber_name: z.string(),
   email: z.string(),
   product_id: z.number(),
-  variation_id: z.number(),
+  variation_id: z.number().optional(),
   status: z.string(),
   subscriber_phone: z.string(),
   custom_quantity: z.string(),

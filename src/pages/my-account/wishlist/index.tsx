@@ -34,7 +34,7 @@ const Wishlist: FC<WishlistPageProps> = ({ defaultCustomerData }) => {
   const tCart = useTranslations('Cart');
   const [isLoadingWishlist, setIsLoadingWishlist] = useState(true);
   const [wishlist, setWishlist] = useState(
-    defaultCustomerData?.meta.wishlist || []
+    defaultCustomerData?.meta?.wishlist || []
   );
 
   const [fetchUserUpdate, { data: userData, isLoading: isUserUpdateLoading }] =

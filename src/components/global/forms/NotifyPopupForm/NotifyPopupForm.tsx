@@ -66,7 +66,7 @@ export const NotifyPopupForm: FC<NotifyPopupFormProps> = ({ data }) => {
       subscriber_name: formData.first_name,
       email: formData.email,
       product_id: data.productId as number,
-      variation_id: data.variationId as number,
+      variation_id: (data.variationId as number) || undefined,
       status: 'cwg_subscribed',
       subscriber_phone: user?.billing?.phone || 'phone-number',
       custom_quantity: '1',

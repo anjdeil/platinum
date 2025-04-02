@@ -29,6 +29,7 @@ import { getCardProductPrice } from '@/utils/price/getCardProductPrice';
 import { Skeleton } from '@mui/material';
 import ProductCardBadgeWrapper from '../ProductCardBadgeWrapper/ProductCardBadgeWrapper';
 import { ProductBadgeBox } from '../ProductBadgeWrapper/styles';
+import NotifyBasketButton from '@/components/global/buttons/NotifyBasketButton/NotifyBasketButton';
 
 const ProductCard: React.FC<ProductCardPropsType> = ({ product }) => {
   const t = useTranslations('Product');
@@ -84,6 +85,18 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product }) => {
     } else {
       router.push(`/${router.locale === 'en' ? '' : router.locale}/cart`);
     }
+  }
+
+  function handleNotifyButtonClick(productId: number) {
+    console.log('Notify');
+    dispatch(
+      popupToggle({
+        popupType: 'notify',
+        data: {
+          productId,
+        },
+      })
+    );
   }
 
   return (
@@ -162,18 +175,26 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product }) => {
         </ProductCardBadgeWrapper>
       </ProductWrapper>
       <>
-        <AddToBasketButton
-          onClick={handleCartButtonClick}
-          disabled={product.stock_quantity === 0}
-        >
-          {product.stock_quantity === 0
-            ? t('outOfStock')
-            : product?.type !== 'variable'
-            ? isCartMatch
-              ? t('viewCart')
-              : t('addToBasket')
-            : t('chooseOptions')}
-        </AddToBasketButton>
+        {product.stock_quantity === 0 && product?.type !== 'variable' ? (
+          <NotifyBasketButton
+            onClick={() => handleNotifyButtonClick(product.id)}
+          >
+            {t('notifyWhenAvailable')}
+          </NotifyBasketButton>
+        ) : (
+          <AddToBasketButton
+            onClick={handleCartButtonClick}
+            // disabled={product.stock_quantity === 0}
+          >
+            {product.stock_quantity === 0
+              ? t('notifyWhenAvailable')
+              : product?.type !== 'variable'
+              ? isCartMatch
+                ? t('viewCart')
+                : t('addToBasket')
+              : t('chooseOptions')}
+          </AddToBasketButton>
+        )}
       </>
     </StyledProductCard>
   );
