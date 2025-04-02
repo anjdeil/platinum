@@ -184,7 +184,7 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product }) => {
         ) : (
           <AddToBasketButton
             onClick={handleCartButtonClick}
-            disabled={product.stock_quantity === 0}
+            // disabled={product.stock_quantity === 0}
           >
             {product.stock_quantity === 0
               ? t('notifyWhenAvailable')

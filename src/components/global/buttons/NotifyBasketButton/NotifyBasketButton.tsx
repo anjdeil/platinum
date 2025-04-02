@@ -3,10 +3,11 @@ import { NotifyBasketButtonStyled } from './styles';
 
 const NotifyBasketButton: React.FC<AddToBasketButtonProps> = ({
   height,
+  onClick,
   children,
 }) => {
   return (
-    <NotifyBasketButtonStyled height={height}>
+    <NotifyBasketButtonStyled height={height} onClick={onClick}>
       {children}
     </NotifyBasketButtonStyled>
   );
