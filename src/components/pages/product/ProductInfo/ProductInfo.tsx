@@ -219,9 +219,9 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
               ))}
           </ProductBadgeBox>
           <FavoriteButton
-            onClick={() => handleWishlistToggle(product)}
+            onClick={() => handleWishlistToggle(product, currentVariation?.id)}
             marginLeft="auto"
-            active={checkDesired(product.id)}
+            active={checkDesired(product.id, currentVariation?.id)}
             isLoading={isUpdatingWishlist || isFetchingWishlist}
           />
         </ProductBadgeWrapper>
@@ -284,14 +284,18 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
               {renderCartButtonInnerText()}
             </AddToBasketButton>
           ) : (
-            <StyledButton notify={true} onClick={handleNotifyButtonClick}>
+            <StyledButton
+              notify={true}
+              height="56px"
+              onClick={handleNotifyButtonClick}
+            >
               {t('notifyWhenAvailable')}
             </StyledButton>
           )}
         </AddToBasketWrapper>
         <PaymentList />
         <ShippingList />
-        <StyledButton onClick={addComment}>
+        <StyledButton secondary={true} onClick={addComment}>
           {t('leaveAReviewAboutProduct')}
         </StyledButton>
         {Boolean(product.attributes.length) && (
@@ -301,9 +305,10 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
         )}
         <DetailsAccordion summary={t('descriptions')}>
           <RichTextSection
-            text={decodeHTML(
-              currentVariation?.description || product.description
-            )}
+            // text={decodeHTML(
+            //   currentVariation?.description || product.description
+            // )}
+            text={currentVariation?.description || product.description}
           />
         </DetailsAccordion>
       </ProductInfoWrapper>

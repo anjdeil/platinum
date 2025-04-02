@@ -26,18 +26,20 @@ export const useWishlist = () => {
     }
   }, [userSlice]);
 
-  const handleWishlistToggle = (product: ProductType) => {
+  const handleWishlistToggle = (product: ProductType, variationId?: number) => {
     if (!userSlice) {
       dispatch(popupToggle({ popupType: 'login' }));
       return;
     }
 
-    const userWishlist = userData?.meta.wishlist || [];
+    const userWishlist = userData?.meta?.wishlist || [];
+
     const index = userWishlist.findIndex(
       (item: WishlistItem) =>
         item.product_id === product.id &&
         (!product.variations.length ||
-          item.variation_id === product.variations[0].id)
+          // item.variation_id === product.variations[0].id)
+          item.variation_id === variationId)
     );
     let updatedWishlist: WishlistItem[];
 
@@ -50,9 +52,7 @@ export const useWishlist = () => {
         ...userWishlist,
         {
           product_id: product.id,
-          ...(product.variations.length && {
-            variation_id: product.variations[0].id,
-          }),
+          ...(variationId && { variation_id: variationId }),
         },
       ];
     }
@@ -67,8 +67,18 @@ export const useWishlist = () => {
       fetchUserUpdate(userUpdateRequestBody);
     }
   };
-  const checkDesired = (productId: number) => {
+
+  const checkDesired = (productId: number, variationId?: number) => {
     if (userSlice) {
+      if (variationId) {
+        return Boolean(
+          wishlist?.find(
+            (item: WishlistItem) =>
+              item.product_id === productId && item.variation_id === variationId
+          )
+        );
+      }
+
       return Boolean(
         wishlist?.find((item: WishlistItem) => item.product_id === productId)
       );
