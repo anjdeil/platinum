@@ -18,7 +18,7 @@ import { useAppDispatch, useAppSelector } from '@/store';
 import { updateCart } from '@/store/slices/cartSlice';
 /* import theme from '@/styles/theme'; */
 import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
-import { LinkWrapper } from '@/styles/components';
+import { LinkWrapper, StyledButton } from '@/styles/components';
 import { WishListTableProps } from '@/types/components/pages/myAccount/wishlist';
 import { ProductsMinimizedType } from '@/types/components/shop/product/products';
 import { CartItem } from '@/types/store/reducers/сartSlice';
@@ -33,6 +33,7 @@ import {
   WishlistCardAllWrapper,
   WishlistImgWrapper,
 } from './style';
+import { popupToggle } from '@/store/slices/PopupSlice';
 
 const WishListTable: FC<WishListTableProps> = ({
   wishlist,
@@ -91,149 +92,167 @@ const WishListTable: FC<WishListTableProps> = ({
     }
   };
 
+  function handleNotifyButtonClick(item: ProductsMinimizedType) {
+    const { id, parent_id } = item;
+
+    dispatch(
+      popupToggle({
+        popupType: 'notify',
+        data: { productId: parent_id, variationId: id },
+      })
+    );
+  }
+
   return (
     <CartTableWrapper>
       <>
         {!isTablet && !isMobile ? (
           <>
             {!isLoading &&
-              wishlist
-                ?.filter(item => item.stock_quantity !== null)
-                .map(item => {
-                  const isCartMatch = checkCartMatch(cartItems, item.id);
-                  const { finalPrice } = getProductPrice(item.price);
+              wishlist &&
+              wishlist?.length > 0 &&
+              wishlist?.map(item => {
+                const isCartMatch = checkCartMatch(cartItems, item.id);
+                const { finalPrice } = getProductPrice(item.price);
 
-                  const convertedFinalPrice = convertCurrency(finalPrice || 0);
+                const convertedFinalPrice = convertCurrency(finalPrice || 0);
 
-                  const notAvaible = finalPrice === null;
-                  return (
-                    <WishlistCardAllWrapper key={item.id} padding="16px">
-                      <DeleteCell>
-                        <TrashIcon onClick={() => handleDelete(item)} />
-                      </DeleteCell>
-                      <WishlistImgWrapper maxHeight="100px" maxWidth="100px">
+                const notAvaible = finalPrice === null;
+
+                return (
+                  <WishlistCardAllWrapper key={item.id} padding="16px">
+                    <DeleteCell>
+                      <TrashIcon onClick={() => handleDelete(item)} />
+                    </DeleteCell>
+                    <WishlistImgWrapper maxHeight="100px" maxWidth="100px">
+                      <CartItemImg
+                        src={
+                          item?.image?.src || '/assets/images/not-found.webp'
+                        }
+                        alt={item.name}
+                        width="50"
+                      />
+                    </WishlistImgWrapper>
+                    <CardContent gap="12px">
+                      <TextNameCell>
+                        <LinkWrapper
+                          href={`/product/${item?.parent_slug || item?.slug}`}
+                        >
+                          {item.name}
+                        </LinkWrapper>
+                      </TextNameCell>
+                      <QuantityRow>
+                        <Circle />
+                        {item.stock_quantity}
+                      </QuantityRow>
+                      <OnePrice fontSize="1.1em">
+                        {!currencyLoading ? (
+                          <p>
+                            {finalPrice && formatPrice(convertedFinalPrice)}
+                          </p>
+                        ) : (
+                          <Skeleton width="50px" />
+                        )}
+                      </OnePrice>
+                    </CardContent>
+
+                    {notAvaible || item.stock_quantity === 0 ? (
+                      <StyledButton
+                        notify={true}
+                        height="56px"
+                        onClick={() => handleNotifyButtonClick(item)}
+                      >
+                        {tProduct('notifyWhenAvailable')}
+                      </StyledButton>
+                    ) : (
+                      <AddToBasketButton
+                        active={isCartMatch}
+                        onClick={() => handleCartButtonClick(item, isCartMatch)}
+                      >
+                        {isCartMatch
+                          ? tProduct('viewCart')
+                          : tProduct('addToBasket')}
+                      </AddToBasketButton>
+                    )}
+                  </WishlistCardAllWrapper>
+                );
+              })}
+          </>
+        ) : (
+          <>
+            {!isLoading &&
+              wishlist &&
+              wishlist?.length > 0 &&
+              wishlist?.map(item => {
+                const isCartMatch = checkCartMatch(cartItems, item.id);
+
+                const { finalPrice } = getProductPrice(item.price);
+
+                const convertedFinalPrice = convertCurrency(finalPrice || 0);
+
+                const notAvaible = finalPrice === null;
+                return (
+                  <CartCardAllWrapper key={item.id} padding="16px">
+                    <CartCardWrapper>
+                      <WishlistImgWrapper>
                         <CartItemImg
-                          src={
-                            item?.image?.src || '/assets/images/not-found.webp'
-                          }
+                          src={item.image?.src}
                           alt={item.name}
                           width="50"
                         />
                       </WishlistImgWrapper>
-                      <CardContent gap="12px">
-                        <TextNameCell>
+                      <CardContent gap="8px" padding="0 0 4px 0">
+                        <ProducTitle>
                           <LinkWrapper
                             href={`/product/${item?.parent_slug || item?.slug}`}
                           >
                             {item.name}
                           </LinkWrapper>
-                        </TextNameCell>
+                          <TrashIcon
+                            padding="0 10px 0 0"
+                            onClick={() => handleDelete(item)}
+                          />
+                        </ProducTitle>
                         <QuantityRow>
                           <Circle />
-                          {item.stock_quantity}
+                          {tMyAccount('availablePcs', {
+                            quantity: item.stock_quantity,
+                          })}
                         </QuantityRow>
-                        <OnePrice fontSize="1.1em">
-                          {!currencyLoading ? (
-                            <p>
-                              {finalPrice && formatPrice(convertedFinalPrice)}
-                            </p>
-                          ) : (
-                            <Skeleton width="50px" />
-                          )}
-                        </OnePrice>
+                        <ProductPrice>
+                          <OnePrice fontSize="1.3em">
+                            {!currencyLoading ? (
+                              <p>
+                                {finalPrice && formatPrice(convertedFinalPrice)}
+                              </p>
+                            ) : (
+                              <Skeleton width="50px" />
+                            )}
+                          </OnePrice>
+                        </ProductPrice>
                       </CardContent>
+                    </CartCardWrapper>
+                    {notAvaible || item.stock_quantity === 0 ? (
+                      <StyledButton
+                        notify={true}
+                        height="56px"
+                        onClick={() => handleNotifyButtonClick(item)}
+                      >
+                        {tProduct('notifyWhenAvailable')}
+                      </StyledButton>
+                    ) : (
                       <AddToBasketButton
                         active={isCartMatch}
                         onClick={() => handleCartButtonClick(item, isCartMatch)}
-                        disabled={notAvaible || item.stock_quantity === 0}
                       >
-                        {item.stock_quantity === 0
-                          ? tProduct('outOfStock')
-                          : item.parent_id !== 0
-                          ? tProduct('chooseOptions')
-                          : isCartMatch
+                        {isCartMatch
                           ? tProduct('viewCart')
-                          : notAvaible
-                          ? tProduct('notAvailable')
                           : tProduct('addToBasket')}
                       </AddToBasketButton>
-                    </WishlistCardAllWrapper>
-                  );
-                })}
-          </>
-        ) : (
-          <>
-            {!isLoading &&
-              wishlist
-                ?.filter(item => item.stock_quantity !== null)
-                .map(item => {
-                  const isCartMatch = checkCartMatch(cartItems, item.id);
-
-                  const { finalPrice } = getProductPrice(item.price);
-
-                  const convertedFinalPrice = convertCurrency(finalPrice || 0);
-
-                  const notAvaible = finalPrice === null;
-                  return (
-                    <CartCardAllWrapper key={item.id} padding="16px">
-                      <CartCardWrapper>
-                        <WishlistImgWrapper>
-                          <CartItemImg
-                            src={item.image?.src}
-                            alt={item.name}
-                            width="50"
-                          />
-                        </WishlistImgWrapper>
-                        <CardContent gap="8px" padding="0 0 4px 0">
-                          <ProducTitle>
-                            <LinkWrapper
-                              href={`/product/${
-                                item?.parent_slug || item?.slug
-                              }`}
-                            >
-                              {item.name}
-                            </LinkWrapper>
-                            <TrashIcon
-                              padding="0 10px 0 0"
-                              onClick={() => handleDelete(item)}
-                            />
-                          </ProducTitle>
-                          <QuantityRow>
-                            <Circle />
-                            {tMyAccount('availablePcs', {
-                              quantity: item.stock_quantity,
-                            })}
-                          </QuantityRow>
-                          <ProductPrice>
-                            <OnePrice fontSize="1.3em">
-                              {!currencyLoading ? (
-                                <p>
-                                  {finalPrice &&
-                                    formatPrice(convertedFinalPrice)}
-                                </p>
-                              ) : (
-                                <Skeleton width="50px" />
-                              )}
-                            </OnePrice>
-                          </ProductPrice>
-                        </CardContent>
-                      </CartCardWrapper>
-                      <AddToBasketButton
-                        active={isCartMatch}
-                        onClick={() => handleCartButtonClick(item, isCartMatch)}
-                        disabled={notAvaible}
-                      >
-                        {item.parent_id !== 0
-                          ? tProduct('chooseOptions')
-                          : isCartMatch
-                          ? tProduct('viewCart')
-                          : notAvaible
-                          ? tProduct('notAvailable')
-                          : tProduct('addToBasket')}
-                      </AddToBasketButton>
-                    </CartCardAllWrapper>
-                  );
-                })}
+                    )}
+                  </CartCardAllWrapper>
+                );
+              })}
           </>
         )}
       </>

@@ -46,6 +46,7 @@ export const StyledRichTextSection = styled.div<StyledRichTextSectionProps>`
     color: ${({ theme }) => theme.colors.black};
     text-transform: uppercase;
     ${({ fullSize }) => fullSize && 'text-align: center'};
+    margin-top: 16px;
     margin-bottom: 16px;
 
     @media ${({ theme }) => theme.media.xl} {
