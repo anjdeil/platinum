@@ -18,7 +18,6 @@ import {
   ProductVariation,
 } from '@/types/components/shop/product/products';
 import { CartItem } from '@/types/store/reducers/сartSlice';
-import { getCookieValue } from '@/utils/auth/getCookieValue';
 import { getCurrentVariation } from '@/utils/getCurrentVariation';
 import { getProductPrice } from '@/utils/price/getProductPrice';
 import { useTranslations } from 'next-intl';
