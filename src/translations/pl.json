@@ -217,7 +217,9 @@
     "failedNotify": "Nie udało się zasubskrybować produktu",
     "userAlreadyNotified": "Subskrybujesz już ten produkt",
     "notValidData": "Nie udało się zasubskrybować produktu. Podaj prawidłowe dane",
-    "saleTag": "Promocja"
+    "saleTag": "Promocja",
+    "successAddComment": "Dziękujemy za Twój komentarz!",
+    "failedAddComment": "Nie udało się dodać komentarza"
   },
   "Cart": {
     "cart": "Koszyk",
@@ -400,7 +402,13 @@
     "invalidPostcodeFormat": "Nieprawidłowy format kodu pocztowego",
     "validationErrorsFields": "Proszę wypełnić nieprawidłowe pola formularza",
     "noRegistrationData": "Brak danych rejestracyjnych",
-    "invalidCharacters": "Zawiera niedozwolone znaki"
+    "invalidCharacters": "Zawiera niedozwolone znaki",
+    "pleaseFillInTheUserName": "Proszę, przedstaw się",
+    "yourUserNameIsTooShort": "Twoje imię jest za krótkie",
+    "yourUserNameIsTooLong": "Twoje imię jest za długie",
+    "pleaseFillTheCommentField": "Prosimy o wypełnienie pola komentarza",
+    "yourCommentIsTooShort": "Twój komentarz jest za krótki",
+    "yourCommentIsTooLong": "Twój komentarz jest za długi"
   },
   "Forms": {
     "applicationForm": "Formularz zgłoszeniowy",

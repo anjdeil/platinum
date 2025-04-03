@@ -86,14 +86,16 @@ export const StyledError = styled.div`
 `;
 
 export const StyledTextField = styled(TextField, {
-  shouldForwardProp: prop => prop !== 'isError' && prop !== 'isPassword',
-})<{ isError?: boolean; isPassword?: boolean }>`
+  shouldForwardProp: prop =>
+    prop !== 'isError' && prop !== 'isPassword' && prop !== 'minHeight',
+})<{ isError?: boolean; isPassword?: boolean; minHeight?: string }>`
   box-sizing: border-box;
   margin-top: 4px !important;
   transition: border 0.1s ease-in-out, outline-color 0.1s ease-in-out;
   margin-bottom: 24px;
 
   & .MuiOutlinedInput-root {
+    ${props => props.minHeight && `height: ${props.minHeight}`};
     color: ${({ theme }) => theme.colors.black};
     background-color: ${({ theme }) => theme.background.secondary};
     border-radius: 8px;

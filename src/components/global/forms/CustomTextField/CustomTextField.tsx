@@ -21,13 +21,14 @@ interface CustomTextFieldProps {
   autocomplete?: string;
   errors: any;
   label: string;
-  placeholder: string;
+  placeholder?: string;
   validation?: RegisterOptions;
   setValue?: any;
   defaultValue?: string;
   onChange?: (value: string) => void;
   onBlur?: (value: string) => void;
   notRequired?: boolean;
+  minHeight?: string;
 }
 
 const CustomTextField: React.FC<CustomTextFieldProps> = ({
@@ -45,6 +46,7 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
   setValue,
   defaultValue,
   notRequired,
+  minHeight,
 }) => {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -144,6 +146,7 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
               inputRef={inputType === 'password' ? inputRef : undefined}
               defaultValue={defaultValue}
               isPassword={inputType === 'password'}
+              minHeight={minHeight}
             />
             {inputType === 'password' && (
               <ShowPasswordImage
