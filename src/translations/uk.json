@@ -217,7 +217,9 @@
     "failedNotify": "Не вдалося підписатися на продукт",
     "userAlreadyNotified": "Ви вже підписалися на цей продукт",
     "notValidData": "Не вдалося підписатися на продукт. Будь ласка, вкажіть правильні дані",
-    "saleTag": "Розпродаж"
+    "saleTag": "Розпродаж",
+    "successAddComment": "Дякуємо за ваш коментар!",
+    "failedAddComment": "Не вдалося додати коментар"
   },
   "Cart": {
     "cart": "Кошик",
@@ -400,7 +402,13 @@
     "invalidPostcodeFormat": "Неправильний формат поштового індексу",
     "validationErrorsFields": "Будь ласка, заповніть неправильні поля форми",
     "noRegistrationData": "Немає даних для реєстрації",
-    "invalidCharacters": "Містить недопустимі символи"
+    "invalidCharacters": "Містить недопустимі символи",
+    "pleaseFillInTheUserName": "Будь ласка, представтеся",
+    "yourUserNameIsTooShort": "Ваше ім'я занадто коротке",
+    "yourUserNameIsTooLong": "Ваше ім'я занадто довге",
+    "pleaseFillTheCommentField": "Будь ласка, заповніть поле для коментаря",
+    "yourCommentIsTooShort": "Ваш коментар занадто короткий",
+    "yourCommentIsTooLong": "Ваш коментар занадто довгий"
   },
   "Forms": {
     "applicationForm": "форма заявки",

@@ -23,7 +23,7 @@ export const ReviewsSlider: FC<ReviewsPropsType> = ({ reviews }) => {
             slidesPerView: 1,
             spaceBetween: 16,
           },
-          500: {
+          540: {
             slidesPerView: 2,
             spaceBetween: 16,
           },
@@ -38,7 +38,7 @@ export const ReviewsSlider: FC<ReviewsPropsType> = ({ reviews }) => {
         }}
       >
         {reviews.map(review => (
-          <SwiperSlide key={review.id} style={{ height: '100%' }}>
+          <SwiperSlide key={review.id} style={{ height: 'auto' }}>
             <ReviewsCard
               review={review}
               isOpen={opened === review.id}

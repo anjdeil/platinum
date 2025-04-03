@@ -25,6 +25,7 @@ export const ReviewContainer = styled.div<{ isOpen: boolean }>`
 `;
 
 export const FlexWrapper = styled.div`
+  width: 100%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -37,6 +38,7 @@ export const ImageWrapper = styled.div`
   border-radius: 50%;
   overflow: hidden;
   display: flex;
+  align-self: flex-start;
 
   & img {
     width: 100%;
@@ -49,6 +51,8 @@ export const ImageWrapper = styled.div`
 `;
 
 export const ReviewName = styled(Text)`
+  word-break: break-word;
+  width: 70%;
   @media ${({ theme }) => theme.media.large} {
     font-size: 14px;
   }
@@ -56,6 +60,7 @@ export const ReviewName = styled(Text)`
 
 export const ReviewText = styled(Collapse)`
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
+  word-break: break-word;
 
   @media ${({ theme }) => theme.media.large} {
     font-size: 14px;

@@ -104,7 +104,7 @@ const PopupContainer = () => {
       return <SwiperPopup onClose={closePopup} />;
     }
     case 'add-comment': {
-      return <CommentPopup onClose={closePopup} />;
+      return <CommentPopup onClose={closePopup} data={data || {}} />;
     }
     case 'mobile-search': {
       return <MobileSearchPopup onClose={closePopup} />;

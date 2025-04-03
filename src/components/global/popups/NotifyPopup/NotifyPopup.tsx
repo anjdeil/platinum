@@ -1,6 +1,7 @@
 import CloseIcon from '../../icons/CloseIcon/CloseIcon';
 import { Title } from '@/styles/components';
 import {
+  FormWrapper,
   StyledCloseWrapper,
   StyledHeader,
   StyledPopupBody,
@@ -25,13 +26,15 @@ const NotifyPopup: React.FC<NotifyPopupProps> = ({ onClose, data }) => {
   return (
     <StyledPopupOverlay onClick={handleClickBackground}>
       <StyledPopupBody>
-        <StyledHeader>
-          <Title as="h3">{t('notifyWhenAvailable')}</Title>
-          <StyledCloseWrapper>
-            <CloseIcon onClick={onClose} padding="0" />
-          </StyledCloseWrapper>
-        </StyledHeader>
-        <NotifyPopupForm data={data} />
+        <StyledCloseWrapper>
+          <CloseIcon onClick={onClose} padding="0" />
+        </StyledCloseWrapper>
+        <FormWrapper>
+          <StyledHeader>
+            <Title as="h3">{t('notifyWhenAvailable')}</Title>
+          </StyledHeader>
+          <NotifyPopupForm data={data} />
+        </FormWrapper>
       </StyledPopupBody>
     </StyledPopupOverlay>
   );

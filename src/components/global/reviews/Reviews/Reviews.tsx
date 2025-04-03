@@ -50,6 +50,10 @@ const Reviews: FC<ReviewsPropsType> = ({ product }) => {
             slidesPerView: 1,
             spaceBetween: 16,
           },
+          540: {
+            slidesPerView: 2,
+            spaceBetween: 16,
+          },
           769: {
             slidesPerView: 3,
             spaceBetween: 16,
