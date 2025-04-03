@@ -403,6 +403,9 @@
     "validationErrorsFields": "Будь ласка, заповніть неправильні поля форми",
     "noRegistrationData": "Немає даних для реєстрації",
     "invalidCharacters": "Містить недопустимі символи",
+    "pleaseFillInTheUserName": "Будь ласка, представтеся",
+    "yourUserNameIsTooShort": "Ваше ім'я занадто коротке",
+    "yourUserNameIsTooLong": "Ваше ім'я занадто довге",
     "pleaseFillTheCommentField": "Будь ласка, заповніть поле для коментаря",
     "yourCommentIsTooShort": "Ваш коментар занадто короткий",
     "yourCommentIsTooLong": "Ваш коментар занадто довгий"

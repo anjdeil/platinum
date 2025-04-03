@@ -131,7 +131,7 @@ const CommentPopup: React.FC<CommentPopupProps> = ({ onClose }) => {
                   inputType="text"
                   errors={errors}
                   label={tForms('first_name')}
-                  validation={validationSchema('first_name')}
+                  validation={validationSchema('user_name')}
                   autocomplete="given-name"
                 />
                 <CustomTextField

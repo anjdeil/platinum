@@ -403,6 +403,9 @@
     "validationErrorsFields": "Пожалуйста, заполните некорректные поля формы",
     "noRegistrationData": "Нет данных для регистрации",
     "invalidCharacters": "Содержит недопустимые символы",
+    "pleaseFillInTheUserName": "Представьтесь, пожалуйста",
+    "yourUserNameIsTooShort": "Ваше имя слишком короткое",
+    "yourUserNameIsTooLong": "Ваше имя слишком длинное",
     "pleaseFillTheCommentField": "Пожалуйста, заполните поле комментария",
     "yourCommentIsTooShort": "Ваш комментарий слишком короткий",
     "yourCommentIsTooLong": "Ваш комментарий слишком длинный"

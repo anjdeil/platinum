@@ -403,6 +403,9 @@
     "validationErrorsFields": "Bitte füllen Sie die falschen Formularfelder aus",
     "noRegistrationData": "Keine Registrierungsdaten",
     "invalidCharacters": "Enthält ungültige Zeichen",
+    "pleaseFillInTheUserName": "Bitte stellen Sie sich vor",
+    "yourUserNameIsTooShort": "Ihr Vorname ist zu kurz",
+    "yourUserNameIsTooLong": "Ihr Vorname ist zu lang",
     "pleaseFillTheCommentField": "Bitte füllen Sie das Kommentarfeld aus",
     "yourCommentIsTooShort": "Ihr Kommentar ist zu kurz",
     "yourCommentIsTooLong": "Ihr Kommentar ist zu lang"
