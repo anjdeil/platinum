@@ -50,10 +50,8 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
   const { images, thumbnail } = product;
   const t = useTranslations('Product');
   const { isMobile } = useResponsive();
-  const { user: userSlice } = useAppSelector(state => state.userSlice);
   const dispatch = useAppDispatch();
   const { cartItems } = useAppSelector(state => state.cartSlice);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const {
     handleWishlistToggle,
@@ -61,18 +59,6 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
     isUpdatingWishlist,
     checkDesired,
   } = useWishlist();
-
-  useEffect(() => {
-    const checkAuth = () => {
-      const cookies = document.cookie;
-
-      const authToken = getCookieValue(cookies || '', 'authToken');
-
-      setIsAuthenticated(!!authToken);
-    };
-
-    checkAuth();
-  }, [userSlice]);
 
   const [quantity, setQuantity] = useState<number>(1);
   const [cartMatch, setCartMatch] = useState<CartItem>();
@@ -169,12 +155,8 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
   );
 
   const addComment = () => {
-    if (isAuthenticated) {
-      updateProductState(product);
-      dispatch(popupSet({ popupType: 'add-comment' }));
-    } else {
-      dispatch(popupToggle({ popupType: 'login' }));
-    }
+    updateProductState(product);
+    dispatch(popupSet({ popupType: 'add-comment' }));
   };
 
   const galleryImages =

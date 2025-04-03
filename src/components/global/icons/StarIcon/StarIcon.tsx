@@ -1,9 +1,11 @@
-import { StarProps } from "@/types/components/global/rating";
-import { StyledStar } from "./styles";
+import { StarProps } from '@/types/components/global/rating';
+import { StyledStar } from './styles';
 
-const StarIcon = ({ filled }: StarProps) => (
+const StarIcon = ({ filled, width, height }: StarProps) => (
   <StyledStar
     filled={filled}
+    width={width}
+    height={height}
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 20 20"
   >

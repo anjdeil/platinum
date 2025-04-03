@@ -217,7 +217,9 @@
     "failedNotify": "Abonnieren des Produkts fehlgeschlagen",
     "userAlreadyNotified": "Sie haben sich bereits für dieses Produkt angemeldet",
     "notValidData": "Das Produkt konnte nicht abonniert werden. Bitte geben Sie gültige Daten an",
-    "saleTag": "Verkauf"
+    "saleTag": "Verkauf",
+    "successAddComment": "Vielen Dank für Ihren Kommentar!",
+    "failedAddComment": "Fehler beim Hinzufügen des Kommentars"
   },
   "Cart": {
     "cart": "Warenkorb",
@@ -400,7 +402,10 @@
     "invalidPostcodeFormat": "Ungültiges Postleitzahlformat",
     "validationErrorsFields": "Bitte füllen Sie die falschen Formularfelder aus",
     "noRegistrationData": "Keine Registrierungsdaten",
-    "invalidCharacters": "Enthält ungültige Zeichen"
+    "invalidCharacters": "Enthält ungültige Zeichen",
+    "pleaseFillTheCommentField": "Bitte füllen Sie das Kommentarfeld aus",
+    "yourCommentIsTooShort": "Ihr Kommentar ist zu kurz",
+    "yourCommentIsTooLong": "Ihr Kommentar ist zu lang"
   },
   "Forms": {
     "applicationForm": "Antragsformular",

@@ -207,6 +207,18 @@ export const getValidationSchema = (
       return {
         required: t('agreentmentTerms'),
       };
+    case 'comment':
+      return {
+        required: t('pleaseFillTheCommentField'),
+        minLength: {
+          value: 2,
+          message: t('yourCommentIsTooShort'),
+        },
+        maxLength: {
+          value: 600,
+          message: t('yourCommentIsTooLong'),
+        },
+      };
     default:
       return {};
   }

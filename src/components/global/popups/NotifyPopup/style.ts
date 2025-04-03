@@ -6,6 +6,7 @@ interface PopupBodyProps {
   tabletPadding?: string;
   mobilePadding?: string;
 }
+
 export const StyledPopupOverlay = styled.div`
   position: fixed;
   z-index: 1000;
@@ -18,18 +19,29 @@ export const StyledPopupBody = styled.div<PopupBodyProps>`
   max-width: 600px;
   width: 100%;
   height: auto;
-  padding: 32px;
+  padding: 64px;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  border-radius: 20px;
+  border-radius: 8px;
   background-color: ${({ theme }) => theme.colors.white};
 
   @media ${({ theme }) => theme.media.medium} {
     width: 90%;
-    padding: 24px;
+    padding: 20px;
   }
+`;
+
+export const FormWrapper = styled.div`
+  border-radius: 8px;
+  padding: 32px;
+  border: ${({ theme }) => `1px solid ${theme.colors.lightBorder}`};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  row-gap: 24px;
 `;
 
 export const StyledHeader = styled.div`

@@ -1,16 +1,9 @@
 import { useAppSelector } from '@/store';
 import { useAddCommentMutation } from '@/store/rtk-queries/wooCustomApi';
 import { StyledButton, Text } from '@/styles/components';
-import {
-  CommentFormSchema,
-  CommentFormType,
-} from '@/types/components/global/forms/commentForm';
-import { SwiperPopupProps } from '@/types/components/global/sliders/productSwiper';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { CustomFormInput } from '../../forms/CustomFormInput';
 import CloseIcon from '../../icons/CloseIcon/CloseIcon';
 import Rating from '../../Rating/Rating';
 import {
@@ -20,15 +13,37 @@ import {
   PopupOverlay,
   StyledForm,
   StyledName,
+  StyledRatingWrapper,
+  TextFieldsWrapper,
 } from './styles';
+import { getValidationSchema } from '@/utils/getValidationSchema';
+import {
+  StyledError,
+  StyledSuccessMessage,
+} from '../../forms/NotifyPopupForm/styles';
+import CustomTextField from '../../forms/CustomTextField/CustomTextField';
+import CustomTextArea from '../../forms/CustomTextArea/CustomTextArea';
 
-const CommentPopup: React.FC<SwiperPopupProps> = ({ onClose }) => {
-  const handleClickBackground = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (event.target === event.currentTarget) {
-      onClose();
-    }
-  };
+interface CommentPopupProps {
+  onClose: () => void;
+  data: Record<string, string | number>;
+}
+
+interface FormDataType {
+  first_name: string;
+  email: string;
+  comment: string;
+}
+
+const CommentPopup: React.FC<CommentPopupProps> = ({ onClose }) => {
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
   const t = useTranslations('Product');
+  const tForms = useTranslations('Forms');
+  const tValidation = useTranslations('Validation');
+  const locale = useLocale();
+
   const [rating, setRating] = useState<number>(0);
 
   const [AddCommentMutation] = useAddCommentMutation();
@@ -39,73 +54,142 @@ const CommentPopup: React.FC<SwiperPopupProps> = ({ onClose }) => {
 
   const user = useAppSelector(state => state.userSlice.user);
 
+  const handleClickBackground = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (event.target === event.currentTarget) {
+      onClose();
+    }
+  };
+
+  const validationSchema = useMemo(() => {
+    return (name: string, watch?: any) =>
+      getValidationSchema(name, tValidation, watch);
+  }, [locale]);
+
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<CommentFormType>({
-    resolver: zodResolver(CommentFormSchema),
+    formState: { errors, isSubmitting, isSubmitSuccessful },
+  } = useForm<FormDataType>({
+    mode: 'onChange',
   });
 
-  useEffect(() => {
-    if (!user) {
-      onClose();
-    }
-  }, [user, onClose]);
+  async function onSubmit(formData: FormDataType) {
+    const preparedData = user
+      ? `${user?.first_name} ${user?.last_name}`
+      : formData.first_name;
 
-  async function onSubmit(formData: CommentFormType) {
     const data = {
       product_id: product?.id || 0,
       review: formData.comment,
-      reviewer: `${user?.first_name} ${user?.last_name}`,
-      reviewer_email: user?.email,
+      reviewer: preparedData,
+      reviewer_email: user?.email || formData.email,
       rating,
       status: 'hold',
     };
 
     try {
       const response = await AddCommentMutation(data);
-      if (response) {
-        console.log(response);
-        onClose();
-      }
+      setTimeout(() => {
+        if (response) {
+          console.log(response);
+          onClose();
+        }
+      }, 3000);
     } catch (error) {
       console.error(error);
+      setErrorMessage((error as any).data?.message || t('failedAddComment'));
+      setSuccessMessage(null);
+    } finally {
+      setTimeout(() => {
+        setErrorMessage(null);
+        setSuccessMessage(null);
+      }, 5000);
     }
   }
 
-  return (
-    <PopupOverlay onClick={handleClickBackground}>
-      <PopupBody>
-        <CloseWrapper>
-          <CloseIcon onClick={onClose} />
-        </CloseWrapper>
-        <FormWrapper>
-          <StyledName>{`${user?.first_name} ${user?.last_name}`}</StyledName>
-          <Rating rating={rating} onChange={setRating} />
-          <Text textalign="center">
-            {t('commentText1')}
-            <br />
-            {t('commentText2')}
-          </Text>
-          <StyledForm onSubmit={handleSubmit(onSubmit)}>
-            <CustomFormInput
-              fieldName={t('yourOpinion')}
-              name="comment"
-              placeholder={t('comment')}
-              register={register}
-              errors={errors}
-              inputTag="textarea"
-              inputType="text"
-            />
-            <StyledButton type="submit" disabled={isSubmitting}>
-              {isSubmitting ? `${t('submitting')}...` : t('addComment')}
-            </StyledButton>
-          </StyledForm>
-        </FormWrapper>
-      </PopupBody>
-    </PopupOverlay>
-  );
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      setErrorMessage(null);
+      setSuccessMessage(t('successAddComment'));
+    }
+  }, [isSubmitSuccessful]);
+
+    return (
+      <PopupOverlay onClick={handleClickBackground}>
+        <PopupBody>
+          <CloseWrapper>
+            <CloseIcon onClick={onClose} />
+          </CloseWrapper>
+          <FormWrapper>
+            {user ? (
+              <StyledName>{`${user?.first_name} ${user?.last_name}`}</StyledName>
+            ) : (
+              <TextFieldsWrapper>
+                <CustomTextField
+                  name="first_name"
+                  register={register}
+                  inputType="text"
+                  errors={errors}
+                  label={tForms('first_name')}
+                  validation={validationSchema('first_name')}
+                  autocomplete="given-name"
+                />
+                <CustomTextField
+                  name="email"
+                  register={register}
+                  inputType="email"
+                  errors={errors}
+                  label={tForms('email')}
+                  validation={validationSchema('email')}
+                  autocomplete="email"
+                />
+              </TextFieldsWrapper>
+            )}
+            <StyledRatingWrapper>
+              <Rating
+                rating={rating}
+                onChange={setRating}
+                width="24px"
+                height="24px"
+              />
+            </StyledRatingWrapper>
+            <StyledForm onSubmit={handleSubmit(onSubmit)}>
+              <Text textalign="center">
+                {t('commentText1')}
+                <br />
+                {t('commentText2')}
+              </Text>
+              <CustomTextArea
+                name="comment"
+                register={register}
+                inputType="textarea"
+                errors={errors}
+                label={t('comment')}
+                placeholder={t('yourOpinion')}
+                validation={validationSchema('comment')}
+                minHeight="121px"
+              />
+              <StyledButton
+                type="submit"
+                disabled={isSubmitting || rating === 0}
+              >
+                {isSubmitting ? `${t('submitting')}...` : t('addComment')}
+              </StyledButton>
+            </StyledForm>
+            {errorMessage && (
+              <StyledError isVisible={!!errorMessage}>
+                {t('failedAddComment')}
+              </StyledError>
+            )}
+            {successMessage && (
+              <StyledSuccessMessage isVisible={!!successMessage}>
+                {successMessage}
+              </StyledSuccessMessage>
+            )}
+          </FormWrapper>
+        </PopupBody>
+      </PopupOverlay>
+    );
 };
 
 export default CommentPopup;

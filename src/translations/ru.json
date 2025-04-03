@@ -217,7 +217,9 @@
     "failedNotify": "Не удалось подписаться на продукт",
     "userAlreadyNotified": "Вы уже подписались на этот продукт",
     "notValidData": "Не удалось подписаться на продукт. Пожалуйста, укажите правильные данные",
-    "saleTag": "Распродажа"
+    "saleTag": "Распродажа",
+    "successAddComment": "Спасибо за ваш комментарий!",
+    "failedAddComment": "Не удалось добавить комментарий"
   },
   "Cart": {
     "cart": "Корзина",
@@ -400,7 +402,10 @@
     "invalidPostcodeFormat": "Неправильный формат почтового индекса",
     "validationErrorsFields": "Пожалуйста, заполните некорректные поля формы",
     "noRegistrationData": "Нет данных для регистрации",
-    "invalidCharacters": "Содержит недопустимые символы"
+    "invalidCharacters": "Содержит недопустимые символы",
+    "pleaseFillTheCommentField": "Пожалуйста, заполните поле комментария",
+    "yourCommentIsTooShort": "Ваш комментарий слишком короткий",
+    "yourCommentIsTooLong": "Ваш комментарий слишком длинный"
   },
   "Forms": {
     "applicationForm": "Форма заявки",

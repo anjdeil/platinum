@@ -1,8 +1,10 @@
 import { z } from 'zod';
 
 export const RatingPropsSchema = z.object({
-    rating: z.number().min(0).max(5),
-    onChange: z.function().args(z.number()).optional(),
+  rating: z.number().min(0).max(5),
+  onChange: z.function().args(z.number()).optional(),
+  width: z.string().optional(),
+  height: z.string().optional(),
 });
 
 export const StarPropsSchema = z.object({
