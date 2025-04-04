@@ -491,12 +491,13 @@
     "parcelLocker": "Почтомат",
     "selectParcelLocker": "Выбрать почтомат",
     "deliveryUnavailable": "Способы доставки недоступны для выбранного региона. Пожалуйста, проверьте свою страну.",
-    "easypack_parcel_machines": "InPost Почтомат 24/7",
-    "easypack_shipping_courier": "InPost Курьер",
-    "easypack_cod_shipping_courier": "InPost Курьер – Наложенный платеж",
-    "local_pickup": "Самовывоз",
-    "flexible_shipping_single": "Poczta Polska",
-    "gls": "GLS"
+    "InPost Locker 24/7": "InPost Почтомат 24/7",
+    "InPost Courier": "InPost Курьер",
+    "InPost Courier – Cash on delivery": "InPost Курьер – Наложенный платеж",
+    "Pickup": "Самовывоз",
+    "Poczta Polska": "Poczta Polska",
+    "Express Delivery": "Экспресс-доставка",
+    "GLS": "GLS"
   },
   "InPostGeowidget": {
     "close": "Закрыть"

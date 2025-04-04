@@ -491,12 +491,13 @@
     "parcelLocker": "Paketstation",
     "selectParcelLocker": "Paketstation auswählen",
     "deliveryUnavailable": "Für die ausgewählte Region sind keine Liefermethoden verfügbar. Bitte überprüfen Sie Ihr Land.",
-    "easypack_parcel_machines": "InPost Paketautomat 24/7",
-    "easypack_shipping_courier": "InPost Kurier",
-    "easypack_cod_shipping_courier": "InPost Kurier – Nachnahme",
-    "local_pickup": "Abholung",
-    "flexible_shipping_single": "Poczta Polska",
-    "gls": "GLS"
+    "InPost Locker 24/7": "InPost Paketautomat 24/7",
+    "InPost Courier": "InPost Kurier",
+    "InPost Courier – Cash on delivery": "InPost Kurier – Nachnahme",
+    "Pickup": "Abholung",
+    "Poczta Polska": "Poczta Polska",
+    "Express Delivery": "Express-Lieferung",
+    "GLS": "GLS"
   },
   "InPostGeowidget": {
     "close": "Schließen"

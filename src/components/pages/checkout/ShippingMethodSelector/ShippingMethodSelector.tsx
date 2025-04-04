@@ -78,7 +78,7 @@ export default function ShippingMethodSelector({
                   <ShippingMethodSelectorMethodRadioBox className="ShippingMethodSelectorMethodRadioBox" />
                   <ShippingMethodSelectorMethodNaming>
                     <ShippingMethodSelectorMethodName>
-                      {t(method.method_id)}
+                      {t(method.title)}
                     </ShippingMethodSelectorMethodName>
                     {method.method_id === 'local_pickup' &&
                       <ShippingMethodSelectorMethodDescription>{address}</ShippingMethodSelectorMethodDescription>
