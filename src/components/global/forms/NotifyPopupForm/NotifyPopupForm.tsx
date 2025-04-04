@@ -107,7 +107,7 @@ export const NotifyPopupForm: FC<NotifyPopupFormProps> = ({ data }) => {
         errors={errors}
         label={tForms('first_name')}
         placeholder={tValidation('firstNamePlaceholder')}
-        validation={validationSchema('first_name')}
+        validation={validationSchema('user_name')}
         setValue={setValue}
         autocomplete="given-name"
       />
