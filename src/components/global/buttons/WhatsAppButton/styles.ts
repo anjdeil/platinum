@@ -9,7 +9,7 @@ export const StyledIconContainer = styled.div`
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: #fff;
+  background: #25d366;
   cursor: pointer;
   box-shadow: 0 0 6px 0 rgba(17, 55, 96, 0.2);
   z-index: 99;
