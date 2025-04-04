@@ -36,7 +36,7 @@ export default function WhatsAppButton() {
     <CustomWidthTooltip title={t('whatsApp')} placement="left">
       <StyledButtonLink href="https://wa.me/48883462736" target="_blank">
         <StyledIconContainer>
-          <WhatsAppIcon width={35} height={35} fill="#17AA40" />
+          <WhatsAppIcon width={35} height={35} fill="#fff" />
         </StyledIconContainer>
       </StyledButtonLink>
     </CustomWidthTooltip>
