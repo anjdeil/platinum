@@ -19,6 +19,15 @@ const initialState: CustomDataThemeOptionsType = {
         email: '',
         address: '',
       },
+      banners: [
+        {
+          _type: '',
+          title: '',
+          delay: '',
+          image: '',
+          url: '',
+        },
+      ],
       about_platinum: {
         en: {
           subtitle: '',
