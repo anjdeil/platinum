@@ -55,6 +55,7 @@ const Orders: FC<OrdersPropsType> = ({ user }) => {
 
   const { data: ordersData } = useFetchOrdersQuery({
     customer: user.id,
+    status: 'processing,completed,cancelled,pending,refunded,failed',
   });
 
   return (
