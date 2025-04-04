@@ -29,11 +29,11 @@ function mergeFreeShippingNotifications(
     if (matchedNotification) {
       return accumulator.map((notification) =>
         notification.difference === methodDifference
-          ? { ...notification, titles: [...notification.titles, method.method_id] }
+          ? { ...notification, titles: [...notification.titles, method.title] }
           : notification,
       );
     } else {
-      return [...accumulator, { difference: methodDifference, titles: [method.method_id] }];
+      return [...accumulator, { difference: methodDifference, titles: [method.title] }];
     }
   }, []);
 
