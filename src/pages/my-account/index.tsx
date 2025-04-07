@@ -108,6 +108,7 @@ const MyAccount: FC<MyAccountPropsType> = ({ user }) => {
   const { isLoading: ordersLoading, data: ordersData } = useFetchOrdersQuery({
     customer: user.id,
     per_page: 100,
+    status: 'processing,completed,cancelled,pending,refunded,failed',
   });
 
   const translatedAccountLinkList = accountLinkList.map(

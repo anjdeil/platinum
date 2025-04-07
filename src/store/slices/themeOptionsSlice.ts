@@ -19,6 +19,36 @@ const initialState: CustomDataThemeOptionsType = {
         email: '',
         address: '',
       },
+      banners: [
+        {
+          _type: '',
+          title: '',
+          url: '',
+          delay: 0,
+          images: {
+            en: {
+              desktop: '',
+              mobile: '',
+            },
+            de: {
+              desktop: '',
+              mobile: '',
+            },
+            pl: {
+              desktop: '',
+              mobile: '',
+            },
+            ru: {
+              desktop: '',
+              mobile: '',
+            },
+            uk: {
+              desktop: '',
+              mobile: '',
+            },
+          },
+        },
+      ],
       about_platinum: {
         en: {
           subtitle: '',
@@ -59,6 +89,7 @@ const themeOptionsSlice = createSlice({
             },
           },
           contacts: data.data.item.contacts,
+          banners: data.data.item.banners,
           about_platinum: {
             ['lang']: aboutPlatinum[language] || {
               subtitle: '',
