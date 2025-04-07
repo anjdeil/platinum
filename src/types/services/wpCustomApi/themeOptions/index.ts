@@ -1,5 +1,10 @@
 import { z } from "zod";
 
+const languageImageSchema = z.object({
+  desktop: z.string(),
+  mobile: z.string(),
+});
+
 export const ThemeOptionsItemSchema = z.object({
   loyalty_options: z.record(
     z.object({
@@ -34,9 +39,9 @@ export const ThemeOptionsItemSchema = z.object({
     z.object({
       _type: z.string(),
       title: z.string(),
-      delay: z.string(),
-      image: z.string(),
       url: z.string(),
+      delay: z.number(),
+      images: z.record(z.string(), languageImageSchema),
     })
   ),
   about_platinum: z.record(

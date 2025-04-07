@@ -11,8 +11,9 @@ export const menuItemSchema = z.object({
 });
 
 export const menuItemsSchema = z.object({
-    id: z.number(),
-    items: z.array(menuItemSchema)
+  id: z.number(),
+  language_code: z.string(),
+  items: z.array(menuItemSchema),
 });
 
 export type menuItemsType = z.infer<typeof menuItemsSchema>;
