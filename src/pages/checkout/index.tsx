@@ -1,6 +1,10 @@
+import { BillingForm } from '@/components/global/forms/BillingForm/BillingForm';
+import CheckIcon from '@/components/global/icons/CheckIcon';
 import OrderProgress from '@/components/pages/cart/OrderProgress/OrderProgress';
-import Head from 'next/head';
-import React, { useEffect, useState } from 'react';
+import OrderSummary from '@/components/pages/cart/OrderSummary/OrderSummary';
+import CheckoutWarnings from '@/components/pages/checkout/CheckoutWarnings';
+import FreeShippingNotifications from '@/components/pages/checkout/FreeShippingNotifications/FreeShippingNotifications';
+import ShippingMethodSelector from '@/components/pages/checkout/ShippingMethodSelector/ShippingMethodSelector';
 import {
   CheckoutAgreement,
   CheckoutAgreementWrapper,
@@ -13,48 +17,43 @@ import {
   CheckoutSummary,
   CheckoutSummaryWrapper,
 } from '@/components/pages/checkout/style';
-import ShippingMethodSelector from '@/components/pages/checkout/ShippingMethodSelector/ShippingMethodSelector';
+import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
+import useGetAuthToken from '@/hooks/useGetAuthToken';
+import useInPostGeowidget from '@/hooks/useInPostGeowidget';
 import useShippingMethods from '@/hooks/useShippingMethods';
+import { useAppSelector } from '@/store';
+import { useCreateOrderMutation } from '@/store/rtk-queries/wooCustomApi';
+import { useLazyFetchUserDataQuery } from '@/store/rtk-queries/wpApi';
+import { useGetProductsMinimizedMutation } from '@/store/rtk-queries/wpCustomApi';
 import {
   OrderLineMetaDataType,
   ParcelMachineType,
   ShippingLineType,
 } from '@/types/pages/checkout';
-import useInPostGeowidget from '@/hooks/useInPostGeowidget';
 import { ShippingMethodType } from '@/types/services';
-import { useCreateOrderMutation } from '@/store/rtk-queries/wooCustomApi';
-import { useGetProductsMinimizedMutation } from '@/store/rtk-queries/wpCustomApi';
-import { useAppSelector } from '@/store';
-import useGetAuthToken from '@/hooks/useGetAuthToken';
-import { useLazyFetchUserDataQuery } from '@/store/rtk-queries/wpApi';
-import Link from 'next/link';
-import { useTranslations } from 'next-intl';
-import OrderSummary from '@/components/pages/cart/OrderSummary/OrderSummary';
-import CheckIcon from '@/components/global/icons/CheckIcon';
-import router from 'next/router';
 import checkCartConflict from '@/utils/cart/checkCartConflict';
-import parcelMachinesMethods from '@/utils/checkout/parcelMachinesMethods';
-import CheckoutWarnings from '@/components/pages/checkout/CheckoutWarnings';
-import validateOrder from '@/utils/checkout/validateOrder';
+import getCartTotals from '@/utils/cart/getCartTotals';
 import getCalculatedMethodCostByWeight from '@/utils/checkout/getCalculatedMethodCostByWeight';
 import getShippingMethodFixedCost from '@/utils/checkout/getShippingMethodFixedCost';
-import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
-import getCartTotals from '@/utils/cart/getCartTotals';
-import FreeShippingNotifications from '@/components/pages/checkout/FreeShippingNotifications/FreeShippingNotifications';
-import { BillingForm } from '@/components/global/forms/BillingForm/BillingForm';
+import parcelMachinesMethods from '@/utils/checkout/parcelMachinesMethods';
+import validateOrder from '@/utils/checkout/validateOrder';
+import { useTranslations } from 'next-intl';
+import Head from 'next/head';
+import Link from 'next/link';
+import router from 'next/router';
+import { useEffect, useState } from 'react';
 
+import Notification from '@/components/global/Notification/Notification';
+import BillingWarnings from '@/components/pages/checkout/BillingWarnings';
+import { RegistrationError } from '@/components/pages/checkout/RegistrationError/RegistrationError';
+import { useRegisterUser } from '@/hooks/useRegisterUser';
+import { useLazyGetUserTotalsQuery } from '@/store/rtk-queries/userTotals/userTotals';
+import { RegistrationFormType } from '@/types/components/global/forms/registrationForm';
 import {
   BillingType,
   MetaDataType,
   ShippingType,
 } from '@/types/services/wooCustomApi/customer';
-import BillingWarnings from '@/components/pages/checkout/BillingWarnings';
-import Notification from '@/components/global/Notification/Notification';
-import { useRegisterUser } from '@/hooks/useRegisterUser';
-import { RegistrationError } from '@/components/pages/checkout/RegistrationError/RegistrationError';
-import { useLazyGetUserTotalsQuery } from '@/store/rtk-queries/userTotals/userTotals';
-import { getLoyaltyLevel } from '@/utils/getLoyaltyLevel';
-import { RegistrationFormType } from '@/types/components/global/forms/registrationForm';
 
 export function getServerSideProps() {
   return {
@@ -254,7 +253,7 @@ export default function CheckoutPage() {
 
   useEffect(() => {
     if (userTotal?.total_spent) {
-      const { level } = getLoyaltyLevel(Number(userTotal.total_spent));
+      const level = userTotal?.loyalty_status;
       if (level && !coupons?.includes(level)) {
         setCoupons([...coupons, level]);
       }

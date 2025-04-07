@@ -21,7 +21,6 @@ import getCartTotals from '@/utils/cart/getCartTotals';
 // import getTotalByLineItems from '@/utils/cart/getTotalByLineItems';
 import { handleQuantityChange } from '@/utils/cart/handleQuantityChange';
 import { roundedPrice } from '@/utils/cart/roundedPrice';
-import { getLoyaltyLevel } from '@/utils/getLoyaltyLevel';
 import { validateJwtDecode } from '@/utils/zodValidators/validateJwtDecode';
 import { decodeJwt } from 'jose';
 import { debounce } from 'lodash';
@@ -50,7 +49,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   useEffect(() => {
     if (defaultCustomerData) {
       setAuth(true);
-      const { level } = getLoyaltyLevel(Number(userTotal?.total_spent));
+      const level = userTotal?.loyalty_status;
       setUserLoyalityStatus(level);
     }
   }, [defaultCustomerData, userTotal]);
