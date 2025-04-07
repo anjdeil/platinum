@@ -104,7 +104,7 @@ const InfoPopup: React.FC = () => {
     <StyledContainer onClick={handleClickBackground}>
       <StyledPopupBody>
         <StyledCloseWrapper>
-          <CloseIcon onClick={handleClosePopup} padding="0" />
+          <CloseIcon onClick={handleClosePopup} padding="0" color="white" />
         </StyledCloseWrapper>
         <StyledLink href={firstBanner?.url} target="_blank">
           <StyledBanner
