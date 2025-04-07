@@ -17,9 +17,9 @@ export const StyledContainer = styled.div`
 
 export const StyledPopupBody = styled.div<PopupBodyProps>`
   box-sizing: border-box;
-  max-width: 700px;
+  max-width: 864px;
   padding: 32px;
-  width: 55%;
+  width: 60%;
   height: auto;
 
   position: absolute;
@@ -29,27 +29,26 @@ export const StyledPopupBody = styled.div<PopupBodyProps>`
   border-radius: 8px;
   background-color: ${({ theme }) => theme.colors.white};
 
-  @media ${({ theme }) => theme.media.mediumLarge} {
-    width: 70%;
-  }
-
   @media ${({ theme }) => theme.media.preSmall} {
-    width: 90%;
+    max-width: 464px;
+    width: 80%;
     padding: 20px;
   }
 `;
 export const StyledBanner = styled(Image)`
+  box-sizing: border-box;
   width: 100%;
-  max-width: 700px;
+  // max-width: 800px;
   height: auto;
-  aspect-ratio: 700 / 288;
+  aspect-ratio: 800 / 500;
   border-radius: 8px;
   cursor: pointer;
 
   @media ${({ theme }) => theme.media.medium} {
     width: 100%;
+    // max-width: 400px;
     height: auto;
-    max-width: 90vw;
+    aspect-ratio: 400 / 600;
     padding: 0;
   }
 `;
@@ -81,12 +80,12 @@ export const StyledCloseWrapper = styled.div`
     padding: 0;
 
     @media ${({ theme }) => theme.media.medium} {
-      width: 12px;
-      height: 12px;
+      width: 14px;
+      height: 14px;
     }
   }
 
-  @media ${({ theme }) => theme.media.medium} {
+  @media ${({ theme }) => theme.media.preSmall} {
     top: 6px;
     right: 6px;
   }
