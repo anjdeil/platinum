@@ -17,8 +17,7 @@ export const StyledContainer = styled.div`
 
 export const StyledPopupBody = styled.div<PopupBodyProps>`
   box-sizing: border-box;
-  max-width: 864px;
-  padding: 32px;
+  max-width: 800px;
   width: 60%;
   height: auto;
 
@@ -29,10 +28,13 @@ export const StyledPopupBody = styled.div<PopupBodyProps>`
   border-radius: 8px;
   background-color: ${({ theme }) => theme.colors.white};
 
+  @media ${({ theme }) => theme.media.medium} {
+    max-width: 400px;
+    width: 70%;
+  }
+
   @media ${({ theme }) => theme.media.preSmall} {
-    max-width: 464px;
     width: 80%;
-    padding: 20px;
   }
 `;
 export const StyledBanner = styled(Image)`
@@ -71,22 +73,21 @@ export const StyledHeader = styled.div`
 export const StyledCloseWrapper = styled.div`
   position: absolute;
   z-index: 10;
-  top: 12px;
-  right: 12px;
+  top: 8px;
+  right: 8px;
+  color: ${({ theme }) => theme.colors.white};
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 10px;
+  border-radius: 50%;
 
   & button svg {
     width: 16px;
     height: 16px;
     padding: 0;
-
-    @media ${({ theme }) => theme.media.medium} {
-      width: 14px;
-      height: 14px;
-    }
+    color: ${({ theme }) => theme.colors.white};
   }
 
   @media ${({ theme }) => theme.media.preSmall} {
-    top: 6px;
-    right: 6px;
+    padding: 8px;
   }
 `;
