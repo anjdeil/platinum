@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import CloseIcon from '../../icons/CloseIcon/CloseIcon';
 import {
   StyledBanner,
@@ -8,23 +8,40 @@ import {
   StyledPopupBody,
 } from './style';
 import { useGetThemeOptionsQuery } from '@/store/rtk-queries/wpCustomApi';
+import { useRouter } from 'next/router';
+import { useResponsive } from '@/hooks/useResponsive';
 
 const InfoPopup: React.FC = () => {
-  const [showPopup, setShowPopup] = useState<boolean>(true);
+  const [showPopup, setShowPopup] = useState<boolean>(false);
   const { data: themeOptions } = useGetThemeOptionsQuery();
+  const { locale } = useRouter();
+  const { isMobile } = useResponsive();
 
   const SESSION_KEY = 'info-popup-shown-this-session';
 
   const firstBanner = themeOptions?.data?.item?.banners?.find(
-    (banner: { _type: string }) => banner._type === '_'
+    (banner: { title: string }) => banner.title === 'First banner'
   );
+
+  const imageConfig = useMemo(() => {
+    if (!firstBanner || !locale) return null;
+
+    const image = firstBanner.images?.[locale];
+    if (!image) return null;
+
+    return {
+      width: isMobile ? 400 : 800,
+      height: isMobile ? 400 / 0.67 : 800 / 1.6,
+      imageSrc: isMobile ? image.mobile : image.desktop,
+    };
+  }, [firstBanner, locale, isMobile]);
 
   useEffect(() => {
     if (!themeOptions) return;
 
     const POPUP_DELAY_MS = firstBanner?.delay
       ? +firstBanner.delay * 1000
-      : 1000;
+      : 5000;
 
     const alreadyShown = sessionStorage.getItem(SESSION_KEY);
 
@@ -36,7 +53,7 @@ const InfoPopup: React.FC = () => {
 
       return () => clearTimeout(timer);
     }
-  }, [themeOptions]);
+  }, [themeOptions, locale]);
 
   if (!showPopup) return null;
 
@@ -81,6 +98,8 @@ const InfoPopup: React.FC = () => {
   //   };
   // }, []);
 
+  if (!imageConfig) return null;
+
   return (
     <StyledContainer onClick={handleClickBackground}>
       <StyledPopupBody>
@@ -89,9 +108,9 @@ const InfoPopup: React.FC = () => {
         </StyledCloseWrapper>
         <StyledLink href={firstBanner?.url} target="_blank">
           <StyledBanner
-            src={firstBanner?.image || '/assets/images/no-image.jpg'}
-            width={700}
-            height={288}
+            src={imageConfig?.imageSrc}
+            width={imageConfig?.width || 800}
+            height={imageConfig?.height || 500}
             alt={firstBanner?.title || ''}
             priority
           />

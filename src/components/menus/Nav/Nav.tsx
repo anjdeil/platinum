@@ -4,6 +4,7 @@ import { menuItemsType } from '@/types/services/wpCustomApi/menus';
 import { FC, useContext } from 'react';
 import { MenuSkeleton } from '../MenuSkeleton';
 import { NavLink, NavList, StyleNav } from './styles';
+import { useRouter } from 'next/router';
 
 const Nav: FC<wpMenuProps> = ({
   menuId,
@@ -21,7 +22,11 @@ const Nav: FC<wpMenuProps> = ({
   lineHeight,
 }) => {
   const menus: menuItemsType[] | undefined = useContext(MenusContext);
-  const menuItems = menus?.find(({ id }) => id === menuId)?.items;
+  const { locale } = useRouter();
+
+  const menuItems = menus?.find(
+    ({ id, language_code }) => id === menuId && language_code === locale
+  )?.items;
 
   if (!menuItems && skeleton) {
     return (
