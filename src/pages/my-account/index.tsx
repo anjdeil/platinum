@@ -14,7 +14,6 @@ import {
   saveUserToLocalStorage,
 } from '@/utils/auth/userLocalStorage';
 import { accountLinkList } from '@/utils/consts';
-import { getLoyaltyLevel } from '@/utils/getLoyaltyLevel';
 import { validateJwtDecode } from '@/utils/zodValidators/validateJwtDecode';
 import { decodeJwt } from 'jose';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
@@ -90,7 +89,7 @@ const MyAccount: FC<MyAccountPropsType> = ({ user }) => {
   const dispatch = useDispatch();
   const userLocal = getUserFromLocalStorage();
 
-  const { level } = getLoyaltyLevel(Number(userTotal?.total_spent));
+  const level = userTotal?.loyalty_status;
 
   if (!userLocal) {
     const userData = {
