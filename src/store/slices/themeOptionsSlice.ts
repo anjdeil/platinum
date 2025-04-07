@@ -19,13 +19,43 @@ const initialState: CustomDataThemeOptionsType = {
         email: '',
         address: '',
       },
+      // banners: z.array(
+      //     z.object({
+      //       _type: z.string(),
+      //       title: z.string(),
+      //       url: z.string(),
+      //       delay: z.number(),
+      //       images: z.record(z.string(), languageImageSchema),
+      //     })
+      //   ),
       banners: [
         {
           _type: '',
           title: '',
-          delay: '',
-          image: '',
           url: '',
+          delay: 0,
+          images: {
+            en: {
+              desktop: '',
+              mobile: '',
+            },
+            de: {
+              desktop: '',
+              mobile: '',
+            },
+            pl: {
+              desktop: '',
+              mobile: '',
+            },
+            ru: {
+              desktop: '',
+              mobile: '',
+            },
+            uk: {
+              desktop: '',
+              mobile: '',
+            },
+          },
         },
       ],
       about_platinum: {
