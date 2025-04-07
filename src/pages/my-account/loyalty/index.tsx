@@ -46,7 +46,7 @@ export default function LoyaltyPage() {
   const nextLevelAmount = userTotal?.remaining_amount;
 
   const currentLevelIndex = LOYALTY_LEVELS.findIndex(
-    loyaltyLevel => loyaltyLevel.name === level
+    loyaltyLevel => loyaltyLevel.name.toLowerCase() === level?.toLowerCase()
   );
 
   const nextLevel =
