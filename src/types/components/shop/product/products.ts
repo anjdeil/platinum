@@ -23,6 +23,13 @@ export const ProductImageSchema = z.object({
   src: z.string(),
 });
 
+export const ProductVideosSchema = z.object({
+  _type: z.string(),
+  type: z.string(),
+  video_url: z.string(),
+  youtube_url: z.string(),
+});
+
 export const ProductAttrOptionSchema = z.object({
   id: z.number(),
   slug: z.string(),
@@ -126,6 +133,7 @@ export const ProductSchema = z.object({
   categories: z.array(ProductCategorySchema),
   thumbnail: ThumbnailSchema.nullable(),
   images: z.array(ProductImageSchema),
+  videos: z.array(ProductVideosSchema),
   attributes: z.array(ProductAttributesSchema),
   default_attributes: z.array(ProductDefaultAttributesSchema),
   variations: z.array(ProductVariationSchema),

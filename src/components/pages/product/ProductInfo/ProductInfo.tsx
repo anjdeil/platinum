@@ -46,7 +46,7 @@ import {
 import { ProductBadgeBox } from '@/components/shop/product/ProductBadgeWrapper/styles';
 
 const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
-  const { images, thumbnail } = product;
+  const { images, thumbnail, videos } = product;
   const t = useTranslations('Product');
   const { isMobile } = useResponsive();
   const dispatch = useAppDispatch();
@@ -121,7 +121,6 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
   }
 
   function handleNotifyButtonClick() {
-    console.log('Notify button clicked');
     dispatch(
       popupToggle({
         popupType: 'notify',
@@ -158,13 +157,25 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
     dispatch(popupSet({ popupType: 'add-comment' }));
   };
 
-  const galleryImages =
-    thumbnail?.id && thumbnail?.name && thumbnail?.src
-      ? [
-          { id: thumbnail.id, name: thumbnail.name, src: thumbnail.src },
-          ...images,
-        ]
-      : [...images];
+  const galleryImages = (() => {
+    const imageItems =
+      thumbnail?.id && thumbnail?.name && thumbnail?.src
+        ? [
+            { id: thumbnail.id, name: thumbnail.name, src: thumbnail.src },
+            ...images,
+          ]
+        : [...images];
+
+    const videoItems =
+      videos?.map(video => ({
+        id: video.youtube_url || video.video_url,
+        name: video.type,
+        src: video.youtube_url || video.video_url,
+        type: 'video',
+      })) || [];
+
+    return [...imageItems, ...videoItems];
+  })();
 
   useEffect(() => {
     if (stockQuantity === 0) {

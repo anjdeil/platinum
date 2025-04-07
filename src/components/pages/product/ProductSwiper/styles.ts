@@ -25,6 +25,14 @@ export const MainSwiper = styled(Swiper)`
 	}
 `;
 
+export const VideoWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  aspect-ratio: 452 / 300;
+`;
+	
 export const ImageWrapper = styled.button`
 	width: 100%;
 	height: auto;
