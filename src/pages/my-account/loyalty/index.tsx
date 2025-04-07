@@ -18,7 +18,6 @@ import { AccountTitle, Title } from '@/styles/components';
 import theme from '@/styles/theme';
 import { JwtDecodedDataType } from '@/types/services/wpRestApi/auth';
 import { LOYALTY_LEVELS } from '@/utils/consts';
-import { getLoyaltyLevel } from '@/utils/getLoyaltyLevel';
 import { validateJwtDecode } from '@/utils/zodValidators/validateJwtDecode';
 import { decodeJwt } from 'jose';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
@@ -43,12 +42,11 @@ export default function LoyaltyPage() {
 
   const { convertCurrency, currencyCode: code } = useCurrencyConverter();
 
-  const { level, nextLevelAmount } = getLoyaltyLevel(
-    Number(userTotal?.total_spent) || 0
-  );
+  const level = userTotal?.loyalty_status;
+  const nextLevelAmount = userTotal?.remaining_amount;
 
   const currentLevelIndex = LOYALTY_LEVELS.findIndex(
-    loyaltyLevel => loyaltyLevel.name === level
+    loyaltyLevel => loyaltyLevel.name.toLowerCase() === level?.toLowerCase()
   );
 
   const nextLevel =

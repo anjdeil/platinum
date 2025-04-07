@@ -1,6 +1,6 @@
 import { LOYALTY_LEVELS } from "./consts";
 
-type LoyaltyLevel = "Silver" | "Gold" | "Platinum";
+type LoyaltyLevel = "silver" | "gold" | "platinum";
 type LoyaltyResult = { level?: LoyaltyLevel; nextLevelAmount?: string };
 
 export const getLoyaltyLevel = (totalSpent: number): LoyaltyResult => {

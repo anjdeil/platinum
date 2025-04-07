@@ -6,9 +6,9 @@ import OrderHistoryIcon from '@/components/global/icons/OrderHistoryIcon/OrderHi
 export const MIN_TOTAL_TO_SILVER = 2500;
 
 export const LOYALTY_LEVELS = [
-  { name: "Silver" as const, amount: 2500 },
-  { name: "Gold" as const, amount: 10000 },
-  { name: "Platinum" as const, amount: 20000 },
+  { name: "silver" as const, amount: 2500 },
+  { name: "gold" as const, amount: 10000 },
+  { name: "platinum" as const, amount: 20000 },
 ];
 
 export const DEFAULT_IMAGE = '/assets/images/product-placeholder.jpg';
