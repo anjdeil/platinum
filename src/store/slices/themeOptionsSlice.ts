@@ -19,15 +19,6 @@ const initialState: CustomDataThemeOptionsType = {
         email: '',
         address: '',
       },
-      // banners: z.array(
-      //     z.object({
-      //       _type: z.string(),
-      //       title: z.string(),
-      //       url: z.string(),
-      //       delay: z.number(),
-      //       images: z.record(z.string(), languageImageSchema),
-      //     })
-      //   ),
       banners: [
         {
           _type: '',
