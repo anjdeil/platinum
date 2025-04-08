@@ -16,6 +16,7 @@ import { MenuSkeleton } from '@/components/menus/MenuSkeleton';
 import { StyledButton } from '@/styles/components';
 import { mobileCategoriesMenuProps } from '@/types/components/global/popups/mobilePopup';
 import { useAppSelector } from '@/store';
+import { useTranslations } from 'next-intl';
 
 const MobileCategoriesMenu: FC<mobileCategoriesMenuProps> = ({
   padding,
@@ -26,7 +27,7 @@ const MobileCategoriesMenu: FC<mobileCategoriesMenuProps> = ({
   disableOverlay,
 }) => {
   const [parent, setParent] = useState<CategoryType | undefined>();
-
+  const t = useTranslations('Categories');
   const categories: CategoryType[] | undefined = useAppSelector(
     state => state.categoriesSlice.categories
   );
@@ -46,7 +47,7 @@ const MobileCategoriesMenu: FC<mobileCategoriesMenuProps> = ({
           height="35px"
           onClick={() => switchCategory(parent?.slug || '', undefined)}
         >
-          Show All
+          {t('showAll')}
         </StyledButton>
       </CategoriesHead>
     );
@@ -73,17 +74,19 @@ const MobileCategoriesMenu: FC<mobileCategoriesMenuProps> = ({
     }
   };
 
-  const filteredCategories = categories?.filter((category: CategoryType) => {
-    if (category.slug === 'uncategorized') return false;
+  const sortedCategories = categories
+    ?.filter((category: CategoryType) => {
+      if (category.slug === 'uncategorized') return false;
 
-    if (parent) {
-      return category.parent_id === parent.id;
-    } else {
-      return category.parent_id === 0;
-    }
-  });
+      if (parent) {
+        return category.parent_id === parent.id;
+      } else {
+        return category.parent_id === 0;
+      }
+    })
+    .sort((a, b) => (a.menu_order || 0) - (b.menu_order || 0));
 
-  const categoriesLinks = filteredCategories?.map(
+  const categoriesLinks = sortedCategories?.map(
     ({ id, name, slug }: CategoryType) => {
       const hasSubcategories = categories?.some(
         (category: CategoryType) => category.parent_id === id
@@ -96,6 +99,28 @@ const MobileCategoriesMenu: FC<mobileCategoriesMenuProps> = ({
       };
     }
   );
+
+  // const categoriesLinks = sortedCategories?.map(
+  //   ({ id, name, slug }: CategoryType) => {
+  //     // Для каждой категории ищем подкатегории
+  //     const hasSubcategories = categories?.some(
+  //       (category: CategoryType) => category.parent_id === id
+  //     );
+
+  //     // Сортировка подкатегорий для каждой категории
+  //     const subcategories = categories
+  //       ?.filter((category: CategoryType) => category.parent_id === id)
+  //       .sort((a, b) => (a.menu_order || 0) - (b.menu_order || 0));
+
+  //     return {
+  //       name,
+  //       url: slug,
+  //       isActive: false,
+  //       isNested: hasSubcategories,
+  //       subcategories, // Добавляем подкатегории в объект
+  //     };
+  //   }
+  // );
 
   if (!categories || categories.length === 0) {
     if (disableOverlay) {

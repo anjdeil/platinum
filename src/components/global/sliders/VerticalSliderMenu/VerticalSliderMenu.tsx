@@ -36,8 +36,15 @@ const VerticalSlider: FC<wpMenuProps> = ({ menuId, skeleton }) => {
 
   const menus: menuItemsType[] | undefined = useContext(MenusContext);
   const menuItems = menus?.find(({ id }) => id === menuId)?.items;
+  const sortedMenuItems = menuItems
+    ? [...menuItems].sort((a, b) => {
+        const aOrder = a.menu_order || 0;
+        const bOrder = b.menu_order || 0;
+        return aOrder - bOrder;
+      })
+    : [];
 
-  if (!menuItems && skeleton) {
+  if (!sortedMenuItems.length && skeleton) {
     return (
       <MenuSkeleton
         elements={skeleton.elements}
@@ -54,8 +61,8 @@ const VerticalSlider: FC<wpMenuProps> = ({ menuId, skeleton }) => {
   return (
     <SliderWrapper>
       <Slider ref={sliderRef} {...settings}>
-        {menuItems &&
-          menuItems.map(({ title, url }) => (
+        {sortedMenuItems.length > 0 &&
+          sortedMenuItems.map(({ title, url }) => (
             <Slide key={title}>
               <NavLink href={url}>{title}</NavLink>
             </Slide>

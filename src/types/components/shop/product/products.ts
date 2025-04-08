@@ -1,6 +1,5 @@
 import { z } from "zod";
 
-// Схеми продуктів
 export const ProductCategorySchema = z.object({
   id: z.number(),
   parent_id: z.number(),
@@ -8,6 +7,7 @@ export const ProductCategorySchema = z.object({
   slug: z.string(),
   description: z.string(),
   count: z.number(),
+  menu_order: z.number(),
 });
 
 
