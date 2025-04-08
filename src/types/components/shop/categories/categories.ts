@@ -8,7 +8,7 @@ export const CategorySchema = z.object({
   description: z.string(),
   count: z.number(),
   language_code: z.string(),
-  menu_order: z.number(),
+  menu_order: z.number().optional(),
 });
 
 type CategoryType = z.infer<typeof CategorySchema>;
