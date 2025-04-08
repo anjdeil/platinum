@@ -30,7 +30,7 @@ const SelectParentCategory: FC<SelectParentCategoryMobileProps> = ({
         .filter(
           (category: CategoryType) => category.parent_id === selectedParent.id
         )
-        .sort((a, b) => a.menu_order - b.menu_order);
+        .sort((a, b) => (a.menu_order ?? 0) - (b.menu_order ?? 0));
 
       setChildren(filteredChildren);
     }
