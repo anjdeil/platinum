@@ -126,6 +126,9 @@
   "TopBar": {
     "CallUs": "Kontakt"
   },
+  "Categories": {
+    "showAll": "Alle anzeigen"
+  },
   "Search": {
     "Search": "Suche",
     "showAll": "Alle anzeigen",

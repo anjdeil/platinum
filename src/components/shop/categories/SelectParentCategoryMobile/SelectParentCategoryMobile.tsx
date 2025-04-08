@@ -16,7 +16,7 @@ const SelectParentCategory: FC<SelectParentCategoryMobileProps> = ({
   switchCategory,
 }) => {
   const categories: CategoryType[] | undefined = useAppSelector(
-    (state) => state.categoriesSlice.categories
+    state => state.categoriesSlice.categories
   );
   const [children, setChildren] = useState<CategoryType[]>([]);
   const [parent, setParent] = useState<CategoryType | undefined>(undefined);
@@ -25,12 +25,17 @@ const SelectParentCategory: FC<SelectParentCategoryMobileProps> = ({
     if (categories && selectedCategories.length > 0) {
       const selectedParent = selectedCategories[0];
       setParent(selectedParent);
-      const filteredChildren = categories.filter(
-        (category: CategoryType) => category.parent_id === selectedParent.id
-      );
+
+      const filteredChildren = categories
+        .filter(
+          (category: CategoryType) => category.parent_id === selectedParent.id
+        )
+        .sort((a, b) => a.menu_order - b.menu_order);
+
       setChildren(filteredChildren);
     }
   }, [categories, selectedCategories]);
+
   return (
     <>
       {parent && (
@@ -38,13 +43,17 @@ const SelectParentCategory: FC<SelectParentCategoryMobileProps> = ({
           {children.length > 0 ? (
             <CustomSingleAccordion key={parent.slug} title={parent.name}>
               <List>
-                {children.map((childCategory) => (
+                {children.map(childCategory => (
                   <StyledListItem
                     btnpadding="12px 16px"
                     key={childCategory.slug}
                     isActive={childCategory.id === selectedCategories[1]?.id}
                   >
-                    <button onClick={() => switchCategory(parent.slug, childCategory.slug)}>
+                    <button
+                      onClick={() =>
+                        switchCategory(parent.slug, childCategory.slug)
+                      }
+                    >
                       {childCategory.name}
                     </button>
                   </StyledListItem>
@@ -53,7 +62,7 @@ const SelectParentCategory: FC<SelectParentCategoryMobileProps> = ({
             </CustomSingleAccordion>
           ) : (
             <SingleCategory>
-              <Title as={"h3"} uppercase fontSize="16px" fontWeight={400}>
+              <Title as={'h3'} uppercase fontSize="16px" fontWeight={400}>
                 {parent.name}
               </Title>
             </SingleCategory>

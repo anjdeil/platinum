@@ -1,23 +1,23 @@
-import { Category, Subcategory } from "@/types/components/shop/categories/categoriesMenu";
-import { CategoryType } from "@/types/pages/shop";
+import {
+  Category,
+  Subcategory,
+} from '@/types/components/shop/categories/categoriesMenu';
+import { CategoryType } from '@/types/pages/shop';
 
 const transformCategoriesMenu = (response: CategoryType[]): Category[] => {
   const categories: Category[] = [];
 
-  response.forEach((parentRow) => {
-    if (parentRow.parent_id) return;
-    if (parentRow.slug === "uncategorized") return;
+  response.forEach(parentRow => {
+    if (parentRow.parent_id || parentRow.slug === 'uncategorized') return;
 
-    const subcategories: Subcategory[] = [];
-    response.forEach((childRow) => {
-      if (childRow.parent_id !== parentRow.id) return;
-
-      subcategories.push({
+    const subcategories: Subcategory[] = response
+      .filter(childRow => childRow.parent_id === parentRow.id)
+      .sort((a, b) => a.menu_order - b.menu_order)
+      .map(childRow => ({
         id: childRow.id,
         categoryName: childRow.name,
         url: `/product-category/${parentRow.slug}/${childRow.slug}`,
-      });
-    });
+      }));
 
     categories.push({
       id: parentRow.id,
@@ -27,7 +27,13 @@ const transformCategoriesMenu = (response: CategoryType[]): Category[] => {
     });
   });
 
-  return categories;
+  const sortedCategories = categories.sort((a, b) => {
+    const aData = response.find(r => r.id === a.id);
+    const bData = response.find(r => r.id === b.id);
+    return (aData?.menu_order || 0) - (bData?.menu_order || 0);
+  });
+
+  return sortedCategories;
 };
 
 export default transformCategoriesMenu;
