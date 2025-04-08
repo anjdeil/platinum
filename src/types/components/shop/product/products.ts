@@ -7,7 +7,7 @@ export const ProductCategorySchema = z.object({
   slug: z.string(),
   description: z.string(),
   count: z.number(),
-  menu_order: z.number(),
+  menu_order: z.number().optional(),
 });
 
 

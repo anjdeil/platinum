@@ -10,7 +10,7 @@ export const CategorySchema = z.object({
   count: z.number(),
   language_code: z.string(),
   image: z.string().optional(),
-  menu_order: z.number(),
+  menu_order: z.number().optional(),
 });
 
 export const CategoryItemContainerPropsSchema = z.object({

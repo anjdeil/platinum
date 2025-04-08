@@ -12,7 +12,7 @@ const transformCategoriesMenu = (response: CategoryType[]): Category[] => {
 
     const subcategories: Subcategory[] = response
       .filter(childRow => childRow.parent_id === parentRow.id)
-      .sort((a, b) => a.menu_order - b.menu_order)
+      .sort((a, b) => (a.menu_order || 0) - (b.menu_order || 0))
       .map(childRow => ({
         id: childRow.id,
         categoryName: childRow.name,
