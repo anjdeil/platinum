@@ -152,16 +152,16 @@
     "productsNotFound": "Nie znaleziono towarów",
     "filter": "Filtr",
     "price": "Cena",
-    "Length": "Długość",
-    "Thickness": "Grubość",
-    "Colour": "Kolor",
-    "Size": "Rozmiar",
-    "Volumes": "Objemy",
+    "length": "Długość",
+    "thickness": "Grubość",
+    "colour": "Kolor",
+    "size": "Rozmiar",
+    "volumes": "Objemy",
     "view": "Widok",
     "gift certificate": "Certyfikat podarunkowy",
     "mattress-cover": "Pokrowiec na materac",
-    "Twist": "Skręt",
-    "Volume": "Objętość"
+    "twist": "Skręt",
+    "volume": "Objętość"
   },
   "Product": {
     "addToBasket": "Dodaj do koszyka",
