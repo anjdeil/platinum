@@ -152,16 +152,16 @@
     "productsNotFound": "Товари не знайдено",
     "filter": "Фільтр",
     "price": "Ціна",
-    "Length": "Довжина",
-    "Thickness": "Товщина",
-    "Colour": "Колір",
-    "Size": "Розмір",
-    "Volumes": "Об'єми",
+    "length": "Довжина",
+    "thickness": "Товщина",
+    "colour": "Колір",
+    "size": "Розмір",
+    "volumes": "Об'єми",
     "view": "Вид",
     "gift certificate": "Подарунковий сертифікат",
     "mattress-cover": "Чехол на матрац",
-    "Twist": "Підкручення",
-    "Volume": "Об'єм"
+    "twist": "Підкручення",
+    "volume": "Об'єм"
   },
   "Product": {
     "addToBasket": "Додати до кошика",

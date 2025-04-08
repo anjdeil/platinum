@@ -152,16 +152,16 @@
     "productsNotFound": "Products not found",
     "filter": "Filter",
     "price": "Price",
-    "Length": "Length",
-    "Thickness": "Thickness",
-    "Colour": "Colour",
-    "Size": "Size",
-    "Volumes": "Volumes",
+    "length": "Length",
+    "thickness": "Thickness",
+    "colour": "Colour",
+    "size": "Size",
+    "volumes": "Volumes",
     "view": "View",
     "gift certificate": "Gift certificate",
     "mattress-cover": "Mattress cover",
-    "Twist": "Twist",
-    "Volume": "Volume"
+    "twist": "Twist",
+    "volume": "Volume"
   },
   "Product": {
     "addToBasket": "Add to basket",

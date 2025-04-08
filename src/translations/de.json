@@ -152,16 +152,16 @@
     "productsNotFound": "Produkte nicht gefunden",
     "filter": "Filter",
     "price": "Preis",
-    "Length": "Länge",
-    "Thickness": "Dicke",
-    "Colour": "Farbe",
-    "Size": "Größe",
-    "Volumes": "Volumen",
+    "length": "Länge",
+    "thickness": "Dicke",
+    "colour": "Farbe",
+    "size": "Größe",
+    "volumes": "Volumen",
     "view": "Ansicht",
     "gift certificate": "Geschenkgutschein",
     "mattress-cover": "Matratzenbezug",
-    "Twist": "Twist",
-    "Volume": "Volumen"
+    "twist": "Twist",
+    "volume": "Volumen"
   },
   "Product": {
     "addToBasket": "In den Warenkorb legen",
