@@ -152,16 +152,16 @@
     "productsNotFound": "Товары не найдены",
     "filter": "Фильтр",
     "price": "Цена",
-    "Length": "Длина",
-    "Thickness": "Толщина",
-    "Colour": "Цвет",
-    "Size": "Размер",
-    "Volumes": "Объемы",
+    "length": "Длина",
+    "thickness": "Толщина",
+    "colour": "Цвет",
+    "size": "Размер",
+    "volumes": "Объемы",
     "view": "Вид",
     "gift certificate": "Подарочный сертификат",
     "mattress-cover": "Чехол на матрас",
-    "Twist": "Подкрутка",
-    "Volume": "Объем"
+    "twist": "Подкрутка",
+    "volume": "Объем"
   },
   "Product": {
     "addToBasket": "Добавить в корзину",

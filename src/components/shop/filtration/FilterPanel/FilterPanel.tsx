@@ -316,7 +316,7 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({
           const currentAttr = searchParams.get(attrName)?.split(',') || [];
 
           return (
-            <CustomSingleAccordion title={t(attribute.name)} key={attribute.id}>
+            <CustomSingleAccordion title={t(attribute.slug)} key={attribute.id}>
               {attributes && attribute.slug === 'colour' ? (
                 <ColorsFilter
                   attribute={attribute}
