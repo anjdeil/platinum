@@ -186,9 +186,7 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product }) => {
             onClick={handleCartButtonClick}
             // disabled={product.stock_quantity === 0}
           >
-            {product.stock_quantity === 0
-              ? t('notifyWhenAvailable')
-              : product?.type !== 'variable'
+            {product?.type !== 'variable'
               ? isCartMatch
                 ? t('viewCart')
                 : t('addToBasket')
