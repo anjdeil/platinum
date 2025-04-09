@@ -35,6 +35,7 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
   disabled,
   xlarea,
   autoComplete,
+  inputStyles,
 }) => {
   const registerProps = register ? { ...register(name) } : {};
 
@@ -96,9 +97,10 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
         isPhone={inputType === 'phone'}
         padding={padding}
         font={font}
+        inputStyles={inputStyles}
       >
         {label && (
-          <LabelWrapper>
+          <LabelWrapper inputStyles={inputStyles}>
             <span>
               {fieldName}
               {isRequire && <CustomRequired>*</CustomRequired>}

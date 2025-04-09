@@ -1,5 +1,9 @@
 import styled from '@emotion/styled';
 
+export const StyledCountrySelect = styled.div`
+  align-self: flex-end;
+`;
+
 export const FileUploadLabel = styled.label<{ isDragging: boolean }>`
   display: flex;
   flex-direction: column;

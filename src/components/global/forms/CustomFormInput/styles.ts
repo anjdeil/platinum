@@ -8,8 +8,8 @@ interface CustomInputStyleProps {
   isCheckbox: boolean;
   isPhone: boolean;
   padding?: string;
-
   font?: string;
+  inputStyles?: boolean;
 }
 interface CustomInputContainerProps {
   isCheckbox: boolean;
@@ -25,7 +25,7 @@ interface CustomInputProps {
 }
 
 export const CustomInputStyle = styled.div<CustomInputStyleProps>`
-  height: 100%;
+  height: ${({ inputStyles }) => (inputStyles ? 'auto' : '100%')};
   padding: ${({ padding = '5px' }) => padding};
   display: flex;
   flex-direction: ${({ isCheckbox }) => (isCheckbox ? 'row' : 'column')};
@@ -120,10 +120,14 @@ export const Input = styled.input<CustomInputProps>`
   }
 `;
 
-export const LabelWrapper = styled.div`
+type LabelWrapperProps = {
+  inputStyles?: boolean;
+};
+export const LabelWrapper = styled.div<LabelWrapperProps>`
   display: flex;
   align-items: flex-end;
-  flex-grow: 1;
+  flex-grow: ${({ inputStyles }) => (inputStyles ? '0' : '1')};
+  // flex-grow: 1;
 `;
 export const CustomInputWrapper = styled.div`
   position: relative;
