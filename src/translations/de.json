@@ -303,6 +303,7 @@
   "Validation": {
     "emailValidation": "Geben Sie eine gültige E-Mail-Adresse ein",
     "minChar": "Muss mindestens {count} Zeichen lang sein.",
+    "maxChar": "Darf nicht länger als {count} Zeichen sein.",
     "RequiredField": "Pflichtfeld",
     "email": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
     "name": "Name",

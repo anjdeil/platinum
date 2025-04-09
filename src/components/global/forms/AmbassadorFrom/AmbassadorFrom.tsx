@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import 'react-international-phone/style.css';
@@ -6,6 +6,7 @@ import {
   FileUploadLabel,
   FileUploadPreview,
   FileUploadWrapper,
+  StyledCountrySelect,
 } from './styles';
 import {
   CustomForm,
@@ -20,7 +21,7 @@ import { useFetchCustomerQuery } from '@/store/rtk-queries/wooCustomApi';
 import { CircularProgress } from '@mui/material';
 import { CustomFormInput } from '../CustomFormInput';
 import { CustomError } from '../CustomFormInput/styles';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useSendAmbassadorFormMutation } from '@/store/rtk-queries/contactFrom7/contactFromApi7';
 import UploadIcon from '../../icons/UploadIcon/UploadIcon';
 import {
@@ -45,6 +46,7 @@ export const AmbassadorForm: FC = () => {
   const tForms = useTranslations('Forms');
   const tValidation = useTranslations('Validation');
   const tMyAccount = useTranslations('MyAccount');
+  const locale = useLocale();
 
   useEffect(() => {
     const user = getUserFromLocalStorage();
@@ -53,9 +55,16 @@ export const AmbassadorForm: FC = () => {
     }
   }, []);
 
-  const schema = AmbassadorFormValidationSchema(tValidation);
+  const schema = useMemo(
+    () => AmbassadorFormValidationSchema(tValidation),
+    [locale]
+  );
+
   const [sendForm, { isLoading, isError, isSuccess }] =
     useSendAmbassadorFormMutation();
+
+  const { data: customer, isLoading: isCustomerLoading } =
+    useFetchCustomerQuery({ customerId: userId || '' }, { skip: !userId });
 
   const SEND_AMBASSADOR_FORM_ID = 26923;
 
@@ -75,13 +84,31 @@ export const AmbassadorForm: FC = () => {
     setValue,
     watch,
     control,
+    reset,
   } = useForm<AmbassadorFormType>({
     resolver: zodResolver(schema),
-    mode: 'onBlur',
+    mode: 'onChange',
   });
 
-  const { data: customer, isLoading: isCustomerLoading } =
-    useFetchCustomerQuery({ customerId: userId || '' }, { skip: !userId });
+  useEffect(() => {
+    if (customer) {
+      setValue('country', customer?.billing?.country || '');
+      setValue('phone', customer?.billing?.phone || '');
+      setValue('first_name', customer?.first_name || '');
+      setValue('last_name', customer?.last_name || '');
+      setValue('email', customer?.email || '');
+      setValue('city', customer?.billing?.city || '');
+    }
+  }, [customer]);
+
+  useEffect(() => {
+    reset(watch(), {
+      keepValues: true,
+      keepErrors: false,
+      keepDirty: true,
+      keepTouched: true,
+    });
+  }, [locale]);
 
   const onSubmit = async (data: AmbassadorFormType) => {
     const formData = new FormData();
@@ -126,12 +153,6 @@ export const AmbassadorForm: FC = () => {
     });
     return () => subscription.unsubscribe();
   }, [watch]);
-
-  useEffect(() => {
-    if (customer) {
-      setValue('country', customer?.billing?.country);
-    }
-  }, [customer, setValue]);
 
   const MAX_FILE_SIZE = 3 * 1024 * 1024;
 
@@ -188,37 +209,31 @@ export const AmbassadorForm: FC = () => {
           errors={errors}
           inputTag="input"
           inputType={field === 'phone' ? 'phone' : 'text'}
-          defaultValue={
-            field === 'phone'
-              ? customer?.billing?.phone
-              : defaultValues[field] || ''
-          }
           setValue={setValue}
+          defaultValue={field === 'phone' ? customer?.billing?.phone : ''}
+          inputStyles={true}
         />
       ))}
       <CustomCountrySelect
-        name={`country${prefix}`}
+        name="country"
         control={control}
         options={countryOptions}
         label={tMyAccount('country')}
         errors={errors}
-        defaultValue={
-          prefix === 'Shipping'
-            ? customer?.shipping?.country
-            : customer?.billing?.country
-        }
         noBottom={true}
       />
-      <CustomFormInput
-        fieldName={tValidation('city')}
-        name="city"
-        register={register}
-        errors={errors}
-        inputTag={'input'}
-        inputType={'text'}
-        defaultValue={customer?.billing.city || ''}
-        setValue={setValue}
-      />
+      <StyledCountrySelect>
+        <CustomFormInput
+          fieldName={tValidation('city')}
+          name="city"
+          register={register}
+          errors={errors}
+          inputTag={'input'}
+          inputType={'text'}
+          setValue={setValue}
+          inputStyles={true}
+        />
+      </StyledCountrySelect>
     </>
   );
 

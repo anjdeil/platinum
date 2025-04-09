@@ -11,7 +11,10 @@ export const AmbassadorFormValidationSchema = (
     phone: phoneNumberValidation(t),
     country: z.string().min(1, t('RequiredField')),
     city: z.string().min(1, t('RequiredField')),
-    about: z.string().min(40, t('minChar', { count: 40 })),
+    about: z
+      .string()
+      .min(3, t('minChar', { count: 3 }))
+      .max(500, t('maxChar', { count: 600 })),
     file:
       typeof window !== 'undefined'
         ? z.instanceof(File).optional()
