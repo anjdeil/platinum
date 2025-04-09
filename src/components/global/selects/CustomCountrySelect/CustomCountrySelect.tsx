@@ -96,10 +96,13 @@ const CustomCountrySelect: React.FC<CustomSelectProps> = ({
             }}
           />
         )}
+        {...(errors[name] && (
+          <CustomError>{tValidation('RequiredField')}</CustomError>
+        ))}
       />
-      {errors[name] && (
+      {/* {errors[name] && (
         <CustomError>{tValidation('RequiredField')}</CustomError>
-      )}
+      )} */}
     </CustomSelectInput>
   );
 };
