@@ -12,10 +12,18 @@ export const LoginFormWrapper = styled.div`
     row-gap: 10px;
   }
 `;
+
+export const StyledCheckboxWrapper = styled.div`
+  & > div > label {
+    display: inline-block;
+  }
+`;
+
 export const ActiveText = styled(Link)`
   color: ${({ theme }) => ` ${theme.colors.active}`};
   text-decoration: none;
 `;
+
 export const BottomWrapper = styled.div`
   display: flex;
   justify-content: space-between;

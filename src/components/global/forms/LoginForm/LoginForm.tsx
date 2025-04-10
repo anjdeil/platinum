@@ -11,7 +11,12 @@ import {
   useGetTokenMutation,
 } from '@/store/rtk-queries/wpApi';
 import { CustomFormInput } from '../CustomFormInput';
-import { ActiveText, BottomWrapper, LoginFormWrapper } from './styles';
+import {
+  ActiveText,
+  BottomWrapper,
+  LoginFormWrapper,
+  StyledCheckboxWrapper,
+} from './styles';
 import {
   CustomForm,
   FlexBox,
@@ -131,13 +136,14 @@ export const LoginForm: FC<LoginFormProps> = ({
           inputType={'password'}
         />
       </LoginFormWrapper>
-
-      <CustomFormCheckbox
-        label={t('rememberMe')}
-        name="rememberMe"
-        register={register}
-        errors={errors}
-      />
+      <StyledCheckboxWrapper>
+        <CustomFormCheckbox
+          label={t('rememberMe')}
+          name="rememberMe"
+          register={register}
+          errors={errors}
+        />
+      </StyledCheckboxWrapper>
 
       <FormWrapperBottom>
         <StyledButton
