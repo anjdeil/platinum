@@ -12,10 +12,13 @@ import { MetaDataType, OrderType } from '@/types/services/wooCustomApi/shop';
 import areBillingAndShippingEqual from '@/utils/areBillingAndShippingEqual';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { useTranslations } from 'next-intl';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { redirectToLogin } from '@/utils/consts';
 import parseCookies from '@/utils/parseCookies';
 import wpRestApi from '@/services/wpRestApi';
+import { useAppDispatch } from '@/store';
+import { useRouter } from 'next/router';
+import { clearCart } from '@/store/slices/cartSlice';
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
@@ -77,6 +80,15 @@ interface OrderPropsType {
 
 const Order: FC<OrderPropsType> = ({ order }) => {
   const t = useTranslations('MyAccount');
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+
+  useEffect(() => {
+    const clearCartParam = router.query['clear-cart'];
+    if (clearCartParam === 'true') {
+      dispatch(clearCart());
+    }
+  }, [router.query]);
 
   const date = new Date(order.date_created);
 
@@ -93,9 +105,13 @@ const Order: FC<OrderPropsType> = ({ order }) => {
     order.shipping
   );
 
-  const apartmentNumber = order.meta_data.find(({key, value}) => key === 'apartmentNumber' && value);
-  const shippingApartmentNumber = order.meta_data.find(({key, value}) => key === 'shipping_apartmentNumber' && value);
-  const nip = order.meta_data.find(({key, value}) => key === 'nip' && value);
+  const apartmentNumber = order.meta_data.find(
+    ({ key, value }) => key === 'apartmentNumber' && value
+  );
+  const shippingApartmentNumber = order.meta_data.find(
+    ({ key, value }) => key === 'shipping_apartmentNumber' && value
+  );
+  const nip = order.meta_data.find(({ key, value }) => key === 'nip' && value);
 
   const additionalBillingFields: MetaDataType[] = [];
   const additionalShippingFields: MetaDataType[] = [];
@@ -103,7 +119,8 @@ const Order: FC<OrderPropsType> = ({ order }) => {
   if (apartmentNumber) additionalBillingFields.push(apartmentNumber);
   if (nip) additionalBillingFields.push(nip);
 
-  if (shippingApartmentNumber) additionalShippingFields.push(shippingApartmentNumber);
+  if (shippingApartmentNumber)
+    additionalShippingFields.push(shippingApartmentNumber);
 
   return (
     <AccountLayout title={t('clientPersonalAccount')}>
@@ -126,11 +143,17 @@ const Order: FC<OrderPropsType> = ({ order }) => {
           <OrderTotals order={order} />
         </OrderInfo>
         <OrderInfo title="customerData">
-          <BillingShippingAddress address={order.billing} additionalFields={additionalBillingFields} />
+          <BillingShippingAddress
+            address={order.billing}
+            additionalFields={additionalBillingFields}
+          />
         </OrderInfo>
         {!billingAndShippingEqual && (
           <OrderInfo title="shippingAddress">
-            <BillingShippingAddress address={order.shipping} additionalFields={additionalShippingFields} />
+            <BillingShippingAddress
+              address={order.shipping}
+              additionalFields={additionalShippingFields}
+            />
           </OrderInfo>
         )}
       </AccountInfoWrapper>
