@@ -4,6 +4,8 @@ import { cartSlice } from '../slices/cartSlice';
 import { wpCustomRtkApi } from '../rtk-queries/wpCustomApi';
 import { languageSlice } from '../slices/languageSlice';
 
+const DEFAULT_LOCALE = 'pl';
+
 const cartListenerMiddleware = createListenerMiddleware();
 
 //update cart listener
@@ -24,7 +26,7 @@ cartListenerMiddleware.startListening({
 
 async function handleCartUpdate(listenerApi: any) {
   const state = listenerApi.getState() as RootState;
-  const lang = state.languageSlice.code || 'en';
+  const lang = state.languageSlice.code || DEFAULT_LOCALE;
   const cartItems = state.cartSlice.cartItems;
   const needsProductDataUpdate = state.cartSlice.needsProductDataUpdate;
   if (cartItems.length === 0 || !needsProductDataUpdate) {

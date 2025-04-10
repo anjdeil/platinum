@@ -11,6 +11,7 @@ import { GetServerSideProps, GetServerSidePropsContext } from "next";
 export const getServerSideProps: GetServerSideProps = async ({
   query,
   locale,
+  defaultLocale,
 }: GetServerSidePropsContext) => {
   try {
     const { slugs, ...params } = query;
@@ -25,19 +26,23 @@ export const getServerSideProps: GetServerSideProps = async ({
     const page = findPageParam(slugs);
     if (!page) return { notFound: true };
 
-    const pageIndex = slugs.indexOf("page");
+    const pageIndex = slugs.indexOf('page');
 
     /** Redirect with saving params:
      * if the page params < 0
      * if the page params equals 1
      */
-    if (pageIndex !== -1 && (page === "1" || page === "0")) {
-      const newPath = slugs.slice(0, pageIndex).join("/");
+
+    if (pageIndex !== -1 && (page === '1' || page === '0')) {
+      const newPath = slugs.slice(0, pageIndex).join('/');
       const searchParamsString = sanitizeSearchParams(params);
       return {
         redirect: {
-          destination: `${locale === "en" ? "" : `/${locale}`}/product-category/${newPath}${searchParamsString ? `?${searchParamsString}` : ""
-            }`,
+          destination: `${
+            locale === defaultLocale ? '' : `/${locale}`
+          }/product-category/${newPath}${
+            searchParamsString ? `?${searchParamsString}` : ''
+          }`,
           permanent: false,
         },
       };
@@ -63,14 +68,19 @@ export const getServerSideProps: GetServerSideProps = async ({
 
     /* Fetch categories */
     const categoriesResponseData = await customRestApi.get(`categories`, {
-      slugs: categorySlugs.join(","),
+      slugs: categorySlugs.join(','),
       lang: locale,
     });
-    const categoriesResponse = categoriesResponseData?.data as CustomDataCategoriesType;
-    let categories = categoriesResponse?.data && (categoriesResponse.data.items as CategoryType[]);
+    const categoriesResponse =
+      categoriesResponseData?.data as CustomDataCategoriesType;
+    let categories =
+      categoriesResponse?.data &&
+      (categoriesResponse.data.items as CategoryType[]);
 
     /* Filter only current lang results */
-    categories = categories.filter(({ language_code }) => language_code === locale);
+    categories = categories.filter(
+      ({ language_code }) => language_code === locale
+    );
 
     /* Return 404 if the categories not found */
     if (!categories?.length)
@@ -105,14 +115,14 @@ export const getServerSideProps: GetServerSideProps = async ({
      * Generate product product params
      */
     const productsParams: ProductParamsType = {
-      page: page || "1",
+      page: page || '1',
       per_page: productsPerPage,
       lang: locale,
       category: categorySlugs[categorySlugs.length - 1],
       ...params,
     };
 
-    const response = await customRestApi.get("products", productsParams);
+    const response = await customRestApi.get('products', productsParams);
 
     const validatedProductsData = validateWpCustomProductsData(response.data);
 
@@ -124,7 +134,7 @@ export const getServerSideProps: GetServerSideProps = async ({
       const productsCount =
         validatedProductsData.data.statistic?.products_count;
       pagesCount = Math.ceil(productsCount / productsPerPage);
-    } else {      
+    } else {
       return {
         redirect: {
           destination: '/500',
@@ -146,6 +156,7 @@ export const getServerSideProps: GetServerSideProps = async ({
         page,
         categories,
         locale,
+        defaultLocale,
         statistic: validatedProductsData?.data.statistic ?? null,
       },
     };

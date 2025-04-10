@@ -16,8 +16,10 @@ export default function useLanguageSwitcher(): UseLanguageSwitcherResult {
   const { locale, pathname, query, asPath } = router;
 
   const switchLanguage = (language: string) => {
+    const defaultLanguage = router.defaultLocale || 'pl';
     const currentLanguage =
-      languageSymbols.find(lang => lang.code === language)?.name || 'en';
+      languageSymbols.find(lang => lang.code === language)?.name ||
+      defaultLanguage;
     dispatch(setCurrentLanguage({ name: currentLanguage }));
     router.push({ pathname, query }, asPath, { locale: language });
   };

@@ -14,8 +14,8 @@ export const languageSymbols: LanguageState[] = [
 ];
 
 const initialState: LanguageState = {
-  name: 'EN',
-  code: 'en',
+  name: 'PL',
+  code: 'pl',
 };
 
 export const languageSlice = createSlice({
