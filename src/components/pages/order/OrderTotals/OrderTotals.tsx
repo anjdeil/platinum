@@ -46,7 +46,7 @@ const OrderTotals: FC<OrderTotalsPropsType> = ({
           </Row>
           {order?.shipping_lines?.map(line => (
             <Row key={line.id}>
-              <Label>{tShippingMethodSelector(line.method_id)}</Label>
+              <Label>{tShippingMethodSelector(line.method_title)}</Label>
               <Value>
                 {formatPrice(+line.total)}&nbsp;{order?.currency_symbol}
               </Value>
