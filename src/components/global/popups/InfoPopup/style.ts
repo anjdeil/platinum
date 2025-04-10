@@ -76,9 +76,13 @@ export const StyledCloseWrapper = styled.div`
   top: 8px;
   right: 8px;
   color: ${({ theme }) => theme.colors.white};
-  background-color: rgba(0, 0, 0, 0.4);
-  padding: 10px;
-  border-radius: 50%;
+  cursor: pointer;
+
+  & button {
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 10px;
+    border-radius: 50%;
+  }
 
   & button svg {
     width: 16px;

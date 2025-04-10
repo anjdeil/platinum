@@ -128,6 +128,17 @@ export const Archive: FC<ArchivePropsType> = props => {
     switchPage(newPage, pagesCount);
   };
 
+  if (!products || !products.length) {
+    return (
+      <CatalogContainer>
+        <CatalogTitleWrapper>
+          <Breadcrumbs links={breadcrumbsLinks.slice(0, 1)} />
+        </CatalogTitleWrapper>
+        <Notification>{t('productsNotFound')}</Notification>
+      </CatalogContainer>
+    );
+  }
+
   return (
     <CatalogContainer>
       <CatalogTitleWrapper>
@@ -218,6 +229,7 @@ export const Archive: FC<ArchivePropsType> = props => {
               </FilterWrapper>
               <CustomSortAccordion />
             </FilterSortWrapper>
+
             <CountProduct>
               {statistic && statistic?.products_count !== 0 && (
                 <>
