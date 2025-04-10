@@ -13,6 +13,9 @@ import areBillingAndShippingEqual from '@/utils/areBillingAndShippingEqual';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import { FC } from 'react';
+import { redirectToLogin } from '@/utils/consts';
+import parseCookies from '@/utils/parseCookies';
+import wpRestApi from '@/services/wpRestApi';
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
@@ -21,11 +24,45 @@ export const getServerSideProps: GetServerSideProps = async (
 
   try {
     const orderResponse = await wooCommerceRestApi.get(`orders/${slug}`);
+    const order = orderResponse.data;
+
+    if (order.customer_id === 0) {
+      return {
+        props: {
+          order,
+        },
+      };
+    }
+
+    const cookies = context.req.headers.cookie;
+    if (!cookies) {
+      return redirectToLogin;
+    }
+    const cookieRows = parseCookies(cookies);
+    const authToken = cookieRows.authToken;
+
+    if (!authToken) {
+      return redirectToLogin;
+    }
+
+    const userResponse = await wpRestApi.get(
+      `users/me`,
+      { path: ['users', 'me'] },
+      `Bearer ${authToken}`
+    );
+
+    const user = userResponse.data;
+
+    if (user && user.id === order.customer_id) {
+      return {
+        props: {
+          order,
+        },
+      };
+    }
 
     return {
-      props: {
-        order: orderResponse.data,
-      },
+      notFound: true,
     };
   } catch (error) {
     return {
