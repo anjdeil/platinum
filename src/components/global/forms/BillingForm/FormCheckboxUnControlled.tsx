@@ -19,8 +19,12 @@ export const FormCheckboxUnControlled: FC<CustomFormCheckboxType> = ({
   return (
     <StyledCheckBoxWrapper noTop={noTop || false}>
       <StyledCheckBoxContainer>
-        <StyledCheckbox {...register(name, validation)} error={errors[name]} />
-        <CustomCheckboxLabel>{label}</CustomCheckboxLabel>
+        <StyledCheckbox
+          {...register(name, validation)}
+          error={errors[name]}
+          id={name}
+        />
+        <CustomCheckboxLabel htmlFor={name}>{label}</CustomCheckboxLabel>
       </StyledCheckBoxContainer>
       {errors && name && <CustomError>{errors[name]?.message}</CustomError>}
     </StyledCheckBoxWrapper>
