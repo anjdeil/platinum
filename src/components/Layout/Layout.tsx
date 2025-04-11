@@ -32,7 +32,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const dispatch = useDispatch();
   const { isMobile } = useResponsive();
   const router = useRouter();
-  const { locale } = router;
+  const { locale, defaultLocale } = router;
   const langParam: LangParamType | object = locale ? { lang: locale } : {};
   const langParamStr = locale ? locale : '';
   const [menus, setMenus] = useState<WpMenuResponseType[] | []>([]);
@@ -44,8 +44,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (locale) {
+      const defaultLanguage = defaultLocale || 'pl';
       const currentLanguage =
-        languageSymbols.find(lang => lang.code === locale)?.name || 'en';
+        languageSymbols.find(lang => lang.code === locale)?.name ||
+        defaultLanguage;
       dispatch(setCurrentLanguage({ name: currentLanguage }));
       dispatch(initializeCart());
     }

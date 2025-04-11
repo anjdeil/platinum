@@ -263,9 +263,10 @@ export default function CheckoutPage() {
   /* Check cart conflict */
   useEffect(() => {
     const fetchData = async () => {
+      const defaultLanguage = router.defaultLocale || 'pl';
       const productsMinimizedData = await getProductsMinimized({
         cartItems,
-        lang: router.locale || 'en',
+        lang: router.locale || defaultLanguage,
       });
       const productsMinimized = productsMinimizedData?.data?.data?.items || [];
 
@@ -412,7 +413,8 @@ export default function CheckoutPage() {
     if (order?.status === 'pending' && order.payment_url) {
       const paymentUrlObj = new URL(order.payment_url);
 
-      const langCode = router.locale === 'en' ? '' : router.locale;
+      const langCode =
+        router.locale === router.defaultLocale ? '' : router.locale;
       paymentUrlObj.pathname = '/' + langCode + paymentUrlObj.pathname;
 
       router.push(paymentUrlObj.toString());

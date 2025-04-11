@@ -32,7 +32,7 @@ export default function SearchInputComponent({
   const t = useTranslations('Search');
 
   const searchHref = `/${
-    router.locale === 'en' ? '' : `${router.locale}/`
+    router.locale === router.defaultLocale ? '' : `${router.locale}/`
   }search/${encodeURIComponent(searchTerm)}`;
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {

@@ -75,11 +75,19 @@ export function useSearchLogic() {
     }
 
     function routeToProduct(slug: string) {
-        router.push(`/${router.locale === "en" ? "" : router.locale}/product/${slug}`);
+      router.push(
+        `/${
+          router.locale === router.defaultLocale ? '' : router.locale
+        }/product/${slug}`
+      );
     }
 
     function routeToCategory(slug: string) {
-        router.push(`/${router.locale === "en" ? "" : router.locale}/product-category/${slug}`);
+      router.push(
+        `/${
+          router.locale === router.defaultLocale ? '' : router.locale
+        }/product-category/${slug}`
+      );
     }
 
     useEffect(() => {

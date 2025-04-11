@@ -48,39 +48,41 @@ const WishListTable: FC<WishListTableProps> = ({
 
   const { cartItems } = useAppSelector(state => state.cartSlice);
 
-  const {
-    isLoading: currencyLoading,
-    convertCurrency,
-    formatPrice,
-  } = useCurrencyConverter();
+const {
+  isLoading: currencyLoading,
+  convertCurrency,
+  formatPrice,
+} = useCurrencyConverter();
 
-  const checkCartMatch = (cartItems: CartItem[], productId: number) => {
-    return cartItems.some(({ product_id }) => product_id === productId);
-  };
+const checkCartMatch = (cartItems: CartItem[], productId: number) => {
+  return cartItems.some(({ product_id }) => product_id === productId);
+};
 
-  function handleCartButtonClick(
-    product: ProductsMinimizedType,
-    isCartMatch: boolean
-  ) {
-    if (product.parent_id !== 0) {
-      router.push(
-        `/${router.locale === 'en' ? '' : router.locale}/product/${
-          product.parent_slug
-        }`
+function handleCartButtonClick(
+  product: ProductsMinimizedType,
+  isCartMatch: boolean
+) {
+  if (product.parent_id !== 0) {
+    router.push(
+      `/${
+        router.locale === router.defaultLocale ? '' : router.locale
+      }/product/${product.parent_slug}`
+    );
+  } else {
+    if (!isCartMatch) {
+      dispatch(
+        updateCart({
+          product_id: product.id,
+          quantity: 1,
+        })
       );
     } else {
-      if (!isCartMatch) {
-        dispatch(
-          updateCart({
-            product_id: product.id,
-            quantity: 1,
-          })
-        );
-      } else {
-        router.push(`/${router.locale === 'en' ? '' : router.locale}/cart`);
-      }
+      router.push(
+        `/${router.locale === router.defaultLocale ? '' : router.locale}/cart`
+      );
     }
   }
+}
 
   const handleDelete = (item: ProductsMinimizedType) => {
     const { id, parent_id } = item;
