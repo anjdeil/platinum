@@ -168,12 +168,14 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product }) => {
                 <ProductBadge key={tag.id} type={tag.slug} name={tag.name} />
               ))}
           </ProductBadgeBox>
-          <FavoriteButton
-            onClick={() => handleWishlistToggle(product)}
-            marginLeft="auto"
-            active={checkDesired(product.id)}
-            isLoading={isUpdatingWishlist || isFetchingWishlist}
-          />
+          {product?.type !== 'variable' && (
+            <FavoriteButton
+              onClick={() => handleWishlistToggle(product)}
+              marginLeft="auto"
+              active={checkDesired(product.id)}
+              isLoading={isUpdatingWishlist || isFetchingWishlist}
+            />
+          )}
         </ProductCardBadgeWrapper>
       </ProductWrapper>
       <>
