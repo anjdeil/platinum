@@ -11,6 +11,7 @@ export const ArchivePropsSchema = z.object({
   searchTerm: z.string().optional(),
   statistic: CustomDataProductsStatisticSchema,
   locale: z.string(),
+  defaultLocale: z.string().optional(),
 });
 
 export type ArchivePropsType = z.infer<typeof ArchivePropsSchema>;

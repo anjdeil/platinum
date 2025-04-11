@@ -65,9 +65,9 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product }) => {
   function handleCartButtonClick() {
     if (product?.type === 'variable') {
       router.push(
-        `/${router.locale === 'en' ? '' : router.locale}/product/${
-          product.slug
-        }`
+        `/${
+          router.locale === router.defaultLocale ? '' : router.locale
+        }/product/${product.slug}`
       );
       return;
     }
@@ -83,7 +83,9 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product }) => {
         dispatch(popupToggle({ popupType: 'mini-cart' }));
       }
     } else {
-      router.push(`/${router.locale === 'en' ? '' : router.locale}/cart`);
+      router.push(
+        `/${router.locale === router.defaultLocale ? '' : router.locale}/cart`
+      );
     }
   }
 

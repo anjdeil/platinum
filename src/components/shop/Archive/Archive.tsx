@@ -35,6 +35,11 @@ import {
   PagesNavigationFooterWrapper,
   PagesNavigationWrapper,
 } from './styles';
+import {
+  BreadcrumbLink,
+  BreadcrumbsList,
+  BreadcrumbsWrapper,
+} from '@/components/global/Breadcrumbs/styles';
 
 const switchPage = (page: number, maxPage: number) => {
   if (maxPage < page) return;
@@ -80,6 +85,7 @@ export const Archive: FC<ArchivePropsType> = props => {
     page,
     statistic,
     locale,
+    defaultLocale,
   } = props;
   const t = useTranslations('Archive');
 
@@ -93,10 +99,11 @@ export const Archive: FC<ArchivePropsType> = props => {
   const categoriesBreadcrumbsLinks = transformCategoriesIntoLinks(
     categories || []
   );
+
   const breadcrumbsLinks = [
     {
       name: t('goHome'),
-      url: locale === 'en' ? '/' : `/${locale}`,
+      url: locale === defaultLocale ? '/' : `/${locale}`,
     },
     ...(searchTerm && categories.length === 0
       ? [{ name: t('searchResults'), url: '#' }]
@@ -132,7 +139,13 @@ export const Archive: FC<ArchivePropsType> = props => {
     return (
       <CatalogContainer>
         <CatalogTitleWrapper>
-          <Breadcrumbs links={breadcrumbsLinks.slice(0, 1)} />
+          <BreadcrumbsWrapper>
+            <BreadcrumbsList>
+              <BreadcrumbLink href={breadcrumbsLinks.slice(0, 1)[0].url}>
+                {breadcrumbsLinks.slice(0, 1)[0].name}
+              </BreadcrumbLink>
+            </BreadcrumbsList>
+          </BreadcrumbsWrapper>
         </CatalogTitleWrapper>
         <Notification>{t('productsNotFound')}</Notification>
       </CatalogContainer>

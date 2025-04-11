@@ -10,6 +10,7 @@ import { GetServerSideProps, GetServerSidePropsContext } from "next";
 export const getServerSideProps: GetServerSideProps = async ({
   query,
   locale,
+  defaultLocale,
 }: GetServerSidePropsContext) => {
   try {
     const { slugs, ...params } = query;
@@ -24,20 +25,23 @@ export const getServerSideProps: GetServerSideProps = async ({
     const page = findPageParam(slugs);
     if (!page) return { notFound: true };
 
-    const pageIndex = slugs.indexOf("page");
+    const pageIndex = slugs.indexOf('page');
     const searchTerm = slugs[0];
 
     /** Redirect with saving params:
      * if the page params < 0
      * if the page params equals 1
      */
-    if (pageIndex !== -1 && (page === "1" || page === "0")) {
-      const newPath = slugs.slice(0, pageIndex).join("/");
+    if (pageIndex !== -1 && (page === '1' || page === '0')) {
+      const newPath = slugs.slice(0, pageIndex).join('/');
       const searchParamsString = sanitizeSearchParams(params);
       return {
         redirect: {
-          destination: `${locale === "en" ? "" : `/${locale}`}/search/${newPath}${searchParamsString ? `?${searchParamsString}` : ""
-            }`,
+          destination: `${
+            locale === defaultLocale ? '' : `/${locale}`
+          }/search/${newPath}${
+            searchParamsString ? `?${searchParamsString}` : ''
+          }`,
           permanent: false,
         },
       };
@@ -54,14 +58,14 @@ export const getServerSideProps: GetServerSideProps = async ({
      * Generate product product params
      */
     const productsParams: ProductParamsType = {
-      page: page || "1",
+      page: page || '1',
       per_page: productsPerPage,
       lang: locale,
       search: searchTerm,
       ...params,
     };
 
-    const response = await customRestApi.get("products", productsParams);
+    const response = await customRestApi.get('products', productsParams);
 
     const validatedProductsData = validateWpCustomProductsData(response.data);
 
@@ -70,7 +74,8 @@ export const getServerSideProps: GetServerSideProps = async ({
 
     if (validatedProductsData) {
       products = validatedProductsData.data.items;
-      const productsCount = validatedProductsData.data.statistic?.products_count;
+      const productsCount =
+        validatedProductsData.data.statistic?.products_count;
       pagesCount = Math.ceil(productsCount / productsPerPage);
     }
 
@@ -95,7 +100,7 @@ export const getServerSideProps: GetServerSideProps = async ({
     return {
       props: {
         error: {
-          message: "Server Error",
+          message: 'Server Error',
         },
       },
     };

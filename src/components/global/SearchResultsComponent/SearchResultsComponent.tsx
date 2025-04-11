@@ -47,7 +47,7 @@ export default function SearchResultsComponent({
 
   const searchHref = useMemo(() => {
     return `/${
-      router.locale === 'en' ? '' : `${router.locale}/`
+      router.locale === router.defaultLocale ? '' : `${router.locale}/`
     }search/${encodeURIComponent(searchTerm)}`;
   }, [router.locale, searchTerm]);
 
