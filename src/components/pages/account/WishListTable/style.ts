@@ -19,12 +19,18 @@ export const WishlistImgWrapper = styled(CartImgWrapper)`
     margin-right: 16px;
   }
 `
-export const Circle = styled.div`
+
+type CircleProps = {
+  notAvailable?: boolean;
+};
+export const Circle = styled.div<CircleProps>`
   width: 8px;
   height: 8px;
   border-radius: 100%;
-  background: ${({ theme }) => theme.background.success};
-`
+  background: ${({ theme, notAvailable }) =>
+    notAvailable ? theme.colors.error : theme.background.success};
+`;
+
 export const QuantityRow = styled(TextNameCell)`
   display: flex;
   align-items: center;

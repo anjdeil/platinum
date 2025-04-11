@@ -34,6 +34,7 @@ import {
   WishlistImgWrapper,
 } from './style';
 import { popupToggle } from '@/store/slices/PopupSlice';
+import getProductSlug from '@/utils/cart/getProductSlug';
 
 const WishListTable: FC<WishListTableProps> = ({
   wishlist,
@@ -48,41 +49,63 @@ const WishListTable: FC<WishListTableProps> = ({
 
   const { cartItems } = useAppSelector(state => state.cartSlice);
 
-const {
-  isLoading: currencyLoading,
-  convertCurrency,
-  formatPrice,
-} = useCurrencyConverter();
+  const {
+    isLoading: currencyLoading,
+    convertCurrency,
+    formatPrice,
+  } = useCurrencyConverter();
 
-const checkCartMatch = (cartItems: CartItem[], productId: number) => {
-  return cartItems.some(({ product_id }) => product_id === productId);
-};
-
-function handleCartButtonClick(
-  product: ProductsMinimizedType,
-  isCartMatch: boolean
-) {
-  if (product.parent_id !== 0) {
-    router.push(
-      `/${
-        router.locale === router.defaultLocale ? '' : router.locale
-      }/product/${product.parent_slug}`
-    );
-  } else {
-    if (!isCartMatch) {
-      dispatch(
-        updateCart({
-          product_id: product.id,
-          quantity: 1,
-        })
-      );
+  const checkCartMatch = (
+    cartItems: CartItem[],
+    productId: number,
+    parentId: number
+  ) => {
+    if (parentId === 0) {
+      return cartItems.some(({ product_id }) => product_id === productId);
     } else {
-      router.push(
-        `/${router.locale === router.defaultLocale ? '' : router.locale}/cart`
-      );
+      return cartItems.some(({ variation_id }) => variation_id === productId);
+    }
+  };
+
+  function handleCartButtonClick(
+    product: ProductsMinimizedType,
+    isCartMatch: boolean
+  ) {
+    if (product.parent_id !== 0) {
+      if (!isCartMatch) {
+        dispatch(
+          updateCart({
+            product_id: product.parent_id,
+            quantity: 1,
+            variation_id: product.id,
+          })
+        );
+        if (!isMobile) {
+          dispatch(popupToggle({ popupType: 'mini-cart' }));
+        }
+      } else {
+        router.push(
+          `/${router.locale === router.defaultLocale ? '' : router.locale}/cart`
+        );
+      }
+    } else {
+      if (!isCartMatch) {
+        dispatch(
+          updateCart({
+            product_id: product.id,
+            quantity: 1,
+          })
+        );
+        if (!isMobile) {
+          dispatch(popupToggle({ popupType: 'mini-cart' }));
+        }
+      } else {
+        router.push(
+          `/${router.locale === router.defaultLocale ? '' : router.locale}/cart`
+        );
+      }
     }
   }
-}
 
   const handleDelete = (item: ProductsMinimizedType) => {
     const { id, parent_id } = item;
@@ -114,12 +137,17 @@ function handleCartButtonClick(
               wishlist &&
               wishlist?.length > 0 &&
               wishlist?.map(item => {
-                const isCartMatch = checkCartMatch(cartItems, item.id);
+                const isCartMatch = checkCartMatch(
+                  cartItems,
+                  item.id,
+                  item.parent_id
+                );
                 const { finalPrice } = getProductPrice(item.price);
 
                 const convertedFinalPrice = convertCurrency(finalPrice || 0);
 
-                const notAvaible = finalPrice === null;
+                const slug = getProductSlug(item);
+                const notAvailable = finalPrice === null;
 
                 return (
                   <WishlistCardAllWrapper key={item.id} padding="16px">
@@ -137,14 +165,21 @@ function handleCartButtonClick(
                     </WishlistImgWrapper>
                     <CardContent gap="12px">
                       <TextNameCell>
-                        <LinkWrapper
-                          href={`/product/${item?.parent_slug || item?.slug}`}
-                        >
-                          {item.name}
+                        <LinkWrapper href={`/product/${slug}`}>
+                          {item?.parent_name
+                            ? `${item.parent_name}${
+                                item.attributes?.length
+                                  ? ' - ' +
+                                    item.attributes
+                                      .map(attr => attr.option_name)
+                                      .join(', ')
+                                  : ''
+                              }`
+                            : item.name}
                         </LinkWrapper>
                       </TextNameCell>
                       <QuantityRow>
-                        <Circle />
+                        <Circle notAvailable={item.stock_quantity === 0} />
                         {item.stock_quantity}
                       </QuantityRow>
                       <OnePrice fontSize="1.1em">
@@ -158,7 +193,7 @@ function handleCartButtonClick(
                       </OnePrice>
                     </CardContent>
 
-                    {notAvaible || item.stock_quantity === 0 ? (
+                    {notAvailable || item.stock_quantity === 0 ? (
                       <StyledButton
                         notify={true}
                         height="56px"
@@ -186,13 +221,18 @@ function handleCartButtonClick(
               wishlist &&
               wishlist?.length > 0 &&
               wishlist?.map(item => {
-                const isCartMatch = checkCartMatch(cartItems, item.id);
+                const isCartMatch = checkCartMatch(
+                  cartItems,
+                  item.id,
+                  item.parent_id
+                );
 
                 const { finalPrice } = getProductPrice(item.price);
 
                 const convertedFinalPrice = convertCurrency(finalPrice || 0);
+                const slug = getProductSlug(item);
+                const notAvailable = finalPrice === null;
 
-                const notAvaible = finalPrice === null;
                 return (
                   <CartCardAllWrapper key={item.id} padding="16px">
                     <CartCardWrapper>
@@ -205,10 +245,17 @@ function handleCartButtonClick(
                       </WishlistImgWrapper>
                       <CardContent gap="8px" padding="0 0 4px 0">
                         <ProducTitle>
-                          <LinkWrapper
-                            href={`/product/${item?.parent_slug || item?.slug}`}
-                          >
-                            {item.name}
+                          <LinkWrapper href={`/product/${slug}`}>
+                            {item?.parent_name
+                              ? `${item.parent_name}${
+                                  item.attributes?.length
+                                    ? ' - ' +
+                                      item.attributes
+                                        .map(attr => attr.option_name)
+                                        .join(', ')
+                                    : ''
+                                }`
+                              : item.name}
                           </LinkWrapper>
                           <TrashIcon
                             padding="0 10px 0 0"
@@ -216,7 +263,7 @@ function handleCartButtonClick(
                           />
                         </ProducTitle>
                         <QuantityRow>
-                          <Circle />
+                          <Circle notAvailable={item.stock_quantity === 0} />
                           {tMyAccount('availablePcs', {
                             quantity: item.stock_quantity,
                           })}
@@ -234,7 +281,7 @@ function handleCartButtonClick(
                         </ProductPrice>
                       </CardContent>
                     </CartCardWrapper>
-                    {notAvaible || item.stock_quantity === 0 ? (
+                    {notAvailable || item.stock_quantity === 0 ? (
                       <StyledButton
                         notify={true}
                         height="56px"
