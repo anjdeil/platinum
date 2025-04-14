@@ -274,9 +274,14 @@
     "goToShop": "Przejdź do sklepu",
     "nothingInTheCartText": "Sprawdź nasze nowe produkty lub skorzystaj z wyszukiwarki, jeśli szukasz czegoś konkretnego",
     "YouNeedToLoginForOrder": "Musisz się zalogować, aby złożyć zamówienie.",
-    "сoupon": "Kupon",
+    "coupon": "Kupon",
     "errorFetchingProducts": "Błąd pobierania aktualnych produktów",
-    "clearCart": "Wyczyść koszyk"
+    "clearCart": "Wyczyść koszyk",
+    "couponIsNotApplied": "Kupon lub status lojalnościowy nie został zastosowany do produktów w koszyku",
+    "couponApplied": "Kupon został pomyślnie zastosowany",
+    "couponNotFound": "Przepraszamy, ale podany kupon jest nieprawidłowy",
+    "fetchError": "Przepraszamy, ale podczas stosowania kuponu wystąpił błąd",
+    "overrideLoyaltyDiscount": "Zastosowanie kuponu spowoduje unieważnienie zniżki przyznanej w ramach statusu lojalnościowego"
   },
   "Contacts": {
     "contacts": "Kontakty",

@@ -274,9 +274,14 @@
     "goToShop": "Go to shop",
     "nothingInTheCartText": "Check out our new products or use the search, if you're looking for something specific",
     "YouNeedToLoginForOrder": "You need to log in to place an order.",
-    "сoupon": "Coupon",
+    "coupon": "Coupon",
     "errorFetchingProducts": "Error fetching current products",
-    "clearCart": "Clear cart"
+    "clearCart": "Clear cart",
+    "couponIsNotApplied": "Coupon or your loyalty status is not applied to items in your cart",
+    "couponApplied": "The coupon was successfully applied",
+    "couponNotFound": "Sorry, but the coupon you provided is invalid",
+    "fetchError": "Sorry, but an error occurred while applying the coupon",
+    "overrideLoyaltyDiscount": "Applying the coupon, will override the discount your loyalty status gives you"
   },
   "Contacts": {
     "contacts": "Contacts",

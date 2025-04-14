@@ -47,18 +47,18 @@ export const WooCustomerSchema = z.object({
       id: z.number(),
       key: z.string(),
       value: z.string(),
-    })
+    }),
   ),
   _links: z.object({
     self: z.array(
       z.object({
         href: z.string(),
-      })
+      }),
     ),
     collection: z.array(
       z.object({
         href: z.string(),
-      })
+      }),
     ),
   }),
 });
@@ -164,7 +164,7 @@ export const OrderTypeSchema = z.object({
       shipping_tax_total: z.string(),
       rate_percent: z.number().optional(),
       meta_data: z.array(metaDataSchema).optional(),
-    })
+    }),
   ),
   shipping_lines: z.array(
     z.object({
@@ -176,7 +176,7 @@ export const OrderTypeSchema = z.object({
       taxes: z.array(z.any()),
       total: z.string(),
       total_tax: z.string(),
-    })
+    }),
   ),
   fee_lines: z.array(
     z.object({
@@ -189,7 +189,7 @@ export const OrderTypeSchema = z.object({
       total_tax: z.string(),
       taxes: z.array(z.any()),
       meta_data: z.array(metaDataSchema).optional(),
-    })
+    }),
   ),
   coupon_lines: z.array(
     z.object({
@@ -201,14 +201,14 @@ export const OrderTypeSchema = z.object({
       discount_type: z.string(),
       nominal_amount: z.number(),
       free_shipping: z.boolean(),
-    })
+    }),
   ),
   refunds: z.array(
     z.object({
       id: z.number(),
       refund: z.string(),
       total: z.string(),
-    })
+    }),
   ),
   payment_url: z.string().optional(),
   is_editable: z.boolean().optional(),
@@ -255,7 +255,7 @@ const CreateOrderRequestSchema = z.object({
         discount_type: z.string().optional(),
         nominal_amount: z.number().optional(),
         free_shipping: z.boolean().optional(),
-      })
+      }),
     )
     .optional(),
   status: z.enum([
@@ -289,7 +289,7 @@ const CreateOrderResponseSchema = z.object({
         discount_type: z.string().optional(),
         nominal_amount: z.number().optional(),
         free_shipping: z.boolean().optional(),
-      })
+      }),
     )
     .optional(),
   status: z.enum([
@@ -369,7 +369,7 @@ export const ReviewsRespSchema = z.array(ReviewRespSchema);
 export const ShippingZoneSchema = z.object({
   id: z.number(),
   name: z.string(),
-  order: z.number()
+  order: z.number(),
 });
 
 export const ShippingLocationSchema = z.object({
@@ -380,12 +380,12 @@ export const ShippingLocationSchema = z.object({
 export const ShippingMethodRuleConditionSchema = z.object({
   condition_id: z.string(),
   min: z.string().optional(),
-  max: z.string().optional()
+  max: z.string().optional(),
 });
 
 export const ShippingMethodRuleSchema = z.object({
   conditions: z.array(ShippingMethodRuleConditionSchema),
-  cost_per_order: z.string()
+  cost_per_order: z.string(),
 });
 
 export const ShippingMethodSchema = z.object({
@@ -400,19 +400,30 @@ export const ShippingMethodSchema = z.object({
   settings: z.object({
     fs_method_rules: z.object({
       type: z.string(),
-      value: z.string()
+      value: z.string(),
     }).optional(),
     method_rules: z.object({
       type: z.string(),
-      value: z.array(ShippingMethodRuleSchema)
+      value: z.array(ShippingMethodRuleSchema),
     }).optional(),
     free_shipping_cost: z.object({
-      value: z.string()
+      value: z.string(),
     }).optional(),
     cost_per_order: z.object({
-      value: z.string()
-    }).optional()
-  }).optional()
+      value: z.string(),
+    }).optional(),
+  }).optional(),
+});
+
+export const WooErrorSchema = z.object({
+  details: z.object({
+    code: z.string(),
+    data: z.object({
+      status: z.string()
+    }),
+    message: z.string()
+  }),
+  message: z.string()
 });
 
 export type ShippingZoneType = z.infer<typeof ShippingZoneSchema>;
@@ -430,6 +441,5 @@ export type couponRespType = z.infer<typeof couponRespSchema>;
 export type retrieveCouponQueryType = z.infer<typeof retrieveCouponQuerySchema>;
 export type ReviewRespType = z.infer<typeof ReviewRespSchema>;
 export type ReviewsRespType = z.infer<typeof ReviewsRespSchema>;
-export type WooCustomerUpdateReqType = z.infer<
-  typeof WooCustomerUpdateReqSchema
->;
+export type WooCustomerUpdateReqType = z.infer<typeof WooCustomerUpdateReqSchema>;
+export type WooErrorType = z.infer<typeof WooErrorSchema>;
