@@ -26,6 +26,9 @@ import { useTranslations } from 'next-intl';
 import React, { useCallback, useEffect, useState } from 'react';
 import { addCoupon } from '@/store/slices/cartSlice';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import router from 'next/router';
+import { useGetProductsMinimizedMutation } from '@/store/rtk-queries/wpCustomApi';
+import { ProductsMinimizedType } from '@/types/components/shop/product/products';
 
 interface CartPageProps {
   defaultCustomerData: WpUserType | null;
@@ -56,14 +59,22 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
 
   const [createOrder, { data: orderItems, isLoading: isLoadingOrder }] = useCreateOrderMutation();
 
-  const { cartItems, couponCodes, productsData } = useAppSelector(
+  const { cartItems, couponCodes } = useAppSelector(
     state => state.cartSlice,
   );
 
+  const [getProductsMinimized, { data: productsMinimizedData }] = useGetProductsMinimizedMutation();
+  const [productsMinimized, setProductsMinimized] = useState<ProductsMinimizedType[]>([]);
+
+  useEffect(() => {
+    if (productsMinimizedData) {
+      setProductsMinimized(productsMinimizedData.data.items);
+    }
+  }, [productsMinimizedData]);
+
   const [cachedOrderItems, setCachedOrderItems] = useState(orderItems);
 
-  const { totalCost: cartCost } = getCartTotals(productsData, cartItems);
-
+  const { totalCost: cartCost } = getCartTotals(productsMinimized, cartItems);
 
   useEffect(() => {
     const handleCreateOrder = async () => {
@@ -121,13 +132,25 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   // Conflict detection
   const [hasConflict, setHasConflict] = useState(false);
 
+  /* Check cart conflict */
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setHasConflict(checkCartConflict(cartItems, productsData));
-    }, 100);
+    const fetchData = async () => {
+      const defaultLanguage = router.defaultLocale || 'pl';
+      const productsMinimizedData = await getProductsMinimized({
+        cartItems,
+        lang: router.locale || defaultLanguage,
+      });
+      const productsMinimized = productsMinimizedData?.data?.data?.items || [];
 
-    return () => clearTimeout(timeoutId);
-  }, [productsData]);
+      setHasConflict(checkCartConflict(cartItems, productsMinimized));
+    };
+
+    if (cartItems.length) {
+      fetchData();
+    } else {
+      router.push('/cart');
+    }
+  }, [cartItems]);
 
   const currentOrderItems = orderItems ?? cachedOrderItems;
 
@@ -209,7 +232,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
               isLoadingOrder={isLoadingCart}
               filteredOutItems={filteredOutItems}
               order={currentOrderItems}
-              productsSpecs={productsData}
+              productsSpecs={productsMinimized}
               roundedPrice={roundedPrice}
               hasConflict={hasConflict}
               handleChangeQuantity={handleChangeQuantity}
