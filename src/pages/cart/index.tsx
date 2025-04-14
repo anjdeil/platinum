@@ -42,7 +42,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   const { data: userTotal } = useGetUserTotalsQuery(defaultCustomerData?.id);
 
   const [auth, setAuth] = useState<boolean>(false);
-  const [userLoyalityStatus] = useState<string | undefined>();
+  const [userLoyaltyStatus] = useState<string | undefined>();
 
   useEffect(() => {
     if (defaultCustomerData) {
@@ -89,7 +89,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
 
     };
     handleCreateOrder();
-  }, [cartItems, couponCodes, code, userLoyalityStatus, isCouponsIgnored]);
+  }, [cartItems, couponCodes, code, userLoyaltyStatus, isCouponsIgnored]);
 
   useEffect(() => {
     if (orderItems?.currency_symbol) {
@@ -240,7 +240,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
           </div>
 
           <CartCouponBlock
-            userLoyalityStatus={userLoyalityStatus}
+            userLoyalityStatus={userLoyaltyStatus}
             auth={auth}
             isCouponsIgnored={isCouponsIgnored}
           />
