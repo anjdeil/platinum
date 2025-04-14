@@ -2,7 +2,7 @@ import {
   ShippingLocationType,
   ShippingMethodType,
   ShippingZoneType,
-  WooCustomerUpdateReqType, WooErrorType,
+  WooCustomerUpdateReqType,
 } from '@/types/services';
 import {
   CouponParamsType,
@@ -135,7 +135,6 @@ export const {
   useRegisterCustomerMutation,
   useFetchOrdersQuery,
   useCreateOrderMutation,
-  useListAllCouponsQuery,
   useAddCommentMutation,
   useGetProductsReviewsQuery,
   useGetProductReviewsQuery,
