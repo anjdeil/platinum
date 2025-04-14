@@ -35,8 +35,6 @@ export const handleQuantityChange = (
     }
 
     if (quantityToUpdate >= 0) {
-      console.log('dispatch', product_id, variation_id, quantityToUpdate);
-
       dispatch(
         updateCart({
           product_id,

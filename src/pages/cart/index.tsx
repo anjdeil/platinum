@@ -28,6 +28,7 @@ import { addCoupon } from '@/store/slices/cartSlice';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import router from 'next/router';
 import { useGetProductsMinimizedMutation } from '@/store/rtk-queries/wpCustomApi';
+import { ProductsMinimizedType } from '@/types/components/shop/product/products';
 
 interface CartPageProps {
   defaultCustomerData: WpUserType | null;
@@ -63,7 +64,13 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   );
 
   const [getProductsMinimized, { data: productsMinimizedData }] = useGetProductsMinimizedMutation();
-  const productsMinimized = productsMinimizedData ? productsMinimizedData?.data?.items : [];
+  const [productsMinimized, setProductsMinimized] = useState<ProductsMinimizedType[]>([]);
+
+  useEffect(() => {
+    if (productsMinimizedData) {
+      setProductsMinimized(productsMinimizedData.data.items);
+    }
+  }, [productsMinimizedData]);
 
   const [cachedOrderItems, setCachedOrderItems] = useState(orderItems);
 
