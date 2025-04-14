@@ -4,10 +4,10 @@ import { useTranslations } from 'next-intl';
 import { CartProductWarningProps } from '@/types/pages/cart';
 
 const CartProductWarning: React.FC<CartProductWarningProps> = ({
-  isProductError,
-  onUpdate,
-  resolveCount,
-}) => {
+                                                                 isProductError,
+                                                                 onUpdate,
+                                                                 resolveCount,
+                                                               }) => {
   const t = useTranslations('Cart');
   return (
     <WarningWrapper>
@@ -17,7 +17,7 @@ const CartProductWarning: React.FC<CartProductWarningProps> = ({
           <UpdateButton onClick={onUpdate}>{t('delete')}</UpdateButton>
         </>
       )}
-      {resolveCount && resolveCount !== 0 && (
+      {Boolean(resolveCount && resolveCount !== 0) && (
         <>
           <div>
             <span>{t('productNotAvailableQuantity')}</span>

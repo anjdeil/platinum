@@ -57,7 +57,7 @@ export const cartSlice = createSlice({
     addCoupon: (state, action: PayloadAction<{ couponCode: string }>) => {
       const { couponCode } = action.payload;
       if (!state.couponCodes.includes(couponCode)) {
-        state.couponCodes.push(couponCode);
+        state.couponCodes = [couponCode];
       }
     },
     removeCoupon: (state, action: PayloadAction<{ couponCode: string }>) => {

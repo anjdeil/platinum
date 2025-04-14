@@ -1,5 +1,5 @@
 import { CartLink } from '@/components/global/popups/MiniCart/style';
-import BannerCart from '@/components/pages/cart/BannerCart/BannerCart';
+// import BannerCart from '@/components/pages/cart/BannerCart/BannerCart';
 import CartCouponBlock from '@/components/pages/cart/CartCouponBlock/CartCouponBlock';
 import CartSummaryBlock from '@/components/pages/cart/CartSummaryBlock/CartSummaryBlock';
 import CartTable from '@/components/pages/cart/CartTable/CartTable';
@@ -11,26 +11,28 @@ import { useGetUserTotalsQuery } from '@/store/rtk-queries/userTotals/userTotals
 import { useCreateOrderMutation } from '@/store/rtk-queries/wooCustomApi';
 import { CartPageWrapper } from '@/styles/cart/style';
 import { Container, FlexBox, StyledButton } from '@/styles/components';
-import { CreateOrderRequestType } from '@/types/services';
+import { CreateOrderRequestType, WooErrorType } from '@/types/services';
 import { JwtDecodedDataType } from '@/types/services/wpRestApi/auth';
 import { lineOrderItems } from '@/types/store/reducers/сartSlice';
 import { WpUserType } from '@/types/store/rtk-queries/wpApi';
 import checkCartConflict from '@/utils/cart/checkCartConflict';
 import getCartTotals from '@/utils/cart/getCartTotals';
-// import getSubtotalByLineItems from '@/utils/cart/getSubtotalByLineItems';
-// import getTotalByLineItems from '@/utils/cart/getTotalByLineItems';
 import { handleQuantityChange } from '@/utils/cart/handleQuantityChange';
 import { roundedPrice } from '@/utils/cart/roundedPrice';
 import { validateJwtDecode } from '@/utils/zodValidators/validateJwtDecode';
 import { decodeJwt } from 'jose';
-import { debounce } from 'lodash';
 import { GetServerSidePropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import React, { useCallback, useEffect, useState } from 'react';
+import { addCoupon } from '@/store/slices/cartSlice';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import router from 'next/router';
+import { useGetProductsMinimizedMutation } from '@/store/rtk-queries/wpCustomApi';
 
 interface CartPageProps {
   defaultCustomerData: WpUserType | null;
 }
+
 const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   const { name: code } = useAppSelector(state => state.currencySlice);
   const status: CreateOrderRequestType['status'] = 'on-hold';
@@ -38,65 +40,60 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   const dispatch = useAppDispatch();
   const [firstLoad, setfirstLoad] = useState<boolean>(false);
   const t = useTranslations('Cart');
-
+  const [isCouponsIgnored, setIsCouponsIgnored] = useState(false);
   const { data: userTotal } = useGetUserTotalsQuery(defaultCustomerData?.id);
 
   const [auth, setAuth] = useState<boolean>(false);
-  const [userLoyalityStatus, setUserLoyalityStatus] = useState<
-    string | undefined
-  >();
+  const [userLoyaltyStatus] = useState<string | undefined>();
 
   useEffect(() => {
     if (defaultCustomerData) {
       setAuth(true);
       const level = userTotal?.loyalty_status;
-      setUserLoyalityStatus(level);
+      if (level && level !== '') {
+        dispatch(addCoupon({ couponCode: level }));
+      }
     }
   }, [defaultCustomerData, userTotal]);
 
-  const [createOrder, { data: orderItems, isLoading: isLoadingOrder }] =
-    useCreateOrderMutation();
+  const [createOrder, { data: orderItems, isLoading: isLoadingOrder }] = useCreateOrderMutation();
 
-  const { cartItems, couponCodes, productsData } = useAppSelector(
-    state => state.cartSlice
+  const { cartItems, couponCodes } = useAppSelector(
+    state => state.cartSlice,
   );
+
+  const [getProductsMinimized, { data: productsMinimizedData }] = useGetProductsMinimizedMutation();
+  const productsMinimized = productsMinimizedData ? productsMinimizedData?.data?.items : [];
 
   const [cachedOrderItems, setCachedOrderItems] = useState(orderItems);
 
-  const { totalCost: cartCost } = getCartTotals(productsData, cartItems);
-
-  const handleCreateOrder = async () => {
-    const userCoupons = userLoyalityStatus
-      ? [{ code: userLoyalityStatus }]
-      : [];
-
-    const additionalCoupons = couponCodes.map((code: string) => ({ code }));
-    const combinedCoupons = [...userCoupons, ...additionalCoupons];
-
-    const requestData = {
-      line_items: cartItems,
-      status: status,
-      coupon_lines: combinedCoupons,
-      currency: code,
-    };
-
-    try {
-      await createOrder(requestData);
-    } finally {
-      setfirstLoad(true);
-    }
-  };
+  const { totalCost: cartCost } = getCartTotals(productsMinimized, cartItems);
 
   useEffect(() => {
-    const debouncedCreateOrder = debounce(async () => {
-      await handleCreateOrder();
-    }, 1200);
+    const handleCreateOrder = async () => {
+      const coupons = couponCodes.map((code: string) => ({ code }));
 
-    debouncedCreateOrder();
-    return () => {
-      debouncedCreateOrder.cancel();
+      const requestData = {
+        line_items: cartItems,
+        status: status,
+        currency: code,
+        ...(!isCouponsIgnored && { coupon_lines: coupons }),
+      };
+
+      const { error } = await createOrder(requestData);
+
+      if (error) {
+        const wooError = (error as FetchBaseQueryError).data;
+        if ((wooError as WooErrorType)?.details?.code === 'woocommerce_rest_invalid_coupon') {
+          setIsCouponsIgnored(true);
+        }
+      }
+
+      setfirstLoad(true);
+
     };
-  }, [cartItems, couponCodes, code, userLoyalityStatus]);
+    handleCreateOrder();
+  }, [cartItems, couponCodes, code, userLoyaltyStatus, isCouponsIgnored]);
 
   useEffect(() => {
     if (orderItems?.currency_symbol) {
@@ -110,7 +107,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
       product_id: number,
       action: 'inc' | 'dec' | 'value',
       variation_id?: number,
-      newQuantity?: number | boolean
+      newQuantity?: number | boolean,
     ) => {
       handleQuantityChange(
         cartItems,
@@ -118,35 +115,35 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
         product_id,
         action,
         variation_id,
-        newQuantity
+        newQuantity,
       );
     },
-    [cartItems, dispatch]
+    [cartItems, dispatch],
   );
 
-  // const subtotal = useMemo(
-  //   () =>
-  //     orderItems?.line_items
-  //       ? getSubtotalByLineItems(orderItems.line_items)
-  //       : 0,
-  //   [orderItems]
-  // );
-  // const total = useMemo(
-  //   () =>
-  //     orderItems?.line_items ? getTotalByLineItems(orderItems.line_items) : 0,
-  //   [orderItems]
-  // );
 
   // Conflict detection
   const [hasConflict, setHasConflict] = useState(false);
 
+  /* Check cart conflict */
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setHasConflict(checkCartConflict(cartItems, productsData));
-    }, 100);
+    const fetchData = async () => {
+      const defaultLanguage = router.defaultLocale || 'pl';
+      const productsMinimizedData = await getProductsMinimized({
+        cartItems,
+        lang: router.locale || defaultLanguage,
+      });
+      const productsMinimized = productsMinimizedData?.data?.data?.items || [];
 
-    return () => clearTimeout(timeoutId);
-  }, [productsData]);
+      setHasConflict(checkCartConflict(cartItems, productsMinimized));
+    };
+
+    if (cartItems.length) {
+      fetchData();
+    } else {
+      router.push('/cart');
+    }
+  }, [cartItems]);
 
   const currentOrderItems = orderItems ?? cachedOrderItems;
 
@@ -156,11 +153,11 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   //check cart items and order coincidence
 
   const [innercartItems, setInnerCartItems] = useState(
-    currentOrderItems?.line_items || []
+    currentOrderItems?.line_items || [],
   );
 
   const [filteredOutItems, setFilteredOutItems] = useState<lineOrderItems[]>(
-    []
+    [],
   );
 
   useEffect(() => {
@@ -171,8 +168,8 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
         cartItem =>
           cartItem.product_id === lineItem.product_id &&
           (!cartItem.variation_id ||
-            cartItem.variation_id === lineItem.variation_id)
-      )
+            cartItem.variation_id === lineItem.variation_id),
+      ),
     );
 
     const notFilteredItems = currentOrderItems.line_items.filter(
@@ -181,19 +178,18 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
           cartItem =>
             cartItem.product_id === lineItem.product_id &&
             (!cartItem.variation_id ||
-              cartItem.variation_id === lineItem.variation_id)
-        )
+              cartItem.variation_id === lineItem.variation_id),
+        ),
     );
 
     setInnerCartItems(filteredItems);
     setFilteredOutItems(notFilteredItems);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentOrderItems?.line_items, isLoadingOrder]);
 
   const handleDeleteItem = (productId: number, variationId: number) => {
     const updatedCartItems = innercartItems.filter(
-      item => item.product_id !== productId || item.variation_id !== variationId
+      item => item.product_id !== productId || item.variation_id !== variationId,
     );
     setInnerCartItems(updatedCartItems);
 
@@ -214,11 +210,11 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   return (
     <>
       <OrderProgress />
-      <BannerCart
-        slug="stove"
-        image="bunnerDesktop.png"
-        mobileImage="bunnerMobile.png"
-      />
+      {/*<BannerCart*/}
+      {/*  slug="stove"*/}
+      {/*  image="bunnerDesktop.png"*/}
+      {/*  mobileImage="bunnerMobile.png"*/}
+      {/*/>*/}
       <Container>
         <CartPageWrapper>
           <div>
@@ -229,7 +225,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
               isLoadingOrder={isLoadingCart}
               filteredOutItems={filteredOutItems}
               order={currentOrderItems}
-              productsSpecs={productsData}
+              productsSpecs={productsMinimized}
               roundedPrice={roundedPrice}
               hasConflict={hasConflict}
               handleChangeQuantity={handleChangeQuantity}
@@ -258,11 +254,13 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
               </FlexBox>
             )}
           </div>
+
           <CartCouponBlock
-            userLoyalityStatus={userLoyalityStatus}
+            userLoyalityStatus={userLoyaltyStatus}
             auth={auth}
-            symbol={symbol}
+            isCouponsIgnored={isCouponsIgnored}
           />
+
           {innercartItems.length > 0 && filteredOutItems.length == 0 && (
             <CartSummaryBlock
               auth={auth}
@@ -279,7 +277,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
 };
 
 export const getServerSideProps = async (
-  context: GetServerSidePropsContext
+  context: GetServerSidePropsContext,
 ) => {
   const cookies = context.req.cookies;
   const { locale } = context;
@@ -293,7 +291,7 @@ export const getServerSideProps = async (
       'jwt-auth/v1/token/validate',
       {},
       false,
-      `Bearer ${cookies.authToken}`
+      `Bearer ${cookies.authToken}`,
     );
     if (authResp?.data?.code !== 'jwt_auth_valid_token')
       throw new Error('Invalid or missing authentication token');
@@ -306,7 +304,7 @@ export const getServerSideProps = async (
     const resp = await wpRestApi.get(
       'users/me',
       { path: ['users', 'me'] },
-      `Bearer ${cookies.authToken}`
+      `Bearer ${cookies.authToken}`,
     );
 
     if (!resp?.data) {
@@ -325,7 +323,6 @@ export const getServerSideProps = async (
     return {
       props: {
         user: null,
-        messages: (await import(`../../translations/${locale}.json`)).default,
       },
     };
   }
