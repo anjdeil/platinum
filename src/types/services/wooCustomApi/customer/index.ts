@@ -433,6 +433,11 @@ export const ReviewRespSchema = z.object({
   }),
 });
 
+const CouponParamsSchema = z.object({
+  code: z.string().optional(),
+  exclude: z.array(z.number()).optional(),
+});
+
 export const ReviewsRespSchema = z.array(ReviewRespSchema);
 
 export type OrderType = z.infer<typeof OrderTypeSchema>;
@@ -451,3 +456,4 @@ export type reviewQueryType = z.infer<typeof reviewQuerySchema>;
 export type ReviewRespType = z.infer<typeof ReviewRespSchema>;
 export type ReviewsRespType = z.infer<typeof ReviewsRespSchema>;
 export type WooCustomerUpdateType = z.infer<typeof WooCustomerUpdateSchema>;
+export type CouponParamsType = z.infer<typeof CouponParamsSchema>;

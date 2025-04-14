@@ -5,6 +5,7 @@ import {
   WooCustomerUpdateReqType,
 } from '@/types/services';
 import {
+  CouponParamsType,
   couponRespType,
   CreateOrderRequestType,
   OrderType,
@@ -68,7 +69,7 @@ export const wooCustomRktApi = createApi({
             'Content-Type': 'application/json',
           },
         }),
-      }
+      },
     ),
     retrieveCoupon: builder.query<couponRespType, retrieveCouponQueryType>({
       query: (params: retrieveCouponQueryType) => ({
@@ -76,11 +77,15 @@ export const wooCustomRktApi = createApi({
         method: 'GET',
       }),
     }),
-    ListAllCoupons: builder.query<couponRespType[], void>({
-      query: () => ({
-        url: `/coupons`,
-        method: 'GET',
-      }),
+    ListAllCoupons: builder.query<couponRespType[], CouponParamsType>({
+      query: (params: CouponParamsType) => {
+        const queryString = new URLSearchParams(params as Record<string, string>).toString();
+
+        return {
+          url: `/coupons?${queryString}`,
+          method: 'GET'
+        };
+      },
     }),
     addComment: builder.mutation({
       query: (credentials: any) => ({
@@ -130,7 +135,6 @@ export const {
   useRegisterCustomerMutation,
   useFetchOrdersQuery,
   useCreateOrderMutation,
-  useListAllCouponsQuery,
   useAddCommentMutation,
   useGetProductsReviewsQuery,
   useGetProductReviewsQuery,
@@ -139,4 +143,5 @@ export const {
   useGetShippingZonesQuery,
   useLazyGetShippingZoneMethodsQuery,
   useLazyGetShippingZoneLocationsQuery,
+  useLazyListAllCouponsQuery,
 } = wooCustomRktApi;
