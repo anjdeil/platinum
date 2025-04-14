@@ -51,7 +51,7 @@ const CartCouponBlock: FC<CartCouponBlockProps> = ({
   } = useForm();
 
   const { couponCodes } = useAppSelector(state => state.cartSlice);
-  const isCardLoyaltyIncluded = couponCodes.some((coupon) => loyaltyCouponsCodes.includes(coupon));
+  const isCartLoyaltyIncluded = couponCodes.some((coupon) => loyaltyCouponsCodes.includes(coupon));
 
   const [applyingStatus, setApplyingStatus] = useState<CouponApplyingStatusType>();
 
@@ -142,7 +142,7 @@ const CartCouponBlock: FC<CartCouponBlockProps> = ({
 
       </CouponForm>
 
-      {!applyingStatus && !isCouponsIgnored && isCardLoyaltyIncluded &&
+      {!applyingStatus && !isCouponsIgnored && isCartLoyaltyIncluded &&
         <Notification type={'warning'}>{t('overrideLoyaltyDiscount')}</Notification>
       }
       {

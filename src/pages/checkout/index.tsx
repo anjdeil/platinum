@@ -432,7 +432,6 @@ export default function CheckoutPage() {
       paymentUrlObj.pathname = '/' + langCode + paymentUrlObj.pathname;
 
       router.push(paymentUrlObj.toString());
-      // dispatch(clearCart());
     }
   }, [order]);
 
