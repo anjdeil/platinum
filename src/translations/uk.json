@@ -72,6 +72,8 @@
     "login": "Увійти",
     "loggingIn": "Вхід",
     "log-In": "Увійти",
+    "loginPage": "Вхід у систему",
+    "logoutPage": "Вихід з системи",
     "password": "Пароль",
     "confirmPassword": "Повторіть пароль",
     "AlreadyHaveAnAccount": "Уже є акаунт?",
@@ -470,7 +472,8 @@
     "joinToWhatsApp": "Приєднуйтесь до WhatsApp",
     "subscribe": "Приєднатися зараз",
     "allShop": "Весь магазин",
-    "instagramNotFound": "Instagram Media not found"
+    "instagramNotFound": "Instagram Media not found",
+    "title": "Магазин для нарощування вій та клею для вій"
   },
   "SubscriptionForm": {
     "subscribe": "Приєднатися зараз",

@@ -106,7 +106,7 @@ const Wishlist: FC<WishlistPageProps> = ({ defaultCustomerData }) => {
   ));
 
   return (
-    <AccountLayout>
+    <AccountLayout nameSpace={'MyAccount'} spaceKey={'wishlist'}>
       <AccountTitle as={'h1'} textalign="center" uppercase marginBottom="24">
         {tMyAccount('wishlist')}
       </AccountTitle>

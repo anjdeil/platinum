@@ -57,7 +57,7 @@ export default function LoyaltyPage() {
       : null;
 
   return (
-    <AccountLayout>
+    <AccountLayout nameSpace={'MyAccount'} spaceKey={'loyaltyProgram'}>
       <AccountTitle as={'h1'} textalign="center" uppercase marginBottom="24">
         {t('loyaltyProgram')}
       </AccountTitle>

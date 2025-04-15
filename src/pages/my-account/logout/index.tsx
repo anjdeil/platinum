@@ -1,13 +1,9 @@
+import { PageTitle } from '@/components/pages/pageTitle';
 import { removeUserFromLocalStorage } from '@/utils/auth/userLocalStorage';
 import { GetServerSidePropsContext } from 'next';
-import Head from 'next/head';
 
 export default function Logout() {
-  return (
-    <Head>
-      <title>Logout</title>
-    </Head>
-  );
+  return <PageTitle nameSpace={'MyAccount'} spaceKey={'logoutPage'} />;
 }
 
 export const getServerSideProps = async (

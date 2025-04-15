@@ -3,17 +3,23 @@ import SideList from '@/components/global/SideList/SideList';
 import { useResponsive } from '@/hooks/useResponsive';
 import { AccountTitle } from '@/styles/components';
 import { useTranslations } from 'next-intl';
-import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { ReactNode } from 'react';
 import accountLinks from './accountLinks';
 import { AccountContainer, AccountContent, SideListContainer } from './styles';
+import { PageTitle } from '../../pageTitle';
 
 export default function AccountLayout({
   title,
+  nameSpace,
+  spaceKey,
+  subTitle,
   children,
 }: {
   title?: string;
+  nameSpace?: string;
+  spaceKey?: string;
+  subTitle?: string;
   children: ReactNode;
 }) {
   const t = useTranslations('MyAccount');
@@ -28,10 +34,11 @@ export default function AccountLayout({
 
   return (
     <>
-      <Head>
-        <title>{title}</title>
-      </Head>
-
+      <PageTitle
+        title={subTitle ? subTitle : title}
+        nameSpace={nameSpace}
+        spaceKey={spaceKey}
+      />
       {title && (
         <AccountTitle as={'h1'} textalign="center" uppercase marginTop="24">
           {title}

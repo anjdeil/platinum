@@ -1,3 +1,4 @@
+import { PageTitle } from '@/components/pages/pageTitle';
 import { SlugPageBreadcrumbs } from '@/components/pages/slugPageBreadcrumbs';
 import { RichTextSection } from '@/components/sections/RichTextSection';
 import { SectionRenderer } from '@/components/sections/SectionRenderer';
@@ -75,6 +76,7 @@ const SlugPage = ({ pageTitle, pageContent, sections }: PageProps) => {
 
   return (
     <>
+      <PageTitle title={pageTitle} />
       <StyledHeaderWrapper>
         <SlugPageBreadcrumbs title={pageTitle} />
         <Title as={'h1'} uppercase>
