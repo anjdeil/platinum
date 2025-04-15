@@ -5,6 +5,7 @@ import CartSummaryBlock from '@/components/pages/cart/CartSummaryBlock/CartSumma
 import CartTable from '@/components/pages/cart/CartTable/CartTable';
 import OrderBar from '@/components/pages/cart/OrderBar/OrderBar';
 import OrderProgress from '@/components/pages/cart/OrderProgress/OrderProgress';
+import { PageTitle } from '@/components/pages/pageTitle';
 import wpRestApi from '@/services/wpRestApi';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { useGetUserTotalsQuery } from '@/store/rtk-queries/userTotals/userTotals';
@@ -216,6 +217,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
 
   return (
     <>
+      <PageTitle nameSpace={'Cart'} spaceKey={'Basket'} />
       <OrderProgress />
       {/*<BannerCart*/}
       {/*  slug="stove"*/}

@@ -4,6 +4,7 @@ import Breadcrumbs from '@/components/global/Breadcrumbs/Breadcrumbs';
 import ResetPasswordForm from '@/components/global/forms/password/ResetPasswordForm/ResetPasswordForm';
 import { GetServerSidePropsContext } from 'next';
 import { useTranslations } from 'next-intl';
+import { PageTitle } from '@/components/pages/pageTitle';
 
 export default function ResetPassword() {
   const t = useTranslations('MyAccount');
@@ -16,14 +17,17 @@ export default function ResetPassword() {
   ];
 
   return (
-    <FormPageWrapper>
-      <Breadcrumbs links={breadcrumbsLinks} />
-      <Container>
-        <FormContainer>
-          <ResetPasswordForm />
-        </FormContainer>
-      </Container>
-    </FormPageWrapper>
+    <>
+      <PageTitle nameSpace={'MyAccount'} spaceKey={'resetPassword'} />
+      <FormPageWrapper>
+        <Breadcrumbs links={breadcrumbsLinks} />
+        <Container>
+          <FormContainer>
+            <ResetPasswordForm />
+          </FormContainer>
+        </Container>
+      </FormPageWrapper>
+    </>
   );
 }
 

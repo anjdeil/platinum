@@ -13,7 +13,7 @@ interface Props {
 
 export default function UserInformation({ defaultCustomerData }: Props) {
   return (
-    <AccountLayout>
+    <AccountLayout nameSpace={'Forms'} spaceKey={'UserInfo'}>
       <UserInfoForm defaultCustomerData={defaultCustomerData} />
     </AccountLayout>
   );

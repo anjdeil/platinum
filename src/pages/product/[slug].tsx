@@ -1,5 +1,6 @@
 import Breadcrumbs from '@/components/global/Breadcrumbs/Breadcrumbs';
 import Reviews from '@/components/global/reviews/Reviews/Reviews';
+import { PageTitle } from '@/components/pages/pageTitle';
 import ProductInfo from '@/components/pages/product/ProductInfo/ProductInfo';
 import {
   RecommendContainer,
@@ -104,7 +105,6 @@ export default function ProductPage({
   return (
     <>
       <Head>
-        <title>{'Place for title'}</title>
         {<meta name="description" content={'Place for seo description'} />}
         <link rel="canonical" href={'Place for seo canonical'} />
         {
@@ -113,6 +113,7 @@ export default function ProductPage({
           </script>
         }
       </Head>
+      <PageTitle title={product.name} />
       <Container>
         <Box
           sx={{

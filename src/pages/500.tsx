@@ -1,4 +1,5 @@
 import ErrorPage from '@/components/pages/404/ErrorPage';
+import { PageTitle } from '@/components/pages/pageTitle';
 import { GetStaticProps } from 'next';
 
 const isLocaleRuOrUk = (locale: string | undefined) =>
@@ -16,6 +17,12 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 
 export default function Custom500({ buttonWidth }: { buttonWidth: string }) {
   return (
-    <ErrorPage imageURL={`/assets/images/500.svg`} buttonWidth={buttonWidth} />
+    <>
+      <PageTitle nameSpace={'NotFoundPage'} spaceKey={'serverError'} />
+      <ErrorPage
+        imageURL={`/assets/images/500.svg`}
+        buttonWidth={buttonWidth}
+      />
+    </>
   );
 }

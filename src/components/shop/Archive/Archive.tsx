@@ -40,6 +40,7 @@ import {
   BreadcrumbsList,
   BreadcrumbsWrapper,
 } from '@/components/global/Breadcrumbs/styles';
+import { PageTitle } from '@/components/pages/pageTitle';
 
 const switchPage = (page: number, maxPage: number) => {
   if (maxPage < page) return;
@@ -137,122 +138,158 @@ export const Archive: FC<ArchivePropsType> = props => {
 
   if (!products || !products.length) {
     return (
-      <CatalogContainer>
-        <CatalogTitleWrapper>
-          <BreadcrumbsWrapper>
-            <BreadcrumbsList>
-              <BreadcrumbLink href={breadcrumbsLinks.slice(0, 1)[0].url}>
-                {breadcrumbsLinks.slice(0, 1)[0].name}
-              </BreadcrumbLink>
-            </BreadcrumbsList>
-          </BreadcrumbsWrapper>
-        </CatalogTitleWrapper>
-        <Notification>{t('productsNotFound')}</Notification>
-      </CatalogContainer>
+      <>
+        <PageTitle title={t('productsNotFound')} />
+        <CatalogContainer>
+          <CatalogTitleWrapper>
+            <BreadcrumbsWrapper>
+              <BreadcrumbsList>
+                <BreadcrumbLink href={breadcrumbsLinks.slice(0, 1)[0].url}>
+                  {breadcrumbsLinks.slice(0, 1)[0].name}
+                </BreadcrumbLink>
+              </BreadcrumbsList>
+            </BreadcrumbsWrapper>
+          </CatalogTitleWrapper>
+          <Notification>{t('productsNotFound')}</Notification>
+        </CatalogContainer>
+      </>
     );
   }
 
   return (
-    <CatalogContainer>
-      <CatalogTitleWrapper>
-        <Breadcrumbs links={breadcrumbsLinks} />
-        <Title as="h1" uppercase>
-          {!currentCategory && searchTerm
-            ? `${t('phraseSought')}: "${searchTerm}"`
-            : currentCategory?.name}
-        </Title>
-      </CatalogTitleWrapper>
-      <CatalogLayout>
-        <CatalogFilterBlock visible={isMenuVisible}>
-          <>
-            {isMenuVisible ? (
-              <>
-                <FilterNCategoriesHead>
-                  <h4>{t('filter')}</h4>
-                  <CloseIcon onClick={toggleMenu} />
-                </FilterNCategoriesHead>
-                {!isMobile ? (
-                  <CategoriesMenu
-                    switchCategory={switchCategory}
-                    selectedCategories={categories}
-                    shop={true}
-                    isMenuVisible={isMenuVisible}
-                  />
-                ) : (
-                  <>
-                    {categories?.length !== 0 ? (
-                      <>
-                        {isLoading ? (
-                          <Skeleton
-                            width="100%"
-                            height={48}
-                            variant="rounded"
-                          />
-                        ) : (
-                          <SelectParentCategory
-                            selectedCategories={categories}
-                            switchCategory={switchCategory}
-                          />
-                        )}
-                      </>
-                    ) : (
-                      <MobileCategoriesMenu
-                        padding="all"
-                        disableOverlay={true}
-                        width="100%"
-                        onClose={toggleMenu}
-                        switchCategory={switchCategory}
-                      />
-                    )}
-                  </>
-                )}
-              </>
-            ) : (
-              <>
-                {isLoading ? (
-                  <Skeleton width="100%" height={48} variant="rounded" />
-                ) : (
-                  <SelectParentCategory
-                    selectedCategories={categories}
-                    switchCategory={switchCategory}
-                  />
-                )}
-              </>
-            )}
-          </>
-          {statistic && statistic?.attributes && (
+    <>
+      <PageTitle
+        title={currentCategory?.name || `${t('phraseSought')}: "${searchTerm}"`}
+      />
+      <CatalogContainer>
+        <CatalogTitleWrapper>
+          <Breadcrumbs links={breadcrumbsLinks} />
+          <Title as="h1" uppercase>
+            {!currentCategory && searchTerm
+              ? `${t('phraseSought')}: "${searchTerm}"`
+              : currentCategory?.name}
+          </Title>
+        </CatalogTitleWrapper>
+        <CatalogLayout>
+          <CatalogFilterBlock visible={isMenuVisible}>
             <>
-              <Title as="h3" uppercase textalign="left" marginBottom="24px">
-                {t('filters')}
-              </Title>
-              <FilterPanel
-                attributes={statistic?.attributes}
-                minPrice={statistic?.min_price || 0}
-                maxPrice={statistic?.max_price || 0}
-              />
-            </>
-          )}
-        </CatalogFilterBlock>
-        <FilterOverlay visible={isMenuVisible} onClick={toggleMenu} />
-        <CatalogRightWrapper>
-          <CatalogTopWrapper>
-            <FilterSortWrapper>
-              <FilterWrapper>
-                <FilterButton onClick={toggleMenu} />
-              </FilterWrapper>
-              <CustomSortAccordion />
-            </FilterSortWrapper>
-
-            <CountProduct>
-              {statistic && statistic?.products_count !== 0 && (
+              {isMenuVisible ? (
                 <>
-                  {statistic.products_count}&nbsp;
-                  {getPluralForm(statistic.products_count, locale)}
+                  <FilterNCategoriesHead>
+                    <h4>{t('filter')}</h4>
+                    <CloseIcon onClick={toggleMenu} />
+                  </FilterNCategoriesHead>
+                  {!isMobile ? (
+                    <CategoriesMenu
+                      switchCategory={switchCategory}
+                      selectedCategories={categories}
+                      shop={true}
+                      isMenuVisible={isMenuVisible}
+                    />
+                  ) : (
+                    <>
+                      {categories?.length !== 0 ? (
+                        <>
+                          {isLoading ? (
+                            <Skeleton
+                              width="100%"
+                              height={48}
+                              variant="rounded"
+                            />
+                          ) : (
+                            <SelectParentCategory
+                              selectedCategories={categories}
+                              switchCategory={switchCategory}
+                            />
+                          )}
+                        </>
+                      ) : (
+                        <MobileCategoriesMenu
+                          padding="all"
+                          disableOverlay={true}
+                          width="100%"
+                          onClose={toggleMenu}
+                          switchCategory={switchCategory}
+                        />
+                      )}
+                    </>
+                  )}
+                </>
+              ) : (
+                <>
+                  {isLoading ? (
+                    <Skeleton width="100%" height={48} variant="rounded" />
+                  ) : (
+                    <SelectParentCategory
+                      selectedCategories={categories}
+                      switchCategory={switchCategory}
+                    />
+                  )}
                 </>
               )}
-            </CountProduct>
+            </>
+            {statistic && statistic?.attributes && (
+              <>
+                <Title as="h3" uppercase textalign="left" marginBottom="24px">
+                  {t('filters')}
+                </Title>
+                <FilterPanel
+                  attributes={statistic?.attributes}
+                  minPrice={statistic?.min_price || 0}
+                  maxPrice={statistic?.max_price || 0}
+                />
+              </>
+            )}
+          </CatalogFilterBlock>
+          <FilterOverlay visible={isMenuVisible} onClick={toggleMenu} />
+          <CatalogRightWrapper>
+            <CatalogTopWrapper>
+              <FilterSortWrapper>
+                <FilterWrapper>
+                  <FilterButton onClick={toggleMenu} />
+                </FilterWrapper>
+                <CustomSortAccordion />
+              </FilterSortWrapper>
+
+              <CountProduct>
+                {statistic && statistic?.products_count !== 0 && (
+                  <>
+                    {statistic.products_count}&nbsp;
+                    {getPluralForm(statistic.products_count, locale)}
+                  </>
+                )}
+              </CountProduct>
+              {pagesCount > 1 && (
+                <PagesNavigationWrapper>
+                  <PagesNavigation
+                    page={+page}
+                    count={pagesCount}
+                    siblingCount={0}
+                    shape="rounded"
+                    hidePrevButton
+                    hideNextButton
+                    onChange={handlePageChange}
+                  />
+                </PagesNavigationWrapper>
+              )}
+            </CatalogTopWrapper>
+            <CatalogListBlock>
+              {products?.length > 0 ? (
+                <ProductCardList
+                  products={products}
+                  columns={{
+                    mobileColumns: 2,
+                    tabletColumns: 4,
+                    mintabletColumns: 3,
+                    desktopColumns: 3,
+                  }}
+                />
+              ) : (
+                <Notification>{t('productsNotFound')}</Notification>
+              )}
+            </CatalogListBlock>
             {pagesCount > 1 && (
-              <PagesNavigationWrapper>
+              <PagesNavigationFooterWrapper>
                 <PagesNavigation
                   page={+page}
                   count={pagesCount}
@@ -262,40 +299,12 @@ export const Archive: FC<ArchivePropsType> = props => {
                   hideNextButton
                   onChange={handlePageChange}
                 />
-              </PagesNavigationWrapper>
+              </PagesNavigationFooterWrapper>
             )}
-          </CatalogTopWrapper>
-          <CatalogListBlock>
-            {products?.length > 0 ? (
-              <ProductCardList
-                products={products}
-                columns={{
-                  mobileColumns: 2,
-                  tabletColumns: 4,
-                  mintabletColumns: 3,
-                  desktopColumns: 3,
-                }}
-              />
-            ) : (
-              <Notification>{t('productsNotFound')}</Notification>
-            )}
-          </CatalogListBlock>
-          {pagesCount > 1 && (
-            <PagesNavigationFooterWrapper>
-              <PagesNavigation
-                page={+page}
-                count={pagesCount}
-                siblingCount={0}
-                shape="rounded"
-                hidePrevButton
-                hideNextButton
-                onChange={handlePageChange}
-              />
-            </PagesNavigationFooterWrapper>
-          )}
-        </CatalogRightWrapper>
-      </CatalogLayout>
-    </CatalogContainer>
+          </CatalogRightWrapper>
+        </CatalogLayout>
+      </CatalogContainer>
+    </>
   );
 };
 

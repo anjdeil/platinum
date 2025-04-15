@@ -123,7 +123,10 @@ const Order: FC<OrderPropsType> = ({ order }) => {
     additionalShippingFields.push(shippingApartmentNumber);
 
   return (
-    <AccountLayout title={t('clientPersonalAccount')}>
+    <AccountLayout
+      title={t('clientPersonalAccount')}
+      subTitle={`${t('order')} #${order.id}`}
+    >
       <AccountTitle as={'h1'} textalign="center" uppercase marginBottom="24">
         {`${t('order')} #${order.id}`}
       </AccountTitle>
