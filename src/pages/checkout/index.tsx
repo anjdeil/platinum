@@ -30,7 +30,7 @@ import {
   ParcelMachineType,
   ShippingLineType,
 } from '@/types/pages/checkout';
-import { ShippingMethodType } from '@/types/services';
+import { ShippingMethodType, WooErrorType } from '@/types/services';
 import checkCartConflict from '@/utils/cart/checkCartConflict';
 import getCartTotals from '@/utils/cart/getCartTotals';
 import getCalculatedMethodCostByWeight from '@/utils/checkout/getCalculatedMethodCostByWeight';
@@ -55,6 +55,7 @@ import {
   ShippingType,
 } from '@/types/services/wooCustomApi/customer';
 import { PageTitle } from '@/components/pages/pageTitle';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
 export function getServerSideProps() {
   return {
@@ -235,7 +236,7 @@ export default function CheckoutPage() {
 
   const authToken = useGetAuthToken();
   const { name: currencyCode } = useAppSelector(state => state.currencySlice);
-  const [createOrder, { data: order, isLoading: isOrderLoading = true }] =
+  const [createOrder, { data: order, isLoading: isOrderLoading = true, error: orderCreationError }] =
     useCreateOrderMutation();
   const [fetchUserData, { data: userData, isLoading: isUserDataLoading }] =
     useLazyFetchUserDataQuery();
@@ -243,6 +244,7 @@ export default function CheckoutPage() {
   /**
    * Coupons and loyalty status
    */
+  const [isCouponsIgnored, setIsCouponsIgnored] = useState(false);
   const [coupons, setCoupons] = useState(couponCodes);
 
   const [fetchUserTotals, { data: userTotal }] = useLazyGetUserTotalsQuery();
@@ -366,6 +368,18 @@ export default function CheckoutPage() {
 
   const isPayButtonDisabled = isOrderLoading || orderStatus === 'pending';
 
+  /**
+   * Handle order creation error
+   */
+  useEffect(() => {
+    if (orderCreationError) {
+      const wooError = (orderCreationError as FetchBaseQueryError).data;
+      if ((wooError as WooErrorType)?.details?.code === 'woocommerce_rest_invalid_coupon') {
+        setIsCouponsIgnored(true);
+      }
+    }
+  }, [orderCreationError]);
+
   /* Update an order */
   useEffect(() => {
     if (isUserDataLoading || cartItems.length === 0) return;
@@ -383,7 +397,6 @@ export default function CheckoutPage() {
     createOrder({
       status: orderStatus,
       line_items: cartItems,
-      coupon_lines: couponLines,
       meta_data: [
         {
           key: 'wpml_language',
@@ -391,6 +404,7 @@ export default function CheckoutPage() {
         },
         ...(orderStatus === 'pending' ? filteredMetaData : []),
       ],
+      ...(!isCouponsIgnored && { coupon_lines: couponLines }),
       ...(currencyCode && { currency: currencyCode }),
       ...(formOrderData.billing &&
         orderStatus === 'pending' && { billing: formOrderData.billing }),
@@ -408,6 +422,7 @@ export default function CheckoutPage() {
     userData,
     shippingLine,
     router.locale,
+    isCouponsIgnored
   ]);
 
   useEffect(() => {
@@ -418,7 +433,6 @@ export default function CheckoutPage() {
       paymentUrlObj.pathname = '/' + langCode + paymentUrlObj.pathname;
 
       router.push(paymentUrlObj.toString());
-      // dispatch(clearCart());
     }
   }, [order]);
 

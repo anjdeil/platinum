@@ -276,9 +276,13 @@
     "goToShop": "Zum Shop gehen",
     "nothingInTheCartText": "Sehen Sie sich unsere neuen Produkte an oder nutzen Sie die Suche, wenn Sie etwas Bestimmtes suchen",
     "YouNeedToLoginForOrder": "Sie müssen sich anmelden, um eine Bestellung aufzugeben.",
-    "сoupon": "Coupon",
     "errorFetchingProducts": "Fehler beim Abrufen der aktuellen Produkte",
-    "clearCart": "Warenkorb leeren"
+    "clearCart": "Warenkorb leeren",
+    "couponIsNotApplied": "Der Coupon oder Ihr Treuestatus wird nicht auf die Artikel in Ihrem Warenkorb angewendet",
+    "couponApplied": "Der Coupon wurde erfolgreich angewendet",
+    "couponNotFound": "Der von Ihnen angegebene Coupon ist leider ungültig",
+    "fetchError": "Bei der Anwendung des Coupons ist ein Fehler aufgetreten",
+    "overrideLoyaltyDiscount": "Die Anwendung des Coupons hebt den Rabatt auf, den Ihnen Ihr Treuestatus gewährt."
   },
   "Contacts": {
     "contacts": "Kontakte",
