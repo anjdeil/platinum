@@ -502,13 +502,14 @@
     "parcelLocker": "Paczkomat",
     "selectParcelLocker": "Wybierz paczkomat",
     "deliveryUnavailable": "Metody dostawy nie są dostępne dla wybranego regionu. Sprawdź swój kraj.",
-    "InPost Locker 24/7": "InPost Paczkomat 24/7",
+    "InPost Locker 24/7": "InPost Paczkomat ® 24/7",
     "InPost Courier": "InPost Kurier",
     "InPost Courier – Cash on delivery": "InPost Kurier – Płatność za pobraniem",
     "Pickup": "Odbiór",
     "Poczta Polska": "Poczta Polska",
     "Express Delivery": "Dostawa ekspresowa",
-    "GLS": "GLS"
+    "GLS": "GLS",
+    "deliveryEstimate": "1-2 dni robocze"
   },
   "InPostGeowidget": {
     "close": "Zamknij"
