@@ -64,8 +64,8 @@ export const ErrorPageDescription = styled.p`
   }
 `;
 
-export const ErrorPageButtonGoHome = styled.button<{ buttonWidth: string }>`
-  width: ${({ buttonWidth }) => buttonWidth};
+export const ErrorPageButtonGoHome = styled.button<{ buttonwidth: string }>`
+  width: ${({ buttonwidth }) => buttonwidth};
   height: 56px;
   font-size: 1rem;
   font-weight: 400;
