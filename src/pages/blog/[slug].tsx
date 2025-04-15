@@ -28,6 +28,7 @@ import {
   StyledHeroImage,
 } from '@/styles/blog/styles';
 import BlogInfo from '@/components/pages/main/BlogListBlock/BlogInfo/BlogInfo';
+import { PageTitle } from '@/components/pages/pageTitle';
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
@@ -158,53 +159,56 @@ const BlogPostPage = ({ post, recommendedPosts, popularPosts }: PageProps) => {
     ) : null;
 
   return (
-    <SectionContainer>
-      <StyledContainer>
-        <StyledHeaderWrapper>
-          <PostPageBreadcrumbs title={title} />
-          <BlogTitle title={'blogPage'} />
-          <Title as={'h2'} uppercase fontWeight={500}>
-            {title}
-          </Title>
-        </StyledHeaderWrapper>
-        <StyledBox>
-          <StyledHeroImage
-            src={thumbnail?.src || '/assets/images/no-image.jpg'}
-            alt={title}
-            width={1280}
-            height={477}
-            priority
-          />
-          <CategoriesTagWrapper>
-            {categories.map(
-              category =>
-                category.name !== 'Uncategorized' && (
-                  <StyledTag key={category.id}>{category.name}</StyledTag>
-                )
-            )}
-          </CategoriesTagWrapper>
-        </StyledBox>
-        <BlogInfo created={created} views_count={views_count ?? 0} postPage />
-        <BlogPostContent content={content} />
-        <PostGroupNavigationButton
-          prev_post={prev_post}
-          next_post={next_post}
-        />
-      </StyledContainer>
-      {recommendedPosts.length > 0 ? (
-        <Container>
-          <RecommendContainer>
-            <BlogHeader
-              title={'blogSectionRelatedTitle'}
-              subtitle={'blogPage'}
+    <>
+      <PageTitle title={title} />
+      <SectionContainer>
+        <StyledContainer>
+          <StyledHeaderWrapper>
+            <PostPageBreadcrumbs title={title} />
+            <BlogTitle title={'blogPage'} />
+            <Title as={'h2'} uppercase fontWeight={500}>
+              {title}
+            </Title>
+          </StyledHeaderWrapper>
+          <StyledBox>
+            <StyledHeroImage
+              src={thumbnail?.src || '/assets/images/no-image.jpg'}
+              alt={title}
+              width={1280}
+              height={477}
+              priority
             />
-            <BlogListBlock posts={recommendedPosts} />
-          </RecommendContainer>
-        </Container>
-      ) : (
-        mostViewedPosts
-      )}
-    </SectionContainer>
+            <CategoriesTagWrapper>
+              {categories.map(
+                category =>
+                  category.name !== 'Uncategorized' && (
+                    <StyledTag key={category.id}>{category.name}</StyledTag>
+                  )
+              )}
+            </CategoriesTagWrapper>
+          </StyledBox>
+          <BlogInfo created={created} views_count={views_count ?? 0} postPage />
+          <BlogPostContent content={content} />
+          <PostGroupNavigationButton
+            prev_post={prev_post}
+            next_post={next_post}
+          />
+        </StyledContainer>
+        {recommendedPosts.length > 0 ? (
+          <Container>
+            <RecommendContainer>
+              <BlogHeader
+                title={'blogSectionRelatedTitle'}
+                subtitle={'blogPage'}
+              />
+              <BlogListBlock posts={recommendedPosts} />
+            </RecommendContainer>
+          </Container>
+        ) : (
+          mostViewedPosts
+        )}
+      </SectionContainer>
+    </>
   );
 };
 

@@ -59,7 +59,11 @@ const Orders: FC<OrdersPropsType> = ({ user }) => {
   });
 
   return (
-    <AccountLayout title={isTablet ? t('recentOrders') : ''}>
+    <AccountLayout
+      title={isTablet ? t('recentOrders') : ''}
+      nameSpace={'MyAccount'}
+      spaceKey={'recentOrders'}
+    >
       <OrderTable
         orderList={ordersData}
         title={!isTablet ? t('recentOrders') : ''}

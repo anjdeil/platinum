@@ -72,6 +72,8 @@
     "login": "Zaloguj się",
     "loggingIn": "Logowanie",
     "log-In": "Zaloguj się",
+    "loginPage": "Logowanie",
+    "logoutPage": "Wylogowywanie",
     "password": "Hasło",
     "confirmPassword": "Powtórz hasło",
     "AlreadyHaveAnAccount": "Masz już konto?",
@@ -466,7 +468,8 @@
     "joinToWhatsApp": "Dołącz do nas na WhatsApp",
     "subscribe": "Dołącz teraz",
     "allShop": "Wszystkie produkty",
-    "instagramNotFound": "Instagram Media not found"
+    "instagramNotFound": "Instagram Media not found",
+    "title": "Sklep rzęs do przedłużania i kleju do rzęs"
   },
   "SubscriptionForm": {
     "subscribe": "Dołącz teraz",

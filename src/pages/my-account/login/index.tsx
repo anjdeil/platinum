@@ -8,6 +8,7 @@ import Breadcrumbs from '@/components/global/Breadcrumbs/Breadcrumbs';
 import { removeUserFromLocalStorage } from '@/utils/auth/userLocalStorage';
 import { useAppDispatch } from '@/store';
 import { clearUser } from '@/store/slices/userSlice';
+import { PageTitle } from '@/components/pages/pageTitle';
 
 export default function Login() {
   const t = useTranslations('MyAccount');
@@ -22,14 +23,17 @@ export default function Login() {
   ];
 
   return (
-    <FormPageWrapper>
-      <Breadcrumbs links={breadcrumbsLinks} />
-      <Container>
-        <FormContainer>
-          <LoginForm />
-        </FormContainer>
-      </Container>
-    </FormPageWrapper>
+    <>
+      <PageTitle nameSpace={'MyAccount'} spaceKey={'loginPage'} />
+      <FormPageWrapper>
+        <Breadcrumbs links={breadcrumbsLinks} />
+        <Container>
+          <FormContainer>
+            <LoginForm />
+          </FormContainer>
+        </Container>
+      </FormPageWrapper>
+    </>
   );
 }
 

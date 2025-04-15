@@ -5,6 +5,7 @@ import { FormContainer } from '@/components/pages/account/styles';
 import { useTranslations } from 'next-intl';
 import Breadcrumbs from '@/components/global/Breadcrumbs/Breadcrumbs';
 import { RegistrationForm } from '@/components/global/forms/RegistrationForm';
+import { PageTitle } from '@/components/pages/pageTitle';
 
 export default function Registration() {
   const t = useTranslations('MyAccount');
@@ -17,14 +18,17 @@ export default function Registration() {
   ];
 
   return (
-    <FormPageWrapper>
-      <Breadcrumbs links={breadcrumbsLinks} />
-      <Container>
-        <FormContainer>
-          <RegistrationForm />
-        </FormContainer>
-      </Container>
-    </FormPageWrapper>
+    <>
+      <PageTitle nameSpace={'MyAccount'} spaceKey={'registration'} />
+      <FormPageWrapper>
+        <Breadcrumbs links={breadcrumbsLinks} />
+        <Container>
+          <FormContainer>
+            <RegistrationForm />
+          </FormContainer>
+        </Container>
+      </FormPageWrapper>
+    </>
   );
 }
 

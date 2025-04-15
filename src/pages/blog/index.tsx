@@ -3,6 +3,7 @@ import { BlogPageBreadcrumbs } from '@/components/pages/blog/blogPageBreadcrumbs
 import BlogPagination from '@/components/pages/blog/blogPagination/BlogPagination';
 import { BlogTitle } from '@/components/pages/blog/blogTitle';
 import BlogListBlock from '@/components/pages/main/BlogListBlock/BlogListBlock';
+import { PageTitle } from '@/components/pages/pageTitle';
 import {
   RecommendContainer,
   SectionContainer,
@@ -128,23 +129,26 @@ const BlogPage: React.FC<BlogProps> = ({
   };
 
   return (
-    <Container>
-      <StyledHeaderWrapper>
-        <BlogPageBreadcrumbs />
-        <BlogTitle title={'blogPage'} />
-      </StyledHeaderWrapper>
-      <BlogCategoriesList
-        selectedCategory={selectedCategory}
-        setSelectedCategory={handleCategoryChange}
-        categories={categories}
-      />
-      <SectionContainer>
-        <RecommendContainer>
-          <BlogListBlock posts={posts} />
-          <BlogPagination page={page} count={totalPages} />
-        </RecommendContainer>
-      </SectionContainer>
-    </Container>
+    <>
+      <PageTitle nameSpace={'Breadcrumbs'} spaceKey={'blogPage'} />
+      <Container>
+        <StyledHeaderWrapper>
+          <BlogPageBreadcrumbs />
+          <BlogTitle title={'blogPage'} />
+        </StyledHeaderWrapper>
+        <BlogCategoriesList
+          selectedCategory={selectedCategory}
+          setSelectedCategory={handleCategoryChange}
+          categories={categories}
+        />
+        <SectionContainer>
+          <RecommendContainer>
+            <BlogListBlock posts={posts} />
+            <BlogPagination page={page} count={totalPages} />
+          </RecommendContainer>
+        </SectionContainer>
+      </Container>
+    </>
   );
 };
 

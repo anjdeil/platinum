@@ -72,6 +72,8 @@
     "login": "Einloggen",
     "loggingIn": "Einloggen",
     "log-In": "Einloggen",
+    "loginPage": "Anmeldung",
+    "logoutPage": "Abmelden",
     "password": "Passwort",
     "confirmPassword": "Passwort wiederholen",
     "AlreadyHaveAnAccount": "Haben Sie bereits ein Konto?",
@@ -466,7 +468,8 @@
     "joinToWhatsApp": "Beitritt zu WhatsApp",
     "subscribe": "Jetzt beitreten",
     "allShop": "Alle Geschäfte",
-    "instagramNotFound": "Instagram Media not found"
+    "instagramNotFound": "Instagram Media not found",
+    "title": "Shop für Wimpernverlängerung und Wimpernkleber"
   },
   "SubscriptionForm": {
     "subscribe": "Jetzt beitreten",

@@ -54,6 +54,7 @@ import {
   MetaDataType,
   ShippingType,
 } from '@/types/services/wooCustomApi/customer';
+import { PageTitle } from '@/components/pages/pageTitle';
 
 export function getServerSideProps() {
   return {
@@ -423,6 +424,7 @@ export default function CheckoutPage() {
 
   return (
     <>
+      <PageTitle nameSpace={'Cart'} spaceKey={'PersonalInformation'} />
       <Head>{inPostHead}</Head>
       <OrderProgress />
       <CheckoutContainer>

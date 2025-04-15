@@ -72,6 +72,8 @@
     "login": "Войти",
     "loggingIn": "Вход",
     "log-In": "Войти",
+    "loginPage": "Вход в систему",
+    "logoutPage": "Выход из системы",
     "password": "Пароль",
     "confirmPassword": "Повторите пароль",
     "AlreadyHaveAnAccount": "Уже есть аккаунт?",
@@ -466,7 +468,8 @@
     "joinToWhatsApp": "Присоединяйтесь к WhatsApp",
     "subscribe": "Присоединиться сейчас",
     "allShop": "Весь магазин",
-    "instagramNotFound": "Instagram Media not found"
+    "instagramNotFound": "Instagram Media not found",
+    "title": "Магазин для наращивания ресниц и клея для ресниц"
   },
   "SubscriptionForm": {
     "subscribe": "Присоединиться сейчас",

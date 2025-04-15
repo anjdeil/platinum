@@ -72,6 +72,8 @@
     "login": "Login",
     "loggingIn": "Logging in",
     "log-In": "Log in",
+    "loginPage": "Login",
+    "logoutPage": "Logout",
     "password": "Password",
     "confirmPassword": "Repeat password",
     "AlreadyHaveAnAccount": "Already have an account?",
@@ -466,7 +468,8 @@
     "joinToWhatsApp": "Join to WhatsApp",
     "subscribe": "Join now",
     "allShop": "All shop",
-    "instagramNotFound": "Instagram Media not found"
+    "instagramNotFound": "Instagram Media not found",
+    "title": "Store for eyelash extensions and eyelash glue"
   },
   "SubscriptionForm": {
     "subscribe": "Join now",

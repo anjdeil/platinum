@@ -5,6 +5,7 @@ import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { validateWpPage } from '@/utils/zodValidators/validateWpPage';
 import { PageDataFullType, PageDataItemType } from '@/types/services';
 import InfoPopup from '@/components/global/popups/InfoPopup/InfoPopup';
+import { PageTitle } from '@/components/pages/pageTitle';
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
@@ -75,10 +76,13 @@ interface HomeProps {
 
 const Home: React.FC<HomeProps> = ({ sections }) => {
   return (
-    <div className="homepage">
-      <SectionRenderer sections={sections} />
-      <InfoPopup />
-    </div>
+    <>
+      <PageTitle />
+      <div className="homepage">
+        <SectionRenderer sections={sections} />
+        <InfoPopup />
+      </div>
+    </>
   );
 };
 

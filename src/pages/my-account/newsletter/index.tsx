@@ -107,7 +107,7 @@ export default function Subscription({ email }: SubscriptionProps) {
   };
 
   return (
-    <AccountLayout>
+    <AccountLayout nameSpace={'MyAccount'} spaceKey={'subscription'}>
       <AccountTitle as={'h1'} textalign="center" uppercase marginBottom="24">
         {t('subscription')}
       </AccountTitle>
