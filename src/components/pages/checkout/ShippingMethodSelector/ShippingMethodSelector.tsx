@@ -26,6 +26,8 @@ import { CustomRequired } from '@/components/global/forms/CustomFormInput/styles
 import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
 import { useAppSelector } from '@/store';
 
+const inpostMethodsIds = ['easypack_parcel_machines', 'easypack_shipping_courier', 'easypack_cod_shipping_courier'];
+
 export default function ShippingMethodSelector({
                                                  methods,
                                                  isLoading,
@@ -80,6 +82,9 @@ export default function ShippingMethodSelector({
                     <ShippingMethodSelectorMethodName>
                       {t(method.title)}
                     </ShippingMethodSelectorMethodName>
+                    {inpostMethodsIds.includes(method.method_id) &&
+                      <ShippingMethodSelectorMethodDescription>{t('deliveryEstimate')}</ShippingMethodSelectorMethodDescription>
+                    }
                     {method.method_id === 'local_pickup' &&
                       <ShippingMethodSelectorMethodDescription>{address}</ShippingMethodSelectorMethodDescription>
                     }

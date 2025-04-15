@@ -502,13 +502,14 @@
     "parcelLocker": "Paketstation",
     "selectParcelLocker": "Paketstation auswählen",
     "deliveryUnavailable": "Für die ausgewählte Region sind keine Liefermethoden verfügbar. Bitte überprüfen Sie Ihr Land.",
-    "InPost Locker 24/7": "InPost Paketautomat 24/7",
+    "InPost Locker 24/7": "InPost Paczkomat ® 24/7",
     "InPost Courier": "InPost Kurier",
     "InPost Courier – Cash on delivery": "InPost Kurier – Nachnahme",
     "Pickup": "Abholung",
     "Poczta Polska": "Poczta Polska",
     "Express Delivery": "Express-Lieferung",
-    "GLS": "GLS"
+    "GLS": "GLS",
+    "deliveryEstimate": "1-2 Arbeitstage"
   },
   "InPostGeowidget": {
     "close": "Schließen"
