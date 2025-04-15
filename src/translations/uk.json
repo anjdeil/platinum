@@ -502,13 +502,14 @@
     "parcelLocker": "Поштомат",
     "selectParcelLocker": "Вибрати поштомат",
     "deliveryUnavailable": "Способи доставки недоступні для обраного регіону. Будь ласка, перевірте свою країну.",
-    "InPost Locker 24/7": "InPost Поштомат 24/7",
-    "InPost Courier": "InPost Кур'єр",
-    "InPost Courier – Cash on delivery": "InPost Кур'єр – Накладений платіж",
+    "InPost Locker 24/7": "InPost Paczkomat ® 24/7",
+    "InPost Courier": "InPost Kurier",
+    "InPost Courier – Cash on delivery": "InPost Kurier – Накладений платіж",
     "Pickup": "Самовивіз",
     "Poczta Polska": "Poczta Polska",
     "Express Delivery": "Експрес-доставка",
-    "GLS": "GLS"
+    "GLS": "GLS",
+    "deliveryEstimate": "1-2 робочих дні"
   },
   "InPostGeowidget": {
     "close": "Закрити"

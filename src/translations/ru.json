@@ -502,13 +502,14 @@
     "parcelLocker": "Почтомат",
     "selectParcelLocker": "Выбрать почтомат",
     "deliveryUnavailable": "Способы доставки недоступны для выбранного региона. Пожалуйста, проверьте свою страну.",
-    "InPost Locker 24/7": "InPost Почтомат 24/7",
-    "InPost Courier": "InPost Курьер",
-    "InPost Courier – Cash on delivery": "InPost Курьер – Наложенный платеж",
+    "InPost Locker 24/7": "InPost Paczkomat ® 24/7",
+    "InPost Courier": "InPost Kurier",
+    "InPost Courier – Cash on delivery": "InPost Kurier – Наложенный платеж",
     "Pickup": "Самовывоз",
     "Poczta Polska": "Poczta Polska",
     "Express Delivery": "Экспресс-доставка",
-    "GLS": "GLS"
+    "GLS": "GLS",
+    "deliveryEstimate": "1-2 рабочих дня"
   },
   "InPostGeowidget": {
     "close": "Закрыть"
