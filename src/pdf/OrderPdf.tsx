@@ -12,6 +12,7 @@ import {
 import { formatPrice } from '@/utils/price/formatPrice';
 import { lineOrderItems } from '@/types/store/reducers/сartSlice';
 import { getMetaDataValue } from '@/utils/myAcc/getMetaDataValue';
+import React from 'react';
 
 Font.register({
   family: 'Roboto',
@@ -228,8 +229,8 @@ const OrderPdf = ({
                 : ''
             }`;
             return (
-              <>
-                <View key={name} style={styles.split}>
+              <React.Fragment key={line.id}>
+                <View style={styles.split}>
                   <View style={styles.splitFirst}>
                     <Text style={styles.text}>{t('discount')}</Text>
                   </View>
@@ -241,7 +242,7 @@ const OrderPdf = ({
                   </View>
                 </View>
 
-                <View key={line.id} style={styles.split}>
+                <View style={styles.split}>
                   <View style={styles.splitMiddle}>
                     <Text style={styles.text}>
                       {name}
@@ -249,7 +250,7 @@ const OrderPdf = ({
                     </Text>
                   </View>
                 </View>
-              </>
+              </React.Fragment>
             );
           })}
 
