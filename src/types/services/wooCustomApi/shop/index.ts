@@ -16,6 +16,7 @@ export const AddressTypeSchema = z.object({
     state: z.string(),
     postcode: z.string(),
     country: z.string(),
+    company: z.string().optional(),
     email: z.string().optional(),
     phone: z.string().optional()
 });

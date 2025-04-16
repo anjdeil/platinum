@@ -1,28 +1,40 @@
 import ErrorPage from '@/components/pages/404/ErrorPage';
 import { PageTitle } from '@/components/pages/pageTitle';
-import { GetStaticProps } from 'next';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { NextIntlClientProvider } from 'next-intl';
+import { FlexBox } from '@/styles/components';
+import { CircularProgress } from '@mui/material';
 
 const isLocaleRuOrUk = (locale: string | undefined) =>
   locale === 'ru' || locale === 'uk';
 
-export const getStaticProps: GetStaticProps = async ({ locale }) => {
-  const messages = (await import(`../translations/${locale}.json`)).default;
-  return {
-    props: {
-      messages,
-      buttonWidth: isLocaleRuOrUk(locale) ? '314px' : '242px',
-    },
-  };
-};
+export default function Custom500() {
+  const { locale } = useRouter();
+  const [messages, setMessages] = useState<Record<string, string> | null>(null);
 
-export default function Custom500({ buttonWidth }: { buttonWidth: string }) {
+  const buttonWidth = isLocaleRuOrUk(locale) ? '314px' : '242px';
+
+  useEffect(() => {
+    const loadMessages = async () => {
+      const msgs = (await import(`../translations/${locale}.json`)).default;
+      setMessages(msgs);
+    };
+
+    loadMessages();
+  }, [locale]);
+
+  if (!locale || !messages) {
+    return (
+      <FlexBox justifyContent="center" alignItems="center" margin="100px">
+        <CircularProgress />
+      </FlexBox>
+    );
+  }
   return (
-    <>
-      <PageTitle nameSpace={'NotFoundPage'} spaceKey={'serverError'} />
-      <ErrorPage
-        imageURL={`/assets/images/500.svg`}
-        buttonWidth={buttonWidth}
-      />
-    </>
+    <NextIntlClientProvider locale={locale!} messages={messages}>
+      <PageTitle nameSpace="NotFoundPage" spaceKey="serverError" />
+      <ErrorPage imageURL="/assets/images/500.svg" buttonWidth={buttonWidth} />
+    </NextIntlClientProvider>
   );
 }

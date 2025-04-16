@@ -9,6 +9,7 @@ import { StyledOrderButton } from './styles';
 const PDFDownloadButton: React.FC<PDFDownloadButtonProps> = ({ item }) =>
 {
   const t = useTranslations("MyAccount");
+  const tCheckout = useTranslations("Checkout");
 
   const [isClient, setIsClient] = useState(false);
 
@@ -23,7 +24,7 @@ const PDFDownloadButton: React.FC<PDFDownloadButtonProps> = ({ item }) =>
     }
 
   return (
-    <PDFDownloadLink document={<OrderPdf order={item} />} fileName={`order-${item.id}.pdf`}>
+    <PDFDownloadLink document={<OrderPdf order={item} t={tCheckout}/>} fileName={`order-${item.id}.pdf`}>
       <StyledOrderButton aria-label={t("downloadPdf")} >
           <Image width={28} height={28} src={`/assets/icons/pdf-icon.svg`} alt="pdf" />
       </StyledOrderButton>
