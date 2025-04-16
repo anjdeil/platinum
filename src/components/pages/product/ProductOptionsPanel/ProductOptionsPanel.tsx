@@ -19,6 +19,38 @@ export const ProductOptionsPanel: FC<ProductOptionsPanelType> = ({
     [attributes, variations]
   );
 
+  const getFilteredAttribute = useCallback(
+    (attr: (typeof attributes)[0], index: number): typeof attr => {
+      if (index === 0) return attr;
+
+      const prevSelected = Array.from(chosenOptions.entries()).filter(
+        ([slug]) => {
+          const currentAttrIndex = attributes.findIndex(a => a.slug === slug);
+          return currentAttrIndex >= 0 && currentAttrIndex < index;
+        }
+      );
+
+      const filteredVariations = variations.filter(variation => {
+        return prevSelected.every(([key, value]) => {
+          const match = variation.attributes.find(attr => attr.slug === key);
+          return match?.option === value;
+        });
+      });
+
+      const optionSlugs = new Set<string>();
+      filteredVariations.forEach(variation => {
+        const match = variation.attributes.find(a => a.slug === attr.slug);
+        if (match) optionSlugs.add(match.option);
+      });
+
+      return {
+        ...attr,
+        options: attr.options.filter(opt => optionSlugs.has(opt.slug)),
+      };
+    },
+    [attributes, variations, chosenOptions]
+  );
+
   /** Sanitize chosen options */
   const sanitizeChosenOptions = useCallback(
     (optionsMap: Map<string, string>) => {
@@ -100,7 +132,7 @@ export const ProductOptionsPanel: FC<ProductOptionsPanelType> = ({
 
   useEffect(() => {
     setDefaultAttributes();
-  }, []);
+  }, [router.asPath]);
 
   /** Update chosen options by click on option */
   function updateChosenOptions(attr: string, option: string) {
@@ -133,38 +165,7 @@ export const ProductOptionsPanel: FC<ProductOptionsPanelType> = ({
   return (
     <>
       {filteredAttributes.map((attr, index) => {
-        let filteredAttr = attr;
-
-        if (index > 0) {
-          const prevSelected = Array.from(chosenOptions.entries()).filter(
-            ([slug]) => {
-              const currentAttrIndex = attributes.findIndex(
-                a => a.slug === slug
-              );
-              return currentAttrIndex >= 0 && currentAttrIndex < index;
-            }
-          );
-
-          const filteredVariations = variations.filter(variation => {
-            return prevSelected.every(([key, value]) => {
-              const match = variation.attributes.find(
-                attr => attr.slug === key
-              );
-              return match?.option === value;
-            });
-          });
-
-          const optionSlugs = new Set<string>();
-          filteredVariations.forEach(variation => {
-            const match = variation.attributes.find(a => a.slug === attr.slug);
-            if (match) optionSlugs.add(match.option);
-          });
-
-          filteredAttr = {
-            ...attr,
-            options: attr.options.filter(opt => optionSlugs.has(opt.slug)),
-          };
-        }
+        const filteredAttr = getFilteredAttribute(attr, index);
 
         if (attr.slug === 'colour') {
           return (
