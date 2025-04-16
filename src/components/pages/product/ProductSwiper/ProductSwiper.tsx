@@ -82,7 +82,7 @@ const ProductSwiper: React.FC<SwiperProps> = ({ data }) => {
               <ImageStyled
                 unoptimized={true}
                 priority
-                src="/assets/images/not-found.webp"
+                src="/assets/images/not-found.png"
                 alt="Product not found"
                 width={452}
                 height={452}
@@ -140,7 +140,7 @@ const ProductSwiper: React.FC<SwiperProps> = ({ data }) => {
                 <ImageStyled
                   unoptimized={true}
                   priority
-                  src={item?.src || '/assets/images/not-found.webp'}
+                  src={item?.src || '/assets/images/not-found.png'}
                   alt={`Product ${index + 1}`}
                   width={452}
                   height={452}
@@ -184,7 +184,7 @@ const ProductSwiper: React.FC<SwiperProps> = ({ data }) => {
                         '/assets/images/video-thumbnail.jpg'
                       : item.type === 'video' && item.name !== 'youtube'
                       ? '/assets/images/video-thumbnail.jpg'
-                      : item?.src || '/assets/images/not-found.webp'
+                      : item?.src || '/assets/images/not-found.png'
                   }
                   alt={`Thumbnail ${index + 1}`}
                   width={92}
