@@ -4,7 +4,6 @@ import transformCategoriesMenu from '@/services/transformers/transformCategories
 import { useAppDispatch, useAppSelector } from '@/store';
 import MenuCategoriesSlice from '@/store/slices/MenuCategoriesSlice';
 import { Title } from '@/styles/components';
-import CategoryType from '@/types/components/shop/categories/categories';
 import { CategoriesMenuPropsType } from '@/types/components/shop/categories/categoriesMenu';
 import { FC, useCallback, useEffect } from 'react';
 import {
@@ -15,6 +14,7 @@ import {
   ListWrapper,
 } from './styles';
 import { popupClosed } from '@/store/slices/PopupSlice';
+import { CategoryType } from '@/types/pages/shop';
 
 const CategoriesMenu: FC<CategoriesMenuPropsType> = ({
   selectedCategories,

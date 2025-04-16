@@ -11,6 +11,7 @@ export const CategorySchema = z.object({
   language_code: z.string(),
   image: z.string().optional(),
   menu_order: z.number().optional(),
+  is_hidden: z.boolean()
 });
 
 export const CategoryItemContainerPropsSchema = z.object({
