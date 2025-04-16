@@ -110,47 +110,45 @@ const ProductSwiper: React.FC<SwiperProps> = ({ data }) => {
           handleSlideChangeWithStop(swiper);
         }}
       >
-        {data.map((item, index) => (
-          <React.Fragment key={index}>
-            {item.type === 'video' ? (
-              <SwiperSlide>
-                <VideoWrapper>
-                  <ReactPlayer
-                    ref={player => {
-                      playerRefs.current[index] = player;
-                    }}
-                    url={item.src}
-                    controls
-                    max-width="452px"
-                    height="100%"
-                    style={{ overflow: 'hidden' }}
-                    muted={true}
-                    config={{
-                      file: {
-                        attributes: {
-                          controlsList: 'nodownload',
-                        },
+        {data.map((item, index) =>
+          item.type === 'video' ? (
+            <SwiperSlide key={index}>
+              <VideoWrapper>
+                <ReactPlayer
+                  ref={player => {
+                    playerRefs.current[index] = player;
+                  }}
+                  url={item.src}
+                  controls
+                  max-width="452px"
+                  height="100%"
+                  style={{ overflow: 'hidden' }}
+                  muted={true}
+                  config={{
+                    file: {
+                      attributes: {
+                        controlsList: 'nodownload',
                       },
-                    }}
-                  />
-                </VideoWrapper>
-              </SwiperSlide>
-            ) : (
-              <SwiperSlide onClick={handlerOpen}>
-                <ImageWrapper>
-                  <ImageStyled
-                    unoptimized={true}
-                    priority
-                    src={item?.src || '/assets/images/not-found.webp'}
-                    alt={`Product ${index + 1}`}
-                    width={452}
-                    height={452}
-                  />
-                </ImageWrapper>
-              </SwiperSlide>
-            )}
-          </React.Fragment>
-        ))}
+                    },
+                  }}
+                />
+              </VideoWrapper>
+            </SwiperSlide>
+          ) : (
+            <SwiperSlide key={index} onClick={handlerOpen}>
+              <ImageWrapper>
+                <ImageStyled
+                  unoptimized={true}
+                  priority
+                  src={item?.src || '/assets/images/not-found.webp'}
+                  alt={`Product ${index + 1}`}
+                  width={452}
+                  height={452}
+                />
+              </ImageWrapper>
+            </SwiperSlide>
+          )
+        )}
       </MainSwiper>
 
       <CustomWrapper>
