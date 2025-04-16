@@ -29,6 +29,14 @@ const OrderProductList: React.FC<OrderProductListProps> = ({
 }) => {
   const t = useTranslations('MyAccount');
 
+
+  const getItemUnitPrice = (item: lineOrderItems): string => {
+    return formatPrice((+item.subtotal + +item.subtotal_tax) / item.quantity);
+  };
+
+  const getItemTotalPrice = (item: lineOrderItems): string => {
+    return formatPrice(+item.subtotal + +item.subtotal_tax);
+  };
   return (
     <ProductListWrapper>
       <ListHeader>
@@ -55,7 +63,7 @@ const OrderProductList: React.FC<OrderProductListProps> = ({
               <BlockInfo>
                 <InfoTitle>{t('price')}</InfoTitle>
                 <StyledValue>
-                  {formatPrice(product.price)}&nbsp;{currency}
+                  {getItemUnitPrice(product)}&nbsp;{currency}
                 </StyledValue>
               </BlockInfo>
               <BlockInfo>
@@ -65,7 +73,7 @@ const OrderProductList: React.FC<OrderProductListProps> = ({
               <BlockInfo>
                 <InfoTitle>{t('total')}</InfoTitle>
                 <StyledValue>
-                  {formatPrice(+product.total)}&nbsp;{currency}
+                  {getItemTotalPrice(product)}&nbsp;{currency}
                 </StyledValue>
               </BlockInfo>
             </WrapperBlockInfo>

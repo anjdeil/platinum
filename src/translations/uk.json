@@ -63,7 +63,7 @@
     "email": "E-mail",
     "phone": "Номер телефону",
     "discountCode": "Промокод",
-    "amount": "Сума",
+    "amount": "Проміжний підсумок",
     "paymentMethod": "Спосіб оплати",
     "total": "Всього",
     "action": "Дія",
@@ -534,7 +534,7 @@
     "last_name": "Прізвище",
     "email": "E-mail",
     "phone": "Номер телефону",
-    "company": "Ім'я та прізвище/ Компанія",
+    "company": "Компанія",
     "nip": "НІП",
     "address_2": "Номер будинку",
     "postcode": "Поштовий індекс",
@@ -552,7 +552,14 @@
     "quantity": "Кількість",
     "price": "Ціна",
     "order": "Замовлення",
-    "orderTotals": "Підсумки замовленя"
+    "orderTotals": "Підсумки замовленя",
+    "discount": "Знижка",
+    "coupon": "Купон",
+    "includesVat": "(включає {cost} ПДВ)",
+    "summaryOrder": "Підсумок замовлення",
+    "orderValue": "Проміжний підсумок",
+    "apartmentNumber": "Номер квартири/офісу",
+    "shipping_apartmentNumber": "Номер квартири/офісу"
   },
   "Footer": {
     "myAccount": "Мій акаунт",
