@@ -174,6 +174,7 @@ export type ProductVariation = z.infer<typeof ProductVariationSchema>;
 export type ProductDataResponseType = z.infer<typeof ProductDataResponseSchema>;
 export type defaultAttributesType = z.infer<typeof ProductDefaultAttributesSchema>;
 export type ProductAttributesType = z.infer<typeof ProductAttributesSchema>;
+export type ProductAttrOptionType = z.infer<typeof ProductAttrOptionSchema>;
 export type ProductImageType = z.infer<typeof ProductImageSchema>;
 export type ProductVariationType = z.infer<typeof ProductVariationSchema>;
 export type ProductsMinimizedType = z.infer<typeof ProductsMinimizedSchema>;
