@@ -63,7 +63,7 @@
     "email": "E-mail",
     "phone": "Номер телефона",
     "discountCode": "Промокод",
-    "amount": "Сумма",
+    "amount": "Подытог",
     "paymentMethod": "Способ оплаты",
     "total": "Итого",
     "action": "Действие",
@@ -534,7 +534,7 @@
     "last_name": "Фамилия",
     "email": "E-mail",
     "phone": "Номер телефона",
-    "company": "Имя и фамилия/ Компания",
+    "company": "Компания",
     "nip": "НИП",
     "address_2": "Номер дома",
     "postcode": "Почтовый индекс",
@@ -552,7 +552,14 @@
     "quantity": "Количество",
     "price": "Цена",
     "order": "Заказ",
-    "orderTotals": "Итоги заказа"
+    "orderTotals": "Итоги заказа",
+    "discount": "Скидка",
+    "coupon": "Купон",
+    "includesVat": "(включая {cost} НДС)",
+    "summaryOrder": "Итоги заказа",
+    "orderValue": "Подытог",
+    "apartmentNumber": "Номер квартиры/офиса",
+    "shipping_apartmentNumber": "Номер квартиры/офиса"
   },
   "Footer": {
     "myAccount": "Мой аккаунт",

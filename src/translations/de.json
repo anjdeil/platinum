@@ -63,7 +63,7 @@
     "email": "E-Mail",
     "phone": "Telefon",
     "discountCode": "Rabattcode",
-    "amount": "Betrag",
+    "amount": "Zwischensumme",
     "paymentMethod": "Zahlungsmethode",
     "total": "Gesamt",
     "action": "Aktion",
@@ -534,7 +534,7 @@
     "last_name": "Nachname",
     "email": "E-Mail",
     "phone": "Telefonnummer",
-    "company": "Name und Nachname/ Firma",
+    "company": "Firma",
     "nip": "Steuernummer (NIP)",
     "address_2": "Hausnummer",
     "postcode": "Postleitzahl",
@@ -552,7 +552,14 @@
     "quantity": "Menge",
     "price": "Preis",
     "order": "Bestellung",
-    "orderTotals": "Ergebnisse bestellen"
+    "orderTotals": "Ergebnisse bestellen",
+    "discount": "Rabatt",
+    "coupon": "Gutschein",
+    "includesVat": "(inkl. {cost} MwSt.)",
+    "summaryOrder": "Bestellübersicht",
+    "orderValue": "Zwischensumme",
+    "apartmentNumber": "Wohnung/Büro Nr.",
+    "shipping_apartmentNumber": "Wohnung/Büro Nr."
   },
   "Footer": {
     "myAccount": "Mein Konto",
