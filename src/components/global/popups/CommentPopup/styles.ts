@@ -7,12 +7,19 @@ export const PopupOverlay = styled.div`
 	inset: 0;
 `;
 
-export const PopupBody = styled.div`
+interface PopupBodyProps {
+  maxWidth?: string;
+  padding?: string;
+  tabletPadding?: string;
+  mobilePadding?: string;
+}
+
+export const PopupBody = styled.div<PopupBodyProps>`
   box-sizing: border-box;
-  max-width: 791px;
+  max-width: ${({ maxWidth }) => maxWidth || '791px'};
   width: 90%;
   height: auto;
-  padding: 64px;
+  padding: ${({ padding }) => padding || '64px'};
   position: absolute;
   top: 50%;
   left: 50%;
@@ -22,12 +29,12 @@ export const PopupBody = styled.div`
 
   @media ${({ theme }) => theme.media.large} {
     // max-width: 622px;
-    // padding: 72px 80px;
+    padding: ${({ tabletPadding }) => tabletPadding || '72px 80px'};
   }
 
   @media ${({ theme }) => theme.media.medium} {
     width: 90%;
-    padding: 20px;
+    padding: ${({ mobilePadding }) => mobilePadding || '20px'};
   }
 `;
 
@@ -52,6 +59,9 @@ export const FormWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   // row-gap: 24px;
+  @media ${({ theme }) => theme.media.medium} {
+    padding: 20px;
+  }
 `;
 
 export const TextFieldsWrapper = styled.div`
@@ -74,6 +84,10 @@ export const StyledName = styled.span`
 export const StyledRatingWrapper = styled.div`
   margin-top: 8px;
   margin-bottom: 24px;
+
+  @media ${({ theme }) => theme.media.medium} {
+    margin-bottom: 16px;
+  }
 `;
 
 export const StyledForm = styled.form`
@@ -91,5 +105,8 @@ export const StyledForm = styled.form`
     border: none;
     background-color: ${({ theme }) => theme.background.secondary};
     resize: none;
+  }
+  @media ${({ theme }) => theme.media.medium} {
+    row-gap: 16px;
   }
 `;

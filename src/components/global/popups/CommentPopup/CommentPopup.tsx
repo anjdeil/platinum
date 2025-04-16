@@ -116,7 +116,12 @@ const CommentPopup: React.FC<CommentPopupProps> = ({ onClose }) => {
 
     return (
       <PopupOverlay onClick={handleClickBackground}>
-        <PopupBody>
+        <PopupBody
+          maxWidth="600px"
+          padding="32px"
+          tabletPadding="32px"
+          mobilePadding="20px"
+        >
           <CloseWrapper>
             <CloseIcon onClick={onClose} />
           </CloseWrapper>

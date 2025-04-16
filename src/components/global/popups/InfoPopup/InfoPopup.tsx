@@ -100,7 +100,7 @@ const InfoPopup: React.FC = () => {
 
   if (!imageConfig) return null;
 
-  const urlWithLocale = `/${locale}${firstBanner?.url}`;
+  // const urlWithLocale = `/${locale}${firstBanner?.url}`;
 
   return (
     <StyledContainer onClick={handleClickBackground}>
@@ -108,7 +108,7 @@ const InfoPopup: React.FC = () => {
         <StyledCloseWrapper>
           <CloseIcon onClick={handleClosePopup} padding="0" color="white" />
         </StyledCloseWrapper>
-        <StyledLink href={urlWithLocale || ''}>
+        <StyledLink href={firstBanner?.url || ''}>
           <StyledBanner
             src={imageConfig?.imageSrc}
             width={imageConfig?.width || 800}

@@ -67,6 +67,33 @@ const ProductSwiper: React.FC<SwiperProps> = ({ data }) => {
     }
   };
 
+  if (!data || data.length === 0) {
+    return (
+      <SwiperContainer>
+        <MainSwiper
+          ref={swiperRef}
+          spaceBetween={10}
+          centeredSlides={true}
+          modules={[FreeMode, Thumbs]}
+          style={{ minHeight: heightRef.current ? heightRef.current : 'auto' }}
+        >
+          <SwiperSlide>
+            <ImageWrapper>
+              <ImageStyled
+                unoptimized={true}
+                priority
+                src="/assets/images/not-found.webp"
+                alt="Product not found"
+                width={452}
+                height={452}
+              />
+            </ImageWrapper>
+          </SwiperSlide>
+        </MainSwiper>
+      </SwiperContainer>
+    );
+  }
+
   return (
     <SwiperContainer>
       <MainSwiper
