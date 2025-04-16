@@ -63,7 +63,7 @@
     "email": "E-mail",
     "phone": "Phone number",
     "discountCode": "Discount code",
-    "amount": "Amount",
+    "amount": "Subtotal",
     "paymentMethod": "Payment method",
     "total": "Total",
     "action": "Action",
@@ -552,7 +552,14 @@
     "quantity": "Quantity",
     "price": "Price",
     "order": "Order",
-    "orderTotals": "Order totals"
+    "orderTotals": "Order totals",
+    "discount": "Discount",
+    "coupon": "Coupon",
+    "includesVat": "(includes {cost} VAT)",
+    "summaryOrder": "Summary Order",
+    "orderValue": "Subtotal",
+    "apartmentNumber": "# apartment/office",
+    "shipping_apartmentNumber": "# apartment/office"
   },
   "Footer": {
     "myAccount": "My account",

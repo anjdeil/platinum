@@ -534,7 +534,7 @@
     "last_name": "Nazwisko",
     "email": "E-Mail",
     "phone": "Numer telefonu",
-    "company": "Imię i nazwisko/ Firma",
+    "company": "Firma",
     "nip": "NIP",
     "address_2": "Numer budynku",
     "postcode": "Kod pocztowy",
@@ -552,7 +552,14 @@
     "quantity": "Ilość",
     "price": "Cena",
     "order": "Zamówienie",
-    "orderTotals": "Sumy zamówień"
+    "orderTotals": "Sumy zamówień",
+    "discount": "Rabat",
+    "coupon": "Kupon",
+    "includesVat": "(zawiera {cost} VAT)",
+    "summaryOrder": "Podsumowanie zamówienia",
+    "orderValue": "Kwota",
+    "apartmentNumber": "Numer mieszkania/biura",
+    "shipping_apartmentNumber": "Numer mieszkania/biura"
   },
   "Footer": {
     "myAccount": "Moje konto",

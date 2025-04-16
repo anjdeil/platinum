@@ -12,8 +12,16 @@ import { formatPrice } from '@/utils/price/formatPrice';
 import { useTranslations } from 'next-intl';
 import { FC } from 'react';
 import OrderTotalsRowsSkeleton from './OrderTotalsRowsSkeleton';
-import { Label, LabelCode, LastRow, Row, TotalsTable, Value } from './styles';
+import { Label, LastRow, Row, TotalsTable, Value } from './styles';
 import { useAppSelector } from '@/store';
+import {
+  OrderCouponName,
+  OrderCouponNamesBox,
+  OrderSummaryLineName,
+  OrderSummaryTotalTax,
+  OrderSummaryTotalValue,
+  OrderSummaryTotalWrapper,
+} from '../../cart/OrderSummary/style';
 
 interface OrderTotalsPropsType {
   order: OrderType | undefined | null;
@@ -24,13 +32,19 @@ const OrderTotals: FC<OrderTotalsPropsType> = ({
   order,
   isLoading = false,
 }) => {
-  const {address} = useAppSelector(state => state.themeOptions.data.item.contacts);
+  const { address } = useAppSelector(
+    state => state.themeOptions.data.item.contacts
+  );
 
   const subtotal = order?.line_items
     ? getSubtotalByLineItems(order.line_items)
     : 0;
   const t = useTranslations('MyAccount');
+  const tCart = useTranslations('Cart');
   const tShippingMethodSelector = useTranslations('ShippingMethodSelector');
+
+  const formattedPrice = order?.total ? formatPrice(+order?.total) : '—';
+  const formattedTax = order?.total_tax ? formatPrice(+order?.total_tax) : null;
 
   return (
     <TotalsTable>
@@ -76,7 +90,7 @@ const OrderTotals: FC<OrderTotalsPropsType> = ({
               )}
             </Row>
           ))}
-          {order?.coupon_lines?.map(line => {
+          {/* {order?.coupon_lines?.map(line => {
             const name = `${t('discountCode')} ${
               line.discount_type === 'percent'
                 ? `-${line.nominal_amount}% `
@@ -93,6 +107,34 @@ const OrderTotals: FC<OrderTotalsPropsType> = ({
                 </Value>
               </Row>
             );
+          })} */}
+          {order?.coupon_lines?.map(line => {
+            const name = `${t('discountCode')} ${
+              line.discount_type === 'percent'
+                ? `-${line.nominal_amount}% `
+                : ''
+            }`;
+            const discountTotal = order
+              ? +order.discount_total + +order.discount_tax
+              : 0;
+
+            return (
+              <Row key={line.id}>
+                <Label>
+                  <OrderSummaryLineName>
+                    {tCart('discount')}
+                  </OrderSummaryLineName>
+                  <OrderCouponNamesBox>
+                    <OrderCouponName>
+                      {name} {line.code}
+                    </OrderCouponName>
+                  </OrderCouponNamesBox>
+                </Label>
+                <Value>
+                  – {`${formatPrice(discountTotal)} ${order?.currency_symbol}`}
+                </Value>
+              </Row>
+            );
           })}
           {order?.fee_lines?.map(line => (
             <Row key={line.id}>
@@ -102,7 +144,7 @@ const OrderTotals: FC<OrderTotalsPropsType> = ({
               </Value>
             </Row>
           ))}
-          {order?.tax_lines?.map(line => (
+          {/* {order?.tax_lines?.map(line => (
             <Row key={line.id}>
               <Label>
                 {line.label} ({line.rate_percent}%)
@@ -111,7 +153,7 @@ const OrderTotals: FC<OrderTotalsPropsType> = ({
                 {formatPrice(+line.tax_total)}&nbsp;{order?.currency_symbol}
               </Value>
             </Row>
-          ))}
+          ))} */}
           <Row>
             <Label>{t('paymentMethod')}</Label>
             <Value>{order?.payment_method_title || '—'}</Value>
@@ -119,8 +161,18 @@ const OrderTotals: FC<OrderTotalsPropsType> = ({
           <LastRow>
             <Label>{t('totalToPay')}</Label>
             <Value>
-              {order?.total ? formatPrice(+order.total) : '—'}&nbsp;
-              {order?.currency_symbol}
+              <OrderSummaryTotalWrapper>
+                <OrderSummaryTotalValue>
+                  {formattedPrice} {order?.currency_symbol}
+                </OrderSummaryTotalValue>
+                {formattedTax && (
+                  <OrderSummaryTotalTax>
+                    {tCart('includesVat', {
+                      cost: `${formattedTax} ${order?.currency_symbol}`,
+                    })}
+                  </OrderSummaryTotalTax>
+                )}
+              </OrderSummaryTotalWrapper>
             </Value>
           </LastRow>
         </>
