@@ -67,7 +67,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (categoriesResp && categoriesResp.data) {
-      dispatch(setCategories(categoriesResp.data.items));
+      const categories = categoriesResp.data.items;
+      const filteredCategories = categories.filter(category => !category.is_hidden);
+      dispatch(setCategories(filteredCategories));
     }
     dispatch(setLoading(isCategoriesLoading));
   }, [categoriesResp, isCategoriesLoading, dispatch]);

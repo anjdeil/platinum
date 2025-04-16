@@ -1,5 +1,5 @@
-import CategoryType from "@/types/components/shop/categories/categories";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { CategoryType } from '@/types/pages/shop';
 
 interface CategoriesState {
   categories: CategoryType[];
