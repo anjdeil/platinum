@@ -126,27 +126,29 @@ export default function ProductPage({
         </Box>
         {product && <ProductInfo product={product} />}
         <Reviews product={product} />
-        <StyledSectionWrapper>
-          <RecommendContainer>
-            <TitleBlock>
-              <StyledText>{t('bestForYou')}</StyledText>
-              <Title as="h4" uppercase>
-                {t('recommendProduct')}
-              </Title>
-            </TitleBlock>
-            <ProductCardList
-              products={products}
-              isLoading={isLoading}
-              isError={isError}
-              columns={{
-                mobileColumns: 2,
-                tabletColumns: 4,
-                mintabletColumns: 4,
-                desktopColumns: 4,
-              }}
-            />
-          </RecommendContainer>
-        </StyledSectionWrapper>
+        {products.length > 0 && (
+          <StyledSectionWrapper>
+            <RecommendContainer>
+              <TitleBlock>
+                <StyledText>{t('bestForYou')}</StyledText>
+                <Title as="h4" uppercase>
+                  {t('recommendProduct')}
+                </Title>
+              </TitleBlock>
+              <ProductCardList
+                products={products}
+                isLoading={isLoading}
+                isError={isError}
+                columns={{
+                  mobileColumns: 2,
+                  tabletColumns: 4,
+                  mintabletColumns: 4,
+                  desktopColumns: 4,
+                }}
+              />
+            </RecommendContainer>
+          </StyledSectionWrapper>
+        )}
       </Container>
     </>
   );

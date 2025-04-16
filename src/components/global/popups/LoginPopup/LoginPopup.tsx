@@ -3,7 +3,7 @@ import CloseIcon from '../../icons/CloseIcon/CloseIcon';
 import { LoginForm } from '../../forms/LoginForm';
 
 import { FlexBox } from '@/styles/components';
-import { PopupBody, PopupOverlay } from './style';
+import { CloseWrapper, PopupBody, PopupContainer, PopupOverlay } from './style';
 
 const LoginPopup: React.FC<SwiperPopupProps> = ({ onClose }) => {
   const handleClickBackground = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -14,11 +14,20 @@ const LoginPopup: React.FC<SwiperPopupProps> = ({ onClose }) => {
 
   return (
     <PopupOverlay onClick={handleClickBackground}>
-      <PopupBody padding="24px 32px">
-        <FlexBox justifyContent="flex-end" padding="0 32px">
-          <CloseIcon onClick={onClose} />
-        </FlexBox>
-        <LoginForm redirect={false} border={false} onClose={onClose} />
+      <PopupBody
+        maxWidth="600px"
+        padding="32px"
+        tabletPadding="32px"
+        mobilePadding="20px"
+      >
+        <PopupContainer>
+          <FlexBox justifyContent="flex-end">
+            <CloseWrapper>
+              <CloseIcon onClick={onClose} />
+            </CloseWrapper>
+          </FlexBox>
+          <LoginForm redirect={false} border={false} onClose={onClose} />
+        </PopupContainer>
       </PopupBody>
     </PopupOverlay>
   );
