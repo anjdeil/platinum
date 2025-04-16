@@ -537,7 +537,22 @@
     "company": "Name und Nachname/ Firma",
     "nip": "Steuernummer (NIP)",
     "address_2": "Hausnummer",
-    "postcode": "Postleitzahl"
+    "postcode": "Postleitzahl",
+    "city": "Stadt/Stadt",
+    "address_1": "Straße",
+    "country": "Land",
+    "state": "Staat",
+    "orderWasPlaced": "Ihre Bestellung wurde am {date} erfolgreich aufgegeben. Sie ist derzeit {status}.",
+    "productName": "Produktname",
+    "billing": "Details zur Rechnungsstellung",
+    "shipping": "Einzelheiten zum Versand",
+    "paymentMethod": "Zahlungsmethode",
+    "total": "Gesamt",
+    "subtotal": "Zwischensumme",
+    "quantity": "Menge",
+    "price": "Preis",
+    "order": "Bestellung",
+    "orderTotals": "Ergebnisse bestellen"
   },
   "Footer": {
     "myAccount": "Mein Konto",

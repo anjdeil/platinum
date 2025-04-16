@@ -537,7 +537,22 @@
     "company": "Imię i nazwisko/ Firma",
     "nip": "NIP",
     "address_2": "Numer budynku",
-    "postcode": "Kod pocztowy"
+    "postcode": "Kod pocztowy",
+    "city": "Miasto",
+    "address_1": "Ulica",
+    "country": "Kraj",
+    "state": "Państwo",
+    "orderWasPlaced": "Twoje zamówienie zostało pomyślnie złożone w dniu {date}. Obecnie {status}.",
+    "productName": "Nazwa produktu",
+    "billing": "Szczegóły rozliczenia",
+    "shipping": "Szczegóły wysyłki",
+    "paymentMethod": "Metoda płatności",
+    "total": "Razem",
+    "subtotal": "Suma częściowa",
+    "quantity": "Ilość",
+    "price": "Cena",
+    "order": "Zamówienie",
+    "orderTotals": "Sumy zamówień"
   },
   "Footer": {
     "myAccount": "Moje konto",
