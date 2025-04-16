@@ -19,6 +19,7 @@ export const PopupBody = styled.div<PopupBodyProps>`
   max-width: ${({ maxWidth }) => maxWidth || '791px'};
   width: 90%;
   height: auto;
+  max-height: 90vh;
   padding: ${({ padding }) => padding || '64px'};
   position: absolute;
   top: 50%;
@@ -26,15 +27,20 @@ export const PopupBody = styled.div<PopupBodyProps>`
   transform: translate(-50%, -50%);
   border-radius: 8px;
   background-color: ${({ theme }) => theme.colors.white};
+  overflow-y: auto;
 
   @media ${({ theme }) => theme.media.large} {
-    // max-width: 622px;
     padding: ${({ tabletPadding }) => tabletPadding || '72px 80px'};
   }
 
   @media ${({ theme }) => theme.media.medium} {
     width: 90%;
     padding: ${({ mobilePadding }) => mobilePadding || '20px'};
+  }
+
+  @media ${({ theme }) => theme.media.smallest} {
+    max-height: calc(100vh - 80px);
+    top: 45%;
   }
 `;
 
