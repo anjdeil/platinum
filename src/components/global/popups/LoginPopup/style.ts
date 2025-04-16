@@ -37,14 +37,20 @@ export const PopupBody = styled.div<PopupBodyProps>`
   }
 `;
 
+export const PopupContainer = styled.div`
+  padding: 16px;
+  border-radius: 8px;
+  border: ${({ theme }) => `1px solid ${theme.colors.lightBorder}`};
+`;
+
 export const CloseWrapper = styled.div`
   position: absolute;
   z-index: 10;
-  top: 24px;
-  right: 24px;
+  top: 4px;
+  right: 4px;
 
   @media ${({ theme }) => theme.media.medium} {
-    top: 28px;
-    right: 28px;
+    top: 18px;
+    right: 18px;
   }
 `;

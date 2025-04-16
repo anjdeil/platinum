@@ -158,7 +158,7 @@ export const LoginForm: FC<LoginFormProps> = ({
           <ActiveText href="/my-account/reset-password">
             {t('ForgotYourPassword')}
           </ActiveText>
-          <FlexBox gap="5px">
+          <FlexBox gap="10px" flexWrap="wrap">
             <div> {t('DontHaveAnAccount')}</div>
             <ActiveText href="/my-account/registration">
               {t('SignUpNow')}
