@@ -3,6 +3,11 @@ import styled from '@emotion/styled';
 
 export const StyledSubscribeForm = styled.form`
   position: relative;
+  margin-bottom: 16px;
+
+  @media ${({ theme }) => theme.media.medium} {
+    margin-bottom: 0px;
+  }
 `;
 
 export const StyledSubscribeInput = styled(Input)`
@@ -34,11 +39,14 @@ export const StyledSubscribeInput = styled(Input)`
   @media ${({ theme }) => theme.media.medium} {
     width: 100%;
     padding: 13px 10px;
-    margin-bottom: 16px;
+    margin-bottom: 24px;
   }
 `;
 
-export const StyledSubscribeButton = styled.button`
+type StyledSubscribeButtonProps = {
+  isdisabled?: boolean;
+};
+export const StyledSubscribeButton = styled.button<StyledSubscribeButtonProps>`
   position: absolute;
   right: 0;
   top: 0;
@@ -55,6 +63,7 @@ export const StyledSubscribeButton = styled.button`
   padding: 0 16px;
   text-decoration: none;
   cursor: pointer;
+  opacity: ${({ isdisabled }) => (isdisabled ? 0.8 : 1)};
 
   overflow-wrap: break-word;
 
@@ -75,25 +84,40 @@ export const StyledSubscribeButton = styled.button`
 `;
 
 export const StyledError = styled.p`
+  position: absolute;
+  top: 64px;
+  left: 0;
+  right: 0;
   font: ${({ theme }) => theme.fonts.bodypresmallReg};
-  font-weight: 600;
+  font-weight: 500;
   color: ${({ theme }) => theme.colors.error};
-  padding-top: 8px;
 
+  @media ${({ theme }) => theme.media.large} {
+    top: 56px;
+  }
   @media ${({ theme }) => theme.media.medium} {
-    padding-top: 0;
-    padding-bottom: 8px;
+    top: 48px;
   }
 `;
 
 export const StyledSuccessMessage = styled.p`
+  position: absolute;
+  top: 64px;
+  left: 0;
+  right: 0;
   font: ${({ theme }) => theme.fonts.bodypresmallReg};
-  font-weight: 600;
-  color: ${({ theme }) => theme.colors.success};
-  padding-top: 8px;
+  font-weight: 500;
+  color: ${({ theme }) => theme.colors.error};
+  font: ${({ theme }) => theme.fonts.bodyMiddleReg};
+  font-weight: 500;
+  color: ${({ theme }) => theme.colors.new};
+
+  @media ${({ theme }) => theme.media.large} {
+    top: 48px;
+  }
 
   @media ${({ theme }) => theme.media.medium} {
-    padding-top: 0;
-    padding-bottom: 8px;
+    position: static;
+    padding: 8px 0;
   }
 `;
