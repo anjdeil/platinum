@@ -129,7 +129,7 @@ export const getServerSideProps: GetServerSideProps = async (
     if (!cookies?.authToken) {
       return {
         redirect: {
-          destination: '/my-account/login',
+          destination: `/${locale}/my-account/login`,
           permanent: false,
         },
       };
@@ -144,7 +144,7 @@ export const getServerSideProps: GetServerSideProps = async (
     if (authResp?.data?.code !== 'jwt_auth_valid_token') {
       return {
         redirect: {
-          destination: '/my-account/login',
+          destination: `/${locale}/my-account/login`,
           permanent: false,
         },
       };
@@ -154,7 +154,7 @@ export const getServerSideProps: GetServerSideProps = async (
     if (!isJwtDecodedDataValid) {
       return {
         redirect: {
-          destination: '/my-account/login',
+          destination: `/${locale}/my-account/login`,
           permanent: false,
         },
       };

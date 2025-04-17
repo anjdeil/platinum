@@ -3,7 +3,6 @@ import OrderTable from '@/components/pages/order/OrderTable/OrderTable';
 import { useResponsive } from '@/hooks/useResponsive';
 import wpRestApi from '@/services/wpRestApi';
 import { useFetchOrdersQuery } from '@/store/rtk-queries/wooCustomApi';
-import { redirectToLogin } from '@/utils/consts';
 import parseCookies from '@/utils/parseCookies';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { useTranslations } from 'next-intl';
@@ -17,11 +16,26 @@ interface UserType {
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
+  const { locale } = context;
   const cookies = context.req.headers.cookie;
-  if (!cookies) return redirectToLogin;
+  if (!cookies) {
+    return {
+      redirect: {
+        destination: `/${locale}/my-account/login`,
+        permanent: false,
+      },
+    };
+  }
 
   const cookieRows = parseCookies(cookies);
-  if (!cookieRows.authToken) return redirectToLogin;
+  if (!cookieRows.authToken) {
+    return {
+      redirect: {
+        destination: `/${locale}/my-account/login`,
+        permanent: false,
+      },
+    };
+  }
 
   try {
     const userResponse = await wpRestApi.get(
@@ -31,7 +45,14 @@ export const getServerSideProps: GetServerSideProps = async (
     );
 
     const userData = userResponse.data;
-    if (!userData) return redirectToLogin;
+    if (!userData) {
+      return {
+        redirect: {
+          destination: `/${locale}/my-account/login`,
+          permanent: false,
+        },
+      };
+    }
 
     return {
       props: {

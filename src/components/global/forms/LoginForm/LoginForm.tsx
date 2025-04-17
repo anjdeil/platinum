@@ -83,7 +83,7 @@ export const LoginForm: FC<LoginFormProps> = ({
       if (!isTokenValid) throw new Error('Auth token validation failed.');
 
       if (redirect) {
-        router.push('/my-account');
+        router.push(`/${router.locale}/my-account`);
       }
 
       setcustomSuccess(true);
@@ -155,12 +155,12 @@ export const LoginForm: FC<LoginFormProps> = ({
         </StyledButton>
 
         <BottomWrapper>
-          <ActiveText href="/my-account/reset-password">
+          <ActiveText href={`/${router.locale}/my-account/reset-password`}>
             {t('ForgotYourPassword')}
           </ActiveText>
           <FlexBox gap="10px" flexWrap="wrap">
             <div> {t('DontHaveAnAccount')}</div>
-            <ActiveText href="/my-account/registration">
+            <ActiveText href={`/${router.locale}/my-account/registration`}>
               {t('SignUpNow')}
             </ActiveText>
           </FlexBox>

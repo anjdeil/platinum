@@ -23,6 +23,7 @@ export const getServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
   const cookies = context.req.cookies;
+  const { locale } = context;
 
   try {
     if (!cookies?.authToken)
@@ -58,7 +59,7 @@ export const getServerSideProps = async (
     console.error(err);
     return {
       redirect: {
-        destination: '/my-account/login',
+        destination: `/${locale}/my-account/login`,
         permanent: false,
       },
     };
