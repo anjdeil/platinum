@@ -32,17 +32,21 @@ export const FooterSecondTitle = styled.h3`
 export const FooterLogoImage = styled(Image)`
   @media ${({ theme }) => theme.media.large} {
     width: 104px;
-    height: 93px;
+    height: 79px;
   }
   @media ${({ theme }) => theme.media.medium} {
     width: 129px;
-    height: 116px;
+    height: 98px;
   }
 `;
 export const FooterLogoWrapper = styled.div`
   margin-right: 36px;
   display: flex;
   align-items: start;
+
+  @media ${({ theme }) => theme.media.medium} {
+    margin-right: 0px;
+  }
 `;
 //---------------GRID & CONTAINERS-------------
 export const FooterGridContainer = styled.div`
