@@ -6,15 +6,17 @@ import { useTranslations } from 'next-intl';
 import Breadcrumbs from '@/components/global/Breadcrumbs/Breadcrumbs';
 import { RegistrationForm } from '@/components/global/forms/RegistrationForm';
 import { PageTitle } from '@/components/pages/pageTitle';
+import { useRouter } from 'next/router';
 
 export default function Registration() {
   const t = useTranslations('MyAccount');
   const tBreadcrumbs = useTranslations('Breadcrumbs');
+  const { locale } = useRouter();
 
   const breadcrumbsLinks = [
-    { name: tBreadcrumbs('homePage'), url: '/' },
-    { name: tBreadcrumbs('myAccount'), url: '/my-account' },
-    { name: t('registration'), url: '/my-account/registration' },
+    { name: tBreadcrumbs('homePage'), url: `/${locale}` },
+    { name: tBreadcrumbs('myAccount'), url: `/${locale}/my-account` },
+    { name: t('registration'), url: `/${locale}/my-account/registration` },
   ];
 
   return (
@@ -36,6 +38,7 @@ export const getServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
   const cookies = context.req.cookies;
+  const { locale } = context;
   if (!cookies?.authToken) return { props: {} };
 
   try {
@@ -49,7 +52,7 @@ export const getServerSideProps = async (
 
     return {
       redirect: {
-        destination: '/my-account',
+        destination: `/${locale}/my-account/login`,
         permanent: false,
       },
     };

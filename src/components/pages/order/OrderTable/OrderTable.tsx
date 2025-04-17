@@ -28,10 +28,12 @@ import {
   StyledTotalSpan,
   StyledTr,
 } from './styles';
+import { useRouter } from 'next/router';
 
 const OrderTable: React.FC<TableProps> = ({ orderList, title }) => {
   const theme = useTheme();
   const t = useTranslations('MyAccount');
+  const { locale } = useRouter();
 
   return (
     <>
@@ -113,14 +115,14 @@ const OrderTable: React.FC<TableProps> = ({ orderList, title }) => {
                     </StyledTd>
                     <StyledActionsTd>
                       <StyledLinkMobileButton
-                        href={`/my-account/orders/${item.id}`}
+                        href={`/${locale}/my-account/orders/${item.id}`}
                       >
                         <StyledButton color={theme.colors.white}>
                           {t('seeMore')}
                         </StyledButton>
                       </StyledLinkMobileButton>
                       <StyledLinkDesktopButton
-                        href={`/my-account/orders/${item.id}`}
+                        href={`/${locale}/my-account/orders/${item.id}`}
                       >
                         <StyledOrderButton aria-label={t('seeMore')}>
                           <Image
