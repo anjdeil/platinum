@@ -3,28 +3,30 @@ import Image from 'next/image';
 
 export const AboutContainer = styled.div`
   width: 100%;
-  height: 648px;
+  height: auto;
   display: flex;
   flex-direction: row;
   align-items: flex-end;
   justify-content: center;
   background-color: ${({ theme }) => theme.background.secondary};
-  column-gap: 117px;
-  padding: 0 78px;
+  column-gap: 76px;
+  padding: 24px 78px 0;
 
-  @media ${({ theme }) => theme.media.largePlus} {
-    height: 365px;
-    column-gap: 76px;
-    padding: 0 32px;
+  @media ${({ theme }) => theme.media.middle} {
+    padding: 24px 32px 0;
+  }
+
+  @media ${({ theme }) => theme.media.middle} {
+    column-gap: 32px;
+    padding: 24px 32px 0;
   }
 
   @media ${({ theme }) => theme.media.medium} {
     flex-direction: column;
     align-items: center;
-    height: 812px;
     column-gap: 0;
-    row-gap: 76px;
-    padding: 0 28px;
+    row-gap: 32px;
+    padding: 24px 28px 0;
   }
 `;
 
@@ -33,17 +35,29 @@ export const ImageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const StyledImage = styled(Image)`
-  object-fit: contain;
-  width: 641px;
-  height: 637px;
-
+  max-width: 641px;
+  height: auto;
   @media ${({ theme }) => theme.media.largePlus} {
-    width: 284px;
-    height: 329px;
-    object-fit: cover;
+    max-width: 400px;
+  }
+
+  @media ${({ theme }) => theme.media.middle} {
+    max-width: 380px;
+  }
+
+  @media ${({ theme }) => theme.media.mediumLarge} {
+    max-width: 320px;
+  }
+
+  @media ${({ theme }) => theme.media.preSmall} {
+    max-width: 284px;
   }
 `;
 
@@ -56,12 +70,19 @@ export const ContentWrapper = styled.div`
   width: 524px;
 
   @media ${({ theme }) => theme.media.largePlus} {
+    width: 400px;
+  }
+
+  @media ${({ theme }) => theme.media.mediumLarge} {
     width: 344px;
   }
 
   @media ${({ theme }) => theme.media.medium} {
-    width: 300px;
     align-items: center;
+  }
+
+  @media ${({ theme }) => theme.media.preSmall} {
+    max-width: 284px;
   }
 `;
 
@@ -108,6 +129,7 @@ export const StyledSubtitle = styled.p`
 export const StyledTextContent = styled.p`
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
   color: ${({ theme }) => theme.colors.black};
+  margin-bottom: 24px;
 
   @media ${({ theme }) => theme.media.largePlus} {
     font: ${({ theme }) => theme.fonts.bodypresmallReg};
