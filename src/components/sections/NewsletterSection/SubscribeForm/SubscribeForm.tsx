@@ -20,6 +20,7 @@ export const SubscribeForm: FC<SubscriptionFormProps> = ({}) => {
   const [subscribe, { isLoading }] = useSubscribeMutation();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [isSuccessMessageShown, setIsSuccessMessageShown] = useState(false);
 
   const t = useTranslations('SubscriptionForm');
 
@@ -30,7 +31,7 @@ export const SubscribeForm: FC<SubscriptionFormProps> = ({}) => {
     reset,
   } = useForm<SubscriptionFormValues>({
     resolver: zodResolver(SubscriptionFormSchema),
-    mode: 'onChange',
+    mode: 'onBlur',
   });
 
   const submitForm = async ({ email }: { email: string }) => {
@@ -39,22 +40,27 @@ export const SubscribeForm: FC<SubscriptionFormProps> = ({}) => {
 
       if (response.message === 'Subscribed') {
         setErrorMessage(null);
+        setIsSuccessMessageShown(true);
         setSuccessMessage(t('successSubscribe'));
         reset();
       } else if (response.message === 'User already subscribed') {
         setErrorMessage(null);
+        setIsSuccessMessageShown(true);
         setSuccessMessage(t('userAlreadySubscribed'));
         reset();
       } else {
         setErrorMessage(response.message || t('failedSubscribe'));
+        setIsSuccessMessageShown(false);
         setSuccessMessage(null);
       }
     } catch (err) {
       setErrorMessage((err as any).data?.message || t('failedSubscribe'));
+      setIsSuccessMessageShown(false);
       setSuccessMessage(null);
     } finally {
       setTimeout(() => {
         setErrorMessage(null);
+        setIsSuccessMessageShown(false);
         setSuccessMessage(null);
       }, 5000);
     }
@@ -72,15 +78,20 @@ export const SubscribeForm: FC<SubscriptionFormProps> = ({}) => {
       />
       {errors.email && <StyledError>{t('typeValidEmail')}</StyledError>}
       {errorMessage && <StyledError>{errorMessage}</StyledError>}
-      {successMessage && (
-        <StyledSuccessMessage>{successMessage}</StyledSuccessMessage>
-      )}
+
       <StyledSubscribeButton
         type="submit"
-        disabled={!isValid || isSubmitting || isLoading}
+        disabled={
+          !isValid || isSubmitting || isLoading || isSuccessMessageShown
+        }
+        isdisabled={isSuccessMessageShown}
       >
         {isSubmitting || isLoading ? t('sending') : t('subscribe')}
       </StyledSubscribeButton>
+
+      {successMessage && (
+        <StyledSuccessMessage>{successMessage}</StyledSuccessMessage>
+      )}
     </StyledSubscribeForm>
   );
 };

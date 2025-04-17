@@ -30,16 +30,16 @@ const TopBar: React.FC = () => {
       <Stack>
         <LogoLink
           href="/"
-          width={44}
-          height={44}
+          width={63}
+          height={48}
           desktopwidth={92}
-          desktopheight={92}
+          desktopheight={70}
         >
           <LogoLinkImage
-            src="/assets/icons/logo.svg"
+            src="/assets/icons/logo.png"
             alt="Logo"
             width={92}
-            height={92}
+            height={70}
           />
         </LogoLink>
         <NavWrapper>

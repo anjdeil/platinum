@@ -314,10 +314,10 @@ export const Footer: FC = () => {
           <FooterLogoWrapper>
             <Link href={'/'} passHref>
               <FooterLogoImage
-                src="/assets/icons/logo_white.svg"
+                src="/assets/icons/logo_white.png"
                 alt="Logo"
                 width={175}
-                height={158}
+                height={133}
               />
             </Link>
           </FooterLogoWrapper>

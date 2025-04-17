@@ -8,18 +8,13 @@ export const StyledContainer = styled.div`
   justify-content: center;
   align-items: center;
   background-image: url('/assets/images/newsletter-bg.jpg');
-  background-position: top -350px left 0;
+  background-repeat: no-repeat;
+  background-position: top center;
   background-size: cover;
   padding: 137px 0;
 
-  @media ${({ theme }) => theme.media.large} {
-    background-position: top -300px left 0;
-    padding: 49px 0;
-  }
-
   @media ${({ theme }) => theme.media.medium} {
-    background-position: top 0 left 0;
-    padding: 47px 0;
+    background-image: url('/assets/images/newsletter-mob-bg.jpg');
   }
 `;
 
@@ -31,7 +26,7 @@ export const StyledCard = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 32px 48px;
-  background-color: ${({ theme }) => theme.background.secondary};
+  background-color: rgba(242, 248, 254, 0.8);
   border-radius: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
@@ -124,6 +119,7 @@ export const StyledLink = styled(Link)`
 
   @media ${({ theme }) => theme.media.medium} {
     width: 239px;
+    margin-bottom: 8px;
   }
 `;
 
