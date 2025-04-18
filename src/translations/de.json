@@ -123,7 +123,19 @@
     "dataFailed": "Validierung der Kundenantwortdaten fehlgeschlagen.",
     "invalidResp": "Ungültige Kundenantwort.",
     "unknownError": "Unbekannter Serverfehler.",
-    "customerPanel": "Kundenpanel"
+    "customerPanel": "Kundenpanel",
+    "january": "Januar",
+    "february": "Februar",
+    "march": "März",
+    "april": "April",
+    "may": "Mai",
+    "june": "Juni",
+    "july": "Juli",
+    "august": "August",
+    "september": "September",
+    "october": "Oktober",
+    "november": "November",
+    "december": "Dezember"
   },
   "TopBar": {
     "CallUs": "Kontakt"
@@ -543,7 +555,7 @@
     "address_1": "Straße und Gebäudenummer",
     "country": "Land",
     "state": "Staat",
-    "orderWasPlaced": "Ihre Bestellung wurde am {date} erfolgreich aufgegeben. Sie ist derzeit {status}.",
+    "orderWasPlaced": "Ihre Bestellung wurde am {date} erfolgreich aufgegeben. Aktuell ist der Status {status}.",
     "productName": "Produktname",
     "billing": "Details zur Rechnungsstellung",
     "shipping": "Einzelheiten zum Versand",
