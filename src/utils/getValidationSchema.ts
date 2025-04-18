@@ -120,7 +120,7 @@ export const getValidationSchema = (
           message: t('yourStreetAddressIsTooLong'),
         },
         pattern: {
-          value: /^(?!.*--)(?!.*\.\.)(?!.*,$)(?!.*\.$)[\p{L}\d\s\-.,]+$/u,
+          value: /^(?!.*([\-.,/\s])\1)[\p{L}\d\s\-.,/]+$/u,
           message: t('invalidCharacters'),
         },
       };
@@ -136,7 +136,7 @@ export const getValidationSchema = (
           message: t('yourStreetAddressIsTooLong'),
         },
         pattern: {
-          value: /^[\p{L}\d\s\-.,/]+$/u,
+          value: /^(?!.*([\-.,/\s])\1)[\p{L}\d\s\-.,/]+$/u,
           message: t('invalidCharacters'),
         },
       };

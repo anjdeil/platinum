@@ -45,7 +45,7 @@ export const UserInfoFormSchema = (
     .min(1, { message: t('pleaseFillInTheStreetBuildingAddress') })
     .min(3, { message: t('yourStreetAddressIsTooShort') })
     .max(150, { message: t('yourStreetAddressIsTooLong') })
-    .regex(/^[\p{L}\d\s\-.,/]+$/u, {
+    .regex(/^(?!.*([\-.,/\s])\1)[\p{L}\d\s\-.,/]+$/u, {
       message: t('invalidCharacters'),
     });
 

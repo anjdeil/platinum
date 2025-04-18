@@ -66,7 +66,10 @@ export const RegistrationFormSchema2 = (isLoggedIn: boolean, t: any) => {
         .nonempty(t('pleaseFillInTheStreetAddress'))
         .min(2, t('yourStreetAddressIsTooShort'))
         .max(150, t('yourStreetAddressIsTooLong'))
-        .regex(/^[\p{L}\d\s\-.,/]+$/u, t('invalidCharacters')),
+        .regex(
+          /^(?!.*([\-.,/\s])\1)[\p{L}\d\s\-.,/]+$/u,
+          t('invalidCharacters')
+        ),
       address_2: z
         .string()
         .nonempty(t('pleaseFillInTheBuildingNumber'))
