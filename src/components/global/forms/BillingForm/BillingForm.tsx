@@ -111,16 +111,6 @@ export const BillingForm: FC<BillingFormProps> = ({
     }
   }, [customer]);
 
-  const apartmentNumber = customer
-    ? getMetaDataValue(customer.meta_data, 'apartmentNumber')
-    : '';
-
-  // TODO - shipping_apartmentNumber from customer.shipping
-
-  // const shipping_apartmentNumber = customer
-  //   ? getMetaDataValue(customer.meta_data, 'shipping_apartmentNumber')
-  //   : '';
-
   const nipFromMeta = customer
     ? getMetaDataValue(customer.meta_data, 'nip')
     : '';
@@ -147,15 +137,12 @@ export const BillingForm: FC<BillingFormProps> = ({
 
       setValue('country', billing?.country || 'PL');
 
-      setValue('apartmentNumber', apartmentNumber);
-
       setValue('shipping_first_name', billing.first_name);
       setValue('shipping_last_name', billing.last_name);
       setValue('shipping_country', billing.country);
       setValue('shipping_city', billing.city);
       setValue('shipping_address_1', billing.address_1);
       setValue('shipping_address_2', billing.address_2);
-      setValue('shipping_apartmentNumber', apartmentNumber);
       setValue('shipping_postcode', billing.postcode);
     }
   }, [customer]);
@@ -180,7 +167,6 @@ export const BillingForm: FC<BillingFormProps> = ({
       setValue('shipping_city', watchedFields?.city);
       setValue('shipping_address_1', watchedFields?.address_1);
       setValue('shipping_address_2', watchedFields?.address_2);
-      setValue('shipping_apartmentNumber', watchedFields?.apartmentNumber);
       setValue('shipping_postcode', watchedFields?.postcode);
     }
   }, [
@@ -191,7 +177,6 @@ export const BillingForm: FC<BillingFormProps> = ({
     watchedFields.city,
     watchedFields.address_1,
     watchedFields.address_2,
-    watchedFields.apartmentNumber,
     watchedFields.postcode,
   ]);
 
@@ -206,7 +191,6 @@ export const BillingForm: FC<BillingFormProps> = ({
       setValue('shipping_city', '');
       setValue('shipping_address_1', '');
       setValue('shipping_address_2', '');
-      setValue('shipping_apartmentNumber', '');
       setValue('shipping_postcode', '');
     }
     // } else {
@@ -216,7 +200,6 @@ export const BillingForm: FC<BillingFormProps> = ({
     //   setValue('shipping_city', customer?.shipping.city || '');
     //   setValue('shipping_address_1', customer?.shipping.address_1 || '');
     //   setValue('shipping_address_2', customer?.shipping.address_2 || '');
-    //   setValue('shipping_apartmentNumber', shipping_apartmentNumber);
     // }
   }, [different_address]);
 
@@ -316,34 +299,23 @@ export const BillingForm: FC<BillingFormProps> = ({
           defaultValue={customer?.billing?.city || ''}
           autocomplete="address-level2"
         />
-        <CustomTextField
-          name={form === 'billing' ? 'address_1' : 'shipping_address_1'}
-          register={register}
-          inputType="text"
-          errors={errors}
-          label={tMyAccount('address_1')}
-          placeholder={tValidation('streetPlaceholder')}
-          validation={validationSchema('address_1')}
-          setValue={setValue}
-          defaultValue={customer?.billing?.address_1 || ''}
-          autocomplete="address-line1"
-        />
+      </StyledFormWrapper>
+      <VariationFields></VariationFields>
+      <CustomTextField
+        name={form === 'billing' ? 'address_1' : 'shipping_address_1'}
+        register={register}
+        inputType="text"
+        errors={errors}
+        label={tMyAccount('address_1')}
+        placeholder={tValidation('streetPlaceholder')}
+        validation={validationSchema('street_building')}
+        setValue={setValue}
+        defaultValue={customer?.billing?.address_1 || ''}
+        autocomplete="address-line1"
+      />
+      <StyledFormWrapper>
         <CustomTextField
           name={form === 'billing' ? 'address_2' : 'shipping_address_2'}
-          register={register}
-          inputType="text"
-          errors={errors}
-          label={tCheckout('address_2')}
-          placeholder={tValidation('buildingPlaceholder')}
-          validation={validationSchema('address_2')}
-          setValue={setValue}
-          defaultValue={customer?.billing?.address_2 || ''}
-          autocomplete="address-line2"
-        />
-        <CustomTextField
-          name={
-            form === 'billing' ? 'apartmentNumber' : 'shipping_apartmentNumber'
-          }
           register={register}
           inputType="text"
           errors={errors}
@@ -351,8 +323,8 @@ export const BillingForm: FC<BillingFormProps> = ({
           placeholder={tValidation('apartmentPlaceholder')}
           validation={validationSchema('apartmentNumber')}
           setValue={setValue}
-          defaultValue={apartmentNumber}
-          autocomplete="address-line3"
+          defaultValue={customer?.billing?.address_2 || ''}
+          autocomplete="address-line2"
           notRequired
         />
         <CustomTextField

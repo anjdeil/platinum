@@ -115,22 +115,12 @@ const Order: FC<OrderPropsType> = ({ order }) => {
     order.shipping
   );
 
-  const apartmentNumber = order.meta_data.find(
-    ({ key, value }) => key === 'apartmentNumber' && value
-  );
-  const shippingApartmentNumber = order.meta_data.find(
-    ({ key, value }) => key === 'shipping_apartmentNumber' && value
-  );
   const nip = order.meta_data.find(({ key, value }) => key === 'nip' && value);
 
   const additionalBillingFields: MetaDataType[] = [];
   const additionalShippingFields: MetaDataType[] = [];
 
-  if (apartmentNumber) additionalBillingFields.push(apartmentNumber);
   if (nip) additionalBillingFields.push(nip);
-
-  if (shippingApartmentNumber)
-    additionalShippingFields.push(shippingApartmentNumber);
 
   return (
     <AccountLayout

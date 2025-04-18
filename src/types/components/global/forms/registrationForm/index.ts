@@ -12,7 +12,6 @@ export const RegistrationFormSchema = (isLoggedIn: boolean, t: any) => {
       city: z.string().min(1, t('RequiredField')),
       address_1: z.string().min(3, t('RequiredField')),
       address_2: z.string().min(1, t('RequiredField')),
-      apartmentNumber: z.string().min(1, t('RequiredField')),
       postcode: z.string().min(3, t('minChar', { count: 3 })),
       password: !isLoggedIn ? passwordSchema(t) : z.string().optional(),
       confirmPassword: !isLoggedIn ? z.string() : z.string().optional(),
@@ -67,23 +66,12 @@ export const RegistrationFormSchema2 = (isLoggedIn: boolean, t: any) => {
         .nonempty(t('pleaseFillInTheStreetAddress'))
         .min(2, t('yourStreetAddressIsTooShort'))
         .max(150, t('yourStreetAddressIsTooLong'))
-        .regex(
-          /^(?!.*--)(?!.*\.\.)(?!.*,$)(?!.*\.$)[\p{L}\d\s\-.,]+$/u,
-          t('invalidCharacters')
-        ),
+        .regex(/^[\p{L}\d\s\-.,/]+$/u, t('invalidCharacters')),
       address_2: z
         .string()
         .nonempty(t('pleaseFillInTheBuildingNumber'))
         .max(6, t('yourBuildingNumberIsTooLong'))
-        .regex(
-          /^[0-9]+[\p{L}]?(\s?\/\s?[0-9\p{L}]+)?$/u,
-          t('invalidCharacters')
-        ),
-      apartmentNumber: z
-        .string()
-        .nonempty(t('pleaseFillInTheBuildingNumber'))
-        .max(10, t('yourBuildingNumberIsTooLong'))
-        .regex(/^[\p{L}0-9\s\-\/#]+$/u, t('invalidCharacters')),
+        .regex(/^(?=.*[\p{L}0-9])[ \p{L}0-9\-\/#]+$/u, t('invalidCharacters')),
       postcode: z
         .string()
         .nonempty(t('pleaseFillInThePostcode'))
