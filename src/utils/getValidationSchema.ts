@@ -120,7 +120,23 @@ export const getValidationSchema = (
           message: t('yourStreetAddressIsTooLong'),
         },
         pattern: {
-          value: /^(?!.*--)(?!.*\.\.)(?!.*,$)(?!.*\.$)[\p{L}\d\s\-.,]+$/u,
+          value: /^(?!.*([\-.,/\s])\1)[\p{L}\d\s\-.,/]+$/u,
+          message: t('invalidCharacters'),
+        },
+      };
+    case 'street_building':
+      return {
+        required: t('pleaseFillInTheStreetBuildingAddress'),
+        minLength: {
+          value: 3,
+          message: t('yourStreetAddressIsTooShort'),
+        },
+        maxLength: {
+          value: 150,
+          message: t('yourStreetAddressIsTooLong'),
+        },
+        pattern: {
+          value: /^(?!.*([\-.,/\s])\1)[\p{L}\d\s\-.,/]+$/u,
           message: t('invalidCharacters'),
         },
       };
@@ -143,7 +159,7 @@ export const getValidationSchema = (
           message: t('yourApartmentNumberIsTooLong'),
         },
         pattern: {
-          value: /^[\p{L}0-9\s\-\/#]+$/u,
+          value: /^(?=.*[\p{L}0-9])[ \p{L}0-9\-\/#]+$/u,
           message: t('invalidCharacters'),
         },
       };
@@ -155,7 +171,7 @@ export const getValidationSchema = (
           message: t('yourApartmentNumberIsTooLong'),
         },
         pattern: {
-          value: /^[\p{L}0-9\s\-\/#]+$/u,
+          value: /^(?=.*[\p{L}0-9])[ \p{L}0-9\-\/#]+$/u,
           message: t('invalidCharacters'),
         },
       };

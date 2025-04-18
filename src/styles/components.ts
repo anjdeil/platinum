@@ -266,6 +266,7 @@ export const CustomForm = styled.form<CustomFormProps>`
 interface CustomFormProps {
   direction?: 'column' | 'grid';
   paddingBottom?: string;
+  rowgap?: string;
 }
 export const FormWrapper = styled.div<CustomFormProps>`
   display: ${({ direction }) => (direction === 'column' ? 'flex' : 'grid')};
@@ -275,7 +276,8 @@ export const FormWrapper = styled.div<CustomFormProps>`
     direction === 'column' ? 'unset' : 'repeat(auto-fill, minmax(49%, 1fr))'};
   column-gap: 1%;
   gap: ${({ direction }) => (direction === 'column' ? '15px' : 'unset')};
-  row-gap: ${({ direction }) => (direction === 'column' ? 'unset' : '15px')};
+  row-gap: ${({ direction, rowgap }) =>
+    direction === 'column' ? 'unset' : rowgap ? rowgap : '15px'};
   padding-bottom: ${({ paddingBottom = '20px' }) => paddingBottom};
 
   @media ${({ theme }) => theme.media.medium} {

@@ -13,7 +13,6 @@ export interface ReqData {
   last_name: string;
   address_1: string;
   address_2: string;
-  apartmentNumber?: string;
   city: string;
   postcode: string;
   country: string;
@@ -27,7 +26,6 @@ export interface ReqData {
   shipping_last_name: string;
   shipping_address_1: string;
   shipping_address_2: string;
-  shipping_apartmentNumber?: string;
   shipping_city: string;
   shipping_postcode: string;
   shipping_country: string;
@@ -42,7 +40,6 @@ export const getFormattedUserData = (billingData: ReqData) => {
     last_name,
     address_1,
     address_2,
-    apartmentNumber,
     city,
     postcode,
     country,
@@ -56,7 +53,6 @@ export const getFormattedUserData = (billingData: ReqData) => {
     shipping_last_name,
     shipping_address_1,
     shipping_address_2,
-    shipping_apartmentNumber,
     shipping_city,
     shipping_postcode,
     shipping_country,
@@ -80,14 +76,6 @@ export const getFormattedUserData = (billingData: ReqData) => {
     {
       key: 'nip',
       value: nip || '',
-    },
-    {
-      key: 'apartmentNumber',
-      value: apartmentNumber || '',
-    },
-    {
-      key: 'shipping_apartmentNumber',
-      value: shipping_apartmentNumber || '',
     },
   ];
 
@@ -134,14 +122,6 @@ export const getFormattedUserData = (billingData: ReqData) => {
         phone,
       },
       meta_data: [
-        {
-          key: 'apartmentNumber',
-          value: apartmentNumber || '',
-        },
-        {
-          key: 'shipping_apartmentNumber',
-          value: shipping_apartmentNumber || '',
-        },
         {
           key: 'nip',
           value: nip || '',

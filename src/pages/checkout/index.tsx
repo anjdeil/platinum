@@ -387,11 +387,7 @@ export default function CheckoutPage() {
     const couponLines = coupons.map(code => ({ code }));
 
     const filteredMetaData = Array.isArray(formOrderData.metaData)
-      ? formOrderData.metaData.filter(meta =>
-          isShippingAddressDifferent
-            ? true
-            : meta.key !== 'shipping_apartmentNumber'
-        )
+      ? formOrderData.metaData
       : [];
 
     createOrder({

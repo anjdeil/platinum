@@ -25,6 +25,7 @@ interface CustomInputProps {
 }
 
 export const CustomInputStyle = styled.div<CustomInputStyleProps>`
+  position: relative;
   height: ${({ inputStyles }) => (inputStyles ? 'auto' : '100%')};
   padding: ${({ padding = '5px' }) => padding};
   display: flex;
@@ -152,6 +153,9 @@ export const ShowPasswordImage = styled(Image)`
 `;
 
 export const CustomError = styled.p`
+  position: absolute;
+  left: 4px;
+  font: ${({ theme }) => theme.fonts.bodypresmallReg};
   color: ${({ theme }) => theme.colors.error};
   @media ${({ theme }) => theme.media.medium} {
     margin-top: 10px;
@@ -162,6 +166,7 @@ export const CustomSuccess = styled(CustomError)`
 `;
 
 export const CustomInputContainer = styled.div<CustomInputContainerProps>`
+  position: relative;
   width: ${({ isCheckbox, width = '100%' }) => (isCheckbox ? '100%' : width)};
   height: 100%;
   @media ${({ theme }) => theme.media.medium} {

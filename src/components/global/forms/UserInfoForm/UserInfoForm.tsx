@@ -80,19 +80,8 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
     control,
   } = useForm<UserInfoFormType>({
     resolver: zodResolver(formSchema),
+    mode: 'onChange',
   });
-
-  const apartmentNumberFromMeta = useMemo(() => {
-    return customer
-      ? getMetaDataValue(customer.meta_data || [], 'apartmentNumber')
-      : '';
-  }, [customer]);
-
-  const shippingApartmentNumberFromMeta = useMemo(() => {
-    return customer
-      ? getMetaDataValue(customer.meta_data || [], 'shipping_apartmentNumber')
-      : '';
-  }, [customer]);
 
   const nipFromMeta = useMemo(() => {
     return customer ? getMetaDataValue(customer.meta_data || [], 'nip') : '';
@@ -123,7 +112,6 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
       setValue('address_1Shipping', '');
       setValue('address_2Shipping', '');
       setValue('postcodeShipping', '');
-      setValue('apartmentNumberShipping', '');
     }
   }, [isShipping]);
 
@@ -141,10 +129,6 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
   }, [customer]);
 
   useEffect(() => {
-    setValue('apartmentNumberShipping', shippingApartmentNumberFromMeta);
-  }, [shippingApartmentNumberFromMeta]);
-
-  useEffect(() => {
     if (customer) {
       const isShippingInfo = customerShippingInfo(customer);
 
@@ -155,8 +139,6 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
         address_1Shipping: customer.shipping?.address_1 || '',
         address_2: customer.billing?.address_2 || '',
         address_2Shipping: customer.shipping?.address_2 || '',
-        apartmentNumber: apartmentNumberFromMeta || '',
-        apartmentNumberShipping: shippingApartmentNumberFromMeta,
         city: customer.billing?.city || '',
         cityShipping: customer.shipping?.city || '',
         country: customer.billing?.country || '',
@@ -191,8 +173,6 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
       address_1Shipping: formData.address_1Shipping,
       address_2: formData.address_2,
       address_2Shipping: formData.address_2Shipping,
-      apartmentNumber: formData.apartmentNumber,
-      apartmentNumberShipping: formData.apartmentNumberShipping,
       city: formData.city,
       cityShipping: formData.cityShipping,
       country: formData.country,
@@ -241,14 +221,6 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
         postcode: (isShipping && formData.postcodeShipping) || '',
       },
       meta_data: [
-        {
-          key: 'apartmentNumber',
-          value: formData.apartmentNumber,
-        },
-        {
-          key: 'shipping_apartmentNumber',
-          value: (isShipping && formData.apartmentNumberShipping) || '',
-        },
         {
           key: 'nip',
           value: (isInvoice && formData.nip) || '',
@@ -386,39 +358,29 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
         noBottom={true}
       />
 
-      {['city', 'address_1', 'address_2', 'apartmentNumber', 'postcode'].map(
-        field => (
-          <CustomFormInput
-            key={field}
-            fieldName={tForms(field)}
-            name={`${field}${prefix}`}
-            register={register}
-            errors={errors}
-            inputTag="input"
-            inputType={field === 'postCode' ? 'number' : 'text'}
-            placeholder={
-              field === 'city'
-                ? tValidation('cityPlaceholder')
-                : field === 'address_1'
-                ? tValidation('streetPlaceholder')
-                : field === 'address_2'
-                ? tValidation('buildingPlaceholder')
-                : field === 'apartmentNumber'
-                ? tValidation('apartmentPlaceholder')
-                : tValidation('postCodePlaceholder')
-            }
-            defaultValue={
-              field === 'apartmentNumber'
-                ? prefix === 'Shipping'
-                  ? shippingApartmentNumberFromMeta
-                  : apartmentNumberFromMeta
-                : defaultValues[field] || ''
-            }
-            isRequire={field === 'apartmentNumber' ? false : true}
-            setValue={setValue}
-          />
-        )
-      )}
+      {['city', 'address_1', 'address_2', 'postcode'].map(field => (
+        <CustomFormInput
+          key={field}
+          fieldName={tForms(field)}
+          name={`${field}${prefix}`}
+          register={register}
+          errors={errors}
+          inputTag="input"
+          inputType={field === 'postCode' ? 'number' : 'text'}
+          placeholder={
+            field === 'city'
+              ? tValidation('cityPlaceholder')
+              : field === 'address_1'
+              ? tValidation('streetPlaceholder')
+              : field === 'address_2'
+              ? tValidation('buildingPlaceholder')
+              : tValidation('postCodePlaceholder')
+          }
+          defaultValue={defaultValues[field] || ''}
+          isRequire={true}
+          setValue={setValue}
+        />
+      ))}
     </>
   );
 
@@ -506,7 +468,7 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
           </FlexBox>
         ) : (
           <>
-            <FormWrapper>
+            <FormWrapper rowgap="20px">
               {renderFormInfoFields('', customer)}
               {renderFormShippingFields('', customer?.billing)}
             </FormWrapper>
@@ -523,7 +485,9 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
                 noTop
               />
             </VariationFields>
-            <FormWrapper>{isInvoice && renderInvoiceFields}</FormWrapper>
+            <FormWrapper rowgap="20px">
+              {isInvoice && renderInvoiceFields}
+            </FormWrapper>
           </>
         )}
       </InfoCard>
@@ -553,7 +517,7 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
         </VariationFields>
         {customer && isShipping && (
           <AnimatedWrapper isVisible={true}>
-            <FormWrapper>
+            <FormWrapper rowgap="20px">
               {renderFormShippingFields('Shipping', customer?.shipping)}
             </FormWrapper>
             {/* <VariationFields>

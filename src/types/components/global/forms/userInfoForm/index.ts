@@ -42,33 +42,22 @@ export const UserInfoFormSchema = (
 
   const address1Validation = z
     .string()
-    .min(1, { message: t('pleaseFillInTheStreetAddress') })
-    .min(2, { message: t('yourStreetAddressIsTooShort') })
+    .min(1, { message: t('pleaseFillInTheStreetBuildingAddress') })
+    .min(3, { message: t('yourStreetAddressIsTooShort') })
     .max(150, { message: t('yourStreetAddressIsTooLong') })
-    .regex(/^(?!.*--)(?!.*\.\.)(?!.*,$)(?!.*\.$)[\p{L}\d\s\-.,]+$/u, {
-      message: t('invalidCharacters'),
-    });
-
-  const address2Validation = z
-    .string()
-    .min(1, { message: t('pleaseFillInTheBuildingNumber') })
-    .max(10, { message: t('yourBuildingNumberIsTooLong') })
-    .regex(/^[0-9]+[\p{L}]?(\s?\/\s?[0-9\p{L}]+)?$/u, {
+    .regex(/^(?!.*([\-.,/\s])\1)[\p{L}\d\s\-.,/]+$/u, {
       message: t('invalidCharacters'),
     });
 
   const apartmentNumberValidation = z
-    .string()
-    .optional()
-    .refine(value => !value || value.length <= 10, {
-      message: t('yourApartmentNumberIsTooLong'),
+    .string({
+      required_error: t('pleaseFillInTheApartmentNumber'),
     })
-    .refine(
-      value => !value || /^[a-zA-Zа-яА-ЯёЁіІїЇєЄ0-9\s\-\/#]+$/.test(value),
-      {
-        message: t('invalidCharacters'),
-      }
-    );
+    .min(1, { message: t('pleaseFillInTheApartmentNumber') }) // для required
+    .max(10, { message: t('yourApartmentNumberIsTooLong') })
+    .regex(/^(?=.*[\p{L}0-9])[ \p{L}0-9\-\/#]+$/u, {
+      message: t('invalidCharacters'),
+    });
 
   const postCodeValidation = z
     .string()
@@ -104,8 +93,7 @@ export const UserInfoFormSchema = (
     country: z.string().min(1, t('pleaseSelectACountry')),
     city: cityValidation,
     address_1: address1Validation,
-    address_2: address2Validation,
-    apartmentNumber: apartmentNumberValidation,
+    address_2: apartmentNumberValidation,
     postcode: postCodeValidation,
     invoice: z.boolean().optional(),
     company: isInvoice ? companyValidation : z.string().optional(),
@@ -117,13 +105,14 @@ export const UserInfoFormSchema = (
     last_nameShipping: isShipping ? lastNameValidation : z.string().optional(),
     phoneShipping: isShipping ? phoneValidation : z.string().optional(),
     address_1Shipping: isShipping ? address1Validation : z.string().optional(),
-    address_2Shipping: isShipping ? address2Validation : z.string().optional(),
+    address_2Shipping: isShipping
+      ? apartmentNumberValidation
+      : z.string().optional(),
     postcodeShipping: isShipping ? postCodeValidation : z.string().optional(),
     cityShipping: isShipping ? cityValidation : z.string().optional(),
     countryShipping: isShipping
       ? z.string().min(1, t('pleaseSelectACountry'))
       : z.string().optional(),
-    apartmentNumberShipping: apartmentNumberValidation,
     newsletter: z.boolean().optional(),
   });
 

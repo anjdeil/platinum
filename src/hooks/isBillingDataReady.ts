@@ -11,7 +11,6 @@ const requiredFields = [
   'country',
   'email',
   'phone',
-  'apartmentNumber',
 ];
 
 const isBillingDataReady = (billingData: AddressType | undefined): boolean => {

@@ -99,13 +99,6 @@ export const RegistrationForm: FC = () => {
         email: formData.email,
         phone: formData.phone,
       },
-
-      meta_data: [
-        {
-          key: 'apartmentNumber',
-          value: formData.apartmentNumber,
-        },
-      ],
     };
 
     try {
@@ -230,7 +223,7 @@ export const RegistrationForm: FC = () => {
         errors={errors}
         label={tMyAccount('address_1')}
         placeholder={tValidation('streetPlaceholder')}
-        validation={validationSchema('address_1')}
+        validation={validationSchema('street_building')}
         setValue={setValue}
         defaultValue={''}
         autocomplete="address-line1"
@@ -242,22 +235,10 @@ export const RegistrationForm: FC = () => {
         errors={errors}
         label={tCheckout('address_2')}
         placeholder={tValidation('buildingPlaceholder')}
-        validation={validationSchema('address_2')}
-        setValue={setValue}
-        defaultValue={''}
-        autocomplete="address-line2"
-      />
-      <CustomTextField
-        name="apartmentNumber"
-        register={register}
-        inputType="text"
-        errors={errors}
-        label={tValidation('apartment/office')}
-        placeholder={tValidation('apartmentPlaceholder')}
         validation={validationSchema('apartmentNumberRequired')}
         setValue={setValue}
         defaultValue={''}
-        autocomplete="address-line3"
+        autocomplete="address-line2"
       />
       <CustomTextField
         name="postcode"
@@ -271,26 +252,6 @@ export const RegistrationForm: FC = () => {
         defaultValue={''}
         autocomplete="postal-code"
       />
-      <CustomTextField
-        name="password"
-        register={register}
-        inputType="password"
-        autocomplete="new-password"
-        errors={errors}
-        label={tMyAccount('password')}
-        placeholder={tValidation('passwordPlaceholder')}
-        validation={validationSchema('password')}
-      />
-      <CustomTextField
-        name="confirm_password"
-        register={register}
-        inputType="password"
-        autocomplete="off"
-        errors={errors}
-        label={tMyAccount('confirmPassword')}
-        placeholder={tValidation('confirmPasswordPlaceholder')}
-        validation={validationSchema('confirm_password', watch)}
-      />
     </>
   );
 
@@ -300,6 +261,30 @@ export const RegistrationForm: FC = () => {
         {tMyAccount('registration')}
       </Title>
       <StyledFieldsWrapper>{renderFormFields()} </StyledFieldsWrapper>
+      <StyledFieldsWrapper>
+        <CustomTextField
+          name="password"
+          register={register}
+          inputType="password"
+          autocomplete="new-password"
+          errors={errors}
+          label={tMyAccount('password')}
+          placeholder={tValidation('passwordPlaceholder')}
+          validation={validationSchema('password')}
+          setValue={setValue}
+        />
+        <CustomTextField
+          name="confirm_password"
+          register={register}
+          inputType="password"
+          autocomplete="off"
+          errors={errors}
+          label={tMyAccount('confirmPassword')}
+          placeholder={tValidation('confirmPasswordPlaceholder')}
+          validation={validationSchema('confirm_password', watch)}
+          setValue={setValue}
+        />
+      </StyledFieldsWrapper>
       <FormCheckboxUnControlled
         name={'terms'}
         register={register}

@@ -80,13 +80,7 @@ export const ChangeShippingForm: FC<ChangeShippingFormProps> = ({
         address_1:
           (isShipping && formData.address_1Shipping) || formData.address_1,
         address_2:
-          (isShipping &&
-            [formData.address_2Shipping, formData.apartmentNumberShipping]
-              .filter(Boolean)
-              .join('/')) ||
-          [formData.address_2, formData.apartmentNumber]
-            .filter(Boolean)
-            .join('/'),
+          (isShipping && formData.address_2Shipping) || formData.address_2,
         city: (isShipping && formData.cityShipping) || formData.city,
         postcode:
           (isShipping && formData.postcodeShipping) || formData.postcode,
@@ -135,27 +129,19 @@ export const ChangeShippingForm: FC<ChangeShippingFormProps> = ({
         }
       />
 
-      {['city', 'address_1', 'address_2', 'apartmentNumber', 'postcode'].map(
-        field => (
-          <CustomFormInput
-            key={field}
-            fieldName={tMyAccount(field)}
-            name={`${field}${prefix}`}
-            register={register}
-            errors={errors}
-            inputTag="input"
-            inputType={field === 'postCode' ? 'number' : 'text'}
-            defaultValue={
-              field === 'address_2'
-                ? defaultValues.address_2?.split('/')[0] || ''
-                : field === 'apartmentNumber'
-                ? defaultValues.address_2?.split('/')[1] || ''
-                : defaultValues[field] || ''
-            }
-            setValue={setValue}
-          />
-        )
-      )}
+      {['city', 'address_1', 'address_2', 'postcode'].map(field => (
+        <CustomFormInput
+          key={field}
+          fieldName={tMyAccount(field)}
+          name={`${field}${prefix}`}
+          register={register}
+          errors={errors}
+          inputTag="input"
+          inputType={field === 'postCode' ? 'number' : 'text'}
+          defaultValue={defaultValues[field] || ''}
+          setValue={setValue}
+        />
+      ))}
     </>
   );
 
