@@ -11,8 +11,10 @@ import { popupToggle } from '@/store/slices/PopupSlice';
 import { useTheme } from '@emotion/react';
 import { useEffect, useState } from 'react';
 import { BottomMenuNav, BottomMenuWrapper } from './styles';
+import { useRouter } from 'next/router';
 
 const BottomMenu = () => {
+  const { locale } = useRouter();
   const dispatch = useAppDispatch();
   const theme = useTheme();
   const { cartItems } = useAppSelector(state => state.cartSlice);
@@ -46,7 +48,7 @@ const BottomMenu = () => {
           IconComponent={CatalogIcon}
         />
         <IconButton
-          href="/my-account/wishlist"
+          href={`/${locale}/my-account/wishlist`}
           color={theme.colors.primary}
           count={wishlist.length}
           IconComponent={HeartIcon}
@@ -58,7 +60,7 @@ const BottomMenu = () => {
           IconComponent={CartIcon}
         />
         <IconButton
-          href="/my-account"
+          href={`/${locale}/my-account`}
           color={theme.colors.primary}
           IconComponent={AccountIcon}
         />

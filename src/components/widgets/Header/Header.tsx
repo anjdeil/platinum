@@ -80,9 +80,12 @@ const Header: React.FC = () => {
                 IconComponent={FindIcon}
               />
             )}
-            <IconButton href="/my-account" IconComponent={AccountIcon} />
             <IconButton
-              href="/my-account/wishlist"
+              href={`/${router.locale}/my-account`}
+              IconComponent={AccountIcon}
+            />
+            <IconButton
+              href={`/${router.locale}/my-account/wishlist`}
               count={wishlist.length}
               IconComponent={HeartIcon}
             />

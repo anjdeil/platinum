@@ -9,17 +9,19 @@ import { removeUserFromLocalStorage } from '@/utils/auth/userLocalStorage';
 import { useAppDispatch } from '@/store';
 import { clearUser } from '@/store/slices/userSlice';
 import { PageTitle } from '@/components/pages/pageTitle';
+import { useRouter } from 'next/router';
 
 export default function Login() {
+  const { locale } = useRouter();
   const t = useTranslations('MyAccount');
   const tBreadcrumbs = useTranslations('Breadcrumbs');
   const dispatch = useAppDispatch();
   dispatch(clearUser());
   removeUserFromLocalStorage();
   const breadcrumbsLinks = [
-    { name: tBreadcrumbs('homePage'), url: '/' },
-    { name: tBreadcrumbs('myAccount'), url: '/my-account' },
-    { name: t('log-In'), url: '/my-account/login' },
+    { name: tBreadcrumbs('homePage'), url: `/${locale}` },
+    { name: tBreadcrumbs('myAccount'), url: `/${locale}/my-account` },
+    { name: t('log-In'), url: `/${locale}/my-account/login` },
   ];
 
   return (

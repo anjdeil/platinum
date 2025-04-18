@@ -112,7 +112,7 @@ export const NewPasswordForm: FC = () => {
       if (!resp.data) throw new Error('Invalid server response.');
 
       dispatch(clearUser());
-      router.push('/my-account/login');
+      router.push(`/${router.locale}/my-account/login`);
     } catch (err) {
       reset();
     }

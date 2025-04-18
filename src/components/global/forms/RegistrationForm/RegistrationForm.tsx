@@ -141,7 +141,7 @@ export const RegistrationForm: FC = () => {
         }
       }
 
-      router.push('/my-account');
+      router.push(`/${router.locale}/my-account`);
     } catch (err) {
       setCustomError(
         'Oops! Something went wrong with the server. Please try again or contact support.'
@@ -348,7 +348,7 @@ export const RegistrationForm: FC = () => {
       </FormWrapperBottom>
       <FlexBox gap="10px" justifyContent="flex-end" margin="16px 0 0 0">
         <div>{tMyAccount('AlreadyHaveAnAccount')} </div>
-        <ActiveText href="/my-account/login">
+        <ActiveText href={`/${locale}/my-account/login`}>
           {tMyAccount('log-In')}!
         </ActiveText>
       </FlexBox>

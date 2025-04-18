@@ -46,7 +46,7 @@ const ResetPasswordForm: FC = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      router.push('/my-account/new-password');
+      router.push(`/${router.locale}/my-account/new-password`);
     }
   }, [isSuccess, router]);
 

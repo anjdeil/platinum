@@ -106,7 +106,7 @@ export const ShippingForm: FC = () => {
       /** Validate auth token */
       const isTokenValid = await checkToken(true);
       if (!isTokenValid) throw new Error('Auth token validation failed.');
-      router.push('/my-account');
+      router.push(`/${router.locale}/my-account`);
     } catch (err) {
       setCustomError(
         'Oops! Something went wrong with the server. Please try again or contact support.'
@@ -201,7 +201,7 @@ export const ShippingForm: FC = () => {
       </FormWrapperBottom>
       <FlexBox gap="10px" justifyContent="flex-end" margin="16px 0 0 0">
         <div>{tMyAccount('AlreadyHaveAnAccount')} </div>
-        <ActiveText href="/my-account/login">
+        <ActiveText href={`/${router.locale}/my-account/login`}>
           {tMyAccount('log-In')}!
         </ActiveText>
       </FlexBox>

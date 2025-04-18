@@ -5,15 +5,17 @@ import Breadcrumbs from '@/components/global/Breadcrumbs/Breadcrumbs';
 import { NewPasswordForm } from '@/components/global/forms/password/NewPasswordForm';
 import { GetServerSidePropsContext } from 'next';
 import { PageTitle } from '@/components/pages/pageTitle';
+import { useRouter } from 'next/router';
 
 export default function ResetPassword() {
   const t = useTranslations('MyAccount');
   const tBreadcrumbs = useTranslations('Breadcrumbs');
+  const { locale } = useRouter();
 
   const breadcrumbsLinks = [
-    { name: tBreadcrumbs('homePage'), url: '/' },
-    { name: tBreadcrumbs('myAccount'), url: '/my-account' },
-    { name: t('setNewPassword'), url: '/my-account/new-password' },
+    { name: tBreadcrumbs('homePage'), url: `/${locale}` },
+    { name: tBreadcrumbs('myAccount'), url: `/${locale}/my-account` },
+    { name: t('setNewPassword'), url: `/${locale}/my-account/new-password` },
   ];
 
   return (

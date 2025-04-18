@@ -5,15 +5,17 @@ import ResetPasswordForm from '@/components/global/forms/password/ResetPasswordF
 import { GetServerSidePropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import { PageTitle } from '@/components/pages/pageTitle';
+import { useRouter } from 'next/router';
 
 export default function ResetPassword() {
   const t = useTranslations('MyAccount');
   const tBreadcrumbs = useTranslations('Breadcrumbs');
+  const { locale } = useRouter();
 
   const breadcrumbsLinks = [
-    { name: tBreadcrumbs('homePage'), url: '/' },
-    { name: tBreadcrumbs('myAccount'), url: '/my-account' },
-    { name: t('resetPassword'), url: '/my-account/reset-password' },
+    { name: tBreadcrumbs('homePage'), url: `/${locale}` },
+    { name: tBreadcrumbs('myAccount'), url: `/${locale}/my-account` },
+    { name: t('resetPassword'), url: `/${locale}/my-account/reset-password` },
   ];
 
   return (

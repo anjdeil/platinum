@@ -13,7 +13,6 @@ import areBillingAndShippingEqual from '@/utils/areBillingAndShippingEqual';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import { FC, useEffect } from 'react';
-import { redirectToLogin } from '@/utils/consts';
 import parseCookies from '@/utils/parseCookies';
 import wpRestApi from '@/services/wpRestApi';
 import { useAppDispatch } from '@/store';
@@ -23,6 +22,7 @@ import { clearCart } from '@/store/slices/cartSlice';
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
+  const { locale } = context;
   const { slug } = context.query;
 
   try {
@@ -39,13 +39,23 @@ export const getServerSideProps: GetServerSideProps = async (
 
     const cookies = context.req.headers.cookie;
     if (!cookies) {
-      return redirectToLogin;
+      return {
+        redirect: {
+          destination: `/${locale}/my-account/login`,
+          permanent: false,
+        },
+      };
     }
     const cookieRows = parseCookies(cookies);
     const authToken = cookieRows.authToken;
 
     if (!authToken) {
-      return redirectToLogin;
+      return {
+        redirect: {
+          destination: `/${locale}/my-account/login`,
+          permanent: false,
+        },
+      };
     }
 
     const userResponse = await wpRestApi.get(
