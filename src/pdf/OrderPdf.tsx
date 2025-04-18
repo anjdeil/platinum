@@ -457,16 +457,18 @@ const OrderPdf = ({
               </View>
             </View>
 
-            <View style={styles.split}>
-              <View style={styles.splitFirst}>
-                <Text style={styles.text}>{t('company')}</Text>
+            {Boolean(order?.shipping?.company) && (
+              <View style={styles.split}>
+                <View style={styles.splitFirst}>
+                  <Text style={styles.text}>{t('company')}</Text>
+                </View>
+                <View style={styles.splitLast}>
+                  <Text style={styles.text}>
+                    {order?.shipping?.company || '—'}
+                  </Text>
+                </View>
               </View>
-              <View style={styles.splitLast}>
-                <Text style={styles.text}>
-                  {order?.shipping?.company || '—'}
-                </Text>
-              </View>
-            </View>
+            )}
 
             <View style={styles.split}>
               <View style={styles.splitFirst}>
@@ -534,39 +536,43 @@ const OrderPdf = ({
               </View>
             )}
 
-            <View style={styles.split}>
-              <View style={styles.splitFirst}>
-                <Text style={styles.text}>{t('email')}</Text>
+            {Boolean(order?.shipping?.email) && (
+              <View style={styles.split}>
+                <View style={styles.splitFirst}>
+                  <Text style={styles.text}>{t('email')}</Text>
+                </View>
+                <View style={styles.splitLast}>
+                  <Text style={styles.text}>
+                    {order?.shipping?.email ? (
+                      <Link src={`mailto:${order?.shipping.email}`}>
+                        {order?.shipping.email}
+                      </Link>
+                    ) : (
+                      '—'
+                    )}
+                  </Text>
+                </View>
               </View>
-              <View style={styles.splitLast}>
-                <Text style={styles.text}>
-                  {order?.shipping?.email ? (
-                    <Link src={`mailto:${order?.shipping.email}`}>
-                      {order?.shipping.email}
-                    </Link>
-                  ) : (
-                    '—'
-                  )}
-                </Text>
-              </View>
-            </View>
+            )}
 
-            <View style={styles.split}>
-              <View style={styles.splitFirst}>
-                <Text style={styles.text}>{t('phone')}</Text>
+            {Boolean(order?.shipping?.phone) && (
+              <View style={styles.split}>
+                <View style={styles.splitFirst}>
+                  <Text style={styles.text}>{t('phone')}</Text>
+                </View>
+                <View style={styles.splitLast}>
+                  <Text style={styles.text}>
+                    {order?.shipping?.phone ? (
+                      <Link src={`tel:${order?.shipping.phone}`}>
+                        {order?.shipping.phone}
+                      </Link>
+                    ) : (
+                      '—'
+                    )}
+                  </Text>
+                </View>
               </View>
-              <View style={styles.splitLast}>
-                <Text style={styles.text}>
-                  {order?.shipping?.phone ? (
-                    <Link src={`tel:${order?.shipping.phone}`}>
-                      {order?.shipping.phone}
-                    </Link>
-                  ) : (
-                    '—'
-                  )}
-                </Text>
-              </View>
-            </View>
+            )}
           </View>
         )}
       </Page>
