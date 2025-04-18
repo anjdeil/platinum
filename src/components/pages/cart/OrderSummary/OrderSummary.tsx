@@ -25,6 +25,8 @@ const OrderSummary: FC<OrderSummaryProps> = ({
   noPaymentMethod,
 }) => {
   const t = useTranslations('Cart');
+  const tShipping = useTranslations('ShippingMethodSelector');
+
   const subtotal = order?.line_items
     ? getSubtotalByLineItems(order.line_items)
     : 0;
@@ -94,7 +96,9 @@ const OrderSummary: FC<OrderSummaryProps> = ({
             const shippingLineTotal = +line.total + +line.total_tax;
             return (
               <OrderSummaryLine key={line.id}>
-                <OrderSummaryLineName>{line.method_title}</OrderSummaryLineName>
+                <OrderSummaryLineName>
+                  {tShipping(line.method_title)}
+                </OrderSummaryLineName>
                 <span>{formatPrice(+shippingLineTotal)}</span>
               </OrderSummaryLine>
             );
