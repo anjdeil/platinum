@@ -123,7 +123,19 @@
     "dataFailed": "Customer response data validation failed.",
     "invalidResp": "Invalid customer response.",
     "unknownError": "Unknown server error",
-    "customerPanel": "Customer Panel"
+    "customerPanel": "Customer Panel",
+    "january": "January",
+    "february": "February",
+    "march": "March",
+    "april": "April",
+    "may": "May",
+    "june": "June",
+    "july": "July",
+    "august": "August",
+    "september": "September",
+    "october": "October",
+    "november": "November",
+    "december": "December"
   },
   "TopBar": {
     "CallUs": "Call us"
@@ -543,7 +555,7 @@
     "address_1": " Street and Building number",
     "country": "Country",
     "state": "State",
-    "orderWasPlaced": "Your order was successfully placed on {date}. It is currently {status}.",
+    "orderWasPlaced": "Your order was successfully placed on {date}. Currently the status is {status}.",
     "productName": "Product name",
     "billing": "Billing details",
     "shipping": "Shipping details",

@@ -93,16 +93,23 @@ const styles = StyleSheet.create({
 const OrderPdf = ({
   order,
   t,
+  tShipping,
+  tMyAccount,
 }: {
   order: OrderType;
   t: (string: string, props?: Record<string, string>) => string;
+  tShipping?: (string: string, props?: Record<string, string>) => string;
+  tMyAccount: (string: string, props?: Record<string, string>) => string;
 }) => {
   const date = new Date(order?.date_created);
-  const formattedDate = date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
+
+  const day = date.getDate();
+  const year = date.getFullYear();
+  const month = date.toLocaleString('en-US', { month: 'long' });
+
+  const translatedMonth = tMyAccount(month.toLowerCase());
+
+  const formattedDate = `${day} ${translatedMonth}, ${year}`;
 
   const subtotal = order?.line_items
     ? getSubtotalByLineItems(order.line_items)
@@ -140,7 +147,7 @@ const OrderPdf = ({
           <Text style={styles.text}>
             {t('orderWasPlaced', {
               date: formattedDate,
-              status: order?.status,
+              status: `«${tMyAccount(order?.status)}»`,
             })}
           </Text>
         </View>
@@ -204,7 +211,9 @@ const OrderPdf = ({
           {order?.shipping_lines?.map(line => (
             <View key={line.id} style={styles.split}>
               <View style={styles.splitFirst}>
-                <Text style={styles.text}>{line.method_title}</Text>
+                <Text style={styles.text}>
+                  {tShipping ? tShipping(line.method_title) : line.method_title}
+                </Text>
               </View>
               <View style={styles.splitLast}>
                 <Text style={styles.text}>

@@ -33,6 +33,7 @@ import { useRouter } from 'next/router';
 const OrderTable: React.FC<TableProps> = ({ orderList, title }) => {
   const theme = useTheme();
   const t = useTranslations('MyAccount');
+  const tShipping = useTranslations('ShippingMethodSelector');
   const { locale } = useRouter();
 
   return (
@@ -93,7 +94,8 @@ const OrderTable: React.FC<TableProps> = ({ orderList, title }) => {
                     </StyledTd>
                     <StyledDetailesTd>
                       <StyledTotalSpan>
-                        {t('shipping')}: {item.shipping_lines[0]?.method_title}
+                        {t('shipping')}:{' '}
+                        {tShipping(item.shipping_lines[0]?.method_title)}
                       </StyledTotalSpan>
                       <StyledTotalSpan>
                         {t('payment')}: {item.payment_method_title}

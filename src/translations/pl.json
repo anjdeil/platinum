@@ -123,7 +123,19 @@
     "dataFailed": "Walidacja danych odpowiedzi klienta nie powiodła się.",
     "invalidResp": "Nieprawidłowa odpowiedź klienta.",
     "unknownError": "Nieznany błąd serwera.",
-    "customerPanel": "Panel klienta"
+    "customerPanel": "Panel klienta",
+    "january": "Stycznia",
+    "february": "Lutego",
+    "march": "Marca",
+    "april": "Kwietnia",
+    "may": "Maja",
+    "june": "Czerwca",
+    "july": "Lipca",
+    "august": "Sierpnia",
+    "september": "Września",
+    "october": "Października",
+    "november": "Listopada",
+    "december": "Grudnia"
   },
   "TopBar": {
     "CallUs": "Kontakt"
@@ -543,7 +555,7 @@
     "address_1": "Ulica i numer budynku",
     "country": "Kraj",
     "state": "Państwo",
-    "orderWasPlaced": "Twoje zamówienie zostało pomyślnie złożone w dniu {date}. Obecnie {status}.",
+    "orderWasPlaced": "Twoje zamówienie zostało pomyślnie złożone w dniu {date}. Aktualny status to {status}.",
     "productName": "Nazwa produktu",
     "billing": "Szczegóły rozliczenia",
     "shipping": "Szczegóły wysyłki",
