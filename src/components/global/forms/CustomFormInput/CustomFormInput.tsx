@@ -37,7 +37,19 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
   autoComplete,
   inputStyles,
 }) => {
-  const registerProps = register ? { ...register(name) } : {};
+  // const registerProps = register ? { ...register(name) } : {};
+  const registerProps = register
+    ? register(name, {
+        onBlur: (
+          e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
+        ) => {
+          const trimmed = e.target.value.trim();
+          if (setValue) {
+            setValue(name, trimmed, { shouldValidate: true });
+          }
+        },
+      })
+    : {};
 
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const togglePasswordVisibility = () => setPasswordVisible(prev => !prev);

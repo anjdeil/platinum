@@ -22,7 +22,6 @@ export const BillingFormSchema = (isLoggedIn: boolean, t: any) => {
       city: requiredFieldValidation(t),
       address_1: minLengthValidation(t, 3),
       address_2: requiredFieldValidation(t),
-      apartmentNumber: requiredFieldValidation(t),
       postcode: minLengthValidation(t, 3),
       password: !isLoggedIn ? passwordSchema(t) : z.string().min(0),
       confirmPassword: !isLoggedIn ? passwordSchema(t) : z.string().min(0),

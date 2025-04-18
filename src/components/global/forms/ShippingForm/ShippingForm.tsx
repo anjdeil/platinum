@@ -5,7 +5,7 @@ import { z } from 'zod';
 import 'react-international-phone/style.css';
 import { useRegisterCustomerMutation } from '@/store/rtk-queries/wooCustomApi';
 import { useRouter } from 'next/router';
-import { RegistrationFormSchema } from '@/types/components/global/forms/registrationForm';
+import { RegistrationFormSchema2 } from '@/types/components/global/forms/registrationForm';
 import { isAuthErrorResponseType } from '@/utils/isAuthErrorResponseType';
 import { CustomFormInput } from '../CustomFormInput';
 import { CustomError, CustomSuccess } from '../CustomFormInput/styles';
@@ -37,7 +37,7 @@ export const ShippingForm: FC = () => {
 
   /** Form settings */
   const formSchema = useMemo(
-    () => RegistrationFormSchema(false, tValidation),
+    () => RegistrationFormSchema2(false, tValidation),
     []
   );
   type RegistrationFormType = z.infer<typeof formSchema>;
@@ -74,9 +74,7 @@ export const ShippingForm: FC = () => {
         first_name: formData.first_name,
         last_name: formData.last_name,
         address_1: formData.address_1,
-        address_2: [formData.address_2, formData.apartmentNumber]
-          .filter(Boolean)
-          .join('/'),
+        address_2: formData.address_2,
         city: formData.city,
         postcode: formData.postcode,
         country: formData.country,
@@ -141,7 +139,6 @@ export const ShippingForm: FC = () => {
         'city',
         'address_1',
         'address_2',
-        'apartmentNumber',
         'postcode',
         'password',
         'confirmPassword',

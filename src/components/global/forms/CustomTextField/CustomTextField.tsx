@@ -129,7 +129,15 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
               fullWidth
               margin="normal"
               id={name}
-              {...register(name, validation)}
+              {...register(name, {
+                ...validation,
+                onBlur: (e: React.FocusEvent<HTMLInputElement>) => {
+                  const trimmed = e.target.value.trim();
+                  if (typeof setValue === 'function') {
+                    setValue(name, trimmed, { shouldValidate: true });
+                  }
+                },
+              })}
               type={
                 isPasswordVisible && inputType === 'password'
                   ? 'text'

@@ -120,14 +120,6 @@ const OrderPdf = ({
   const formattedPrice = order?.total ? formatPrice(+order?.total) : '—';
   const formattedTax = order?.total_tax ? formatPrice(+order?.total_tax) : null;
 
-  const apartmentNumber = order
-    ? getMetaDataValue(order.meta_data, 'apartmentNumber')
-    : '';
-
-  const shippingApartmentNumber = order
-    ? getMetaDataValue(order.meta_data, 'shipping_apartmentNumber')
-    : '';
-
   const nipFromMeta = order ? getMetaDataValue(order.meta_data, 'nip') : '';
 
   const isShippingData = () => {
@@ -345,7 +337,7 @@ const OrderPdf = ({
 
           <View style={styles.split}>
             <View style={styles.splitFirst}>
-              <Text style={styles.text}>{t('address_2')}</Text>
+              <Text style={styles.text}>{t('apartmentNumber')}</Text>
             </View>
             <View style={styles.splitLast}>
               <Text style={styles.text}>
@@ -353,17 +345,6 @@ const OrderPdf = ({
               </Text>
             </View>
           </View>
-
-          {Boolean(apartmentNumber) && (
-            <View style={styles.split}>
-              <View style={styles.splitFirst}>
-                <Text style={styles.text}>{t('apartmentNumber')}</Text>
-              </View>
-              <View style={styles.splitLast}>
-                <Text style={styles.text}>{apartmentNumber || '—'}</Text>
-              </View>
-            </View>
-          )}
 
           <View style={styles.split}>
             <View style={styles.splitFirst}>
@@ -459,7 +440,7 @@ const OrderPdf = ({
         )}
 
         {/* Shipping */}
-        {order?.shipping && isShippingData() && !shippingApartmentNumber && (
+        {order?.shipping && isShippingData() && (
           <View style={styles.island}>
             <Text style={styles.secondaryTitle}>{t('shipping')}</Text>
 
@@ -500,7 +481,7 @@ const OrderPdf = ({
 
             <View style={styles.split}>
               <View style={styles.splitFirst}>
-                <Text style={styles.text}>{t('address_2')}</Text>
+                <Text style={styles.text}>{t('shipping_apartmentNumber')}</Text>
               </View>
               <View style={styles.splitLast}>
                 <Text style={styles.text}>
@@ -508,21 +489,6 @@ const OrderPdf = ({
                 </Text>
               </View>
             </View>
-
-            {Boolean(shippingApartmentNumber) && (
-              <View style={styles.split}>
-                <View style={styles.splitFirst}>
-                  <Text style={styles.text}>
-                    {t('shipping_apartmentNumber')}
-                  </Text>
-                </View>
-                <View style={styles.splitLast}>
-                  <Text style={styles.text}>
-                    {shippingApartmentNumber || '—'}
-                  </Text>
-                </View>
-              </View>
-            )}
 
             <View style={styles.split}>
               <View style={styles.splitFirst}>
