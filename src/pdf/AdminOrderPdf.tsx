@@ -90,6 +90,19 @@ const styles = StyleSheet.create({
   },
 });
 
+type MetaData = {
+  display_key: string;
+  display_value: string;
+  id: number;
+  key: string;
+  value: string;
+}
+
+function uniteOptionsIntoString(meta_data:MetaData[]) {
+  const options = meta_data.filter(({ key }) => key !== '_reduced_stock');
+  return options.reduce((acc, { display_value }) => acc + ', ' + display_value, '');
+}
+
 const OrderPdf = ({
                     order,
                     t,
@@ -159,7 +172,11 @@ const OrderPdf = ({
             {order?.line_items?.map(item => (
               <View key={item.id} style={styles.productTableRow}>
                 <View style={styles.productTableTwoColumn}>
-                  <Text style={styles.text}>{item.name}</Text>
+                  <Text style={styles.text}>{item.name}
+                  {
+                    uniteOptionsIntoString(item.meta_data) !== '' && uniteOptionsIntoString(item.meta_data)
+                  }
+                  </Text>
                   <View style={styles.splitMiddle}>
                     <Text style={styles.text}>{item.sku}</Text>
                   </View>
