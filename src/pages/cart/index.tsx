@@ -158,7 +158,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
     } else {
       router.push('/cart');
     }
-  }, [cartItems]);
+  }, [cartItems, router.locale]);
 
   const currentOrderItems = orderItems ?? cachedOrderItems;
 
