@@ -29,6 +29,7 @@ import { Skeleton } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { CartLink, MiniCartContainer } from './style';
+import { useRouter } from 'next/router';
 
 interface MiniCartProps {
   onClose: () => void;
@@ -38,6 +39,7 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
   const dispatch = useAppDispatch();
   const { cartItems, productsData } = useAppSelector(state => state.cartSlice);
   const t = useTranslations('Cart');
+  const router = useRouter();
 
   const [hasConflict, setHasConflict] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -269,12 +271,12 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
         />
 
         <FlexBox flexDirection="column" gap="8px" margin="20px 0 0 0">
-          <CartLink href="/cart">
+          <CartLink href={`/${router.locale}/cart`}>
             <StyledButton secondary height="58px">
               {t('goToCart')}
             </StyledButton>
           </CartLink>
-          <CartLink href="/checkout">
+          <CartLink href={`/${router.locale}/checkout`}>
             <StyledButton
               height="58px"
               disabled={hasConflict || productsWithCartData.length < 1}
