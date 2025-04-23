@@ -95,20 +95,6 @@ const CartCouponBlock: FC<CartCouponBlockProps> = ({
 
   return (
     <CouponBlock>
-      {!auth && (
-        <CouponText uppercase marginBottom="8px">
-          {/*  need to add diff  DISCOUNT */}
-          {t('LoginAnd')}
-          <span>&nbsp;-3%&nbsp;</span>
-          {t('ForOrders')} {t('Above')}{' '}
-          <span>&nbsp;500&nbsp;{t('CouponCurrencySymbol')}</span>,
-          &nbsp;5%&nbsp;
-          {t('Above')} <span>&nbsp;1000&nbsp;{t('CouponCurrencySymbol')}</span>,{' '}
-          &nbsp;10%&nbsp;
-          {t('Above')}{' '}
-          <span>&nbsp;2000&nbsp;{t('CouponCurrencySymbol')}&nbsp;</span>
-        </CouponText>
-      )}
       {validStatus && (
         <CouponText uppercase marginBottom="8px">
           {t('UserLoyalityStatus', { validStatus: validStatus })}
@@ -135,28 +121,22 @@ const CartCouponBlock: FC<CartCouponBlockProps> = ({
         />
         <CouponButton type="submit" disabled={isCouponsIgnored || isLoading}>
           {t('CouponApplyBtn')}
-          {isLoading &&
-            <>...</>
-          }
+          {isLoading && <>...</>}
         </CouponButton>
-
       </CouponForm>
 
-      {!applyingStatus && !isCouponsIgnored && isCartLoyaltyIncluded &&
-        <Notification type={'warning'}>{t('overrideLoyaltyDiscount')}</Notification>
-      }
-      {
-        applyingStatus && !isCouponsIgnored && !applyingStatus.isError &&
+      {!applyingStatus && !isCouponsIgnored && isCartLoyaltyIncluded && (
+        <Notification type={'warning'}>
+          {t('overrideLoyaltyDiscount')}
+        </Notification>
+      )}
+      {applyingStatus && !isCouponsIgnored && !applyingStatus.isError && (
         <CouponSuccess>{t(applyingStatus.message)}</CouponSuccess>
-      }
-      {
-        applyingStatus && !isCouponsIgnored && applyingStatus.isError &&
+      )}
+      {applyingStatus && !isCouponsIgnored && applyingStatus.isError && (
         <CouponError>{t(applyingStatus.message)}</CouponError>
-      }
-      {isCouponsIgnored &&
-        <CouponError>{t('couponIsNotApplied')}</CouponError>
-      }
-
+      )}
+      {isCouponsIgnored && <CouponError>{t('couponIsNotApplied')}</CouponError>}
     </CouponBlock>
   );
 };
