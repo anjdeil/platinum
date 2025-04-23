@@ -115,8 +115,13 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
         ...(currentVariation && { variation_id: currentVariation.id }),
       })
     );
+
     if (!isMobile) {
       dispatch(popupToggle({ popupType: 'mini-cart' }));
+    } else {
+      if (cartMatch && cartMatch.quantity === quantity) {
+        router.push(`/${router.locale}/cart`);
+      }
     }
   }
 
