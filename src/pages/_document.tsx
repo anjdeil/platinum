@@ -8,6 +8,7 @@ export default function Document() {
           id="cookieyes"
           type="text/javascript"
           src="https://cdn-cookieyes.com/client_data/4892edb3dd7351862d65495e/script.js"
+          strategy="afterInteractive"
         />
       </Head>
       <body>
