@@ -55,7 +55,21 @@ export default function ProductPage({
   const t = useTranslations('Product');
 
   useEffect(() => {
-    const categoriesWithLang = product.categories.map(item => ({
+    const categories = product.categories;
+
+    const childCategory =
+      categories.find(cat => cat.parent_id !== 0 && cat.is_hidden === false) ||
+      categories[0];
+
+    const parentCategory = categories.find(
+      cat => cat.id === childCategory.parent_id
+    );
+
+    const selectedCategories = parentCategory
+      ? [parentCategory, childCategory]
+      : [childCategory];
+
+    const categoriesWithLang = selectedCategories.map(item => ({
       ...item,
       language_code: locale,
     }));
@@ -101,6 +115,8 @@ export default function ProductPage({
   }
 
   const products: ProductType[] = filteredRecommendedProducts || [];
+
+  console.log('product...', product);
 
   return (
     <>
