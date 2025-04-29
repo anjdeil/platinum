@@ -116,8 +116,6 @@ export default function ProductPage({
 
   const products: ProductType[] = filteredRecommendedProducts || [];
 
-  console.log('product...', product);
-
   return (
     <>
       <Head>
