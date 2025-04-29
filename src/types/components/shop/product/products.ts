@@ -6,6 +6,7 @@ export const ProductCategorySchema = z.object({
   name: z.string(),
   slug: z.string(),
   description: z.string(),
+  is_hidden: z.boolean().optional(),
   count: z.number(),
   menu_order: z.number().optional(),
 });
