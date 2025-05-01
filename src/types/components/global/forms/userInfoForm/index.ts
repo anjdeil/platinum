@@ -1,3 +1,12 @@
+import {
+  apartmentRegex,
+  cityRegex,
+  nameRegex,
+  nipRegex,
+  phoneRegex,
+  postcodeRegex,
+  streetRegex,
+} from '@/utils/validation';
 import { z } from 'zod';
 
 export const UserInfoFormSchema = (
@@ -10,7 +19,7 @@ export const UserInfoFormSchema = (
     .min(1, { message: t('pleaseFillInTheFirstName') })
     .min(2, { message: t('yourFirstNameIsTooShort') })
     .max(50, { message: t('yourFirstNameIsTooLong') })
-    .regex(/^[\p{L}'-]+$/u, {
+    .regex(nameRegex, {
       message: t('invalidCharacters'),
     });
 
@@ -19,7 +28,7 @@ export const UserInfoFormSchema = (
     .min(1, { message: t('pleaseFillInTheLastName') })
     .min(2, { message: t('yourLastNameIsTooShort') })
     .max(50, { message: t('yourLastNameIsTooLong') })
-    .regex(/^[\p{L}'-]+$/u, {
+    .regex(nameRegex, {
       message: t('invalidCharacters'),
     });
 
@@ -27,7 +36,7 @@ export const UserInfoFormSchema = (
     .string()
     .min(1, { message: t('pleaseFillInThePhoneNumber') })
     .min(12, { message: t('yourPhoneNumberIsTooShort') })
-    .regex(/^\+?[1-9]\d{0,2}[-\s]?\d{3}[-\s]?\d{3}[-\s]?\d{3,4}$/g, {
+    .regex(phoneRegex, {
       message: t('invalidPhoneNumber'),
     });
 
@@ -36,7 +45,7 @@ export const UserInfoFormSchema = (
     .min(1, { message: t('pleaseFillInTheCity') })
     .min(3, { message: t('yourCityNameIsTooShort') })
     .max(100, { message: t('yourCityNameIsTooLong') })
-    .regex(/^[\p{L}'-]+$/u, {
+    .regex(cityRegex, {
       message: t('invalidCharacters'),
     });
 
@@ -45,7 +54,7 @@ export const UserInfoFormSchema = (
     .min(1, { message: t('pleaseFillInTheStreetBuildingAddress') })
     .min(3, { message: t('yourStreetAddressIsTooShort') })
     .max(150, { message: t('yourStreetAddressIsTooLong') })
-    .regex(/^(?!.*([\-.,/\s])\1)[\p{L}\d\s\-.,/]+$/u, {
+    .regex(streetRegex, {
       message: t('invalidCharacters'),
     });
 
@@ -53,31 +62,32 @@ export const UserInfoFormSchema = (
     .string({
       required_error: t('pleaseFillInTheApartmentNumber'),
     })
-    .min(1, { message: t('pleaseFillInTheApartmentNumber') }) // для required
+    .min(1, { message: t('pleaseFillInTheApartmentNumber') })
     .max(10, { message: t('yourApartmentNumberIsTooLong') })
-    .regex(/^(?=.*[\p{L}0-9])[ \p{L}0-9\-\/#]+$/u, {
+    .regex(apartmentRegex, {
       message: t('invalidCharacters'),
     });
 
   const postCodeValidation = z
     .string()
     .min(1, { message: t('pleaseFillInThePostcode') })
-    .regex(/^[A-Z0-9\s-]{3,10}$/i, {
+    .regex(postcodeRegex, {
       message: t('invalidPostcodeFormat'),
     });
 
   const companyValidation = z
     .string()
     .min(1, { message: t('pleaseFillInTheCorrectCompanyName') })
-    .max(100, { message: t('yourCompanyNameIsTooLong') })
-    .regex(/^(?!.*--)(?!.*\.\.)(?!.*,$)(?!.*\.$)[\p{L}\d\s\-.,]+$/u, {
-      message: t('invalidCharacters'),
-    });
+    .min(2, { message: t('yourCompanyNameIsTooShort') })
+    .max(100, { message: t('yourCompanyNameIsTooLong') });
+  // .regex(/^(?!.*--)(?!.*\.\.)(?!.*,$)(?!.*\.$)[\p{L}\d\s\-.,]+$/u, {
+  //   message: t('invalidCharacters'),
+  // });
 
   const nipValidation = z
     .string()
     .min(1, { message: t('pleaseFillInTheNip') })
-    .regex(/^[0-9\-]{10,20}$/, {
+    .regex(nipRegex, {
       message: t('wrongNipFormat'),
     });
 

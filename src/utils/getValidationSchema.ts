@@ -123,7 +123,7 @@ export const getValidationSchema = (
       return {
         required: t('pleaseFillInTheStreetAddress'),
         minLength: {
-          value: 2,
+          value: 3,
           message: t('yourStreetAddressIsTooShort'),
         },
         maxLength: {
