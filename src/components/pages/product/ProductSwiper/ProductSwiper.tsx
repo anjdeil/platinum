@@ -1,9 +1,9 @@
-import React, { useRef, useState } from 'react';
-import ReactPlayer from 'react-player';
 import BackArrow from '@/components/global/icons/BackArrow/BackArrow';
 import ForwardArrow from '@/components/global/icons/ForwardArrow/ForwardArrow';
 import useProductSwiper from '@/hooks/useProductSwiper';
 import { SwiperProps } from '@/types/components/global/sliders/productSwiper';
+import React, { useEffect, useRef, useState } from 'react';
+import ReactPlayer from 'react-player';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
@@ -32,6 +32,12 @@ const ProductSwiper: React.FC<SwiperProps> = ({ data }) => {
     swiperRef,
     heightRef,
   } = useProductSwiper({ data });
+
+  useEffect(() => {
+    if (swiperRef.current) {
+      swiperRef.current.swiper.slideTo(0);
+    }
+  }, [data, swiperRef]);
 
   const [activeSlide, setActiveSlide] = useState<number>(0);
 

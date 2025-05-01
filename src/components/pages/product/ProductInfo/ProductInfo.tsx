@@ -5,6 +5,7 @@ import Rating from '@/components/global/Rating/Rating';
 import { RichTextSection } from '@/components/sections/RichTextSection';
 import ProductBadge from '@/components/shop/product/ProductBadge/ProductBadge';
 import ProductBadgeWrapper from '@/components/shop/product/ProductBadgeWrapper/ProductBadgeWrapper';
+import { ProductBadgeBox } from '@/components/shop/product/ProductBadgeWrapper/styles';
 import { useResponsive } from '@/hooks/useResponsive';
 import { useWishlist } from '@/hooks/useWishlist';
 import { useAppDispatch, useAppSelector } from '@/store';
@@ -43,7 +44,6 @@ import {
   ProductTitleWrapper,
   ProductWrapper,
 } from './styles';
-import { ProductBadgeBox } from '@/components/shop/product/ProductBadgeWrapper/styles';
 
 const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
   const { images, thumbnail, videos } = product;
@@ -163,13 +163,21 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
   };
 
   const galleryImages = (() => {
-    const imageItems =
-      thumbnail?.id && thumbnail?.name && thumbnail?.src
-        ? [
-            { id: thumbnail.id, name: thumbnail.name, src: thumbnail.src },
-            ...images,
-          ]
-        : [...images];
+    const variationImage = currentVariation?.image;
+    const hasValidVariationImage =
+      variationImage?.id && variationImage?.name && variationImage?.src;
+
+    const baseImage = hasValidVariationImage
+      ? {
+          id: variationImage.id,
+          name: variationImage.name,
+          src: variationImage.src,
+        }
+      : thumbnail?.id && thumbnail?.name && thumbnail?.src
+      ? { id: thumbnail.id, name: thumbnail.name, src: thumbnail.src }
+      : null;
+
+    const imageItems = baseImage ? [baseImage, ...images] : [...images];
 
     const videoItems =
       videos?.map(video => ({
@@ -201,6 +209,9 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
   const showAttributes = product.attributes.filter(attr =>
     product.variations.some(v => v.attributes.some(va => va.id === attr.id))
   );
+
+  console.log('product...', product);
+  console.log('currentVariation...', currentVariation);
 
   return (
     <ProductWrapper>
