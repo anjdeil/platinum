@@ -1,8 +1,6 @@
 import { z } from 'zod';
 import { phoneNumberValidation } from '../common';
-
-const nameRegex = /^[A-Za-zÀ-ÿ\s'-]+$/;
-const cityRegex = /^[A-Za-zÀ-ÿ0-9\s'-]+$/;
+import { cityRegex, nameRegex } from '@/utils/validation';
 
 export const AmbassadorFormValidationSchema = (
   t: (key: string, params?: Record<string, any>) => string

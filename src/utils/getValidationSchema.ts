@@ -1,3 +1,14 @@
+import {
+  apartmentRegex,
+  cityRegex,
+  emailRegex,
+  nameRegex,
+  nipRegex,
+  phoneRegex,
+  postcodeRegex,
+  streetRegex,
+} from './validation';
+
 export const getValidationSchema = (
   name: string,
   t: any,
@@ -16,8 +27,8 @@ export const getValidationSchema = (
           message: t('yourFirstNameIsTooLong'),
         },
         pattern: {
-          value: /^[\p{L}'-]+$/u,
-          message: t('invalidCharacters'),
+          value: nameRegex,
+          message: t('nameRegex'),
         },
       };
     case 'last_name':
@@ -32,15 +43,15 @@ export const getValidationSchema = (
           message: t('yourLastNameIsTooLong'),
         },
         pattern: {
-          value: /^[\p{L}'-]+$/u,
-          message: t('invalidCharacters'),
+          value: nameRegex,
+          message: t('nameRegex'),
         },
       };
     case 'email':
       return {
         required: t('pleaseFillInTheEmail'),
         pattern: {
-          value: /^(?!['`])\s*[-+.'\w]+@[-.\w]+\.[-.\w]+\s*$/gm,
+          value: emailRegex,
           message: t('wrongEmailFormat'),
         },
         maxLength: {
@@ -56,7 +67,7 @@ export const getValidationSchema = (
           message: t('yourPhoneNumberIsTooShort'),
         },
         pattern: {
-          value: /^\+?[1-9]\d{0,2}[-\s]?\d{3}[-\s]?\d{3}[-\s]?\d{3,4}$/g,
+          value: phoneRegex,
           message: t('invalidPhoneNumber'),
         },
       };
@@ -84,7 +95,7 @@ export const getValidationSchema = (
           message: t('yourNipIsTooLong'),
         },
         pattern: {
-          value: /^[0-9\\-]*$/,
+          value: nipRegex,
           message: t('invalidNipFormat'),
         },
       };
@@ -104,8 +115,8 @@ export const getValidationSchema = (
           message: t('yourCityNameIsTooLong'),
         },
         pattern: {
-          value: /^[\p{L}'-]+$/u,
-          message: t('invalidCharacters'),
+          value: cityRegex,
+          message: t('cityRegex'),
         },
       };
     case 'address_1':
@@ -120,7 +131,7 @@ export const getValidationSchema = (
           message: t('yourStreetAddressIsTooLong'),
         },
         pattern: {
-          value: /^(?!.*([\-.,/\s])\1)[\p{L}\d\s\-.,/]+$/u,
+          value: streetRegex,
           message: t('invalidCharacters'),
         },
       };
@@ -136,7 +147,7 @@ export const getValidationSchema = (
           message: t('yourStreetAddressIsTooLong'),
         },
         pattern: {
-          value: /^(?!.*([\-.,/\s])\1)[\p{L}\d\s\-.,/]+$/u,
+          value: streetRegex,
           message: t('invalidCharacters'),
         },
       };
@@ -148,7 +159,7 @@ export const getValidationSchema = (
           message: t('yourBuildingNumberIsTooLong'),
         },
         pattern: {
-          value: /^[0-9]+[\p{L}]?(\s?\/\s?[0-9\p{L}]+)?$/u,
+          value: streetRegex,
           message: t('invalidCharacters'),
         },
       };
@@ -159,7 +170,7 @@ export const getValidationSchema = (
           message: t('yourApartmentNumberIsTooLong'),
         },
         pattern: {
-          value: /^(?=.*[\p{L}0-9])[ \p{L}0-9\-\/#]+$/u,
+          value: apartmentRegex,
           message: t('invalidCharacters'),
         },
       };
@@ -171,7 +182,7 @@ export const getValidationSchema = (
           message: t('yourApartmentNumberIsTooLong'),
         },
         pattern: {
-          value: /^(?=.*[\p{L}0-9])[ \p{L}0-9\-\/#]+$/u,
+          value: apartmentRegex,
           message: t('invalidCharacters'),
         },
       };
@@ -179,7 +190,7 @@ export const getValidationSchema = (
       return {
         required: t('pleaseFillInThePostcode'),
         pattern: {
-          value: /^[A-Z0-9\s-]{3,10}$/i,
+          value: postcodeRegex,
           message: t('invalidPostcodeFormat'),
         },
       };
