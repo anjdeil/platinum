@@ -320,9 +320,11 @@
   },
   "Validation": {
     "emailValidation": "Geben Sie eine gültige E-Mail-Adresse ein",
-    "minChar": "Muss mindestens {count} Zeichen lang sein.",
-    "maxChar": "Darf nicht länger als {count} Zeichen sein.",
+    "minChar": "Muss mindestens {count} Zeichen lang sein",
+    "maxChar": "Darf nicht länger als {count} Zeichen sein",
     "RequiredField": "Pflichtfeld",
+    "nameRegex": "Nur Buchstaben von A-Z, Bindestriche und Apostrophe",
+    "cityRegex": "Nur A-Z, Zahlen, Bindestriche, Apostrophe",
     "email": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
     "name": "Name",
     "lastName": "Nachname",

@@ -1,5 +1,14 @@
 import { z } from 'zod';
 import { passwordSchema, phoneNumberValidation, termsSchema } from '../common';
+import {
+  apartmentRegex,
+  cityRegex,
+  emailRegex,
+  nameRegex,
+  phoneRegex,
+  postcodeRegex,
+  streetRegex,
+} from '@/utils/validation';
 
 export const RegistrationFormSchema = (isLoggedIn: boolean, t: any) => {
   const schema = z
@@ -34,51 +43,46 @@ export const RegistrationFormSchema2 = (isLoggedIn: boolean, t: any) => {
         .nonempty(t('pleaseFillInTheFirstName'))
         .min(2, t('yourFirstNameIsTooShort'))
         .max(50, t('yourFirstNameIsTooLong'))
-        .regex(/^[\p{L}'-]+$/u, t('invalidCharacters')),
+        .regex(nameRegex, t('invalidCharacters')),
       last_name: z
         .string()
         .nonempty(t('pleaseFillInTheLastName'))
         .min(2, t('yourLastNameIsTooShort'))
         .max(50, t('yourLastNameIsTooLong'))
-        .regex(/^[\p{L}'-]+$/u, t('invalidCharacters')),
+        .regex(nameRegex, t('invalidCharacters')),
       email: z
         .string()
         .nonempty(t('pleaseFillInTheEmail'))
         .email(t('wrongEmailFormat'))
-        .max(254, t('cannotExceed254Characters')),
+        .max(254, t('cannotExceed254Characters'))
+        .regex(emailRegex, t('wrongEmailFormat')),
       phone: z
         .string()
         .nonempty(t('pleaseFillInThePhoneNumber'))
         .min(12, t('yourPhoneNumberIsTooShort'))
-        .regex(
-          /^\+?[1-9]\d{0,2}[-\s]?\d{3}[-\s]?\d{3}[-\s]?\d{3,4}$/g,
-          t('invalidPhoneNumber')
-        ),
+        .regex(phoneRegex, t('invalidPhoneNumber')),
       country: z.string().nonempty(t('pleaseSelectACountry')),
       city: z
         .string()
         .nonempty(t('pleaseFillInTheCity'))
         .min(3, t('yourCityNameIsTooShort'))
         .max(100, t('yourCityNameIsTooLong'))
-        .regex(/^[\p{L}'-]+$/u, t('invalidCharacters')),
+        .regex(cityRegex, t('invalidCharacters')),
       address_1: z
         .string()
-        .nonempty(t('pleaseFillInTheStreetAddress'))
-        .min(2, t('yourStreetAddressIsTooShort'))
+        .nonempty(t('pleaseFillInTheStreetBuildingAddress'))
+        .min(3, t('yourStreetAddressIsTooShort'))
         .max(150, t('yourStreetAddressIsTooLong'))
-        .regex(
-          /^(?!.*([\-.,/\s])\1)[\p{L}\d\s\-.,/]+$/u,
-          t('invalidCharacters')
-        ),
+        .regex(streetRegex, t('invalidCharacters')),
       address_2: z
         .string()
-        .nonempty(t('pleaseFillInTheBuildingNumber'))
-        .max(6, t('yourBuildingNumberIsTooLong'))
-        .regex(/^(?=.*[\p{L}0-9])[ \p{L}0-9\-\/#]+$/u, t('invalidCharacters')),
+        .nonempty(t('pleaseFillInTheApartmentNumber'))
+        .max(10, t('yourApartmentNumberIsTooLong'))
+        .regex(apartmentRegex, t('invalidCharacters')),
       postcode: z
         .string()
         .nonempty(t('pleaseFillInThePostcode'))
-        .regex(/^[A-Z0-9\s-]{3,10}$/i, t('invalidPostcodeFormat')),
+        .regex(postcodeRegex, t('invalidPostcodeFormat')),
       password: !isLoggedIn
         ? z
             .string()
