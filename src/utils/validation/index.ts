@@ -1,6 +1,6 @@
 export const nameRegex = /^[A-Za-zÀ-ÿ\s'-]+$/;
 export const cityRegex = /^[A-Za-zÀ-ÿ0-9\s'-]+$/;
-export const streetRegex = /^[A-Za-zÀ-ÿ0-9\s.'/-]+$/;
+export const streetRegex = /^[A-Za-zÀ-ÿ0-9\s.'\/\-,]+$/;
 export const apartmentRegex = /^[A-Za-zÀ-ÿ0-9\s.'\/-]+$/;
 export const postcodeRegex = /^[A-Z0-9\s-]{3,10}$/i;
 export const emailRegex = /^(?!['`])\s*[-+.'\w]+@[-.\w]+\.[-.\w]+\s*$/gm;
