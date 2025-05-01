@@ -259,7 +259,7 @@ export const AmbassadorForm: FC = () => {
           </FlexBox>
         ) : (
           <>
-            <FormWrapper paddingBottom="16px">
+            <FormWrapper paddingBottom="16px" rowgap="24px">
               {renderFormInfoFields('', customer)}
             </FormWrapper>
             <FlexBox flexDirection="column" gap="16px">

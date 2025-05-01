@@ -320,9 +320,11 @@
   },
   "Validation": {
     "emailValidation": "Proszę wprowadzić poprawny adres e-mail.",
-    "minChar": "Musi mieć co najmniej {count} znaków.",
-    "maxChar": "Nie może zawierać więcej niż {count} znaków.",
+    "minChar": "Musi mieć co najmniej {count} znaków",
+    "maxChar": "Nie może zawierać więcej niż {count} znaków",
     "RequiredField": "Pole wymagane",
+    "nameRegex": "Tylko litery A-Z, myślniki i apostrofy",
+    "cityRegex": "Tylko A-Z, cyfry, myślniki, apostrofy",
     "email": "Proszę wpisać poprawny adres e-mail",
     "name": "Imię",
     "lastName": "Nazwisko",

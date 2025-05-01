@@ -320,9 +320,11 @@
   },
   "Validation": {
     "emailValidation": "Please enter a valid email.",
-    "minChar": "Must be at least {count} characters long.",
-    "maxChar": "Must be no more than {count} characters.",
+    "minChar": "Must be at least {count} characters long",
+    "maxChar": "Must be no more than {count} characters",
     "RequiredField": "Required field",
+    "nameRegex": "Only A–Z letters, hyphens and apostrophes",
+    "cityRegex": "Only A–Z, numbers, hyphens, apostrophes",
     "email": "Please, type valid email",
     "name": "Name",
     "lastName": "Last name",
