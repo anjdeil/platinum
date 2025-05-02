@@ -34,8 +34,10 @@ const ProductSwiper: React.FC<SwiperProps> = ({ data }) => {
   } = useProductSwiper({ data });
 
   useEffect(() => {
-    if (swiperRef.current) {
-      swiperRef.current.swiper.slideTo(0);
+    if (swiperRef.current && data.length > 0) {
+      setTimeout(() => {
+        swiperRef.current?.swiper.slideTo(0);
+      }, 0);
     }
   }, [data, swiperRef]);
 
