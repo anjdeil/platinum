@@ -15,6 +15,7 @@ import {
 } from './styles';
 import { popupClosed } from '@/store/slices/PopupSlice';
 import { CategoryType } from '@/types/pages/shop';
+import { useTranslations } from 'next-intl';
 
 const CategoriesMenu: FC<CategoriesMenuPropsType> = ({
   selectedCategories,
@@ -24,7 +25,7 @@ const CategoriesMenu: FC<CategoriesMenuPropsType> = ({
   const categoriesData: CategoryType[] | undefined = useAppSelector(
     state => state.categoriesSlice.categories
   );
-
+  const t = useTranslations('HomePage');
   const categories = transformCategoriesMenu(categoriesData);
 
   const dispatch = useAppDispatch();
@@ -69,7 +70,7 @@ const CategoriesMenu: FC<CategoriesMenuPropsType> = ({
           uppercase={true}
           marginBottom="16px"
         >
-          all shop
+          {t('allShop')}
         </Title>
       )}
       <Categories
