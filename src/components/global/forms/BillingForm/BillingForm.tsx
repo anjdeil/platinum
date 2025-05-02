@@ -273,7 +273,7 @@ export const BillingForm: FC<BillingFormProps> = ({
         });
       });
     }
-  }, [isValid, isWarningsShown]);
+  }, [isValid, isWarningsShown, locale]);
 
   const addressFields = (form: string) => (
     <>
