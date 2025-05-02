@@ -210,9 +210,6 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
     product.variations.some(v => v.attributes.some(va => va.id === attr.id))
   );
 
-  console.log('product...', product);
-  console.log('currentVariation...', currentVariation);
-
   return (
     <ProductWrapper>
       <ProductImageWrapper>

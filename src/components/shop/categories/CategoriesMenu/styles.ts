@@ -9,7 +9,7 @@ import Link from 'next/link';
 export const Categories = styled.div<CategoriesWrapperProps>`
   position: ${({ shop }) => (shop ? 'relative' : 'absolute')};
   display: flex;
-  top: ${({ shop }) => (shop ? '0' : '190px')};
+  top: ${({ shop }) => (shop ? '0' : '167px')};
   z-index: 11;
   bottom: 0;
   transition: transform 0.3s ease-in-out;
@@ -25,7 +25,7 @@ export const Categories = styled.div<CategoriesWrapperProps>`
 
   @media ${({ theme }) => theme.media.medium} {
     display: none;
-    top: 60px;
+    top: 53px;
     bottom: 0;
   }
 
