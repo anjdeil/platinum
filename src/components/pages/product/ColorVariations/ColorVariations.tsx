@@ -6,25 +6,23 @@ import { ColorVariationsContainer, VariationListBlock, VariationsColorButton } f
 
 const ColorVariations: React.FC<ColorVariationsProps> = ({ attr, currentVariation, onChange }) =>
 {
-    const t = useTranslations("Product");
+    const t = useTranslations('Product');
 
     return (
-        <ColorVariationsContainer>
-            <VariationTitle>
-                {t('color')}
-            </VariationTitle>
-            <VariationListBlock>
-                {attr.options && attr.options.map((item) => (
-                    <VariationsColorButton
-                        key={item.slug}
-                        active={item.slug === currentVariation}
-                        onClick={() => onChange(attr.slug, item.slug)}
-                        color={item.slug}
-                    >
-                    </VariationsColorButton>
-                ))}
-            </VariationListBlock>
-        </ColorVariationsContainer >
+      <ColorVariationsContainer>
+        <VariationTitle>{t('color')}</VariationTitle>
+        <VariationListBlock>
+          {attr.options &&
+            attr.options.map(item => (
+              <VariationsColorButton
+                key={item.slug}
+                active={item.slug === currentVariation}
+                onClick={() => onChange(attr.slug, item.slug)}
+                color={item?.color_hex ? item.color_hex : '#efefef'}
+              ></VariationsColorButton>
+            ))}
+        </VariationListBlock>
+      </ColorVariationsContainer>
     );
 };
 

@@ -35,6 +35,7 @@ export const ProductAttrOptionSchema = z.object({
   id: z.number(),
   slug: z.string(),
   name: z.string(),
+  color_hex: z.string().optional(),
 });
 
 export const ProductTagsSchema = z.object({
