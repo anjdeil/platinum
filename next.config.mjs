@@ -7,6 +7,7 @@ const nextConfig = {
     localeDetection: true,
   },
   images: {
+    unoptimized: true,
     domains: [
       'admin.platinumchetvertinovskaya.com',
       'secure.gravatar.com',
