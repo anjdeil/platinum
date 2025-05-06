@@ -47,7 +47,9 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   const { data: userTotal } = useGetUserTotalsQuery(defaultCustomerData?.id);
 
   const [auth, setAuth] = useState<boolean>(false);
-  const [userLoyaltyStatus] = useState<string | undefined>();
+  const [userLoyaltyStatus, setUserLoyaltyStatus] = useState<
+    string | undefined
+  >();
 
   useEffect(() => {
     if (defaultCustomerData) {
@@ -55,6 +57,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
       const level = userTotal?.loyalty_status;
       if (level && level !== '') {
         dispatch(addCoupon({ couponCode: level }));
+        setUserLoyaltyStatus(level);
       }
     }
   }, [defaultCustomerData, userTotal]);
@@ -66,6 +69,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
 
   const [getProductsMinimized, { data: productsMinimizedData }] =
     useGetProductsMinimizedMutation();
+
   const [productsMinimized, setProductsMinimized] = useState<
     ProductsMinimizedType[]
   >([]);
@@ -291,7 +295,9 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   );
 };
 
-export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
   const cookies = context.req.cookies;
   const { locale } = context;
 
@@ -335,7 +341,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 
     return {
       props: {
-        user: null,
+        defaultCustomerData: null,
       },
     };
   }
