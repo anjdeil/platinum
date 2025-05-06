@@ -2,8 +2,7 @@ export const nameRegex = /^[\p{Script=Latin}\s'-]+$/u;
 export const cityRegex = /^(?=.*\p{Script=Latin})[\p{Script=Latin}0-9\s'.-]+$/u;
 export const streetRegex =
   /^(?=.*\p{Script=Latin})[\p{Script=Latin}0-9\s.'\/,#-]+$/u;
-export const apartmentRegex =
-  /^(?=.*\p{Script=Latin})[\p{Script=Latin}0-9\s.'\/,\-]+$/u;
+export const apartmentRegex = /^[\p{Script=Latin}0-9\s.'\/,\-]*$/u;
 
 export const postcodeRegex = /^[A-Z0-9\s-]{3,10}$/i;
 export const emailRegex = /^(?!['`])\s*[-+.'\w]+@[-.\w]+\.[-.\w]+\s*$/gm;
