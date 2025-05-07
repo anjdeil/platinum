@@ -1,24 +1,13 @@
-import { z } from 'zod';
+import { z } from "zod";
 
-const SeoImageSchema = z.object({
-  'image:loc': z.string(),
-});
+export type OpenGraphSeoData = z.infer<typeof OpenGraphSeoSchema>;
+export type ProductSeoData = z.infer<typeof ProductSeoDataSchema>;
+export type CategorySeoData = z.infer<typeof CategorySeoDataSchema>;
+export type PostSeoData = z.infer<typeof PostSeoDataSchema>;
+export type PageSeoData = z.infer<typeof PageSeoDataSchema>;
+export type PostCategorySeoData = z.infer<typeof PostCategorySeoDataSchema>;
 
-const SeoRobotsSchema = z.object({
-  default: z.boolean(),
-  noindex: z.boolean(),
-  noarchive: z.boolean(),
-  nosnippet: z.boolean(),
-  nofollow: z.boolean(),
-  noimageindex: z.boolean(),
-  noodp: z.boolean(),
-  notranslate: z.boolean(),
-  max_snippet: z.number(),
-  max_videopreview: z.number(),
-  max_imagepreview: z.union([z.string(), z.number()]),
-});
-
-const SeoOgSchema = z.object({
+export const OpenGraphSeoSchema = z.object({
   title: z.string().nullable(),
   description: z.string().nullable(),
   image_url: z.string().nullable(),
@@ -30,10 +19,35 @@ const SeoOgSchema = z.object({
 });
 
 export const ProductSeoDataSchema = z.object({
-  title: z.string().nullable(),
-  description: z.string().nullable(),
-  images: z.array(SeoImageSchema).nullable(),
-  image_scan_date: z.string().nullable(),
-  robots: SeoRobotsSchema.nullable(),
-  og: SeoOgSchema.nullable(),
+  title: z.string(),
+  description: z.string(),
+  images: z.array(z.any()).nullable(),
+  image_scan_date: z.string().datetime().nullable(),
+  og: OpenGraphSeoSchema,
+});
+
+export const CategorySeoDataSchema = z.object({
+  title: z.string(),
+  description: z.string(),
+});
+
+export const PostCategorySeoDataSchema = z.object({
+  title: z.string(),
+  description: z.string(),
+});
+
+export const PostSeoDataSchema = z.object({
+  title: z.string(),
+  description: z.string(),
+  images: z.array(z.any()).nullable(),
+  image_scan_date: z.string().datetime().nullable(),
+  og: OpenGraphSeoSchema,
+});
+
+export const PageSeoDataSchema = z.object({
+  title: z.string(),
+  description: z.string(),
+  images: z.array(z.any()).nullable(),
+  image_scan_date: z.string().datetime().nullable(),
+  og: OpenGraphSeoSchema,
 });
