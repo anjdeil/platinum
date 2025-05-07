@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { ProductSeoDataSchema } from "./productSEO";
 
 export const ProductCategorySchema = z.object({
   id: z.number(),
@@ -139,6 +140,7 @@ export const ProductSchema = z.object({
   attributes: z.array(ProductAttributesSchema),
   default_attributes: z.array(ProductDefaultAttributesSchema),
   variations: z.array(ProductVariationSchema),
+  seo_data: ProductSeoDataSchema.nullable(),
 });
 
 export const ProductDataResponseSchema = z.object({
