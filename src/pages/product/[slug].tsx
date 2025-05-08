@@ -82,6 +82,28 @@ export default function ProductPage({
     setBreadcrumbsLinks(categoriesBreadcrumbsLinks);
   }, [product.categories]);
 
+  //Google Analytics
+  useEffect(() => {
+    if (product) {
+      const viewItemPayload = {
+        value: product.price?.min_price,
+        items: [
+          {
+            item_id: product.sku || product.id,
+            item_name: product.name,
+            item_category: product.categories.map(c => c.name).join('/'),
+            price: String(product.price?.min_price),
+            quantity: 1,
+          },
+        ],
+      };
+
+      if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+        window.gtag('event', 'view_item', viewItemPayload);
+      }
+    }
+  }, [product]);
+
   const PER_PAGE = 5;
   const selectedCategory = product.categories[0].slug || null;
 
