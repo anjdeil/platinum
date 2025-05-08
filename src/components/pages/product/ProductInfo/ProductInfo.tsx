@@ -116,6 +116,29 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
       })
     );
 
+    //Google Analytics
+    const addToCartPayload = {
+      value: finalPrice ? finalPrice : 0 * quantity,
+      items: [
+        {
+          item_id: currentVariation?.sku || product.sku || product.id,
+          item_name: product.name,
+          item_category: product.categories.map(c => c.name).join('/'),
+          price: String(finalPrice),
+          quantity,
+          ...(currentVariation && {
+            item_variant: currentVariation.attributes
+              ?.map(attr => attr.option)
+              .join(', '),
+          }),
+        },
+      ],
+    };
+
+    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+      window.gtag('event', 'add_to_cart', addToCartPayload);
+    }
+
     if (!isMobile) {
       dispatch(popupToggle({ popupType: 'mini-cart' }));
     } else {

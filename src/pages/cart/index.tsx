@@ -6,12 +6,16 @@ import CartTable from '@/components/pages/cart/CartTable/CartTable';
 import OrderBar from '@/components/pages/cart/OrderBar/OrderBar';
 import OrderProgress from '@/components/pages/cart/OrderProgress/OrderProgress';
 import { PageTitle } from '@/components/pages/pageTitle';
+import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
 import wpRestApi from '@/services/wpRestApi';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { useGetUserTotalsQuery } from '@/store/rtk-queries/userTotals/userTotals';
 import { useCreateOrderMutation } from '@/store/rtk-queries/wooCustomApi';
+import { useGetProductsMinimizedMutation } from '@/store/rtk-queries/wpCustomApi';
+import { addCoupon } from '@/store/slices/cartSlice';
 import { CartPageWrapper } from '@/styles/cart/style';
 import { Container, FlexBox, StyledButton } from '@/styles/components';
+import { ProductsMinimizedType } from '@/types/components/shop/product/products';
 import { CreateOrderRequestType, WooErrorType } from '@/types/services';
 import { JwtDecodedDataType } from '@/types/services/wpRestApi/auth';
 import { lineOrderItems } from '@/types/store/reducers/сartSlice';
@@ -21,16 +25,12 @@ import getCartTotals from '@/utils/cart/getCartTotals';
 import { handleQuantityChange } from '@/utils/cart/handleQuantityChange';
 import { roundedPrice } from '@/utils/cart/roundedPrice';
 import { validateJwtDecode } from '@/utils/zodValidators/validateJwtDecode';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { decodeJwt } from 'jose';
 import { GetServerSidePropsContext } from 'next';
 import { useTranslations } from 'next-intl';
-import React, { useCallback, useEffect, useState } from 'react';
-import { addCoupon } from '@/store/slices/cartSlice';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import router from 'next/router';
-import { useGetProductsMinimizedMutation } from '@/store/rtk-queries/wpCustomApi';
-import { ProductsMinimizedType } from '@/types/components/shop/product/products';
-import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
+import React, { useCallback, useEffect, useState } from 'react';
 
 interface CartPageProps {
   defaultCustomerData: WpUserType | null;
@@ -208,6 +208,29 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
     setInnerCartItems(updatedCartItems);
 
     handleChangeQuantity(productId, 'value', variationId, 0);
+
+    //Google Analytics
+    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+      const itemToRemove = innercartItems.find(
+        item =>
+          item.product_id === productId && item.variation_id === variationId
+      );
+
+      if (itemToRemove) {
+        window.gtag('event', 'remove_from_cart', {
+          currency: code,
+          value: itemToRemove.price * itemToRemove.quantity,
+          items: [
+            {
+              item_id: itemToRemove.product_id,
+              item_name: itemToRemove.name,
+              quantity: itemToRemove.quantity,
+              price: String(itemToRemove.price),
+            },
+          ],
+        });
+      }
+    }
   };
 
   //fix  hydration
@@ -291,7 +314,9 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   );
 };
 
-export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
   const cookies = context.req.cookies;
   const { locale } = context;
 
