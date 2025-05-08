@@ -47,7 +47,8 @@ import { useEffect, useState } from 'react';
 export default function ProductPage({
   res,
   locale,
-}: ProductPageType & { locale: string }) {
+  fullUrl,
+}: ProductPageType & { locale: string; fullUrl: string }) {
   const product = res.data.item;
   const [breadcrumbsLinks, setBreadcrumbsLinks] = useState<BreadcrumbType[]>(
     []
@@ -81,6 +82,28 @@ export default function ProductPage({
     categoriesBreadcrumbsLinks.push({ name: product.name, url: '/' });
     setBreadcrumbsLinks(categoriesBreadcrumbsLinks);
   }, [product.categories]);
+
+  //Google Analytics
+  useEffect(() => {
+    if (product) {
+      const viewItemPayload = {
+        value: product.price?.min_price,
+        items: [
+          {
+            item_id: product.sku || product.id,
+            item_name: product.name,
+            item_category: product.categories.map(c => c.name).join('/'),
+            price: String(product.price?.min_price),
+            quantity: 1,
+          },
+        ],
+      };
+
+      if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+        window.gtag('event', 'view_item', viewItemPayload);
+      }
+    }
+  }, [product]);
 
   const PER_PAGE = 5;
   const selectedCategory = product.categories[0].slug || null;
@@ -116,14 +139,52 @@ export default function ProductPage({
 
   const products: ProductType[] = filteredRecommendedProducts || [];
 
+  //SEO
+  const productTitle = product?.seo_data?.title || product?.name;
+  const productDescription =
+    product?.seo_data?.description || product?.description?.slice(0, 160);
+  const productImage =
+    product?.seo_data?.images?.[0]?.['image:loc'] || product?.images?.[0]?.src;
+  const productUrl = fullUrl;
+
+  const schemaProduct = {
+    '@context': 'https://schema.org/',
+    '@type': 'Product',
+    name: productTitle,
+    image:
+      product?.seo_data?.images?.map(img => img['image:loc']) ||
+      product?.images?.map(img => img.src),
+    description: productDescription,
+    sku: product?.sku,
+    brand: {
+      '@type': 'Brand',
+      name: 'Platinum by Chetvertinovskaya Liubov',
+    },
+    offers: {
+      '@type': 'Offer',
+      priceCurrency: 'USD',
+      price: product?.price?.min_price,
+      availability:
+        product?.stock_quantity && product.stock_quantity > 0
+          ? 'https://schema.org/InStock'
+          : 'https://schema.org/OutOfStock',
+      url: productUrl,
+    },
+  };
+
   return (
     <>
       <Head>
-        {<meta name="description" content={'Place for seo description'} />}
-        <link rel="canonical" href={'Place for seo canonical'} />
+        <meta name="description" content={productDescription} />
+        <meta property="og:title" content={productTitle} />
+        <meta property="og:description" content={productDescription} />
+        <meta property="og:image" content={productImage} />
+        <meta property="og:type" content="product" />
+        <meta property="og:url" content={productUrl} />
+        <link rel="canonical" href={productUrl} />
         {
           <script type="application/ld+json">
-            {JSON.stringify('Place for schema')}
+            {JSON.stringify(schemaProduct)}
           </script>
         }
       </Head>
@@ -171,6 +232,7 @@ export default function ProductPage({
 export const getServerSideProps: GetServerSideProps = async ({
   query,
   locale,
+  req,
 }: GetServerSidePropsContext) => {
   const { slug } = query;
 
@@ -186,10 +248,16 @@ export const getServerSideProps: GetServerSideProps = async ({
     const isValid = await validateCustomSingleProduct(response.data);
     if (!isValid) throw new Error('Invalid product data');
 
+    // Construct full URL
+    const protocol = req.headers['x-forwarded-proto'] || 'https';
+    const host = req.headers.host;
+    const fullUrl = `${protocol}://${host}/product/${slug}`;
+
     return {
       props: {
         res: response.data,
         locale,
+        fullUrl,
       },
     };
   } catch (err) {

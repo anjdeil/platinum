@@ -7,17 +7,17 @@ import Notification from '@/components/global/Notification/Notification';
 import OrderProductList from '@/components/pages/order/OrderProductList/OrderProductList';
 import OrderTotals from '@/components/pages/order/OrderTotals/OrderTotals';
 import wooCommerceRestApi from '@/services/wooCommerceRestApi';
+import wpRestApi from '@/services/wpRestApi';
+import { useAppDispatch } from '@/store';
+import { clearCart } from '@/store/slices/cartSlice';
 import { AccountInfoWrapper, AccountTitle } from '@/styles/components';
 import { MetaDataType, OrderType } from '@/types/services/wooCustomApi/shop';
 import areBillingAndShippingEqual from '@/utils/areBillingAndShippingEqual';
+import parseCookies from '@/utils/parseCookies';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { useTranslations } from 'next-intl';
-import { FC, useEffect } from 'react';
-import parseCookies from '@/utils/parseCookies';
-import wpRestApi from '@/services/wpRestApi';
-import { useAppDispatch } from '@/store';
 import { useRouter } from 'next/router';
-import { clearCart } from '@/store/slices/cartSlice';
+import { FC, useEffect } from 'react';
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
@@ -97,8 +97,34 @@ const Order: FC<OrderPropsType> = ({ order }) => {
     const clearCartParam = router.query['clear-cart'];
     if (clearCartParam === 'true') {
       dispatch(clearCart());
+
+      //Google Analytics
+      if (
+        typeof window.gtag === 'function' &&
+        order?.id &&
+        order.line_items?.length
+      ) {
+        const alreadyTracked = sessionStorage.getItem(
+          `purchase-tracked-${order.id}`
+        );
+        if (!alreadyTracked) {
+          window.gtag('event', 'purchase', {
+            transaction_id: order.id,
+            value: parseFloat(order.total),
+            currency: order.currency,
+            items: order.line_items.map(item => ({
+              id: item.sku || item.product_id,
+              name: item.name,
+              quantity: item.quantity,
+              price: String(item.price),
+            })),
+          });
+
+          sessionStorage.setItem(`purchase-tracked-${order.id}`, 'true');
+        }
+      }
     }
-  }, [router.query]);
+  }, [router.query, order]);
 
   const date = new Date(order.date_created);
 
