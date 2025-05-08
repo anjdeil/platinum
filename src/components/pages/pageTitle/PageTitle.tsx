@@ -26,7 +26,7 @@ export const PageTitle: React.FC<PageHeadProps> = ({
     nameSpace === 'HomePage' ? `${BRAND_NAME} – ${t('title')}` : BRAND_NAME;
 
   const fullTitle = capitalizedTitle
-    ? `${capitalizedTitle} – ${BRAND_NAME}`
+    ? `${capitalizedTitle} | ${BRAND_NAME}`
     : defaultTitle;
 
   return (
