@@ -1,10 +1,17 @@
 import { CustomSortAccordion } from '@/components/global/accordions/CustomSortAccordion';
 import Breadcrumbs from '@/components/global/Breadcrumbs/Breadcrumbs';
+import {
+  BreadcrumbLink,
+  BreadcrumbsList,
+  BreadcrumbsWrapper,
+} from '@/components/global/Breadcrumbs/styles';
 import FilterButton from '@/components/global/buttons/FilterButton/FilterButton';
 import CloseIcon from '@/components/global/icons/CloseIcon/CloseIcon';
 import Notification from '@/components/global/Notification/Notification';
 import MobileCategoriesMenu from '@/components/global/popups/MobileCategoriesMenu/MobileCategoriesMenu';
+import { PageTitle } from '@/components/pages/pageTitle';
 import CategoriesMenu from '@/components/shop/categories/CategoriesMenu/CategoriesMenu';
+import { useCanonicalUrl } from '@/hooks/useCanonicalUrl';
 import { useResponsive } from '@/hooks/useResponsive';
 import transformCategoriesIntoLinks from '@/services/transformers/transformCategoriesIntoLinks';
 import { useAppSelector } from '@/store';
@@ -14,6 +21,7 @@ import { CategoryType } from '@/types/pages/shop';
 import { getPluralForm } from '@/utils/getPluralForm';
 import { Skeleton } from '@mui/material';
 import { useTranslations } from 'next-intl';
+import Head from 'next/head';
 import router from 'next/router';
 import { FC, useState } from 'react';
 import SelectParentCategory from '../categories/SelectParentCategoryMobile/SelectParentCategoryMobile';
@@ -35,12 +43,6 @@ import {
   PagesNavigationFooterWrapper,
   PagesNavigationWrapper,
 } from './styles';
-import {
-  BreadcrumbLink,
-  BreadcrumbsList,
-  BreadcrumbsWrapper,
-} from '@/components/global/Breadcrumbs/styles';
-import { PageTitle } from '@/components/pages/pageTitle';
 
 const switchPage = (page: number, maxPage: number) => {
   if (maxPage < page) return;
@@ -89,6 +91,7 @@ export const Archive: FC<ArchivePropsType> = props => {
     defaultLocale,
   } = props;
   const t = useTranslations('Archive');
+  const canonicalUrl = useCanonicalUrl();
 
   const currentCategory = Array.isArray(categories)
     ? (categories[categories.length - 1] as CategoryType)
@@ -158,6 +161,9 @@ export const Archive: FC<ArchivePropsType> = props => {
 
   return (
     <>
+      <Head>
+        <link rel="canonical" href={canonicalUrl} />
+      </Head>
       <PageTitle
         title={currentCategory?.name || `${t('phraseSought')}: "${searchTerm}"`}
       />
