@@ -8,6 +8,7 @@ import {
   RecommendContainer,
   SectionContainer,
 } from '@/components/sections/styles';
+import { useCanonicalUrl } from '@/hooks/useCanonicalUrl';
 import { customRestApi } from '@/services/wpCustomApi';
 import { Container, StyledHeaderWrapper } from '@/styles/components';
 import { BlogCategoryType, BlogParsedItemType } from '@/types/pages/blog';
@@ -16,6 +17,7 @@ import { serverParseHTMLContent } from '@/utils/blog/serverParseHTMLContent';
 import { validateWpBlogPage } from '@/utils/zodValidators/validateWpBlogPage';
 import { omit } from 'lodash';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 export const getServerSideProps: GetServerSideProps = async (
@@ -115,6 +117,8 @@ const BlogPage: React.FC<BlogProps> = ({
 }) => {
   const router = useRouter();
 
+  const canonicalUrl = useCanonicalUrl();
+
   const handleCategoryChange = (categorySlug: string | null) => {
     let newQuery = categorySlug
       ? { ...router.query, category: categorySlug }
@@ -130,6 +134,9 @@ const BlogPage: React.FC<BlogProps> = ({
 
   return (
     <>
+      <Head>
+        <link rel="canonical" href={canonicalUrl} />
+      </Head>
       <PageTitle nameSpace={'Breadcrumbs'} spaceKey={'blogPage'} />
       <Container>
         <StyledHeaderWrapper>

@@ -8,6 +8,7 @@ import {
   TitleBlock,
 } from '@/components/sections/styles';
 import { ProductCardList } from '@/components/shop/ProductCardsList';
+import { useCanonicalUrl } from '@/hooks/useCanonicalUrl';
 import transformCategoriesIntoLinks from '@/services/transformers/transformCategoriesIntoLinks';
 import { customRestApi } from '@/services/wpCustomApi';
 import { useGetProductsQuery } from '@/store/rtk-queries/wpCustomApi';
@@ -146,6 +147,7 @@ export default function ProductPage({
   const productImage =
     product?.seo_data?.images?.[0]?.['image:loc'] || product?.images?.[0]?.src;
   const productUrl = fullUrl;
+  const canonicalUrl = useCanonicalUrl();
 
   const schemaProduct = {
     '@context': 'https://schema.org/',
@@ -181,7 +183,7 @@ export default function ProductPage({
         <meta property="og:image" content={productImage} />
         <meta property="og:type" content="product" />
         <meta property="og:url" content={productUrl} />
-        <link rel="canonical" href={productUrl} />
+        <link rel="canonical" href={canonicalUrl} />
         {
           <script type="application/ld+json">
             {JSON.stringify(schemaProduct)}
