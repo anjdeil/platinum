@@ -17,18 +17,20 @@ import { BlogPostContent } from '@/components/pages/blog/blogPostContent';
 import { BlogTitle } from '@/components/pages/blog/blogTitle';
 import { PostGroupNavigationButton } from '@/components/pages/blog/postGroupNavigationButton';
 import { PostPageBreadcrumbs } from '@/components/pages/blog/postPageBreadcrumbs';
+import BlogInfo from '@/components/pages/main/BlogListBlock/BlogInfo/BlogInfo';
 import {
   CategoriesTagWrapper,
   StyledTag,
 } from '@/components/pages/main/BlogListBlock/BlogItem/styles';
 import BlogListBlock from '@/components/pages/main/BlogListBlock/BlogListBlock';
+import { PageTitle } from '@/components/pages/pageTitle';
+import { useCanonicalUrl } from '@/hooks/useCanonicalUrl';
 import {
   StyledBox,
   StyledContainer,
   StyledHeroImage,
 } from '@/styles/blog/styles';
-import BlogInfo from '@/components/pages/main/BlogListBlock/BlogInfo/BlogInfo';
-import { PageTitle } from '@/components/pages/pageTitle';
+import Head from 'next/head';
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
@@ -133,6 +135,8 @@ interface PageProps {
 }
 
 const BlogPostPage = ({ post, recommendedPosts, popularPosts }: PageProps) => {
+  const canonicalUrl = useCanonicalUrl();
+
   if (!post) {
     return <StyledError>No Post found</StyledError>;
   }
@@ -160,6 +164,9 @@ const BlogPostPage = ({ post, recommendedPosts, popularPosts }: PageProps) => {
 
   return (
     <>
+      <Head>
+        <link rel="canonical" href={canonicalUrl} />
+      </Head>
       <PageTitle title={title} />
       <SectionContainer>
         <StyledContainer>
