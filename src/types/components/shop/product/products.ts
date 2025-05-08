@@ -140,7 +140,7 @@ export const ProductSchema = z.object({
   attributes: z.array(ProductAttributesSchema),
   default_attributes: z.array(ProductDefaultAttributesSchema),
   variations: z.array(ProductVariationSchema),
-  seo_data: ProductSeoDataSchema.nullable(),
+  seo_data: ProductSeoDataSchema.nullable().optional(),
 });
 
 export const ProductDataResponseSchema = z.object({
