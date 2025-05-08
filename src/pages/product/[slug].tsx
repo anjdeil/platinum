@@ -149,8 +149,6 @@ export default function ProductPage({
   const productUrl = fullUrl;
   const canonicalUrl = useCanonicalUrl();
 
-  console.log('canonicalUrl...', canonicalUrl);
-
   const schemaProduct = {
     '@context': 'https://schema.org/',
     '@type': 'Product',
