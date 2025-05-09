@@ -46,6 +46,7 @@ import { useEffect, useState } from 'react';
 import Notification from '@/components/global/Notification/Notification';
 import BillingWarnings from '@/components/pages/checkout/BillingWarnings';
 import { RegistrationError } from '@/components/pages/checkout/RegistrationError/RegistrationError';
+import { PageTitle } from '@/components/pages/pageTitle';
 import { useRegisterUser } from '@/hooks/useRegisterUser';
 import { useLazyGetUserTotalsQuery } from '@/store/rtk-queries/userTotals/userTotals';
 import { RegistrationFormType } from '@/types/components/global/forms/registrationForm';
@@ -54,7 +55,6 @@ import {
   MetaDataType,
   ShippingType,
 } from '@/types/services/wooCustomApi/customer';
-import { PageTitle } from '@/components/pages/pageTitle';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
 export function getServerSideProps() {
@@ -147,6 +147,27 @@ export default function CheckoutPage() {
     setShippingMethod(undefined);
   }, [shippingMethods]);
 
+  //Facebook Pixel: InitiateCheckout
+  useEffect(() => {
+    const cartKey = `fb-initiate-checkout-${btoa(JSON.stringify(cartItems))}`;
+    const alreadyTracked = sessionStorage.getItem(cartKey);
+
+    if (
+      typeof window !== 'undefined' &&
+      typeof window.fbq === 'function' &&
+      totalCost > 0 &&
+      !isCurrencyLoading &&
+      !alreadyTracked
+    ) {
+      window.fbq('track', 'InitiateCheckout', {
+        value: parseFloat(totalCost.toFixed(2)),
+        currency: currency || 'PLN',
+      });
+
+      sessionStorage.setItem(cartKey, 'true');
+    }
+  }, [totalCost, currency, isCurrencyLoading]);
+
   useEffect(() => {
     if (!isCurrencyLoading) {
       if (shippingMethod) {
@@ -236,8 +257,14 @@ export default function CheckoutPage() {
 
   const authToken = useGetAuthToken();
   const { name: currencyCode } = useAppSelector(state => state.currencySlice);
-  const [createOrder, { data: order, isLoading: isOrderLoading = true, error: orderCreationError }] =
-    useCreateOrderMutation();
+  const [
+    createOrder,
+    {
+      data: order,
+      isLoading: isOrderLoading = true,
+      error: orderCreationError,
+    },
+  ] = useCreateOrderMutation();
   const [fetchUserData, { data: userData, isLoading: isUserDataLoading }] =
     useLazyFetchUserDataQuery();
 
@@ -374,7 +401,10 @@ export default function CheckoutPage() {
   useEffect(() => {
     if (orderCreationError) {
       const wooError = (orderCreationError as FetchBaseQueryError).data;
-      if ((wooError as WooErrorType)?.details?.code === 'woocommerce_rest_invalid_coupon') {
+      if (
+        (wooError as WooErrorType)?.details?.code ===
+        'woocommerce_rest_invalid_coupon'
+      ) {
         setIsCouponsIgnored(true);
       }
     }
@@ -418,7 +448,7 @@ export default function CheckoutPage() {
     userData,
     shippingLine,
     router.locale,
-    isCouponsIgnored
+    isCouponsIgnored,
   ]);
 
   useEffect(() => {
