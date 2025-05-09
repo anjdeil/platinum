@@ -87,6 +87,8 @@ export default function ProductPage({
   //Google Analytics
   useEffect(() => {
     if (product) {
+      const price = product.price?.min_price || 0;
+
       const viewItemPayload = {
         value: product.price?.min_price,
         items: [
@@ -94,14 +96,27 @@ export default function ProductPage({
             item_id: product.sku || product.id,
             item_name: product.name,
             item_category: product.categories.map(c => c.name).join('/'),
-            price: String(product.price?.min_price),
+            price: String(price),
             quantity: 1,
           },
         ],
       };
 
-      if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
-        window.gtag('event', 'view_item', viewItemPayload);
+      if (typeof window !== 'undefined') {
+        // Google Analytics: view_item
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', 'view_item', viewItemPayload);
+        }
+
+        // Facebook Pixel: ViewContent
+        if (typeof window.fbq === 'function') {
+          window.fbq('track', 'ViewContent', {
+            content_ids: [product.sku || product.id],
+            content_type: 'product',
+            value: price,
+            currency: 'PLN',
+          });
+        }
       }
     }
   }, [product]);
