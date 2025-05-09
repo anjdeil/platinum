@@ -100,7 +100,7 @@ const Order: FC<OrderPropsType> = ({ order }) => {
 
       //Google Analytics
       if (
-        typeof window.gtag === 'function' &&
+        typeof window !== 'undefined' &&
         order?.id &&
         order.line_items?.length
       ) {
@@ -108,17 +108,32 @@ const Order: FC<OrderPropsType> = ({ order }) => {
           `purchase-tracked-${order.id}`
         );
         if (!alreadyTracked) {
-          window.gtag('event', 'purchase', {
-            transaction_id: order.id,
-            value: parseFloat(order.total),
-            currency: order.currency,
-            items: order.line_items.map(item => ({
-              id: item.sku || item.product_id,
-              name: item.name,
-              quantity: item.quantity,
-              price: String(item.price),
-            })),
-          });
+          // GA: Purchase
+          if (typeof window.gtag === 'function') {
+            window.gtag('event', 'purchase', {
+              transaction_id: order.id,
+              value: parseFloat(order.total),
+              currency: order.currency,
+              items: order.line_items.map(item => ({
+                id: item.sku || item.product_id,
+                name: item.name,
+                quantity: item.quantity,
+                price: String(item.price),
+              })),
+            });
+          }
+
+          // FB Pixel: Purchase
+          if (typeof window.fbq === 'function') {
+            window.fbq('track', 'Purchase', {
+              content_ids: order.line_items.map(
+                item => item.sku || item.product_id
+              ),
+              content_type: 'product',
+              value: parseFloat(order.total),
+              currency: order.currency,
+            });
+          }
 
           sessionStorage.setItem(`purchase-tracked-${order.id}`, 'true');
         }

@@ -116,9 +116,9 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
       })
     );
 
-    //Google Analytics
+    //Analytics
     const addToCartPayload = {
-      value: finalPrice ? finalPrice : 0 * quantity,
+      value: finalPrice ? finalPrice * quantity : 0,
       items: [
         {
           item_id: currentVariation?.sku || product.sku || product.id,
@@ -135,8 +135,21 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
       ],
     };
 
-    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
-      window.gtag('event', 'add_to_cart', addToCartPayload);
+    if (typeof window !== 'undefined') {
+      // Google Analytics
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'add_to_cart', addToCartPayload);
+      }
+
+      // Facebook Pixel
+      if (typeof window.fbq === 'function') {
+        window.fbq('track', 'AddToCart', {
+          content_ids: [currentVariation?.sku || product.sku || product.id],
+          content_type: 'product',
+          value: finalPrice ? finalPrice * quantity : 0,
+          currency: 'PLN',
+        });
+      }
     }
 
     if (!isMobile) {
