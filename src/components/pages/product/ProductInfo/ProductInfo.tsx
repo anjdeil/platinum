@@ -171,10 +171,16 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
   }
 
   const stockQuantity = useMemo(() => {
-    if (!currentVariation?.stock_quantity && !product.stock_quantity) return 0;
-    if (currentVariation?.stock_quantity)
+    if (!currentVariation?.stock_quantity && !product.stock_quantity) {
+      return 0;
+    }
+    if (currentVariation?.stock_quantity) {
       return currentVariation?.stock_quantity;
-    if (product?.stock_quantity) return product?.stock_quantity;
+    }
+    if (product?.stock_quantity) {
+      return product?.stock_quantity;
+    }
+
     return 0;
   }, [currentVariation, product]);
 

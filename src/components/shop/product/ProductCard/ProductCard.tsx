@@ -179,7 +179,7 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product }) => {
         </ProductCardBadgeWrapper>
       </ProductWrapper>
       <>
-        {product.stock_quantity === 0 && product?.type !== 'variable' ? (
+        {!product.stock_quantity && product?.type !== 'variable' ? (
           <NotifyBasketButton
             onClick={() => handleNotifyButtonClick(product.id)}
           >
