@@ -18,7 +18,7 @@ import { Container, FlexBox, StyledButton } from '@/styles/components';
 import { ProductsMinimizedType } from '@/types/components/shop/product/products';
 import { CreateOrderRequestType, WooErrorType } from '@/types/services';
 import { JwtDecodedDataType } from '@/types/services/wpRestApi/auth';
-import { lineOrderItems } from '@/types/store/reducers/сartSlice';
+import { CartItem, lineOrderItems } from '@/types/store/reducers/сartSlice';
 import { WpUserType } from '@/types/store/rtk-queries/wpApi';
 import checkCartConflict from '@/utils/cart/checkCartConflict';
 import getCartTotals from '@/utils/cart/getCartTotals';
@@ -180,7 +180,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
 
     const filteredItems = currentOrderItems.line_items.filter(lineItem =>
       cartItems.some(
-        cartItem =>
+        (cartItem: CartItem) =>
           cartItem.product_id === lineItem.product_id &&
           (!cartItem.variation_id ||
             cartItem.variation_id === lineItem.variation_id)
@@ -190,7 +190,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
     const notFilteredItems = currentOrderItems.line_items.filter(
       lineItem =>
         !cartItems.some(
-          cartItem =>
+          (cartItem: CartItem) =>
             cartItem.product_id === lineItem.product_id &&
             (!cartItem.variation_id ||
               cartItem.variation_id === lineItem.variation_id)
