@@ -108,7 +108,7 @@ const CartTable: FC<CartTableProps> = ({
                       }`
                     : productSpec?.name || item.name}
                 </LinkWrapper>
-                <CloseIcon
+                {/* <CloseIcon
                   onClick={() =>
                     handleChangeQuantity(
                       item.product_id,
@@ -116,6 +116,11 @@ const CartTable: FC<CartTableProps> = ({
                       item.variation_id,
                       0
                     )
+                  }
+                /> */}
+                <CloseIcon
+                  onClick={() =>
+                    handleDeleteItem(item.product_id, item.variation_id)
                   }
                 />
               </ProducTitle>
@@ -152,6 +157,7 @@ const CartTable: FC<CartTableProps> = ({
       );
     });
   };
+
   const renderCartItems = (items: lineOrderItems[], isFiltered = false) => {
     return (
       <>
@@ -236,19 +242,23 @@ const CartTable: FC<CartTableProps> = ({
         firstLoad &&
         innercartItems.length === cartItems.length
       ) && <Notification type="warning">{t('cartConflict')}</Notification>}
-      {innercartItems.length !== cartItems.length && order && (
-        <>
-          <Notification type="warning" marginBottom="0">
-            Ошибка получения текущих товаров
-          </Notification>
-          <FlexBox
-            alignItems="center"
-            flexDirection="column"
-            width="100%"
-            margin="0 0 24px 0"
-          ></FlexBox>
-        </>
-      )}
+
+      {innercartItems.length !== cartItems.length &&
+        order &&
+        cartItems.length > 0 &&
+        !isLoadingOrder && (
+          <>
+            <Notification type="warning" marginBottom="0">
+              {t('errorFetchingProducts')}
+            </Notification>
+            <FlexBox
+              alignItems="center"
+              flexDirection="column"
+              width="100%"
+              margin="0 0 24px 0"
+            ></FlexBox>
+          </>
+        )}
 
       {cartItems.length == 0 && (
         <FlexBox flexDirection="column" margin="0 0 46px 0" alignItems="center">
