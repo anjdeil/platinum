@@ -29,6 +29,29 @@ const nextConfig = {
   env: {
     timeZone: 'Europe/Warsaw',
   },
+
+
+  async rewrites() {
+    return [
+      {
+        source: '/sitemap.xml',
+        destination: 'https://admin.platinumchetvertinovskaya.com/sitemap.xml',
+      },
+      {
+        source: '/post-sitemap.xml',
+        destination: 'https://admin.platinumchetvertinovskaya.com/post-sitemap.xml',
+      },
+      {
+        source: '/page-sitemap.xml',
+        destination: 'https://admin.platinumchetvertinovskaya.com/page-sitemap.xml',
+      },
+      {
+        source: '/product-sitemap.xml',
+        destination: 'https://admin.platinumchetvertinovskaya.com/product-sitemap.xml',
+      },
+    ];
+  },
 };
+
 
 export default nextConfig;
