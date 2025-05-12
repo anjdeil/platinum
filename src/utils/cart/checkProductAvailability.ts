@@ -23,7 +23,6 @@ export default function checkProductAvailability(
   }
 
   if (!productSpecs) {
-    console.warn(`Product with ID ${item.product_id} not found`);
     return {
       resolveCount: 0,
       isAvailable: false,
