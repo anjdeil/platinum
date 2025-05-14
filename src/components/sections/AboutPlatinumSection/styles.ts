@@ -88,18 +88,19 @@ export const ContentWrapper = styled.div`
 
 export const StyledLogoImage = styled(Image)`
   width: 416px;
-  height: 80px;
+  // height: 80px;
+  height: auto;
   margin-bottom: 24px;
 
   @media ${({ theme }) => theme.media.largePlus} {
     width: 344px;
-    height: 71px;
+    // height: 71px;
     margin-bottom: 16px;
   }
 
   @media ${({ theme }) => theme.media.medium} {
     width: 300px;
-    height: 67px;
+    // height: 67px;
   }
 `;
 

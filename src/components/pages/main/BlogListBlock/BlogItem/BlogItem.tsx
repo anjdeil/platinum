@@ -26,7 +26,7 @@ interface BlogItemProps {
 
 const BlogItem: FC<BlogItemProps> = ({ post }) => {
   const { title, thumbnail, slug, created, views_count } = post;
-  const src = thumbnail?.src || '/assets/images/no-image.jpg';
+  const src = thumbnail?.src || '/assets/images/no-image.webp';
   const router = useRouter();
   const t = useTranslations('Product');
 

@@ -244,7 +244,7 @@ const BlogPostPage = ({
           </StyledHeaderWrapper>
           <StyledBox>
             <StyledHeroImage
-              src={thumbnail?.src || '/assets/images/no-image.jpg'}
+              src={thumbnail?.src || '/assets/images/no-image.webp'}
               alt={title}
               width={1280}
               height={477}

@@ -156,7 +156,9 @@ const WishListTable: FC<WishListTableProps> = ({
                     </DeleteCell>
                     <WishlistImgWrapper maxHeight="100px" maxWidth="100px">
                       <CartItemImg
-                        src={item?.image?.src || '/assets/images/not-found.png'}
+                        src={
+                          item?.image?.src || '/assets/images/not-found.webp'
+                        }
                         alt={item.name}
                         width="50"
                       />

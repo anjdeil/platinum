@@ -107,7 +107,7 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product }) => {
         <ProductImageWrapper>
           <Link href={`/product/${product.slug}`}>
             <Image
-              src={product.thumbnail?.src || '/assets/images/not-found.png'}
+              src={product.thumbnail?.src || '/assets/images/not-found.webp'}
               fill
               style={{ objectFit: 'contain' }}
               alt="image"
