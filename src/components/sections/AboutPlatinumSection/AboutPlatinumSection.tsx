@@ -37,11 +37,10 @@ export const AboutPlatinumSection: React.FC = ({}) => {
       <AboutContainer>
         <ImageWrapper>
           <StyledImage
-            src="/assets/images/about-section-1.5.png"
+            src="/assets/images/about-section-1.5.webp"
             alt="About Platinum"
             width={641}
             height={637}
-            priority
           />
         </ImageWrapper>
         <ContentWrapper>
@@ -49,8 +48,7 @@ export const AboutPlatinumSection: React.FC = ({}) => {
             src="/assets/images/about-logo.svg"
             alt="Platinum Logo"
             width={416}
-            height={80}
-            priority
+            height={72}
           />
           <StyledSubtitle>{subtitle}</StyledSubtitle>
           <StyledTitle>{title}</StyledTitle>

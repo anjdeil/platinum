@@ -248,11 +248,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
     <>
       <PageTitle nameSpace={'Cart'} spaceKey={'Basket'} />
       <OrderProgress />
-      {/*<BannerCart*/}
-      {/*  slug="stove"*/}
-      {/*  image="bunnerDesktop.png"*/}
-      {/*  mobileImage="bunnerMobile.png"*/}
-      {/*/>*/}
+
       <Container>
         <CartPageWrapper>
           <div>

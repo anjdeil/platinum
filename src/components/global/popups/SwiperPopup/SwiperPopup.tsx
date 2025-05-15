@@ -56,8 +56,7 @@ const SwiperPopup: React.FC<SwiperPopupProps> = ({ onClose }) => {
             data.map((item, index) => (
               <StyledSwiperSlide key={item?.id || index}>
                 <SlideImage
-                  unoptimized
-                  src={item?.src || '/assets/images/not-found.png'}
+                  src={item?.src || '/assets/images/not-found.webp'}
                   alt={`Product image ${index + 1}`}
                   width={600}
                   height={600}

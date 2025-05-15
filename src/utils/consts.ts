@@ -9,7 +9,7 @@ export const LOYALTY_LEVELS = [
   { name: 'platinum' as const, amount: 20000 },
 ];
 
-export const DEFAULT_IMAGE = '/assets/images/not-found.png';
+export const DEFAULT_IMAGE = '/assets/images/not-found.webp';
 
 export const accountLinkList = [
   {

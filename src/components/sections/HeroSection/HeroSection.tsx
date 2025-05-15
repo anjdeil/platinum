@@ -16,7 +16,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     <SectionContainer>
       <StyledWrapper>
         <StyledImage
-          src={image || "/assets/images/about-section-1.5.png"}
+          src={image || '/assets/images/about-section-1.5.webp'}
           alt={title}
           width={524}
           height={524}

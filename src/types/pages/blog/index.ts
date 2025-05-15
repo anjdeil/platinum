@@ -15,6 +15,33 @@ export const BlogCategorySchema = z.object({
   count: z.number(),
 });
 
+export const BlogSeoDataSchema = z.object({
+  title: z.string().nullable().optional(),
+  description: z.string().nullable().optional(),
+  images: z
+    .array(
+      z.object({
+        'image:loc': z.string().optional(),
+      })
+    )
+    .nullable()
+    .optional(),
+  image_scan_date: z.string().nullable().optional(),
+  og: z
+    .object({
+      title: z.string().nullable().optional(),
+      description: z.string().nullable().optional(),
+      image_url: z.string().nullable().optional(),
+      image_width: z.number().nullable().optional(),
+      image_height: z.number().nullable().optional(),
+      video: z.string().nullable().optional(),
+      article_section: z.string().nullable().optional(),
+      article_tags: z.string().nullable().optional(),
+    })
+    .nullable()
+    .optional(),
+});
+
 export const BaseBlogItemSchema = z.object({
   id: z.number(),
   slug: z.string(),
@@ -35,6 +62,7 @@ export const BaseBlogItemSchema = z.object({
   menu_order: z.number(),
   categories: z.array(BlogCategorySchema),
   views_count: z.number().optional(),
+  seo_data: BlogSeoDataSchema.nullable().optional(),
 });
 
 export const BlogItemSchema = BaseBlogItemSchema.extend({
@@ -93,3 +121,4 @@ export type BlogItemUnionType = z.infer<typeof BlogItemUnionSchema>;
 export type BlogPostType = z.infer<typeof BlogPostSchema>;
 export type BlogPostResponseType = z.infer<typeof BlogResponseTypeSchema>;
 export type BlogPageDataFullType = z.infer<typeof BlogPageDataFullSchema>;
+export type BlogSeoDataType = z.infer<typeof BlogSeoDataSchema>;

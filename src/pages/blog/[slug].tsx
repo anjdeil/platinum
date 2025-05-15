@@ -31,12 +31,22 @@ import {
   StyledHeroImage,
 } from '@/styles/blog/styles';
 import Head from 'next/head';
+import he from 'he';
+
+const getCleanText = (html: string) => {
+  if (!html) return '';
+  const decoded = he.decode(html);
+  const noComments = decoded.replace(/<!--[\s\S]*?-->/g, '');
+  const noTags = noComments.replace(/<\/?[^>]+(>|$)/g, '');
+  const trimmed = noTags.trim().replace(/\s+/g, ' ');
+  return trimmed;
+};
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
   const { slug } = context.params as { slug: string };
-  const { locale } = context;
+  const { locale, req } = context;
 
   try {
     const response = await customRestApi.get(`posts/${slug}`, {
@@ -110,11 +120,17 @@ export const getServerSideProps: GetServerSideProps = async (
 
     const popularPosts: BlogItemType[] = filteredPopularItems || [];
 
+    // Construct full URL
+    const protocol = req.headers['x-forwarded-proto'] || 'https';
+    const host = req.headers.host;
+    const fullUrl = `${protocol}://${host}/blog/${slug}`;
+
     return {
       props: {
         post: postData,
         recommendedPosts,
         popularPosts,
+        fullUrl,
       },
     };
   } catch (error) {
@@ -132,9 +148,15 @@ interface PageProps {
   post: BlogPostType;
   recommendedPosts: BlogItemType[];
   popularPosts: BlogItemType[];
+  fullUrl: string;
 }
 
-const BlogPostPage = ({ post, recommendedPosts, popularPosts }: PageProps) => {
+const BlogPostPage = ({
+  post,
+  recommendedPosts,
+  popularPosts,
+  fullUrl,
+}: PageProps) => {
   const canonicalUrl = useCanonicalUrl();
 
   if (!post) {
@@ -149,6 +171,7 @@ const BlogPostPage = ({ post, recommendedPosts, popularPosts }: PageProps) => {
     next_post,
     categories,
     created,
+    modified,
     views_count,
   } = post;
 
@@ -162,10 +185,52 @@ const BlogPostPage = ({ post, recommendedPosts, popularPosts }: PageProps) => {
       </Container>
     ) : null;
 
+  //SEO
+  const postTitle = post?.seo_data?.title || title;
+  const fullText = getCleanText(content);
+  const postDescription = post?.seo_data?.description || fullText.slice(0, 160);
+  const postImage =
+    post?.seo_data?.images?.[0]?.['image:loc'] || thumbnail?.src;
+  const postUrl = fullUrl;
+
+  const schemaPost = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: postTitle,
+    description: postDescription,
+    image:
+      post?.seo_data?.images?.map(img => img['image:loc']) || thumbnail?.src,
+    datePublished: created,
+    dateModified: modified,
+    author: {
+      '@type': 'Organization',
+      name: 'Platinum by Chetvertinovskaya Liubov',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Platinum by Chetvertinovskaya Liubov',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://platinumchetvertinovskaya.com/assets/icons/logo.png',
+      },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': postUrl,
+    },
+  };
+
   return (
     <>
       <Head>
+        <meta name="description" content={postDescription} />
+        <meta property="og:title" content={postTitle} />
+        <meta property="og:description" content={postDescription} />
+        <meta property="og:image" content={postImage} />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={canonicalUrl} />
         <link rel="canonical" href={canonicalUrl} />
+        <script type="application/ld+json">{JSON.stringify(schemaPost)}</script>
       </Head>
       <PageTitle title={title} />
       <SectionContainer>
@@ -179,7 +244,7 @@ const BlogPostPage = ({ post, recommendedPosts, popularPosts }: PageProps) => {
           </StyledHeaderWrapper>
           <StyledBox>
             <StyledHeroImage
-              src={thumbnail?.src || '/assets/images/no-image.jpg'}
+              src={thumbnail?.src || '/assets/images/no-image.webp'}
               alt={title}
               width={1280}
               height={477}

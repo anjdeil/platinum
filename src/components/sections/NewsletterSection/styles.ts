@@ -7,14 +7,14 @@ export const StyledContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-image: url('/assets/images/newsletter-bg.jpg');
+  background-image: url('/assets/images/newsletter-bg.webp');
   background-repeat: no-repeat;
   background-position: top center;
   background-size: cover;
   padding: 137px 0;
 
   @media ${({ theme }) => theme.media.medium} {
-    background-image: url('/assets/images/newsletter-mob-bg.jpg');
+    background-image: url('/assets/images/newsletter-mob-bg.webp');
   }
 `;
 
