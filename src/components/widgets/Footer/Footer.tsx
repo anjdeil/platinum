@@ -183,7 +183,6 @@ export const Footer: FC = () => {
                       alt="contact place"
                       width={24}
                       height={24}
-                      unoptimized={true}
                     />
                     <ContactLink
                       href={
@@ -205,7 +204,6 @@ export const Footer: FC = () => {
                       alt="contact phone"
                       width={24}
                       height={24}
-                      unoptimized={true}
                     />
                     <ContactLink
                       href={
@@ -236,7 +234,6 @@ export const Footer: FC = () => {
                       alt="contact mail"
                       width={24}
                       height={24}
-                      unoptimized={true}
                     />
                     <ContactLink
                       href={
@@ -255,7 +252,6 @@ export const Footer: FC = () => {
                       alt="contact time"
                       width={24}
                       height={24}
-                      unoptimized={true}
                     />
                     <p>
                       {tContacts('schedule', {
@@ -337,21 +333,18 @@ export const Footer: FC = () => {
                     alt="Logo"
                     width={41}
                     height={22}
-                    unoptimized={true}
                   />
                   <Image
                     src="/assets/icons/del_gls-logo.svg"
                     alt="Logo"
                     width={48}
                     height={16}
-                    unoptimized={true}
                   />
                   <Image
                     src="/assets/icons/del_polmail-logo.svg"
                     alt="Logo"
                     width={88}
                     height={20}
-                    unoptimized={true}
                   />
                 </PaymentAndDeliveryMethods>
                 <PaymentAndDeliveryMethods>
@@ -361,49 +354,42 @@ export const Footer: FC = () => {
                     alt="Logo"
                     width={41}
                     height={22}
-                    unoptimized={true}
                   />
                   <Image
                     src="/assets/icons/pay_prz-logo.svg"
                     alt="Logo"
                     width={45}
                     height={22}
-                    unoptimized={true}
                   />
                   <Image
                     src="/assets/icons/pay_apple-logo.svg"
                     alt="Logo"
                     width={46}
                     height={22}
-                    unoptimized={true}
                   />
                   <Image
                     src="/assets/icons/pay_visa-logo.svg"
                     alt="Logo"
                     width={46}
                     height={22}
-                    unoptimized={true}
                   />
                   <Image
                     src="/assets/icons/pay_mc-logo.svg"
                     alt="Logo"
                     width={32}
                     height={22}
-                    unoptimized={true}
                   />
                   <Image
                     src="/assets/icons/pay_pp-logo.svg"
                     alt="Logo"
                     width={28}
                     height={22}
-                    unoptimized={true}
                   />
                   <Image
                     src="/assets/icons/pay_g-logo.svg"
                     alt="Logo"
                     width={46}
                     height={22}
-                    unoptimized={true}
                   />
                 </PaymentAndDeliveryMethods>
               </PaymentAndDeliveryMethodsContainer>
@@ -429,21 +415,18 @@ export const Footer: FC = () => {
                 alt="Logo"
                 width={41}
                 height={22}
-                unoptimized={true}
               />
               <Image
                 src="/assets/icons/del_gls-logo.svg"
                 alt="Logo"
                 width={48}
                 height={16}
-                unoptimized={true}
               />
               <Image
                 src="/assets/icons/del_polmail-logo.svg"
                 alt="Logo"
                 width={88}
                 height={20}
-                unoptimized={true}
               />
             </PaymentAndDeliveryMethods>
             <PaymentAndDeliveryMethods>
@@ -453,49 +436,42 @@ export const Footer: FC = () => {
                 alt="Logo"
                 width={41}
                 height={22}
-                unoptimized={true}
               />
               <Image
                 src="/assets/icons/pay_prz-logo.svg"
                 alt="Logo"
                 width={45}
                 height={22}
-                unoptimized={true}
               />
               <Image
                 src="/assets/icons/pay_apple-logo.svg"
                 alt="Logo"
                 width={46}
                 height={22}
-                unoptimized={true}
               />
               <Image
                 src="/assets/icons/pay_visa-logo.svg"
                 alt="Logo"
                 width={46}
                 height={22}
-                unoptimized={true}
               />
               <Image
                 src="/assets/icons/pay_mc-logo.svg"
                 alt="Logo"
                 width={32}
                 height={22}
-                unoptimized={true}
               />
               <Image
                 src="/assets/icons/pay_pp-logo.svg"
                 alt="Logo"
                 width={28}
                 height={22}
-                unoptimized={true}
               />
               <Image
                 src="/assets/icons/pay_g-logo.svg"
                 alt="Logo"
                 width={46}
                 height={22}
-                unoptimized={true}
               />
             </PaymentAndDeliveryMethods>
           </PaymentAndDeliveryMethodsContainer>

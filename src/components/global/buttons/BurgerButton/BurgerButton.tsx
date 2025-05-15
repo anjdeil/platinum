@@ -21,7 +21,6 @@ export default function BurgerButton()
         alt={'Menu'}
         width={24}
         height={24}
-        unoptimized={true}
       />
     </StyledIconButton>
   );

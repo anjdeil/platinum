@@ -163,7 +163,6 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
                 width={24}
                 height={24}
                 onClick={togglePasswordVisibility}
-                unoptimized={true}
               />
             )}
           </>
