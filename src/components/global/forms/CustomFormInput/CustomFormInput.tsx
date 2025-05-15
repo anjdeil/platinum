@@ -160,7 +160,6 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
               width={24}
               height={24}
               onClick={togglePasswordVisibility}
-              unoptimized={true}
             />
           )}
         </CustomInputWrapper>

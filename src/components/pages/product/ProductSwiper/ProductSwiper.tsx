@@ -88,7 +88,6 @@ const ProductSwiper: React.FC<SwiperProps> = ({ data }) => {
           <SwiperSlide>
             <ImageWrapper>
               <ImageStyled
-                unoptimized={true}
                 priority
                 src="/assets/images/not-found.webp"
                 alt="Product not found"
@@ -146,7 +145,6 @@ const ProductSwiper: React.FC<SwiperProps> = ({ data }) => {
             <SwiperSlide key={index} onClick={handlerOpen}>
               <ImageWrapper>
                 <ImageStyled
-                  unoptimized={true}
                   priority
                   src={item?.src || '/assets/images/not-found.webp'}
                   alt={`Product ${index + 1}`}
@@ -185,7 +183,6 @@ const ProductSwiper: React.FC<SwiperProps> = ({ data }) => {
             <SwiperSlideStyled key={index}>
               <ThumbnailWrapper>
                 <Thumbnail
-                  unoptimized={true}
                   src={
                     item.type === 'video' && item.name === 'youtube'
                       ? getYouTubeThumbnail(item.src) ||

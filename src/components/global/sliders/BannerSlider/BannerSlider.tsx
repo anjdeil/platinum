@@ -79,8 +79,7 @@ const BannerSlider: React.FC<BannerSliderProps> = ({
               {isMainPage && (
                 <Link href={slide.url || '#'} passHref>
                   <ImageStyled
-                    // unoptimized={true}
-                    // priority={index === 0}
+                    priority={index === 0}
                     src={imageConfig.imageSrc(slide)}
                     alt="Banner"
                     width={imageConfig.width}
@@ -89,8 +88,7 @@ const BannerSlider: React.FC<BannerSliderProps> = ({
                 </Link>
               )}
               <ImageStyled
-                // unoptimized={true}
-                // priority={index === 0}
+                priority={index === 0}
                 src={imageConfig.imageSrc(slide)}
                 alt="Banner"
                 width={imageConfig.width}

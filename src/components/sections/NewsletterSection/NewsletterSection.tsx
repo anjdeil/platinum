@@ -42,7 +42,6 @@ export const NewsletterSection: React.FC = () => {
               alt={'WhatsApp'}
               width={24}
               height={24}
-              unoptimized={true}
             />
             {t('joinToWhatsApp')}
           </StyledLink>

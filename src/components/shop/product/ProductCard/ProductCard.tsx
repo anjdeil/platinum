@@ -111,7 +111,6 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product }) => {
               fill
               style={{ objectFit: 'contain' }}
               alt="image"
-              unoptimized={true}
             />
           </Link>
         </ProductImageWrapper>

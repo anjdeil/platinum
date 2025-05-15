@@ -36,7 +36,6 @@ const BlogInfo: FC<BlogInfoProps> = ({ created, views_count, postPage }) => {
           alt="Post view count"
           width={16}
           height={16}
-          unoptimized={true}
         />
         <StyledViewCountNumber>
           {formatViewCount(views_count)}

@@ -19,7 +19,6 @@ const MobileSearchButton = () => {
         alt={'Search'}
         width={24}
         height={24}
-        unoptimized={true}
       />
     </ButtonStyled>
   );
