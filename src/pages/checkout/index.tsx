@@ -125,12 +125,8 @@ export default function CheckoutPage() {
    * Shipping costs logic
    */
   const getCalculatedShippingMethodCost = (method: ShippingMethodType) => {
-    const costByValueOrWeight = getCalculatedMethodCostByWeight(
-      method,
-      totalWeight,
-      totalCost
-    );
-    if (costByValueOrWeight !== false) return costByValueOrWeight;
+    const costByWeight = getCalculatedMethodCostByWeight(method, totalWeight);
+    if (costByWeight !== false) return costByWeight;
 
     const costFixed = getShippingMethodFixedCost(method, totalCost);
     if (costFixed !== false) return costFixed;
