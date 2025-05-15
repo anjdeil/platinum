@@ -81,8 +81,9 @@ const InstagramBlock = () => {
                 src={
                   item.media_type === 'VIDEO'
                     ? item.thumbnail_url ||
-                      '/assets/images/product-placeholder.jpg'
-                    : item.media_url || '/assets/images/product-placeholder.jpg'
+                      '/assets/images/product-placeholder.webp'
+                    : item.media_url ||
+                      '/assets/images/product-placeholder.webp'
                 }
                 alt={item.username}
                 width={308}
