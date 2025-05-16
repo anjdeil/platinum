@@ -88,12 +88,7 @@ export default function ProductPage({
   }, [product.categories]);
 
   // Get recommended products
-  const hasItems = (arr?: number[]): boolean =>
-    Array.isArray(arr) && arr.length > 0;
-
-  const upsells = product.upsell_product_ids;
   const crosssells = product.crosssell_product_ids;
-  const isRecommended = hasItems(upsells) || hasItems(crosssells);
 
   // Get category slug
   const selectedCategorySlug = product?.categories[0]?.slug || null;
@@ -108,9 +103,8 @@ export default function ProductPage({
     per_page: PER_PAGE,
   };
 
-  if (isRecommended) {
-    const ids = hasItems(upsells) ? upsells : crosssells;
-    RECOMMENDED_PARAMS.ids = ids?.join(',');
+  if (Array.isArray(crosssells) && crosssells.length > 0) {
+    RECOMMENDED_PARAMS.ids = crosssells.join(',');
   } else if (baseCategorySlug) {
     RECOMMENDED_PARAMS.category = baseCategorySlug;
   }
