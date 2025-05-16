@@ -10,13 +10,11 @@ import {
 } from '@/components/sections/styles';
 import { useCanonicalUrl } from '@/hooks/useCanonicalUrl';
 import { customRestApi } from '@/services/wpCustomApi';
-import { useGetPostCategoryQuery } from '@/store/rtk-queries/wpCustomApi';
 import { Container, StyledHeaderWrapper } from '@/styles/components';
 import { BlogCategoryType, BlogParsedItemType } from '@/types/pages/blog';
 import { CustomDataPostsType } from '@/types/services';
 import { serverParseHTMLContent } from '@/utils/blog/serverParseHTMLContent';
 import { validateWpBlogPage } from '@/utils/zodValidators/validateWpBlogPage';
-import { skipToken } from '@reduxjs/toolkit/query';
 import { omit } from 'lodash';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
@@ -82,6 +80,39 @@ export const getServerSideProps: GetServerSideProps = async (
       return { notFound: true };
     }
 
+    // Get post category
+    let postCategoryTitle = 'Blog Category';
+    let postCategoryDescription = 'Blog category description';
+
+    if (selectedCategory) {
+      try {
+        const responsePostCategoryData = await customRestApi.get(
+          `post-categories/${selectedCategory}`,
+          {
+            lang: locale,
+          }
+        );
+
+        const postCategory = responsePostCategoryData?.data?.data
+          ?.item as BlogCategoryType;
+
+        postCategoryTitle =
+          postCategory?.seo_data?.title ||
+          postCategory?.name ||
+          postCategoryTitle;
+
+        postCategoryDescription =
+          postCategory?.seo_data?.description ||
+          postCategory?.name ||
+          postCategoryDescription;
+      } catch (err) {
+        console.warn(
+          `Could not load category: ${selectedCategory} or category is All`,
+          err
+        );
+      }
+    }
+
     return {
       props: {
         posts: postsData,
@@ -89,6 +120,8 @@ export const getServerSideProps: GetServerSideProps = async (
         totalPages,
         page,
         selectedCategory,
+        postCategoryTitle,
+        postCategoryDescription,
       },
     };
   } catch (error) {
@@ -108,6 +141,8 @@ interface BlogProps {
   totalPages: number;
   page: number;
   selectedCategory: string | null;
+  postCategoryTitle: string;
+  postCategoryDescription: string;
 }
 
 const BlogPage: React.FC<BlogProps> = ({
@@ -116,9 +151,10 @@ const BlogPage: React.FC<BlogProps> = ({
   totalPages,
   page,
   selectedCategory,
+  postCategoryTitle,
+  postCategoryDescription,
 }) => {
   const router = useRouter();
-
   const canonicalUrl = useCanonicalUrl();
 
   const handleCategoryChange = (categorySlug: string | null) => {
@@ -134,24 +170,7 @@ const BlogPage: React.FC<BlogProps> = ({
     });
   };
 
-  //Get post category
-  const { data: postCategoryData } = useGetPostCategoryQuery(
-    selectedCategory
-      ? { slug: selectedCategory, lang: router.locale }
-      : skipToken
-  );
-
-  const postCategory = postCategoryData?.data?.item as BlogCategoryType;
-
   //SEO
-  const postCategoryTitle =
-    postCategory?.seo_data?.title || postCategory?.name || 'Blog Category';
-
-  const postCategoryDescription =
-    postCategory?.seo_data?.description ||
-    postCategory?.name ||
-    'Blog category description';
-
   const schemaPostCategory = {
     '@context': 'https://schema.org',
     '@type': 'Blog',
