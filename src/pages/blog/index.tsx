@@ -80,6 +80,39 @@ export const getServerSideProps: GetServerSideProps = async (
       return { notFound: true };
     }
 
+    // Get post category
+    let postCategoryTitle = 'Blog Category';
+    let postCategoryDescription = 'Blog category description';
+
+    if (selectedCategory) {
+      try {
+        const responsePostCategoryData = await customRestApi.get(
+          `post-categories/${selectedCategory}`,
+          {
+            lang: locale,
+          }
+        );
+
+        const postCategory = responsePostCategoryData?.data?.data
+          ?.item as BlogCategoryType;
+
+        postCategoryTitle =
+          postCategory?.seo_data?.title ||
+          postCategory?.name ||
+          postCategoryTitle;
+
+        postCategoryDescription =
+          postCategory?.seo_data?.description ||
+          postCategory?.name ||
+          postCategoryDescription;
+      } catch (err) {
+        console.warn(
+          `Could not load category: ${selectedCategory} or category is All`,
+          err
+        );
+      }
+    }
+
     return {
       props: {
         posts: postsData,
@@ -87,6 +120,8 @@ export const getServerSideProps: GetServerSideProps = async (
         totalPages,
         page,
         selectedCategory,
+        postCategoryTitle,
+        postCategoryDescription,
       },
     };
   } catch (error) {
@@ -106,6 +141,8 @@ interface BlogProps {
   totalPages: number;
   page: number;
   selectedCategory: string | null;
+  postCategoryTitle: string;
+  postCategoryDescription: string;
 }
 
 const BlogPage: React.FC<BlogProps> = ({
@@ -114,9 +151,10 @@ const BlogPage: React.FC<BlogProps> = ({
   totalPages,
   page,
   selectedCategory,
+  postCategoryTitle,
+  postCategoryDescription,
 }) => {
   const router = useRouter();
-
   const canonicalUrl = useCanonicalUrl();
 
   const handleCategoryChange = (categorySlug: string | null) => {
@@ -132,10 +170,32 @@ const BlogPage: React.FC<BlogProps> = ({
     });
   };
 
+  //SEO
+  const schemaPostCategory = {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    name: postCategoryTitle,
+    description: postCategoryDescription,
+    url: canonicalUrl,
+    mainEntity: {
+      '@type': 'Blog',
+      name: postCategoryTitle,
+      description: postCategoryDescription,
+    },
+  };
+
   return (
     <>
       <Head>
+        <meta name="description" content={postCategoryDescription} />
         <link rel="canonical" href={canonicalUrl} />
+        <meta property="og:title" content={postCategoryTitle} />
+        <meta property="og:description" content={postCategoryDescription} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={canonicalUrl} />
+        <script type="application/ld+json">
+          {JSON.stringify(schemaPostCategory)}
+        </script>
       </Head>
       <PageTitle nameSpace={'Breadcrumbs'} spaceKey={'blogPage'} />
       <Container>

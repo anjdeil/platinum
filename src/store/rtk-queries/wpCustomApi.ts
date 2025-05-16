@@ -1,3 +1,4 @@
+import { BlogCategoryType } from '@/types/pages/blog';
 import {
   CurrenciesResponseType,
   CustomDataCategoriesType,
@@ -78,6 +79,15 @@ export const wpCustomRtkApi = createApi({
       }),
       keepUnusedDataFor: 60 * 60,
     }),
+    getPostCategory: builder.query<
+      { data: { item: BlogCategoryType } },
+      { slug: string; lang?: string }
+    >({
+      query: ({ slug, lang }) => ({
+        url: `/post-categories/${slug}`,
+        params: lang ? { lang } : undefined,
+      }),
+    }),
   }),
 });
 
@@ -91,4 +101,5 @@ export const {
   useGetCurrenciesQuery,
   useGetProductsMinimizedMutation,
   useGetPostsQuery,
+  useGetPostCategoryQuery,
 } = wpCustomRtkApi;
