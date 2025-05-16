@@ -10,11 +10,13 @@ import {
 } from '@/components/sections/styles';
 import { useCanonicalUrl } from '@/hooks/useCanonicalUrl';
 import { customRestApi } from '@/services/wpCustomApi';
+import { useGetPostCategoryQuery } from '@/store/rtk-queries/wpCustomApi';
 import { Container, StyledHeaderWrapper } from '@/styles/components';
 import { BlogCategoryType, BlogParsedItemType } from '@/types/pages/blog';
 import { CustomDataPostsType } from '@/types/services';
 import { serverParseHTMLContent } from '@/utils/blog/serverParseHTMLContent';
 import { validateWpBlogPage } from '@/utils/zodValidators/validateWpBlogPage';
+import { skipToken } from '@reduxjs/toolkit/query';
 import { omit } from 'lodash';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
@@ -132,10 +134,49 @@ const BlogPage: React.FC<BlogProps> = ({
     });
   };
 
+  //Get post category
+  const { data: postCategoryData } = useGetPostCategoryQuery(
+    selectedCategory
+      ? { slug: selectedCategory, lang: router.locale }
+      : skipToken
+  );
+
+  const postCategory = postCategoryData?.data?.item as BlogCategoryType;
+
+  //SEO
+  const postCategoryTitle =
+    postCategory?.seo_data?.title || postCategory?.name || 'Blog Category';
+
+  const postCategoryDescription =
+    postCategory?.seo_data?.description ||
+    postCategory?.name ||
+    'Blog category description';
+
+  const schemaPostCategory = {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    name: postCategoryTitle,
+    description: postCategoryDescription,
+    url: canonicalUrl,
+    mainEntity: {
+      '@type': 'Blog',
+      name: postCategoryTitle,
+      description: postCategoryDescription,
+    },
+  };
+
   return (
     <>
       <Head>
+        <meta name="description" content={postCategoryDescription} />
         <link rel="canonical" href={canonicalUrl} />
+        <meta property="og:title" content={postCategoryTitle} />
+        <meta property="og:description" content={postCategoryDescription} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={canonicalUrl} />
+        <script type="application/ld+json">
+          {JSON.stringify(schemaPostCategory)}
+        </script>
       </Head>
       <PageTitle nameSpace={'Breadcrumbs'} spaceKey={'blogPage'} />
       <Container>
