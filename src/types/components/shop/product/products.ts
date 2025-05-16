@@ -141,6 +141,8 @@ export const ProductSchema = z.object({
   default_attributes: z.array(ProductDefaultAttributesSchema),
   variations: z.array(ProductVariationSchema),
   seo_data: ProductSeoDataSchema.nullable().optional(),
+  upsell_product_ids: z.array(z.number()).optional(),
+  crosssell_product_ids: z.array(z.number()).optional(),
 });
 
 export const ProductDataResponseSchema = z.object({
