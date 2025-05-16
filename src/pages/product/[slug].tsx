@@ -15,7 +15,6 @@ import { useGetProductsQuery } from '@/store/rtk-queries/wpCustomApi';
 import { Container, StyledSectionWrapper, Title } from '@/styles/components';
 import { BreadcrumbType } from '@/types/components/global/breadcrumbs';
 import { ProductType } from '@/types/components/shop/product/products';
-import { ProductPageType } from '@/types/pages/product';
 import { validateCustomSingleProduct } from '@/utils/zodValidators/validateCustomSingleProduct';
 import { Box } from '@mui/material';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
@@ -45,12 +44,16 @@ import { useEffect, useState } from 'react';
 // Map or Set for current variation
 // Variations FOR attributes FOR check slug and option
 
+interface ProductPageProps {
+  product: ProductType;
+  locale: string;
+  fullUrl: string;
+}
 export default function ProductPage({
-  res,
+  product,
   locale,
   fullUrl,
-}: ProductPageType & { locale: string; fullUrl: string }) {
-  const product = res.data.item;
+}: ProductPageProps) {
   const [breadcrumbsLinks, setBreadcrumbsLinks] = useState<BreadcrumbType[]>(
     []
   );
@@ -83,6 +86,42 @@ export default function ProductPage({
     categoriesBreadcrumbsLinks.push({ name: product.name, url: '/' });
     setBreadcrumbsLinks(categoriesBreadcrumbsLinks);
   }, [product.categories]);
+
+  // Get recommended products
+  const crosssells = product.crosssell_product_ids;
+
+  // Get category slug
+  const selectedCategorySlug = product?.categories[0]?.slug || null;
+  const baseCategorySlug = selectedCategorySlug
+    ? selectedCategorySlug.replace(/-(uk|ru|de|pl|en)$/, '')
+    : null;
+
+  // Construct params for recommended products
+  const PER_PAGE = 5;
+  const RECOMMENDED_PARAMS: Record<string, any> = {
+    lang: locale,
+    per_page: PER_PAGE,
+  };
+
+  if (Array.isArray(crosssells) && crosssells.length > 0) {
+    RECOMMENDED_PARAMS.ids = crosssells.join(',');
+  } else if (baseCategorySlug) {
+    RECOMMENDED_PARAMS.category = baseCategorySlug;
+  }
+
+  // Fetch recommended products
+  const {
+    data: recommendedResponse,
+    isLoading,
+    isError,
+  } = useGetProductsQuery(RECOMMENDED_PARAMS);
+
+  const recommendedItems: ProductType[] =
+    recommendedResponse?.data?.items || [];
+
+  const recommendedProducts = recommendedItems
+    .filter(prod => prod.id !== product.id)
+    .slice(0, 4);
 
   //Google Analytics
   useEffect(() => {
@@ -120,40 +159,6 @@ export default function ProductPage({
       }
     }
   }, [product]);
-
-  const PER_PAGE = 5;
-  const selectedCategory = product.categories[0].slug || null;
-
-  const baseCategory = selectedCategory
-    ? selectedCategory.replace(/-(uk|ru|de|pl|en)$/, '')
-    : null;
-
-  const RECOMMENDED_PARAMS = {
-    lang: locale,
-    per_page: PER_PAGE,
-    category: baseCategory || undefined,
-  };
-  const {
-    data: recommendedData,
-    isLoading,
-    isError,
-  } = useGetProductsQuery(RECOMMENDED_PARAMS);
-
-  const popularProducts: ProductType[] = recommendedData?.data?.items || [];
-
-  let filteredRecommendedProducts = [] as ProductType[];
-
-  if (popularProducts && popularProducts.length > 0) {
-    filteredRecommendedProducts = popularProducts.filter(
-      (popularProduct: ProductType) => popularProduct.id !== product.id
-    );
-  }
-
-  if (filteredRecommendedProducts && filteredRecommendedProducts.length > 4) {
-    filteredRecommendedProducts = filteredRecommendedProducts.slice(0, 4);
-  }
-
-  const products: ProductType[] = filteredRecommendedProducts || [];
 
   //SEO
   const productTitle = product?.seo_data?.title || product?.name;
@@ -218,7 +223,7 @@ export default function ProductPage({
         </Box>
         {product && <ProductInfo product={product} />}
         <Reviews product={product} />
-        {products.length > 0 && (
+        {recommendedProducts.length > 0 && (
           <StyledSectionWrapper>
             <RecommendContainer>
               <TitleBlock>
@@ -228,7 +233,7 @@ export default function ProductPage({
                 </Title>
               </TitleBlock>
               <ProductCardList
-                products={products}
+                products={recommendedProducts}
                 isLoading={isLoading}
                 isError={isError}
                 columns={{
@@ -258,12 +263,14 @@ export const getServerSideProps: GetServerSideProps = async ({
     if (typeof locale !== 'string')
       throw new Error('Invalid language parameter');
 
-    const response = await customRestApi.get(`products/${slug}`, {
+    const productResponse = await customRestApi.get(`products/${slug}`, {
       lang: locale,
     });
 
-    const isValid = await validateCustomSingleProduct(response.data);
+    const isValid = await validateCustomSingleProduct(productResponse.data);
     if (!isValid) throw new Error('Invalid product data');
+
+    const product = productResponse?.data?.data?.item;
 
     // Construct full URL
     const protocol = req.headers['x-forwarded-proto'] || 'https';
@@ -272,7 +279,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 
     return {
       props: {
-        res: response.data,
+        product,
         locale,
         fullUrl,
       },
