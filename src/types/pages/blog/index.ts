@@ -13,6 +13,14 @@ export const BlogCategorySchema = z.object({
   slug: z.string(),
   description: z.string(),
   count: z.number(),
+  language_code: z.string().optional(),
+  seo_data: z
+    .object({
+      title: z.string().optional(),
+      description: z.string().optional(),
+    })
+    .nullable()
+    .optional(),
 });
 
 export const BlogSeoDataSchema = z.object({
