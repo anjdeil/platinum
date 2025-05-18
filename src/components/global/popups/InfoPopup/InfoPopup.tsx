@@ -35,8 +35,8 @@ const InfoPopup: React.FC = () => {
     const rawBanners: Banner[] = themeOptions?.data?.item?.banners || [];
 
     return rawBanners.filter(banner => {
-      const images = banner.images?.[locale ?? ''];
-      return images?.desktop || images?.mobile;
+      const images = banner.images?.[locale ?? 'pl'];
+      return banner.title && (images?.desktop || images?.mobile);
     });
   }, [themeOptions, locale]);
 
@@ -100,7 +100,7 @@ const InfoPopup: React.FC = () => {
             src={imageConfig?.imageSrc}
             width={imageConfig?.width || 800}
             height={imageConfig?.height || 500}
-            alt={currentBanner?.title || ''}
+            alt={currentBanner?.title || 'Banner'}
             priority
           />
         </StyledLink>
