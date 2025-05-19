@@ -28,6 +28,10 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 12,
   },
+  name: {
+    fontSize: 12,
+    width: '90%',
+  },
   title: {
     fontSize: 18,
     fontWeight: 700,
@@ -45,11 +49,19 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   productTableTwoColumn: {
-    width: '40%',
+    width: '45%',
   },
-  productTableColumn: {
+  productTableColumnMiddle: {
     width: '20%',
-    textalign: 'right',
+    textAlign: 'center',
+  },
+  productTableColumnRight: {
+    width: '20%',
+    textAlign: 'right',
+  },
+  productTableColumnQUantity: {
+    width: '15%',
+    textAlign: 'center',
   },
   productImage: {
     width: 50,
@@ -80,13 +92,13 @@ const styles = StyleSheet.create({
   },
   splitMiddle: {
     width: '100%',
-    textalign: 'left',
+    textAlign: 'left',
     fontSize: 10,
     opacity: 0.3,
   },
   splitLast: {
     width: '50%',
-    textalign: 'right',
+    textAlign: 'right',
   },
 });
 
@@ -158,13 +170,13 @@ const OrderPdf = ({
               <View style={styles.productTableTwoColumn}>
                 <Text style={styles.text}>{t('productName')}</Text>
               </View>
-              <View style={styles.productTableColumn}>
+              <View style={styles.productTableColumnMiddle}>
                 <Text style={styles.text}>{t('price')}</Text>
               </View>
-              <View style={styles.productTableColumn}>
+              <View style={styles.productTableColumnQUantity}>
                 <Text style={styles.text}>{t('quantity')}</Text>
               </View>
-              <View style={styles.productTableColumn}>
+              <View style={styles.productTableColumnRight}>
                 <Text style={styles.text}>{t('total')}</Text>
               </View>
             </View>
@@ -174,17 +186,17 @@ const OrderPdf = ({
             {order?.line_items?.map(item => (
               <View key={item.id} style={styles.productTableRow}>
                 <View style={styles.productTableTwoColumn}>
-                  <Text style={styles.text}>{item.name}</Text>
+                  <Text style={styles.name}>{item.name}</Text>
                 </View>
-                <View style={styles.productTableColumn}>
+                <View style={styles.productTableColumnMiddle}>
                   <Text style={styles.text}>
                     {getItemUnitPrice(item)} {order.currency}
                   </Text>
                 </View>
-                <View style={styles.productTableColumn}>
+                <View style={styles.productTableColumnQUantity}>
                   <Text style={styles.text}>{item.quantity}</Text>
                 </View>
-                <View style={styles.productTableColumn}>
+                <View style={styles.productTableColumnRight}>
                   <Text style={styles.text}>
                     {getItemTotalPrice(item)} {order.currency}
                   </Text>
