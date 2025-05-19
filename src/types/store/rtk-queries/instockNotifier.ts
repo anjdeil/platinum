@@ -8,6 +8,7 @@ export const ProductNotifierReqDataSchema = z.object({
   status: z.string(),
   subscriber_phone: z.string(),
   custom_quantity: z.string(),
+  language: z.string().optional(),
 });
 
 export const ProductNotifierRespDataSchema = z.object({
