@@ -26,6 +26,10 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 12,
   },
+  name: {
+    fontSize: 12,
+    width: '90%',
+  },
   title: {
     fontSize: 18,
     fontWeight: 700,
@@ -43,11 +47,19 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   productTableTwoColumn: {
-    width: '40%',
+    width: '45%',
   },
-  productTableColumn: {
+  productTableColumnMiddle: {
     width: '20%',
-    textalign: 'right',
+    textAlign: 'center',
+  },
+  productTableColumnRight: {
+    width: '20%',
+    textAlign: 'right',
+  },
+  productTableColumnQUantity: {
+    width: '15%',
+    textAlign: 'center',
   },
   productImage: {
     width: 50,
@@ -78,13 +90,13 @@ const styles = StyleSheet.create({
   },
   splitMiddle: {
     width: '100%',
-    textalign: 'left',
+    textAlign: 'left',
     fontSize: 10,
     opacity: 0.3,
   },
   splitLast: {
     width: '50%',
-    textalign: 'right',
+    textAlign: 'right',
   },
 });
 
@@ -94,17 +106,20 @@ type MetaData = {
   id: number;
   key: string;
   value: string;
-}
+};
 
-function uniteOptionsIntoString(meta_data:MetaData[]) {
+function uniteOptionsIntoString(meta_data: MetaData[]) {
   const options = meta_data.filter(({ key }) => key !== '_reduced_stock');
-  return options.reduce((acc, { display_value }) => acc + ', ' + display_value, '');
+  return options.reduce(
+    (acc, { display_value }) => acc + ', ' + display_value,
+    ''
+  );
 }
 
 const OrderPdf = ({
-                    order,
-                    t,
-                  }: {
+  order,
+  t,
+}: {
   order: OrderType;
   t: (string: string, props?: Record<string, string>) => string;
 }) => {
@@ -137,13 +152,13 @@ const OrderPdf = ({
               <View style={styles.productTableTwoColumn}>
                 <Text style={styles.text}>{t('productName')}</Text>
               </View>
-              <View style={styles.productTableColumn}>
+              <View style={styles.productTableColumnMiddle}>
                 <Text style={styles.text}>{t('price')}</Text>
               </View>
-              <View style={styles.productTableColumn}>
+              <View style={styles.productTableColumnQUantity}>
                 <Text style={styles.text}>{t('quantity')}</Text>
               </View>
-              <View style={styles.productTableColumn}>
+              <View style={styles.productTableColumnRight}>
                 <Text style={styles.text}>{t('total')}</Text>
               </View>
             </View>
@@ -153,24 +168,24 @@ const OrderPdf = ({
             {order?.line_items?.map(item => (
               <View key={item.id} style={styles.productTableRow}>
                 <View style={styles.productTableTwoColumn}>
-                  <Text style={styles.text}>{item.name}
-                  {
-                    uniteOptionsIntoString(item.meta_data) !== '' && uniteOptionsIntoString(item.meta_data)
-                  }
+                  <Text style={styles.name}>
+                    {item.name}
+                    {uniteOptionsIntoString(item.meta_data) !== '' &&
+                      uniteOptionsIntoString(item.meta_data)}
                   </Text>
                   <View style={styles.splitMiddle}>
                     <Text style={styles.text}>{item.sku}</Text>
                   </View>
                 </View>
-                <View style={styles.productTableColumn}>
+                <View style={styles.productTableColumnMiddle}>
                   <Text style={styles.text}>
                     {getItemUnitPrice(item)} {order.currency}
                   </Text>
                 </View>
-                <View style={styles.productTableColumn}>
+                <View style={styles.productTableColumnQUantity}>
                   <Text style={styles.text}>{item.quantity}</Text>
                 </View>
-                <View style={styles.productTableColumn}>
+                <View style={styles.productTableColumnRight}>
                   <Text style={styles.text}>
                     {getItemTotalPrice(item)} {order.currency}
                   </Text>
