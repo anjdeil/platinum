@@ -294,7 +294,10 @@
     "couponApplied": "Kupon został pomyślnie zastosowany",
     "couponNotFound": "Przepraszamy, ale podany kupon jest nieprawidłowy",
     "fetchError": "Przepraszamy, ale podczas stosowania kuponu wystąpił błąd",
-    "overrideLoyaltyDiscount": "Zastosowanie kuponu spowoduje unieważnienie zniżki przyznanej w ramach statusu lojalnościowego"
+    "overrideLoyaltyDiscount": "Zastosowanie kuponu spowoduje unieważnienie zniżki przyznanej w ramach statusu lojalnościowego",
+    "OrderCommentTooLong": "Twój komentarz jest za długi, maksymalnie 500 znaków",
+    "OrderCommentInvalidChars": "Twój komentarz zawiera nieprawidłowe znaki",
+    "OrderCommentError": "Prosimy o poprawne wypełnienie pola komentarza"
   },
   "Contacts": {
     "contacts": "Kontakty",

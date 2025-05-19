@@ -1,8 +1,9 @@
-import { useAppDispatch } from '@/store';
+import { useAppDispatch, useAppSelector } from '@/store';
 import { StyledButton, Title } from '@/styles/components';
 import { useTranslations } from 'next-intl';
-import React, { FC, useCallback, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import {
+  CartCommentError,
   CartCommentHint,
   CartCommentInput,
   CartCommentsTitle,
@@ -19,6 +20,8 @@ import OrderSummary from '../OrderSummary/OrderSummary';
 import { CartSummaryBlockProps } from '@/types/pages/cart';
 import router from 'next/router';
 
+const MAX_LENGTH = 500;
+
 const CartSummaryBlock: FC<CartSummaryBlockProps> = ({
   symbol,
   order,
@@ -29,10 +32,30 @@ const CartSummaryBlock: FC<CartSummaryBlockProps> = ({
   const t = useTranslations('Cart');
   const dispatch = useAppDispatch();
   const [inputValue, setInputValue] = useState('');
+  const { commentToOrder } = useAppSelector(state => state.cartSlice);
+  const [error, setError] = useState('');
 
+  useEffect(() => {
+    setInputValue(commentToOrder || '');
+  }, [commentToOrder]);
+
+  const validateComment = (value: string) => {
+    if (value.length > MAX_LENGTH) {
+      return t('OrderCommentTooLong');
+    }
+    if (/[<>]/.test(value)) {
+      return t('OrderCommentInvalidChars');
+    }
+    return '';
+  };
+  console.log(error);
   const debouncedChangeHandler = useCallback(
     debounce((value: string) => {
-      dispatch(setCommentToOrder(value));
+      const validationError = validateComment(value);
+      setError(validationError);
+      if (!validationError) {
+        dispatch(setCommentToOrder(value));
+      }
     }, 1300),
     [dispatch]
   );
@@ -54,6 +77,9 @@ const CartSummaryBlock: FC<CartSummaryBlockProps> = ({
           value={inputValue}
           onChange={handleInputChange}
         />
+        {error && (
+          <CartCommentError>{error || t('OrderCommentError')}</CartCommentError>
+        )}
         <CartCommentHint>{t('OrderCommentHint')}</CartCommentHint>
       </CartCommentsWrapper>
 
