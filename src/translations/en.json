@@ -294,7 +294,10 @@
     "couponApplied": "The coupon was successfully applied",
     "couponNotFound": "Sorry, but the coupon you provided is invalid",
     "fetchError": "Sorry, but an error occurred while applying the coupon",
-    "overrideLoyaltyDiscount": "Applying the coupon, will override the discount your loyalty status gives you"
+    "overrideLoyaltyDiscount": "Applying the coupon, will override the discount your loyalty status gives you",
+    "OrderCommentTooLong": "Your comment is too long, max 500 characters",
+    "OrderCommentInvalidChars": "Your comment contains invalid characters",
+    "OrderCommentError": "Please, fill in the comment field correctly"
   },
   "Contacts": {
     "contacts": "Contacts",

@@ -294,7 +294,10 @@
     "couponApplied": "Der Coupon wurde erfolgreich angewendet",
     "couponNotFound": "Der von Ihnen angegebene Coupon ist leider ungültig",
     "fetchError": "Bei der Anwendung des Coupons ist ein Fehler aufgetreten",
-    "overrideLoyaltyDiscount": "Die Anwendung des Coupons hebt den Rabatt auf, den Ihnen Ihr Treuestatus gewährt."
+    "overrideLoyaltyDiscount": "Die Anwendung des Coupons hebt den Rabatt auf, den Ihnen Ihr Treuestatus gewährt.",
+    "OrderCommentTooLong": "Ihr Kommentar ist zu lang, maximal 500 Zeichen",
+    "OrderCommentInvalidChars": "Ihr Kommentar enthält ungültige Zeichen",
+    "OrderCommentError": "Bitte füllen Sie das Kommentarfeld korrekt aus"
   },
   "Contacts": {
     "contacts": "Kontakte",

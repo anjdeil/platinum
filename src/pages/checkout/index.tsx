@@ -78,7 +78,9 @@ export default function CheckoutPage() {
   /**
    * Calculate totals
    */
-  const { cartItems, couponCodes } = useAppSelector(state => state.cartSlice);
+  const { cartItems, couponCodes, commentToOrder } = useAppSelector(
+    state => state.cartSlice
+  );
   const [getProductsMinimized, { data: productsMinimizedData }] =
     useGetProductsMinimizedMutation();
   const [{ totalCost, totalWeight }, setCartTotals] = useState({
@@ -443,6 +445,7 @@ export default function CheckoutPage() {
         orderStatus === 'pending' && { shipping: formOrderData.shipping }),
       ...(userData?.id && { customer_id: userData.id }),
       ...(shippingLine && { shipping_lines: [shippingLine] }),
+      ...(commentToOrder && { customer_note: commentToOrder }),
     });
   }, [
     cartItems,
@@ -453,6 +456,7 @@ export default function CheckoutPage() {
     shippingLine,
     router.locale,
     isCouponsIgnored,
+    commentToOrder,
   ]);
 
   useEffect(() => {

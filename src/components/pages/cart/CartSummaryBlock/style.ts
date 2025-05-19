@@ -73,6 +73,12 @@ export const CartCommentsTitle = styled(Title)`
   }
 `
 export const CartCommentHint = styled.p`
+  padding-top: 8px;
+  font: ${({ theme }) => theme.fonts.bodypresmallReg};
+`;
+
+export const CartCommentError = styled.p`
   padding-top: 6px;
   font: ${({ theme }) => theme.fonts.bodypresmallReg};
-`
+  color: ${({ theme }) => theme.colors.error};
+`;
