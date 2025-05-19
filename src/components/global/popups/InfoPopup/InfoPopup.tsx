@@ -11,22 +11,41 @@ import { useGetThemeOptionsQuery } from '@/store/rtk-queries/wpCustomApi';
 import { useRouter } from 'next/router';
 import { useResponsive } from '@/hooks/useResponsive';
 
+type Banner = {
+  title: string;
+  url: string;
+  delay: string | number;
+  images: {
+    [key: string]: {
+      desktop: string;
+      mobile: string;
+    };
+  };
+};
+
 const InfoPopup: React.FC = () => {
-  const [showPopup, setShowPopup] = useState<boolean>(false);
+  const [currentBannerIndex, setCurrentBannerIndex] = useState<number | null>(
+    null
+  );
   const { data: themeOptions } = useGetThemeOptionsQuery();
   const { locale } = useRouter();
   const { isMobile } = useResponsive();
 
-  const SESSION_KEY = 'info-popup-shown-this-session';
+  const visibleBanners = useMemo(() => {
+    const rawBanners: Banner[] = themeOptions?.data?.item?.banners || [];
 
-  const firstBanner = themeOptions?.data?.item?.banners?.find(
-    (banner: { title: string }) => banner.title === 'First banner'
-  );
+    return rawBanners.filter(banner => {
+      const images = banner.images?.[locale ?? 'pl'];
+      return banner.title && (images?.desktop || images?.mobile);
+    });
+  }, [themeOptions, locale]);
+
+  const currentBanner = visibleBanners[currentBannerIndex ?? -1] || null;
 
   const imageConfig = useMemo(() => {
-    if (!firstBanner || !locale) return null;
+    if (!currentBanner || !locale) return null;
 
-    const image = firstBanner.images?.[locale];
+    const image = currentBanner.images?.[locale];
     if (!image) return null;
 
     return {
@@ -34,32 +53,32 @@ const InfoPopup: React.FC = () => {
       height: isMobile ? 400 / 0.67 : 800 / 1.6,
       imageSrc: isMobile ? image.mobile : image.desktop,
     };
-  }, [firstBanner, locale, isMobile]);
+  }, [currentBanner, locale, isMobile]);
 
   useEffect(() => {
-    if (!themeOptions) return;
+    if (!visibleBanners.length || currentBannerIndex !== null) return;
 
-    const POPUP_DELAY_MS = firstBanner?.delay
-      ? +firstBanner.delay * 1000
-      : 5000;
+    const nextIndex = visibleBanners.findIndex(banner => {
+      const sessionKey = `info-popup-shown-${banner.title}`;
+      return !sessionStorage.getItem(sessionKey);
+    });
 
-    const alreadyShown = sessionStorage.getItem(SESSION_KEY);
+    if (nextIndex !== -1) {
+      const banner = visibleBanners[nextIndex];
+      const delayMs =
+        Number(banner.delay) > 0 ? Number(banner.delay) * 1000 : 5000;
 
-    if (!alreadyShown) {
       const timer = setTimeout(() => {
-        setShowPopup(true);
-        sessionStorage.setItem(SESSION_KEY, 'true');
-      }, POPUP_DELAY_MS);
+        setCurrentBannerIndex(nextIndex);
+        sessionStorage.setItem(`info-popup-shown-${banner.title}`, 'true');
+      }, delayMs);
 
       return () => clearTimeout(timer);
     }
-  }, [themeOptions, locale]);
-
-  if (!showPopup) return null;
+  }, [visibleBanners, currentBannerIndex]);
 
   const handleClosePopup = () => {
-    setShowPopup(false);
-    sessionStorage.setItem(SESSION_KEY, 'true');
+    setCurrentBannerIndex(null);
   };
 
   const handleClickBackground = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -68,39 +87,7 @@ const InfoPopup: React.FC = () => {
     }
   };
 
-  // Functionality with the ability to change the frequency
-
-  // const POPUP_STORAGE_KEY = 'info-popup-last-shown';
-  // const POPUP_REPEAT_DELAY_MS = 5000;
-  // const POPUP_CHECK_INTERVAL_MS = 60 * 1000;
-  // const checkAndShowPopup = () => {
-  //   const lastShown = localStorage.getItem(POPUP_STORAGE_KEY);
-  //   const now = Date.now();
-
-  //   if (!lastShown || now - parseInt(lastShown) > POPUP_REPEAT_DELAY_MS) {
-  //     setShowPopup(true);
-  //     localStorage.setItem(POPUP_STORAGE_KEY, now.toString());
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   const delayTimer = setTimeout(() => {
-  //     checkAndShowPopup();
-  //   }, POPUP_DELAY_MS);
-
-  //   const interval = setInterval(() => {
-  //     checkAndShowPopup();
-  //   }, POPUP_CHECK_INTERVAL_MS);
-
-  //   return () => {
-  //     clearTimeout(delayTimer);
-  //     clearInterval(interval);
-  //   };
-  // }, []);
-
-  if (!imageConfig) return null;
-
-  // const urlWithLocale = `/${locale}${firstBanner?.url}`;
+  if (currentBannerIndex === null || !imageConfig) return null;
 
   return (
     <StyledContainer onClick={handleClickBackground}>
@@ -108,12 +95,12 @@ const InfoPopup: React.FC = () => {
         <StyledCloseWrapper>
           <CloseIcon onClick={handleClosePopup} padding="0" color="white" />
         </StyledCloseWrapper>
-        <StyledLink href={firstBanner?.url || ''}>
+        <StyledLink href={currentBanner?.url || ''}>
           <StyledBanner
             src={imageConfig?.imageSrc}
             width={imageConfig?.width || 800}
             height={imageConfig?.height || 500}
-            alt={firstBanner?.title || ''}
+            alt={currentBanner?.title || 'Banner'}
             priority
           />
         </StyledLink>
