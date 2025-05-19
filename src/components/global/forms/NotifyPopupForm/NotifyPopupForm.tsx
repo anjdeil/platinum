@@ -70,6 +70,7 @@ export const NotifyPopupForm: FC<NotifyPopupFormProps> = ({ data }) => {
       status: 'cwg_subscribed',
       subscriber_phone: user?.billing?.phone || 'phone-number',
       custom_quantity: '1',
+      language: locale || 'pl',
     };
 
     try {
