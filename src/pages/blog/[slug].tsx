@@ -200,31 +200,51 @@ const BlogPostPage = ({
 
   const schemaPost = {
     '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: postTitle,
-    description: postDescription,
-    image:
-      post?.seo_data?.images?.map(img => img['image:loc']) || thumbnail?.src,
-    datePublished: created,
-    dateModified: modified,
-    articleSection: categories.map(cat => cat.name).join(', '),
-    inLanguage: languageMap[locale as keyof typeof languageMap] ?? 'pl-PL',
-    author: {
-      '@type': 'Organization',
-      name: 'Platinum by Chetvertinovskaya Liubov',
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: 'Platinum by Chetvertinovskaya Liubov',
-      logo: {
-        '@type': 'ImageObject',
-        url: 'https://platinumchetvertinovskaya.com/assets/icons/logo.png',
+    '@graph': [
+      {
+        '@type': 'Article',
+        '@id': `${postUrl}#article`,
+        headline: postTitle,
+        description: postDescription,
+        image:
+          post?.seo_data?.images?.map(img => img['image:loc']) ||
+          thumbnail?.src,
+        datePublished: created,
+        dateModified: modified,
+        articleSection: categories.map(cat => cat.name).join(', '),
+        inLanguage: languageMap[locale as keyof typeof languageMap] ?? 'pl-PL',
+        author: {
+          '@type': 'Organization',
+          name: 'Platinum by Chetvertinovskaya Liubov',
+          url: 'https://platinumchetvertinovskaya.com',
+        },
+        publisher: {
+          '@id': `${postUrl}#publisher`,
+        },
+        mainEntityOfPage: {
+          '@id': `${postUrl}#webpage`,
+        },
       },
-    },
-    mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': postUrl,
-    },
+      {
+        '@type': 'Organization',
+        '@id': `${postUrl}#publisher`,
+        name: 'Platinum by Chetvertinovskaya Liubov',
+        logo: {
+          '@type': 'ImageObject',
+          url: 'https://platinumchetvertinovskaya.com/assets/icons/logo.png',
+        },
+      },
+      {
+        '@type': 'WebPage',
+        '@id': `${postUrl}#webpage`,
+        url: postUrl,
+        name: postTitle,
+        inLanguage: languageMap[locale as keyof typeof languageMap] ?? 'pl-PL',
+        isPartOf: {
+          '@id': `${postUrl}`,
+        },
+      },
+    ],
   };
 
   return (
