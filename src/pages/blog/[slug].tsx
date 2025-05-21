@@ -33,6 +33,14 @@ import {
 import Head from 'next/head';
 import { getCleanText } from '@/utils/getCleanText';
 
+const languageMap = {
+  pl: 'pl-PL',
+  en: 'en-US',
+  de: 'de-DE',
+  uk: 'uk-UA',
+  ru: 'ru-RU',
+};
+
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
@@ -112,9 +120,12 @@ export const getServerSideProps: GetServerSideProps = async (
     const popularPosts: BlogItemType[] = filteredPopularItems || [];
 
     // Construct full URL
+    const defaultLocale = 'pl';
     const protocol = req.headers['x-forwarded-proto'] || 'https';
     const host = req.headers.host;
-    const fullUrl = `${protocol}://${host}/blog/${slug}`;
+    const pathWithLocale =
+      locale === defaultLocale ? `/blog/${slug}` : `/${locale}/blog/${slug}`;
+    const fullUrl = `${protocol}://${host}${pathWithLocale}`;
 
     return {
       props: {
@@ -122,6 +133,7 @@ export const getServerSideProps: GetServerSideProps = async (
         recommendedPosts,
         popularPosts,
         fullUrl,
+        locale,
       },
     };
   } catch (error) {
@@ -140,6 +152,7 @@ interface PageProps {
   recommendedPosts: BlogItemType[];
   popularPosts: BlogItemType[];
   fullUrl: string;
+  locale: string;
 }
 
 const BlogPostPage = ({
@@ -147,6 +160,7 @@ const BlogPostPage = ({
   recommendedPosts,
   popularPosts,
   fullUrl,
+  locale,
 }: PageProps) => {
   const canonicalUrl = useCanonicalUrl();
 
@@ -193,6 +207,8 @@ const BlogPostPage = ({
       post?.seo_data?.images?.map(img => img['image:loc']) || thumbnail?.src,
     datePublished: created,
     dateModified: modified,
+    articleSection: categories.map(cat => cat.name).join(', '),
+    inLanguage: languageMap[locale as keyof typeof languageMap] ?? 'pl-PL',
     author: {
       '@type': 'Organization',
       name: 'Platinum by Chetvertinovskaya Liubov',
