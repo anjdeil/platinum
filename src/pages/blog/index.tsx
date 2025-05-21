@@ -20,6 +20,15 @@ import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
+const BASE_URL = 'https://platinumchetvertinovskaya.com';
+const languageMap = {
+  pl: 'pl-PL',
+  en: 'en-US',
+  de: 'de-DE',
+  uk: 'uk-UA',
+  ru: 'ru-RU',
+};
+
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
@@ -76,7 +85,7 @@ export const getServerSideProps: GetServerSideProps = async (
     const postsCount = pageResponseData.data?.statistic?.posts_count;
     const totalPages = postsCount ? Math.ceil(postsCount / PER_PAGE) : 1;
 
-    if (!postsData) {
+    if (!postsData?.length) {
       return { notFound: true };
     }
 
@@ -171,6 +180,69 @@ const BlogPage: React.FC<BlogProps> = ({
   };
 
   //SEO
+  const pageDescription =
+    router.locale === 'pl'
+      ? 'Ekspercka kolekcja artykułów o stylizacji rzęs i brwi, nowościach branżowych, produktach premium PLATINUM oraz inspiracjach dla profesjonalistów beauty.'
+      : 'An expert collection of articles on lash and brow styling, industry news, premium PLATINUM products, and inspiration for beauty professionals.';
+
+  const structuredDataBlog = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        '@id': canonicalUrl,
+        url: canonicalUrl,
+        name: 'Blog',
+        description: pageDescription,
+        inLanguage:
+          languageMap[router.locale as keyof typeof languageMap] ?? 'pl-PL',
+        isPartOf: {
+          '@id': `https://platinumchetvertinovskaya.com/${router.locale}/#website`,
+        },
+        author: {
+          '@type': 'Organization',
+          name: 'Platinum by Chetvertinovskaya Liubov',
+        },
+        publisher: {
+          '@type': 'Organization',
+          name: 'Platinum by Chetvertinovskaya Liubov',
+          logo: {
+            '@type': 'ImageObject',
+            url: 'https://platinumchetvertinovskaya.com/assets/icons/logo.png',
+          },
+        },
+        mainEntity: {
+          '@type': 'ItemList',
+          itemListElement: posts?.map((product, index) => ({
+            '@type': 'Article',
+            position: index + 1,
+            name: product.title,
+            url: `${BASE_URL}/${router.locale}/blog/${product.slug}`,
+          })),
+        },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: `https://platinumchetvertinovskaya.com/${router.locale}/`,
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Blog',
+            item: `https://platinumchetvertinovskaya.com/${router.locale}/${
+              selectedCategory ? `blog?category=${selectedCategory}` : 'blog'
+            }`,
+          },
+        ],
+      },
+    ],
+  };
+
   const schemaPostCategory = {
     '@context': 'https://schema.org',
     '@type': 'Blog',
@@ -193,6 +265,9 @@ const BlogPage: React.FC<BlogProps> = ({
         <meta property="og:description" content={postCategoryDescription} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={canonicalUrl} />
+        <script type="application/ld+json">
+          {JSON.stringify(structuredDataBlog)}
+        </script>
         <script type="application/ld+json">
           {JSON.stringify(schemaPostCategory)}
         </script>

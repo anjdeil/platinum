@@ -44,6 +44,15 @@ import {
   PagesNavigationWrapper,
 } from './styles';
 
+const BASE_URL = 'https://platinumchetvertinovskaya.com';
+const languageMap = {
+  pl: 'pl-PL',
+  en: 'en-US',
+  de: 'de-DE',
+  uk: 'uk-UA',
+  ru: 'ru-RU',
+};
+
 const switchPage = (page: number, maxPage: number) => {
   if (maxPage < page) return;
   const { slugs, ...params } = router.query;
@@ -159,10 +168,51 @@ export const Archive: FC<ArchivePropsType> = props => {
     );
   }
 
+  const structuredDataProductsCategory = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        '@id': canonicalUrl,
+        url: canonicalUrl,
+        name: currentCategory?.name || `${t('phraseSought')}: "${searchTerm}"`,
+        description: currentCategory?.description || '',
+        inLanguage: languageMap[locale as keyof typeof languageMap] ?? 'pl-PL',
+        isPartOf: {
+          '@id': `https://platinumchetvertinovskaya.com/${locale}/#website`,
+        },
+        mainEntity: {
+          '@type': 'ItemList',
+          itemListElement: products.map((product, index) => ({
+            '@type': 'Product',
+            position: index + 1,
+            name: product.name,
+            url: `${BASE_URL}/${locale}/product/${product.slug}`,
+          })),
+        },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: breadcrumbsLinks.map((item, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: item.name,
+          item: `${BASE_URL}${item.url}`,
+        })),
+      },
+    ],
+  };
+
   return (
     <>
       <Head>
         <link rel="canonical" href={canonicalUrl} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredDataProductsCategory),
+          }}
+        />
       </Head>
       <PageTitle
         title={currentCategory?.name || `${t('phraseSought')}: "${searchTerm}"`}
