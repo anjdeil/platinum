@@ -6,6 +6,15 @@ import { validateWpPage } from '@/utils/zodValidators/validateWpPage';
 import { PageDataFullType, PageDataItemType } from '@/types/services';
 import InfoPopup from '@/components/global/popups/InfoPopup/InfoPopup';
 import { PageTitle } from '@/components/pages/pageTitle';
+import Head from 'next/head';
+
+const languageMap = {
+  pl: 'pl-PL',
+  en: 'en-US',
+  de: 'de-DE',
+  uk: 'uk-UA',
+  ru: 'ru-RU',
+};
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
@@ -54,6 +63,7 @@ export const getServerSideProps: GetServerSideProps = async (
       return {
         props: {
           sections: filteredSections,
+          locale,
         },
       };
     }
@@ -72,11 +82,99 @@ export const getServerSideProps: GetServerSideProps = async (
 
 interface HomeProps {
   sections: SectionsType[];
+  locale: string;
 }
 
-const Home: React.FC<HomeProps> = ({ sections }) => {
+const Home: React.FC<HomeProps> = ({ sections, locale }) => {
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebSite',
+        '@id': `https://platinumchetvertinovskaya.com/#website`,
+        url: `https://platinumchetvertinovskaya.com/${locale}/`,
+        name: 'Platinum by Chetvertinovskaya Liubov',
+        inLanguage: languageMap[locale as keyof typeof languageMap] || locale,
+
+        potentialAction: {
+          '@type': 'SearchAction',
+          target: `https://platinumchetvertinovskaya.com/${locale}/search/{search_term_string}`,
+          'query-input': 'required name=search_term_string',
+        },
+      },
+      {
+        '@type': 'Organization',
+        '@id': 'https://platinumchetvertinovskaya.com/#organization',
+        name: 'Platinum by Chetvertinovskaya Liubov',
+        url: 'https://platinumchetvertinovskaya.com/',
+        logo: {
+          '@type': 'ImageObject',
+          url: 'https://platinumchetvertinovskaya.com/assets/icons/logo.png',
+        },
+        contactPoint: [
+          {
+            '@type': 'ContactPoint',
+            telephone: '+48883462736',
+            email: 'polandplatinum@gmail.com',
+            contactType: 'customer service',
+            areaServed: 'PL',
+            availableLanguage: [
+              'English',
+              'German',
+              'Polish',
+              'Ukrainian',
+              'Russian',
+            ],
+          },
+        ],
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: 'Kolejowa 45/U6',
+          addressLocality: 'Warszawa',
+          addressCountry: 'PL',
+        },
+        sameAs: [
+          'https://www.facebook.com/share/18fGwAhvgr/?mibextid=wwXIfr',
+          'https://www.instagram.com/platinum_poland',
+          'https://pl.pinterest.com/PLATINUMbyChetvertinovskaya/',
+          'https://www.youtube.com/channel/UCVCfpxqypwwUJX_wCZ8rjBw',
+          'https://www.tiktok.com/@platinum_europe',
+          'https://wa.me/48883462736',
+        ],
+        openingHoursSpecification: [
+          {
+            '@type': 'OpeningHoursSpecification',
+            dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+            opens: '09:00',
+            closes: '18:00',
+          },
+        ],
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: `https://platinumchetvertinovskaya.com/${locale}/`,
+          },
+        ],
+      },
+    ],
+  };
+
   return (
     <>
+      <Head>
+        <meta
+          name="description"
+          content="Platinum by Chetvertinovskaya Liubov"
+        />
+        <script type="application/ld+json">
+          {JSON.stringify(structuredData)}
+        </script>
+      </Head>
       <PageTitle />
       <div className="homepage">
         <SectionRenderer sections={sections} />
