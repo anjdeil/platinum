@@ -172,6 +172,7 @@ export default function ProductPage({
   const schemaProduct = {
     '@context': 'https://schema.org/',
     '@type': 'Product',
+    productID: product?.id,
     name: productTitle,
     image:
       product?.seo_data?.images?.map(img => img['image:loc']) ||
@@ -184,7 +185,7 @@ export default function ProductPage({
     },
     offers: {
       '@type': 'Offer',
-      priceCurrency: 'USD',
+      priceCurrency: 'PLN',
       price: product?.price?.min_price,
       availability:
         product?.stock_quantity && product.stock_quantity > 0
