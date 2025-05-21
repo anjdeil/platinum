@@ -31,7 +31,7 @@ export interface ReqData {
   shipping_country: string;
 }
 
-export const getFormattedUserData = (billingData: ReqData) => {
+export const getFormattedUserData = (billingData: ReqData, locale?: string) => {
   const {
     different_address,
     registration,
@@ -125,6 +125,10 @@ export const getFormattedUserData = (billingData: ReqData) => {
         {
           key: 'nip',
           value: nip || '',
+        },
+        {
+          key: 'icl_admin_language',
+          value: locale || 'pl',
         },
       ],
       password,
