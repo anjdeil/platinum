@@ -94,8 +94,7 @@ const Home: React.FC<HomeProps> = ({ sections, locale }) => {
         '@id': `https://platinumchetvertinovskaya.com/#website`,
         url: `https://platinumchetvertinovskaya.com/${locale}/`,
         name: 'Platinum by Chetvertinovskaya Liubov',
-        inLanguage: languageMap[locale as keyof typeof languageMap] || locale,
-
+        inLanguage: languageMap[locale as keyof typeof languageMap] ?? 'pl-PL',
         potentialAction: {
           '@type': 'SearchAction',
           target: `https://platinumchetvertinovskaya.com/${locale}/search/{search_term_string}`,
