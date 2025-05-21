@@ -169,7 +169,7 @@ export const Archive: FC<ArchivePropsType> = props => {
       />
       <CatalogContainer>
         <CatalogTitleWrapper>
-          <Breadcrumbs links={breadcrumbsLinks} />
+          <Breadcrumbs links={breadcrumbsLinks} locale={locale} />
           <Title as="h1" uppercase>
             {!currentCategory && searchTerm
               ? `${t('phraseSought')}: "${searchTerm}"`

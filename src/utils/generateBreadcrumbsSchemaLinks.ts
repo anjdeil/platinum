@@ -7,16 +7,42 @@ interface BreadcrumbSchema {
     "name": string;
 }
 
-export function generateBreadcrumbsSchemaLinks(links: BreadcrumbType[]): BreadcrumbSchema[] {
-    if (!Array.isArray(links) || links.length === 0) return [];
+const BASE_URL = 'https://platinumchetvertinovskaya.com';
 
-    return links.map(({ url, name }, i) => {
-        return {
-            "@type": "ListItem",
-            "position": i + 1,
-            "item": url || '',
-            "name": name || '',
-        }
+export function generateBreadcrumbsSchemaLinks(
+  links: BreadcrumbType[],
+  locale: string | undefined,
+  fullUrl: string | undefined,
+  currentName: string | undefined
+): BreadcrumbSchema[] {
+  const breadcrumbs: BreadcrumbSchema[] = [];
 
-    })
+  breadcrumbs.push({
+    '@type': 'ListItem',
+    position: 1,
+    item: `${BASE_URL}/` + (locale && locale !== 'pl' ? locale + '/' : ''),
+    name: 'Home',
+  });
+
+  links.forEach(({ url, name }, i) => {
+    if (url && url !== '/') {
+      breadcrumbs.push({
+        '@type': 'ListItem',
+        position: i + 2,
+        item: `${BASE_URL}${url}`,
+        name: name || '',
+      });
+    }
+  });
+
+  if (fullUrl) {
+    breadcrumbs.push({
+      '@type': 'ListItem',
+      position: breadcrumbs.length + 1,
+      item: fullUrl,
+      name: currentName || 'Product',
+    });
+  }
+
+  return breadcrumbs;
 }

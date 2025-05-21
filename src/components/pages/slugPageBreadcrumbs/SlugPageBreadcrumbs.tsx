@@ -1,5 +1,6 @@
 import Breadcrumbs from '@/components/global/Breadcrumbs/Breadcrumbs';
 import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/router';
 import { FC } from 'react';
 
 type SlugPageBreadcrumbsProps = {
@@ -9,6 +10,7 @@ type SlugPageBreadcrumbsProps = {
 export const SlugPageBreadcrumbs: FC<SlugPageBreadcrumbsProps> = ({
   title,
 }) => {
+  const { locale } = useRouter();
   const t = useTranslations('Breadcrumbs');
   const breadcrumbsLinks = [
     {
@@ -21,5 +23,5 @@ export const SlugPageBreadcrumbs: FC<SlugPageBreadcrumbsProps> = ({
     },
   ];
 
-  return <Breadcrumbs links={breadcrumbsLinks} />;
+  return <Breadcrumbs links={breadcrumbsLinks} locale={locale} />;
 };
