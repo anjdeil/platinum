@@ -99,6 +99,12 @@ export const RegistrationForm: FC = () => {
         email: formData.email,
         phone: formData.phone,
       },
+      meta_data: [
+        {
+          key: 'icl_admin_language',
+          value: locale,
+        },
+      ],
     };
 
     try {
