@@ -1,11 +1,13 @@
 import Breadcrumbs from '@/components/global/Breadcrumbs/Breadcrumbs';
 import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/router';
 
 type PostPageBreadcrumbsProps = {
   title: string;
 };
 
 export const PostPageBreadcrumbs = ({ title }: PostPageBreadcrumbsProps) => {
+  const { locale } = useRouter();
   const t = useTranslations('Breadcrumbs');
   const breadcrumbsLinks = [
     {
@@ -22,5 +24,5 @@ export const PostPageBreadcrumbs = ({ title }: PostPageBreadcrumbsProps) => {
     },
   ];
 
-  return <Breadcrumbs links={breadcrumbsLinks} />;
+  return <Breadcrumbs links={breadcrumbsLinks} locale={locale} />;
 };

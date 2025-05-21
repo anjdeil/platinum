@@ -22,7 +22,7 @@ export default function ResetPassword() {
     <>
       <PageTitle nameSpace={'MyAccount'} spaceKey={'setNewPassword'} />
       <FormPageWrapper>
-        <Breadcrumbs links={breadcrumbsLinks} />
+        <Breadcrumbs links={breadcrumbsLinks} locale={locale} />
         <Container>
           <FormContainer>
             <NewPasswordForm />

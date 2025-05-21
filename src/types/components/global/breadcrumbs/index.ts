@@ -6,7 +6,10 @@ export const BreadcrumbSchema = z.object({
 });
 
 export const BreadcrumbsSchema = z.object({
-    links: z.array(BreadcrumbSchema),
+  links: z.array(BreadcrumbSchema),
+  locale: z.string().optional(),
+  fullUrl: z.string().optional(),
+  currentName: z.string().optional(),
 });
 
 export type BreadcrumbType = z.infer<typeof BreadcrumbSchema>;

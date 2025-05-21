@@ -172,6 +172,7 @@ export default function ProductPage({
   const schemaProduct = {
     '@context': 'https://schema.org/',
     '@type': 'Product',
+    productID: product?.id,
     name: productTitle,
     image:
       product?.seo_data?.images?.map(img => img['image:loc']) ||
@@ -184,7 +185,7 @@ export default function ProductPage({
     },
     offers: {
       '@type': 'Offer',
-      priceCurrency: 'USD',
+      priceCurrency: 'PLN',
       price: product?.price?.min_price,
       availability:
         product?.stock_quantity && product.stock_quantity > 0
@@ -219,7 +220,12 @@ export default function ProductPage({
             marginTop: '24px',
           }}
         >
-          <Breadcrumbs links={breadcrumbsLinks} />
+          <Breadcrumbs
+            links={breadcrumbsLinks}
+            locale={locale}
+            fullUrl={fullUrl}
+            currentName={product.name}
+          />
         </Box>
         {product && <ProductInfo product={product} />}
         <Reviews product={product} />
@@ -273,9 +279,14 @@ export const getServerSideProps: GetServerSideProps = async ({
     const product = productResponse?.data?.data?.item;
 
     // Construct full URL
+    const defaultLocale = 'pl';
     const protocol = req.headers['x-forwarded-proto'] || 'https';
     const host = req.headers.host;
-    const fullUrl = `${protocol}://${host}/product/${slug}`;
+    const pathWithLocale =
+      locale === defaultLocale
+        ? `/product/${slug}`
+        : `/${locale}/product/${slug}`;
+    const fullUrl = `${protocol}://${host}${pathWithLocale}`;
 
     return {
       props: {
