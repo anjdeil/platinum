@@ -86,18 +86,20 @@ interface HomeProps {
 }
 
 const Home: React.FC<HomeProps> = ({ sections, locale }) => {
+  const safeLocale = locale ?? 'pl';
   const structuredData = {
     '@context': 'https://schema.org',
     '@graph': [
       {
         '@type': 'WebSite',
         '@id': `https://platinumchetvertinovskaya.com/#website`,
-        url: `https://platinumchetvertinovskaya.com/${locale}/`,
+        url: `https://platinumchetvertinovskaya.com/${safeLocale}/`,
         name: 'Platinum by Chetvertinovskaya Liubov',
-        inLanguage: languageMap[locale as keyof typeof languageMap] ?? 'pl-PL',
+        inLanguage:
+          languageMap[safeLocale as keyof typeof languageMap] ?? 'pl-PL',
         potentialAction: {
           '@type': 'SearchAction',
-          target: `https://platinumchetvertinovskaya.com/${locale}/search/{search_term_string}`,
+          target: `https://platinumchetvertinovskaya.com/${safeLocale}/search/{search_term_string}`,
           'query-input': 'required name=search_term_string',
         },
       },
@@ -156,7 +158,7 @@ const Home: React.FC<HomeProps> = ({ sections, locale }) => {
             '@type': 'ListItem',
             position: 1,
             name: 'Home',
-            item: `https://platinumchetvertinovskaya.com/${locale}/`,
+            item: `https://platinumchetvertinovskaya.com/${safeLocale}/`,
           },
         ],
       },
