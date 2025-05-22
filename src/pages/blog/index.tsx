@@ -213,11 +213,11 @@ const BlogPage: React.FC<BlogProps> = ({
         },
         mainEntity: {
           '@type': 'ItemList',
-          itemListElement: posts?.map((product, index) => ({
+          itemListElement: posts?.map((post, index) => ({
             '@type': 'Article',
             position: index + 1,
-            name: product.title,
-            url: `${BASE_URL}/${locale}/blog/${product.slug}`,
+            name: post?.title,
+            url: `${BASE_URL}/${locale}/blog/${post?.slug}`,
           })),
         },
       },
