@@ -93,6 +93,7 @@ const SlugPage = ({
   slug,
 }: PageProps) => {
   const isMainContent = isContentMain(pageContent, sections);
+  const safeLocale = locale ?? 'pl';
 
   const fullText = getCleanText(pageContent);
   const pageDescription =
@@ -104,13 +105,14 @@ const SlugPage = ({
     '@graph': [
       {
         '@type': 'WebPage',
-        '@id': `https://platinumchetvertinovskaya.com/${locale}/${slug}`,
-        url: `https://platinumchetvertinovskaya.com/${locale}/${slug}`,
+        '@id': `https://platinumchetvertinovskaya.com/${safeLocale}/${slug}`,
+        url: `https://platinumchetvertinovskaya.com/${safeLocale}/${slug}`,
         name: pageTitle,
         description: pageDescription,
-        inLanguage: languageMap[locale as keyof typeof languageMap] ?? 'pl-PL',
+        inLanguage:
+          languageMap[safeLocale as keyof typeof languageMap] ?? 'pl-PL',
         isPartOf: {
-          '@id': `https://platinumchetvertinovskaya.com/${locale}/#website`,
+          '@id': `https://platinumchetvertinovskaya.com/${safeLocale}/#website`,
         },
       },
       {
@@ -168,13 +170,13 @@ const SlugPage = ({
             '@type': 'ListItem',
             position: 1,
             name: 'Home',
-            item: `https://platinumchetvertinovskaya.com/${locale}/`,
+            item: `https://platinumchetvertinovskaya.com/${safeLocale}/`,
           },
           {
             '@type': 'ListItem',
             position: 2,
             name: pageTitle,
-            item: `https://platinumchetvertinovskaya.com/${locale}/${slug}`,
+            item: `https://platinumchetvertinovskaya.com/${safeLocale}/${slug}`,
           },
         ],
       },
