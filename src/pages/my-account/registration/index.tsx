@@ -23,7 +23,7 @@ export default function Registration() {
     <>
       <PageTitle nameSpace={'MyAccount'} spaceKey={'registration'} />
       <FormPageWrapper>
-        <Breadcrumbs links={breadcrumbsLinks} />
+        <Breadcrumbs links={breadcrumbsLinks} locale={locale} />
         <Container>
           <FormContainer>
             <RegistrationForm />

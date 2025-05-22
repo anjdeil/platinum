@@ -234,7 +234,8 @@ export const BillingForm: FC<BillingFormProps> = ({
   useEffect(() => {
     if (newCustomerRegistration && isValid) {
       const { formattedRegistrationData } = getFormattedUserData(
-        watchedFields as ReqData
+        watchedFields as ReqData,
+        locale
       );
       setRegistrationData(formattedRegistrationData as RegistrationFormType);
     }

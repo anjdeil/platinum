@@ -31,15 +31,14 @@ import {
   StyledHeroImage,
 } from '@/styles/blog/styles';
 import Head from 'next/head';
-import he from 'he';
+import { getCleanText } from '@/utils/getCleanText';
 
-const getCleanText = (html: string) => {
-  if (!html) return '';
-  const decoded = he.decode(html);
-  const noComments = decoded.replace(/<!--[\s\S]*?-->/g, '');
-  const noTags = noComments.replace(/<\/?[^>]+(>|$)/g, '');
-  const trimmed = noTags.trim().replace(/\s+/g, ' ');
-  return trimmed;
+const languageMap = {
+  pl: 'pl-PL',
+  en: 'en-US',
+  de: 'de-DE',
+  uk: 'uk-UA',
+  ru: 'ru-RU',
 };
 
 export const getServerSideProps: GetServerSideProps = async (
@@ -121,9 +120,12 @@ export const getServerSideProps: GetServerSideProps = async (
     const popularPosts: BlogItemType[] = filteredPopularItems || [];
 
     // Construct full URL
+    const defaultLocale = 'pl';
     const protocol = req.headers['x-forwarded-proto'] || 'https';
     const host = req.headers.host;
-    const fullUrl = `${protocol}://${host}/blog/${slug}`;
+    const pathWithLocale =
+      locale === defaultLocale ? `/blog/${slug}` : `/${locale}/blog/${slug}`;
+    const fullUrl = `${protocol}://${host}${pathWithLocale}`;
 
     return {
       props: {
@@ -131,6 +133,7 @@ export const getServerSideProps: GetServerSideProps = async (
         recommendedPosts,
         popularPosts,
         fullUrl,
+        locale,
       },
     };
   } catch (error) {
@@ -149,6 +152,7 @@ interface PageProps {
   recommendedPosts: BlogItemType[];
   popularPosts: BlogItemType[];
   fullUrl: string;
+  locale: string;
 }
 
 const BlogPostPage = ({
@@ -156,8 +160,10 @@ const BlogPostPage = ({
   recommendedPosts,
   popularPosts,
   fullUrl,
+  locale,
 }: PageProps) => {
   const canonicalUrl = useCanonicalUrl();
+  const safeLocale = locale ?? 'pl';
 
   if (!post) {
     return <StyledError>No Post found</StyledError>;
@@ -195,29 +201,53 @@ const BlogPostPage = ({
 
   const schemaPost = {
     '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: postTitle,
-    description: postDescription,
-    image:
-      post?.seo_data?.images?.map(img => img['image:loc']) || thumbnail?.src,
-    datePublished: created,
-    dateModified: modified,
-    author: {
-      '@type': 'Organization',
-      name: 'Platinum by Chetvertinovskaya Liubov',
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: 'Platinum by Chetvertinovskaya Liubov',
-      logo: {
-        '@type': 'ImageObject',
-        url: 'https://platinumchetvertinovskaya.com/assets/icons/logo.png',
+    '@graph': [
+      {
+        '@type': 'Article',
+        '@id': `${postUrl}#article`,
+        headline: postTitle,
+        description: postDescription,
+        image:
+          post?.seo_data?.images?.map(img => img['image:loc']) ||
+          thumbnail?.src,
+        datePublished: created,
+        dateModified: modified,
+        articleSection: categories.map(cat => cat.name).join(', '),
+        inLanguage:
+          languageMap[safeLocale as keyof typeof languageMap] ?? 'pl-PL',
+        author: {
+          '@type': 'Organization',
+          name: 'Platinum by Chetvertinovskaya Liubov',
+          url: 'https://platinumchetvertinovskaya.com',
+        },
+        publisher: {
+          '@id': `${postUrl}#publisher`,
+        },
+        mainEntityOfPage: {
+          '@id': `${postUrl}#webpage`,
+        },
       },
-    },
-    mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': postUrl,
-    },
+      {
+        '@type': 'Organization',
+        '@id': `${postUrl}#publisher`,
+        name: 'Platinum by Chetvertinovskaya Liubov',
+        logo: {
+          '@type': 'ImageObject',
+          url: 'https://platinumchetvertinovskaya.com/assets/icons/logo.png',
+        },
+      },
+      {
+        '@type': 'WebPage',
+        '@id': `${postUrl}#webpage`,
+        url: postUrl,
+        name: postTitle,
+        inLanguage:
+          languageMap[safeLocale as keyof typeof languageMap] ?? 'pl-PL',
+        isPartOf: {
+          '@id': `${postUrl}`,
+        },
+      },
+    ],
   };
 
   return (

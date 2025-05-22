@@ -28,7 +28,7 @@ export default function Login() {
     <>
       <PageTitle nameSpace={'MyAccount'} spaceKey={'loginPage'} />
       <FormPageWrapper>
-        <Breadcrumbs links={breadcrumbsLinks} />
+        <Breadcrumbs links={breadcrumbsLinks} locale={locale} />
         <Container>
           <FormContainer>
             <LoginForm />
