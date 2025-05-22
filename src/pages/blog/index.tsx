@@ -164,6 +164,7 @@ const BlogPage: React.FC<BlogProps> = ({
   postCategoryDescription,
 }) => {
   const router = useRouter();
+  const locale = router.locale ?? 'pl';
   const canonicalUrl = useCanonicalUrl();
 
   const handleCategoryChange = (categorySlug: string | null) => {
@@ -181,7 +182,7 @@ const BlogPage: React.FC<BlogProps> = ({
 
   //SEO
   const pageDescription =
-    router.locale === 'pl'
+    locale === 'pl'
       ? 'Ekspercka kolekcja artykułów o stylizacji rzęs i brwi, nowościach branżowych, produktach premium PLATINUM oraz inspiracjach dla profesjonalistów beauty.'
       : 'An expert collection of articles on lash and brow styling, industry news, premium PLATINUM products, and inspiration for beauty professionals.';
 
@@ -194,10 +195,9 @@ const BlogPage: React.FC<BlogProps> = ({
         url: canonicalUrl,
         name: 'Blog',
         description: pageDescription,
-        inLanguage:
-          languageMap[router.locale as keyof typeof languageMap] ?? 'pl-PL',
+        inLanguage: languageMap[locale as keyof typeof languageMap] ?? 'pl-PL',
         isPartOf: {
-          '@id': `https://platinumchetvertinovskaya.com/${router.locale}/#website`,
+          '@id': `https://platinumchetvertinovskaya.com/${locale}/#website`,
         },
         author: {
           '@type': 'Organization',
@@ -217,7 +217,7 @@ const BlogPage: React.FC<BlogProps> = ({
             '@type': 'Article',
             position: index + 1,
             name: product.title,
-            url: `${BASE_URL}/${router.locale}/blog/${product.slug}`,
+            url: `${BASE_URL}/${locale}/blog/${product.slug}`,
           })),
         },
       },
@@ -228,13 +228,13 @@ const BlogPage: React.FC<BlogProps> = ({
             '@type': 'ListItem',
             position: 1,
             name: 'Home',
-            item: `https://platinumchetvertinovskaya.com/${router.locale}/`,
+            item: `https://platinumchetvertinovskaya.com/${locale}/`,
           },
           {
             '@type': 'ListItem',
             position: 2,
             name: 'Blog',
-            item: `https://platinumchetvertinovskaya.com/${router.locale}/${
+            item: `https://platinumchetvertinovskaya.com/${locale}/${
               selectedCategory ? `blog?category=${selectedCategory}` : 'blog'
             }`,
           },
