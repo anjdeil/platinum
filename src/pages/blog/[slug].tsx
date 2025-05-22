@@ -163,6 +163,7 @@ const BlogPostPage = ({
   locale,
 }: PageProps) => {
   const canonicalUrl = useCanonicalUrl();
+  const safeLocale = locale ?? 'pl';
 
   if (!post) {
     return <StyledError>No Post found</StyledError>;
@@ -212,7 +213,8 @@ const BlogPostPage = ({
         datePublished: created,
         dateModified: modified,
         articleSection: categories.map(cat => cat.name).join(', '),
-        inLanguage: languageMap[locale as keyof typeof languageMap] ?? 'pl-PL',
+        inLanguage:
+          languageMap[safeLocale as keyof typeof languageMap] ?? 'pl-PL',
         author: {
           '@type': 'Organization',
           name: 'Platinum by Chetvertinovskaya Liubov',
@@ -239,7 +241,8 @@ const BlogPostPage = ({
         '@id': `${postUrl}#webpage`,
         url: postUrl,
         name: postTitle,
-        inLanguage: languageMap[locale as keyof typeof languageMap] ?? 'pl-PL',
+        inLanguage:
+          languageMap[safeLocale as keyof typeof languageMap] ?? 'pl-PL',
         isPartOf: {
           '@id': `${postUrl}`,
         },
