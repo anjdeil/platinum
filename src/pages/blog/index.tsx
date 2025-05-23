@@ -259,6 +259,7 @@ const BlogPage: React.FC<BlogProps> = ({
   return (
     <>
       <Head>
+        <meta name="robots" content="index, follow" />
         <meta name="description" content={postCategoryDescription} />
         <link rel="canonical" href={canonicalUrl} />
         <meta property="og:title" content={postCategoryTitle} />

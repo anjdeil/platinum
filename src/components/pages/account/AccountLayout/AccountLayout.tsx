@@ -8,6 +8,7 @@ import { ReactNode } from 'react';
 import accountLinks from './accountLinks';
 import { AccountContainer, AccountContent, SideListContainer } from './styles';
 import { PageTitle } from '../../pageTitle';
+import Head from 'next/head';
 
 export default function AccountLayout({
   title,
@@ -34,6 +35,9 @@ export default function AccountLayout({
 
   return (
     <>
+      <Head>
+        <meta name="robots" content="noindex, nofollow" />
+      </Head>
       <PageTitle
         title={subTitle ? subTitle : title}
         nameSpace={nameSpace}

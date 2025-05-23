@@ -253,6 +253,7 @@ const BlogPostPage = ({
   return (
     <>
       <Head>
+        <meta name="robots" content="index, follow" />
         <meta name="description" content={postDescription} />
         <meta property="og:title" content={postTitle} />
         <meta property="og:description" content={postDescription} />

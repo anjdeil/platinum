@@ -7,6 +7,7 @@ import Breadcrumbs from '@/components/global/Breadcrumbs/Breadcrumbs';
 import { RegistrationForm } from '@/components/global/forms/RegistrationForm';
 import { PageTitle } from '@/components/pages/pageTitle';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 
 export default function Registration() {
   const t = useTranslations('MyAccount');
@@ -21,6 +22,9 @@ export default function Registration() {
 
   return (
     <>
+      <Head>
+        <meta name="robots" content="noindex, nofollow" />
+      </Head>
       <PageTitle nameSpace={'MyAccount'} spaceKey={'registration'} />
       <FormPageWrapper>
         <Breadcrumbs links={breadcrumbsLinks} locale={locale} />

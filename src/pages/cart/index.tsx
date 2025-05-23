@@ -29,6 +29,7 @@ import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { decodeJwt } from 'jose';
 import { GetServerSidePropsContext } from 'next';
 import { useTranslations } from 'next-intl';
+import Head from 'next/head';
 import router from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
 
@@ -246,6 +247,9 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
 
   return (
     <>
+      <Head>
+        <meta name="robots" content="noindex, nofollow" />
+      </Head>
       <PageTitle nameSpace={'Cart'} spaceKey={'Basket'} />
       <OrderProgress />
 

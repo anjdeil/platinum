@@ -473,7 +473,10 @@ export default function CheckoutPage() {
   return (
     <>
       <PageTitle nameSpace={'Cart'} spaceKey={'PersonalInformation'} />
-      <Head>{inPostHead}</Head>
+      <Head>
+        {inPostHead}
+        <meta name="robots" content="noindex, nofollow" />
+      </Head>
       <OrderProgress />
       <CheckoutContainer>
         <CheckoutFormsWrapper>

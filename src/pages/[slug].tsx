@@ -186,6 +186,7 @@ const SlugPage = ({
   return (
     <>
       <Head>
+        <meta name="robots" content="index, follow" />
         <meta name="description" content={pageDescription} />
         <script type="application/ld+json">
           {JSON.stringify(structuredData)}
