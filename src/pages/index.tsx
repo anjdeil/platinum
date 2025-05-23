@@ -168,6 +168,7 @@ const Home: React.FC<HomeProps> = ({ sections, locale }) => {
   return (
     <>
       <Head>
+        <meta name="robots" content="index, follow" />
         <meta
           name="description"
           content="Platinum by Chetvertinovskaya Liubov"

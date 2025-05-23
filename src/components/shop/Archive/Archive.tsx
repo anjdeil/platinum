@@ -206,6 +206,7 @@ export const Archive: FC<ArchivePropsType> = props => {
   return (
     <>
       <Head>
+        <meta name="robots" content="index, follow" />
         <link rel="canonical" href={canonicalUrl} />
         <script
           type="application/ld+json"

@@ -6,6 +6,7 @@ import { GetServerSidePropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import { PageTitle } from '@/components/pages/pageTitle';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 
 export default function ResetPassword() {
   const t = useTranslations('MyAccount');
@@ -20,6 +21,9 @@ export default function ResetPassword() {
 
   return (
     <>
+      <Head>
+        <meta name="robots" content="noindex, nofollow" />
+      </Head>
       <PageTitle nameSpace={'MyAccount'} spaceKey={'resetPassword'} />
       <FormPageWrapper>
         <Breadcrumbs links={breadcrumbsLinks} locale={locale} />

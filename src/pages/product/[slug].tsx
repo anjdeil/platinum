@@ -198,6 +198,7 @@ export default function ProductPage({
   return (
     <>
       <Head>
+        <meta name="robots" content="index, follow" />
         <meta name="description" content={productDescription} />
         <meta property="og:title" content={productTitle} />
         <meta property="og:description" content={productDescription} />

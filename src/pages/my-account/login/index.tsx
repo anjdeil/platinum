@@ -10,6 +10,7 @@ import { useAppDispatch } from '@/store';
 import { clearUser } from '@/store/slices/userSlice';
 import { PageTitle } from '@/components/pages/pageTitle';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 
 export default function Login() {
   const { locale } = useRouter();
@@ -26,6 +27,9 @@ export default function Login() {
 
   return (
     <>
+      <Head>
+        <meta name="robots" content="noindex, nofollow" />
+      </Head>
       <PageTitle nameSpace={'MyAccount'} spaceKey={'loginPage'} />
       <FormPageWrapper>
         <Breadcrumbs links={breadcrumbsLinks} locale={locale} />
