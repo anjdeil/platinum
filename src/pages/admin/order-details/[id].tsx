@@ -5,9 +5,10 @@ import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import wooCommerceRestApi from '@/services/wooCommerceRestApi';
 import { OrderType } from '@/types/services/wooCustomApi/shop';
 import AdminOrderPdf from '@/pdf/AdminOrderPdf';
+import Head from 'next/head';
 
 export const getServerSideProps: GetServerSideProps = async (
-  context: GetServerSidePropsContext,
+  context: GetServerSidePropsContext
 ) => {
   const { id } = context.query;
 
@@ -27,9 +28,7 @@ export const getServerSideProps: GetServerSideProps = async (
   }
 };
 
-
 export default function PDFGeneratorViewer({ order }: { order: OrderType }) {
-
   const t = useTranslations('Checkout');
 
   useEffect(() => {
@@ -49,9 +48,11 @@ export default function PDFGeneratorViewer({ order }: { order: OrderType }) {
     generateAndDownload();
   }, []);
 
-
   return (
     <>
+      <Head>
+        <meta name="robots" content="noindex, nofollow" />
+      </Head>
     </>
   );
 }
