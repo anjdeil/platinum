@@ -39,6 +39,21 @@ export const passwordResetApi = createApi({
         body,
       }),
     }),
+
+    changePassword: build.mutation<
+      void,
+      { userId: string; password: string; token: string }
+    >({
+      query: ({ userId, password, token }) => ({
+        url: '/change-password',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: { user_id: userId, password },
+      }),
+    }),
   }),
 });
 
@@ -46,4 +61,5 @@ export const {
   useResetPasswordMutation,
   useSetPasswordMutation,
   useValidateCodeMutation,
+  useChangePasswordMutation,
 } = passwordResetApi;
