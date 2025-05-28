@@ -2,6 +2,7 @@ import { FC, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CustomFormInput } from '../../CustomFormInput';
+import { CustomSuccess } from '../../CustomFormInput/styles';
 import {
   CustomForm,
   FormWrapper,
@@ -9,28 +10,22 @@ import {
   StyledButton,
   Title,
 } from '@/styles/components';
+import { useUpdateCustomerInfoMutation } from '@/store/rtk-queries/wooCustomAuthApi';
 import { z } from 'zod';
 import { useTranslations } from 'next-intl';
 import Notification from '../../../Notification/Notification';
 import { ChangePasswordFormSchema } from '@/types/components/global/forms/changePassword';
-import { useChangePasswordMutation } from '@/store/rtk-queries/passwordResetApi';
-import useGetAuthToken from '@/hooks/useGetAuthToken';
-// import {
-//   removeUserFromLocalStorage,
-//   saveUserToLocalStorage,
-// } from '@/utils/auth/userLocalStorage';
 
-type ChangePasswordFormProps = {
-  userId?: number;
-};
+//
+//changing the password for an authorized user (!!on pause, the desired endpoint is missing!!)
+//
 
-export const ChangePasswordForm: FC<ChangePasswordFormProps> = ({ userId }) => {
+export const ChangePasswordForm: FC = () => {
   const [customError, setCustomError] = useState<string>('');
   const tValidation = useTranslations('Validation');
   const tMyAccount = useTranslations('MyAccount');
 
-  const [changePassword, { isSuccess, error }] = useChangePasswordMutation();
-  const token = useGetAuthToken();
+  const [updateCustomerMutation, { error }] = useUpdateCustomerInfoMutation();
 
   const formSchema = useMemo(() => ChangePasswordFormSchema(tValidation), []);
 
@@ -39,68 +34,28 @@ export const ChangePasswordForm: FC<ChangePasswordFormProps> = ({ userId }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isSubmitSuccessful },
     reset,
   } = useForm<ChangePasswordFormType>({
     resolver: zodResolver(formSchema),
   });
 
   async function onSubmit(formData: ChangePasswordFormType) {
-    if (!userId || !token) {
-      setCustomError(tMyAccount('noUserData'));
-      return;
-    }
-
-    if (formData.password !== formData.confirmPassword) {
-      setCustomError(tValidation('passwordsNotMatch'));
-      return;
-    }
-
     setCustomError('');
-
     const reqBody = {
-      userId: userId.toString(),
-      password: formData.password,
-      token: token,
+      password: 'new_password',
     };
 
     try {
-      await changePassword(reqBody).unwrap();
-      // removeUserFromLocalStorage();
-      // saveUserToLocalStorage({ email: userEmail });
+      const resp = await updateCustomerMutation(reqBody);
+      if (!resp.data) throw new Error('Invalid customer response.');
     } catch (err) {
-      setCustomError(tMyAccount('registrationError'));
+      setCustomError(
+        'Oops! Something went wrong with the server. Please try again or contact support.'
+      );
       reset();
     }
   }
-
-  const showErrorMessage = (error: any) => {
-    console.log('Error:', error.status, error.data);
-
-    if (
-      error.status === 429 &&
-      error.data.message ===
-        'You can only change your password once per 5 minutes.'
-    ) {
-      return tMyAccount('passwordChangeLimit');
-    }
-
-    if (
-      error.status === 403 &&
-      error.data.message === 'You are not allowed to change this password.'
-    ) {
-      return tMyAccount('passwordChangeForbidden');
-    }
-
-    if (
-      error.status === 400 &&
-      error.data.message === 'Password must be at least 8 characters long.'
-    ) {
-      return tMyAccount('passwordChangeTooShort');
-    }
-
-    return tMyAccount('passwordChangeError');
-  };
 
   return (
     <CustomForm onSubmit={handleSubmit(onSubmit)} maxWidth="500px">
@@ -131,12 +86,12 @@ export const ChangePasswordForm: FC<ChangePasswordFormProps> = ({ userId }) => {
           {isSubmitting ? tValidation('saving') : tValidation('saveChanges')}
         </StyledButton>
         {error && customError && (
-          <Notification type="warning">{showErrorMessage(error)}</Notification>
-        )}
-        {isSuccess && !error && !customError && (
-          <Notification type="success">
-            {tMyAccount('passwordChanged')}
+          <Notification type="warning">
+            {tMyAccount('passwordChangeError')}
           </Notification>
+        )}
+        {isSubmitSuccessful && !error && !customError && (
+          <CustomSuccess>{tMyAccount('passwordChanged')}</CustomSuccess>
         )}
       </FormWrapperBottom>
     </CustomForm>
