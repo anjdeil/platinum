@@ -441,7 +441,9 @@
     "yourUserNameIsTooLong": "Ihr Vorname ist zu lang",
     "pleaseFillTheCommentField": "Bitte füllen Sie das Kommentarfeld aus",
     "yourCommentIsTooShort": "Ihr Kommentar ist zu kurz",
-    "yourCommentIsTooLong": "Ihr Kommentar ist zu lang"
+    "yourCommentIsTooLong": "Ihr Kommentar ist zu lang",
+    "inpostPhoneRequired": "Die InPost-Zustellung erfordert eine polnische Telefonnummer, die mit +48 beginnt.",
+    "usePolishNumberError": "Bitte verwenden Sie eine polnische Telefonnummer."
   },
   "Forms": {
     "applicationForm": "Antragsformular",

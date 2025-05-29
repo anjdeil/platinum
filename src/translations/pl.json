@@ -441,7 +441,9 @@
     "yourUserNameIsTooLong": "Twoje imię jest za długie",
     "pleaseFillTheCommentField": "Prosimy o wypełnienie pola komentarza",
     "yourCommentIsTooShort": "Twój komentarz jest za krótki",
-    "yourCommentIsTooLong": "Twój komentarz jest za długi"
+    "yourCommentIsTooLong": "Twój komentarz jest za długi",
+    "inpostPhoneRequired": "Dostawa InPost wymaga polskiego numeru telefonu zaczynającego się od +48.",
+    "usePolishNumberError": "Proszę użyć polskiego numeru telefonu."
   },
   "Forms": {
     "applicationForm": "Formularz zgłoszeniowy",

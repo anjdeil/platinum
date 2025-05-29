@@ -441,7 +441,9 @@
     "yourUserNameIsTooLong": "Your name is too long",
     "pleaseFillTheCommentField": "Please, fill in the comment field",
     "yourCommentIsTooShort": "Your comment is too short",
-    "yourCommentIsTooLong": "Your comment is too long"
+    "yourCommentIsTooLong": "Your comment is too long",
+    "inpostPhoneRequired": "InPost delivery requires a Polish phone number starting with +48.",
+    "usePolishNumberError": "Please use a Polish phone number"
   },
   "Forms": {
     "applicationForm": "application form",
