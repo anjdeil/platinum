@@ -335,7 +335,9 @@ export default function CheckoutPage() {
   >(null);
 
   const [warnings, setWarnings] = useState<string[]>();
+  const [phoneWarnings, setPhoneWarnings] = useState<string | null>(null);
   const [validationErrors, setValidationErrors] = useState<string | null>(null);
+  const [phoneTrigger, setPhoneTrigger] = useState(false);
 
   const [isWarningsShown, setIsWarningsShown] = useState(false);
   /**
@@ -367,6 +369,19 @@ export default function CheckoutPage() {
       isOrderValid = false;
     } else {
       setWarnings([]);
+    }
+
+    // Inpost & phone number starts with +48
+    if (
+      shippingMethod?.method_title === 'InPost Locker 24/7' &&
+      !formOrderData?.billing?.phone?.startsWith('+48')
+    ) {
+      setPhoneTrigger(true);
+      setPhoneWarnings('inpostPhoneRequired');
+      isOrderValid = false;
+    } else {
+      setPhoneTrigger(false);
+      setPhoneWarnings(null);
     }
 
     setRegistrationErrorWarning(null);
@@ -483,6 +498,10 @@ export default function CheckoutPage() {
           {/* Billing and shipping forms */}
           {validationErrors && <BillingWarnings message={validationErrors} />}
 
+          {phoneWarnings && isWarningsShown && (
+            <BillingWarnings message={phoneWarnings} />
+          )}
+
           {registrationErrorWarning && (
             <RegistrationError
               message={registrationErrorWarning}
@@ -501,6 +520,7 @@ export default function CheckoutPage() {
             setIsRegistration={setIsRegistration}
             setRegistrationData={setRegistrationData}
             setIsValidForm={setIsValidForm}
+            phoneTrigger={phoneTrigger}
           />
 
           <CheckoutFormSection>
@@ -510,6 +530,10 @@ export default function CheckoutPage() {
 
             {warnings && isWarningsShown && (
               <CheckoutWarnings messages={warnings}></CheckoutWarnings>
+            )}
+
+            {phoneWarnings && isWarningsShown && (
+              <BillingWarnings message={phoneWarnings} />
             )}
 
             <FreeShippingNotifications

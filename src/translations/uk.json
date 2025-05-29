@@ -91,6 +91,11 @@
     "newpassword": "Новий пароль",
     "passwordChanged": "Пароль успішно змінено",
     "passwordChangeError": "Сталася помилка під час зміни пароля, будь ласка, спробуйте ще раз",
+    "noUserData": "Не вдалося отримати дані користувача",
+    "passwordsNotMatch": "Паролі не збігаються",
+    "passwordChangeLimit": "Ви можете змінювати пароль лише раз на 5 хвилин. Будь ласка, спробуйте ще раз пізніше.",
+    "passwordChangeForbidden": "Ви не можете змінити цей пароль.",
+    "passwordChangeTooShort": "Пароль повинен містити щонайменше 8 символів.",
     "resetPassword": "Скинути пароль",
     "codeSendError": "Код не було надіслано, можливо, акаунт з цією поштою не існує",
     "codeSent": "Код надіслано, перевірте вашу електронну пошту",
@@ -436,7 +441,9 @@
     "yourUserNameIsTooLong": "Ваше ім'я занадто довге",
     "pleaseFillTheCommentField": "Будь ласка, заповніть поле для коментаря",
     "yourCommentIsTooShort": "Ваш коментар занадто короткий",
-    "yourCommentIsTooLong": "Ваш коментар занадто довгий"
+    "yourCommentIsTooLong": "Ваш коментар занадто довгий",
+    "inpostPhoneRequired": "Для доставки InPost Paczkomat потрібен польський номер телефону, що починається на +48.",
+    "usePolishNumberError": "Будь ласка, використовуйте польський номер телефону."
   },
   "Forms": {
     "applicationForm": "форма заявки",

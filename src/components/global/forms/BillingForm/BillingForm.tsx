@@ -47,6 +47,7 @@ interface BillingFormProps {
   setIsRegistration: (value: boolean) => void;
   setRegistrationData: (data: RegistrationFormType) => void;
   setIsValidForm: (value: boolean) => void;
+  phoneTrigger?: boolean;
 }
 
 export const BillingForm: FC<BillingFormProps> = ({
@@ -60,6 +61,7 @@ export const BillingForm: FC<BillingFormProps> = ({
   setIsRegistration,
   setRegistrationData,
   setIsValidForm,
+  phoneTrigger,
 }) => {
   const { customer, isCustomerLoading } = useGetCustomerData();
   const tValidation = useTranslations('Validation');
@@ -409,6 +411,7 @@ export const BillingForm: FC<BillingFormProps> = ({
                     validation={validationSchema('phone')}
                     setValue={setValue}
                     defaultValue={customer?.billing?.phone || ''}
+                    hasError={phoneTrigger}
                   />
                 </StyledPhoneWrapper>
               </StyledFormWrapper>
