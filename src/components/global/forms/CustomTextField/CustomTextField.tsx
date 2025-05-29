@@ -10,6 +10,7 @@ import {
   StyledTextField,
 } from './styles';
 import { StyledPhoneInput } from '../CustomFormInput/styles';
+import { useTranslations } from 'next-intl';
 
 interface CustomTextFieldProps {
   isPhone?: boolean;
@@ -29,6 +30,7 @@ interface CustomTextFieldProps {
   onBlur?: (value: string) => void;
   notRequired?: boolean;
   minHeight?: string;
+  hasError?: boolean;
 }
 
 const CustomTextField: React.FC<CustomTextFieldProps> = ({
@@ -47,9 +49,11 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
   defaultValue,
   notRequired,
   minHeight,
+  hasError,
 }) => {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const t = useTranslations('Validation');
 
   const togglePasswordVisibility = () => {
     if (inputRef.current) {
@@ -92,7 +96,10 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
 
         {isPhone ? (
           <>
-            <StyledInputStyle isError={!!errors[name]} isPhone={isPhone}>
+            <StyledInputStyle
+              isError={!!errors[name] || hasError}
+              isPhone={isPhone}
+            >
               <StyledPhoneWrapper>
                 <Controller
                   name={name}
@@ -117,8 +124,14 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
                   )}
                 />
               </StyledPhoneWrapper>
-              {errors[name] && (
+              {/* {errors[name] && (
                 <StyledError>{errors[name].message}</StyledError>
+              )} */}
+
+              {(hasError || errors[name]) && (
+                <StyledError>
+                  {hasError ? t('usePolishNumberError') : errors[name]?.message}
+                </StyledError>
               )}
             </StyledInputStyle>
           </>
