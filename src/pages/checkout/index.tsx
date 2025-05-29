@@ -373,7 +373,7 @@ export default function CheckoutPage() {
 
     // Inpost & phone number starts with +48
     if (
-      shippingMethod?.title.startsWith('InPost') &&
+      shippingMethod?.method_title === 'InPost Locker 24/7' &&
       !formOrderData?.billing?.phone?.startsWith('+48')
     ) {
       setPhoneTrigger(true);

@@ -442,7 +442,7 @@
     "pleaseFillTheCommentField": "Будь ласка, заповніть поле для коментаря",
     "yourCommentIsTooShort": "Ваш коментар занадто короткий",
     "yourCommentIsTooLong": "Ваш коментар занадто довгий",
-    "inpostPhoneRequired": "Для доставки InPost потрібен польський номер телефону, що починається на +48.",
+    "inpostPhoneRequired": "Для доставки InPost Paczkomat потрібен польський номер телефону, що починається на +48.",
     "usePolishNumberError": "Будь ласка, використовуйте польський номер телефону."
   },
   "Forms": {
