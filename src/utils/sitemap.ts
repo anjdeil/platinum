@@ -6,7 +6,7 @@ const WP_ADMIN_DOMAIN = getDomainFromUrl(
   process.env.NEXT_PUBLIC_WP_URL || 'admin.example.com'
 );
 const NEXT_DOMAIN = getDomainFromUrl(
-  process.env.WP_URL || 'example.vercel.com'
+  process.env.NEXT_PUBLIC_URL || 'example.vercel.com'
 );
 
 // Configuration for XML parser and builder
