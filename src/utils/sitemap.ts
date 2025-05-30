@@ -51,7 +51,11 @@ export async function rewriteChildSitemapUrls(
     });
   }
 
-  return builder.build(parsed);
+  // The browser blocks loading XSL from another domain (CORS).
+  let xml = builder.build(parsed);
+  xml = xml.replace(/<\?xml-stylesheet [^>]*\?>/i, '');
+
+  return xml;
 }
 
 /**
@@ -93,7 +97,11 @@ export async function rewriteDomainInAddlSitemap(
     });
   }
 
-  return builder.build(parsed);
+  // The browser blocks loading XSL from another domain (CORS).
+  let xml = builder.build(parsed);
+  xml = xml.replace(/<\?xml-stylesheet [^>]*\?>/i, '');
+
+  return xml;
 }
 
 /**
