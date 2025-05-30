@@ -41,7 +41,12 @@ export default async function handler(
       const transformedXml = await rewriteDomainInAddlSitemap(xmlContent);
       return res.status(200).send(transformedXml);
     } else {
-      return res.status(200).send(xmlContent);
+      // return res.status(200).send(xmlContent);
+      const xmlWithoutXsl = xmlContent.replace(
+        /<\?xml-stylesheet [^>]*\?>/i,
+        ''
+      );
+      return res.status(200).send(xmlWithoutXsl);
     }
   } catch (error: any) {
     console.error(`Error processing sitemap ${slug}:`, error);
