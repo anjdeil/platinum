@@ -25,6 +25,7 @@
     "cookie": "^1.0.1",
     "dompurify": "^3.2.4",
     "dotenv": "^16.4.5",
+    "fast-xml-parser": "^4.3.2",
     "he": "^1.2.0",
     "html-react-parser": "^5.1.18",
     "i": "^0.3.7",

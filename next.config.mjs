@@ -30,6 +30,18 @@ const nextConfig = {
   env: {
     timeZone: 'Europe/Warsaw',
   },
+  async rewrites() {
+    return [
+      {
+        source: '/sitemap.xml',
+        destination: '/api/sitemap.xml',
+      },
+      {
+        source: '/sitemap/:slug',
+        destination: '/api/sitemap/:slug',
+      },
+    ];
+  },
 };
 
 
