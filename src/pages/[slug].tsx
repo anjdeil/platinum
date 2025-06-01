@@ -220,6 +220,7 @@ const SlugPage = ({
           content={seoData?.og?.image_url || pageImage}
         />
         <link rel="canonical" href={fullUrl || ''} />
+        <link rel="alternate" hrefLang={safeLocale} href={fullUrl} />
       </Head>
       <PageTitle title={pageTitle} />
       <StyledHeaderWrapper>

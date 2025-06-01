@@ -206,6 +206,7 @@ export default function ProductPage({
         <meta property="og:type" content="product" />
         <meta property="og:url" content={productUrl} />
         <link rel="canonical" href={canonicalUrl} />
+        <link rel="alternate" hrefLang={locale} href={canonicalUrl} />
         {
           <script type="application/ld+json">
             {JSON.stringify(schemaProduct)}

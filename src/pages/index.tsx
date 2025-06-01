@@ -207,6 +207,7 @@ const Home: React.FC<HomeProps> = ({ sections, locale, seoData, fullUrl }) => {
           content={seoData?.og?.image_url || pageImage}
         />
         <link rel="canonical" href={canonicalUrl} />
+        <link rel="alternate" hrefLang={safeLocale} href={canonicalUrl} />
       </Head>
       <PageTitle title={pageTitle} />
       <div className="homepage">

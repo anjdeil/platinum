@@ -213,6 +213,7 @@ export const Archive: FC<ArchivePropsType> = props => {
         <meta name="robots" content="index, follow" />
         <meta name="description" content={productDescription} />
         <link rel="canonical" href={canonicalUrl} />
+        <link rel="alternate" hrefLang={locale} href={canonicalUrl} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
