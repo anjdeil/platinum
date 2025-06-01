@@ -61,7 +61,7 @@ export const getServerSideProps: GetServerSideProps = async (
 
       return {
         props: {
-          pageTitle: pageData?.seo_data?.title || pageData.title,
+          pageTitle: pageData.title,
           pageContent: pageData?.seo_data?.description || pageData.content,
           sections: pageData.sections,
           locale,
@@ -110,6 +110,7 @@ const SlugPage = ({
   const isMainContent = isContentMain(pageContent, sections);
   const safeLocale = locale ?? 'pl';
 
+  const pageSeoTitle = seoData?.title || pageTitle;
   const fullText = getCleanText(pageContent);
   const pageDescription =
     fullText.slice(0, 160) ||
@@ -125,7 +126,7 @@ const SlugPage = ({
         '@type': 'WebPage',
         '@id': `https://platinumchetvertinovskaya.com/${safeLocale}/${slug}`,
         url: `https://platinumchetvertinovskaya.com/${safeLocale}/${slug}`,
-        name: pageTitle,
+        name: pageSeoTitle,
         description: pageDescription,
         inLanguage:
           languageMap[safeLocale as keyof typeof languageMap] ?? 'pl-PL',
@@ -222,7 +223,7 @@ const SlugPage = ({
         <link rel="canonical" href={fullUrl || ''} />
         <link rel="alternate" hrefLang={safeLocale} href={fullUrl} />
       </Head>
-      <PageTitle title={pageTitle} />
+      <PageTitle title={pageSeoTitle} />
       <StyledHeaderWrapper>
         <SlugPageBreadcrumbs title={pageTitle} />
         <Title as={'h1'} uppercase>
