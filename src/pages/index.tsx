@@ -1,9 +1,13 @@
-import { SectionRenderer } from "@/components/sections/SectionRenderer";
+import { SectionRenderer } from '@/components/sections/SectionRenderer';
 import { customRestApi } from '@/services/wpCustomApi';
 import { SectionsType } from '@/types/components/sections';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { validateWpPage } from '@/utils/zodValidators/validateWpPage';
-import { PageDataFullType, PageDataItemType } from '@/types/services';
+import {
+  PageDataFullType,
+  PageDataItemType,
+  SeoDataType,
+} from '@/types/services';
 import InfoPopup from '@/components/global/popups/InfoPopup/InfoPopup';
 import { PageTitle } from '@/components/pages/pageTitle';
 import Head from 'next/head';
@@ -60,10 +64,19 @@ export const getServerSideProps: GetServerSideProps = async (
           ].includes(section._type)
       );
 
+      const safeLocale = locale ?? 'pl';
+      const baseDomain = process.env.NEXT_PUBLIC_URL;
+      const fullUrl =
+        safeLocale === 'pl'
+          ? `${baseDomain}/`
+          : `${baseDomain}/${safeLocale}/` || '';
+
       return {
         props: {
           sections: filteredSections,
           locale,
+          seoData: pageData.seo_data || {},
+          fullUrl,
         },
       };
     }
@@ -83,9 +96,20 @@ export const getServerSideProps: GetServerSideProps = async (
 interface HomeProps {
   sections: SectionsType[];
   locale: string;
+  seoData?: SeoDataType;
+  fullUrl?: string;
 }
 
-const Home: React.FC<HomeProps> = ({ sections, locale }) => {
+const Home: React.FC<HomeProps> = ({ sections, locale, seoData, fullUrl }) => {
+  // SEO Data
+  const canonicalUrl = fullUrl || 'https://platinumchetvertinovskaya.com/';
+  const pageTitle = seoData?.title || 'Platinum by Chetvertinovskaya Liubov';
+  const pageDescription =
+    seoData?.description ||
+    'European Brand for Professionals PLATINUM by Chetvertinovskaya Liubov supports stylists in creating perfect eyelash and eyebrow designs.';
+  const pageImage =
+    seoData?.images?.[0] ||
+    'https://platinumchetvertinovskaya.com/assets/icons/logo.png';
   const safeLocale = locale ?? 'pl';
   const structuredData = {
     '@context': 'https://schema.org',
@@ -94,7 +118,7 @@ const Home: React.FC<HomeProps> = ({ sections, locale }) => {
         '@type': 'WebSite',
         '@id': `https://platinumchetvertinovskaya.com/#website`,
         url: `https://platinumchetvertinovskaya.com/${safeLocale}/`,
-        name: 'Platinum by Chetvertinovskaya Liubov',
+        name: pageTitle,
         inLanguage:
           languageMap[safeLocale as keyof typeof languageMap] ?? 'pl-PL',
         potentialAction: {
@@ -106,7 +130,7 @@ const Home: React.FC<HomeProps> = ({ sections, locale }) => {
       {
         '@type': 'Organization',
         '@id': 'https://platinumchetvertinovskaya.com/#organization',
-        name: 'Platinum by Chetvertinovskaya Liubov',
+        name: pageTitle,
         url: 'https://platinumchetvertinovskaya.com/',
         logo: {
           '@type': 'ImageObject',
@@ -169,15 +193,22 @@ const Home: React.FC<HomeProps> = ({ sections, locale }) => {
     <>
       <Head>
         <meta name="robots" content="index, follow" />
-        <meta
-          name="description"
-          content="Platinum by Chetvertinovskaya Liubov"
-        />
+        <meta name="description" content={pageDescription} />
         <script type="application/ld+json">
           {JSON.stringify(structuredData)}
         </script>
+        <meta property="og:title" content={seoData?.og?.title || pageTitle} />
+        <meta
+          property="og:description"
+          content={seoData?.og?.description || pageDescription}
+        />
+        <meta
+          property="og:image"
+          content={seoData?.og?.image_url || pageImage}
+        />
+        <link rel="canonical" href={canonicalUrl} />
       </Head>
-      <PageTitle />
+      <PageTitle title={pageTitle} />
       <div className="homepage">
         <SectionRenderer sections={sections} />
         <InfoPopup />

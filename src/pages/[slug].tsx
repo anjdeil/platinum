@@ -10,7 +10,11 @@ import {
   Title,
 } from '@/styles/components';
 import { SectionsType } from '@/types/components/sections';
-import { PageDataFullType, PageDataItemType } from '@/types/services';
+import {
+  PageDataFullType,
+  PageDataItemType,
+  SeoDataType,
+} from '@/types/services';
 import { getCleanText } from '@/utils/getCleanText';
 import { validateWpPage } from '@/utils/zodValidators/validateWpPage';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
@@ -50,13 +54,20 @@ export const getServerSideProps: GetServerSideProps = async (
         return { notFound: true };
       }
 
+      const safeLocale = locale ?? 'pl';
+      const fullUrl =
+        `${process.env.NEXT_PUBLIC_URL}/${safeLocale}/${slug}` || '';
+      const seoData = (pageData?.seo_data as SeoDataType) || {};
+
       return {
         props: {
-          pageTitle: pageData.title,
-          pageContent: pageData.content,
+          pageTitle: pageData?.seo_data?.title || pageData.title,
+          pageContent: pageData?.seo_data?.description || pageData.content,
           sections: pageData.sections,
           locale,
           slug,
+          fullUrl,
+          seoData,
         },
       };
     }
@@ -79,6 +90,8 @@ interface PageProps {
   sections: SectionsType[];
   locale: string;
   slug: string;
+  fullUrl?: string;
+  seoData?: SeoDataType;
 }
 
 const isContentMain = (content: string, sections: any[]): boolean => {
@@ -91,6 +104,8 @@ const SlugPage = ({
   sections,
   locale,
   slug,
+  fullUrl,
+  seoData,
 }: PageProps) => {
   const isMainContent = isContentMain(pageContent, sections);
   const safeLocale = locale ?? 'pl';
@@ -99,6 +114,9 @@ const SlugPage = ({
   const pageDescription =
     fullText.slice(0, 160) ||
     `${pageTitle}: Learn more about Platinum by Chetvertinovskaya Liubov`;
+  const pageImage =
+    seoData?.og?.image_url ||
+    'https://platinumchetvertinovskaya.com/assets/icons/logo.png';
 
   const structuredData = {
     '@context': 'https://schema.org',
@@ -191,6 +209,17 @@ const SlugPage = ({
         <script type="application/ld+json">
           {JSON.stringify(structuredData)}
         </script>
+
+        <meta property="og:title" content={seoData?.og?.title || pageTitle} />
+        <meta
+          property="og:description"
+          content={seoData?.og?.description || pageDescription}
+        />
+        <meta
+          property="og:image"
+          content={seoData?.og?.image_url || pageImage}
+        />
+        <link rel="canonical" href={fullUrl || ''} />
       </Head>
       <PageTitle title={pageTitle} />
       <StyledHeaderWrapper>
