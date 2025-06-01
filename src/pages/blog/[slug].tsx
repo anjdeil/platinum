@@ -269,8 +269,8 @@ const BlogPostPage = ({
         <StyledContainer>
           <StyledHeaderWrapper>
             <PostPageBreadcrumbs title={title} />
-            <BlogTitle title={'blogPage'} />
-            <Title as={'h2'} uppercase fontWeight={500}>
+            <BlogTitle title={'blogPage'} secondTitle={true} />
+            <Title as={'h1'} uppercase fontWeight={500}>
               {title}
             </Title>
           </StyledHeaderWrapper>
