@@ -394,3 +394,15 @@ export const SkeletonItem = styled(Skeleton)`
 export const StyledSectionWrapper = styled.div`
   margin-bottom: 24px;
 `;
+
+export const PageTitleStyled = styled.h1`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+`;

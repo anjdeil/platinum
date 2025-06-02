@@ -37,6 +37,26 @@ export const CustomDataSchema = z.object({
     .optional(),
 });
 
+export const SeoDataSchema = z.object({
+  title: z.string().optional(),
+  description: z.string().optional(),
+  images: z.array(z.string()).nullable().optional(),
+  image_scan_date: z.string().optional(),
+  og: z
+    .object({
+      title: z.string().nullable().optional(),
+      description: z.string().nullable().optional(),
+      image_url: z.string().nullable().optional(),
+      image_width: z.number().nullable().optional(),
+      image_height: z.number().nullable().optional(),
+      video: z.string().nullable().optional(),
+      article_section: z.string().nullable().optional(),
+      article_tags: z.array(z.string()).nullable().optional(),
+    })
+    .nullable()
+    .optional(),
+});
+
 export const PageDataItemsSchema = z.object({
   id: z.number(),
   slug: z.string(),
@@ -48,6 +68,7 @@ export const PageDataItemsSchema = z.object({
   author_id: z.number(),
   menu_order: z.number(),
   sections: z.array(SectionsTypeSchema),
+  seo_data: SeoDataSchema.nullable().optional(),
 });
 
 export const PageDataFullSchema = z.object({
@@ -82,7 +103,7 @@ export const CurrenciesResponseSchema = z.object({
   data: z.object({
     items: z.array(CurrencyItemSchema),
   }),
-})
+});
 
 export const CustomDataProductsStatisticSchema = z.object({
   products_count: z.number(),
@@ -194,6 +215,7 @@ export const PostsDataSchema = z.object({
 
 export type QueryParamsType = z.infer<typeof QueryParamsSchema>;
 export type LangParamType = z.infer<typeof LangParamSchema>;
+export type SeoDataType = z.infer<typeof SeoDataSchema>;
 export type PageDataItemType = z.infer<typeof PageDataItemsSchema>;
 export type PageDataFullType = z.infer<typeof PageDataFullSchema>;
 export type PageDataType = z.infer<typeof PageDataSchema>;

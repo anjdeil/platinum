@@ -261,6 +261,7 @@ const BlogPostPage = ({
         <meta property="og:type" content="article" />
         <meta property="og:url" content={canonicalUrl} />
         <link rel="canonical" href={canonicalUrl} />
+        <link rel="alternate" hrefLang={safeLocale} href={canonicalUrl} />
         <script type="application/ld+json">{JSON.stringify(schemaPost)}</script>
       </Head>
       <PageTitle title={title} />
@@ -268,8 +269,8 @@ const BlogPostPage = ({
         <StyledContainer>
           <StyledHeaderWrapper>
             <PostPageBreadcrumbs title={title} />
-            <BlogTitle title={'blogPage'} />
-            <Title as={'h2'} uppercase fontWeight={500}>
+            <BlogTitle title={'blogPage'} secondTitle={true} />
+            <Title as={'h1'} uppercase fontWeight={500}>
               {title}
             </Title>
           </StyledHeaderWrapper>
