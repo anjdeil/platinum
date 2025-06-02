@@ -167,6 +167,10 @@ export const Archive: FC<ArchivePropsType> = props => {
       </>
     );
   }
+  // SEO
+  const productsTitle =
+    currentCategory?.name || `${t('phraseSought')}: "${searchTerm}"`;
+  const productDescription = currentCategory?.description || '';
 
   const structuredDataProductsCategory = {
     '@context': 'https://schema.org',
@@ -175,8 +179,8 @@ export const Archive: FC<ArchivePropsType> = props => {
         '@type': 'CollectionPage',
         '@id': canonicalUrl,
         url: canonicalUrl,
-        name: currentCategory?.name || `${t('phraseSought')}: "${searchTerm}"`,
-        description: currentCategory?.description || '',
+        name: productsTitle,
+        description: productDescription,
         inLanguage: languageMap[locale as keyof typeof languageMap] ?? 'pl-PL',
         isPartOf: {
           '@id': `https://platinumchetvertinovskaya.com/${locale}/#website`,
@@ -207,17 +211,26 @@ export const Archive: FC<ArchivePropsType> = props => {
     <>
       <Head>
         <meta name="robots" content="index, follow" />
+        <meta name="description" content={productDescription} />
         <link rel="canonical" href={canonicalUrl} />
+        <link rel="alternate" hrefLang={locale} href={canonicalUrl} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(structuredDataProductsCategory),
           }}
         />
+        <meta property="og:title" content={productsTitle} />
+        <meta property="og:description" content={productDescription} />
+        <meta property="og:type" content="product.group" />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:locale" content={locale} />
+        <meta
+          property="og:site_name"
+          content="Platinum by Chetvertinovskaya Liubov"
+        />
       </Head>
-      <PageTitle
-        title={currentCategory?.name || `${t('phraseSought')}: "${searchTerm}"`}
-      />
+      <PageTitle title={productsTitle} />
       <CatalogContainer>
         <CatalogTitleWrapper>
           <Breadcrumbs links={breadcrumbsLinks} locale={locale} />
