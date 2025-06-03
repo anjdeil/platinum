@@ -29,6 +29,24 @@ export const StyledFormWrapper = styled.div<StyledFormTitleProps>`
   }
 `;
 
+export const StyledNote = styled.div`
+  border: 1px solid ${({ theme }) => theme.colors.lightBorder};
+  border-radius: 8px;
+  padding: 8px 8px 16px;
+  margin-bottom: 16px;
+
+  @media ${({ theme }) => theme.media.preSmall} {
+  }
+  @media ${({ theme }) => theme.media.medium} {
+  }
+
+  & > p {
+    font: ${({ theme }) => theme.fonts.bodypresmallReg};
+    color: #000;
+    margin-bottom: 8px;
+  }
+`;
+
 export const VariationFields = styled.div`
   width: 100%;
   max-width: 600px;

@@ -443,7 +443,8 @@
     "yourCommentIsTooShort": "Twój komentarz jest za krótki",
     "yourCommentIsTooLong": "Twój komentarz jest za długi",
     "inpostPhoneRequired": "Dostawa InPost Paczkomat wymaga polskiego numeru telefonu zaczynającego się od +48.",
-    "usePolishNumberError": "Proszę użyć polskiego numeru telefonu."
+    "usePolishNumberError": "Proszę użyć polskiego numeru telefonu.",
+    "cardHolderNote": "Upewnij się, że imię i nazwisko są zgodne z danymi posiadacza karty."
   },
   "Forms": {
     "applicationForm": "Formularz zgłoszeniowy",
