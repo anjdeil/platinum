@@ -443,7 +443,8 @@
     "yourCommentIsTooShort": "Ваш коментар занадто короткий",
     "yourCommentIsTooLong": "Ваш коментар занадто довгий",
     "inpostPhoneRequired": "Для доставки InPost Paczkomat потрібен польський номер телефону, що починається на +48.",
-    "usePolishNumberError": "Будь ласка, використовуйте польський номер телефону."
+    "usePolishNumberError": "Будь ласка, використовуйте польський номер телефону.",
+    "cardHolderNote": "Переконайтеся, що Ім'я та Прізвище збігаються з даними держателя картки"
   },
   "Forms": {
     "applicationForm": "форма заявки",

@@ -3,6 +3,7 @@ import {
   AnimatedWrapper,
   StyledFomContainer,
   StyledFormWrapper,
+  StyledNote,
   StyledPhoneWrapper,
   StyledSingleCheckBoxWrapper,
   VariationFields,
@@ -360,31 +361,36 @@ export const BillingForm: FC<BillingFormProps> = ({
         ) : (
           <>
             <CustomForm maxWidth="850px">
+              <StyledNote>
+                <p>* {tValidation('cardHolderNote')}</p>
+                <StyledFormWrapper>
+                  <CustomTextField
+                    name="first_name"
+                    register={register}
+                    inputType="text"
+                    errors={errors}
+                    label={tCheckout('first_name')}
+                    placeholder={tValidation('firstNamePlaceholder')}
+                    validation={validationSchema('first_name')}
+                    setValue={setValue}
+                    defaultValue={customer?.billing?.first_name || ''}
+                    autocomplete="given-name"
+                  />
+                  <CustomTextField
+                    name="last_name"
+                    register={register}
+                    inputType="text"
+                    errors={errors}
+                    label={tCheckout('last_name')}
+                    placeholder={tValidation('lastNamePlaceholder')}
+                    validation={validationSchema('last_name')}
+                    setValue={setValue}
+                    defaultValue={customer?.billing?.last_name || ''}
+                    autocomplete="family-name"
+                  />
+                </StyledFormWrapper>
+              </StyledNote>
               <StyledFormWrapper>
-                <CustomTextField
-                  name="first_name"
-                  register={register}
-                  inputType="text"
-                  errors={errors}
-                  label={tCheckout('first_name')}
-                  placeholder={tValidation('firstNamePlaceholder')}
-                  validation={validationSchema('first_name')}
-                  setValue={setValue}
-                  defaultValue={customer?.billing?.first_name || ''}
-                  autocomplete="given-name"
-                />
-                <CustomTextField
-                  name="last_name"
-                  register={register}
-                  inputType="text"
-                  errors={errors}
-                  label={tCheckout('last_name')}
-                  placeholder={tValidation('lastNamePlaceholder')}
-                  validation={validationSchema('last_name')}
-                  setValue={setValue}
-                  defaultValue={customer?.billing?.last_name || ''}
-                  autocomplete="family-name"
-                />
                 <CustomTextField
                   name="email"
                   register={register}
