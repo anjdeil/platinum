@@ -140,7 +140,8 @@
     "september": "Września",
     "october": "Października",
     "november": "Listopada",
-    "december": "Grudnia"
+    "december": "Grudnia",
+    "updateError": "Niestety, w tej chwili nie możemy zaktualizować danych klienta. Prosimy spróbować później."
   },
   "TopBar": {
     "CallUs": "Kontakt"
