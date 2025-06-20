@@ -12,7 +12,7 @@ import { CustomForm, Title } from '@/styles/components';
 import { useLocale, useTranslations } from 'next-intl';
 import { ConfirmationRegCard } from './ConfirmationRegCard';
 import { getValidationSchema } from '@/utils/getValidationSchema';
-import { FC, useEffect, useMemo } from 'react';
+import { FC, useEffect, useMemo, useRef } from 'react';
 import CustomTextField from '../CustomTextField/CustomTextField';
 import { useGetCustomerData } from '@/hooks/useGetCustomerData';
 import CustomCountrySelect from '../../selects/CustomCountrySelect/CustomCountrySelect';
@@ -49,6 +49,7 @@ interface BillingFormProps {
   setRegistrationData: (data: RegistrationFormType) => void;
   setIsValidForm: (value: boolean) => void;
   phoneTrigger?: boolean;
+  setIsInvoice: (value: boolean) => void;
 }
 
 export const BillingForm: FC<BillingFormProps> = ({
@@ -63,12 +64,14 @@ export const BillingForm: FC<BillingFormProps> = ({
   setRegistrationData,
   setIsValidForm,
   phoneTrigger,
+  setIsInvoice,
 }) => {
   const { customer, isCustomerLoading } = useGetCustomerData();
   const tValidation = useTranslations('Validation');
   const tCheckout = useTranslations('Checkout');
   const tMyAccount = useTranslations('MyAccount');
   const locale = useLocale();
+  const shippingInitialized = useRef(false);
 
   const validationSchema = useMemo(() => {
     return (name: string, watch?: any) =>
@@ -120,7 +123,7 @@ export const BillingForm: FC<BillingFormProps> = ({
 
   useEffect(() => {
     if (customer) {
-      const { billing } = customer;
+      const { billing, shipping } = customer;
 
       const fieldsToFill: (keyof typeof billing)[] = [
         'first_name',
@@ -140,30 +143,54 @@ export const BillingForm: FC<BillingFormProps> = ({
 
       setValue('country', billing?.country || 'PL');
 
-      setValue('shipping_first_name', billing.first_name);
-      setValue('shipping_last_name', billing.last_name);
-      setValue('shipping_country', billing.country);
-      setValue('shipping_city', billing.city);
-      setValue('shipping_address_1', billing.address_1);
-      setValue('shipping_address_2', billing.address_2);
-      setValue('shipping_postcode', billing.postcode);
+      if (different_address) {
+        setValue('shipping_first_name', shipping?.first_name || '');
+        setValue('shipping_last_name', shipping?.last_name || '');
+        setValue('shipping_country', shipping?.country || 'PL');
+        setValue('shipping_city', shipping?.city || '');
+        setValue('shipping_address_1', shipping?.address_1 || '');
+        setValue('shipping_address_2', shipping?.address_2 || '');
+        setValue('shipping_postcode', shipping?.postcode || '');
+      } else {
+        setValue('shipping_first_name', billing.first_name);
+        setValue('shipping_last_name', billing.last_name);
+        setValue('shipping_country', billing.country);
+        setValue('shipping_city', billing.city);
+        setValue('shipping_address_1', billing.address_1);
+        setValue('shipping_address_2', billing.address_2);
+        setValue('shipping_postcode', billing.postcode);
+      }
     }
-  }, [customer]);
+  }, [customer, different_address]);
 
   useEffect(() => {
     if (invoice && customer) {
       setValue('company', customer.billing?.company || '');
       setValue('nip', nipFromMeta);
+      setIsInvoice(true);
     }
 
     if (!invoice) {
       setValue('company', '');
       setValue('nip', '');
+      setIsInvoice(false);
     }
   }, [invoice, customer]);
 
   useEffect(() => {
+    if (different_address && customer && !shippingInitialized.current) {
+      setValue('shipping_first_name', customer.shipping?.first_name || '');
+      setValue('shipping_last_name', customer.shipping?.last_name || '');
+      setValue('shipping_country', customer.shipping?.country || 'PL');
+      setValue('shipping_city', customer.shipping?.city || '');
+      setValue('shipping_address_1', customer.shipping?.address_1 || '');
+      setValue('shipping_address_2', customer.shipping?.address_2 || '');
+      setValue('shipping_postcode', customer.shipping?.postcode || '');
+      shippingInitialized.current = true;
+    }
     if (!different_address) {
+      // Reset shipping fields to billing fields
+      shippingInitialized.current = false;
       setValue('shipping_first_name', watchedFields?.first_name);
       setValue('shipping_last_name', watchedFields?.last_name);
       setValue('shipping_country', watchedFields?.country);
@@ -174,6 +201,7 @@ export const BillingForm: FC<BillingFormProps> = ({
     }
   }, [
     different_address,
+    customer,
     watchedFields.first_name,
     watchedFields.last_name,
     watchedFields.country,
@@ -182,29 +210,6 @@ export const BillingForm: FC<BillingFormProps> = ({
     watchedFields.address_2,
     watchedFields.postcode,
   ]);
-
-  // TODO - shipping info from customer.shipping
-
-  useEffect(() => {
-    if (different_address) {
-      //if (!customer) {
-      setValue('shipping_first_name', '');
-      setValue('shipping_last_name', '');
-      setValue('shipping_country', 'PL');
-      setValue('shipping_city', '');
-      setValue('shipping_address_1', '');
-      setValue('shipping_address_2', '');
-      setValue('shipping_postcode', '');
-    }
-    // } else {
-    //   setValue('shipping_first_name', customer?.shipping.first_name || '');
-    //   setValue('shipping_last_name', customer?.shipping.last_name || '');
-    //   setValue('shipping_country', customer?.shipping.country || 'PL');
-    //   setValue('shipping_city', customer?.shipping.city || '');
-    //   setValue('shipping_address_1', customer?.shipping.address_1 || '');
-    //   setValue('shipping_address_2', customer?.shipping.address_2 || '');
-    // }
-  }, [different_address]);
 
   useEffect(() => {
     if (password) {
@@ -242,7 +247,19 @@ export const BillingForm: FC<BillingFormProps> = ({
       );
       setRegistrationData(formattedRegistrationData as RegistrationFormType);
     }
-  }, [newCustomerRegistration, isValid]);
+  }, [
+    newCustomerRegistration,
+    isValid,
+    watchedFields.shipping_first_name,
+    watchedFields.shipping_last_name,
+    watchedFields.shipping_country,
+    watchedFields.shipping_city,
+    watchedFields.shipping_address_1,
+    watchedFields.shipping_address_2,
+    watchedFields.shipping_postcode,
+    watchedFields.email,
+    watchedFields.phone,
+  ]);
 
   useEffect(() => {
     if (isValid) {
@@ -288,7 +305,11 @@ export const BillingForm: FC<BillingFormProps> = ({
           options={countryOptions}
           label={tMyAccount('country')}
           errors={errors}
-          defaultValue={customer?.billing?.country || 'PL'}
+          defaultValue={
+            form === 'billing'
+              ? customer?.billing?.country
+              : customer?.shipping?.country || 'PL'
+          }
           noPaddings={true}
         />
         <CustomTextField
@@ -300,7 +321,11 @@ export const BillingForm: FC<BillingFormProps> = ({
           placeholder={tValidation('cityPlaceholder')}
           validation={validationSchema('city')}
           setValue={setValue}
-          defaultValue={customer?.billing?.city || ''}
+          defaultValue={
+            form === 'billing'
+              ? customer?.billing?.city
+              : customer?.shipping?.city || ''
+          }
           autocomplete="address-level2"
         />
       </StyledFormWrapper>
@@ -314,7 +339,11 @@ export const BillingForm: FC<BillingFormProps> = ({
         placeholder={tValidation('streetPlaceholder')}
         validation={validationSchema('street_building')}
         setValue={setValue}
-        defaultValue={customer?.billing?.address_1 || ''}
+        defaultValue={
+          form === 'billing'
+            ? customer?.billing?.address_1
+            : customer?.shipping?.address_1 || ''
+        }
         autocomplete="address-line1"
       />
       <StyledFormWrapper>
@@ -327,7 +356,11 @@ export const BillingForm: FC<BillingFormProps> = ({
           placeholder={tValidation('apartmentPlaceholder')}
           validation={validationSchema('apartmentNumber')}
           setValue={setValue}
-          defaultValue={customer?.billing?.address_2 || ''}
+          defaultValue={
+            form === 'billing'
+              ? customer?.billing?.address_2
+              : customer?.shipping?.address_2 || ''
+          }
           autocomplete="address-line2"
           notRequired
         />
@@ -340,7 +373,11 @@ export const BillingForm: FC<BillingFormProps> = ({
           placeholder={tValidation('postCodePlaceholder')}
           validation={validationSchema('postcode')}
           setValue={setValue}
-          defaultValue={customer?.billing?.postcode || ''}
+          defaultValue={
+            form === 'billing'
+              ? customer?.billing?.postcode
+              : customer?.shipping?.postcode || ''
+          }
           autocomplete="postal-code"
         />
       </StyledFormWrapper>
@@ -456,7 +493,7 @@ export const BillingForm: FC<BillingFormProps> = ({
                         placeholder={tValidation('nipPlaceholder')}
                         validation={validationSchema('nip')}
                         setValue={setValue}
-                        defaultValue={''}
+                        defaultValue={nipFromMeta || ''}
                       />
                     </AnimatedWrapper>
                   </StyledFormWrapper>

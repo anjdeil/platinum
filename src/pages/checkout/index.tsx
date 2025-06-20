@@ -22,7 +22,10 @@ import useGetAuthToken from '@/hooks/useGetAuthToken';
 import useInPostGeowidget from '@/hooks/useInPostGeowidget';
 import useShippingMethods from '@/hooks/useShippingMethods';
 import { useAppSelector } from '@/store';
-import { useCreateOrderMutation } from '@/store/rtk-queries/wooCustomApi';
+import {
+  useCreateOrderMutation,
+  useUpdateCustomerMutation,
+} from '@/store/rtk-queries/wooCustomApi';
 import { useLazyFetchUserDataQuery } from '@/store/rtk-queries/wpApi';
 import { useGetProductsMinimizedMutation } from '@/store/rtk-queries/wpCustomApi';
 import {
@@ -56,6 +59,8 @@ import {
   ShippingType,
 } from '@/types/services/wooCustomApi/customer';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import { useGetCustomerData } from '@/hooks/useGetCustomerData';
+import checkCustomerDataChanges from '@/utils/checkCustomerDataChanges';
 
 export function getServerSideProps() {
   return {
@@ -67,6 +72,7 @@ export default function CheckoutPage() {
   const t = useTranslations('Checkout');
   const tMyAccount = useTranslations('MyAccount');
   const tCart = useTranslations('Cart');
+  const { customer, refetch } = useGetCustomerData();
 
   const {
     currentCurrency: currency,
@@ -74,6 +80,9 @@ export default function CheckoutPage() {
     convertCurrency,
     currencyCode: currencySymbol,
   } = useCurrencyConverter();
+
+  const [updateCustomer, { error: updateError, isSuccess: isUpdateSuccess }] =
+    useUpdateCustomerMutation();
 
   /**
    * Calculate totals
@@ -252,6 +261,8 @@ export default function CheckoutPage() {
     metaData: null,
   });
 
+  const [isInvoice, setIsInvoice] = useState<boolean>(false);
+
   const [isRegistration, setIsRegistration] = useState(false);
   const [registrationData, setRegistrationData] =
     useState<RegistrationFormType | null>(null);
@@ -409,6 +420,98 @@ export default function CheckoutPage() {
       }
     }
 
+    if (customer && customer?.billing && formOrderData?.billing) {
+      const { isNipChanged, hasChanges } = checkCustomerDataChanges(
+        formOrderData.billing,
+        formOrderData.shipping ?? {
+          first_name: '',
+          last_name: '',
+          address_1: '',
+          address_2: '',
+          city: '',
+          postcode: '',
+          country: '',
+        },
+        formOrderData.metaData ?? [],
+        customer,
+        isInvoice,
+        isShippingAddressDifferent
+      );
+
+      if (hasChanges) {
+        const formNipMeta = formOrderData?.metaData?.find(
+          meta => meta.key === 'nip'
+        );
+
+        const preparedData = {
+          email: formOrderData.billing?.email || '',
+          first_name: formOrderData.billing?.first_name || '',
+          last_name: formOrderData.billing?.last_name || '',
+          username: formOrderData.billing?.email || '',
+          billing: {
+            first_name: formOrderData.billing?.first_name || '',
+            last_name: formOrderData.billing?.last_name || '',
+            email: formOrderData.billing?.email || '',
+            phone: formOrderData.billing?.phone || '',
+            country: formOrderData.billing?.country || '',
+            city: formOrderData.billing?.city || '',
+            address_1: formOrderData.billing?.address_1 || '',
+            address_2: formOrderData.billing?.address_2 || '',
+            postcode: formOrderData.billing?.postcode || '',
+            company: isInvoice
+              ? formOrderData.billing?.company || ''
+              : customer.billing.company || '',
+          },
+          shipping: {
+            first_name: isShippingAddressDifferent
+              ? formOrderData.shipping?.first_name
+              : customer.shipping?.first_name || '',
+            last_name: isShippingAddressDifferent
+              ? formOrderData.shipping?.last_name
+              : customer.shipping?.last_name || '',
+            phone: isShippingAddressDifferent
+              ? formOrderData.billing?.phone
+              : customer.billing?.phone || '',
+            country: isShippingAddressDifferent
+              ? formOrderData.shipping?.country
+              : customer.shipping?.country || '',
+            city: isShippingAddressDifferent
+              ? formOrderData.shipping?.city
+              : customer.shipping?.city || '',
+            address_1: isShippingAddressDifferent
+              ? formOrderData.shipping?.address_1
+              : customer.shipping?.address_1 || '',
+            address_2: isShippingAddressDifferent
+              ? formOrderData.shipping?.address_2
+              : customer.shipping?.address_2 || '',
+            postcode: isShippingAddressDifferent
+              ? formOrderData.shipping?.postcode
+              : customer.shipping?.postcode || '',
+          },
+          meta_data:
+            isInvoice && isNipChanged && formNipMeta
+              ? [
+                  {
+                    key: 'nip',
+                    value: formNipMeta.value,
+                  },
+                ]
+              : [],
+        };
+
+        try {
+          await updateCustomer({
+            id: customer.id,
+            ...preparedData,
+          });
+
+          await refetch();
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    }
+
     if (isOrderValid) {
       setOrderStatus('pending');
     }
@@ -521,6 +624,7 @@ export default function CheckoutPage() {
             setRegistrationData={setRegistrationData}
             setIsValidForm={setIsValidForm}
             phoneTrigger={phoneTrigger}
+            setIsInvoice={setIsInvoice}
           />
 
           <CheckoutFormSection>
@@ -581,6 +685,18 @@ export default function CheckoutPage() {
         {!registrationErrorWarning && isRegistrationSuccessful && (
           <Notification type={'success'}>
             {tMyAccount('YourAccountHasBeenCreated')}
+          </Notification>
+        )}
+
+        {updateError && (
+          <Notification type="warning">
+            {tMyAccount('updateError')}
+          </Notification>
+        )}
+
+        {isUpdateSuccess && (
+          <Notification type="success">
+            {tMyAccount('successUpdate')}
           </Notification>
         )}
       </CheckoutContainer>
