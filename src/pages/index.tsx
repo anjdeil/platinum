@@ -11,7 +11,6 @@ import {
 import InfoPopup from '@/components/global/popups/InfoPopup/InfoPopup';
 import { PageTitle } from '@/components/pages/pageTitle';
 import Head from 'next/head';
-import { PageTitleStyled } from '@/styles/components';
 
 const languageMap = {
   pl: 'pl-PL',
@@ -212,7 +211,6 @@ const Home: React.FC<HomeProps> = ({ sections, locale, seoData, fullUrl }) => {
       </Head>
       <PageTitle title={pageTitle} />
       <div className="homepage">
-        <PageTitleStyled>{pageTitle}</PageTitleStyled>
         <SectionRenderer sections={sections} />
         <InfoPopup />
       </div>
