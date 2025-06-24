@@ -1,5 +1,6 @@
 import FreeDeliveryIcon from '@/components/global/icons/FreeDeliveryIcon/FreeDeliveryIcon';
 import ShippingIcon from '@/components/global/icons/ShippingIcon/ShippingIcon';
+import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
 import { useAppSelector } from '@/store';
 import { useTranslations } from 'next-intl';
 import { ShippingItem, ShippingListContainer, ShippingTitle } from './styles';
@@ -7,6 +8,7 @@ import { ShippingItem, ShippingListContainer, ShippingTitle } from './styles';
 const ShippingList = () => {
   const t = useTranslations('Product');
   const currency = useAppSelector(state => state.currencySlice);
+  const { convertCurrency } = useCurrencyConverter();
 
   return (
     <ShippingListContainer>
@@ -17,7 +19,9 @@ const ShippingList = () => {
       <ShippingItem>
         <FreeDeliveryIcon />
         <ShippingTitle>
-          {`${t('freeDeliveryOver', { price: 200 })}\u00A0${currency.code}`}
+          {`${t('freeDeliveryOver', { price: convertCurrency(200) })}\u00A0${
+            currency.code
+          }`}
         </ShippingTitle>
       </ShippingItem>
     </ShippingListContainer>
