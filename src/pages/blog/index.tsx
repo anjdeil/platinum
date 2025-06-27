@@ -1,7 +1,6 @@
 import { BlogCategoriesList } from '@/components/pages/blog/blogCategoriesList';
 import { BlogPageBreadcrumbs } from '@/components/pages/blog/blogPageBreadcrumbs';
 import BlogPagination from '@/components/pages/blog/blogPagination/BlogPagination';
-import { BlogTitle } from '@/components/pages/blog/blogTitle';
 import BlogListBlock from '@/components/pages/main/BlogListBlock/BlogListBlock';
 import { PageTitle } from '@/components/pages/pageTitle';
 import {
@@ -85,9 +84,9 @@ export const getServerSideProps: GetServerSideProps = async (
     const postsCount = pageResponseData.data?.statistic?.posts_count;
     const totalPages = postsCount ? Math.ceil(postsCount / PER_PAGE) : 1;
 
-    if (!postsData?.length) {
-      return { notFound: true };
-    }
+    // if (!postsData?.length) {
+    //   return { notFound: true };
+    // }
 
     // Get post category
     let postCategoryTitle = 'Blog Category';
@@ -278,7 +277,7 @@ const BlogPage: React.FC<BlogProps> = ({
       <Container>
         <StyledHeaderWrapper>
           <BlogPageBreadcrumbs />
-          <BlogTitle title={'blogPage'} />
+          {/* <BlogTitle title={'blogPage'} /> */}
         </StyledHeaderWrapper>
         <BlogCategoriesList
           selectedCategory={selectedCategory}
