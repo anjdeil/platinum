@@ -1,9 +1,10 @@
+import { StyledText } from '@/components/sections/styles';
 import { BlogItemUnionType } from '@/types/pages/blog';
+import { useTranslations } from 'next-intl';
 import { FC } from 'react';
 import BlogItem from './BlogItem/BlogItem';
-import { BlogList, BlogListBlockContainer } from './styles';
 import { BlogListSkeleton } from './BlogListSkeleton';
-import { StyledText } from '@/components/sections/styles';
+import { BlogList, BlogListBlockContainer } from './styles';
 
 interface BlogListBlockProps {
   posts: BlogItemUnionType[];
@@ -17,6 +18,8 @@ const BlogListBlock: FC<BlogListBlockProps> = ({
   isLoading,
 }) => {
   const POSTS_SKELETON_LENGTH = 4;
+
+  const t = useTranslations('BlogPostPage');
 
   if (isLoading) {
     return (
@@ -39,7 +42,7 @@ const BlogListBlock: FC<BlogListBlockProps> = ({
   if (!posts || !posts.length) {
     return (
       <BlogListBlockContainer>
-        <StyledText>Sorry, no posts found.</StyledText>
+        <StyledText>{t('noPostsFound')}</StyledText>
       </BlogListBlockContainer>
     );
   }
@@ -47,7 +50,7 @@ const BlogListBlock: FC<BlogListBlockProps> = ({
   return (
     <BlogListBlockContainer>
       <BlogList>
-        {posts.map((post) => (
+        {posts.map(post => (
           <BlogItem key={post.id} post={post} />
         ))}
       </BlogList>
