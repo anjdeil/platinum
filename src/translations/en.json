@@ -522,7 +522,8 @@
     "blogSectionRelatedTitle": "Related Articles",
     "blogSectionPopularTitle": "Popular Articles",
     "selectCategory": "Select category",
-    "all": "All"
+    "all": "All",
+    "noPostsFound": "Sorry, no posts found."
   },
   "ShippingMethodSelector": {
     "change": "Change",

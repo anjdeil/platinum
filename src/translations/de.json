@@ -522,7 +522,8 @@
     "blogSectionRelatedTitle": "Verwandte Artikel",
     "blogSectionPopularTitle": "Beliebte Artikel",
     "selectCategory": "Kategorie auswählen",
-    "all": "Alle"
+    "all": "Alle",
+    "noPostsFound": "Entschuldigung, keine Beiträge gefunden."
   },
   "ShippingMethodSelector": {
     "change": "Ändern",
