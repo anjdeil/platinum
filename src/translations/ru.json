@@ -522,7 +522,8 @@
     "blogSectionRelatedTitle": "Похожие статьи",
     "blogSectionPopularTitle": "Популярные статьи",
     "selectCategory": "Выберите категорию",
-    "all": "Все"
+    "all": "Все",
+    "noPostsFound": "Извините, записи не найдены."
   },
   "ShippingMethodSelector": {
     "change": "Изменить",

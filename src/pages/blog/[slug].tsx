@@ -14,7 +14,6 @@ import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 
 import { BlogHeader } from '@/components/pages/blog/blogHeader';
 import { BlogPostContent } from '@/components/pages/blog/blogPostContent';
-import { BlogTitle } from '@/components/pages/blog/blogTitle';
 import { PostGroupNavigationButton } from '@/components/pages/blog/postGroupNavigationButton';
 import { PostPageBreadcrumbs } from '@/components/pages/blog/postPageBreadcrumbs';
 import BlogInfo from '@/components/pages/main/BlogListBlock/BlogInfo/BlogInfo';
@@ -30,8 +29,8 @@ import {
   StyledContainer,
   StyledHeroImage,
 } from '@/styles/blog/styles';
-import Head from 'next/head';
 import { getCleanText } from '@/utils/getCleanText';
+import Head from 'next/head';
 
 const languageMap = {
   pl: 'pl-PL',
@@ -269,7 +268,7 @@ const BlogPostPage = ({
         <StyledContainer>
           <StyledHeaderWrapper>
             <PostPageBreadcrumbs title={title} />
-            <BlogTitle title={'blogPage'} secondTitle={true} />
+            {/* <BlogTitle title={'blogPage'} secondTitle={true} /> */}
             <Title as={'h1'} uppercase fontWeight={500}>
               {title}
             </Title>

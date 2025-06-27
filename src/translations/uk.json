@@ -522,7 +522,8 @@
     "blogSectionRelatedTitle": "Схожі статті",
     "blogSectionPopularTitle": "Популярні статті",
     "selectCategory": "Виберіть категорію",
-    "all": "Всі"
+    "all": "Всі",
+    "noPostsFound": "Вибачте, дописів не знайдено."
   },
   "ShippingMethodSelector": {
     "change": "Змінити",
