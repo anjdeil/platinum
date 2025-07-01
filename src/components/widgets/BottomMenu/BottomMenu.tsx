@@ -26,8 +26,6 @@ const BottomMenu = () => {
     setCartCount(cartItems.length);
   }, [cartItems]);
 
-  console.log('locale', locale);
-
   return (
     <BottomMenuWrapper>
       <BottomMenuNav aria-label="Bottom navigation">
