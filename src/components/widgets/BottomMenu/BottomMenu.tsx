@@ -1,17 +1,17 @@
 import IconButton from '@/components/global/buttons/IconButton/IconButton';
 import AccountIcon from '@/components/global/icons/AccountIcon/AccountIcon';
 import BurgerIcon from '@/components/global/icons/BurgerIcon/BurgerIcon';
-import BurgerIconActive from '@/components/global/icons/BurgerIconActive/BurgerIconActive';
 import CartIcon from '@/components/global/icons/CartIcon/CartIcon';
 import CatalogIcon from '@/components/global/icons/CatalogIcon/CatalogIcon';
+import CatalogIconInfo from '@/components/global/icons/CatalogIconInfo/CatalogIconInfo';
 import HeartIcon from '@/components/global/icons/HeartIcon/HeartIcon';
 import { useWishlist } from '@/hooks/useWishlist';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { popupToggle } from '@/store/slices/PopupSlice';
 import { useTheme } from '@emotion/react';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { BottomMenuNav, BottomMenuWrapper } from './styles';
-import { useRouter } from 'next/router';
 
 const BottomMenu = () => {
   const { locale } = useRouter();
@@ -30,13 +30,6 @@ const BottomMenu = () => {
     <BottomMenuWrapper>
       <BottomMenuNav aria-label="Bottom navigation">
         <IconButton
-          onClick={() => dispatch(popupToggle({ popupType: 'hamburger-menu' }))}
-          color={theme.colors.primary}
-          IconComponent={
-            popupType === 'hamburger-menu' ? BurgerIconActive : BurgerIcon
-          }
-        />
-        <IconButton
           onClick={() =>
             dispatch(popupToggle({ popupType: 'mobile-categories' }))
           }
@@ -45,7 +38,7 @@ const BottomMenu = () => {
               ? theme.colors.active
               : theme.colors.primary
           }
-          IconComponent={CatalogIcon}
+          IconComponent={BurgerIcon}
         />
         <IconButton
           href={`/${locale}/my-account/wishlist`}
@@ -63,6 +56,15 @@ const BottomMenu = () => {
           href={`/${locale}/my-account`}
           color={theme.colors.primary}
           IconComponent={AccountIcon}
+        />
+        <IconButton
+          onClick={() => dispatch(popupToggle({ popupType: 'hamburger-menu' }))}
+          color={
+            popupType === 'hamburger-menu'
+              ? theme.colors.active
+              : theme.colors.primary
+          }
+          IconComponent={locale === 'pl' ? CatalogIcon : CatalogIconInfo}
         />
       </BottomMenuNav>
     </BottomMenuWrapper>
