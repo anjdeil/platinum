@@ -4,6 +4,7 @@ import CategoryItem from '../CategoryItem/CategoryItem';
 import { CategoriesBlockContainer, CategoriesList } from './styles';
 
 const CategoriesBlock: FC<CategoriesBlockProps> = ({ categories }) => {
+  console.log('categories...', categories);
   return (
     <CategoriesBlockContainer>
       <CategoriesList>

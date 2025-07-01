@@ -25,20 +25,20 @@ const CategoryItem: FC<CategoryItemProps> = ({
         src={imageURL || ''}
         alt={name}
         fill
-        sizes='100%'
+        sizes="100%"
         priority
       />
       <ContentWrapper>
         <TitleWrapper>
-          <Title as='h3' uppercase>
+          <Title as="h3" uppercase>
             {name}
           </Title>
         </TitleWrapper>
         <StyledLink href={`/product-category/${slug}`}>
           <StyledButton
-            widthMobile='160px'
-            widthTablet='128px'
-            widthDesktop='257px'
+            widthMobile="160px"
+            widthTablet="128px"
+            widthDesktop="257px"
           >
             {t('moreProduct')}
           </StyledButton>

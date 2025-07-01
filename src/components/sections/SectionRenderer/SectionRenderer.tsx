@@ -31,6 +31,8 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
     return sections.filter(section => section._type === 'split').length;
   };
 
+  console.log('sections...', sections);
+
   const splitSectionCount = countSplitSections(sections);
   const isMoreThen5SectionsSplit = splitSectionCount > 5;
 
