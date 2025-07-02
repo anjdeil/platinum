@@ -63,6 +63,8 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
   const [cartMatch, setCartMatch] = useState<CartItem>();
   const [viewing, setViewing] = useState<number>(0);
 
+  console.log('product..', product);
+
   /**
    * Choosen variation
    */
@@ -171,18 +173,26 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
   }
 
   const stockQuantity = useMemo(() => {
-    if (!currentVariation?.stock_quantity && !product.stock_quantity) {
-      return 0;
-    }
-    if (currentVariation?.stock_quantity) {
-      return currentVariation?.stock_quantity;
-    }
-    if (product?.stock_quantity) {
-      return product?.stock_quantity;
+    if (product?.type === 'variable') {
+      return currentVariation?.stock_quantity ?? 0;
     }
 
-    return 0;
+    return product?.stock_quantity ?? 0;
   }, [currentVariation, product]);
+
+  // const stockQuantity = useMemo(() => {
+  //   if (!currentVariation?.stock_quantity && !product.stock_quantity) {
+  //     return 0;
+  //   }
+  //   if (currentVariation?.stock_quantity) {
+  //     return currentVariation?.stock_quantity;
+  //   }
+  //   if (product?.stock_quantity) {
+  //     return product?.stock_quantity;
+  //   }
+
+  //   return 0;
+  // }, [currentVariation, product]);
 
   /** Set default attributes */
   useEffect(() => {
