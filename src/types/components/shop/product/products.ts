@@ -103,6 +103,7 @@ export const ProductsMinimizedSchema = z.object({
   stock_quantity: z.number().optional(),
   average_rating: z.number(),
   price: z.union([ProductPriceSchema, VariationPriceSchema]),
+  shipping_methods_allowed: z.array(z.string()).optional(),
   weight: z.number().nullable(),
   total_sales: z.number(),
   image: z.object({

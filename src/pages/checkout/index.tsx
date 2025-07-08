@@ -50,6 +50,7 @@ import Notification from '@/components/global/Notification/Notification';
 import BillingWarnings from '@/components/pages/checkout/BillingWarnings';
 import { RegistrationError } from '@/components/pages/checkout/RegistrationError/RegistrationError';
 import { PageTitle } from '@/components/pages/pageTitle';
+import { useGetCustomerData } from '@/hooks/useGetCustomerData';
 import { useRegisterUser } from '@/hooks/useRegisterUser';
 import { useLazyGetUserTotalsQuery } from '@/store/rtk-queries/userTotals/userTotals';
 import { RegistrationFormType } from '@/types/components/global/forms/registrationForm';
@@ -58,9 +59,8 @@ import {
   MetaDataType,
   ShippingType,
 } from '@/types/services/wooCustomApi/customer';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
-import { useGetCustomerData } from '@/hooks/useGetCustomerData';
 import checkCustomerDataChanges from '@/utils/checkCustomerDataChanges';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
 export function getServerSideProps() {
   return {
@@ -73,6 +73,9 @@ export default function CheckoutPage() {
   const tMyAccount = useTranslations('MyAccount');
   const tCart = useTranslations('Cart');
   const { customer, refetch } = useGetCustomerData();
+  const [allowedShippingMethods, setAllowedShippingMethods] = useState<
+    string[]
+  >([]);
 
   const {
     currentCurrency: currency,
@@ -99,8 +102,21 @@ export default function CheckoutPage() {
 
   useEffect(() => {
     const productsMinimized = productsMinimizedData?.data?.items;
-    if (productsMinimized)
+    if (productsMinimized) {
       setCartTotals(getCartTotals(productsMinimized, cartItems));
+
+      const allowedMethodsLists = productsMinimized.map(
+        item => item.shipping_methods_allowed || []
+      );
+
+      const intersect = allowedMethodsLists.length
+        ? allowedMethodsLists.reduce((acc, curr) =>
+            acc.filter(methodId => curr.includes(methodId))
+          )
+        : [];
+
+      setAllowedShippingMethods(intersect);
+    }
   }, [cartItems, productsMinimizedData]);
 
   /**
@@ -153,7 +169,10 @@ export default function CheckoutPage() {
    * Shipping
    */
   const [currentCountryCode, setCurrentCountryCode] = useState<string>();
-  const { shippingMethods, isLoading } = useShippingMethods(currentCountryCode);
+  const { shippingMethods, isLoading } = useShippingMethods(
+    currentCountryCode,
+    allowedShippingMethods
+  );
   const [shippingMethod, setShippingMethod] = useState<ShippingMethodType>();
   const [parcelMachine, setParcelMachine] = useState<ParcelMachineType>();
   const [shippingLine, setShippingLine] = useState<ShippingLineType>();
