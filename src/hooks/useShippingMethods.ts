@@ -12,7 +12,7 @@ type UseShippingMethodsResult = {
   isError: boolean;
 };
 
-export default function useShippingMethods(countryCode?: string): UseShippingMethodsResult {
+export default function useShippingMethods(countryCode?: string, allowedShippingMethods?: string[]): UseShippingMethodsResult {
   const { data: shippingZones, isLoading: isShippingZonesLoading, isError } = useGetShippingZonesQuery();
   const [isShippingMethodsLoading, setIsShippingMethodsLoading] = useState(false);
 
@@ -43,7 +43,15 @@ export default function useShippingMethods(countryCode?: string): UseShippingMet
       }
 
       const { data: methods = [] } = await getShippingMethods(targetShippingZoneId);
-      setCurrentShippingMethods(methods);
+
+      const filteredMethods = allowedShippingMethods && allowedShippingMethods.length
+        ? methods.filter(method =>
+          method.method_id === 'local_pickup' ||
+          allowedShippingMethods.some(allowed => allowed.includes(method.method_id))
+        )
+        : methods;
+
+      setCurrentShippingMethods(filteredMethods);
       setIsShippingMethodsLoading(false);
 
     };
