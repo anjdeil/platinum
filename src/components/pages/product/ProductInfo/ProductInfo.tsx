@@ -63,8 +63,6 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
   const [cartMatch, setCartMatch] = useState<CartItem>();
   const [viewing, setViewing] = useState<number>(0);
 
-  console.log('product..', product);
-
   /**
    * Choosen variation
    */
