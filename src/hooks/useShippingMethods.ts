@@ -45,10 +45,13 @@ export default function useShippingMethods(countryCode?: string, allowedShipping
       const { data: methods = [] } = await getShippingMethods(targetShippingZoneId);
 
       const filteredMethods = allowedShippingMethods && allowedShippingMethods.length
-        ? methods.filter(method =>
-          method.method_id === 'local_pickup' ||
-          allowedShippingMethods.some(allowed => allowed.includes(method.method_id))
-        )
+        ? methods.filter(method => {
+          const isInPost = method.title?.toLowerCase().includes('inpost');
+          if (isInPost) {
+            return allowedShippingMethods.some(allowed => allowed.includes(method.method_id));
+          }
+          return true;
+        })
         : methods;
 
       setCurrentShippingMethods(filteredMethods);
