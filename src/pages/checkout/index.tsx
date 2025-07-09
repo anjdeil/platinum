@@ -173,6 +173,7 @@ export default function CheckoutPage() {
     currentCountryCode,
     allowedShippingMethods
   );
+
   const [shippingMethod, setShippingMethod] = useState<ShippingMethodType>();
   const [parcelMachine, setParcelMachine] = useState<ParcelMachineType>();
   const [shippingLine, setShippingLine] = useState<ShippingLineType>();
