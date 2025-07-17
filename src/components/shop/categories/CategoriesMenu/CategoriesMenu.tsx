@@ -3,9 +3,12 @@ import { MenuSkeleton } from '@/components/menus/MenuSkeleton';
 import transformCategoriesMenu from '@/services/transformers/transformCategoriesMenu';
 import { useAppDispatch, useAppSelector } from '@/store';
 import MenuCategoriesSlice from '@/store/slices/MenuCategoriesSlice';
+import { popupClosed } from '@/store/slices/PopupSlice';
 import { Title } from '@/styles/components';
 import { CategoriesMenuPropsType } from '@/types/components/shop/categories/categoriesMenu';
-import { FC, useCallback, useEffect } from 'react';
+import { CategoryType } from '@/types/pages/shop';
+import { useTranslations } from 'next-intl';
+import { FC, useCallback } from 'react';
 import {
   Categories,
   ChildListWrapper,
@@ -13,9 +16,6 @@ import {
   List,
   ListWrapper,
 } from './styles';
-import { popupClosed } from '@/store/slices/PopupSlice';
-import { CategoryType } from '@/types/pages/shop';
-import { useTranslations } from 'next-intl';
 
 const CategoriesMenu: FC<CategoriesMenuPropsType> = ({
   selectedCategories,
@@ -30,10 +30,6 @@ const CategoriesMenu: FC<CategoriesMenuPropsType> = ({
 
   const dispatch = useAppDispatch();
   const { popupType } = useAppSelector(state => state.popup);
-
-  useEffect(() => {
-    console.log(popupType);
-  }, [popupType]);
 
   const { isOpen, CategoryActiveHover } = useAppSelector(
     state => state.MenuCategoriesSlice
