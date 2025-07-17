@@ -60,7 +60,7 @@ export default function useShippingMethods(countryCode?: string, allowedShipping
     };
 
     getTargetShippingZoneId();
-  }, [shippingZones, countryCode]);
+  }, [shippingZones, countryCode, allowedShippingMethods]);
 
   return {
     shippingMethods: currentShippingMethods,
