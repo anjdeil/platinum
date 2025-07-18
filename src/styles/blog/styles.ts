@@ -1,5 +1,5 @@
+import FallbackImage from '@/components/global/FallbackImage/FallbackImage';
 import styled from '@emotion/styled';
-import Image from 'next/image';
 
 export const StyledContainer = styled.div`
   box-sizing: content-box;
@@ -36,7 +36,7 @@ export const StyledBox = styled.div`
   position: relative;
 `;
 
-export const StyledHeroImage = styled(Image)`
+export const StyledHeroImage = styled(FallbackImage)`
   width: 100%;
   height: 477px;
   object-fit: cover;
