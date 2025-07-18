@@ -1,7 +1,7 @@
 import { NavigationButtonProps } from "@/types/pages/product";
 import styled from "@emotion/styled";
-import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
+import FallbackImage from "../../FallbackImage/FallbackImage";
 
 export const PopupOverlay = styled.div`
 	position: fixed;
@@ -58,7 +58,7 @@ export const StyledSwiperSlide = styled(SwiperSlide)`
 	align-items: center;
 `;
 
-export const SlideImage = styled(Image)`
+export const SlideImage = styled(FallbackImage)`
 	max-width: 590px;
 	width: 100%;
 	height: auto;

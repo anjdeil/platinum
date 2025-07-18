@@ -1,5 +1,6 @@
+import FallbackImage from '@/components/global/FallbackImage/FallbackImage'
+import { css, keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
-import { keyframes, css } from '@emotion/react'
 
 interface CartImgWrapperProps {
   maxWidth?: string
@@ -41,7 +42,7 @@ export const CartImgWrapper = styled.div<CartImgWrapperProps>`
   }
   padding: 0 !important;
 `
-export const CartItemImg = styled.img`
+export const CartItemImg = styled(FallbackImage)`
   border-radius: 8px;
   width: 100%;
   height: 100%;

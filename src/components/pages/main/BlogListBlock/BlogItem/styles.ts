@@ -1,6 +1,6 @@
+import FallbackImage from '@/components/global/FallbackImage/FallbackImage';
 import { Text } from '@/styles/components';
 import styled from '@emotion/styled';
-import Image from 'next/image';
 import Link from 'next/link';
 
 export const BlogItemContainer = styled.div`
@@ -40,7 +40,7 @@ export const ImageBlock = styled.div`
   }
 `;
 
-export const StyledImage = styled(Image)`
+export const StyledImage = styled(FallbackImage)`
   position: absolute;
   top: 0;
   left: 0;

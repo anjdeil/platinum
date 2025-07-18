@@ -2,8 +2,8 @@ import { useGetProductQuery } from '@/store/rtk-queries/wpCustomApi';
 import { ProductType } from '@/types/components/shop/product/products';
 import { ProductReviewType } from '@/types/pages/shop/reviews';
 import { useTranslations } from 'next-intl';
-import Image from 'next/image';
 import { FC, useEffect, useRef, useState } from 'react';
+import FallbackImage from '../../FallbackImage/FallbackImage';
 import Rating from '../../Rating/Rating';
 import {
   FlexWrapper,
@@ -56,7 +56,7 @@ const ReviewItem: FC<ReviewItemPropsType> = ({ review, isOpen, setOpened }) => {
     <ReviewContainer ref={reviewRef} isOpen={isOpen || !showReadMore}>
       <FlexWrapper>
         <ImageWrapper>
-          <Image
+          <FallbackImage
             src={product?.thumbnail?.src || '/assets/images/user.webp'}
             width={64}
             height={64}

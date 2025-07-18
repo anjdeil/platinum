@@ -1,9 +1,9 @@
 import { HeroSectionData } from '@/types/components/sections/index';
-import { SectionContainer } from "../styles";
-import { ContentWrapper, StyledImage, StyledWrapper } from "./styles";
-import { RichTextSection } from "../RichTextSection";
+import { RichTextSection } from '../RichTextSection';
+import { SectionContainer } from '../styles';
+import { ContentWrapper, StyledImage, StyledWrapper } from './styles';
 
-type HeroSectionProps = Omit<HeroSectionData, "_type">;
+type HeroSectionProps = Omit<HeroSectionData, '_type'>;
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
   is_reverse,

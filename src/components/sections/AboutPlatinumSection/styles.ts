@@ -1,5 +1,5 @@
+import FallbackImage from '@/components/global/FallbackImage/FallbackImage';
 import styled from '@emotion/styled';
-import Image from 'next/image';
 
 export const AboutContainer = styled.div`
   width: 100%;
@@ -41,7 +41,7 @@ export const ImageWrapper = styled.div`
   align-items: center;
 `;
 
-export const StyledImage = styled(Image)`
+export const StyledImage = styled(FallbackImage)`
   max-width: 641px;
   height: auto;
   @media ${({ theme }) => theme.media.largePlus} {
@@ -86,7 +86,7 @@ export const ContentWrapper = styled.div`
   }
 `;
 
-export const StyledLogoImage = styled(Image)`
+export const StyledLogoImage = styled(FallbackImage)`
   width: 416px;
   // height: 80px;
   height: auto;

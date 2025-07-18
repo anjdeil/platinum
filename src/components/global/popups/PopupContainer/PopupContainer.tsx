@@ -6,12 +6,12 @@ import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import CommentPopup from '../CommentPopup/CommentPopup';
+import LoginPopup from '../LoginPopup/LoginPopup';
 import MiniCart from '../MiniCart/MiniCart';
 import MobileCategoriesMenu from '../MobileCategoriesMenu/MobileCategoriesMenu';
 import MobileSearchPopup from '../MobileSearchPopup/MobileSearchPopup';
-import SwiperPopup from '../SwiperPopup/SwiperPopup';
-import LoginPopup from '../LoginPopup/LoginPopup';
 import NotifyPopup from '../NotifyPopup/NotifyPopup';
+import SwiperPopup from '../SwiperPopup/SwiperPopup';
 
 const unscrollablePopups = [
   'mobile-search',

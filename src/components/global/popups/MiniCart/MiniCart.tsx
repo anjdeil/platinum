@@ -27,9 +27,9 @@ import { handleQuantityChange } from '@/utils/cart/handleQuantityChange';
 import { getProductPrice } from '@/utils/price/getProductPrice';
 import { Skeleton } from '@mui/material';
 import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { CartLink, MiniCartContainer } from './style';
-import { useRouter } from 'next/router';
 
 interface MiniCartProps {
   onClose: () => void;
@@ -187,6 +187,7 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
                     src={item.image?.src}
                     alt={item.name}
                     width="50"
+                    height="50"
                   />
                 </CartImgWrapper>
                 <CardContent padding="8px 0" gap="1px">

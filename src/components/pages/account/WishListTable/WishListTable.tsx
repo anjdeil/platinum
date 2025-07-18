@@ -18,10 +18,12 @@ import { useAppDispatch, useAppSelector } from '@/store';
 import { updateCart } from '@/store/slices/cartSlice';
 /* import theme from '@/styles/theme'; */
 import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
+import { popupToggle } from '@/store/slices/PopupSlice';
 import { LinkWrapper, StyledButton } from '@/styles/components';
 import { WishListTableProps } from '@/types/components/pages/myAccount/wishlist';
 import { ProductsMinimizedType } from '@/types/components/shop/product/products';
 import { CartItem } from '@/types/store/reducers/сartSlice';
+import getProductSlug from '@/utils/cart/getProductSlug';
 import { getProductPrice } from '@/utils/price/getProductPrice';
 import { Skeleton } from '@mui/material';
 import { useTranslations } from 'next-intl';
@@ -33,8 +35,6 @@ import {
   WishlistCardAllWrapper,
   WishlistImgWrapper,
 } from './style';
-import { popupToggle } from '@/store/slices/PopupSlice';
-import getProductSlug from '@/utils/cart/getProductSlug';
 
 const WishListTable: FC<WishListTableProps> = ({
   wishlist,
@@ -161,6 +161,7 @@ const WishListTable: FC<WishListTableProps> = ({
                         }
                         alt={item.name}
                         width="50"
+                        height="50"
                       />
                     </WishlistImgWrapper>
                     <CardContent gap="12px">
@@ -241,6 +242,7 @@ const WishListTable: FC<WishListTableProps> = ({
                           src={item.image?.src}
                           alt={item.name}
                           width="50"
+                          height="50"
                         />
                       </WishlistImgWrapper>
                       <CardContent gap="8px" padding="0 0 4px 0">
