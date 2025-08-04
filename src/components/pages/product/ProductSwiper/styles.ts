@@ -1,5 +1,5 @@
+import FallbackImage from "@/components/global/FallbackImage/FallbackImage";
 import styled from "@emotion/styled";
-import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 export const SwiperContainer = styled.div`
@@ -32,7 +32,7 @@ export const VideoWrapper = styled.div`
   overflow: hidden;
   aspect-ratio: 452 / 300;
 `;
-	
+
 export const ImageWrapper = styled.button`
 	width: 100%;
 	height: auto;
@@ -41,7 +41,7 @@ export const ImageWrapper = styled.button`
 	cursor: pointer;
 `;
 
-export const ImageStyled = styled(Image)`
+export const ImageStyled = styled(FallbackImage)`
 	width: 100%;
 	height: auto;	
 	object-fit: contain;
@@ -99,7 +99,7 @@ export const ThumbnailWrapper = styled.div`
 	}
 `;
 
-export const Thumbnail = styled(Image)`
+export const Thumbnail = styled(FallbackImage)`
 	width: 100%;
 	height: auto;
 	object-fit: cover;

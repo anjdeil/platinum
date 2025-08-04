@@ -5,7 +5,6 @@ import { useAppDispatch, useAppSelector } from '@/store';
 import { updateCart } from '@/store/slices/cartSlice';
 import { ProductCardPropsType } from '@/types/components/shop';
 import { useTranslations } from 'next-intl';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -21,15 +20,16 @@ import {
   TitleWrapper,
 } from './styles';
 
+import NotifyBasketButton from '@/components/global/buttons/NotifyBasketButton/NotifyBasketButton';
+import FallbackImage from '@/components/global/FallbackImage/FallbackImage';
 import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
 import { useResponsive } from '@/hooks/useResponsive';
 import { useWishlist } from '@/hooks/useWishlist';
 import { popupToggle } from '@/store/slices/PopupSlice';
 import { getCardProductPrice } from '@/utils/price/getCardProductPrice';
 import { Skeleton } from '@mui/material';
-import ProductCardBadgeWrapper from '../ProductCardBadgeWrapper/ProductCardBadgeWrapper';
 import { ProductBadgeBox } from '../ProductBadgeWrapper/styles';
-import NotifyBasketButton from '@/components/global/buttons/NotifyBasketButton/NotifyBasketButton';
+import ProductCardBadgeWrapper from '../ProductCardBadgeWrapper/ProductCardBadgeWrapper';
 
 const ProductCard: React.FC<ProductCardPropsType> = ({ product }) => {
   const t = useTranslations('Product');
@@ -106,7 +106,7 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product }) => {
       <ProductWrapper isFavorite={checkDesired(product.id)}>
         <ProductImageWrapper>
           <Link href={`/product/${product.slug}`}>
-            <Image
+            <FallbackImage
               src={product.thumbnail?.src || '/assets/images/not-found.webp'}
               fill
               style={{ objectFit: 'contain' }}

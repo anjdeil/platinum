@@ -1,5 +1,5 @@
+import FallbackImage from "@/components/global/FallbackImage/FallbackImage";
 import styled from "@emotion/styled";
-import Image from "next/image";
 
 interface StyledImageProps {
   objectfitprop?: "contain" | "cover" | "fill" | "none" | "scale-down";
@@ -29,7 +29,7 @@ export const StyledWrapper = styled.div`
   }
 `;
 
-export const StyledImage = styled(Image)<StyledImageProps>`
+export const StyledImage = styled(FallbackImage) <StyledImageProps>`
   width: 40%;
   max-width: 524px;
   height: auto;

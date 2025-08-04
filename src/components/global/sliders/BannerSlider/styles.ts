@@ -1,8 +1,8 @@
 import { BannerWrapperProps } from "@/types/components/global/sliders/BannerSlider";
 import styled from "@emotion/styled";
-import Image from "next/image";
 import Link from "next/link";
 import { Swiper } from "swiper/react";
+import FallbackImage from "../../FallbackImage/FallbackImage";
 
 export const BannerWrapper = styled.div<BannerWrapperProps>`
   position: relative;
@@ -95,7 +95,7 @@ export const CustomSwiper = styled(Swiper)`
     }
 `;
 
-export const ImageStyled = styled(Image)`
+export const ImageStyled = styled(FallbackImage)`
     width: 100%;
     height: 100%;
     object-fit: cover;

@@ -1,7 +1,7 @@
+import FallbackImage from "@/components/global/FallbackImage/FallbackImage";
 import { CategoryItemContainerProps } from "@/types/pages/shop";
 import { StyledButtonProps } from '@/types/styles/components';
 import styled from '@emotion/styled';
-import Image from 'next/image';
 import Link from 'next/link';
 
 export const CategoryItemContainer = styled.div<CategoryItemContainerProps>`
@@ -24,7 +24,7 @@ export const CategoryItemContainer = styled.div<CategoryItemContainerProps>`
   }
 `;
 
-export const BackGroundImage = styled(Image)`
+export const BackGroundImage = styled(FallbackImage)`
   position: absolute;
   top: 0;
   left: 0;
@@ -82,9 +82,9 @@ export const StyledButton = styled.button<StyledButtonProps>`
   &:hover {
     color: ${({ theme, hoverColor = theme.colors.white }) => hoverColor};
     background-color: ${({
-      theme,
-      hoverBackgroundColor = theme.background.hover,
-    }) => hoverBackgroundColor};
+  theme,
+  hoverBackgroundColor = theme.background.hover,
+}) => hoverBackgroundColor};
   }
 
   @media ${({ theme }) => theme.media.largePlus} {

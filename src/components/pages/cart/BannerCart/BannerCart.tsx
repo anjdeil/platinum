@@ -1,16 +1,20 @@
-import AddToBasketButton from '@/components/global/buttons/AddToBasketButton/AddToBasketButton'
-import { useResponsive } from '@/hooks/useResponsive'
-import { Title } from '@/styles/components'
-import { useTranslations } from 'next-intl'
-import Image from 'next/image'
-import React from 'react'
-import { BannerWrapper, ContentWrapper, StyledText } from './styles'
-import { BannerCartProps } from '@/types/pages/cart'
+import AddToBasketButton from '@/components/global/buttons/AddToBasketButton/AddToBasketButton';
+import FallbackImage from '@/components/global/FallbackImage/FallbackImage';
+import { useResponsive } from '@/hooks/useResponsive';
+import { Title } from '@/styles/components';
+import { BannerCartProps } from '@/types/pages/cart';
+import { useTranslations } from 'next-intl';
+import React from 'react';
+import { BannerWrapper, ContentWrapper, StyledText } from './styles';
 
-const BannerCart: React.FC<BannerCartProps> = ({ slug, image, mobileImage }) => {
-  const t = useTranslations('Cart')
-  const tProduct = useTranslations('Product')
-  const { isMobile } = useResponsive()
+const BannerCart: React.FC<BannerCartProps> = ({
+  slug,
+  image,
+  mobileImage,
+}) => {
+  const t = useTranslations('Cart');
+  const tProduct = useTranslations('Product');
+  const { isMobile } = useResponsive();
 
   return (
     <BannerWrapper href={`/product/${slug}`} passHref>
@@ -24,7 +28,7 @@ const BannerCart: React.FC<BannerCartProps> = ({ slug, image, mobileImage }) => 
         <AddToBasketButton>{tProduct('addToBasket')}</AddToBasketButton>
       </ContentWrapper>
       {isMobile ? (
-        <Image
+        <FallbackImage
           src={`/images/${mobileImage}`}
           alt="cosmetics"
           width={768}
@@ -32,7 +36,7 @@ const BannerCart: React.FC<BannerCartProps> = ({ slug, image, mobileImage }) => 
           priority
         />
       ) : (
-        <Image
+        <FallbackImage
           src={`/images/${image}`}
           alt="cosmetics"
           width={1440}
@@ -41,7 +45,7 @@ const BannerCart: React.FC<BannerCartProps> = ({ slug, image, mobileImage }) => 
         />
       )}
     </BannerWrapper>
-  )
-}
+  );
+};
 
-export default BannerCart
+export default BannerCart;

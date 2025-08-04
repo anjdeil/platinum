@@ -1,10 +1,11 @@
+import FallbackImage from '@/components/global/FallbackImage/FallbackImage';
 import parse, {
+  DOMNode,
   domToReact,
   Element,
-  DOMNode,
   HTMLReactParserOptions,
 } from 'html-react-parser';
-import Image from 'next/image';
+import { CustomVideoPlayer } from '../video';
 import {
   StyledBlockquote,
   StyledContentWrapper,
@@ -15,7 +16,6 @@ import {
   StyledOrderedList,
   StyledParagraph,
 } from './styles';
-import { CustomVideoPlayer } from '../video';
 
 interface BlogPostProps {
   content: string;
@@ -68,7 +68,7 @@ export const BlogPostContent: React.FC<BlogPostProps> = ({ content }) => {
           case 'img':
             return (
               <StyledImageWrapper>
-                <Image
+                <FallbackImage
                   src={domNode.attribs.src}
                   alt={domNode.attribs.alt}
                   fill

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import Image from 'next/image';
+import FallbackImage from '../../FallbackImage/FallbackImage';
 
 interface PopupBodyProps {
   maxWidth?: string;
@@ -37,7 +37,7 @@ export const StyledPopupBody = styled.div<PopupBodyProps>`
     width: 80%;
   }
 `;
-export const StyledBanner = styled(Image)`
+export const StyledBanner = styled(FallbackImage)`
   box-sizing: border-box;
   width: 100%;
   // max-width: 800px;

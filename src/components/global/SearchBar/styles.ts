@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { CircularProgress } from '@mui/material';
-import Image from 'next/image';
+import FallbackImage from '../FallbackImage/FallbackImage';
 
 export const SearchFormWrap = styled.form`
   flex-grow: 1;
@@ -90,7 +90,7 @@ export const SearchResultsRowIcon = styled.div`
   padding-top: 2px;
 `;
 
-export const SearchResultsRowImage = styled(Image)`
+export const SearchResultsRowImage = styled(FallbackImage)`
   margin-right: 10px;
   border-radius: 4px;
 `;

@@ -1,5 +1,5 @@
+import FallbackImage from "@/components/global/FallbackImage/FallbackImage";
 import styled from "@emotion/styled";
-import Image from "next/image";
 
 export const ProductListWrapper = styled.div`
     box-sizing: border-box;
@@ -95,7 +95,7 @@ export const WrapperBlock = styled.div`
     }
 `;
 
-export const ProductImage = styled(Image)`
+export const ProductImage = styled(FallbackImage)`
     object-fit: contain;
     @media ${({ theme }) => theme.media.large} {
         width: 42px;
