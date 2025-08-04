@@ -4,7 +4,12 @@ import {
   useGetMenusQuery,
   useGetThemeOptionsQuery,
 } from '@/store/rtk-queries/wpCustomApi';
+import { initializeCart } from '@/store/slices/cartSlice';
 import { setCategories, setLoading } from '@/store/slices/categoriesSlice';
+import {
+  languageSymbols,
+  setCurrentLanguage,
+} from '@/store/slices/languageSlice';
 import { setThemeOptions } from '@/store/slices/themeOptionsSlice';
 import { WpMenuResponseType } from '@/types/menus/WpMenus';
 import { LangParamType } from '@/types/services/wpCustomApi';
@@ -14,17 +19,13 @@ import { createContext, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import WhatsAppButton from '../global/buttons/WhatsAppButton/WhatsAppButton';
 import PopupContainer from '../global/popups/PopupContainer/PopupContainer';
+import RunningLine from '../runningLine/RunningLine';
 import CategoriesMenu from '../shop/categories/CategoriesMenu/CategoriesMenu';
 import BottomMenu from '../widgets/BottomMenu';
 import { Footer } from '../widgets/Footer';
 import Header from '../widgets/Header/Header';
 import MobileHeader from '../widgets/MobileHeader/MobileHeader';
 import TopBar from '../widgets/TopBar/TopBar';
-import { initializeCart } from '@/store/slices/cartSlice';
-import {
-  languageSymbols,
-  setCurrentLanguage,
-} from '@/store/slices/languageSlice';
 
 export const MenusContext = createContext<WpMenuResponseType[] | []>([]);
 
@@ -68,7 +69,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (categoriesResp && categoriesResp.data) {
       const categories = categoriesResp.data.items;
-      const filteredCategories = categories.filter(category => !category.is_hidden);
+      const filteredCategories = categories.filter(
+        category => !category.is_hidden
+      );
       dispatch(setCategories(filteredCategories));
     }
     dispatch(setLoading(isCategoriesLoading));
@@ -77,6 +80,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <Box>
       <MenusContext.Provider value={menus}>
+        <RunningLine />
         {!isMobile && <TopBar />}
         {!isMobile ? <Header /> : <MobileHeader />}
         <PopupContainer />

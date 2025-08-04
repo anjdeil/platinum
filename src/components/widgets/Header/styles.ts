@@ -11,9 +11,9 @@ export const HeaderWrapper = styled.div<HeaderWrapperProps>`
   display: grid;
   align-items: center;
   background: ${({
-    theme,
-    backgroundColor = theme.background.primaryGradient,
-  }) => backgroundColor};
+  theme,
+  backgroundColor = theme.background.primaryGradient,
+}) => backgroundColor};
   position: relative;
   overflow-x: clip;
 
@@ -64,7 +64,7 @@ export const CategoriesButton = styled.button`
   }
 `;
 
-export const HeaderContainer = styled(Container)<HeaderContainerProps>`
+export const HeaderContainer = styled(Container) <HeaderContainerProps>`
   display: flex;
   justify-content: space-between;
   gap: ${({ gap = '30px' }) => gap};

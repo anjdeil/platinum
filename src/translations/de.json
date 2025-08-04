@@ -144,7 +144,8 @@
     "updateError": "Leider können wir Ihre Kundendaten zur Zeit nicht aktualisieren. Bitte versuchen Sie es später erneut."
   },
   "TopBar": {
-    "CallUs": "Kontakt"
+    "CallUs": "Kontakt",
+    "FreeDelivery": "Kostenloser Versand ab"
   },
   "Categories": {
     "showAll": "Alle anzeigen"
