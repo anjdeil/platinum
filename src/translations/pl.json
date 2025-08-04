@@ -144,7 +144,8 @@
     "updateError": "Niestety, w tej chwili nie możemy zaktualizować danych klienta. Prosimy spróbować później."
   },
   "TopBar": {
-    "CallUs": "Kontakt"
+    "CallUs": "Kontakt",
+    "FreeDelivery": "Darmowa dostawa od"
   },
   "Categories": {
     "showAll": "Pokaż wszystko"

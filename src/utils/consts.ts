@@ -11,6 +11,8 @@ export const LOYALTY_LEVELS = [
 
 export const DEFAULT_IMAGE = '/assets/images/not-found.webp';
 
+export const FREE_DELIVERY = 459;
+
 export const accountLinkList = [
   {
     icon: InformationIcon,

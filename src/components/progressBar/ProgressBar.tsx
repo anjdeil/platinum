@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
+import { Global, css } from '@emotion/react';
 import { useRouter } from 'next/router';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
-import { Global, css } from '@emotion/react';
+import { useEffect } from 'react';
 
 NProgress.configure({ showSpinner: false });
 
