@@ -1,5 +1,7 @@
 import { OrderType } from '@/types/services';
+import { lineOrderItems } from '@/types/store/reducers/сartSlice';
 import getSubtotalByLineItems from '@/utils/cart/getSubtotalByLineItems';
+import { formatPrice } from '@/utils/price/formatPrice';
 import {
   Document,
   Font,
@@ -8,8 +10,6 @@ import {
   Text,
   View,
 } from '@react-pdf/renderer';
-import { formatPrice } from '@/utils/price/formatPrice';
-import { lineOrderItems } from '@/types/store/reducers/сartSlice';
 import React from 'react';
 
 Font.register({
@@ -116,13 +116,7 @@ function uniteOptionsIntoString(meta_data: MetaData[]) {
   );
 }
 
-const OrderPdf = ({
-  order,
-  t,
-}: {
-  order: OrderType;
-  t: (string: string, props?: Record<string, string>) => string;
-}) => {
+const OrderPdf = ({ order }: { order: OrderType }) => {
   const subtotal = order?.line_items
     ? getSubtotalByLineItems(order.line_items)
     : 0;
@@ -143,23 +137,23 @@ const OrderPdf = ({
     <Document>
       <Page size="A4" style={styles.page}>
         <View>
-          <Text style={styles.title}>{`${t('order')} #${order?.id}`}</Text>
+          <Text style={styles.title}>{`Zamówienie #${order?.id}`}</Text>
         </View>
 
         <View style={styles.productTable}>
           <View style={styles.productTableHead}>
             <View style={styles.productTableRow}>
               <View style={styles.productTableTwoColumn}>
-                <Text style={styles.text}>{t('productName')}</Text>
+                <Text style={styles.text}>Nazwa produktu</Text>
               </View>
               <View style={styles.productTableColumnMiddle}>
-                <Text style={styles.text}>{t('price')}</Text>
+                <Text style={styles.text}>Cena</Text>
               </View>
               <View style={styles.productTableColumnQUantity}>
-                <Text style={styles.text}>{t('quantity')}</Text>
+                <Text style={styles.text}>Ilość</Text>
               </View>
               <View style={styles.productTableColumnRight}>
-                <Text style={styles.text}>{t('total')}</Text>
+                <Text style={styles.text}>Razem</Text>
               </View>
             </View>
           </View>
@@ -196,11 +190,11 @@ const OrderPdf = ({
         </View>
 
         <View style={styles.island}>
-          <Text style={styles.secondaryTitle}>{t('summaryOrder')}</Text>
+          <Text style={styles.secondaryTitle}>Podsumowanie zamówienia</Text>
 
           <View style={styles.split}>
             <View style={styles.splitFirst}>
-              <Text style={styles.text}>{t('orderValue')}</Text>
+              <Text style={styles.text}>Kwota</Text>
             </View>
             <View style={styles.splitLast}>
               <Text style={styles.text}>
@@ -223,7 +217,7 @@ const OrderPdf = ({
           ))}
 
           {order?.coupon_lines?.map(line => {
-            const name = `${t('coupon')} ${
+            const name = `Kupon ${
               line.discount_type === 'percent'
                 ? `-${line.nominal_amount}% `
                 : ''
@@ -232,7 +226,7 @@ const OrderPdf = ({
               <React.Fragment key={line.id}>
                 <View style={styles.split}>
                   <View style={styles.splitFirst}>
-                    <Text style={styles.text}>{t('discount')}</Text>
+                    <Text style={styles.text}>Rabat</Text>
                   </View>
 
                   <View style={styles.splitLast}>
@@ -269,7 +263,7 @@ const OrderPdf = ({
 
           <View style={styles.split}>
             <View style={styles.splitFirst}>
-              <Text style={styles.text}>{t('paymentMethod')}</Text>
+              <Text style={styles.text}>Metoda płatności</Text>
             </View>
             <View style={styles.splitLast}>
               <Text style={styles.text}>
@@ -280,7 +274,7 @@ const OrderPdf = ({
 
           <View style={styles.split}>
             <View style={styles.splitFirst}>
-              <Text style={styles.text}>{t('total')}</Text>
+              <Text style={styles.text}>Razem</Text>
             </View>
             <View style={styles.splitLast}>
               <Text style={styles.text}>
@@ -292,9 +286,7 @@ const OrderPdf = ({
           <View style={styles.split}>
             <View style={styles.splitMiddle}>
               <Text style={styles.text}>
-                {t('includesVat', {
-                  cost: `${formattedTax} ${order?.currency_symbol}`,
-                })}
+                {`(zawiera ${formattedTax} ${order?.currency_symbol}  VAT)`}
               </Text>
             </View>
           </View>
