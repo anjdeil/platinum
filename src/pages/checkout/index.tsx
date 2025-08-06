@@ -178,9 +178,6 @@ export default function CheckoutPage() {
   const [parcelMachine, setParcelMachine] = useState<ParcelMachineType>();
   const [shippingLine, setShippingLine] = useState<ShippingLineType>();
 
-  console.log('shippingMethods...', shippingMethods);
-  console.log('allowedShippingMethods...', allowedShippingMethods);
-
   useEffect(() => {
     setShippingMethod(undefined);
   }, [shippingMethods]);

@@ -44,8 +44,6 @@ export default function useShippingMethods(countryCode?: string, allowedShipping
 
       const { data: methods = [] } = await getShippingMethods(targetShippingZoneId);
 
-      console.log('methods...', methods);
-
       const filteredMethods = allowedShippingMethods && allowedShippingMethods.length
         ? methods.filter(method => {
           const isInPost = method.title?.toLowerCase().includes('inpost');
