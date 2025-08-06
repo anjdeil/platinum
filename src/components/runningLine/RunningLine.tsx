@@ -1,32 +1,33 @@
-import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
-import { FREE_DELIVERY } from '@/utils/consts';
+import { FREE_DELIVERY, FREE_DELIVERY_EUROPE } from '@/utils/consts';
 import { useTranslations } from 'next-intl';
 import TopIcon from '../global/icons/TopIcon/TopIcon';
-import { Content, Text, Wrapper } from './styles';
+import { Content, Flex, Text, Wrapper } from './styles';
 
 const RunningLine = () => {
   const t = useTranslations('TopBar');
 
-  const { isLoading, convertCurrency, currencyCode } = useCurrencyConverter();
-
   return (
     <Wrapper>
-      {!isLoading && (
-        <>
-          {[...Array(2)].map((_, contentIdx) => (
-            <Content key={contentIdx}>
-              {[...Array(6)].map((_, textIdx) => (
-                <Text key={textIdx}>
-                  {`${t('FreeDelivery')} ${Math.ceil(
-                    convertCurrency(FREE_DELIVERY)
-                  )} ${currencyCode}`}
-                  <TopIcon />
-                </Text>
-              ))}
-            </Content>
+      {[...Array(2)].map((_, contentIdx) => (
+        <Content key={contentIdx}>
+          {[...Array(6)].map((_, textIdx) => (
+            <Flex key={textIdx}>
+              <Text>
+                {t('FreeDelivery', {
+                  sum: FREE_DELIVERY,
+                })}
+                <TopIcon />
+              </Text>
+              <Text>
+                {t('FreeDeliveryEurope', {
+                  sum: FREE_DELIVERY_EUROPE,
+                })}
+                <TopIcon />
+              </Text>
+            </Flex>
           ))}
-        </>
-      )}
+        </Content>
+      ))}
     </Wrapper>
   );
 };

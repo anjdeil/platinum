@@ -145,7 +145,8 @@
   },
   "TopBar": {
     "CallUs": "Call us",
-    "FreeDelivery": "Free delivery from"
+    "FreeDelivery": "Free delivery from {sum} zł within Poland",
+    "FreeDeliveryEurope": "Free delivery from {sum}€ to European Union countries"
   },
   "Categories": {
     "showAll": "Show All"

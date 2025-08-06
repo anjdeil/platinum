@@ -24,14 +24,20 @@ export const Wrapper = styled.div`
 export const Content = styled.div`
   display: inline-block;
   white-space: nowrap;
-  animation: ${scroll} 10s linear infinite;
+  animation: ${scroll} 15s linear infinite;
   display: flex;
   align-items: center;
 `;
 
+export const Flex = styled.div`
+  display: flex;
+  align-items: center;
+  padding-right: 40px;
+  gap: 40px;
+`;
+
 export const Text = styled.span`
   display: inline-block;
-  padding-right: 51px;
   font-size: 12px;
   line-height: 16px;
   font-weight: 400;
