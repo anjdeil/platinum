@@ -145,7 +145,8 @@
   },
   "TopBar": {
     "CallUs": "Kontakt",
-    "FreeDelivery": "Kostenloser Versand ab"
+    "FreeDelivery": "Kostenlose Lieferung ab {sum} zł innerhalb Polens",
+    "FreeDeliveryEurope": "Kostenlose Lieferung ab {sum}€ in die Länder der Europäischen Union"
   },
   "Categories": {
     "showAll": "Alle anzeigen"
