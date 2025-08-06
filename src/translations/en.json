@@ -144,7 +144,8 @@
     "updateError": "Unfortunately, we are unable to update your customer data at this time. Please try again later."
   },
   "TopBar": {
-    "CallUs": "Call us"
+    "CallUs": "Call us",
+    "FreeDelivery": "Free delivery from"
   },
   "Categories": {
     "showAll": "Show All"
