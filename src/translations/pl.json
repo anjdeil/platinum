@@ -145,7 +145,8 @@
   },
   "TopBar": {
     "CallUs": "Kontakt",
-    "FreeDelivery": "Darmowa dostawa od"
+    "FreeDelivery": "Darmowa dostawa od {sum} zl na terenie Polski",
+    "FreeDeliveryEurope": "Darmowa dostawa od {sum}€ do krajów Unii Europejskiej"
   },
   "Categories": {
     "showAll": "Pokaż wszystko"
