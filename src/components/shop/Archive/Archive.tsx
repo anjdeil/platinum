@@ -92,6 +92,7 @@ export const Archive: FC<ArchivePropsType> = props => {
   const {
     products,
     categories = [],
+    categorySeoData,
     searchTerm,
     pagesCount,
     page,
@@ -167,10 +168,23 @@ export const Archive: FC<ArchivePropsType> = props => {
       </>
     );
   }
+
   // SEO
-  const productsTitle =
-    currentCategory?.name || `${t('phraseSought')}: "${searchTerm}"`;
-  const productDescription = currentCategory?.description || '';
+  const seoTitle =
+    categorySeoData?.title ||
+    currentCategory?.name ||
+    `${t('phraseSought')}: "${searchTerm}"`;
+
+  const seoDescription =
+    categorySeoData?.description || currentCategory?.description || '';
+
+  const ogTitle = categorySeoData?.og?.title || seoTitle;
+
+  const ogDescription = categorySeoData?.og?.description || seoDescription;
+
+  const ogImageUrl = categorySeoData?.og?.image_url || null;
+  const ogImageWidth = categorySeoData?.og?.image_width || null;
+  const ogImageHeight = categorySeoData?.og?.image_height || null;
 
   const structuredDataProductsCategory = {
     '@context': 'https://schema.org',
@@ -179,8 +193,8 @@ export const Archive: FC<ArchivePropsType> = props => {
         '@type': 'CollectionPage',
         '@id': canonicalUrl,
         url: canonicalUrl,
-        name: productsTitle,
-        description: productDescription,
+        name: seoTitle,
+        description: seoDescription,
         inLanguage: languageMap[locale as keyof typeof languageMap] ?? 'pl-PL',
         isPartOf: {
           '@id': `https://platinumchetvertinovskaya.com/${locale}/#website`,
@@ -211,7 +225,7 @@ export const Archive: FC<ArchivePropsType> = props => {
     <>
       <Head>
         <meta name="robots" content="index, follow" />
-        <meta name="description" content={productDescription} />
+        <meta name="description" content={seoDescription} />
         <link rel="canonical" href={canonicalUrl} />
         <link rel="alternate" hrefLang={locale} href={canonicalUrl} />
         <script
@@ -220,8 +234,8 @@ export const Archive: FC<ArchivePropsType> = props => {
             __html: JSON.stringify(structuredDataProductsCategory),
           }}
         />
-        <meta property="og:title" content={productsTitle} />
-        <meta property="og:description" content={productDescription} />
+        <meta property="og:title" content={ogTitle} />
+        <meta property="og:description" content={ogDescription} />
         <meta property="og:type" content="product.group" />
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:locale" content={locale} />
@@ -229,8 +243,23 @@ export const Archive: FC<ArchivePropsType> = props => {
           property="og:site_name"
           content="Platinum by Chetvertinovskaya Liubov"
         />
+
+        {ogImageUrl && (
+          <>
+            <meta property="og:image" content={ogImageUrl} />
+            {ogImageWidth && (
+              <meta property="og:image:width" content={String(ogImageWidth)} />
+            )}
+            {ogImageHeight && (
+              <meta
+                property="og:image:height"
+                content={String(ogImageHeight)}
+              />
+            )}
+          </>
+        )}
       </Head>
-      <PageTitle title={productsTitle} />
+      <PageTitle title={seoTitle} />
       <CatalogContainer>
         <CatalogTitleWrapper>
           <Breadcrumbs links={breadcrumbsLinks} locale={locale} />
