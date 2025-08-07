@@ -198,6 +198,10 @@ const BlogPostPage = ({
     post?.seo_data?.images?.[0]?.['image:loc'] || thumbnail?.src;
   const postUrl = fullUrl;
 
+  const ogTitle = post?.seo_data?.og?.title || postTitle;
+
+  const ogDescription = post?.seo_data?.og?.description || postDescription;
+
   const schemaPost = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -254,8 +258,8 @@ const BlogPostPage = ({
       <Head>
         <meta name="robots" content="index, follow" />
         <meta name="description" content={postDescription} />
-        <meta property="og:title" content={postTitle} />
-        <meta property="og:description" content={postDescription} />
+        <meta property="og:title" content={ogTitle} />
+        <meta property="og:description" content={ogDescription} />
         <meta property="og:image" content={postImage} />
         <meta property="og:type" content="article" />
         <meta property="og:url" content={canonicalUrl} />
@@ -263,7 +267,7 @@ const BlogPostPage = ({
         <link rel="alternate" hrefLang={safeLocale} href={canonicalUrl} />
         <script type="application/ld+json">{JSON.stringify(schemaPost)}</script>
       </Head>
-      <PageTitle title={title} />
+      <PageTitle title={postTitle} />
       <SectionContainer>
         <StyledContainer>
           <StyledHeaderWrapper>
