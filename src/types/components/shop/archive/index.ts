@@ -8,6 +8,7 @@ export const ArchivePropsSchema = z.object({
   pagesCount: z.number(),
   page: z.number(),
   categories: z.array(CategorySchema).optional(),
+  categorySeoData: z.any().optional(),
   searchTerm: z.string().optional(),
   statistic: CustomDataProductsStatisticSchema,
   locale: z.string(),
