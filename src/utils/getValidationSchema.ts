@@ -83,7 +83,7 @@ export const getValidationSchema = (
       return {
         required: t('pleaseFillInTheNip'),
         minLength: {
-          value: 10,
+          value: 6,
           message: t('yourNipIsTooShort'),
         },
         maxLength: {
