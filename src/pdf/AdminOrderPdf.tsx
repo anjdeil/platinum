@@ -1,5 +1,7 @@
 import { OrderType } from '@/types/services';
+import { lineOrderItems } from '@/types/store/reducers/сartSlice';
 import getSubtotalByLineItems from '@/utils/cart/getSubtotalByLineItems';
+import { formatPrice } from '@/utils/price/formatPrice';
 import {
   Document,
   Font,
@@ -8,8 +10,6 @@ import {
   Text,
   View,
 } from '@react-pdf/renderer';
-import { formatPrice } from '@/utils/price/formatPrice';
-import { lineOrderItems } from '@/types/store/reducers/сartSlice';
 import React from 'react';
 
 Font.register({

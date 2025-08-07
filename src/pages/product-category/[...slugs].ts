@@ -2,7 +2,7 @@ import { Archive } from "@/components/shop/Archive";
 import { customRestApi } from "@/services/wpCustomApi";
 import CategoryType from "@/types/components/shop/categories/categories";
 import { ProductType } from "@/types/components/shop/product/products";
-import { CustomDataCategoriesType, ProductParamsType } from "@/types/services";
+import { CustomDataCategoriesType, CustomDataCategoryType, ProductParamsType } from "@/types/services";
 import { findPageParam } from "@/utils/getCurrentPageNumber";
 import { sanitizeSearchParams } from "@/utils/sanitizeSearchParams";
 import { validateWpCustomProductsData } from "@/utils/zodValidators/validateWpCustomProductsData";
@@ -38,11 +38,9 @@ export const getServerSideProps: GetServerSideProps = async ({
       const searchParamsString = sanitizeSearchParams(params);
       return {
         redirect: {
-          destination: `${
-            locale === defaultLocale ? '' : `/${locale}`
-          }/product-category/${newPath}${
-            searchParamsString ? `?${searchParamsString}` : ''
-          }`,
+          destination: `${locale === defaultLocale ? '' : `/${locale}`
+            }/product-category/${newPath}${searchParamsString ? `?${searchParamsString}` : ''
+            }`,
           permanent: false,
         },
       };
@@ -109,6 +107,26 @@ export const getServerSideProps: GetServerSideProps = async ({
         notFound: true,
       };
 
+    /* SEO Data for category */
+    let categorySeoData = null;
+
+    try {
+      const categorySeoResponseData = await customRestApi.get(
+        `categories/${categorySlugs[categorySlugs.length - 1]}`,
+        { lang: locale }
+      );
+
+      const categorySeoResponse =
+        categorySeoResponseData?.data as CustomDataCategoryType;
+
+      categorySeoData = categorySeoResponse?.data?.item?.seo_data ?? null;
+    } catch (error) {
+      console.error(
+        `[SEO] Failed to load seo_data for category: ${categorySlugs[categorySlugs.length - 1]}`,
+        error
+      );
+    }
+
     /**
      * Products:
      *
@@ -155,6 +173,7 @@ export const getServerSideProps: GetServerSideProps = async ({
         pagesCount,
         page,
         categories,
+        categorySeoData,
         locale,
         defaultLocale,
         statistic: validatedProductsData?.data.statistic ?? null,
