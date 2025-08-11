@@ -70,13 +70,6 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
 
   const router = useRouter();
 
-  // Temporary code (whole useEffect) for assigning the current variation
-  /* useEffect(() => {
-    if (product.attributes.length == 0 && product.variations.length != 0)
-      setCurrentVariation(product?.variations[0]);
-    console.log(currentVariation);
-  }, []); */
-
   useEffect(() => {
     const cartMatch = cartItems.find(
       ({ product_id, variation_id }) =>
@@ -108,6 +101,10 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
   }
 
   function handleCartButtonClick() {
+    if (product.type === 'variable' && !currentVariation) {
+      return;
+    }
+
     dispatch(
       updateCart({
         product_id: product.id,
@@ -177,20 +174,6 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
 
     return product?.stock_quantity ?? 0;
   }, [currentVariation, product]);
-
-  // const stockQuantity = useMemo(() => {
-  //   if (!currentVariation?.stock_quantity && !product.stock_quantity) {
-  //     return 0;
-  //   }
-  //   if (currentVariation?.stock_quantity) {
-  //     return currentVariation?.stock_quantity;
-  //   }
-  //   if (product?.stock_quantity) {
-  //     return product?.stock_quantity;
-  //   }
-
-  //   return 0;
-  // }, [currentVariation, product]);
 
   /** Set default attributes */
   useEffect(() => {

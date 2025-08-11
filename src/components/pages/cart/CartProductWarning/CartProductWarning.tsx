@@ -1,13 +1,13 @@
+import { CartProductWarningProps } from '@/types/pages/cart';
+import { useTranslations } from 'next-intl';
 import React from 'react';
 import { UpdateButton, WarningWrapper } from './style';
-import { useTranslations } from 'next-intl';
-import { CartProductWarningProps } from '@/types/pages/cart';
 
 const CartProductWarning: React.FC<CartProductWarningProps> = ({
-                                                                 isProductError,
-                                                                 onUpdate,
-                                                                 resolveCount,
-                                                               }) => {
+  isProductError,
+  onUpdate,
+  resolveCount,
+}) => {
   const t = useTranslations('Cart');
   return (
     <WarningWrapper>
