@@ -79,10 +79,13 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
 
   const [cachedOrderItems, setCachedOrderItems] = useState(orderItems);
 
-  const { totalCost: cartCost } = getCartTotals(productsMinimized, cartItems);
   const { convertCurrency } = useCurrencyConverter();
 
-  const convertedCartCost = convertCurrency(cartCost);
+  const { totalCost: cartCost } = getCartTotals(
+    productsMinimized,
+    cartItems,
+    convertCurrency
+  );
 
   useEffect(() => {
     const handleCreateOrder = async () => {
@@ -274,7 +277,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
               <OrderBar
                 miniCart={false}
                 isLoadingOrder={isLoadingOrder}
-                subtotal={convertedCartCost}
+                subtotal={cartCost}
                 symbol={symbol}
               />
             )}
