@@ -35,7 +35,6 @@ import {
 } from '@/types/pages/checkout';
 import { ShippingMethodType, WooErrorType } from '@/types/services';
 import checkCartConflict from '@/utils/cart/checkCartConflict';
-import getCartTotals from '@/utils/cart/getCartTotals';
 import getCalculatedMethodCostByWeight from '@/utils/checkout/getCalculatedMethodCostByWeight';
 import getShippingMethodFixedCost from '@/utils/checkout/getShippingMethodFixedCost';
 import parcelMachinesMethods from '@/utils/checkout/parcelMachinesMethods';
@@ -59,6 +58,7 @@ import {
   MetaDataType,
   ShippingType,
 } from '@/types/services/wooCustomApi/customer';
+import getCartCheckoutTotals from '@/utils/cart/getCartCheckoutTotals';
 import checkCustomerDataChanges from '@/utils/checkCustomerDataChanges';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
@@ -103,7 +103,7 @@ export default function CheckoutPage() {
   useEffect(() => {
     const productsMinimized = productsMinimizedData?.data?.items;
     if (productsMinimized) {
-      setCartTotals(getCartTotals(productsMinimized, cartItems));
+      setCartTotals(getCartCheckoutTotals(productsMinimized, cartItems));
 
       const allowedMethodsLists = productsMinimized.map(
         item => item.shipping_methods_allowed || []

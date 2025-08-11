@@ -6,14 +6,11 @@ type CartTotal = {
   totalCost: number;
   totalWeight: number;
 };
-export default function getCartTotals(
+export default function getCartCheckoutTotals(
   productsMinimized: ProductsMinimizedType[],
   cartItems: CartItem[],
-  convertCurrency: (value: number) => number
 ): CartTotal {
-
   return cartItems.reduce(
-
     (totals, cartItem) => {
       const matchedProduct = productsMinimized.find(({ id, parent_id }) => {
         if (cartItem?.variation_id) {
@@ -27,8 +24,7 @@ export default function getCartTotals(
       if (matchedProduct) {
         if (matchedProduct.price) {
           const { finalPrice } = getProductPrice(matchedProduct.price);
-          const convertedPrice = convertCurrency(finalPrice || 0);
-          totals.totalCost += convertedPrice * cartItem.quantity;
+          totals.totalCost += (finalPrice || 0) * cartItem.quantity;
         }
 
         if (matchedProduct.weight !== null) {
