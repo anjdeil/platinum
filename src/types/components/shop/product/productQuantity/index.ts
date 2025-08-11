@@ -2,6 +2,7 @@ import { z } from 'zod';
 
 export const ProductQuantityPropsSchema = z.object({
     quantity: z.number(),
+    stockQuantity: z.number().optional(),
     onChange: z.function().args(z.number()).returns(z.void()),
 });
 

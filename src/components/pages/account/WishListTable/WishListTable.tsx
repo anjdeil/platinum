@@ -71,39 +71,41 @@ const WishListTable: FC<WishListTableProps> = ({
     product: ProductsMinimizedType,
     isCartMatch: boolean
   ) {
-    if (product.parent_id !== 0) {
-      if (!isCartMatch) {
-        dispatch(
-          updateCart({
-            product_id: product.parent_id,
-            quantity: 1,
-            variation_id: product.id,
-          })
-        );
-        if (!isMobile) {
-          dispatch(popupToggle({ popupType: 'mini-cart' }));
-        }
-      } else {
-        router.push(
-          `/${router.locale === router.defaultLocale ? '' : router.locale}/cart`
-        );
+    const isVariation = product.parent_id !== 0;
+    const isVariableParent =
+      product.parent_id === 0 && product.attributes.length > 0;
+
+    if (isVariableParent) {
+      router.push(
+        `/${
+          router.locale === router.defaultLocale ? '' : router.locale
+        }/product/${product.slug}`
+      );
+      return;
+    }
+
+    if (!isCartMatch) {
+      dispatch(
+        updateCart(
+          isVariation
+            ? {
+                product_id: product.parent_id,
+                variation_id: product.id,
+                quantity: 1,
+              }
+            : {
+                product_id: product.id,
+                quantity: 1,
+              }
+        )
+      );
+      if (!isMobile) {
+        dispatch(popupToggle({ popupType: 'mini-cart' }));
       }
     } else {
-      if (!isCartMatch) {
-        dispatch(
-          updateCart({
-            product_id: product.id,
-            quantity: 1,
-          })
-        );
-        if (!isMobile) {
-          dispatch(popupToggle({ popupType: 'mini-cart' }));
-        }
-      } else {
-        router.push(
-          `/${router.locale === router.defaultLocale ? '' : router.locale}/cart`
-        );
-      }
+      router.push(
+        `/${router.locale === router.defaultLocale ? '' : router.locale}/cart`
+      );
     }
   }
 

@@ -148,7 +148,7 @@ export const ProductOptionsPanel: FC<ProductOptionsPanelType> = ({
       Array.from(chosenOptions.entries()).map(([key, value]) => [key, value])
     );
 
-    router.push(
+    router.replace(
       {
         pathname: router.pathname,
         query: { ...router.query, ...params },
