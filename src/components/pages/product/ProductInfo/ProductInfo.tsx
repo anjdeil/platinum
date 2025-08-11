@@ -310,7 +310,11 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
         {isSale && saleEndDate && <ProductPromotion time={saleEndDate} />}
         <DeliveryTimer />
         <AddToBasketWrapper>
-          <ProductQuantity quantity={quantity} onChange={setQuantity} />
+          <ProductQuantity
+            quantity={quantity}
+            onChange={setQuantity}
+            stockQuantity={stockQuantity}
+          />
 
           {stockQuantity !== null && stockQuantity > 0 ? (
             <AddToBasketButton
