@@ -105,13 +105,16 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
       return;
     }
 
-    dispatch(
-      updateCart({
-        product_id: product.id,
-        quantity,
-        ...(currentVariation && { variation_id: currentVariation.id }),
-      })
-    );
+    const cartItem: CartItem = {
+      product_id: product.id,
+      quantity,
+    };
+
+    if (product.type === 'variable' && currentVariation) {
+      cartItem.variation_id = currentVariation.id;
+    }
+
+    dispatch(updateCart(cartItem));
 
     //Analytics
     const addToCartPayload = {
@@ -242,6 +245,10 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
   const showAttributes = product.attributes.filter(attr =>
     product.variations.some(v => v.attributes.some(va => va.id === attr.id))
   );
+
+  useEffect(() => {
+    setQuantity(1);
+  }, [stockQuantity]);
 
   return (
     <ProductWrapper>

@@ -19,6 +19,7 @@ import {
 } from '@/components/pages/cart/styles/index';
 import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
 import { useAppDispatch, useAppSelector } from '@/store';
+import { clearConflictedItems } from '@/store/slices/cartSlice';
 import { FlexBox, LinkWrapper, StyledButton, Title } from '@/styles/components';
 import theme from '@/styles/theme';
 import checkCartConflict from '@/utils/cart/checkCartConflict';
@@ -132,8 +133,26 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
   }, []);
 
   useEffect(() => {
-    if (productsData.length > 0 && cartItems.length === productsData.length) {
-      setHasConflict(checkCartConflict(cartItems, productsData));
+    if (productsData.length > 0 && cartItems.length > 0) {
+      // remove simple products with variation_id
+      const conflictedSimpleItemsToClear = cartItems.filter(item => {
+        const product = productsData.find(p => p.id === item.product_id);
+        return (
+          product &&
+          (product.parent_id === 0 || product.parent_id === null) &&
+          item.variation_id
+        );
+      });
+
+      if (conflictedSimpleItemsToClear.length > 0) {
+        dispatch(clearConflictedItems(conflictedSimpleItemsToClear));
+        return;
+      }
+
+      if (cartItems.length === productsData.length) {
+        const conflicts = checkCartConflict(cartItems, productsData);
+        setHasConflict(conflicts);
+      }
     }
   }, [cartItems, productsData]);
 
