@@ -9,7 +9,7 @@ import Link from 'next/link';
 export const Categories = styled.div<CategoriesWrapperProps>`
   position: ${({ shop }) => (shop ? 'relative' : 'absolute')};
   display: flex;
-  top: ${({ shop }) => (shop ? '0' : '167px')};
+  top: ${({ shop }) => (shop ? '0' : '192px')};
   z-index: 11;
   bottom: 0;
   transition: transform 0.3s ease-in-out;
@@ -18,14 +18,14 @@ export const Categories = styled.div<CategoriesWrapperProps>`
 
   margin-bottom: 15px;
   @media ${({ theme }) => theme.media.large} {
-    top: ${({ shop }) => (shop ? '0' : '146px')};
+    top: ${({ shop }) => (shop ? '0' : '170px')};
     bottom: 19px;
     border-radius: 0;
   }
 
   @media ${({ theme }) => theme.media.medium} {
     display: none;
-    top: 53px;
+    top: 77px;
     bottom: 0;
   }
 
@@ -45,7 +45,7 @@ export const ListWrapper = styled.div<ListWrapperProps>`
     shop ? theme.background.secondary : theme.background.secondary};
   @media ${({ theme }) => theme.media.large} {
     padding: ${({ isSubcategories }) =>
-      isSubcategories ? '16px' : '16px 32px'};
+    isSubcategories ? '16px' : '16px 32px'};
   }
   @media ${({ theme }) => theme.media.middle} {
     width: 350px;
@@ -54,7 +54,7 @@ export const ListWrapper = styled.div<ListWrapperProps>`
   opacity: ${({ isVisible = true }) => (isVisible ? 1 : 0)};
   display: ${({ isVisible = true }) => (isVisible ? 'block' : 'none')};
 `;
-export const ChildListWrapper = styled(ListWrapper)<ListWrapperProps>`
+export const ChildListWrapper = styled(ListWrapper) <ListWrapperProps>`
   position: absolute;
   top: 0;
   z-index: 20;
@@ -82,7 +82,7 @@ export const List = styled.ul`
 
 export const LinkWrapper = styled(Link, {
   shouldForwardProp: prop => !['isactive', 'isactivehover'].includes(prop),
-})<LinkWrapperProps>`
+}) <LinkWrapperProps>`
   display: block;
   span {
     box-sizing: border-box;
@@ -98,9 +98,9 @@ export const LinkWrapper = styled(Link, {
     text-transform: uppercase;
     transition: all 0.1s ease-in-out;
     background-color: ${({ theme, isactive, isactivehover }) =>
-      isactive || isactivehover ? theme.colors.primary : 'transparent'};
+    isactive || isactivehover ? theme.colors.primary : 'transparent'};
     color: ${({ theme, isactive, isactivehover }) =>
-      isactive || isactivehover ? theme.colors.white : theme.colors.black};
+    isactive || isactivehover ? theme.colors.white : theme.colors.black};
 
     @media ${({ theme }) => theme.media.large} {
       font-size: 14px;
@@ -111,7 +111,7 @@ export const LinkWrapper = styled(Link, {
     }
     & path {
       fill: ${({ theme, isactive, isactivehover }) =>
-        isactive || isactivehover ? theme.colors.white : theme.colors.black};
+    isactive || isactivehover ? theme.colors.white : theme.colors.black};
     }
     &:hover {
       background-color: ${({ theme }) => theme.colors.primary};

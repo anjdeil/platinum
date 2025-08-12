@@ -1,12 +1,12 @@
+import { useAppDispatch, useAppSelector } from '@/store';
 import {
   useFetchUserUpdateMutation,
   useLazyFetchUserDataQuery,
 } from '@/store/rtk-queries/wpApi';
+import { popupToggle } from '@/store/slices/PopupSlice';
+import { ProductType } from '@/types/components/shop/product/products';
 import { WishlistItem } from '@/types/store/rtk-queries/wpApi';
 import { useEffect } from 'react';
-import { ProductType } from '@/types/components/shop/product/products';
-import { useAppDispatch, useAppSelector } from '@/store';
-import { popupToggle } from '@/store/slices/PopupSlice';
 export const useWishlist = () => {
   const dispatch = useAppDispatch();
 
@@ -32,13 +32,19 @@ export const useWishlist = () => {
       return;
     }
 
+    if (product.type === 'variable' && !variationId) {
+      console.warn(
+        `Trying to add a variation product without a variationId: ${product.id}`
+      );
+      return;
+    }
+
     const userWishlist = userData?.meta?.wishlist || [];
 
     const index = userWishlist.findIndex(
       (item: WishlistItem) =>
         item.product_id === product.id &&
         (!product.variations.length ||
-          // item.variation_id === product.variations[0].id)
           item.variation_id === variationId)
     );
     let updatedWishlist: WishlistItem[];
