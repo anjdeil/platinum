@@ -183,6 +183,8 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
     if (product.type === 'variable') {
       const variation = getCurrentVariation(product.variations, router.query);
       if (variation) setCurrentVariation(variation);
+    } else if (product.type === 'simple') {
+      setCurrentVariation(undefined);
     }
   }, [router.query]);
 
