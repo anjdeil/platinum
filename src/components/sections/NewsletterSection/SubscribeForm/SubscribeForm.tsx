@@ -1,6 +1,14 @@
+import { useSubscribeMutation } from '@/store/rtk-queries/mailsterApi';
+import {
+  SubscriptionFormProps,
+  SubscriptionFormSchema,
+  SubscriptionFormValues,
+} from '@/types/components/global/forms/subscriptionForm';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/router';
 import { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import {
   StyledError,
   StyledSubscribeButton,
@@ -8,19 +16,14 @@ import {
   StyledSubscribeInput,
   StyledSuccessMessage,
 } from './styles';
-import {
-  SubscriptionFormProps,
-  SubscriptionFormSchema,
-  SubscriptionFormValues,
-} from '@/types/components/global/forms/subscriptionForm';
-import { useTranslations } from 'next-intl';
-import { useSubscribeMutation } from '@/store/rtk-queries/mailpoetApi';
 
 export const SubscribeForm: FC<SubscriptionFormProps> = ({}) => {
   const [subscribe, { isLoading }] = useSubscribeMutation();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [isSuccessMessageShown, setIsSuccessMessageShown] = useState(false);
+  const router = useRouter();
+  const lang = router.locale || 'pl';
 
   const t = useTranslations('SubscriptionForm');
 
@@ -36,7 +39,7 @@ export const SubscribeForm: FC<SubscriptionFormProps> = ({}) => {
 
   const submitForm = async ({ email }: { email: string }) => {
     try {
-      const response = await subscribe({ email }).unwrap();
+      const response = await subscribe({ email, lang }).unwrap();
 
       if (response.message === 'Subscribed') {
         setErrorMessage(null);
