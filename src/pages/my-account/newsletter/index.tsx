@@ -1,22 +1,16 @@
 import AccountLayout from '@/components/pages/account/AccountLayout';
-import { GetServerSideProps, GetServerSidePropsContext } from 'next';
-import { useTranslations } from 'next-intl';
 import {
   useGetSubscriberQuery,
   useSubscribeMutation,
   useUnsubscribeMutation,
-} from '@/store/rtk-queries/mailpoetApi';
-import { useEffect, useRef, useState } from 'react';
+} from '@/store/rtk-queries/mailsterApi';
 import { AccountTitle, FlexBox } from '@/styles/components';
+import { GetServerSideProps, GetServerSidePropsContext } from 'next';
+import { useTranslations } from 'next-intl';
+import { useEffect, useRef, useState } from 'react';
 
 import Notification from '@/components/global/Notification/Notification';
 import { MenuSkeleton } from '@/components/menus/MenuSkeleton';
-import theme from '@/styles/theme';
-import wpRestApi from '@/services/wpRestApi';
-import { decodeJwt } from 'jose';
-import { JwtDecodedDataType } from '@/types/services/wpRestApi/auth';
-import { validateJwtDecode } from '@/utils/zodValidators/validateJwtDecode';
-import wooCommerceRestApi from '@/services/wooCommerceRestApi';
 import {
   CustomSwitch,
   SubscribeDescText,
@@ -24,28 +18,35 @@ import {
   SubscriptionCardWrapper,
   SubscriptionWrapper,
 } from '@/components/pages/account/Newsletter/style';
+import wooCommerceRestApi from '@/services/wooCommerceRestApi';
+import wpRestApi from '@/services/wpRestApi';
+import theme from '@/styles/theme';
+import { JwtDecodedDataType } from '@/types/services/wpRestApi/auth';
+import { validateJwtDecode } from '@/utils/zodValidators/validateJwtDecode';
+import { decodeJwt } from 'jose';
 
 interface SubscriptionProps {
   email: string;
+  locale: string;
 }
 
-export default function Subscription({ email }: SubscriptionProps) {
+export default function Subscription({ email, locale }: SubscriptionProps) {
   const t = useTranslations('MyAccount');
   const { data, isLoading, error } = useGetSubscriberQuery({
     email,
   });
 
-  const [subscribe, { isSuccess: isSubSuc }] = useSubscribeMutation();
-  const [unsubscribe, { isSuccess: isUnSubSuc }] = useUnsubscribeMutation();
-  const [subscriptions, setSubscriptions] = useState<string[]>([]);
+  const [subscribe, { isLoading: isSubLoading }] = useSubscribeMutation();
+  const [unsubscribe, { isLoading: isUnSubLoading }] = useUnsubscribeMutation();
+  const [isSubscribed, setIsSubscribed] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState('');
-  const [isSwitchDisabled, setIsSwitchDisabled] = useState<boolean>(false);
+  const [notificationType, setNotificationType] = useState<
+    'success' | 'warning' | 'info'
+  >('success');
+
   useEffect(() => {
-    if (data?.subscriptions) {
-      const filteredSubscriptions = data.subscriptions
-        .filter(item => item.status === 'subscribed')
-        .map(item => item.segment_id.toString());
-      setSubscriptions(filteredSubscriptions);
+    if (data && Array.isArray(data) && data.length > 0) {
+      setIsSubscribed(data[0].status === '1');
     }
   }, [data]);
 
@@ -54,16 +55,27 @@ export default function Subscription({ email }: SubscriptionProps) {
 
   const lastAction = useRef<'subscribe' | 'unsubscribe' | null>(null);
 
-  useEffect(() => {
-    if (isSubSuc || isUnSubSuc) {
+  const handleSwitchChange = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+    checked: boolean
+  ) => {
+    setIsSubscribed(checked);
+
+    try {
+      if (checked) {
+        lastAction.current = 'subscribe';
+        await subscribe({ email, lang: locale }).unwrap();
+      } else {
+        lastAction.current = 'unsubscribe';
+        await unsubscribe({ email, lang: locale }).unwrap();
+      }
+
+      setNotificationType('success');
+      setNotificationMessage(
+        checked ? t('subscriptionSuccess') : t('unsubscriptionSuccess')
+      );
       setShowNotification(true);
       setFadeOut(false);
-
-      if (lastAction.current === 'subscribe') {
-        setNotificationMessage(t('subscriptionSuccess'));
-      } else if (lastAction.current === 'unsubscribe') {
-        setNotificationMessage(t('unsubscriptionSuccess'));
-      }
 
       const fadeTimer = setTimeout(() => setFadeOut(true), 2000);
       const hideTimer = setTimeout(() => setShowNotification(false), 2500);
@@ -72,37 +84,23 @@ export default function Subscription({ email }: SubscriptionProps) {
         clearTimeout(fadeTimer);
         clearTimeout(hideTimer);
       };
-    }
-  }, [isSubSuc, isUnSubSuc]);
+    } catch (error) {
+      console.error('Error updating subscription:', error);
 
-  const handleSwitchChange = async (
-    event: React.ChangeEvent<HTMLInputElement>,
-    checked: boolean,
-    id: string
-  ) => {
-    if (isSwitchDisabled) return;
+      setIsSubscribed(!checked);
 
-    setIsSwitchDisabled(true);
-    setTimeout(() => setIsSwitchDisabled(false), 2500);
+      setNotificationType('warning');
+      setNotificationMessage(t('subscriptionError'));
+      setShowNotification(true);
+      setFadeOut(false);
 
-    if (checked) {
-      lastAction.current = 'subscribe';
-      try {
-        await subscribe({ email });
-        setSubscriptions(prevSubscriptions => [...prevSubscriptions, id]);
-      } catch (error) {
-        console.error('Error subscribing:', error);
-      }
-    } else {
-      lastAction.current = 'unsubscribe';
-      try {
-        await unsubscribe({ email });
-        setSubscriptions(prevSubscriptions =>
-          prevSubscriptions.filter(sub => sub !== id)
-        );
-      } catch (error) {
-        console.error('Error unsubscribing:', error);
-      }
+      const fadeTimer = setTimeout(() => setFadeOut(true), 2000);
+      const hideTimer = setTimeout(() => setShowNotification(false), 2500);
+
+      return () => {
+        clearTimeout(fadeTimer);
+        clearTimeout(hideTimer);
+      };
     }
   };
 
@@ -127,10 +125,10 @@ export default function Subscription({ email }: SubscriptionProps) {
         <SubscriptionWrapper>
           <SubscriptionCardWrapper>
             <CustomSwitch
-              disabled={isSwitchDisabled}
-              checked={subscriptions.includes('3')}
+              disabled={isSubLoading || isUnSubLoading}
+              checked={isSubscribed}
               onChange={event =>
-                handleSwitchChange(event, event.target.checked, '3')
+                handleSwitchChange(event, event.target.checked)
               }
             />
             <FlexBox flexDirection="column" gap="10px">
@@ -142,7 +140,7 @@ export default function Subscription({ email }: SubscriptionProps) {
           </SubscriptionCardWrapper>
           <FlexBox margin="20px 0 0 0">
             {showNotification && (
-              <Notification type="success" isVisible={fadeOut}>
+              <Notification type={notificationType} isVisible={fadeOut}>
                 {notificationMessage}
               </Notification>
             )}
@@ -188,6 +186,7 @@ export const getServerSideProps: GetServerSideProps = async (
     return {
       props: {
         email: customerResp.data.email,
+        locale,
       },
     };
   } catch (err) {
