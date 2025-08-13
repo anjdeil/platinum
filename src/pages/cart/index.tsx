@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from '@/store';
 import { useGetUserTotalsQuery } from '@/store/rtk-queries/userTotals/userTotals';
 import { useCreateOrderMutation } from '@/store/rtk-queries/wooCustomApi';
 import { useGetProductsMinimizedMutation } from '@/store/rtk-queries/wpCustomApi';
-import { addCoupon } from '@/store/slices/cartSlice';
+import { addCoupon, clearConflictedItems } from '@/store/slices/cartSlice';
 import { CartPageWrapper } from '@/styles/cart/style';
 import { Container, FlexBox, StyledButton } from '@/styles/components';
 import { ProductsMinimizedType } from '@/types/components/shop/product/products';
@@ -79,10 +79,13 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
 
   const [cachedOrderItems, setCachedOrderItems] = useState(orderItems);
 
-  const { totalCost: cartCost } = getCartTotals(productsMinimized, cartItems);
   const { convertCurrency } = useCurrencyConverter();
 
-  const convertedCartCost = convertCurrency(cartCost);
+  const { totalCost: cartCost } = getCartTotals(
+    productsMinimized,
+    cartItems,
+    convertCurrency
+  );
 
   useEffect(() => {
     const handleCreateOrder = async () => {
@@ -150,6 +153,21 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
         lang: router.locale || defaultLanguage,
       });
       const productsMinimized = productsMinimizedData?.data?.data?.items || [];
+
+      // remove simple products with variation_id
+      const brokenItems = cartItems.filter(item => {
+        const product = productsMinimized.find(p => p.id === item.product_id);
+        return (
+          product &&
+          (product.parent_id === 0 || product.parent_id === null) &&
+          item.variation_id
+        );
+      });
+
+      if (brokenItems.length > 0) {
+        dispatch(clearConflictedItems(brokenItems));
+        return;
+      }
 
       setHasConflict(checkCartConflict(cartItems, productsMinimized));
     };
@@ -274,7 +292,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
               <OrderBar
                 miniCart={false}
                 isLoadingOrder={isLoadingOrder}
-                subtotal={convertedCartCost}
+                subtotal={cartCost}
                 symbol={symbol}
               />
             )}

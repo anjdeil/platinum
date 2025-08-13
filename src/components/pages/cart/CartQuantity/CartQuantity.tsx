@@ -1,9 +1,9 @@
+import MinusIcon from '@/components/global/icons/MinusIcon/MinusIcon';
+import PlusIcon from '@/components/global/icons/PlusIcon/PlusIcon';
+import { QuantityComponentProps } from '@/types/pages/cart';
+import debounce from 'lodash/debounce';
 import React, { useCallback, useState } from 'react';
 import { QuantityBlock, QuantityBtn, QuantityWrapper } from './style';
-import PlusIcon from '@/components/global/icons/PlusIcon/PlusIcon';
-import MinusIcon from '@/components/global/icons/MinusIcon/MinusIcon';
-import debounce from 'lodash/debounce';
-import { QuantityComponentProps } from '@/types/pages/cart';
 
 export const adaptItemToCartQuantity = (
   item: any

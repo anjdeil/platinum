@@ -5,7 +5,9 @@ import storage from 'redux-persist/lib/storage';
 import cartListenerMiddleware from './listeners/cartSliceListener';
 import { contactForm7Api } from './rtk-queries/contactFrom7/contactFromApi7';
 import { instagramCustomRtkApi } from './rtk-queries/instagramMedia';
+import { instockNotifierAPI } from './rtk-queries/instockNotifier';
 import { mailpoetApi } from './rtk-queries/mailpoetApi';
+import { mailsterApi } from './rtk-queries/mailsterApi';
 import { passwordResetApi } from './rtk-queries/passwordResetApi';
 import { userTotals } from './rtk-queries/userTotals/userTotals';
 import { wooCustomRktApi } from './rtk-queries/wooCustomApi';
@@ -21,7 +23,6 @@ import PopupSlice from './slices/PopupSlice';
 import ProductSlice from './slices/ProductSlice';
 import themeOptionsSlice from './slices/themeOptionsSlice';
 import userSlice from './slices/userSlice';
-import { instockNotifierAPI } from './rtk-queries/instockNotifier';
 
 const persistConfig = {
   key: 'root',
@@ -35,6 +36,7 @@ const rootReducer = combineReducers({
   [wpRtkApi.reducerPath]: wpRtkApi.reducer,
   [contactForm7Api.reducerPath]: contactForm7Api.reducer,
   [userTotals.reducerPath]: userTotals.reducer,
+  [mailsterApi.reducerPath]: mailsterApi.reducer,
   [mailpoetApi.reducerPath]: mailpoetApi.reducer,
   [wooCustomAuthRktApi.reducerPath]: wooCustomAuthRktApi.reducer,
   [instagramCustomRtkApi.reducerPath]: instagramCustomRtkApi.reducer,
@@ -72,6 +74,7 @@ export const setupStore = () => {
         userTotals.middleware,
         // saveCartSliceToLocalStorageMiddleware,
         mailpoetApi.middleware,
+        mailsterApi.middleware,
         wooCustomAuthRktApi.middleware,
         instagramCustomRtkApi.middleware,
         instockNotifierAPI.middleware,
