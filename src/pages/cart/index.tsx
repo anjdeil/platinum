@@ -229,24 +229,20 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
     handleChangeQuantity(productId, 'value', variationId, 0);
 
     //Google Analytics
-    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+    if (typeof window !== 'undefined') {
       const itemToRemove = innercartItems.find(
         item =>
           item.product_id === productId && item.variation_id === variationId
       );
 
       if (itemToRemove) {
-        window.gtag('event', 'remove_from_cart', {
-          currency: code,
-          value: itemToRemove.price * itemToRemove.quantity,
-          items: [
-            {
-              item_id: itemToRemove.product_id,
-              item_name: itemToRemove.name,
-              quantity: itemToRemove.quantity,
-              price: String(itemToRemove.price),
-            },
-          ],
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: 'remove_from_cart',
+          item_id: itemToRemove.id,
+          item_name: itemToRemove.name,
+          quantity: itemToRemove.quantity,
+          price: itemToRemove.price,
         });
       }
     }

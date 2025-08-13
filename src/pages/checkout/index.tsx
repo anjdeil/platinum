@@ -305,6 +305,39 @@ export default function CheckoutPage() {
   const [fetchUserData, { data: userData, isLoading: isUserDataLoading }] =
     useLazyFetchUserDataQuery();
 
+  //GTM
+  useEffect(() => {
+    if (
+      order &&
+      order.line_items?.length > 0 &&
+      typeof window !== 'undefined'
+    ) {
+      const gtmKey = `gtm-begin-checkout-${order.id}`;
+      const alreadyTracked = sessionStorage.getItem(gtmKey);
+
+      if (!alreadyTracked) {
+        // GTM: begin_checkout
+
+        const gtmPayload = {
+          event: 'begin_checkout',
+          currency: currencyCode || 'PLN',
+          value: order.total,
+          items: order.line_items.map(item => ({
+            item_id: item.variation_id || item.product_id,
+            item_name: item.name,
+            price: Number(item.price.toFixed(2)),
+            quantity: item.quantity,
+          })),
+        };
+
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push(gtmPayload);
+
+        sessionStorage.setItem(gtmKey, 'true');
+      }
+    }
+  }, [order, currencyCode]);
+
   /**
    * Coupons and loyalty status
    */
