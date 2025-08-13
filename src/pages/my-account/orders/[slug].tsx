@@ -109,29 +109,35 @@ const Order: FC<OrderPropsType> = ({ order }) => {
         );
         if (!alreadyTracked) {
           // GA: Purchase
-          if (typeof window.gtag === 'function') {
-            window.gtag('event', 'purchase', {
+          const items = order.line_items.map(item => ({
+            item_id: item.id,
+            item_name: item.name || '',
+            quantity: Number(item.quantity) || 1,
+            price: Number(item.price) || 0,
+          }));
+
+          const dlPayload = {
+            event: 'purchase',
+            ecommerce: {
               transaction_id: order.id,
               value: parseFloat(order.total),
-              currency: order.currency,
-              items: order.line_items.map(item => ({
-                id: item.sku || item.product_id,
-                name: item.name,
-                quantity: item.quantity,
-                price: String(item.price),
-              })),
-            });
-          }
+              currency: order.currency || 'PLN',
+              items: items,
+            },
+          };
+
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push(dlPayload);
 
           // FB Pixel: Purchase
           if (typeof window.fbq === 'function') {
             window.fbq('track', 'Purchase', {
               content_ids: order.line_items.map(
-                item => item.sku || item.product_id
+                item => item.id || item.product_id
               ),
               content_type: 'product',
               value: parseFloat(order.total),
-              currency: order.currency,
+              currency: order.currency || 'PLN',
             });
           }
 

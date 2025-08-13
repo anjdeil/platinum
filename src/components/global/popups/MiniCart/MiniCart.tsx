@@ -111,6 +111,23 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
       variation_id?: number,
       newQuantity?: number | boolean
     ) => {
+      const item = productsWithCartData.find(
+        cartItem =>
+          cartItem.product_id === product_id &&
+          cartItem.variation === variation_id
+      );
+
+      if (item && newQuantity === 0) {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: 'remove_from_cart',
+          item_id: item.id,
+          item_name: item.name,
+          quantity: item.quantity,
+          price: item.finalPrice ? item.finalPrice : 0,
+        });
+      }
+
       handleQuantityChange(
         cartItems,
         dispatch,
