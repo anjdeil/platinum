@@ -125,37 +125,28 @@ export default function ProductPage({
 
   //Google Analytics
   useEffect(() => {
-    if (product) {
+    if (product && typeof window !== 'undefined') {
       const price = product.price?.min_price || 0;
 
       const viewItemPayload = {
-        value: product.price?.min_price,
-        items: [
-          {
-            item_id: product.sku || product.id,
-            item_name: product.name,
-            item_category: product.categories.map(c => c.name).join('/'),
-            price: String(price),
-            quantity: 1,
-          },
-        ],
+        event: 'view_item',
+        item_id: product.id,
+        item_name: product.name,
+        price: price,
       };
 
-      if (typeof window !== 'undefined') {
-        // Google Analytics: view_item
-        if (typeof window.gtag === 'function') {
-          window.gtag('event', 'view_item', viewItemPayload);
-        }
+      // Google Analytics: view_item
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push(viewItemPayload);
 
-        // Facebook Pixel: ViewContent
-        if (typeof window.fbq === 'function') {
-          window.fbq('track', 'ViewContent', {
-            content_ids: [product.sku || product.id],
-            content_type: 'product',
-            value: price,
-            currency: 'PLN',
-          });
-        }
+      // Facebook Pixel: ViewContent
+      if (typeof window.fbq === 'function') {
+        window.fbq('track', 'ViewContent', {
+          content_ids: [product.id],
+          content_type: 'product',
+          value: price,
+          currency: 'PLN',
+        });
       }
     }
   }, [product]);

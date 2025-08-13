@@ -117,34 +117,23 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
     dispatch(updateCart(cartItem));
 
     //Analytics
-    const addToCartPayload = {
-      value: finalPrice ? finalPrice * quantity : 0,
-      items: [
-        {
-          item_id: currentVariation?.sku || product.sku || product.id,
-          item_name: product.name,
-          item_category: product.categories.map(c => c.name).join('/'),
-          price: String(finalPrice),
-          quantity,
-          ...(currentVariation && {
-            item_variant: currentVariation.attributes
-              ?.map(attr => attr.option)
-              .join(', '),
-          }),
-        },
-      ],
+    const gtmAddToCartPayload = {
+      event: 'add_to_cart',
+      item_id: currentVariation?.id || product.id,
+      item_name: product.name,
+      quantity: quantity,
+      price: finalPrice ? finalPrice : 0,
     };
 
     if (typeof window !== 'undefined') {
       // Google Analytics
-      if (typeof window.gtag === 'function') {
-        window.gtag('event', 'add_to_cart', addToCartPayload);
-      }
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push(gtmAddToCartPayload);
 
       // Facebook Pixel
       if (typeof window.fbq === 'function') {
         window.fbq('track', 'AddToCart', {
-          content_ids: [currentVariation?.sku || product.sku || product.id],
+          content_ids: [currentVariation?.id || product.id],
           content_type: 'product',
           value: finalPrice ? finalPrice * quantity : 0,
           currency: 'PLN',

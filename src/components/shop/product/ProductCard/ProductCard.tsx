@@ -79,6 +79,31 @@ const ProductCard: React.FC<ProductCardPropsType> = ({ product }) => {
           quantity: 1,
         })
       );
+
+      // GTM: Add to Cart
+      const gtmAddToCartPayload = {
+        event: 'add_to_cart',
+        item_id: product.id,
+        item_name: product.name,
+        quantity: 1,
+        price: finalPrice ? finalPrice : 0,
+      };
+
+      if (typeof window !== 'undefined') {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push(gtmAddToCartPayload);
+
+        // Facebook Pixel
+        if (typeof window.fbq === 'function') {
+          window.fbq('track', 'AddToCart', {
+            content_ids: [product.id],
+            content_type: 'product',
+            value: finalPrice ? finalPrice : 0,
+            currency: 'PLN',
+          });
+        }
+      }
+
       if (!isMobile) {
         dispatch(popupToggle({ popupType: 'mini-cart' }));
       }
