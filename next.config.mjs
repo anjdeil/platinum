@@ -13,7 +13,6 @@ const nextConfig = {
       'secure.gravatar.com',
       'instagram.fwaw3-2.fna.fbcdn.net',
       'scontent.cdninstagram.com',
-      'admin.platinumchetvertinovskaya.com',
       'img.youtube.com',
     ],
     remotePatterns: [
