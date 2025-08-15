@@ -11,6 +11,8 @@ export const LOYALTY_LEVELS = [
 
 export const DEFAULT_IMAGE = '/assets/images/not-found.webp';
 
+export const BASE_URL = 'https://platinumchetvertinovskaya.com';
+
 export const FREE_DELIVERY = 200;
 export const FREE_DELIVERY_EUROPE = 150;
 

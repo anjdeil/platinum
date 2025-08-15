@@ -1,13 +1,12 @@
 import { BreadcrumbType } from "@/types/components/global/breadcrumbs";
+import { BASE_URL } from "./consts";
 
 interface BreadcrumbSchema {
-    "@type": string;
-    "position": number;
-    "item": string;
-    "name": string;
+  "@type": string;
+  "position": number;
+  "item": string;
+  "name": string;
 }
-
-const BASE_URL = 'https://platinumchetvertinovskaya.com';
 
 export function generateBreadcrumbsSchemaLinks(
   links: BreadcrumbType[],

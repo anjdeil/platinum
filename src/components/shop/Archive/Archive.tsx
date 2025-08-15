@@ -18,6 +18,7 @@ import { useAppSelector } from '@/store';
 import { PagesNavigation, Title } from '@/styles/components';
 import { ArchivePropsType } from '@/types/components/shop/archive';
 import { CategoryType } from '@/types/pages/shop';
+import { BASE_URL } from '@/utils/consts';
 import { getPluralForm } from '@/utils/getPluralForm';
 import { Skeleton } from '@mui/material';
 import { useTranslations } from 'next-intl';
@@ -44,7 +45,6 @@ import {
   PagesNavigationWrapper,
 } from './styles';
 
-const BASE_URL = 'https://platinumchetvertinovskaya.com';
 const languageMap = {
   pl: 'pl-PL',
   en: 'en-US',
@@ -197,7 +197,7 @@ export const Archive: FC<ArchivePropsType> = props => {
         description: seoDescription,
         inLanguage: languageMap[locale as keyof typeof languageMap] ?? 'pl-PL',
         isPartOf: {
-          '@id': `https://platinumchetvertinovskaya.com/${locale}/#website`,
+          '@id': `${BASE_URL}/${locale}/#website`,
         },
         mainEntity: {
           '@type': 'ItemList',
