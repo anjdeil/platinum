@@ -14,6 +14,19 @@ export const SectionContainer = styled.section<SectionContainerProps>`
   }
 `;
 
+export const AmbassadorSectionContainer = styled.section<SectionContainerProps>`
+  width: 100%;
+  margin-bottom: 116px;
+
+  @media ${({ theme }) => theme.media.large} {
+    margin-bottom: 80px;
+  }
+
+  @media ${({ theme }) => theme.media.medium} {
+    margin-bottom: 64px;
+  }
+`;
+
 export const RecommendContainer = styled.div`
   display: flex;
   flex-direction: column;
