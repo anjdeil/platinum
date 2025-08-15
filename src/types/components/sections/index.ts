@@ -95,6 +95,60 @@ export const ContactsSectionSchema = z.object({
   contacts_separator: z.string().optional(),
 });
 
+export const AmbassadorHeroSectionSchema = z.object({
+  _type: z.literal('ambassador_hero'),
+  image: z.string().url(),
+  title: z.string(),
+  text: z.string(),
+  years: z.string(),
+  sub_text: z.string(),
+});
+
+export const AmbassadorProvideSectionSchema = z.object({
+  _type: z.literal('ambassador_provide'),
+  title: z.string(),
+  items: z.array(
+    z.object({
+      item_text: z.string(),
+    })
+  ),
+});
+
+export const AmbassadorBenefitsSectionSchema = z.object({
+  _type: z.literal('ambassador_benefits'),
+  title: z.string(),
+  items: z.array(
+    z.object({
+      item_image: z.string().url(),
+      item_text: z.string(),
+    })
+  ),
+});
+
+export const AmbassadorAboutSectionSchema = z.object({
+  _type: z.literal('ambassador_about'),
+  title: z.string(),
+  items: z.array(
+    z.object({
+      icons: z.array(
+        z.object({
+          icon_image: z.string().url(),
+        })
+      ),
+      item_text: z.string(),
+      item_link: z.string().url().optional(),
+    })
+  ),
+  text: z.string(),
+  button_text: z.string(),
+  button_link: z.string().url().optional(),
+});
+
+export const AmbassadorImageSectionSchema = z.object({
+  _type: z.literal('ambassador_image'),
+  image: z.string().url(),
+});
+
 export const HeroSectionSchema = z.object({
   _type: z.literal('hero'),
   is_reverse: z.boolean(),
@@ -156,6 +210,11 @@ export const SectionsTypeSchema = z.union([
   BlogSectionSchema,
   LoyaltySectionSchema,
   ContactsSectionSchema,
+  AmbassadorProvideSectionSchema,
+  AmbassadorHeroSectionSchema,
+  AmbassadorBenefitsSectionSchema,
+  AmbassadorAboutSectionSchema,
+  AmbassadorImageSectionSchema,
   HeroSectionSchema,
   SplitSectionSchema,
   RichTextSectionSchema,
@@ -178,6 +237,11 @@ export type FeaturesSectionData = z.infer<typeof FeaturesSectionSchema>;
 export type BlogSectionData = z.infer<typeof BlogSectionSchema>;
 export type LoyaltySectionData = z.infer<typeof LoyaltySectionSchema>;
 export type ContactsSectionData = z.infer<typeof ContactsSectionSchema>;
+export type AmbassadorHeroSectionData = z.infer<typeof AmbassadorHeroSectionSchema>;
+export type AmbassadorProvideSectionData = z.infer<typeof AmbassadorProvideSectionSchema>;
+export type AmbassadorBenefitsSectionData = z.infer<typeof AmbassadorBenefitsSectionSchema>;
+export type AmbassadorAboutSectionData = z.infer<typeof AmbassadorAboutSectionSchema>;
+export type AmbassadorImageSectionData = z.infer<typeof AmbassadorImageSectionSchema>;
 export type HeroSectionData = z.infer<typeof HeroSectionSchema>;
 export type RichTextSectionData = z.infer<typeof RichTextSectionSchema>;
 export type RichTextSectionProps = z.infer<typeof RichTextSectionPropsSchema>;

@@ -3,6 +3,11 @@ import { Container } from '@/styles/components';
 import { SectionsType } from '@/types/components/sections';
 import { normalizeSlides } from '@/utils/normalizeSlides';
 import { AboutPlatinumSection } from '../AboutPlatinumSection';
+import { AmbassadorAboutSection } from '../AmbassadorAboutSection';
+import { AmbassadorBenefitsSection } from '../AmbassadorBenefitsSection';
+import { AmbassadorHeroSection } from '../AmbassadorHeroSection';
+import { AmbassadorImageSection } from '../AmbassadorImageSection';
+import { AmbassadorProvideSection } from '../AmbassadorProvideSection';
 import { BlogSection } from '../BlogSection';
 import { CategoriesSection } from '../CategoriesSection';
 import { ContactsSection } from '../ContactsSection';
@@ -109,6 +114,57 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
                   key={index}
                   subtitle={section.subtitle}
                   title={section.title}
+                />
+              </Container>
+            );
+
+          case 'ambassador_hero':
+            return (
+              <Container key={index}>
+                <AmbassadorHeroSection
+                  key={index}
+                  image={section.image}
+                  title={section.title}
+                  text={section.text}
+                  years={section.years}
+                  sub_text={section.sub_text}
+                />
+              </Container>
+            );
+
+          case 'ambassador_provide':
+            return (
+              <AmbassadorProvideSection
+                key={index}
+                title={section.title}
+                items={section.items}
+              />
+            );
+
+          case 'ambassador_benefits':
+            return (
+              <Container key={index}>
+                <AmbassadorBenefitsSection
+                  key={index}
+                  title={section.title}
+                  items={section.items}
+                />
+              </Container>
+            );
+
+          case 'ambassador_image':
+            return <AmbassadorImageSection key={index} image={section.image} />;
+
+          case 'ambassador_about':
+            return (
+              <Container key={index}>
+                <AmbassadorAboutSection
+                  key={index}
+                  title={section.title}
+                  items={section.items}
+                  text={section.text}
+                  button_text={section.button_text}
+                  button_link={section.button_link}
                 />
               </Container>
             );
