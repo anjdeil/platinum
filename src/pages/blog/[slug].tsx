@@ -29,6 +29,7 @@ import {
   StyledContainer,
   StyledHeroImage,
 } from '@/styles/blog/styles';
+import { BASE_URL } from '@/utils/consts';
 import { getCleanText } from '@/utils/getCleanText';
 import Head from 'next/head';
 
@@ -221,7 +222,7 @@ const BlogPostPage = ({
         author: {
           '@type': 'Organization',
           name: 'Platinum by Chetvertinovskaya Liubov',
-          url: 'https://platinumchetvertinovskaya.com',
+          url: BASE_URL,
         },
         publisher: {
           '@id': `${postUrl}#publisher`,
@@ -236,7 +237,7 @@ const BlogPostPage = ({
         name: 'Platinum by Chetvertinovskaya Liubov',
         logo: {
           '@type': 'ImageObject',
-          url: 'https://platinumchetvertinovskaya.com/assets/icons/logo.png',
+          url: `${BASE_URL}/assets/icons/logo.png`,
         },
       },
       {

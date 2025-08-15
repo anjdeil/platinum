@@ -1,15 +1,16 @@
+import InfoPopup from '@/components/global/popups/InfoPopup/InfoPopup';
+import { PageTitle } from '@/components/pages/pageTitle';
 import { SectionRenderer } from '@/components/sections/SectionRenderer';
 import { customRestApi } from '@/services/wpCustomApi';
 import { SectionsType } from '@/types/components/sections';
-import { GetServerSideProps, GetServerSidePropsContext } from 'next';
-import { validateWpPage } from '@/utils/zodValidators/validateWpPage';
 import {
   PageDataFullType,
   PageDataItemType,
   SeoDataType,
 } from '@/types/services';
-import InfoPopup from '@/components/global/popups/InfoPopup/InfoPopup';
-import { PageTitle } from '@/components/pages/pageTitle';
+import { BASE_URL } from '@/utils/consts';
+import { validateWpPage } from '@/utils/zodValidators/validateWpPage';
+import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 
 const languageMap = {
@@ -102,39 +103,37 @@ interface HomeProps {
 
 const Home: React.FC<HomeProps> = ({ sections, locale, seoData, fullUrl }) => {
   // SEO Data
-  const canonicalUrl = fullUrl || 'https://platinumchetvertinovskaya.com/';
+  const canonicalUrl = fullUrl || `${BASE_URL}/`;
   const pageTitle = seoData?.title || 'Platinum by Chetvertinovskaya Liubov';
   const pageDescription =
     seoData?.description ||
     'European Brand for Professionals PLATINUM by Chetvertinovskaya Liubov supports stylists in creating perfect eyelash and eyebrow designs.';
-  const pageImage =
-    seoData?.images?.[0] ||
-    'https://platinumchetvertinovskaya.com/assets/icons/logo.png';
+  const pageImage = seoData?.images?.[0] || `${BASE_URL}/assets/icons/logo.png`;
   const safeLocale = locale ?? 'pl';
   const structuredData = {
     '@context': 'https://schema.org',
     '@graph': [
       {
         '@type': 'WebSite',
-        '@id': `https://platinumchetvertinovskaya.com/#website`,
-        url: `https://platinumchetvertinovskaya.com/${safeLocale}/`,
+        '@id': `${BASE_URL}/#website`,
+        url: `${BASE_URL}/${safeLocale}/`,
         name: pageTitle,
         inLanguage:
           languageMap[safeLocale as keyof typeof languageMap] ?? 'pl-PL',
         potentialAction: {
           '@type': 'SearchAction',
-          target: `https://platinumchetvertinovskaya.com/${safeLocale}/search/{search_term_string}`,
+          target: `${BASE_URL}/${safeLocale}/search/{search_term_string}`,
           'query-input': 'required name=search_term_string',
         },
       },
       {
         '@type': 'Organization',
-        '@id': 'https://platinumchetvertinovskaya.com/#organization',
+        '@id': `${BASE_URL}/#organization`,
         name: pageTitle,
-        url: 'https://platinumchetvertinovskaya.com/',
+        url: BASE_URL,
         logo: {
           '@type': 'ImageObject',
-          url: 'https://platinumchetvertinovskaya.com/assets/icons/logo.png',
+          url: `${BASE_URL}/assets/icons/logo.png`,
         },
         contactPoint: [
           {
@@ -182,7 +181,7 @@ const Home: React.FC<HomeProps> = ({ sections, locale, seoData, fullUrl }) => {
             '@type': 'ListItem',
             position: 1,
             name: 'Home',
-            item: `https://platinumchetvertinovskaya.com/${safeLocale}/`,
+            item: `${BASE_URL}/${safeLocale}/`,
           },
         ],
       },

@@ -15,6 +15,7 @@ import {
   PageDataItemType,
   SeoDataType,
 } from '@/types/services';
+import { BASE_URL } from '@/utils/consts';
 import { getCleanText } from '@/utils/getCleanText';
 import { validateWpPage } from '@/utils/zodValidators/validateWpPage';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
@@ -116,32 +117,31 @@ const SlugPage = ({
     fullText.slice(0, 160) ||
     `${pageTitle}: Learn more about Platinum by Chetvertinovskaya Liubov`;
   const pageImage =
-    seoData?.og?.image_url ||
-    'https://platinumchetvertinovskaya.com/assets/icons/logo.png';
+    seoData?.og?.image_url || `${BASE_URL}/assets/icons/logo.png`;
 
   const structuredData = {
     '@context': 'https://schema.org',
     '@graph': [
       {
         '@type': 'WebPage',
-        '@id': `https://platinumchetvertinovskaya.com/${safeLocale}/${slug}`,
-        url: `https://platinumchetvertinovskaya.com/${safeLocale}/${slug}`,
+        '@id': `${BASE_URL}/${safeLocale}/${slug}`,
+        url: `${BASE_URL}/${safeLocale}/${slug}`,
         name: pageSeoTitle,
         description: pageDescription,
         inLanguage:
           languageMap[safeLocale as keyof typeof languageMap] ?? 'pl-PL',
         isPartOf: {
-          '@id': `https://platinumchetvertinovskaya.com/${safeLocale}/#website`,
+          '@id': `${BASE_URL}/${safeLocale}/#website`,
         },
       },
       {
         '@type': 'Organization',
-        '@id': 'https://platinumchetvertinovskaya.com/#organization',
+        '@id': `${BASE_URL}/#organization`,
         name: 'Platinum by Chetvertinovskaya Liubov',
-        url: 'https://platinumchetvertinovskaya.com/',
+        url: BASE_URL,
         logo: {
           '@type': 'ImageObject',
-          url: 'https://platinumchetvertinovskaya.com/assets/icons/logo.png',
+          url: `${BASE_URL}/assets/icons/logo.png`,
         },
         contactPoint: [
           {
@@ -189,13 +189,13 @@ const SlugPage = ({
             '@type': 'ListItem',
             position: 1,
             name: 'Home',
-            item: `https://platinumchetvertinovskaya.com/${safeLocale}/`,
+            item: `${BASE_URL}/${safeLocale}/`,
           },
           {
             '@type': 'ListItem',
             position: 2,
             name: pageTitle,
-            item: `https://platinumchetvertinovskaya.com/${safeLocale}/${slug}`,
+            item: `${BASE_URL}/${safeLocale}/${slug}`,
           },
         ],
       },

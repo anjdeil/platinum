@@ -13,13 +13,13 @@ import { Container, StyledHeaderWrapper } from '@/styles/components';
 import { BlogCategoryType, BlogParsedItemType } from '@/types/pages/blog';
 import { CustomDataPostsType } from '@/types/services';
 import { serverParseHTMLContent } from '@/utils/blog/serverParseHTMLContent';
+import { BASE_URL } from '@/utils/consts';
 import { validateWpBlogPage } from '@/utils/zodValidators/validateWpBlogPage';
 import { omit } from 'lodash';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-const BASE_URL = 'https://platinumchetvertinovskaya.com';
 const languageMap = {
   pl: 'pl-PL',
   en: 'en-US',
@@ -196,7 +196,7 @@ const BlogPage: React.FC<BlogProps> = ({
         description: pageDescription,
         inLanguage: languageMap[locale as keyof typeof languageMap] ?? 'pl-PL',
         isPartOf: {
-          '@id': `https://platinumchetvertinovskaya.com/${locale}/#website`,
+          '@id': `${BASE_URL}/${locale}/#website`,
         },
         author: {
           '@type': 'Organization',
@@ -207,7 +207,7 @@ const BlogPage: React.FC<BlogProps> = ({
           name: 'Platinum by Chetvertinovskaya Liubov',
           logo: {
             '@type': 'ImageObject',
-            url: 'https://platinumchetvertinovskaya.com/assets/icons/logo.png',
+            url: `${BASE_URL}/assets/icons/logo.png`,
           },
         },
         mainEntity: {
@@ -227,13 +227,13 @@ const BlogPage: React.FC<BlogProps> = ({
             '@type': 'ListItem',
             position: 1,
             name: 'Home',
-            item: `https://platinumchetvertinovskaya.com/${locale}/`,
+            item: `${BASE_URL}/${locale}/`,
           },
           {
             '@type': 'ListItem',
             position: 2,
             name: 'Blog',
-            item: `https://platinumchetvertinovskaya.com/${locale}/${
+            item: `${BASE_URL}/${locale}/${
               selectedCategory ? `blog?category=${selectedCategory}` : 'blog'
             }`,
           },
