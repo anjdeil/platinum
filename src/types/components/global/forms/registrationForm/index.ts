@@ -1,5 +1,3 @@
-import { z } from 'zod';
-import { passwordSchema, phoneNumberValidation, termsSchema } from '../common';
 import {
   apartmentRegex,
   cityRegex,
@@ -9,6 +7,8 @@ import {
   postcodeRegex,
   streetRegex,
 } from '@/utils/validation';
+import { z } from 'zod';
+import { passwordSchema, phoneNumberValidation, termsSchema } from '../common';
 
 export const RegistrationFormSchema = (isLoggedIn: boolean, t: any) => {
   const schema = z
@@ -85,17 +85,17 @@ export const RegistrationFormSchema2 = (isLoggedIn: boolean, t: any) => {
         .regex(postcodeRegex, t('invalidPostcodeFormat')),
       password: !isLoggedIn
         ? z
-            .string()
-            .nonempty(t('pleaseFillInThePassword'))
-            .min(8, t('minChar', { count: 8 }))
-            .max(25, t('yourPasswordIsTooLong'))
-            .refine(value => /[A-Z]/.test(value), t('PasswordCapitalLetter'))
-            .refine(value => /[a-z]/.test(value), t('PasswordLowercaseLetter'))
-            .refine(value => /[0-9]/.test(value), t('PasswordDigit'))
-            .refine(
-              value => /[^A-Za-z0-9]/.test(value),
-              t('PasswordSpecialChar')
-            )
+          .string()
+          .nonempty(t('pleaseFillInThePassword'))
+          .min(8, t('minChar', { count: 8 }))
+          .max(25, t('yourPasswordIsTooLong'))
+          .refine(value => /[A-Z]/.test(value), t('PasswordCapitalLetter'))
+          .refine(value => /[a-z]/.test(value), t('PasswordLowercaseLetter'))
+          .refine(value => /[0-9]/.test(value), t('PasswordDigit'))
+          .refine(
+            value => /[^A-Za-z0-9]/.test(value),
+            t('PasswordSpecialChar')
+          )
         : z.string().optional(),
       confirmPassword: !isLoggedIn
         ? z.string().nonempty(t('pleaseConfirmYourPassword'))
@@ -121,6 +121,7 @@ export const CheckoutRegistrationFormSchema = z.object({
       first_name: z.string(),
       last_name: z.string(),
       company: z.string().optional(),
+      nip: z.string().optional(),
       address_1: z.string().optional(),
       address_2: z.string().optional(),
       city: z.string().optional(),

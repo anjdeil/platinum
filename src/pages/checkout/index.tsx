@@ -60,6 +60,7 @@ import {
 } from '@/types/services/wooCustomApi/customer';
 import getCartCheckoutTotals from '@/utils/cart/getCartCheckoutTotals';
 import checkCustomerDataChanges from '@/utils/checkCustomerDataChanges';
+import { readNip } from '@/utils/readNip';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
 export function getServerSideProps() {
@@ -492,8 +493,9 @@ export default function CheckoutPage() {
       );
 
       if (hasChanges) {
-        const formNipMeta = formOrderData?.metaData?.find(
-          meta => meta.key === 'nip'
+        const nipValue = readNip(
+          formOrderData?.billing,
+          formOrderData?.metaData
         );
 
         const preparedData = {
@@ -514,6 +516,7 @@ export default function CheckoutPage() {
             company: isInvoice
               ? formOrderData.billing?.company || ''
               : customer.billing.company || '',
+            nip: isInvoice ? nipValue || '' : '',
           },
           shipping: {
             first_name: isShippingAddressDifferent
@@ -541,12 +544,13 @@ export default function CheckoutPage() {
               ? formOrderData.shipping?.postcode
               : customer.shipping?.postcode || '',
           },
+          // meta_data: [],
           meta_data:
-            isInvoice && isNipChanged && formNipMeta
+            isInvoice && isNipChanged && nipValue
               ? [
                   {
                     key: 'nip',
-                    value: formNipMeta.value,
+                    value: nipValue,
                   },
                 ]
               : [],

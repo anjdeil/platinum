@@ -12,7 +12,7 @@ import {
 } from '@/utils/checkout/getFormattedUserData';
 import { getValidationSchema } from '@/utils/getValidationSchema';
 import { countryOptions } from '@/utils/mockdata/countryOptions';
-import { getMetaDataValue } from '@/utils/myAcc/getMetaDataValue';
+import { readNip } from '@/utils/readNip';
 import { useLocale, useTranslations } from 'next-intl';
 import { FC, useEffect, useMemo, useRef } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
@@ -117,9 +117,13 @@ export const BillingForm: FC<BillingFormProps> = ({
     }
   }, [customer]);
 
-  const nipFromMeta = customer
-    ? getMetaDataValue(customer.meta_data, 'nip')
-    : '';
+  // const nipFromMeta = customer
+  //   ? getMetaDataValue(customer.meta_data, 'nip')
+  //   : '';
+
+  const nipValue =
+    customer &&
+    readNip(customer.billing as BillingType, customer.meta_data || []);
 
   useEffect(() => {
     if (customer) {
@@ -142,6 +146,12 @@ export const BillingForm: FC<BillingFormProps> = ({
       });
 
       setValue('country', billing?.country || 'PL');
+
+      const initialNip = readNip(
+        billing as BillingType,
+        customer.meta_data || []
+      );
+      setValue('nip', initialNip || '');
 
       if (different_address) {
         setValue('shipping_first_name', shipping?.first_name || '');
@@ -166,7 +176,11 @@ export const BillingForm: FC<BillingFormProps> = ({
   useEffect(() => {
     if (invoice && customer) {
       setValue('company', customer.billing?.company || '');
-      setValue('nip', nipFromMeta);
+      const nipValue = readNip(
+        customer.billing as BillingType,
+        customer.meta_data || []
+      );
+      setValue('nip', nipValue || '');
       setIsInvoice(true);
     }
 
@@ -493,7 +507,7 @@ export const BillingForm: FC<BillingFormProps> = ({
                         placeholder={tValidation('nipPlaceholder')}
                         validation={validationSchema('nip')}
                         setValue={setValue}
-                        defaultValue={nipFromMeta || ''}
+                        defaultValue={nipValue || ''}
                       />
                     </AnimatedWrapper>
                   </StyledFormWrapper>
