@@ -50,7 +50,9 @@ export const AmbassadorAboutSection: React.FC<AmbassadorAboutSectionProps> = ({
         </LeftBlock>
         <RightBlock>
           <RichTextSection text={text} />
-          <StyledButtonLink href={button_link}>{button_text}</StyledButtonLink>
+          <StyledButtonLink href={button_link} target="_blank">
+            {button_text}
+          </StyledButtonLink>
         </RightBlock>
       </StyledWrapper>
     </AmbassadorSectionContainer>
