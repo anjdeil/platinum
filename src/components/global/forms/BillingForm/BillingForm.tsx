@@ -1,4 +1,26 @@
+import { useGetCustomerData } from '@/hooks/useGetCustomerData';
+import { CustomForm, Title } from '@/styles/components';
+import { RegistrationFormType } from '@/types/components/global/forms/registrationForm';
+import {
+  BillingType,
+  MetaDataType,
+  ShippingType,
+} from '@/types/services/wooCustomApi/customer';
+import {
+  getFormattedUserData,
+  ReqData,
+} from '@/utils/checkout/getFormattedUserData';
+import { getValidationSchema } from '@/utils/getValidationSchema';
+import { countryOptions } from '@/utils/mockdata/countryOptions';
+import { getMetaDataValue } from '@/utils/myAcc/getMetaDataValue';
+import { useLocale, useTranslations } from 'next-intl';
+import { FC, useEffect, useMemo, useRef } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
+import CustomCountrySelect from '../../selects/CustomCountrySelect/CustomCountrySelect';
+import CustomTextField from '../CustomTextField/CustomTextField';
+import { BillingFormSkeleton } from './BillingFormSkeleton';
+import { ConfirmationRegCard } from './ConfirmationRegCard';
+import { FormCheckboxUnControlled } from './FormCheckboxUnControlled';
 import {
   AnimatedWrapper,
   StyledFomContainer,
@@ -8,28 +30,6 @@ import {
   StyledSingleCheckBoxWrapper,
   VariationFields,
 } from './style';
-import { CustomForm, Title } from '@/styles/components';
-import { useLocale, useTranslations } from 'next-intl';
-import { ConfirmationRegCard } from './ConfirmationRegCard';
-import { getValidationSchema } from '@/utils/getValidationSchema';
-import { FC, useEffect, useMemo, useRef } from 'react';
-import CustomTextField from '../CustomTextField/CustomTextField';
-import { useGetCustomerData } from '@/hooks/useGetCustomerData';
-import CustomCountrySelect from '../../selects/CustomCountrySelect/CustomCountrySelect';
-import { countryOptions } from '@/utils/mockdata/countryOptions';
-import {
-  getFormattedUserData,
-  ReqData,
-} from '@/utils/checkout/getFormattedUserData';
-import {
-  BillingType,
-  MetaDataType,
-  ShippingType,
-} from '@/types/services/wooCustomApi/customer';
-import { BillingFormSkeleton } from './BillingFormSkeleton';
-import { RegistrationFormType } from '@/types/components/global/forms/registrationForm';
-import { getMetaDataValue } from '@/utils/myAcc/getMetaDataValue';
-import { FormCheckboxUnControlled } from './FormCheckboxUnControlled';
 
 type OrderFormData = {
   billing: BillingType | null;
