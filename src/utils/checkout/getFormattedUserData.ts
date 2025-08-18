@@ -70,6 +70,7 @@ export const getFormattedUserData = (billingData: ReqData, locale?: string) => {
     // state: city,
     phone,
     company: company || '',
+    nip: nip || '',
   };
 
   const formattedMetaData: MetaDataType[] = [
@@ -109,6 +110,7 @@ export const getFormattedUserData = (billingData: ReqData, locale?: string) => {
         country,
         email,
         phone,
+        nip,
       },
       shipping: {
         first_name: shipping_first_name ? shipping_first_name : first_name,

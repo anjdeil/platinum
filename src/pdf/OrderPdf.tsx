@@ -1,5 +1,8 @@
 import { OrderType } from '@/types/services';
+import { lineOrderItems } from '@/types/store/reducers/сartSlice';
 import getSubtotalByLineItems from '@/utils/cart/getSubtotalByLineItems';
+import { formatPrice } from '@/utils/price/formatPrice';
+import { readNip } from '@/utils/readNip';
 import {
   Document,
   Font,
@@ -9,9 +12,6 @@ import {
   Text,
   View,
 } from '@react-pdf/renderer';
-import { formatPrice } from '@/utils/price/formatPrice';
-import { lineOrderItems } from '@/types/store/reducers/сartSlice';
-import { getMetaDataValue } from '@/utils/myAcc/getMetaDataValue';
 import React from 'react';
 
 Font.register({
@@ -139,7 +139,8 @@ const OrderPdf = ({
   const formattedPrice = order?.total ? formatPrice(+order?.total) : '—';
   const formattedTax = order?.total_tax ? formatPrice(+order?.total_tax) : null;
 
-  const nipFromMeta = order ? getMetaDataValue(order.meta_data, 'nip') : '';
+  // const nipFromMeta = order ? getMetaDataValue(order.meta_data, 'nip') : '';
+  const nip = readNip(order.billing, order.meta_data);
 
   const isShippingData = () => {
     if (!order?.shipping) return false;
@@ -449,13 +450,13 @@ const OrderPdf = ({
           </View>
         </View>
 
-        {Boolean(nipFromMeta) && (
+        {Boolean(nip) && (
           <View style={styles.split}>
             <View style={styles.splitFirst}>
               <Text style={styles.text}>{t('nip')}</Text>
             </View>
             <View style={styles.splitLast}>
-              <Text style={styles.text}>{nipFromMeta || '—'}</Text>
+              <Text style={styles.text}>{nip || '—'}</Text>
             </View>
           </View>
         )}
