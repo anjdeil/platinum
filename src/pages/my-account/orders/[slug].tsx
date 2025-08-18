@@ -14,6 +14,7 @@ import { AccountInfoWrapper, AccountTitle } from '@/styles/components';
 import { MetaDataType, OrderType } from '@/types/services/wooCustomApi/shop';
 import areBillingAndShippingEqual from '@/utils/areBillingAndShippingEqual';
 import parseCookies from '@/utils/parseCookies';
+import { readNip } from '@/utils/readNip';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
@@ -162,12 +163,19 @@ const Order: FC<OrderPropsType> = ({ order }) => {
     order.shipping
   );
 
-  const nip = order.meta_data.find(({ key, value }) => key === 'nip' && value);
+  // const nip = order.meta_data.find(({ key, value }) => key === 'nip' && value);
+  const nip = readNip(order.billing, order.meta_data);
 
   const additionalBillingFields: MetaDataType[] = [];
   const additionalShippingFields: MetaDataType[] = [];
 
-  if (nip) additionalBillingFields.push(nip);
+  if (nip) {
+    additionalBillingFields.push({
+      id: 0,
+      key: 'nip',
+      value: nip,
+    });
+  }
 
   return (
     <AccountLayout

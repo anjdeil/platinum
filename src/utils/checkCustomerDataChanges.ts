@@ -44,7 +44,7 @@ function checkCustomerDataChanges(
 
   const nipFromForm = readNip(formBilling, formOrderDataMeta);
   const nipFromCustomer = readNip(customer.billing as any, customer.meta_data || []);
-  const isNipChanged = !!isInvoice && (nipFromForm !== nipFromCustomer);
+  const isNipChanged = isInvoice && (nipFromForm !== nipFromCustomer);
 
   const isShippingChanged = isShippingAddressDifferent
     ? Object.keys(formShipping).some(key => {

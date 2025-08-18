@@ -493,13 +493,10 @@ export default function CheckoutPage() {
       );
 
       if (hasChanges) {
-        // const formNipMeta = formOrderData?.metaData?.find(
-        //   meta => meta.key === 'nip'
-        // );
-
-        const nipValue =
-          formOrderData?.billing?.nip?.trim() ||
-          readNip(formOrderData?.billing, formOrderData?.metaData);
+        const nipValue = readNip(
+          formOrderData?.billing,
+          formOrderData?.metaData
+        );
 
         const preparedData = {
           email: formOrderData.billing?.email || '',
@@ -547,16 +544,16 @@ export default function CheckoutPage() {
               ? formOrderData.shipping?.postcode
               : customer.shipping?.postcode || '',
           },
-          meta_data: [],
-          // meta_data:
-          //   isInvoice && isNipChanged && formNipMeta
-          //     ? [
-          //         {
-          //           key: 'nip',
-          //           value: formNipMeta.value,
-          //         },
-          //       ]
-          //     : [],
+          // meta_data: [],
+          meta_data:
+            isInvoice && isNipChanged && nipValue
+              ? [
+                  {
+                    key: 'nip',
+                    value: nipValue,
+                  },
+                ]
+              : [],
         };
 
         try {

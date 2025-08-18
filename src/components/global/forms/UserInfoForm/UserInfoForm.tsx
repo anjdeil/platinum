@@ -1,8 +1,4 @@
-import { FC, useEffect, useMemo, useState } from 'react';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import 'react-international-phone/style.css';
+import { useUpdateCustomerMutation } from '@/store/rtk-queries/wooCustomApi';
 import {
   CustomForm,
   FlexBox,
@@ -10,21 +6,28 @@ import {
   FormWrapperBottom,
   InfoCard,
   StyledButton,
+  Title,
 } from '@/styles/components';
-import { isAuthErrorResponseType } from '@/utils/isAuthErrorResponseType';
 import { UserInfoFormSchema } from '@/types/components/global/forms/userInfoForm';
-import { Title } from '@/styles/components';
-import { CircularProgress } from '@mui/material';
-import CustomCountrySelect from '../../selects/CustomCountrySelect/CustomCountrySelect';
-import { useLocale, useTranslations } from 'next-intl';
-import Notification from '../../Notification/Notification';
-import { CustomFormInput } from '../CustomFormInput';
-import { WooCustomerReqType } from '@/types/services/wooCustomApi/customer';
+import {
+  BillingType,
+  WooCustomerReqType,
+} from '@/types/services/wooCustomApi/customer';
+import { isAuthErrorResponseType } from '@/utils/isAuthErrorResponseType';
 import { countryOptions } from '@/utils/mockdata/countryOptions';
-import { getMetaDataValue } from '@/utils/myAcc/getMetaDataValue';
+import { readNip } from '@/utils/readNip';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { CircularProgress } from '@mui/material';
+import { useLocale, useTranslations } from 'next-intl';
+import { FC, useEffect, useMemo, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import 'react-international-phone/style.css';
+import { z } from 'zod';
+import Notification from '../../Notification/Notification';
+import CustomCountrySelect from '../../selects/CustomCountrySelect/CustomCountrySelect';
 import { FormCheckbox } from '../BillingForm/FormCheckbox';
 import { AnimatedWrapper, VariationFields } from '../BillingForm/style';
-import { useUpdateCustomerMutation } from '@/store/rtk-queries/wooCustomApi';
+import { CustomFormInput } from '../CustomFormInput';
 
 const customerShippingInfo = (customer: WooCustomerReqType) => {
   if (!customer) {
@@ -83,12 +86,15 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
     mode: 'onChange',
   });
 
-  const nipFromMeta = useMemo(() => {
-    return customer ? getMetaDataValue(customer.meta_data || [], 'nip') : '';
+  const nipValue = useMemo(() => {
+    return (
+      customer &&
+      readNip(customer.billing as BillingType, customer.meta_data || [])
+    );
   }, [customer]);
 
   const invoiceData = useMemo(() => {
-    return customer?.billing?.company || nipFromMeta;
+    return customer?.billing?.company || nipValue;
   }, [customer]);
 
   useEffect(() => {
@@ -156,7 +162,7 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
         postcodeShipping: customer.shipping?.postcode || '',
         shippingAddress: isShippingInfo,
         company: customer.billing?.company || '',
-        nip: nipFromMeta,
+        nip: nipValue,
       });
     }
   }, [customer, locale]);
@@ -209,6 +215,7 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
         address_2: formData.address_2,
         postcode: formData.postcode,
         company: (isInvoice && formData.company) || '',
+        nip: (isInvoice && formData.nip) || '',
       },
       shipping: {
         first_name: (isShipping && formData.first_nameShipping) || '',
@@ -220,6 +227,7 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
         address_2: (isShipping && formData.address_2Shipping) || '',
         postcode: (isShipping && formData.postcodeShipping) || '',
       },
+      // meta_data: [],
       meta_data: [
         {
           key: 'nip',
@@ -442,7 +450,7 @@ export const UserInfoForm: FC<UserInfoFormProps> = ({
           inputTag="input"
           inputType="text"
           placeholder={tValidation('nipPlaceholder')}
-          defaultValue={nipFromMeta || ''}
+          defaultValue={nipValue || ''}
           setValue={setValue}
         />
       </AnimatedWrapper>
