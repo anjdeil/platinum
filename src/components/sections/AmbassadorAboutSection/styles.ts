@@ -139,6 +139,7 @@ export const StyledButtonLink = styled.a`
   justify-content: center;
   align-items: center;
   text-decoration: none;
+  text-align: center;
 
   &:hover {
     background-color: ${({ theme }) => theme.background.main};
