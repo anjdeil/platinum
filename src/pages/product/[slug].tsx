@@ -15,6 +15,7 @@ import { useGetProductsQuery } from '@/store/rtk-queries/wpCustomApi';
 import { Container, StyledSectionWrapper, Title } from '@/styles/components';
 import { BreadcrumbType } from '@/types/components/global/breadcrumbs';
 import { ProductType } from '@/types/components/shop/product/products';
+import { BASE_URL } from '@/utils/consts';
 import { validateCustomSingleProduct } from '@/utils/zodValidators/validateCustomSingleProduct';
 import { Box } from '@mui/material';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
@@ -152,38 +153,77 @@ export default function ProductPage({
   }, [product]);
 
   //SEO
-  const productTitle = product?.seo_data?.title || product?.name;
+  const productTitle = product?.seo_data?.title || product?.name || '';
   const productDescription =
-    product?.seo_data?.description || product?.description?.slice(0, 160);
-  const productImage =
-    product?.seo_data?.images?.[0]?.['image:loc'] || product?.images?.[0]?.src;
+    product?.seo_data?.description || product?.description?.slice(0, 160) || '';
+  const productImages =
+    product?.seo_data?.images
+      ?.map(img =>
+        img['image:loc']?.startsWith('http')
+          ? img['image:loc']
+          : `${BASE_URL}${img['image:loc']}`
+      )
+      .filter(Boolean) ||
+    product?.images
+      ?.map(img =>
+        img.src?.startsWith('http') ? img.src : `${BASE_URL}${img.src}`
+      )
+      .filter(Boolean) ||
+    [];
+
+  const productImage = productImages[0] || null;
+
+  const ogTitle = product?.seo_data?.og?.title || productTitle;
+  const ogDescription =
+    product?.seo_data?.og?.description || productDescription;
+  const ogImageUrl = product?.seo_data?.og?.image_url
+    ? product?.seo_data?.og?.image_url.startsWith('http')
+      ? product?.seo_data?.og?.image_url
+      : `${BASE_URL}${product?.seo_data?.og?.image_url}`
+    : productImage;
+  const ogImageWidth = product?.seo_data?.og?.image_width || null;
+  const ogImageHeight = product?.seo_data?.og?.image_height || null;
+
   const productUrl = fullUrl;
   const canonicalUrl = useCanonicalUrl();
 
   const schemaProduct = {
     '@context': 'https://schema.org/',
-    '@type': 'Product',
-    productID: product?.id,
-    name: productTitle,
-    image:
-      product?.seo_data?.images?.map(img => img['image:loc']) ||
-      product?.images?.map(img => img.src),
-    description: productDescription,
-    sku: product?.sku,
-    brand: {
-      '@type': 'Brand',
-      name: 'Platinum by Chetvertinovskaya Liubov',
-    },
-    offers: {
-      '@type': 'Offer',
-      priceCurrency: 'PLN',
-      price: product?.price?.min_price,
-      availability:
-        product?.stock_quantity && product.stock_quantity > 0
-          ? 'https://schema.org/InStock'
-          : 'https://schema.org/OutOfStock',
-      url: productUrl,
-    },
+    '@graph': [
+      {
+        '@type': 'Product',
+        '@id': canonicalUrl,
+        url: productUrl,
+        productID: product?.id ?? undefined,
+        name: productTitle,
+        image: productImages,
+        description: productDescription,
+        sku: product?.sku ?? undefined,
+        brand: {
+          '@type': 'Brand',
+          name: 'Platinum by Chetvertinovskaya Liubov',
+        },
+        offers: {
+          '@type': 'Offer',
+          url: productUrl,
+          priceCurrency: 'PLN',
+          price: product?.price?.min_price ?? undefined,
+          availability:
+            product?.stock_quantity && product.stock_quantity > 0
+              ? 'https://schema.org/InStock'
+              : 'https://schema.org/OutOfStock',
+        },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: breadcrumbsLinks.map((item, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: item.name,
+          item: `${BASE_URL}${item.url}`,
+        })),
+      },
+    ],
   };
 
   return (
@@ -191,20 +231,51 @@ export default function ProductPage({
       <Head>
         <meta name="robots" content="index, follow" />
         <meta name="description" content={productDescription} />
-        <meta property="og:title" content={productTitle} />
-        <meta property="og:description" content={productDescription} />
-        <meta property="og:image" content={productImage} />
-        <meta property="og:type" content="product" />
-        <meta property="og:url" content={productUrl} />
         <link rel="canonical" href={canonicalUrl} />
         <link rel="alternate" hrefLang={locale} href={canonicalUrl} />
-        {
-          <script type="application/ld+json">
-            {JSON.stringify(schemaProduct)}
-          </script>
-        }
+
+        {/* Open Graph */}
+        <meta property="og:title" content={ogTitle} />
+        <meta property="og:description" content={ogDescription} />
+        <meta property="og:type" content="product" />
+        <meta property="og:url" content={productUrl} />
+        <meta property="og:locale" content={locale} />
+        <meta
+          property="og:site_name"
+          content="Platinum by Chetvertinovskaya Liubov"
+        />
+
+        {product?.price?.min_price !== undefined && (
+          <>
+            <meta
+              property="og:product:price:amount"
+              content={String(product.price.min_price)}
+            />
+            <meta property="og:product:price:currency" content="PLN" />
+          </>
+        )}
+
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaProduct) }}
+        />
+
+        {ogImageUrl && (
+          <>
+            <meta property="og:image" content={ogImageUrl} />
+            {ogImageWidth && (
+              <meta property="og:image:width" content={String(ogImageWidth)} />
+            )}
+            {ogImageHeight && (
+              <meta
+                property="og:image:height"
+                content={String(ogImageHeight)}
+              />
+            )}
+          </>
+        )}
       </Head>
-      <PageTitle title={product.name} />
+      <PageTitle title={productTitle} />
       <Container>
         <Box
           sx={{
