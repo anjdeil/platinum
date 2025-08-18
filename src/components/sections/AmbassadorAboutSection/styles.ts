@@ -58,6 +58,7 @@ export const StyledTitle = styled.h2`
   max-width: 577px;
   text-transform: uppercase;
   font: ${({ theme }) => theme.fonts.titleH1SemiBold};
+  hyphens: auto;
 
   @media ${({ theme }) => theme.media.large} {
     font: ${({ theme }) => theme.fonts.titleH2SemiBold};
@@ -117,6 +118,7 @@ export const StyledLink = styled.a`
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
   text-decoration: none;
   color: ${({ theme }) => theme.colors.black};
+  white-space: nowrap;
 
   @media ${({ theme }) => theme.media.large} {
     text-align: center;
