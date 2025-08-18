@@ -36,6 +36,20 @@ export const RightBlock = styled.div`
 
   & h3 {
     text-transform: none;
+
+    @media ${({ theme }) => theme.media.large} {
+      font-size: 14px;
+      line-height: 22px;
+      font-weight: 400;
+    }
+
+    &:last-of-type {
+      margin: 0;
+    }
+  }
+
+  & br {
+    display: none;
   }
 `;
 
@@ -135,6 +149,6 @@ export const StyledButtonLink = styled.a`
 
   @media ${({ theme }) => theme.media.large} {
     width: 100%;
-    padding-block: 15px;
+    padding: 15px;
   }
 `;
