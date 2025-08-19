@@ -41,7 +41,7 @@ export class WpRestApi {
     while (attempt < maxRetries) {
       try {
 
-        console.log(this._apiBase, 'wpRestAPI');
+        console.log(this._apiBase + (v2 !== false ? wpV2 : '') + url, 'wpRestAPI');
 
         const response = await axios({
           method: method,
