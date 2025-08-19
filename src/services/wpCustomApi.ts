@@ -22,6 +22,9 @@ class CustomRestApi {
 
     while (attempt < maxRetries) {
       try {
+
+        console.log(this._apiBase, 'wpCustomApi');
+
         const response = await axios({
           method: method,
           url: this._apiBase + url,
