@@ -94,6 +94,8 @@ const Order: FC<OrderPropsType> = ({ order }) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
+  console.log('order...', order);
+
   useEffect(() => {
     const clearCartParam = router.query['clear-cart'];
     if (clearCartParam === 'true') {
@@ -111,7 +113,7 @@ const Order: FC<OrderPropsType> = ({ order }) => {
         if (!alreadyTracked) {
           // GA: Purchase
           const items = order.line_items.map(item => ({
-            item_id: item.id,
+            item_id: String(item.sku || item.product_id || item.id),
             item_name: item.name || '',
             quantity: Number(item.quantity) || 1,
             price: Number(item.price) || 0,
@@ -119,12 +121,10 @@ const Order: FC<OrderPropsType> = ({ order }) => {
 
           const dlPayload = {
             event: 'purchase',
-            ecommerce: {
-              transaction_id: order.id,
-              value: parseFloat(order.total),
-              currency: order.currency || 'PLN',
-              items: items,
-            },
+            transaction_id: String(order.id),
+            value: Number(order.total) || 0,
+            currency: (order.currency || 'PLN').toUpperCase(),
+            items: items,
           };
 
           window.dataLayer = window.dataLayer || [];
@@ -134,11 +134,11 @@ const Order: FC<OrderPropsType> = ({ order }) => {
           if (typeof window.fbq === 'function') {
             window.fbq('track', 'Purchase', {
               content_ids: order.line_items.map(
-                item => item.id || item.product_id
+                item => item.sku || item.product_id
               ),
               content_type: 'product',
               value: parseFloat(order.total),
-              currency: order.currency || 'PLN',
+              currency: (order.currency || 'PLN').toUpperCase(),
             });
           }
 
