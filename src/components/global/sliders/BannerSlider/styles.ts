@@ -7,18 +7,14 @@ import FallbackImage from "../../FallbackImage/FallbackImage";
 export const BannerWrapper = styled.div<BannerWrapperProps>`
   position: relative;
   width: 100%;
-  aspect-ratio: ${({ proportion = 3 }) => proportion};
+  aspect-ratio: ${({ proportion = 2.74 }) => proportion};
   ${({ isMainPage }) => !isMainPage && 'max-width: 20px;'}
   margin: auto;
   overflow: hidden;
 
-  @media ${({ theme }) => theme.media.large} {
-    width: auto;
-  }
-
   @media ${({ theme }) => theme.media.medium} {
-    aspect-ratio: unset;
-    height: calc(100vh - 120px);
+    aspect-ratio: 0.65;
+    max-height: calc(100vh - 120px);
     margin: auto;
     padding-top: ${({ isMainPage }) => (isMainPage ? '0px' : '20px')};
   }

@@ -17,7 +17,7 @@ export const StyledContainer = styled.div`
 
 export const StyledPopupBody = styled.div<PopupBodyProps>`
   box-sizing: border-box;
-  max-width: 800px;
+  max-width: 849px;
   width: 60%;
   height: auto;
 
@@ -27,6 +27,7 @@ export const StyledPopupBody = styled.div<PopupBodyProps>`
   transform: translate(-50%, -50%);
   border-radius: 8px;
   background-color: ${({ theme }) => theme.colors.white};
+  overflow: hidden;
 
   @media ${({ theme }) => theme.media.medium} {
     max-width: 400px;
@@ -40,17 +41,12 @@ export const StyledPopupBody = styled.div<PopupBodyProps>`
 export const StyledBanner = styled(FallbackImage)`
   box-sizing: border-box;
   width: 100%;
-  // max-width: 800px;
   height: auto;
-  aspect-ratio: 800 / 500;
-  border-radius: 8px;
   cursor: pointer;
 
   @media ${({ theme }) => theme.media.medium} {
     width: 100%;
-    // max-width: 400px;
     height: auto;
-    aspect-ratio: 400 / 600;
     padding: 0;
   }
 `;
@@ -59,6 +55,7 @@ export const StyledLink = styled.a`
   text-decoration: none;
   color: ${({ theme }) => theme.colors.black};
   cursor: pointer;
+  display: flex;
 `;
 
 export const StyledHeader = styled.div`

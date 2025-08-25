@@ -33,7 +33,7 @@ const BannerSlider: React.FC<BannerSliderProps> = ({
       width: isMobile ? 768 : 1440,
       height: isMobile
         ? 768 / (mobileProportion || 0.65)
-        : 1440 / (proportion || 3),
+        : 1440 / (proportion || 2.74),
 
       imageSrc: (slide: BannerSlideType | MainPageSlideType) => {
         if ('image_desc' in slide && 'image_mob' in slide) {
