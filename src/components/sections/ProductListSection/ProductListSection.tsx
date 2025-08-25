@@ -27,6 +27,7 @@ export const ProductListSection: React.FC<ProductListSectionProps> = ({
     per_page: PER_PAGE,
     order_by: 'total_sales',
     order: 'desc' as const,
+    tag: 'bestseller',
   };
 
   const {
