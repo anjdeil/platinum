@@ -111,10 +111,10 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
           (wooError as WooErrorType)?.details?.code ===
           'woocommerce_rest_invalid_coupon'
         ) {
-          setIsCouponsIgnored(true);
-
           if (userLoyaltyStatus) {
             dispatch(addCoupon({ couponCode: userLoyaltyStatus }));
+          } else {
+            setIsCouponsIgnored(true);
           }
         }
       }
