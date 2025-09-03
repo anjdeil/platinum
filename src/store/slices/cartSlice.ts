@@ -65,6 +65,9 @@ export const cartSlice = createSlice({
         state.couponCodes = [couponCode];
       }
     },
+    clearCoupons: (state) => {
+      state.couponCodes = [];
+    },
     removeCoupon: (state, action: PayloadAction<{ couponCode: string }>) => {
       const { couponCode } = action.payload;
       state.couponCodes = state.couponCodes.filter(code => code !== couponCode);
@@ -98,6 +101,7 @@ export const {
   updateCart,
   addCoupon,
   removeCoupon,
+  clearCoupons,
   setCommentToOrder,
   clearCommentToOrder,
   initializeCart,
