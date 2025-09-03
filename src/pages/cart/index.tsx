@@ -12,7 +12,11 @@ import { useAppDispatch, useAppSelector } from '@/store';
 import { useGetUserTotalsQuery } from '@/store/rtk-queries/userTotals/userTotals';
 import { useCreateOrderMutation } from '@/store/rtk-queries/wooCustomApi';
 import { useGetProductsMinimizedMutation } from '@/store/rtk-queries/wpCustomApi';
-import { addCoupon, clearConflictedItems } from '@/store/slices/cartSlice';
+import {
+  addCoupon,
+  clearConflictedItems,
+  clearCoupons,
+} from '@/store/slices/cartSlice';
 import { CartPageWrapper } from '@/styles/cart/style';
 import { Container, FlexBox, StyledButton } from '@/styles/components';
 import { ProductsMinimizedType } from '@/types/components/shop/product/products';
@@ -48,17 +52,18 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   const { data: userTotal } = useGetUserTotalsQuery(defaultCustomerData?.id);
 
   const [auth, setAuth] = useState<boolean>(false);
-  const [userLoyaltyStatus] = useState<string | undefined>();
+
+  const userLoyaltyStatus = userTotal?.loyalty_status;
 
   useEffect(() => {
-    if (defaultCustomerData) {
+    if (defaultCustomerData && userLoyaltyStatus) {
       setAuth(true);
-      const level = userTotal?.loyalty_status;
-      if (level && level !== '') {
-        dispatch(addCoupon({ couponCode: level }));
-      }
+      dispatch(addCoupon({ couponCode: userLoyaltyStatus }));
+    } else {
+      dispatch(clearCoupons());
+      setAuth(false);
     }
-  }, [defaultCustomerData, userTotal]);
+  }, [defaultCustomerData, userLoyaltyStatus, dispatch]);
 
   const [createOrder, { data: orderItems, isLoading: isLoadingOrder }] =
     useCreateOrderMutation();
@@ -107,6 +112,10 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
           'woocommerce_rest_invalid_coupon'
         ) {
           setIsCouponsIgnored(true);
+
+          if (userLoyaltyStatus) {
+            dispatch(addCoupon({ couponCode: userLoyaltyStatus }));
+          }
         }
       }
 
