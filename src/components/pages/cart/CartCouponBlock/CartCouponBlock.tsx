@@ -1,4 +1,5 @@
 import { CustomFormInput } from '@/components/global/forms/CustomFormInput';
+import Notification from '@/components/global/Notification/Notification';
 import { useResponsive } from '@/hooks/useResponsive';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { useLazyListAllCouponsQuery } from '@/store/rtk-queries/wooCustomApi';
@@ -19,20 +20,19 @@ import {
   CouponSuccess,
   CouponText,
 } from './style';
-import Notification from '@/components/global/Notification/Notification';
 
 type CouponApplyingStatusType = {
   isError: boolean;
   message: string;
-}
+};
 
 const loyaltyCouponsCodes = ['silver', 'gold', 'platinum'];
 
 const CartCouponBlock: FC<CartCouponBlockProps> = ({
-                                                     auth,
-                                                     userLoyalityStatus,
-                                                     isCouponsIgnored,
-                                                   }) => {
+  auth,
+  userLoyalityStatus,
+  isCouponsIgnored,
+}) => {
   const { isMobile } = useResponsive();
   const t = useTranslations('Cart');
   const dispatch = useAppDispatch();
@@ -40,7 +40,10 @@ const CartCouponBlock: FC<CartCouponBlockProps> = ({
   const isValidStatus = userLoyalityStatusSchema.safeParse(userLoyalityStatus);
   const validStatus = isValidStatus.data;
 
-  const [fetchCoupons, { isLoading: isCouponsLoading, isFetching: isCouponsFetching }] = useLazyListAllCouponsQuery();
+  const [
+    fetchCoupons,
+    { isLoading: isCouponsLoading, isFetching: isCouponsFetching },
+  ] = useLazyListAllCouponsQuery();
   const isLoading = isCouponsLoading || isCouponsFetching;
 
   const {
@@ -51,9 +54,12 @@ const CartCouponBlock: FC<CartCouponBlockProps> = ({
   } = useForm();
 
   const { couponCodes } = useAppSelector(state => state.cartSlice);
-  const isCartLoyaltyIncluded = couponCodes.some((coupon) => loyaltyCouponsCodes.includes(coupon));
+  const isCartLoyaltyIncluded = couponCodes.some(coupon =>
+    loyaltyCouponsCodes.includes(coupon)
+  );
 
-  const [applyingStatus, setApplyingStatus] = useState<CouponApplyingStatusType>();
+  const [applyingStatus, setApplyingStatus] =
+    useState<CouponApplyingStatusType>();
 
   const onSubmit = async (data: any) => {
     if (isLoading) return;
@@ -66,10 +72,11 @@ const CartCouponBlock: FC<CartCouponBlockProps> = ({
       return;
     }
 
-    const { data: coupons, error } = await fetchCoupons({ code: data.couponCode });
+    const { data: coupons, error } = await fetchCoupons({
+      code: data.couponCode,
+    });
 
     if (coupons) {
-
       if (coupons.length !== 0 && coupons[0].code === data.couponCode) {
         setApplyingStatus({
           isError: false,
@@ -83,7 +90,6 @@ const CartCouponBlock: FC<CartCouponBlockProps> = ({
         });
         return;
       }
-
     } else if (error) {
       setApplyingStatus({
         isError: true,
@@ -91,7 +97,6 @@ const CartCouponBlock: FC<CartCouponBlockProps> = ({
       });
     }
   };
-
 
   return (
     <CouponBlock>
