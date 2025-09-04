@@ -31,7 +31,8 @@ const loyaltyCouponsCodes = ['silver', 'gold', 'platinum'];
 const CartCouponBlock: FC<CartCouponBlockProps> = ({
   auth,
   userLoyalityStatus,
-  isCouponsIgnored,
+  couponError,
+  setCouponError,
 }) => {
   const { isMobile } = useResponsive();
   const t = useTranslations('Cart');
@@ -63,6 +64,8 @@ const CartCouponBlock: FC<CartCouponBlockProps> = ({
 
   const onSubmit = async (data: any) => {
     if (isLoading) return;
+
+    setCouponError(false);
 
     if (loyaltyCouponsCodes.includes(data.couponCode)) {
       setApplyingStatus({
@@ -124,24 +127,24 @@ const CartCouponBlock: FC<CartCouponBlockProps> = ({
           placeholder={t('CouponInputPlaceholder')}
           height="100%"
         />
-        <CouponButton type="submit" disabled={isCouponsIgnored || isLoading}>
+        <CouponButton type="submit" disabled={isLoading}>
           {t('CouponApplyBtn')}
           {isLoading && <>...</>}
         </CouponButton>
       </CouponForm>
 
-      {!applyingStatus && !isCouponsIgnored && isCartLoyaltyIncluded && (
+      {!applyingStatus && !couponError && isCartLoyaltyIncluded && (
         <Notification type={'warning'}>
           {t('overrideLoyaltyDiscount')}
         </Notification>
       )}
-      {applyingStatus && !isCouponsIgnored && !applyingStatus.isError && (
+      {applyingStatus && !couponError && !applyingStatus.isError && (
         <CouponSuccess>{t(applyingStatus.message)}</CouponSuccess>
       )}
-      {applyingStatus && !isCouponsIgnored && applyingStatus.isError && (
+      {applyingStatus && !couponError && applyingStatus.isError && (
         <CouponError>{t(applyingStatus.message)}</CouponError>
       )}
-      {isCouponsIgnored && <CouponError>{t('couponIsNotApplied')}</CouponError>}
+      {couponError && <CouponError>{t('couponIsNotApplied')}</CouponError>}
     </CouponBlock>
   );
 };

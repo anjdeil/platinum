@@ -53,6 +53,8 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
 
   const [auth, setAuth] = useState<boolean>(false);
 
+  const [couponError, setCouponError] = useState(false);
+
   const userLoyaltyStatus = userTotal?.loyalty_status;
 
   useEffect(() => {
@@ -111,6 +113,8 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
           (wooError as WooErrorType)?.details?.code ===
           'woocommerce_rest_invalid_coupon'
         ) {
+          setCouponError(true);
+
           if (userLoyaltyStatus) {
             dispatch(addCoupon({ couponCode: userLoyaltyStatus }));
           } else {
@@ -319,7 +323,8 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
           <CartCouponBlock
             userLoyalityStatus={userLoyaltyStatus}
             auth={auth}
-            isCouponsIgnored={isCouponsIgnored}
+            couponError={couponError}
+            setCouponError={setCouponError}
           />
 
           {innercartItems.length > 0 && filteredOutItems.length == 0 && (
