@@ -38,7 +38,11 @@ export const BannerCartSchema = z.object({
 export const CartCouponBlockSchema = z.object({
   userLoyalityStatus: z.string().optional(),
   auth: z.boolean(),
-  isCouponsIgnored: z.boolean().optional(),
+  couponError: z.boolean().optional(),
+  setCouponError: z
+    .function()
+    .args(z.boolean())
+    .returns(z.void()),
 });
 export const CartSummaryBlockSchema = z.object({
   symbol: z.string(),
