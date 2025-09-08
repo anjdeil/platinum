@@ -549,7 +549,7 @@ export default function CheckoutPage() {
             isInvoice && isNipChanged && nipValue
               ? [
                   {
-                    key: 'nip',
+                    key: '_billing_nip',
                     value: nipValue,
                   },
                 ]
