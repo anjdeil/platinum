@@ -4,6 +4,8 @@ export const readNip = (billing?: BillingType | null, metaData?: MetaDataType[] 
     const nipFromBilling = billing?.nip?.trim();
     if (nipFromBilling) return nipFromBilling;
 
-    const nipFromMeta = metaData?.find(m => m.key === 'nip')?.value?.trim();
+    const nipFromMeta =
+        metaData?.find(m => m.key === '_billing_nip')?.value?.trim() ||
+        metaData?.find(m => m.key === 'nip')?.value?.trim();
     return nipFromMeta || '';
 };

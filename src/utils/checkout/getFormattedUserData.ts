@@ -78,6 +78,10 @@ export const getFormattedUserData = (billingData: ReqData, locale?: string) => {
       key: 'nip',
       value: nip || '',
     },
+    {
+      key: '_billing_nip',
+      value: nip || ''
+    },
   ];
 
   const formattedShippingData: ShippingType = {
@@ -127,6 +131,10 @@ export const getFormattedUserData = (billingData: ReqData, locale?: string) => {
         {
           key: 'nip',
           value: nip || '',
+        },
+        {
+          key: '_billing_nip',
+          value: nip || ''
         },
         {
           key: 'icl_admin_language',
