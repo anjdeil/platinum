@@ -79,7 +79,7 @@ export const getFormattedUserData = (billingData: ReqData, locale?: string) => {
       value: nip || '',
     },
     {
-      key: '_billing_nip',
+      key: '_billing_vat_number',
       value: nip || ''
     },
   ];
@@ -133,7 +133,7 @@ export const getFormattedUserData = (billingData: ReqData, locale?: string) => {
           value: nip || '',
         },
         {
-          key: '_billing_nip',
+          key: '_billing_vat_number',
           value: nip || ''
         },
         {
