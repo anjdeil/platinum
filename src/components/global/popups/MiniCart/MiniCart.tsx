@@ -19,6 +19,7 @@ import {
 } from '@/components/pages/cart/styles/index';
 import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
 import { useAppDispatch, useAppSelector } from '@/store';
+import { clearConflictedItems } from '@/store/slices/cartSlice';
 import { FlexBox, LinkWrapper, StyledButton, Title } from '@/styles/components';
 import theme from '@/styles/theme';
 import checkCartConflict from '@/utils/cart/checkCartConflict';
@@ -75,22 +76,31 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
         const quantity = cartItem ? cartItem.quantity || 0 : 0;
         const { finalPrice } = getProductPrice(product.price);
 
+        const convertedFinalPrice = convertCurrency(finalPrice || 0);
+        const convertedTotalPrice = convertedFinalPrice * quantity;
+
         const totalPrice = finalPrice ? finalPrice * quantity : 0;
 
         return {
           ...product,
           finalPrice,
+          convertedFinalPrice,
           quantity,
           variation: cartItem?.variation_id || 0,
           product_id: cartItem?.product_id || product.id,
           totalPrice,
+          convertedTotalPrice,
         };
       })
       .filter((item): item is NonNullable<typeof item> => !!item);
-  }, [productsData, cartItems]);
+  }, [productsData, cartItems, convertCurrency]);
 
   const totalCartPrice = useMemo(
-    () => productsWithCartData.reduce((sum, item) => sum + item.totalPrice, 0),
+    () =>
+      productsWithCartData.reduce(
+        (sum, item) => sum + item.convertedTotalPrice,
+        0
+      ),
     [productsWithCartData]
   );
 
@@ -101,6 +111,23 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
       variation_id?: number,
       newQuantity?: number | boolean
     ) => {
+      const item = productsWithCartData.find(
+        cartItem =>
+          cartItem.product_id === product_id &&
+          cartItem.variation === variation_id
+      );
+
+      if (item && newQuantity === 0) {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: 'remove_from_cart',
+          item_id: item.id,
+          item_name: item.name,
+          quantity: item.quantity,
+          price: item.finalPrice ? item.finalPrice : 0,
+        });
+      }
+
       handleQuantityChange(
         cartItems,
         dispatch,
@@ -123,12 +150,28 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
   }, []);
 
   useEffect(() => {
-    if (productsData.length > 0 && cartItems.length === productsData.length) {
-      setHasConflict(checkCartConflict(cartItems, productsData));
+    if (productsData.length > 0 && cartItems.length > 0) {
+      // remove simple products with variation_id
+      const conflictedSimpleItemsToClear = cartItems.filter(item => {
+        const product = productsData.find(p => p.id === item.product_id);
+        return (
+          product &&
+          (product.parent_id === 0 || product.parent_id === null) &&
+          item.variation_id
+        );
+      });
+
+      if (conflictedSimpleItemsToClear.length > 0) {
+        dispatch(clearConflictedItems(conflictedSimpleItemsToClear));
+        return;
+      }
+
+      if (cartItems.length === productsData.length) {
+        const conflicts = checkCartConflict(cartItems, productsData);
+        setHasConflict(conflicts);
+      }
     }
   }, [cartItems, productsData]);
-
-  const convertedTotalCartPrice = convertCurrency(totalCartPrice);
 
   return (
     <PopupOverlay
@@ -175,9 +218,6 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
           productsWithCartData?.map(item => {
             const resolveCount = item.stock_quantity;
 
-            const convertedFinalPrice = convertCurrency(item.finalPrice || 0);
-            const convertedTotalPrice = convertCurrency(item.totalPrice || 0);
-
             const slug = getProductSlug(item);
 
             return (
@@ -220,7 +260,8 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
                     <ProductPrice>
                       {currentCurrency ? (
                         <p>
-                          {item.finalPrice && formatPrice(convertedFinalPrice)}
+                          {item.convertedFinalPrice &&
+                            formatPrice(item.convertedFinalPrice)}
                         </p>
                       ) : (
                         <Skeleton width="50px" />
@@ -239,7 +280,8 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
 
                     {currentCurrency ? (
                       <OnePrice fontSize="1.2em">
-                        {item.totalPrice && formatPrice(convertedTotalPrice)}
+                        {item.convertedTotalPrice &&
+                          formatPrice(item.convertedTotalPrice)}
                       </OnePrice>
                     ) : (
                       <Skeleton width="50px" />
@@ -263,9 +305,7 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
         <OrderBar
           productsData={productsData}
           subtotal={
-            currentCurrency?.rate !== undefined
-              ? convertedTotalCartPrice
-              : undefined
+            currentCurrency?.rate !== undefined ? totalCartPrice : undefined
           }
           symbol={currencyCode}
           miniCart

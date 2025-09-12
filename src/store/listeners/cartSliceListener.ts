@@ -1,7 +1,7 @@
-import { createListenerMiddleware } from '@reduxjs/toolkit';
 import { RootState } from '@/store';
-import { cartSlice } from '../slices/cartSlice';
+import { createListenerMiddleware } from '@reduxjs/toolkit';
 import { wpCustomRtkApi } from '../rtk-queries/wpCustomApi';
+import { cartSlice } from '../slices/cartSlice';
 import { languageSlice } from '../slices/languageSlice';
 
 const DEFAULT_LOCALE = 'pl';
@@ -11,6 +11,14 @@ const cartListenerMiddleware = createListenerMiddleware();
 //update cart listener
 cartListenerMiddleware.startListening({
   actionCreator: cartSlice.actions.updateCart,
+  effect: async (action, listenerApi) => {
+    await handleCartUpdate(listenerApi);
+  },
+});
+
+//clearConflict cart listener
+cartListenerMiddleware.startListening({
+  actionCreator: cartSlice.actions.clearConflictedItems,
   effect: async (action, listenerApi) => {
     await handleCartUpdate(listenerApi);
   },

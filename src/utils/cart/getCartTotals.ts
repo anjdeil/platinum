@@ -8,9 +8,12 @@ type CartTotal = {
 };
 export default function getCartTotals(
   productsMinimized: ProductsMinimizedType[],
-  cartItems: CartItem[]
+  cartItems: CartItem[],
+  convertCurrency: (value: number) => number
 ): CartTotal {
+
   return cartItems.reduce(
+
     (totals, cartItem) => {
       const matchedProduct = productsMinimized.find(({ id, parent_id }) => {
         if (cartItem?.variation_id) {
@@ -24,7 +27,8 @@ export default function getCartTotals(
       if (matchedProduct) {
         if (matchedProduct.price) {
           const { finalPrice } = getProductPrice(matchedProduct.price);
-          totals.totalCost += (finalPrice || 0) * cartItem.quantity;
+          const convertedPrice = convertCurrency(finalPrice || 0);
+          totals.totalCost += convertedPrice * cartItem.quantity;
         }
 
         if (matchedProduct.weight !== null) {

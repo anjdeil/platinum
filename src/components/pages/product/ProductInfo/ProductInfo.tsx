@@ -70,13 +70,6 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
 
   const router = useRouter();
 
-  // Temporary code (whole useEffect) for assigning the current variation
-  /* useEffect(() => {
-    if (product.attributes.length == 0 && product.variations.length != 0)
-      setCurrentVariation(product?.variations[0]);
-    console.log(currentVariation);
-  }, []); */
-
   useEffect(() => {
     const cartMatch = cartItems.find(
       ({ product_id, variation_id }) =>
@@ -108,43 +101,39 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
   }
 
   function handleCartButtonClick() {
-    dispatch(
-      updateCart({
-        product_id: product.id,
-        quantity,
-        ...(currentVariation && { variation_id: currentVariation.id }),
-      })
-    );
+    if (product.type === 'variable' && !currentVariation) {
+      return;
+    }
+
+    const cartItem: CartItem = {
+      product_id: product.id,
+      quantity,
+    };
+
+    if (product.type === 'variable' && currentVariation) {
+      cartItem.variation_id = currentVariation.id;
+    }
+
+    dispatch(updateCart(cartItem));
 
     //Analytics
-    const addToCartPayload = {
-      value: finalPrice ? finalPrice * quantity : 0,
-      items: [
-        {
-          item_id: currentVariation?.sku || product.sku || product.id,
-          item_name: product.name,
-          item_category: product.categories.map(c => c.name).join('/'),
-          price: String(finalPrice),
-          quantity,
-          ...(currentVariation && {
-            item_variant: currentVariation.attributes
-              ?.map(attr => attr.option)
-              .join(', '),
-          }),
-        },
-      ],
+    const gtmAddToCartPayload = {
+      event: 'add_to_cart',
+      item_id: currentVariation?.id || product.id,
+      item_name: product.name,
+      quantity: quantity,
+      price: finalPrice ? finalPrice : 0,
     };
 
     if (typeof window !== 'undefined') {
       // Google Analytics
-      if (typeof window.gtag === 'function') {
-        window.gtag('event', 'add_to_cart', addToCartPayload);
-      }
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push(gtmAddToCartPayload);
 
       // Facebook Pixel
       if (typeof window.fbq === 'function') {
         window.fbq('track', 'AddToCart', {
-          content_ids: [currentVariation?.sku || product.sku || product.id],
+          content_ids: [currentVariation?.id || product.id],
           content_type: 'product',
           value: finalPrice ? finalPrice * quantity : 0,
           currency: 'PLN',
@@ -178,25 +167,13 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
     return product?.stock_quantity ?? 0;
   }, [currentVariation, product]);
 
-  // const stockQuantity = useMemo(() => {
-  //   if (!currentVariation?.stock_quantity && !product.stock_quantity) {
-  //     return 0;
-  //   }
-  //   if (currentVariation?.stock_quantity) {
-  //     return currentVariation?.stock_quantity;
-  //   }
-  //   if (product?.stock_quantity) {
-  //     return product?.stock_quantity;
-  //   }
-
-  //   return 0;
-  // }, [currentVariation, product]);
-
   /** Set default attributes */
   useEffect(() => {
     if (product.type === 'variable') {
       const variation = getCurrentVariation(product.variations, router.query);
       if (variation) setCurrentVariation(variation);
+    } else if (product.type === 'simple') {
+      setCurrentVariation(undefined);
     }
   }, [router.query]);
 
@@ -259,6 +236,10 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
   const showAttributes = product.attributes.filter(attr =>
     product.variations.some(v => v.attributes.some(va => va.id === attr.id))
   );
+
+  useEffect(() => {
+    setQuantity(1);
+  }, [stockQuantity]);
 
   return (
     <ProductWrapper>
@@ -327,7 +308,11 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
         {isSale && saleEndDate && <ProductPromotion time={saleEndDate} />}
         <DeliveryTimer />
         <AddToBasketWrapper>
-          <ProductQuantity quantity={quantity} onChange={setQuantity} />
+          <ProductQuantity
+            quantity={quantity}
+            onChange={setQuantity}
+            stockQuantity={stockQuantity}
+          />
 
           {stockQuantity !== null && stockQuantity > 0 ? (
             <AddToBasketButton

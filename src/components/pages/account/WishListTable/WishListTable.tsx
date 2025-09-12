@@ -69,41 +69,69 @@ const WishListTable: FC<WishListTableProps> = ({
 
   function handleCartButtonClick(
     product: ProductsMinimizedType,
-    isCartMatch: boolean
+    isCartMatch: boolean,
+    finalPrice?: number
   ) {
-    if (product.parent_id !== 0) {
-      if (!isCartMatch) {
-        dispatch(
-          updateCart({
-            product_id: product.parent_id,
-            quantity: 1,
-            variation_id: product.id,
-          })
-        );
-        if (!isMobile) {
-          dispatch(popupToggle({ popupType: 'mini-cart' }));
+    const isVariation = product.parent_id !== 0;
+    const isVariableParent =
+      product.parent_id === 0 && product.attributes.length > 0;
+
+    if (isVariableParent) {
+      router.push(
+        `/${
+          router.locale === router.defaultLocale ? '' : router.locale
+        }/product/${product.slug}`
+      );
+      return;
+    }
+
+    if (!isCartMatch) {
+      dispatch(
+        updateCart(
+          isVariation
+            ? {
+                product_id: product.parent_id,
+                variation_id: product.id,
+                quantity: 1,
+              }
+            : {
+                product_id: product.id,
+                quantity: 1,
+              }
+        )
+      );
+
+      // GTM: Add to Cart
+      const gtmAddToCartPayload = {
+        event: 'add_to_cart',
+        item_id: product.id,
+        item_name: product.name,
+        quantity: 1,
+        price: finalPrice != null ? Number(finalPrice) : 0,
+      };
+
+      if (typeof window !== 'undefined') {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push(gtmAddToCartPayload);
+
+        // Facebook Pixel
+        if (typeof window.fbq === 'function') {
+          window.fbq('track', 'AddToCart', {
+            content_ids: [product.id],
+            content_type: 'product',
+            value: finalPrice != null ? Number(finalPrice) : 0,
+            currency: 'PLN',
+          });
         }
-      } else {
-        router.push(
-          `/${router.locale === router.defaultLocale ? '' : router.locale}/cart`
-        );
+      }
+
+      if (!isMobile) {
+        dispatch(popupToggle({ popupType: 'mini-cart' }));
       }
     } else {
-      if (!isCartMatch) {
-        dispatch(
-          updateCart({
-            product_id: product.id,
-            quantity: 1,
-          })
-        );
-        if (!isMobile) {
-          dispatch(popupToggle({ popupType: 'mini-cart' }));
-        }
-      } else {
-        router.push(
-          `/${router.locale === router.defaultLocale ? '' : router.locale}/cart`
-        );
-      }
+      router.push(
+        `/${router.locale === router.defaultLocale ? '' : router.locale}/cart`
+      );
     }
   }
 
@@ -205,7 +233,9 @@ const WishListTable: FC<WishListTableProps> = ({
                     ) : (
                       <AddToBasketButton
                         active={isCartMatch}
-                        onClick={() => handleCartButtonClick(item, isCartMatch)}
+                        onClick={() =>
+                          handleCartButtonClick(item, isCartMatch, finalPrice)
+                        }
                       >
                         {isCartMatch
                           ? tProduct('viewCart')
@@ -294,7 +324,9 @@ const WishListTable: FC<WishListTableProps> = ({
                     ) : (
                       <AddToBasketButton
                         active={isCartMatch}
-                        onClick={() => handleCartButtonClick(item, isCartMatch)}
+                        onClick={() =>
+                          handleCartButtonClick(item, isCartMatch, finalPrice)
+                        }
                       >
                         {isCartMatch
                           ? tProduct('viewCart')

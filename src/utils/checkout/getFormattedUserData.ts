@@ -70,12 +70,17 @@ export const getFormattedUserData = (billingData: ReqData, locale?: string) => {
     // state: city,
     phone,
     company: company || '',
+    nip: nip || '',
   };
 
   const formattedMetaData: MetaDataType[] = [
     {
       key: 'nip',
       value: nip || '',
+    },
+    {
+      key: '_billing_vat_number',
+      value: nip || ''
     },
   ];
 
@@ -109,6 +114,7 @@ export const getFormattedUserData = (billingData: ReqData, locale?: string) => {
         country,
         email,
         phone,
+        nip,
       },
       shipping: {
         first_name: shipping_first_name ? shipping_first_name : first_name,
@@ -125,6 +131,10 @@ export const getFormattedUserData = (billingData: ReqData, locale?: string) => {
         {
           key: 'nip',
           value: nip || '',
+        },
+        {
+          key: '_billing_vat_number',
+          value: nip || ''
         },
         {
           key: 'icl_admin_language',

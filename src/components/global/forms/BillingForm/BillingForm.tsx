@@ -1,4 +1,26 @@
+import { useGetCustomerData } from '@/hooks/useGetCustomerData';
+import { CustomForm, Title } from '@/styles/components';
+import { RegistrationFormType } from '@/types/components/global/forms/registrationForm';
+import {
+  BillingType,
+  MetaDataType,
+  ShippingType,
+} from '@/types/services/wooCustomApi/customer';
+import {
+  getFormattedUserData,
+  ReqData,
+} from '@/utils/checkout/getFormattedUserData';
+import { getValidationSchema } from '@/utils/getValidationSchema';
+import { countryOptions } from '@/utils/mockdata/countryOptions';
+import { readNip } from '@/utils/readNip';
+import { useLocale, useTranslations } from 'next-intl';
+import { FC, useEffect, useMemo, useRef } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
+import CustomCountrySelect from '../../selects/CustomCountrySelect/CustomCountrySelect';
+import CustomTextField from '../CustomTextField/CustomTextField';
+import { BillingFormSkeleton } from './BillingFormSkeleton';
+import { ConfirmationRegCard } from './ConfirmationRegCard';
+import { FormCheckboxUnControlled } from './FormCheckboxUnControlled';
 import {
   AnimatedWrapper,
   StyledFomContainer,
@@ -8,28 +30,6 @@ import {
   StyledSingleCheckBoxWrapper,
   VariationFields,
 } from './style';
-import { CustomForm, Title } from '@/styles/components';
-import { useLocale, useTranslations } from 'next-intl';
-import { ConfirmationRegCard } from './ConfirmationRegCard';
-import { getValidationSchema } from '@/utils/getValidationSchema';
-import { FC, useEffect, useMemo, useRef } from 'react';
-import CustomTextField from '../CustomTextField/CustomTextField';
-import { useGetCustomerData } from '@/hooks/useGetCustomerData';
-import CustomCountrySelect from '../../selects/CustomCountrySelect/CustomCountrySelect';
-import { countryOptions } from '@/utils/mockdata/countryOptions';
-import {
-  getFormattedUserData,
-  ReqData,
-} from '@/utils/checkout/getFormattedUserData';
-import {
-  BillingType,
-  MetaDataType,
-  ShippingType,
-} from '@/types/services/wooCustomApi/customer';
-import { BillingFormSkeleton } from './BillingFormSkeleton';
-import { RegistrationFormType } from '@/types/components/global/forms/registrationForm';
-import { getMetaDataValue } from '@/utils/myAcc/getMetaDataValue';
-import { FormCheckboxUnControlled } from './FormCheckboxUnControlled';
 
 type OrderFormData = {
   billing: BillingType | null;
@@ -117,9 +117,13 @@ export const BillingForm: FC<BillingFormProps> = ({
     }
   }, [customer]);
 
-  const nipFromMeta = customer
-    ? getMetaDataValue(customer.meta_data, 'nip')
-    : '';
+  // const nipFromMeta = customer
+  //   ? getMetaDataValue(customer.meta_data, 'nip')
+  //   : '';
+
+  const nipValue =
+    customer &&
+    readNip(customer.billing as BillingType, customer.meta_data || []);
 
   useEffect(() => {
     if (customer) {
@@ -142,6 +146,12 @@ export const BillingForm: FC<BillingFormProps> = ({
       });
 
       setValue('country', billing?.country || 'PL');
+
+      const initialNip = readNip(
+        billing as BillingType,
+        customer.meta_data || []
+      );
+      setValue('nip', initialNip || '');
 
       if (different_address) {
         setValue('shipping_first_name', shipping?.first_name || '');
@@ -166,7 +176,11 @@ export const BillingForm: FC<BillingFormProps> = ({
   useEffect(() => {
     if (invoice && customer) {
       setValue('company', customer.billing?.company || '');
-      setValue('nip', nipFromMeta);
+      const nipValue = readNip(
+        customer.billing as BillingType,
+        customer.meta_data || []
+      );
+      setValue('nip', nipValue || '');
       setIsInvoice(true);
     }
 
@@ -493,7 +507,7 @@ export const BillingForm: FC<BillingFormProps> = ({
                         placeholder={tValidation('nipPlaceholder')}
                         validation={validationSchema('nip')}
                         setValue={setValue}
-                        defaultValue={nipFromMeta || ''}
+                        defaultValue={nipValue || ''}
                       />
                     </AnimatedWrapper>
                   </StyledFormWrapper>

@@ -1,3 +1,6 @@
+import { useResponsive } from '@/hooks/useResponsive';
+import { useGetThemeOptionsQuery } from '@/store/rtk-queries/wpCustomApi';
+import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import CloseIcon from '../../icons/CloseIcon/CloseIcon';
 import {
@@ -7,9 +10,6 @@ import {
   StyledLink,
   StyledPopupBody,
 } from './style';
-import { useGetThemeOptionsQuery } from '@/store/rtk-queries/wpCustomApi';
-import { useRouter } from 'next/router';
-import { useResponsive } from '@/hooks/useResponsive';
 
 type Banner = {
   title: string;

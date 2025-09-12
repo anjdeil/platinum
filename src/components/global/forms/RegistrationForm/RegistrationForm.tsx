@@ -1,12 +1,9 @@
-import { FC, useEffect, useMemo, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import 'react-international-phone/style.css';
+import { useSubscribeMutation } from '@/store/rtk-queries/mailsterApi';
 import { useRegisterCustomerMutation } from '@/store/rtk-queries/wooCustomApi';
-import { useRouter } from 'next/router';
-import { RegistrationFormSchema } from '@/types/components/global/forms/registrationForm';
-import { isAuthErrorResponseType } from '@/utils/isAuthErrorResponseType';
-import { CustomError } from '../CustomFormInput/styles';
+import {
+  useCheckTokenMutation,
+  useGetTokenMutation,
+} from '@/store/rtk-queries/wpApi';
 import {
   FlexBox,
   FormWrapperBottom,
@@ -14,23 +11,26 @@ import {
   Title,
 } from '@/styles/components';
 import theme from '@/styles/theme';
-import { validateWooCustomer } from '@/utils/zodValidators/validateWooCustomer';
-import {
-  useCheckTokenMutation,
-  useGetTokenMutation,
-} from '@/store/rtk-queries/wpApi';
-import { useLocale, useTranslations } from 'next-intl';
-import { ActiveText } from '../LoginForm/styles';
-import CustomCountrySelect from '../../selects/CustomCountrySelect/CustomCountrySelect';
-import { countryOptions } from '@/utils/mockdata/countryOptions';
-import Notification from '../../Notification/Notification';
-import CustomTextField from '../CustomTextField/CustomTextField';
+import { RegistrationFormSchema } from '@/types/components/global/forms/registrationForm';
 import { getValidationSchema } from '@/utils/getValidationSchema';
-import { CustomForm, StyledFieldsWrapper } from './styles';
-import { FormCheckboxUnControlled } from '../BillingForm/FormCheckboxUnControlled';
+import { isAuthErrorResponseType } from '@/utils/isAuthErrorResponseType';
+import { countryOptions } from '@/utils/mockdata/countryOptions';
+import { validateWooCustomer } from '@/utils/zodValidators/validateWooCustomer';
+import { useLocale, useTranslations } from 'next-intl';
+import { useRouter } from 'next/router';
+import { FC, useEffect, useMemo, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import 'react-international-phone/style.css';
+import { z } from 'zod';
+import Notification from '../../Notification/Notification';
+import CustomCountrySelect from '../../selects/CustomCountrySelect/CustomCountrySelect';
 import { FormCheckbox } from '../BillingForm/FormCheckbox';
+import { FormCheckboxUnControlled } from '../BillingForm/FormCheckboxUnControlled';
 import { VariationFields } from '../BillingForm/style';
-import { useSubscribeMutation } from '@/store/rtk-queries/mailpoetApi';
+import { CustomError } from '../CustomFormInput/styles';
+import CustomTextField from '../CustomTextField/CustomTextField';
+import { ActiveText } from '../LoginForm/styles';
+import { CustomForm, StyledFieldsWrapper } from './styles';
 
 export const RegistrationForm: FC = () => {
   const tValidation = useTranslations('Validation');
@@ -134,7 +134,7 @@ export const RegistrationForm: FC = () => {
 
       if (isTokenValid && subscription) {
         try {
-          await subscribe({ email });
+          await subscribe({ email, lang: locale });
         } catch (error) {
           console.error('Error subscribing:', error);
         }

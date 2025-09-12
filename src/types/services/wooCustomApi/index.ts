@@ -27,6 +27,7 @@ export const WooCustomerSchema = z.object({
     state: z.string(),
     email: z.string(),
     phone: z.string(),
+    nip: z.string().optional(),
   }),
   shipping: z.object({
     first_name: z.string(),

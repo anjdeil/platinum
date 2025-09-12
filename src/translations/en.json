@@ -145,7 +145,8 @@
   },
   "TopBar": {
     "CallUs": "Call us",
-    "FreeDelivery": "Free delivery from"
+    "FreeDelivery": "Free delivery from {sum} zł within Poland",
+    "FreeDeliveryEurope": "Free delivery from {sum}€ to European Union countries"
   },
   "Categories": {
     "showAll": "Show All"
@@ -496,7 +497,7 @@
     "newUnreadMessage": "New unread message",
     "unreadMessageDate": "Now",
     "subscribeToOurNewsletter": "Sign up for our newsletter and receive a 10% welcome discount!",
-    "newArrivals": "Join our WhatsApp newsletter to receive exclusive discounts, great deals and stay up to date.",
+    "newArrivals": "Join our newsletter to receive exclusive discounts, great deals and stay up to date.",
     "joinToWhatsApp": "Join to WhatsApp",
     "subscribe": "Join now",
     "allShop": "All shop",

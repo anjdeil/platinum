@@ -14,6 +14,7 @@ import { AccountInfoWrapper, AccountTitle } from '@/styles/components';
 import { MetaDataType, OrderType } from '@/types/services/wooCustomApi/shop';
 import areBillingAndShippingEqual from '@/utils/areBillingAndShippingEqual';
 import parseCookies from '@/utils/parseCookies';
+import { readNip } from '@/utils/readNip';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
@@ -93,6 +94,8 @@ const Order: FC<OrderPropsType> = ({ order }) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
+  console.log('order...', order);
+
   useEffect(() => {
     const clearCartParam = router.query['clear-cart'];
     if (clearCartParam === 'true') {
@@ -109,19 +112,23 @@ const Order: FC<OrderPropsType> = ({ order }) => {
         );
         if (!alreadyTracked) {
           // GA: Purchase
-          if (typeof window.gtag === 'function') {
-            window.gtag('event', 'purchase', {
-              transaction_id: order.id,
-              value: parseFloat(order.total),
-              currency: order.currency,
-              items: order.line_items.map(item => ({
-                id: item.sku || item.product_id,
-                name: item.name,
-                quantity: item.quantity,
-                price: String(item.price),
-              })),
-            });
-          }
+          const items = order.line_items.map(item => ({
+            item_id: String(item.sku || item.product_id || item.id),
+            item_name: item.name || '',
+            quantity: Number(item.quantity) || 1,
+            price: Number(item.price) || 0,
+          }));
+
+          const dlPayload = {
+            event: 'purchase',
+            transaction_id: String(order.id),
+            value: Number(order.total) || 0,
+            currency: (order.currency || 'PLN').toUpperCase(),
+            items: items,
+          };
+
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push(dlPayload);
 
           // FB Pixel: Purchase
           if (typeof window.fbq === 'function') {
@@ -131,7 +138,7 @@ const Order: FC<OrderPropsType> = ({ order }) => {
               ),
               content_type: 'product',
               value: parseFloat(order.total),
-              currency: order.currency,
+              currency: (order.currency || 'PLN').toUpperCase(),
             });
           }
 
@@ -156,12 +163,19 @@ const Order: FC<OrderPropsType> = ({ order }) => {
     order.shipping
   );
 
-  const nip = order.meta_data.find(({ key, value }) => key === 'nip' && value);
+  // const nip = order.meta_data.find(({ key, value }) => key === 'nip' && value);
+  const nip = readNip(order.billing, order.meta_data);
 
   const additionalBillingFields: MetaDataType[] = [];
   const additionalShippingFields: MetaDataType[] = [];
 
-  if (nip) additionalBillingFields.push(nip);
+  if (nip) {
+    additionalBillingFields.push({
+      id: 0,
+      key: 'nip',
+      value: nip,
+    });
+  }
 
   return (
     <AccountLayout

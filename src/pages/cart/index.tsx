@@ -12,7 +12,11 @@ import { useAppDispatch, useAppSelector } from '@/store';
 import { useGetUserTotalsQuery } from '@/store/rtk-queries/userTotals/userTotals';
 import { useCreateOrderMutation } from '@/store/rtk-queries/wooCustomApi';
 import { useGetProductsMinimizedMutation } from '@/store/rtk-queries/wpCustomApi';
-import { addCoupon } from '@/store/slices/cartSlice';
+import {
+  addCoupon,
+  clearConflictedItems,
+  clearCoupons,
+} from '@/store/slices/cartSlice';
 import { CartPageWrapper } from '@/styles/cart/style';
 import { Container, FlexBox, StyledButton } from '@/styles/components';
 import { ProductsMinimizedType } from '@/types/components/shop/product/products';
@@ -48,17 +52,20 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   const { data: userTotal } = useGetUserTotalsQuery(defaultCustomerData?.id);
 
   const [auth, setAuth] = useState<boolean>(false);
-  const [userLoyaltyStatus] = useState<string | undefined>();
+
+  const [couponError, setCouponError] = useState(false);
+
+  const userLoyaltyStatus = userTotal?.loyalty_status;
 
   useEffect(() => {
-    if (defaultCustomerData) {
+    if (defaultCustomerData && userLoyaltyStatus) {
       setAuth(true);
-      const level = userTotal?.loyalty_status;
-      if (level && level !== '') {
-        dispatch(addCoupon({ couponCode: level }));
-      }
+      dispatch(addCoupon({ couponCode: userLoyaltyStatus }));
+    } else {
+      dispatch(clearCoupons());
+      setAuth(false);
     }
-  }, [defaultCustomerData, userTotal]);
+  }, [defaultCustomerData, userLoyaltyStatus, dispatch]);
 
   const [createOrder, { data: orderItems, isLoading: isLoadingOrder }] =
     useCreateOrderMutation();
@@ -79,10 +86,13 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
 
   const [cachedOrderItems, setCachedOrderItems] = useState(orderItems);
 
-  const { totalCost: cartCost } = getCartTotals(productsMinimized, cartItems);
   const { convertCurrency } = useCurrencyConverter();
 
-  const convertedCartCost = convertCurrency(cartCost);
+  const { totalCost: cartCost } = getCartTotals(
+    productsMinimized,
+    cartItems,
+    convertCurrency
+  );
 
   useEffect(() => {
     const handleCreateOrder = async () => {
@@ -103,7 +113,13 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
           (wooError as WooErrorType)?.details?.code ===
           'woocommerce_rest_invalid_coupon'
         ) {
-          setIsCouponsIgnored(true);
+          setCouponError(true);
+
+          if (userLoyaltyStatus) {
+            dispatch(addCoupon({ couponCode: userLoyaltyStatus }));
+          } else {
+            setIsCouponsIgnored(true);
+          }
         }
       }
 
@@ -150,6 +166,21 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
         lang: router.locale || defaultLanguage,
       });
       const productsMinimized = productsMinimizedData?.data?.data?.items || [];
+
+      // remove simple products with variation_id
+      const brokenItems = cartItems.filter(item => {
+        const product = productsMinimized.find(p => p.id === item.product_id);
+        return (
+          product &&
+          (product.parent_id === 0 || product.parent_id === null) &&
+          item.variation_id
+        );
+      });
+
+      if (brokenItems.length > 0) {
+        dispatch(clearConflictedItems(brokenItems));
+        return;
+      }
 
       setHasConflict(checkCartConflict(cartItems, productsMinimized));
     };
@@ -211,24 +242,20 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
     handleChangeQuantity(productId, 'value', variationId, 0);
 
     //Google Analytics
-    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+    if (typeof window !== 'undefined') {
       const itemToRemove = innercartItems.find(
         item =>
           item.product_id === productId && item.variation_id === variationId
       );
 
       if (itemToRemove) {
-        window.gtag('event', 'remove_from_cart', {
-          currency: code,
-          value: itemToRemove.price * itemToRemove.quantity,
-          items: [
-            {
-              item_id: itemToRemove.product_id,
-              item_name: itemToRemove.name,
-              quantity: itemToRemove.quantity,
-              price: String(itemToRemove.price),
-            },
-          ],
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: 'remove_from_cart',
+          item_id: itemToRemove.id,
+          item_name: itemToRemove.name,
+          quantity: itemToRemove.quantity,
+          price: itemToRemove.price,
         });
       }
     }
@@ -274,7 +301,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
               <OrderBar
                 miniCart={false}
                 isLoadingOrder={isLoadingOrder}
-                subtotal={convertedCartCost}
+                subtotal={cartCost}
                 symbol={symbol}
               />
             )}
@@ -296,7 +323,8 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
           <CartCouponBlock
             userLoyalityStatus={userLoyaltyStatus}
             auth={auth}
-            isCouponsIgnored={isCouponsIgnored}
+            couponError={couponError}
+            setCouponError={setCouponError}
           />
 
           {innercartItems.length > 0 && filteredOutItems.length == 0 && (

@@ -29,6 +29,7 @@ import {
   StyledContainer,
   StyledHeroImage,
 } from '@/styles/blog/styles';
+import { BASE_URL } from '@/utils/consts';
 import { getCleanText } from '@/utils/getCleanText';
 import Head from 'next/head';
 
@@ -198,6 +199,10 @@ const BlogPostPage = ({
     post?.seo_data?.images?.[0]?.['image:loc'] || thumbnail?.src;
   const postUrl = fullUrl;
 
+  const ogTitle = post?.seo_data?.og?.title || postTitle;
+
+  const ogDescription = post?.seo_data?.og?.description || postDescription;
+
   const schemaPost = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -217,7 +222,7 @@ const BlogPostPage = ({
         author: {
           '@type': 'Organization',
           name: 'Platinum by Chetvertinovskaya Liubov',
-          url: 'https://platinumchetvertinovskaya.com',
+          url: BASE_URL,
         },
         publisher: {
           '@id': `${postUrl}#publisher`,
@@ -232,7 +237,7 @@ const BlogPostPage = ({
         name: 'Platinum by Chetvertinovskaya Liubov',
         logo: {
           '@type': 'ImageObject',
-          url: 'https://platinumchetvertinovskaya.com/assets/icons/logo.png',
+          url: `${BASE_URL}/assets/icons/logo.png`,
         },
       },
       {
@@ -254,8 +259,8 @@ const BlogPostPage = ({
       <Head>
         <meta name="robots" content="index, follow" />
         <meta name="description" content={postDescription} />
-        <meta property="og:title" content={postTitle} />
-        <meta property="og:description" content={postDescription} />
+        <meta property="og:title" content={ogTitle} />
+        <meta property="og:description" content={ogDescription} />
         <meta property="og:image" content={postImage} />
         <meta property="og:type" content="article" />
         <meta property="og:url" content={canonicalUrl} />
@@ -263,7 +268,7 @@ const BlogPostPage = ({
         <link rel="alternate" hrefLang={safeLocale} href={canonicalUrl} />
         <script type="application/ld+json">{JSON.stringify(schemaPost)}</script>
       </Head>
-      <PageTitle title={title} />
+      <PageTitle title={postTitle} />
       <SectionContainer>
         <StyledContainer>
           <StyledHeaderWrapper>

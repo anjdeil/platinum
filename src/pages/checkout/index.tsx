@@ -35,7 +35,6 @@ import {
 } from '@/types/pages/checkout';
 import { ShippingMethodType, WooErrorType } from '@/types/services';
 import checkCartConflict from '@/utils/cart/checkCartConflict';
-import getCartTotals from '@/utils/cart/getCartTotals';
 import getCalculatedMethodCostByWeight from '@/utils/checkout/getCalculatedMethodCostByWeight';
 import getShippingMethodFixedCost from '@/utils/checkout/getShippingMethodFixedCost';
 import parcelMachinesMethods from '@/utils/checkout/parcelMachinesMethods';
@@ -59,7 +58,9 @@ import {
   MetaDataType,
   ShippingType,
 } from '@/types/services/wooCustomApi/customer';
+import getCartCheckoutTotals from '@/utils/cart/getCartCheckoutTotals';
 import checkCustomerDataChanges from '@/utils/checkCustomerDataChanges';
+import { readNip } from '@/utils/readNip';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
 export function getServerSideProps() {
@@ -103,7 +104,7 @@ export default function CheckoutPage() {
   useEffect(() => {
     const productsMinimized = productsMinimizedData?.data?.items;
     if (productsMinimized) {
-      setCartTotals(getCartTotals(productsMinimized, cartItems));
+      setCartTotals(getCartCheckoutTotals(productsMinimized, cartItems));
 
       const allowedMethodsLists = productsMinimized.map(
         item => item.shipping_methods_allowed || []
@@ -305,6 +306,39 @@ export default function CheckoutPage() {
   const [fetchUserData, { data: userData, isLoading: isUserDataLoading }] =
     useLazyFetchUserDataQuery();
 
+  //GTM
+  useEffect(() => {
+    if (
+      order &&
+      order.line_items?.length > 0 &&
+      typeof window !== 'undefined'
+    ) {
+      const gtmKey = `gtm-begin-checkout-${order.id}`;
+      const alreadyTracked = sessionStorage.getItem(gtmKey);
+
+      if (!alreadyTracked) {
+        // GTM: begin_checkout
+
+        const gtmPayload = {
+          event: 'begin_checkout',
+          currency: currencyCode || 'PLN',
+          value: order.total,
+          items: order.line_items.map(item => ({
+            item_id: item.variation_id || item.product_id,
+            item_name: item.name,
+            price: Number(item.price.toFixed(2)),
+            quantity: item.quantity,
+          })),
+        };
+
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push(gtmPayload);
+
+        sessionStorage.setItem(gtmKey, 'true');
+      }
+    }
+  }, [order, currencyCode]);
+
   /**
    * Coupons and loyalty status
    */
@@ -459,8 +493,9 @@ export default function CheckoutPage() {
       );
 
       if (hasChanges) {
-        const formNipMeta = formOrderData?.metaData?.find(
-          meta => meta.key === 'nip'
+        const nipValue = readNip(
+          formOrderData?.billing,
+          formOrderData?.metaData
         );
 
         const preparedData = {
@@ -481,6 +516,7 @@ export default function CheckoutPage() {
             company: isInvoice
               ? formOrderData.billing?.company || ''
               : customer.billing.company || '',
+            nip: isInvoice ? nipValue || '' : '',
           },
           shipping: {
             first_name: isShippingAddressDifferent
@@ -508,12 +544,13 @@ export default function CheckoutPage() {
               ? formOrderData.shipping?.postcode
               : customer.shipping?.postcode || '',
           },
+          // meta_data: [],
           meta_data:
-            isInvoice && isNipChanged && formNipMeta
+            isInvoice && isNipChanged && nipValue
               ? [
                   {
-                    key: 'nip',
-                    value: formNipMeta.value,
+                    key: '_billing_vat_number',
+                    value: nipValue,
                   },
                 ]
               : [],

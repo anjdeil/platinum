@@ -11,6 +11,11 @@ const cartInitialState: CartState = {
   needsProductDataUpdate: false,
 };
 
+interface ClearConflictedItemsPayload {
+  product_id: number;
+  variation_id?: number;
+}
+
 export const cartSlice = createSlice({
   name: 'Cart',
   initialState: cartInitialState,
@@ -60,6 +65,9 @@ export const cartSlice = createSlice({
         state.couponCodes = [couponCode];
       }
     },
+    clearCoupons: (state) => {
+      state.couponCodes = [];
+    },
     removeCoupon: (state, action: PayloadAction<{ couponCode: string }>) => {
       const { couponCode } = action.payload;
       state.couponCodes = state.couponCodes.filter(code => code !== couponCode);
@@ -73,18 +81,32 @@ export const cartSlice = createSlice({
     initializeCart: state => {
       state.needsProductDataUpdate = true;
     },
+    clearConflictedItems: (state, action: PayloadAction<ClearConflictedItemsPayload[]>) => {
+      const conflictedItems = action.payload;
+
+      state.cartItems = state.cartItems.filter(cartItem => {
+        return !conflictedItems.some(
+          conflicted =>
+            conflicted.product_id === cartItem.product_id &&
+            (conflicted.variation_id === undefined || conflicted.variation_id === cartItem.variation_id)
+        );
+      });
+
+      state.needsProductDataUpdate = true;
+    },
   },
 });
 
 export const {
   updateCart,
-
   addCoupon,
   removeCoupon,
+  clearCoupons,
   setCommentToOrder,
   clearCommentToOrder,
   initializeCart,
   clearCart,
+  clearConflictedItems
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

@@ -62,10 +62,6 @@ export const getValidationSchema = (
     case 'phone':
       return {
         required: t('pleaseFillInThePhoneNumber'),
-        minLength: {
-          value: 12,
-          message: t('yourPhoneNumberIsTooShort'),
-        },
         pattern: {
           value: phoneRegex,
           message: t('invalidPhoneNumber'),
@@ -87,7 +83,7 @@ export const getValidationSchema = (
       return {
         required: t('pleaseFillInTheNip'),
         minLength: {
-          value: 10,
+          value: 6,
           message: t('yourNipIsTooShort'),
         },
         maxLength: {

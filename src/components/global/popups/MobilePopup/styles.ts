@@ -13,12 +13,12 @@ export const PopupContainer = styled.div<PopupContainerProps>`
   @media ${({ theme }) => theme.media.large} {
     position: fixed;
     background-color: ${({
-      theme,
-      backgroundColor = theme.background.secondary,
-    }) => backgroundColor};
+  theme,
+  backgroundColor = theme.background.secondary,
+}) => backgroundColor};
     width: ${({ width = '70%' }) => width};
     padding-top: ${({ paddingTop = '0' }) => paddingTop};
-    top: ${({ scroll = 0 }) => (scroll ? Math.max(0, 146 - scroll) : 146)}px;
+    top: ${({ scroll = 0 }) => (scroll ? Math.max(0, 170 - scroll) : 170)}px;
     left: 0;
     bottom: 0;
     display: grid;
@@ -27,13 +27,13 @@ export const PopupContainer = styled.div<PopupContainerProps>`
 
   @media ${({ theme }) => theme.media.large} {
     grid-template-rows: ${({ title, closeButton = false }) =>
-      closeButton ? 'auto 1fr' : title === '' ? '1fr' : '1fr 8fr'};
+    closeButton ? 'auto 1fr' : title === '' ? '1fr' : '1fr 8fr'};
     overflow: auto;
   }
 
   @media ${({ theme }) => theme.media.medium} {
-    top: ${({ scroll = 0 }) => (scroll ? Math.max(0, 60 - scroll) : 60)}px;
-    bottom: 60px;
+    top: ${({ scroll = 0 }) => (scroll ? Math.max(0, 77 - scroll) : 77)}px;
+    bottom: 72px;
   }
 `;
 
@@ -45,7 +45,7 @@ export const Header = styled.div<PopupContainerProps>`
     display: flex;
     padding-top: ${({ closeButton = false }) => (closeButton ? '16px' : ' 0')};
     justify-content: ${({ closeButton = false }) =>
-      closeButton ? 'flex-end' : ' flex-start'};
+    closeButton ? 'flex-end' : ' flex-start'};
   }
 `;
 
