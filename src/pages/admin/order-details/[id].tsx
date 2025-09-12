@@ -1,83 +1,85 @@
-import AdminOrderPdf from '@/pdf/AdminOrderPdf';
-// import wooCommerceRestApi from '@/services/wooCommerceRestApi';
-import { OrderType } from '@/types/services/wooCustomApi/shop';
-import { pdf } from '@react-pdf/renderer';
-import { GetServerSideProps, GetServerSidePropsContext } from 'next';
-import Head from 'next/head';
-import { useEffect } from 'react';
+// File commented because use new index.tsx
 
-export const getServerSideProps: GetServerSideProps = async (
-  context: GetServerSidePropsContext
-) => {
-  const { id } = context.query;
+// import AdminOrderPdf from '@/pdf/AdminOrderPdf';
+// // import wooCommerceRestApi from '@/services/wooCommerceRestApi';
+// import { OrderType } from '@/types/services/wooCustomApi/shop';
+// import { pdf } from '@react-pdf/renderer';
+// import { GetServerSideProps, GetServerSidePropsContext } from 'next';
+// import Head from 'next/head';
+// import { useEffect } from 'react';
 
-  if (!id) {
-    return { notFound: true };
-  }
+// export const getServerSideProps: GetServerSideProps = async (
+//   context: GetServerSidePropsContext
+// ) => {
+//   const { id } = context.query;
 
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_WP_URL}/wp-json/platinum/v1/order-details/${id}`
-    );
+//   if (!id) {
+//     return { notFound: true };
+//   }
 
-    if (!response.ok) {
-      throw new Error('Failed to fetch order data');
-    }
+//   try {
+//     const response = await fetch(
+//       `${process.env.NEXT_PUBLIC_WP_URL}/wp-json/platinum/v1/order-details/${id}`
+//     );
 
-    const order = await response.json();
+//     if (!response.ok) {
+//       throw new Error('Failed to fetch order data');
+//     }
 
-    return {
-      props: {
-        order,
-      },
-    };
-  } catch (error) {
-    return {
-      notFound: true,
-    };
-  }
+//     const order = await response.json();
 
-  // const { id } = context.query;
+//     return {
+//       props: {
+//         order,
+//       },
+//     };
+//   } catch (error) {
+//     return {
+//       notFound: true,
+//     };
+//   }
 
-  // try {
-  //   const orderResponse = await wooCommerceRestApi.get(`orders/${id}`);
-  //   const order = orderResponse.data;
+//   // const { id } = context.query;
 
-  //   return {
-  //     props: {
-  //       order,
-  //     },
-  //   };
-  // } catch (error) {
-  //   return {
-  //     notFound: true,
-  //   };
-  // }
-};
+//   // try {
+//   //   const orderResponse = await wooCommerceRestApi.get(`orders/${id}`);
+//   //   const order = orderResponse.data;
 
-export default function PDFGeneratorViewer({ order }: { order: OrderType }) {
-  useEffect(() => {
-    const generateAndDownload = async () => {
-      const blob = await pdf(<AdminOrderPdf order={order} />).toBlob();
+//   //   return {
+//   //     props: {
+//   //       order,
+//   //     },
+//   //   };
+//   // } catch (error) {
+//   //   return {
+//   //     notFound: true,
+//   //   };
+//   // }
+// };
 
-      const blobUrl = URL.createObjectURL(blob);
+// export default function PDFGeneratorViewer({ order }: { order: OrderType }) {
+//   useEffect(() => {
+//     const generateAndDownload = async () => {
+//       const blob = await pdf(<AdminOrderPdf order={order} />).toBlob();
 
-      const link = document.createElement('a');
-      link.href = blobUrl;
-      link.download = `order-details-${order.id}`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    };
+//       const blobUrl = URL.createObjectURL(blob);
 
-    generateAndDownload();
-  }, []);
+//       const link = document.createElement('a');
+//       link.href = blobUrl;
+//       link.download = `order-details-${order.id}`;
+//       document.body.appendChild(link);
+//       link.click();
+//       document.body.removeChild(link);
+//     };
 
-  return (
-    <>
-      <Head>
-        <meta name="robots" content="noindex, nofollow" />
-      </Head>
-    </>
-  );
-}
+//     generateAndDownload();
+//   }, []);
+
+//   return (
+//     <>
+//       <Head>
+//         <meta name="robots" content="noindex, nofollow" />
+//       </Head>
+//     </>
+//   );
+// }
