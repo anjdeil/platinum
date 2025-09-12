@@ -266,7 +266,7 @@ export const Archive: FC<ArchivePropsType> = props => {
           <Title as="h1" uppercase>
             {!currentCategory && searchTerm
               ? `${t('phraseSought')}: "${searchTerm}"`
-              : currentCategory?.name}
+              : currentCategory?.custom_h1 || currentCategory?.name}
           </Title>
         </CatalogTitleWrapper>
         <CatalogLayout>
