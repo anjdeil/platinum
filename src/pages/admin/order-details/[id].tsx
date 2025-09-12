@@ -1,5 +1,5 @@
 import AdminOrderPdf from '@/pdf/AdminOrderPdf';
-import wooCommerceRestApi from '@/services/wooCommerceRestApi';
+// import wooCommerceRestApi from '@/services/wooCommerceRestApi';
 import { OrderType } from '@/types/services/wooCustomApi/shop';
 import { pdf } from '@react-pdf/renderer';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
@@ -11,9 +11,20 @@ export const getServerSideProps: GetServerSideProps = async (
 ) => {
   const { id } = context.query;
 
+  if (!id) {
+    return { notFound: true };
+  }
+
   try {
-    const orderResponse = await wooCommerceRestApi.get(`orders/${id}`);
-    const order = orderResponse.data;
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_WP_URL}/wp-json/platinum/v1/order-details/${id}`
+    );
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch order data');
+    }
+
+    const order = await response.json();
 
     return {
       props: {
@@ -25,6 +36,23 @@ export const getServerSideProps: GetServerSideProps = async (
       notFound: true,
     };
   }
+
+  // const { id } = context.query;
+
+  // try {
+  //   const orderResponse = await wooCommerceRestApi.get(`orders/${id}`);
+  //   const order = orderResponse.data;
+
+  //   return {
+  //     props: {
+  //       order,
+  //     },
+  //   };
+  // } catch (error) {
+  //   return {
+  //     notFound: true,
+  //   };
+  // }
 };
 
 export default function PDFGeneratorViewer({ order }: { order: OrderType }) {
