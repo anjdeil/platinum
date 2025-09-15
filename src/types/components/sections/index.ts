@@ -9,7 +9,7 @@ const SliderItemSchema = z.object({
 });
 
 const TitleSectionSchema = z.object({
-  _type: z.literal('title'),
+  _type: z.literal('custom_h1'),
   title: z.string(),
 });
 

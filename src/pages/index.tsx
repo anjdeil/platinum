@@ -53,7 +53,7 @@ export const getServerSideProps: GetServerSideProps = async (
       const filteredSections = pageData.sections.filter(
         (section: { _type: string }) =>
           [
-            'title',
+            'custom_h1',
             'slider',
             'product_list',
             'categories',

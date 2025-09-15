@@ -47,7 +47,7 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
           case 'slider':
             const normalizedSlides = normalizeSlides(section.slider);
             return <SliderSection key={index} slides={normalizedSlides} />;
-          case 'title':
+          case 'custom_h1':
             return <TitleSection title={section.title} />;
           case 'product_list':
             return (

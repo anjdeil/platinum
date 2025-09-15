@@ -5,5 +5,9 @@ export const TitleContainer = styled.div`
   height: auto;
   max-width: 846px;
   margin: 0 auto;
+  text-align: center;
 
+  @media ${({ theme }) => theme.media.large} {
+    max-width: 640px;
+  }
 `;
