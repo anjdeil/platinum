@@ -24,6 +24,7 @@ import { RichTextSection } from '../RichTextSection';
 import { SliderSection } from '../SliderSection';
 import { SplitSection } from '../SplitSection';
 import { SectionContainer } from '../styles';
+import { TitleSection } from '../TitleSection';
 
 interface SectionRendererProps {
   sections: SectionsType[];
@@ -46,6 +47,8 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
           case 'slider':
             const normalizedSlides = normalizeSlides(section.slider);
             return <SliderSection key={index} slides={normalizedSlides} />;
+          case 'title':
+            return <TitleSection title={section.title} />;
           case 'product_list':
             return (
               <Container key={index}>

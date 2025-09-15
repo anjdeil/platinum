@@ -8,6 +8,11 @@ const SliderItemSchema = z.object({
   url: z.string().url(),
 });
 
+const TitleSectionSchema = z.object({
+  _type: z.literal('title'),
+  title: z.string(),
+});
+
 export const SliderSectionSchema = z.object({
   _type: z.literal('slider'),
   slider: z.array(SliderItemSchema),
@@ -199,6 +204,7 @@ export const NetworksSectionSchema = z.object({
 });
 
 export const SectionsTypeSchema = z.union([
+  TitleSectionSchema,
   SliderSectionSchema,
   ProductListSectionSchema,
   CategoriesSectionSchema,
@@ -223,6 +229,7 @@ export const SectionsTypeSchema = z.union([
 ]);
 
 // export type SliderItem = z.infer<typeof SliderItemSchema>;
+export type TitleSectionData = z.infer<typeof TitleSectionSchema>;
 export type SliderSectionData = z.infer<typeof SliderSectionSchema>;
 export type ProductListSectionData = z.infer<typeof ProductListSectionSchema>;
 export type CategoriesSectionData = z.infer<typeof CategoriesSectionSchema>;
