@@ -24,7 +24,7 @@ export const Wrapper = styled.div`
 export const Content = styled.div`
   display: inline-block;
   white-space: nowrap;
-  animation: ${scroll} 15s linear infinite;
+  animation: ${scroll} 30s linear infinite;
   display: flex;
   align-items: center;
 `;
