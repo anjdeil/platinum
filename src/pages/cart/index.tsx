@@ -111,7 +111,9 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
         const wooError = (error as FetchBaseQueryError).data;
         if (
           (wooError as WooErrorType)?.details?.code ===
-          'woocommerce_rest_invalid_coupon'
+            'woocommerce_rest_invalid_coupon' ||
+          (wooError as WooErrorType)?.details?.code ===
+            'invalid_coupon_for_sale'
         ) {
           setCouponError(true);
 
