@@ -25,6 +25,7 @@ import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import router from 'next/router';
 import { FC, useState } from 'react';
+import CategorieDescription from '../categories/CategorieDescription/CategorieDescription';
 import SelectParentCategory from '../categories/SelectParentCategoryMobile/SelectParentCategoryMobile';
 import { FilterPanel } from '../filtration/FilterPanel';
 import { ProductCardList } from '../ProductCardsList';
@@ -399,6 +400,9 @@ export const Archive: FC<ArchivePropsType> = props => {
                   onChange={handlePageChange}
                 />
               </PagesNavigationFooterWrapper>
+            )}
+            {currentCategory && (
+              <CategorieDescription content={currentCategory?.description} />
             )}
           </CatalogRightWrapper>
         </CatalogLayout>
