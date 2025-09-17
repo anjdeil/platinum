@@ -29,7 +29,7 @@ export const FilterSortWrapper = styled.div`
   @media ${({ theme }) => theme.media.medium} {
     flex-direction: row-reverse;
     justify-content: space-between;
-    flex-grow: 1;
+    flex-grow: 1; 
   }
 `;
 

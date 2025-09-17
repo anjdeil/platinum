@@ -149,7 +149,9 @@
     "FreeDeliveryEurope": "Free delivery from {sum}€ to European Union countries"
   },
   "Categories": {
-    "showAll": "Show All"
+    "showAll": "Show All",
+    "readMore": "Read more",
+    "showLess": "Show less"
   },
   "Search": {
     "Search": "Search",
