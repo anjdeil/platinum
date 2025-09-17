@@ -401,8 +401,10 @@ export const Archive: FC<ArchivePropsType> = props => {
                 />
               </PagesNavigationFooterWrapper>
             )}
-            {currentCategory && (
-              <CategorieDescription content={currentCategory?.description} />
+            {currentCategory?.custom_description && (
+              <CategorieDescription
+                content={currentCategory?.custom_description}
+              />
             )}
           </CatalogRightWrapper>
         </CatalogLayout>

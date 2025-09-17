@@ -1,12 +1,17 @@
 import parse, {
   DOMNode,
   domToReact,
+  Element,
   HTMLReactParserOptions,
 } from 'html-react-parser';
-import { FC, useRef, useState } from 'react';
+import { useTranslations } from 'next-intl';
+import { FC, useEffect, useRef, useState } from 'react';
 import {
+  Container,
+  GradientFade,
   Inner,
-  StyledHeading,
+  StyledHeadingH2,
+  StyledHeadingH3,
   StyledList,
   StyledListItem,
   StyledOrderedList,
@@ -23,8 +28,10 @@ const CategorieDescription: FC<CategorieDescriptionPropsType> = ({
   content,
 }) => {
   const [expanded, setExpanded] = useState(false);
-  const [height, setHeight] = useState(100);
+  const [height, setHeight] = useState(150);
   const contentRef = useRef<HTMLDivElement>(null);
+
+  const t = useTranslations('Categories');
 
   const options: HTMLReactParserOptions = {
     replace: (domNode: DOMNode) => {
@@ -32,11 +39,16 @@ const CategorieDescription: FC<CategorieDescriptionPropsType> = ({
         const { name, children } = domNode;
         switch (name) {
           case 'h2':
+            return (
+              <StyledHeadingH2 as={name}>
+                {domToReact(children as DOMNode[], options)}
+              </StyledHeadingH2>
+            );
           case 'h3':
             return (
-              <StyledHeading as={name}>
+              <StyledHeadingH3 as={name}>
                 {domToReact(children as DOMNode[], options)}
-              </StyledHeading>
+              </StyledHeadingH3>
             );
           case 'p':
             return (
@@ -63,7 +75,7 @@ const CategorieDescription: FC<CategorieDescriptionPropsType> = ({
               </StyledListItem>
             );
           default:
-            return domNode;
+            return domToReact(children as DOMNode[], options);
         }
       }
     },
@@ -71,15 +83,26 @@ const CategorieDescription: FC<CategorieDescriptionPropsType> = ({
 
   const parsedContent = parse(content, options);
 
+  useEffect(() => {
+    if (contentRef.current) {
+      if (expanded) {
+        setHeight(contentRef.current.scrollHeight);
+      } else {
+        setHeight(150);
+      }
+    }
+  }, [expanded, content]);
+
   return (
-    <div>
+    <Container>
       <Wrapper height={height} expanded={expanded}>
         <Inner ref={contentRef}>{parsedContent}</Inner>
+        <GradientFade expanded={expanded} />
       </Wrapper>
       <ToggleButton onClick={() => setExpanded(prev => !prev)}>
-        {expanded ? 'Згорнути' : 'Дивитись більше'}
+        {expanded ? `${t('showLess')}` : `${t('readMore')}`}
       </ToggleButton>
-    </div>
+    </Container>
   );
 };
 
