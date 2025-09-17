@@ -74,7 +74,7 @@ export const ToggleButton = styled.button`
   border: none;
   color: ${({ theme }) => theme.colors.border};
   cursor: pointer;
-  font: ${({ theme }) => theme.fonts.titleH2Medium};
+  font: ${({ theme }) => theme.fonts.bodyMiddleReg};
   align-self: flex-end;
   transition: all 0.2s ease;
 
