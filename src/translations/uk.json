@@ -149,7 +149,9 @@
     "FreeDeliveryEurope": "Безкоштовна доставка від {sum}€ до країн Європейського Союзу"
   },
   "Categories": {
-    "showAll": "Показати всі"
+    "showAll": "Показати всі",
+    "readMore": "Дивитись більше",
+    "showLess": "Згорнути"
   },
   "Search": {
     "Search": "Пошук",

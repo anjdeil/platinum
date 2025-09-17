@@ -25,6 +25,7 @@ import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import router from 'next/router';
 import { FC, useState } from 'react';
+import CategorieDescription from '../categories/CategorieDescription/CategorieDescription';
 import SelectParentCategory from '../categories/SelectParentCategoryMobile/SelectParentCategoryMobile';
 import { FilterPanel } from '../filtration/FilterPanel';
 import { ProductCardList } from '../ProductCardsList';
@@ -266,7 +267,7 @@ export const Archive: FC<ArchivePropsType> = props => {
           <Title as="h1" uppercase>
             {!currentCategory && searchTerm
               ? `${t('phraseSought')}: "${searchTerm}"`
-              : currentCategory?.name}
+              : currentCategory?.custom_h1 || currentCategory?.name}
           </Title>
         </CatalogTitleWrapper>
         <CatalogLayout>
@@ -399,6 +400,11 @@ export const Archive: FC<ArchivePropsType> = props => {
                   onChange={handlePageChange}
                 />
               </PagesNavigationFooterWrapper>
+            )}
+            {currentCategory?.custom_description && (
+              <CategorieDescription
+                content={currentCategory?.custom_description}
+              />
             )}
           </CatalogRightWrapper>
         </CatalogLayout>

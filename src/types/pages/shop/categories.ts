@@ -25,6 +25,8 @@ export const CategorySchema = z.object({
   slug: z.string(),
   description: z.string(),
   count: z.number(),
+  custom_h1: z.string().nullable().optional(),
+  custom_description: z.string().nullable().optional(),
   language_code: z.string(),
   image: z.string().optional(),
   menu_order: z.number().optional(),

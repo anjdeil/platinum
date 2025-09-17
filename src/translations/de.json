@@ -149,7 +149,9 @@
     "FreeDeliveryEurope": "Kostenlose Lieferung ab {sum}€ in die Länder der Europäischen Union"
   },
   "Categories": {
-    "showAll": "Alle anzeigen"
+    "showAll": "Alle anzeigen",
+    "readMore": "Mehr anzeigen",
+    "showLess": "Weniger anzeigen"
   },
   "Search": {
     "Search": "Suche",
