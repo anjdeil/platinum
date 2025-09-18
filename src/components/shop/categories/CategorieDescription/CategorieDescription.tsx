@@ -10,6 +10,7 @@ import {
   Container,
   GradientFade,
   Inner,
+  StyledBlockquote,
   StyledHeadingH2,
   StyledHeadingH3,
   StyledList,
@@ -73,6 +74,12 @@ const CategorieDescription: FC<CategorieDescriptionPropsType> = ({
               <StyledListItem>
                 {domToReact(children as DOMNode[], options)}
               </StyledListItem>
+            );
+          case 'blockquote':
+            return (
+              <StyledBlockquote>
+                {domToReact(children as DOMNode[], options)}
+              </StyledBlockquote>
             );
           default:
             return domToReact(children as DOMNode[], options);
