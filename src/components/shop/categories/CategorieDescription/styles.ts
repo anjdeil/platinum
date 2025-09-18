@@ -108,3 +108,9 @@ export const GradientFade = styled.div<{ expanded: boolean }>`
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #fff);
   pointer-events: none;
 `;
+
+export const StyledBlockquote = styled.blockquote`
+  font: ${({ theme }) => theme.fonts.bodyMiddleReg};
+  border-left: 2px solid ${({ theme }) => theme.colors.primary};
+  padding-left: 16px;
+`;

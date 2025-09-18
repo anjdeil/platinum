@@ -88,6 +88,15 @@ export const BlogSectionSchema = z.object({
   _type: z.literal('blog'),
   subtitle: z.string().optional(),
   title: z.string().optional(),
+  all_link: z.array(
+    z.object({
+      _type: z.string(),
+      title: z.string(),
+      url: z.string(),
+      target: z.string()
+    })
+  ).optional(),
+  below_text: z.string().optional(),
 });
 
 export const LoyaltySectionSchema = z.object({

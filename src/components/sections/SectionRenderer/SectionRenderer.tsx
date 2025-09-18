@@ -117,6 +117,8 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
                   key={index}
                   subtitle={section.subtitle}
                   title={section.title}
+                  all_link={section.all_link}
+                  below_text={section.below_text}
                 />
               </Container>
             );

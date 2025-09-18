@@ -1,16 +1,21 @@
 import BlogListBlock from '@/components/pages/main/BlogListBlock/BlogListBlock';
-import { BlogSectionData } from '@/types/components/sections';
-import { RecommendContainer, SectionContainer } from '../styles';
-import { useRouter } from 'next/router';
+import CategorieDescription from '@/components/shop/categories/CategorieDescription/CategorieDescription';
 import { useGetPostsQuery } from '@/store/rtk-queries/wpCustomApi';
+import { BlogSectionData } from '@/types/components/sections';
 import { BlogItemType } from '@/types/pages/blog';
+import { useRouter } from 'next/router';
 import { SectionHeader } from '../SectionHeader';
+import { SectionHeaderWithLink } from '../SectionHeaderWithLink';
+import { RecommendContainer } from '../styles';
+import { BlogSectionContainer } from './styles';
 
 type BlogSectionProps = Omit<BlogSectionData, '_type'>;
 
 export const BlogSection: React.FC<BlogSectionProps> = ({
   subtitle,
   title,
+  all_link,
+  below_text,
 }) => {
   const router = useRouter();
   const PER_PAGE = 4;
@@ -30,15 +35,24 @@ export const BlogSection: React.FC<BlogSectionProps> = ({
   const posts: BlogItemType[] = postsData?.data?.items || [];
 
   return (
-    <SectionContainer>
+    <BlogSectionContainer>
       <RecommendContainer>
-        <SectionHeader title={title} subtitle={subtitle} />
+        {all_link ? (
+          <SectionHeaderWithLink
+            title={title}
+            subtitle={subtitle}
+            all_link={all_link}
+          />
+        ) : (
+          <SectionHeader title={title} subtitle={subtitle} />
+        )}
         <BlogListBlock
           posts={posts}
           isError={!!postsError}
           isLoading={isComponentLoading}
         />
       </RecommendContainer>
-    </SectionContainer>
+      {below_text && <CategorieDescription content={below_text} />}
+    </BlogSectionContainer>
   );
 };
