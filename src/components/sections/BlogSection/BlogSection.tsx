@@ -6,7 +6,8 @@ import { BlogItemType } from '@/types/pages/blog';
 import { useRouter } from 'next/router';
 import { SectionHeader } from '../SectionHeader';
 import { SectionHeaderWithLink } from '../SectionHeaderWithLink';
-import { RecommendContainer, SectionContainer } from '../styles';
+import { RecommendContainer } from '../styles';
+import { BlogSectionContainer } from './styles';
 
 type BlogSectionProps = Omit<BlogSectionData, '_type'>;
 
@@ -34,7 +35,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({
   const posts: BlogItemType[] = postsData?.data?.items || [];
 
   return (
-    <SectionContainer>
+    <BlogSectionContainer>
       <RecommendContainer>
         {all_link ? (
           <SectionHeaderWithLink
@@ -52,6 +53,6 @@ export const BlogSection: React.FC<BlogSectionProps> = ({
         />
       </RecommendContainer>
       {below_text && <CategorieDescription content={below_text} />}
-    </SectionContainer>
+    </BlogSectionContainer>
   );
 };
