@@ -20,13 +20,13 @@ const NetworksSection = dynamic(() => import('../NetworksSection').then(mod => m
 const ProductListSection = dynamic(() => import('../ProductListSection').then(mod => mod.ProductListSection));
 const QuestionFormSection = dynamic(() => import('../QuestionFormSection').then(mod => mod.QuestionFormSection));
 const RichTextSection = dynamic(() => import('../RichTextSection').then(mod => mod.RichTextSection));
-const SliderSection = dynamic(() => import('../SliderSection').then(mod => mod.SliderSection));
-const SplitSection = dynamic(() => import('../SplitSection').then(mod => mod.SplitSection));
+import { SliderSection } from '../SliderSection';
+import { SplitSection } from '../SplitSection';
 import { SectionContainer } from '../styles';
 import { TitleSection } from '../TitleSection';
 import { HeroSection } from '../HeroSection';
-const LoyaltySection = dynamic(() => import('../LoyaltySection').then(mod => mod.LoyaltySection));
-const ContactsSection = dynamic(() => import('../ContactsSection/ContactsSection').then(mod => mod.ContactsSection));
+import { LoyaltySection } from '../LoyaltySection';
+import { ContactsSection } from '../ContactsSection/ContactsSection';
 
 interface SectionRendererProps {
   sections: SectionsType[];
