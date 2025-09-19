@@ -8,33 +8,31 @@ import { AmbassadorBenefitsSection } from '../AmbassadorBenefitsSection';
 import { AmbassadorHeroSection } from '../AmbassadorHeroSection';
 import { AmbassadorImageSection } from '../AmbassadorImageSection';
 import { AmbassadorProvideSection } from '../AmbassadorProvideSection';
-import dynamic from 'next/dynamic';
-
-const BlogSection = dynamic(() => import('../BlogSection').then(mod => mod.BlogSection));
-const CategoriesSection = dynamic(() => import('../CategoriesSection').then(mod => mod.CategoriesSection));
-const FeaturesSection = dynamic(() => import('../FeaturesSection/FeaturesSection').then(mod => mod.FeaturesSection));
-const InstagramSection = dynamic(() => import('../InstagramSection').then(mod => mod.InstagramSection));
-const NewsletterSection = dynamic(() => import('../NewsletterSection').then(mod => mod.NewsletterSection));
-const ReviewsSection = dynamic(() => import('../ReviewsSection').then(mod => mod.ReviewsSection));
-const NetworksSection = dynamic(() => import('../NetworksSection').then(mod => mod.NetworksSection));
-const ProductListSection = dynamic(() => import('../ProductListSection').then(mod => mod.ProductListSection));
-const QuestionFormSection = dynamic(() => import('../QuestionFormSection').then(mod => mod.QuestionFormSection));
-const RichTextSection = dynamic(() => import('../RichTextSection').then(mod => mod.RichTextSection));
+import { BlogSection } from '../BlogSection';
+import { CategoriesSection } from '../CategoriesSection';
+import { ContactsSection } from '../ContactsSection';
+import { FeaturesSection } from '../FeaturesSection/FeaturesSection';
+import { HeroSection } from '../HeroSection';
+import { InstagramSection } from '../InstagramSection';
+import { LoyaltySection } from '../LoyaltySection';
+import { NetworksSection } from '../NetworksSection';
+import { NewsletterSection } from '../NewsletterSection';
+import { ProductListSection } from '../ProductListSection';
+import { QuestionFormSection } from '../QuestionFormSection';
+import { ReviewsSection } from '../ReviewsSection';
+import { RichTextSection } from '../RichTextSection';
 import { SliderSection } from '../SliderSection';
 import { SplitSection } from '../SplitSection';
 import { SectionContainer } from '../styles';
 import { TitleSection } from '../TitleSection';
-import { HeroSection } from '../HeroSection';
-import { LoyaltySection } from '../LoyaltySection';
-import { ContactsSection } from '../ContactsSection/ContactsSection';
 
 interface SectionRendererProps {
   sections: SectionsType[];
 }
 
 export const SectionRenderer: React.FC<SectionRendererProps> = ({
-  sections,
-}) => {
+                                                                  sections,
+                                                                }) => {
   const countSplitSections = (sections: any[]): number => {
     return sections.filter(section => section._type === 'split').length;
   };
