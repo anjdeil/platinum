@@ -80,19 +80,25 @@ const CartCouponBlock: FC<CartCouponBlockProps> = ({
     });
 
     if (coupons) {
-      if (coupons.length !== 0 && coupons[0].code === data.couponCode) {
-        setApplyingStatus({
-          isError: false,
-          message: 'couponApplied',
-        });
-        dispatch(addCoupon({ couponCode: data.couponCode }));
-      } else {
-        setApplyingStatus({
-          isError: true,
-          message: 'couponNotFound',
-        });
-        return;
-      }
+      // testing
+      // setApplyingStatus({
+      //   isError: false,
+      //   message: 'couponApplied',
+      // });
+      dispatch(addCoupon({ couponCode: '68a3333cb4475' }));
+      // if (coupons.length !== 0 && coupons[0].code === data.couponCode) {
+      //   setApplyingStatus({
+      //     isError: false,
+      //     message: 'couponApplied',
+      //   });
+      //   dispatch(addCoupon({ couponCode: data.couponCode }));
+      // } else {
+      //   setApplyingStatus({
+      //     isError: true,
+      //     message: 'couponNotFound',
+      //   });
+      //   return;
+      // }
     } else if (error) {
       setApplyingStatus({
         isError: true,
