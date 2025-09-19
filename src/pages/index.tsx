@@ -210,8 +210,8 @@ const Home: React.FC<HomeProps> = ({ sections, locale, seoData, fullUrl }) => {
         <link rel="canonical" href={canonicalUrl} />
         <link rel="alternate" hrefLang={safeLocale} href={canonicalUrl} />
 
-        <link rel="dns-prefetch" href={process.env.WP_URL} />
-        <link rel="preconnect" href={process.env.WP_URL} crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href={process.env.NEXT_PUBLIC_WP_URL} />
+        <link rel="preconnect" href={process.env.NEXT_PUBLIC_WP_URL} crossOrigin="anonymous" />
       </Head>
       <PageTitle title={pageTitle} />
       <div className="homepage">

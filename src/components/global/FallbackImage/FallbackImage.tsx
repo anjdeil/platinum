@@ -14,6 +14,7 @@ const FallbackImage: React.FC<FallbackImageProps> = ({
   webp = true,
   alt,
   className,
+  priority,
   ...props
 }) => {
   const [imgSrc, setImgSrc] = useState<string>();
@@ -35,7 +36,7 @@ const FallbackImage: React.FC<FallbackImageProps> = ({
 
   if (!imgSrc) return null;
 
-  return <Image {...props} className={className} src={imgSrc} alt={alt} />;
+  return <Image {...props} className={className} src={imgSrc} alt={alt} priority={priority} />;
 };
 
 export default FallbackImage;
