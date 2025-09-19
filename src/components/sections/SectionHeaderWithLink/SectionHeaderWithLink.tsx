@@ -12,6 +12,8 @@ export const SectionHeaderWithLink: React.FC<SectionHeaderWithLinkProps> = ({
   title,
   all_link,
 }) => {
+  const link = all_link?.[0];
+
   return (
     <StyledWrapper>
       <TitleBlock>
@@ -20,12 +22,9 @@ export const SectionHeaderWithLink: React.FC<SectionHeaderWithLinkProps> = ({
           {title}
         </Title>
       </TitleBlock>
-      {all_link && (
-        <StyledLink
-          href={all_link[0].url || '/blog'}
-          target={all_link[0].target || '_self'}
-        >
-          {all_link[0].title}
+      {link && (
+        <StyledLink href={link.url || '/blog'} target={link.target || '_self'}>
+          {link.title}
         </StyledLink>
       )}
     </StyledWrapper>
