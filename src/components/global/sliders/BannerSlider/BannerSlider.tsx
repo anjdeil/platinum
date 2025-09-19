@@ -67,7 +67,7 @@ const BannerSlider: React.FC<BannerSliderProps> = ({
         src={imageConfig.imageSrc(slides[0])}
         alt="Banner"
         width={imageConfig.width}
-        height={imageConfig.height}
+        height={Math.floor(imageConfig.height)}
       />
       {/*<CustomSwiper*/}
       {/*  modules={slides.length > 1 ? [Pagination, Autoplay] : [Autoplay]}*/}
