@@ -1,6 +1,6 @@
 import { LineItemSchema } from '@/types/components/shop/product/products';
 import { ShippingLineSchema } from '@/types/pages/checkout';
-import { lineOrderItemsSchema } from '@/types/store/reducers/сartSlice';
+import { lineOrderItemsSchema } from '@/types/store/reducers/cartSlice';
 import { z } from 'zod';
 
 const currencies: [string, ...string[]] = ['EUR', 'USD', 'PLN'];

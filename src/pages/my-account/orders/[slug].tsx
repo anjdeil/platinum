@@ -94,8 +94,6 @@ const Order: FC<OrderPropsType> = ({ order }) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
-  console.log('order...', order);
-
   useEffect(() => {
     const clearCartParam = router.query['clear-cart'];
     if (clearCartParam === 'true') {

@@ -10,6 +10,7 @@ export const CartItemSchema = z.object({
 export const CartStateSchema = z.object({
   cartItems: z.array(CartItemSchema),
   couponCodes: z.array(z.string()),
+  pendingCoupon: z.string().optional().nullable(),
   commentToOrder: z.string(),
   productsData: z.array(ProductsMinimizedSchema),
   needsProductDataUpdate: z.boolean(),

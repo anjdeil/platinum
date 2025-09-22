@@ -8,7 +8,7 @@ import { FlexBox, LinkWrapper, Title } from '@/styles/components';
 import theme from '@/styles/theme';
 import { ProductsMinimizedType } from '@/types/components/shop/product/products';
 import { CartTableProps } from '@/types/pages/cart';
-import { lineOrderItems } from '@/types/store/reducers/сartSlice';
+import { lineOrderItems } from '@/types/store/reducers/cartSlice';
 import checkProductAvailability from '@/utils/cart/checkProductAvailability';
 import getProductSlug from '@/utils/cart/getProductSlug';
 import { useTranslations } from 'next-intl';
