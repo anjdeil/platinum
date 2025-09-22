@@ -59,17 +59,10 @@ const CartCouponBlock: FC<CartCouponBlockProps> = ({
     setValue,
   } = useForm();
 
-  const { couponCodes, pendingCoupon } = useAppSelector(
-    state => state.cartSlice
-  );
+  const { couponCodes } = useAppSelector(state => state.cartSlice);
   const isCartLoyaltyIncluded = couponCodes.some(coupon =>
     loyaltyCouponsCodes.includes(coupon)
   );
-
-  console.log('couponSuccess...', couponSuccess);
-  console.log('couponError...', couponError);
-  console.log('pendingCoupon...', pendingCoupon);
-  console.log('couponCodes...', couponCodes);
 
   const [applyingStatus, setApplyingStatus] =
     useState<CouponApplyingStatusType>();

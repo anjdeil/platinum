@@ -103,8 +103,6 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
     convertCurrency
   );
 
-  console.log('isCouponsIgnored...', isCouponsIgnored);
-
   useEffect(() => {
     const handleCreateOrder = async () => {
       const coupons = couponCodes.map((code: string) => ({ code }));
