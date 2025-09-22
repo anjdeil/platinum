@@ -22,7 +22,7 @@ import { popupToggle } from '@/store/slices/PopupSlice';
 import { LinkWrapper, StyledButton } from '@/styles/components';
 import { WishListTableProps } from '@/types/components/pages/myAccount/wishlist';
 import { ProductsMinimizedType } from '@/types/components/shop/product/products';
-import { CartItem } from '@/types/store/reducers/сartSlice';
+import { CartItem } from '@/types/store/reducers/cartSlice';
 import getProductSlug from '@/utils/cart/getProductSlug';
 import { getProductPrice } from '@/utils/price/getProductPrice';
 import { Skeleton } from '@mui/material';

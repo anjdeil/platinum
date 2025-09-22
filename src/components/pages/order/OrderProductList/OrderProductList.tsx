@@ -1,4 +1,4 @@
-import { lineOrderItems } from '@/types/store/reducers/сartSlice';
+import { lineOrderItems } from '@/types/store/reducers/cartSlice';
 import { DEFAULT_IMAGE } from '@/utils/consts';
 import { formatPrice } from '@/utils/price/formatPrice';
 import { useTranslations } from 'next-intl';
@@ -28,7 +28,6 @@ const OrderProductList: React.FC<OrderProductListProps> = ({
   currency,
 }) => {
   const t = useTranslations('MyAccount');
-
 
   const getItemUnitPrice = (item: lineOrderItems): string => {
     return formatPrice((+item.subtotal + +item.subtotal_tax) / item.quantity);

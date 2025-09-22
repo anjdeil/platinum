@@ -1,5 +1,5 @@
 import { OrderType } from '@/types/services';
-import { lineOrderItems } from '@/types/store/reducers/сartSlice';
+import { lineOrderItems } from '@/types/store/reducers/cartSlice';
 import getSubtotalByLineItems from '@/utils/cart/getSubtotalByLineItems';
 import { formatPrice } from '@/utils/price/formatPrice';
 import { readNip } from '@/utils/readNip';

@@ -11,7 +11,7 @@ import {
   CustomDataThemeOptionsType,
   QueryParamsType,
 } from '@/types/services';
-import { ProductMinReq } from '@/types/store/reducers/сartSlice';
+import { ProductMinReq } from '@/types/store/reducers/cartSlice';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const wpCustomRtkApi = createApi({

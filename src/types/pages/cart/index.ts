@@ -6,7 +6,7 @@ import { OrderTypeSchema } from '@/types/services/wooCustomApi/customer';
 import {
   CartItemSchema,
   lineOrderItemsSchema,
-} from '@/types/store/reducers/сartSlice';
+} from '@/types/store/reducers/cartSlice';
 import { z } from 'zod';
 
 export const CartProductWarningSchema = z.object({
@@ -43,6 +43,7 @@ export const CartCouponBlockSchema = z.object({
     .function()
     .args(z.boolean())
     .returns(z.void()),
+  couponSuccess: z.boolean().optional(),
 });
 export const CartSummaryBlockSchema = z.object({
   symbol: z.string(),

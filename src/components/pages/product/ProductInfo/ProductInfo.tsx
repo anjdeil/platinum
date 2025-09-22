@@ -18,7 +18,7 @@ import {
   ProductType,
   ProductVariation,
 } from '@/types/components/shop/product/products';
-import { CartItem } from '@/types/store/reducers/сartSlice';
+import { CartItem } from '@/types/store/reducers/cartSlice';
 import { getCurrentVariation } from '@/utils/getCurrentVariation';
 import { getProductPrice } from '@/utils/price/getProductPrice';
 import { useTranslations } from 'next-intl';
