@@ -15,7 +15,7 @@ import { CustomDataPostsType } from '@/types/services';
 import { serverParseHTMLContent } from '@/utils/blog/serverParseHTMLContent';
 import { BASE_URL } from '@/utils/consts';
 import { validateWpBlogPage } from '@/utils/zodValidators/validateWpBlogPage';
-import { omit } from 'lodash';
+import omit from 'lodash/omit';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';

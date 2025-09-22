@@ -2,18 +2,18 @@ import { IsMobileScreen } from '@/components/global/isMobileScreenWrapper';
 import { Container } from '@/styles/components';
 import { SectionsType } from '@/types/components/sections';
 import { normalizeSlides } from '@/utils/normalizeSlides';
-import { AboutPlatinumSection } from '../AboutPlatinumSection';
+// import { AboutPlatinumSection } from '../AboutPlatinumSection';
 import { AmbassadorAboutSection } from '../AmbassadorAboutSection';
 import { AmbassadorBenefitsSection } from '../AmbassadorBenefitsSection';
 import { AmbassadorHeroSection } from '../AmbassadorHeroSection';
 import { AmbassadorImageSection } from '../AmbassadorImageSection';
 import { AmbassadorProvideSection } from '../AmbassadorProvideSection';
-import { BlogSection } from '../BlogSection';
-import { CategoriesSection } from '../CategoriesSection';
+// import { BlogSection } from '../BlogSection';
+// import { CategoriesSection } from '../CategoriesSection';
 import { ContactsSection } from '../ContactsSection';
-import { FeaturesSection } from '../FeaturesSection/FeaturesSection';
+// import { FeaturesSection } from '../FeaturesSection/FeaturesSection';
 import { HeroSection } from '../HeroSection';
-import { InstagramSection } from '../InstagramSection';
+// import { InstagramSection } from '../InstagramSection';
 import { LoyaltySection } from '../LoyaltySection';
 import { NetworksSection } from '../NetworksSection';
 import { NewsletterSection } from '../NewsletterSection';
@@ -63,22 +63,22 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
           case 'categories':
             return (
               <Container key={index}>
-                <CategoriesSection
-                  key={index}
-                  subtitle={section.subtitle}
-                  title={section.title}
-                  categories_bars={section.categories_bars}
-                />
+                {/*<CategoriesSection*/}
+                {/*  key={index}*/}
+                {/*  subtitle={section.subtitle}*/}
+                {/*  title={section.title}*/}
+                {/*  categories_bars={section.categories_bars}*/}
+                {/*/>*/}
               </Container>
             );
           case 'instagram':
             return (
               <Container key={index}>
-                <InstagramSection
-                  key={index}
-                  subtitle={section.subtitle}
-                  title={section.title}
-                />
+                {/*<InstagramSection*/}
+                {/*  key={index}*/}
+                {/*  subtitle={section.subtitle}*/}
+                {/*  title={section.title}*/}
+                {/*/>*/}
               </Container>
             );
           case 'reviews':
@@ -98,28 +98,29 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
               </IsMobileScreen>
             );
           case 'about_platinum':
-            return <AboutPlatinumSection key={index} />;
+            return null;
+            // return <AboutPlatinumSection key={index} />;
           case 'features':
             return (
               <Container key={index}>
-                <FeaturesSection
-                  key={index}
-                  subtitle={section.subtitle}
-                  title={section.title}
-                  items={section.items}
-                />
+                {/*<FeaturesSection*/}
+                {/*  key={index}*/}
+                {/*  subtitle={section.subtitle}*/}
+                {/*  title={section.title}*/}
+                {/*  items={section.items}*/}
+                {/*/>*/}
               </Container>
             );
           case 'blog':
             return (
               <Container key={index}>
-                <BlogSection
-                  key={index}
-                  subtitle={section.subtitle}
-                  title={section.title}
-                  all_link={section.all_link}
-                  below_text={section.below_text}
-                />
+                {/*<BlogSection*/}
+                {/*  key={index}*/}
+                {/*  subtitle={section.subtitle}*/}
+                {/*  title={section.title}*/}
+                {/*  all_link={section.all_link}*/}
+                {/*  below_text={section.below_text}*/}
+                {/*/>*/}
               </Container>
             );
 
