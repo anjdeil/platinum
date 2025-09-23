@@ -1,10 +1,10 @@
 import { MenusContext } from '@/components/Layout/Layout';
 import { wpMenuProps } from '@/types/menus/WpMenus';
 import { menuItemsType } from '@/types/services/wpCustomApi/menus';
+import { useRouter } from 'next/router';
 import { FC, useContext } from 'react';
 import { MenuSkeleton } from '../MenuSkeleton';
 import { NavLink, NavList, StyleNav } from './styles';
-import { useRouter } from 'next/router';
 
 const Nav: FC<wpMenuProps> = ({
   menuId,
