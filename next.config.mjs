@@ -9,7 +9,7 @@ const nextConfig = {
     localeDetection: true,
   },
   images: {
-    // unoptimized: true,
+    unoptimized: false,
     domains: [
       'admin.platinumchetvertinovskaya.com',
       'stg-platinum-staging.kinsta.cloud',

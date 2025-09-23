@@ -195,7 +195,7 @@ const Home: React.FC<HomeProps> = ({ sections, locale, seoData, fullUrl }) => {
       <Head>
         <meta name="robots" content="index, follow" />
         <meta name="description" content={pageDescription} />
-        <script type="application/ld+json">
+        <script type="application/ld+json" async>
           {JSON.stringify(structuredData)}
         </script>
         <meta property="og:title" content={seoData?.og?.title || pageTitle} />
