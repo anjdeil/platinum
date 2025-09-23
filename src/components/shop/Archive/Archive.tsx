@@ -230,6 +230,7 @@ export const Archive: FC<ArchivePropsType> = props => {
         <link rel="canonical" href={canonicalUrl} />
         <link rel="alternate" hrefLang={locale} href={canonicalUrl} />
         <script
+          async
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(structuredDataProductsCategory),

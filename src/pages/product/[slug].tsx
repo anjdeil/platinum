@@ -256,6 +256,7 @@ export default function ProductPage({
         )}
 
         <script
+          async
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaProduct) }}
         />

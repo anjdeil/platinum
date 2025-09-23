@@ -266,10 +266,10 @@ const BlogPage: React.FC<BlogProps> = ({
         <meta property="og:description" content={postCategoryDescription} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={canonicalUrl} />
-        <script type="application/ld+json">
+        <script async type="application/ld+json">
           {JSON.stringify(structuredDataBlog)}
         </script>
-        <script type="application/ld+json">
+        <script async type="application/ld+json">
           {JSON.stringify(schemaPostCategory)}
         </script>
       </Head>
