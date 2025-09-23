@@ -86,10 +86,10 @@ const CartCouponBlock: FC<CartCouponBlockProps> = ({
 
     if (coupons) {
       if (coupons.length !== 0 && coupons[0].code === data.couponCode) {
-        // setApplyingStatus({
-        //   isError: false,
-        //   message: 'couponApplied',
-        // });
+        setApplyingStatus({
+          isError: false,
+          message: 'couponApplied',
+        });
         setApplyingStatus(undefined);
         dispatch(addCoupon({ couponCode: data.couponCode }));
         dispatch(setPendingCoupon(data.couponCode));
