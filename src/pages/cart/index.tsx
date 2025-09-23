@@ -146,8 +146,8 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
           setCouponSuccess(true);
         } else {
           setCouponSuccess(false);
+          setIsCouponsIgnored(false);
         }
-        setIsCouponsIgnored(false);
 
         if (userLoyaltyStatus) {
           setCouponError(false);
