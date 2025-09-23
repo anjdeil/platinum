@@ -1,5 +1,4 @@
 import Layout from '@/components/Layout/Layout';
-import MetaPixel from '@/components/metaPixel/MetaPixel';
 import ProgressBar from '@/components/progressBar/ProgressBar';
 import { setupStore } from '@/store';
 import GlobalStyle from '@/styles/global';
@@ -31,7 +30,7 @@ function MyApp({ Component, pageProps }: AppProps) {
               <GlobalStyle />
               <Layout>
                 <ProgressBar />
-                <MetaPixel pixelId="2492032124476904" />
+                {/* <MetaPixel pixelId="2492032124476904" /> */}
                 <Component {...pageProps} />
               </Layout>
             </MuiThemeProvider>
