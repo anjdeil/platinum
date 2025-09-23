@@ -124,6 +124,7 @@ const CartCouponBlock: FC<CartCouponBlockProps> = ({
 
       <CouponText uppercase>{t('CouponText')}</CouponText>
       <CouponText>{t('ChooseCouponText')}</CouponText>
+      <CouponText>{t('ChooseCouponText')}</CouponText>
 
       <CouponForm onSubmit={handleSubmit(onSubmit)}>
         <CustomFormInput
