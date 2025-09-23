@@ -1,5 +1,5 @@
 import React, { FC, useContext } from 'react';
-import Slider from 'react-slick';
+import Slider, { Settings as SlickSettings } from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -13,6 +13,12 @@ import { wpMenuProps } from '@/types/menus/WpMenus';
 
 const VerticalSlider: FC<wpMenuProps> = ({ menuId, skeleton }) => {
   const sliderRef = React.createRef<Slider>();
+  const SlickSlider = React.forwardRef<Slider, SlickSettings>((props, ref) => (
+    // @ts-expect-error: TypeScript/react-slick incompatibility workaround
+    <Slider ref={ref} {...props} />
+  ));
+  SlickSlider.displayName = "SlickSlider";
+
   const settings = {
     dots: false,
     infinite: true,
@@ -58,16 +64,17 @@ const VerticalSlider: FC<wpMenuProps> = ({ menuId, skeleton }) => {
       />
     );
   }
+
   return (
     <SliderWrapper>
-      <Slider ref={sliderRef} {...settings}>
+      <SlickSlider ref={sliderRef} {...settings}>
         {sortedMenuItems.length > 0 &&
           sortedMenuItems.map(({ title, url }) => (
             <Slide key={title}>
               <NavLink href={url}>{title}</NavLink>
             </Slide>
           ))}
-      </Slider>
+      </SlickSlider>
       <NavButton className="prev" onClick={goToPrev}>
         <KeyboardArrowUpIcon />
       </NavButton>

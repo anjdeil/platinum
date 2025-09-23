@@ -67,6 +67,7 @@
     "@types/woocommerce__woocommerce-rest-api": "^1.0.5",
     "@typescript-eslint/eslint-plugin": "^8.19.1",
     "@typescript-eslint/parser": "^8.19.1",
+    "critters": "^0.0.25",
     "eslint": "^8.57.1",
     "eslint-config-next": "14.2.6",
     "eslint-import-resolver-alias": "^1.1.2",
