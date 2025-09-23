@@ -26,10 +26,7 @@ export const StyledHeadingH2 = styled.h2`
   font: ${({ theme }) => theme.fonts.titleH2Medium};
   text-transform: uppercase;  
   margin-bottom: 24px;
-
-  &:not(:first-of-type) {
-    margin-top: 32px;
-  }
+  margin-top: 32px;
 
   @media ${({ theme }) => theme.media.large} {
     font: ${({ theme }) => theme.fonts.bodyMiddleSemiBold}; 
@@ -40,10 +37,7 @@ export const StyledHeadingH3 = styled.h3`
   font: ${({ theme }) => theme.fonts.titleH2Medium};
   text-transform: uppercase;
   margin-bottom: 24px;
-
-  &:not(:first-of-type) {
-    margin-top: 32px;
-  }
+  margin-top: 32px;
 
   @media ${({ theme }) => theme.media.large} {
     font: ${({ theme }) => theme.fonts.bodyMiddleSemiBold}; 
@@ -96,6 +90,10 @@ export const Wrapper = styled.div<{ height: number; expanded: boolean }>`
 
 export const Inner = styled.div`
   padding-bottom: 8px;
+
+  & > :first-child {
+    margin-top: 0;
+  }
 `;
 
 export const GradientFade = styled.div<{ expanded: boolean }>`

@@ -1,4 +1,4 @@
-import { CartItem } from "@/types/store/reducers/сartSlice";
+import { CartItem } from "@/types/store/reducers/cartSlice";
 
 export const saveCartItemsToLocalStorage = (cartItems: CartItem[]) => {
     if (typeof window !== 'undefined') {

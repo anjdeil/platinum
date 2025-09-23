@@ -1,5 +1,5 @@
 import { updateCart } from '@/store/slices/cartSlice';
-import { CartItem } from '@/types/store/reducers/сartSlice';
+import { CartItem } from '@/types/store/reducers/cartSlice';
 
 export const handleQuantityChange = (
   cartItems: CartItem[],
