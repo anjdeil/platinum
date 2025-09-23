@@ -94,6 +94,7 @@ export const Inner = styled.div`
   & > :first-child {
     margin-top: 0;
   }
+  
 `;
 
 export const GradientFade = styled.div<{ expanded: boolean }>`
