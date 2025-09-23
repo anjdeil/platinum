@@ -36,7 +36,7 @@ const FallbackImage: React.FC<FallbackImageProps> = ({
   //
   // if (!imgSrc) return null;
 
-  return <Image {...props} className={className} src={imgSrc} alt={alt} loading={priority ? 'eager' : 'lazy'} onError={() => setImgSrc(fallback || src)} />;
+  return <Image {...props} className={className} src={imgSrc} alt={alt} priority={priority} loading={priority ? 'eager' : 'lazy'} onError={() => setImgSrc(fallback || src)} />;
 };
 
 export default FallbackImage;
