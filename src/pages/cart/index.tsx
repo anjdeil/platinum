@@ -103,6 +103,8 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
     convertCurrency
   );
 
+  console.log('test vercel');
+
   useEffect(() => {
     const handleCreateOrder = async () => {
       const coupons = couponCodes.map((code: string) => ({ code }));
