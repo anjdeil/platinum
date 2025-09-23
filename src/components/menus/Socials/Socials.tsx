@@ -1,14 +1,14 @@
-import { useAppSelector } from '@/store';
-import { FC } from 'react';
-import { SocialItemLink, SocialsContainer, SocialText } from './styles';
-import { SocialsProps } from '@/types/menus/Socials';
 import FacebookIcon from '@/components/global/icons/socials/FacebookIcon/FacebookIcon';
 import InstagramIcon from '@/components/global/icons/socials/InstagramIcon/InstagramIcon';
 import PinterestIcon from '@/components/global/icons/socials/PinterestIcon/PinterestIcon';
 import TikTokIcon from '@/components/global/icons/socials/TikTokIcon/TikTokIcon';
-import YouTubeIcon from '@/components/global/icons/socials/YouTubeIcon/YouTubeIcon';
-import { Skeleton } from '@mui/material';
 import WhatsAppIcon from '@/components/global/icons/socials/WhatsAppIcon/WhatsAppIcon';
+import YouTubeIcon from '@/components/global/icons/socials/YouTubeIcon/YouTubeIcon';
+import { useAppSelector } from '@/store';
+import { SocialsProps } from '@/types/menus/Socials';
+import { Skeleton } from '@mui/material';
+import { FC } from 'react';
+import { SocialItemLink, SocialsContainer, SocialText } from './styles';
 
 export const Socials: FC<SocialsProps> = ({
   iconscolor,
