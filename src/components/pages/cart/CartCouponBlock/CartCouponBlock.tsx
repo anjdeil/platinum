@@ -144,6 +144,24 @@ const CartCouponBlock: FC<CartCouponBlockProps> = ({
           {isLoading && <>...</>}
         </CouponButton>
       </CouponForm>
+      <CouponForm onSubmit={handleSubmit(onSubmit)}>
+        <CustomFormInput
+          width={isMobile ? '100%' : 'auto'}
+          label={false}
+          name="couponCode"
+          register={register}
+          errors={errors}
+          inputTag="input"
+          inputType="text"
+          setValue={setValue}
+          placeholder={t('CouponInputPlaceholder')}
+          height="100%"
+        />
+        <CouponButton type="submit" disabled={isLoading}>
+          {t('CouponApplyBtn')}
+          {isLoading && <>...</>}
+        </CouponButton>
+      </CouponForm>
 
       {!applyingStatus && !couponError && isCartLoyaltyIncluded && (
         <Notification type={'warning'}>
