@@ -1,5 +1,11 @@
 import React, { FC, useContext } from 'react';
 import Slider, { Settings as SlickSettings } from 'react-slick';
+
+const SlickSlider = React.forwardRef<Slider, SlickSettings>((props, ref) => (
+  // @ts-ignore
+  <Slider ref={ref} {...props} />
+));
+SlickSlider.displayName = "SlickSlider";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -12,13 +18,7 @@ import { menuItemsType } from '@/types/services/wpCustomApi/menus';
 import { wpMenuProps } from '@/types/menus/WpMenus';
 
 const VerticalSlider: FC<wpMenuProps> = ({ menuId, skeleton }) => {
-  const sliderRef = React.createRef<Slider>();
-  const SlickSlider = React.forwardRef<Slider, SlickSettings>((props, ref) => (
-    // @ts-expect-error: TypeScript/react-slick incompatibility workaround
-    <Slider ref={ref} {...props} />
-  ));
-  SlickSlider.displayName = "SlickSlider";
-
+  const sliderRef: React.RefObject<Slider> = React.createRef();
   const settings = {
     dots: false,
     infinite: true,
