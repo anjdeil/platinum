@@ -13,7 +13,7 @@ import { CategoriesSection } from '../CategoriesSection';
 import { ContactsSection } from '../ContactsSection';
 import { FeaturesSection } from '../FeaturesSection/FeaturesSection';
 import { HeroSection } from '../HeroSection';
-import { InstagramSection } from '../InstagramSection';
+// import { InstagramSection } from '../InstagramSection';
 import { LoyaltySection } from '../LoyaltySection';
 import { NetworksSection } from '../NetworksSection';
 import { NewsletterSection } from '../NewsletterSection';
@@ -74,11 +74,11 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
           case 'instagram':
             return (
               <Container key={index}>
-                <InstagramSection
-                  key={index}
-                  subtitle={section.subtitle}
-                  title={section.title}
-                />
+                {/*<InstagramSection*/}
+                {/*  key={index}*/}
+                {/*  subtitle={section.subtitle}*/}
+                {/*  title={section.title}*/}
+                {/*/>*/}
               </Container>
             );
           case 'reviews':
