@@ -1,5 +1,5 @@
 import { ProductsMinimizedType } from '@/types/components/shop/product/products';
-import { CartItem } from '@/types/store/reducers/сartSlice';
+import { CartItem } from '@/types/store/reducers/cartSlice';
 
 export default function checkCartConflict(
   cartItems: CartItem[],

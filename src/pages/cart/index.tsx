@@ -16,13 +16,14 @@ import {
   addCoupon,
   clearConflictedItems,
   clearCoupons,
+  clearPendingCoupon,
 } from '@/store/slices/cartSlice';
 import { CartPageWrapper } from '@/styles/cart/style';
 import { Container, FlexBox, StyledButton } from '@/styles/components';
 import { ProductsMinimizedType } from '@/types/components/shop/product/products';
 import { CreateOrderRequestType, WooErrorType } from '@/types/services';
 import { JwtDecodedDataType } from '@/types/services/wpRestApi/auth';
-import { CartItem, lineOrderItems } from '@/types/store/reducers/сartSlice';
+import { CartItem, lineOrderItems } from '@/types/store/reducers/cartSlice';
 import { WpUserType } from '@/types/store/rtk-queries/wpApi';
 import checkCartConflict from '@/utils/cart/checkCartConflict';
 import getCartTotals from '@/utils/cart/getCartTotals';
@@ -35,7 +36,7 @@ import { GetServerSidePropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import router from 'next/router';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 interface CartPageProps {
   defaultCustomerData: WpUserType | null;
@@ -54,8 +55,16 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   const [auth, setAuth] = useState<boolean>(false);
 
   const [couponError, setCouponError] = useState(false);
+  const [couponSuccess, setCouponSuccess] = useState(false);
 
   const userLoyaltyStatus = userTotal?.loyalty_status;
+
+  const pendingCoupon = useAppSelector(s => s.cartSlice.pendingCoupon);
+  const pendingCouponRef = useRef(pendingCoupon);
+
+  useEffect(() => {
+    pendingCouponRef.current = pendingCoupon;
+  }, [pendingCoupon]);
 
   useEffect(() => {
     if (defaultCustomerData && userLoyaltyStatus) {
@@ -116,19 +125,44 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
             'invalid_coupon_for_sale'
         ) {
           setCouponError(true);
+          setCouponSuccess(false);
+
+          dispatch(clearPendingCoupon());
 
           if (userLoyaltyStatus) {
             dispatch(addCoupon({ couponCode: userLoyaltyStatus }));
           } else {
+            dispatch(clearCoupons());
             setIsCouponsIgnored(true);
           }
         }
+      } else {
+        const pending = pendingCouponRef.current;
+        const requestHadPending = !!pending && !isCouponsIgnored;
+
+        if (requestHadPending) {
+          setCouponSuccess(true);
+        } else {
+          setCouponSuccess(false);
+        }
+        setIsCouponsIgnored(false);
+
+        if (userLoyaltyStatus) {
+          setCouponError(false);
+        }
+
+        dispatch(clearPendingCoupon());
       }
 
       setfirstLoad(true);
     };
     handleCreateOrder();
   }, [cartItems, couponCodes, code, userLoyaltyStatus, isCouponsIgnored]);
+
+  useEffect(() => {
+    setCouponError(false);
+    setCouponSuccess(false);
+  }, [cartItems]);
 
   useEffect(() => {
     if (orderItems?.currency_symbol) {
@@ -327,6 +361,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
             auth={auth}
             couponError={couponError}
             setCouponError={setCouponError}
+            couponSuccess={couponSuccess}
           />
 
           {innercartItems.length > 0 && filteredOutItems.length == 0 && (
