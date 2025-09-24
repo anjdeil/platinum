@@ -31,7 +31,7 @@ function MyApp({ Component, pageProps }: AppProps) {
               <GlobalStyle />
               <Layout>
                 <ProgressBar />
-                {/*<MetaPixel pixelId="2492032124476904" />*/}
+                <MetaPixel pixelId="2492032124476904" />
                 <Component {...pageProps} />
               </Layout>
             </MuiThemeProvider>

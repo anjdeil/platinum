@@ -15,7 +15,7 @@ import {
   BannerWrapper,
   ContentWrapper,
   CustomSwiper,
-  ImageStyled,
+  ImageStyled, SliderPlaceholder,
   StyledText,
 } from './styles';
 
@@ -27,6 +27,7 @@ const BannerSlider: React.FC<BannerSliderProps> = ({
 }) => {
   const t = useTranslations('Cart');
   const { isMobile } = useResponsive();
+  const [isSliderInitialized, setIsSliderInitialized] = React.useState(false);
 
   const imageConfig = useMemo(
     () => ({
@@ -62,6 +63,20 @@ const BannerSlider: React.FC<BannerSliderProps> = ({
           <AddToBasketButton maxWidth="250px">Add to basket</AddToBasketButton>
         </ContentWrapper>
       )}
+
+      {!isSliderInitialized && (
+        <SliderPlaceholder>
+          <ImageStyled
+            priority
+            fetchPriority={'high'}
+            src={imageConfig.imageSrc(slides[0])}
+            alt="Banner"
+            width={imageConfig.width}
+            height={Math.floor(imageConfig.height)}
+          />
+        </SliderPlaceholder>
+      )}
+
       <CustomSwiper
         modules={slides.length > 1 ? [Pagination, Autoplay] : [Autoplay]}
         pagination={slides.length > 1 ? { clickable: true } : false}
@@ -72,6 +87,7 @@ const BannerSlider: React.FC<BannerSliderProps> = ({
           delay: 8000,
           disableOnInteraction: false,
         }}
+        onAfterInit={() => setIsSliderInitialized(true)}
       >
         {slides.map(
           (slide: BannerSlideType | MainPageSlideType, index: number) => (
@@ -84,7 +100,7 @@ const BannerSlider: React.FC<BannerSliderProps> = ({
                     src={imageConfig.imageSrc(slide)}
                     alt="Banner"
                     width={imageConfig.width}
-                    height={imageConfig.height}
+                    height={Math.floor(imageConfig.height)}
                   />
                 </Link>
               )}

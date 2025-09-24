@@ -33,9 +33,7 @@ import ProductPrice from '../ProductPrice/ProductPrice';
 import ProductPromotion from '../ProductPromotion/ProductPromotion';
 import ProductQuantity from '../ProductQuantity/ProductQuantity';
 import ProductSku from '../ProductSku/ProductSku';
-const ProductSwiper = dynamic(() => import('../ProductSwiper/ProductSwiper'), {
-  ssr: false,
-});
+import ProductSwiper from '../ProductSwiper/ProductSwiper';
 import ProductViewing from '../ProductViewing/ProductViewing';
 import ShippingList from '../ShippingList/ShippingList';
 import {
@@ -46,7 +44,6 @@ import {
   ProductTitleWrapper,
   ProductWrapper,
 } from './styles';
-import dynamic from 'next/dynamic';
 
 const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
   const { images, thumbnail, videos } = product;
