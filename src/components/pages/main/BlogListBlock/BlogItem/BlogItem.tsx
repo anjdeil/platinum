@@ -47,7 +47,6 @@ const BlogItem: FC<BlogItemProps> = ({ post }) => {
             alt={title}
             width={632}
             height={335}
-            priority
           />
         </Link>
       </ImageBlock>

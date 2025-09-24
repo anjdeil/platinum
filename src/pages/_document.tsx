@@ -24,9 +24,10 @@ class MyDocument extends Document {
             type="text/javascript"
             src="https://cdn-cookieyes.com/client_data/4892edb3dd7351862d65495e/script.js"
             strategy="afterInteractive"
+            async
           />
           {/* GTM */}
-          <Script id="gtm" strategy="afterInteractive">
+          <Script id="gtm" strategy="afterInteractive" async>
             {`
               (function(w,d,s,l,i){w[l]=w[l]||[];
                 w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});

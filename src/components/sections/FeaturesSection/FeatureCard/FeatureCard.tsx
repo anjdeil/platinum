@@ -19,7 +19,7 @@ export const FeatureCard: FC<FeaturesCardProps> = ({ item }) => {
   return (
     <StyledCardContainer contrastBg={contrast_bg}>
       <StyledWrapper>
-        <StyledImage src={image} alt={title} width={40} height={40} priority />
+        <StyledImage src={image} alt={title} width={40} height={40} />
         <StyledTitle as="h2" contrastBg={contrast_bg}>
           {title}
         </StyledTitle>

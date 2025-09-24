@@ -23,7 +23,7 @@ export default function useInPostGeowidget() {
     inPostHead:
       <>
         <link rel="stylesheet" href="https://geowidget.inpost.pl/inpost-geowidget.css" />
-        <script src="https://geowidget.inpost.pl/inpost-geowidget.js" defer></script>
+        <script async src="https://geowidget.inpost.pl/inpost-geowidget.js" defer></script>
       </>,
     InPostGeowidget,
     pointDetail,

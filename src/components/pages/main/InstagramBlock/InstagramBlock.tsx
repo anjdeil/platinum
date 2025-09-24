@@ -88,7 +88,6 @@ const InstagramBlock = () => {
                 alt={item.username}
                 width={308}
                 height={308}
-                priority
               />
             </InstagramPhotoWrapper>
           ))}
