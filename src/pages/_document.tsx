@@ -38,17 +38,13 @@ class MyDocument extends Document {
           {/*    })(window,document,'script','dataLayer','GTM-NLKVWGD8');*/}
           {/*  `}*/}
           {/*</Script>*/}
-
-          <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin={'anonymous'} />
-          <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
         </Head>
         <body>
-        {/* GTM noscript iframe */}
-        {/*<noscript>*/}
-        {/*  <iframe*/}
-        {/*    title="Google Tag Manager"*/}
-        {/*    src="https://www.googletagmanager.com/ns.html?id=GTM-NLKVWGD8"*/}
+          {/* GTM noscript iframe */}
+          {/*<noscript>*/}
+          {/*  <iframe*/}
+          {/*    title="Google Tag Manager"*/}
+          {/*    src="https://www.googletagmanager.com/ns.html?id=GTM-NLKVWGD8"*/}
           {/*    height="0"*/}
           {/*    width="0"*/}
           {/*    style={{ display: 'none', visibility: 'hidden' }}*/}

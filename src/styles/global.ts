@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-import { font } from './theme';
+import { montserrat } from "./theme";
 
 const GlobalStyle = createGlobalStyle`
  * {
@@ -50,7 +50,7 @@ html {
 
 body {
     margin: 0;
-     font-family: ${font};
+     font-family: ${montserrat.style.fontFamily}, sans-serif;
 }
 
 main {
