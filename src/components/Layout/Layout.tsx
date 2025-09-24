@@ -84,7 +84,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         {!isMobile && <TopBar />}
 
         <div style={{minHeight: '50px'}}>
-          {!isMobile ? <Header /> : <MobileHeader />}
+          {isMobile ? <MobileHeader /> : <Header />}
         </div>
         <PopupContainer />
         {isMobile && <BottomMenu />}

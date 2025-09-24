@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 export const useResponsive = () => {
-    const [isMobile, setIsMobile] = useState<boolean>(true);
+    const [isMobile, setIsMobile] = useState<boolean>(false);
     const [isTablet, setIsTablet] = useState<boolean>(false);
 
     const handleResize = () => {
