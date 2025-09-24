@@ -651,10 +651,6 @@ export default function CheckoutPage() {
     }
   }, [order]);
 
-  console.log('shippingMethod...', shippingMethod);
-  console.log('shippingMethods...', shippingMethods);
-  console.log('allowedShippingMethods...', allowedShippingMethods);
-
   return (
     <>
       <PageTitle nameSpace={'Cart'} spaceKey={'PersonalInformation'} />
