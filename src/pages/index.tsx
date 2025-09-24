@@ -1,4 +1,6 @@
-import InfoPopup from '@/components/global/popups/InfoPopup/InfoPopup';
+const InfoPopup = dynamic(() => import('@/components/global/popups/InfoPopup/InfoPopup'), {
+  ssr: false,
+});
 import { PageTitle } from '@/components/pages/pageTitle';
 import { SectionRenderer } from '@/components/sections/SectionRenderer';
 import { customRestApi } from '@/services/wpCustomApi';
@@ -12,6 +14,7 @@ import { BASE_URL } from '@/utils/consts';
 import { validateWpPage } from '@/utils/zodValidators/validateWpPage';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
+import dynamic from 'next/dynamic';
 
 const languageMap = {
   pl: 'pl-PL',
