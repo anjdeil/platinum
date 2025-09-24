@@ -6,7 +6,8 @@ import {
   TextProps,
 } from '@/types/styles/components';
 import styled from '@emotion/styled';
-import { Pagination, Skeleton } from '@mui/material';
+import Pagination from '@mui/material/Pagination';
+import Skeleton from '@mui/material/Skeleton';
 import Image from 'next/image';
 import Link from 'next/link';
 

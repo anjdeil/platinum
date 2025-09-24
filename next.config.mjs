@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  swcMinify: true,
+  compress: true,
   i18n: {
     locales: ['en', 'ru', 'pl', 'uk', 'de'],
     defaultLocale: 'pl',
@@ -10,6 +12,7 @@ const nextConfig = {
     unoptimized: true,
     domains: [
       'admin.platinumchetvertinovskaya.com',
+      'stg-platinum-staging.kinsta.cloud',
       'secure.gravatar.com',
       'instagram.fwaw3-2.fna.fbcdn.net',
       'scontent.cdninstagram.com',
@@ -25,6 +28,28 @@ const nextConfig = {
         hostname: '**.cdninstagram.com',
       },
     ],
+  },
+  bundlePagesRouterDependencies: true,
+  experimental: {
+    optimizeCss: true,
+    scrollRestoration: true,
+    optimizePackageImports: [
+      'lodash',
+      '@mui/material',
+      '@mui/icons-material',
+      '@emotion/react',
+      '@emotion/styled',
+      'react-select',
+      'react-slick',
+      'swiper',
+      '@react-pdf/renderer',
+      'styled-components',
+    ],
+    turbo: {
+      rules: {
+        '*.svg': ['@svgr/webpack'],
+      },
+    },
   },
   env: {
     timeZone: 'Europe/Warsaw',

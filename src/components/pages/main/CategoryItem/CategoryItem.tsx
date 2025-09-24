@@ -26,7 +26,6 @@ const CategoryItem: FC<CategoryItemProps> = ({
         alt={name}
         fill
         sizes="100%"
-        priority
       />
       <ContentWrapper>
         <TitleWrapper>

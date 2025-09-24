@@ -15,7 +15,7 @@ import { CustomDataPostsType } from '@/types/services';
 import { serverParseHTMLContent } from '@/utils/blog/serverParseHTMLContent';
 import { BASE_URL } from '@/utils/consts';
 import { validateWpBlogPage } from '@/utils/zodValidators/validateWpBlogPage';
-import { omit } from 'lodash';
+import omit from 'lodash/omit';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -266,10 +266,10 @@ const BlogPage: React.FC<BlogProps> = ({
         <meta property="og:description" content={postCategoryDescription} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={canonicalUrl} />
-        <script type="application/ld+json">
+        <script async type="application/ld+json">
           {JSON.stringify(structuredDataBlog)}
         </script>
-        <script type="application/ld+json">
+        <script async type="application/ld+json">
           {JSON.stringify(schemaPostCategory)}
         </script>
       </Head>
