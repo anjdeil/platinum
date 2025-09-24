@@ -13,11 +13,11 @@ import { CategoriesSection } from '../CategoriesSection';
 import { ContactsSection } from '../ContactsSection';
 import { FeaturesSection } from '../FeaturesSection/FeaturesSection';
 import { HeroSection } from '../HeroSection';
-// import { InstagramSection } from '../InstagramSection';
+import { InstagramSection } from '../InstagramSection';
 import { LoyaltySection } from '../LoyaltySection';
 import { NetworksSection } from '../NetworksSection';
 import { NewsletterSection } from '../NewsletterSection';
-// import { ProductListSection } from '../ProductListSection';
+import { ProductListSection } from '../ProductListSection';
 import { QuestionFormSection } from '../QuestionFormSection';
 import { ReviewsSection } from '../ReviewsSection';
 import { RichTextSection } from '../RichTextSection';
@@ -30,9 +30,7 @@ interface SectionRendererProps {
   sections: SectionsType[];
 }
 
-export const SectionRenderer: React.FC<SectionRendererProps> = ({
-                                                                  sections,
-                                                                }) => {
+export const SectionRenderer: React.FC<SectionRendererProps> = ({ sections }) => {
   const countSplitSections = (sections: any[]): number => {
     return sections.filter(section => section._type === 'split').length;
   };
@@ -52,12 +50,12 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
           case 'product_list':
             return (
               <Container key={index}>
-                {/*<ProductListSection*/}
-                {/*  key={index}*/}
-                {/*  title={section.title}*/}
-                {/*  subtitle={section.subtitle}*/}
-                {/*  sort_type={section.sort_type}*/}
-                {/*/>*/}
+                <ProductListSection
+                  key={index}
+                  title={section.title}
+                  subtitle={section.subtitle}
+                  sort_type={section.sort_type}
+                />
               </Container>
             );
           case 'categories':
@@ -74,11 +72,11 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
           case 'instagram':
             return (
               <Container key={index}>
-                {/*<InstagramSection*/}
-                {/*  key={index}*/}
-                {/*  subtitle={section.subtitle}*/}
-                {/*  title={section.title}*/}
-                {/*/>*/}
+                <InstagramSection
+                  key={index}
+                  subtitle={section.subtitle}
+                  title={section.title}
+                />
               </Container>
             );
           case 'reviews':
