@@ -83,7 +83,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <RunningLine />
         {!isMobile && <TopBar />}
 
-        <div style={{'min-height': '50px'}}>
+        <div style={{minHeight: '50px'}}>
           {!isMobile ? <Header /> : <MobileHeader />}
         </div>
         <PopupContainer />
