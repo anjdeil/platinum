@@ -1,4 +1,4 @@
-import { lineOrderItems } from '@/types/store/reducers/сartSlice';
+import { lineOrderItems } from '@/types/store/reducers/cartSlice';
 
 const getTotalByLineItems = (lineItems: lineOrderItems[]): number => {
   let total = 0;

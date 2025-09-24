@@ -37,7 +37,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({
   return (
     <BlogSectionContainer>
       <RecommendContainer>
-        {all_link ? (
+        {all_link?.length ? (
           <SectionHeaderWithLink
             title={title}
             subtitle={subtitle}

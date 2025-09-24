@@ -1,11 +1,12 @@
 import { ProductsMinimizedType } from '@/types/components/shop/product/products';
-import { CartItem, CartState } from '@/types/store/reducers/сartSlice';
+import { CartItem, CartState } from '@/types/store/reducers/cartSlice';
 import { getCartItemsFromLocalStorage } from '@/utils/cartSlice/cartItemsFunctions';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const cartInitialState: CartState = {
   cartItems: getCartItemsFromLocalStorage() || [],
   couponCodes: [],
+  pendingCoupon: null,
   commentToOrder: '',
   productsData: [],
   needsProductDataUpdate: false,
@@ -65,6 +66,12 @@ export const cartSlice = createSlice({
         state.couponCodes = [couponCode];
       }
     },
+    setPendingCoupon(state, action: PayloadAction<string | null>) {
+      state.pendingCoupon = action.payload;
+    },
+    clearPendingCoupon(state) {
+      state.pendingCoupon = null;
+    },
     clearCoupons: (state) => {
       state.couponCodes = [];
     },
@@ -100,6 +107,8 @@ export const cartSlice = createSlice({
 export const {
   updateCart,
   addCoupon,
+  setPendingCoupon,
+  clearPendingCoupon,
   removeCoupon,
   clearCoupons,
   setCommentToOrder,

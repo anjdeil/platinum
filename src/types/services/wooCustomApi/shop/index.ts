@@ -1,4 +1,4 @@
-import { lineOrderItemsSchema } from "@/types/store/reducers/сartSlice";
+import { lineOrderItemsSchema } from "@/types/store/reducers/cartSlice";
 import { z } from "zod";
 
 const metaDataSchema = z.object({

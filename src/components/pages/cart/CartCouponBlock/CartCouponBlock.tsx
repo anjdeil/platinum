@@ -3,7 +3,11 @@ import Notification from '@/components/global/Notification/Notification';
 import { useResponsive } from '@/hooks/useResponsive';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { useLazyListAllCouponsQuery } from '@/store/rtk-queries/wooCustomApi';
-import { addCoupon } from '@/store/slices/cartSlice';
+import {
+  addCoupon,
+  clearCoupons,
+  setPendingCoupon,
+} from '@/store/slices/cartSlice';
 import { CartCouponBlockProps } from '@/types/pages/cart';
 import {
   discountMapping,
@@ -33,6 +37,7 @@ const CartCouponBlock: FC<CartCouponBlockProps> = ({
   userLoyalityStatus,
   couponError,
   setCouponError,
+  couponSuccess,
 }) => {
   const { isMobile } = useResponsive();
   const t = useTranslations('Cart');
@@ -81,16 +86,22 @@ const CartCouponBlock: FC<CartCouponBlockProps> = ({
 
     if (coupons) {
       if (coupons.length !== 0 && coupons[0].code === data.couponCode) {
-        setApplyingStatus({
-          isError: false,
-          message: 'couponApplied',
-        });
+        // setApplyingStatus({
+        //   isError: false,
+        //   message: 'couponApplied',
+        // });
+        setApplyingStatus(undefined);
         dispatch(addCoupon({ couponCode: data.couponCode }));
+        dispatch(setPendingCoupon(data.couponCode));
       } else {
         setApplyingStatus({
           isError: true,
           message: 'couponNotFound',
         });
+        dispatch(clearCoupons());
+        if (userLoyalityStatus) {
+          dispatch(addCoupon({ couponCode: userLoyalityStatus }));
+        }
         return;
       }
     } else if (error) {
@@ -143,6 +154,9 @@ const CartCouponBlock: FC<CartCouponBlockProps> = ({
       )}
       {applyingStatus && !couponError && applyingStatus.isError && (
         <CouponError>{t(applyingStatus.message)}</CouponError>
+      )}
+      {couponSuccess && !couponError && (
+        <CouponSuccess>{t('couponApplied')}</CouponSuccess>
       )}
       {couponError && <CouponError>{t('couponIsNotApplied')}</CouponError>}
     </CouponBlock>
