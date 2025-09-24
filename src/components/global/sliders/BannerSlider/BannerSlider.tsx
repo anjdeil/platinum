@@ -6,15 +6,15 @@ import {
   MainPageSlideType,
 } from '@/types/components/global/sliders/BannerSlider';
 import { useTranslations } from 'next-intl';
-// import Link from 'next/link';
+import Link from 'next/link';
 import React, { useMemo } from 'react';
-// import { Autoplay, Pagination } from 'swiper/modules';
-// import { SwiperSlide } from 'swiper/react';
+import { Autoplay, Pagination } from 'swiper/modules';
+import { SwiperSlide } from 'swiper/react';
 import AddToBasketButton from '../../buttons/AddToBasketButton/AddToBasketButton';
 import {
   BannerWrapper,
   ContentWrapper,
-  // CustomSwiper,
+  CustomSwiper,
   ImageStyled,
   StyledText,
 } from './styles';
@@ -62,43 +62,36 @@ const BannerSlider: React.FC<BannerSliderProps> = ({
           <AddToBasketButton maxWidth="250px">Add to basket</AddToBasketButton>
         </ContentWrapper>
       )}
-      <ImageStyled
-        priority
-        fetchPriority="high"
-        src={imageConfig.imageSrc(slides[0])}
-        alt="Banner"
-        width={imageConfig.width}
-        height={Math.floor(imageConfig.height)}
-      />
-      {/*<CustomSwiper*/}
-      {/*  modules={slides.length > 1 ? [Pagination, Autoplay] : [Autoplay]}*/}
-      {/*  pagination={slides.length > 1 ? { clickable: true } : false}*/}
-      {/*  spaceBetween={0}*/}
-      {/*  slidesPerView={1}*/}
-      {/*  loop={true}*/}
-      {/*  autoplay={{*/}
-      {/*    delay: 8000,*/}
-      {/*    disableOnInteraction: false,*/}
-      {/*  }}*/}
-      {/*>*/}
-      {/*  {slides.map(*/}
-      {/*    (slide: BannerSlideType | MainPageSlideType, index: number) => (*/}
-      {/*      <SwiperSlide key={index}>*/}
-      {/*        {isMainPage && (*/}
-      {/*          <Link href={slide.url || '#'} passHref>*/}
-      {/*            <ImageStyled*/}
-      {/*              priority={index === 0}*/}
-      {/*              src={imageConfig.imageSrc(slide)}*/}
-      {/*              alt="Banner"*/}
-      {/*              width={imageConfig.width}*/}
-      {/*              height={imageConfig.height}*/}
-      {/*            />*/}
-      {/*          </Link>*/}
-      {/*        )}*/}
-      {/*      </SwiperSlide>*/}
-      {/*    )*/}
-      {/*  )}*/}
-      {/*</CustomSwiper>*/}
+      <CustomSwiper
+        modules={slides.length > 1 ? [Pagination, Autoplay] : [Autoplay]}
+        pagination={slides.length > 1 ? { clickable: true } : false}
+        spaceBetween={0}
+        slidesPerView={1}
+        loop={true}
+        autoplay={{
+          delay: 8000,
+          disableOnInteraction: false,
+        }}
+      >
+        {slides.map(
+          (slide: BannerSlideType | MainPageSlideType, index: number) => (
+            <SwiperSlide key={index}>
+              {isMainPage && (
+                <Link href={slide.url || '#'} passHref>
+                  <ImageStyled
+                    priority={index === 0}
+                    fetchPriority={index === 0 ? 'high' : 'auto'}
+                    src={imageConfig.imageSrc(slide)}
+                    alt="Banner"
+                    width={imageConfig.width}
+                    height={imageConfig.height}
+                  />
+                </Link>
+              )}
+            </SwiperSlide>
+          )
+        )}
+      </CustomSwiper>
     </BannerWrapper>
   );
 };
