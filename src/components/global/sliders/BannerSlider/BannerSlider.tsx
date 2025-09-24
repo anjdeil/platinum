@@ -64,6 +64,7 @@ const BannerSlider: React.FC<BannerSliderProps> = ({
       )}
       <ImageStyled
         priority
+        fetchPriority="high"
         src={imageConfig.imageSrc(slides[0])}
         alt="Banner"
         width={imageConfig.width}
