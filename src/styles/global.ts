@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-import { montserrat } from "./theme";
+import { font } from './theme';
 
 const GlobalStyle = createGlobalStyle`
  * {
@@ -50,7 +50,7 @@ html {
 
 body {
     margin: 0;
-     font-family: ${montserrat.style.fontFamily}, sans-serif;
+     font-family: ${font};
 }
 
 main {
@@ -79,7 +79,6 @@ a {
 
 abbr[title] {
     border-bottom: none;
-    text-decoration: underline;
     text-decoration: underline dotted;
 }
 
