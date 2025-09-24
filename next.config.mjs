@@ -29,6 +29,7 @@ const nextConfig = {
       },
     ],
   },
+  bundlePagesRouterDependencies: true,
   experimental: {
     optimizeCss: true,
     scrollRestoration: true,
