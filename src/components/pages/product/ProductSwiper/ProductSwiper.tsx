@@ -88,7 +88,6 @@ const ProductSwiper: React.FC<SwiperProps> = ({ data }) => {
           <SwiperSlide>
             <ImageWrapper>
               <ImageStyled
-                priority
                 src="/assets/images/not-found.webp"
                 alt="Product not found"
                 width={452}

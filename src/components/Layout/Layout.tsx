@@ -23,8 +23,8 @@ import RunningLine from '../runningLine/RunningLine';
 import CategoriesMenu from '../shop/categories/CategoriesMenu/CategoriesMenu';
 import BottomMenu from '../widgets/BottomMenu';
 import { Footer } from '../widgets/Footer';
-// import Header from '../widgets/Header/Header';
-// import MobileHeader from '../widgets/MobileHeader/MobileHeader';
+import Header from '../widgets/Header/Header';
+import MobileHeader from '../widgets/MobileHeader/MobileHeader';
 import TopBar from '../widgets/TopBar/TopBar';
 
 export const MenusContext = createContext<WpMenuResponseType[] | []>([]);
@@ -82,7 +82,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <MenusContext.Provider value={menus}>
         <RunningLine />
         {!isMobile && <TopBar />}
-        {/*{!isMobile ? <Header /> : <MobileHeader />}*/}
+
+        <div style={{'min-height': '50px'}}>
+          {!isMobile ? <Header /> : <MobileHeader />}
+        </div>
         <PopupContainer />
         {isMobile && <BottomMenu />}
         {children}
