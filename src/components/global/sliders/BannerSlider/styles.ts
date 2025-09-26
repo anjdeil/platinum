@@ -97,3 +97,9 @@ export const ImageStyled = styled(FallbackImage)`
     object-fit: cover;
     object-position: center;
 `;
+
+export const SliderPlaceholder = styled.div`
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+`;

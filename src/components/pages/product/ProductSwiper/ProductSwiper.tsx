@@ -4,9 +4,9 @@ import useProductSwiper from '@/hooks/useProductSwiper';
 import { SwiperProps } from '@/types/components/global/sliders/productSwiper';
 import React, { useEffect, useRef, useState } from 'react';
 import ReactPlayer from 'react-player';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/thumbs';
+// import 'swiper/css';
+// import 'swiper/css/navigation';
+// import 'swiper/css/thumbs';
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 import { SwiperSlide } from 'swiper/react';
 import {
@@ -88,7 +88,6 @@ const ProductSwiper: React.FC<SwiperProps> = ({ data }) => {
           <SwiperSlide>
             <ImageWrapper>
               <ImageStyled
-                priority
                 src="/assets/images/not-found.webp"
                 alt="Product not found"
                 width={452}

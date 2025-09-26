@@ -79,7 +79,6 @@ a {
 
 abbr[title] {
     border-bottom: none;
-    text-decoration: underline;
     text-decoration: underline dotted;
 }
 

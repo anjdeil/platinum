@@ -266,7 +266,7 @@ const BlogPostPage = ({
         <meta property="og:url" content={canonicalUrl} />
         <link rel="canonical" href={canonicalUrl} />
         <link rel="alternate" hrefLang={safeLocale} href={canonicalUrl} />
-        <script type="application/ld+json">{JSON.stringify(schemaPost)}</script>
+        <script async type="application/ld+json">{JSON.stringify(schemaPost)}</script>
       </Head>
       <PageTitle title={postTitle} />
       <SectionContainer>
