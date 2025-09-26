@@ -14,7 +14,7 @@ import {
   userLoyalityStatusSchema,
 } from '@/types/store/rtk-queries/wpApi';
 import { useTranslations } from 'next-intl';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import {
   CouponBlock,
@@ -59,6 +59,12 @@ const CartCouponBlock: FC<CartCouponBlockProps> = ({
     setValue,
   } = useForm();
 
+  useEffect(() => {
+    if (couponError) {
+      setValue('couponCode', '');
+    }
+  }, [couponError, setValue]);
+
   const { couponCodes } = useAppSelector(state => state.cartSlice);
   const isCartLoyaltyIncluded = couponCodes.some(coupon =>
     loyaltyCouponsCodes.includes(coupon)
@@ -77,6 +83,7 @@ const CartCouponBlock: FC<CartCouponBlockProps> = ({
         isError: true,
         message: 'couponNotFound',
       });
+      setValue('couponCode', '');
       return;
     }
 
@@ -98,6 +105,7 @@ const CartCouponBlock: FC<CartCouponBlockProps> = ({
           isError: true,
           message: 'couponNotFound',
         });
+        setValue('couponCode', '');
         dispatch(clearCoupons());
         if (userLoyalityStatus) {
           dispatch(addCoupon({ couponCode: userLoyalityStatus }));
@@ -109,6 +117,7 @@ const CartCouponBlock: FC<CartCouponBlockProps> = ({
         isError: true,
         message: 'fetchError',
       });
+      setValue('couponCode', '');
     }
   };
 
