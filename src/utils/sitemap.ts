@@ -92,6 +92,10 @@ export async function rewriteDomainInAddlSitemap(
       if (url['xhtml:link'] && Array.isArray(url['xhtml:link'])) {
         url['xhtml:link'].forEach(link => {
           link['@_href'] = replace(link['@_href']);
+
+          if(link['@_hreflang'] === 'pl') {
+            link['@_href'] = link['@_href'].replace('/pl/','/');
+          }
         });
       }
     });
