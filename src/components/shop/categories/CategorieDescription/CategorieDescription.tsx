@@ -34,10 +34,33 @@ const CategorieDescription: FC<CategorieDescriptionPropsType> = ({
 
   const t = useTranslations('Categories');
 
+  const blockElements = [
+    'div',
+    'p',
+    'ul',
+    'ol',
+    'li',
+    'h1',
+    'h2',
+    'h3',
+    'h4',
+    'h5',
+    'h6',
+    'blockquote',
+  ];
+
   const options: HTMLReactParserOptions = {
     replace: (domNode: DOMNode) => {
       if (domNode instanceof Element && domNode.type === 'tag') {
         const { name, children } = domNode;
+
+        const hasBlockChildren = (children: DOMNode[]) => {
+          return children.some(
+            child =>
+              child instanceof Element && blockElements.includes(child.name)
+          );
+        };
+
         switch (name) {
           case 'h2':
             return (
@@ -57,6 +80,15 @@ const CategorieDescription: FC<CategorieDescriptionPropsType> = ({
                 {domToReact(children as DOMNode[], options)}
               </StyledParagraph>
             );
+          case 'div':
+            if (!hasBlockChildren(children as DOMNode[])) {
+              return (
+                <StyledParagraph>
+                  {domToReact(children as DOMNode[], options)}
+                </StyledParagraph>
+              );
+            }
+            return <div>{domToReact(children as DOMNode[], options)}</div>;
           case 'ol':
             return (
               <StyledOrderedList>
