@@ -30,9 +30,7 @@ interface SectionRendererProps {
   sections: SectionsType[];
 }
 
-export const SectionRenderer: React.FC<SectionRendererProps> = ({
-  sections,
-}) => {
+export const SectionRenderer: React.FC<SectionRendererProps> = ({ sections }) => {
   const countSplitSections = (sections: any[]): number => {
     return sections.filter(section => section._type === 'split').length;
   };

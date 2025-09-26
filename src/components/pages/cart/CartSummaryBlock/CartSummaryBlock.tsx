@@ -14,7 +14,7 @@ import {
   CartSummaryWrapper,
 } from './style';
 import theme from '@/styles/theme';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 import { setCommentToOrder } from '@/store/slices/cartSlice';
 import OrderSummary from '../OrderSummary/OrderSummary';
 import { CartSummaryBlockProps } from '@/types/pages/cart';

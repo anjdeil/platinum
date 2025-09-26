@@ -1,4 +1,6 @@
-import InfoPopup from '@/components/global/popups/InfoPopup/InfoPopup';
+const InfoPopup = dynamic(() => import('@/components/global/popups/InfoPopup/InfoPopup'), {
+  ssr: false,
+});
 import { PageTitle } from '@/components/pages/pageTitle';
 import { SectionRenderer } from '@/components/sections/SectionRenderer';
 import { customRestApi } from '@/services/wpCustomApi';
@@ -12,6 +14,7 @@ import { BASE_URL } from '@/utils/consts';
 import { validateWpPage } from '@/utils/zodValidators/validateWpPage';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
+import dynamic from 'next/dynamic';
 
 const languageMap = {
   pl: 'pl-PL',
@@ -189,12 +192,13 @@ const Home: React.FC<HomeProps> = ({ sections, locale, seoData, fullUrl }) => {
     ],
   };
 
+
   return (
     <>
       <Head>
         <meta name="robots" content="index, follow" />
         <meta name="description" content={pageDescription} />
-        <script type="application/ld+json">
+        <script type="application/ld+json" async>
           {JSON.stringify(structuredData)}
         </script>
         <meta property="og:title" content={seoData?.og?.title || pageTitle} />
@@ -208,6 +212,9 @@ const Home: React.FC<HomeProps> = ({ sections, locale, seoData, fullUrl }) => {
         />
         <link rel="canonical" href={canonicalUrl} />
         <link rel="alternate" hrefLang={safeLocale} href={canonicalUrl} />
+
+        <link rel="dns-prefetch" href={process.env.NEXT_PUBLIC_WP_URL} />
+        <link rel="preconnect" href={process.env.NEXT_PUBLIC_WP_URL} crossOrigin="anonymous" />
       </Head>
       <PageTitle title={pageTitle} />
       <div className="homepage">

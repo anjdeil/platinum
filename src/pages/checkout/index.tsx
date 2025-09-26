@@ -574,7 +574,13 @@ export default function CheckoutPage() {
     }
   };
 
-  const isPayButtonDisabled = isOrderLoading || orderStatus === 'pending';
+  // const isPayButtonDisabled = isOrderLoading || orderStatus === 'pending';
+  const isPayButtonDisabled =
+    isOrderLoading ||
+    orderStatus === 'pending' ||
+    isLoading ||
+    !shippingMethod ||
+    !shippingMethods.some(m => m.method_id === shippingMethod?.method_id);
 
   /**
    * Handle order creation error

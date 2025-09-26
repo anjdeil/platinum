@@ -1,4 +1,6 @@
-import { styled, Tooltip, tooltipClasses, TooltipProps } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import Tooltip from '@mui/material/Tooltip';
+import { tooltipClasses, TooltipProps } from '@mui/material/Tooltip';
 import WhatsAppIcon from '../../icons/socials/WhatsAppIcon/WhatsAppIcon';
 import { StyledButtonLink, StyledIconContainer } from './styles';
 import { useTranslations } from 'next-intl';

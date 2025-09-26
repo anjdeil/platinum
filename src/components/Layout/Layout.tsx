@@ -82,7 +82,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <MenusContext.Provider value={menus}>
         <RunningLine />
         {!isMobile && <TopBar />}
-        {!isMobile ? <Header /> : <MobileHeader />}
+
+        <div style={{minHeight: '50px'}}>
+          {!isMobile ? <Header /> : <MobileHeader />}
+        </div>
         <PopupContainer />
         {isMobile && <BottomMenu />}
         {children}
