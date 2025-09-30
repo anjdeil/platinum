@@ -61,7 +61,7 @@ export async function rewriteChildSitemapUrls(
 /**
  * Transform a WPML addl sitemap by replacing all WordPress URLs with Next.js URLs
  */
-export async function rewriteDomainInAddlSitemap(
+export async function rewriteDomainSitemap(
   xmlContent: string
 ): Promise<string> {
   const parser = new XMLParser(parserOptions);
@@ -92,10 +92,6 @@ export async function rewriteDomainInAddlSitemap(
       if (url['xhtml:link'] && Array.isArray(url['xhtml:link'])) {
         url['xhtml:link'].forEach(link => {
           link['@_href'] = replace(link['@_href']);
-
-          if(link['@_hreflang'] === 'pl') {
-            link['@_href'] = link['@_href'].replace('/pl/','/');
-          }
         });
       }
     });
@@ -107,6 +103,65 @@ export async function rewriteDomainInAddlSitemap(
 
   return xml;
 }
+
+export async function modifySitemapUrls(
+  xmlContent: string
+): Promise<string> {
+  const parser = new XMLParser(parserOptions);
+  const builder = new XMLBuilder(builderOptions);
+
+  const parsed = parser.parse(xmlContent);
+
+  if (parsed.urlset && parsed.urlset.url) {
+    parsed.urlset.url.forEach((url: any) => {
+      if (url.loc && url.loc.__cdata) {
+        url.loc.__cdata = url.loc.__cdata.replace('/homepage', '');
+      }
+
+      if (url['xhtml:link'] && Array.isArray(url['xhtml:link'])) {
+        let default_url =''
+
+        url['xhtml:link'].forEach((link) => {
+          if (link['@_href'].includes('/homepage')) {
+            link['@_href'] = link['@_href'].replace('/homepage', '');
+          }
+
+
+          if (link['@_hreflang'] === 'pl') {
+            link['@_href'] = link['@_href'].replace('/pl/', '/');
+            default_url = link['@_href'];
+          }
+
+          if (link['@_hreflang'] === 'en') {
+            link['@_href'] = link['@_href'].replace(
+              `https://${NEXT_DOMAIN}`,
+              `https://${NEXT_DOMAIN}/en`
+            );
+          }
+        });
+
+        const hasXDefault = url['xhtml:link'].some(
+          (link) => link['@_hreflang'] === 'x-default'
+        );
+
+        if (!hasXDefault) {
+          url['xhtml:link'].push({
+            '@_rel': 'alternate',
+            '@_hreflang': 'x-default',
+            '@_href': default_url,
+          });
+        }
+      }
+    });
+  }
+
+  // The browser blocks loading XSL from another domain (CORS).
+  let xml = builder.build(parsed);
+  xml = xml.replace(/<\?xml-stylesheet [^>]*\?>/i, '');
+
+  return xml;
+}
+
 
 /**
  * Fetch XML content from WordPress

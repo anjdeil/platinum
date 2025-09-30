@@ -40,6 +40,7 @@ const BannerSlider: React.FC<BannerSliderProps> = ({
         if ('image_desc' in slide && 'image_mob' in slide) {
           return isMobile ? slide.image_mob : slide.image_desc;
         }
+        console.log(slide, 'slide');
         return isMobile ? slide.mobileImage : slide.image;
       },
     }),
