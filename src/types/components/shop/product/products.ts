@@ -114,6 +114,18 @@ export const ProductsMinimizedSchema = z.object({
   attributes: z.array(ProductDefaultAttributesSchema),
 });
 
+export const ProductsWithCartDataSchemaWithFinalPrice = ProductsMinimizedSchema.extend({
+  finalPrice: z.number().nullable().optional(),
+  convertedFinalPrice: z.number(),
+  quantity: z.number(),
+  variation_id: z.number(),
+  product_id: z.number(),
+  totalPrice: z.number(),
+  convertedTotalPrice: z.number(),
+  resolveCount: z.number(),
+  isAvailable: z.boolean()
+});
+
 export const ProductsWithCartDataSchema = ProductsMinimizedSchema.extend({
   quantity: z.number().optional(),
   variation: z.number().optional(),
@@ -187,3 +199,4 @@ export type ProductVariationType = z.infer<typeof ProductVariationSchema>;
 export type ProductsMinimizedType = z.infer<typeof ProductsMinimizedSchema>;
 export type LineItemType = z.infer<typeof LineItemSchema>;
 export type ProductsWithCartDataType = z.infer<typeof ProductsWithCartDataSchema>;
+export type ProductsWithCartDataTypeWithFinalPrice = z.infer<typeof ProductsWithCartDataSchemaWithFinalPrice>;

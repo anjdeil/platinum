@@ -281,6 +281,7 @@
     "OrderCommentPlaceholder": "Share any specific details or requests about your order...",
     "OrderCommentHint": "Feel free to provide any additional instructions or notes for your order here.",
     "OrderSummary": "Order Summary",
+    "PreOrderSummary": "Estimated Summary",
     "Continue": "Continue",
     "OrderSummaryTotal": "Total",
     "products": "Products",
