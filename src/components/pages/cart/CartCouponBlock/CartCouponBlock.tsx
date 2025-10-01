@@ -1,7 +1,7 @@
 import { CustomFormInput } from '@/components/global/forms/CustomFormInput';
 import { useResponsive } from '@/hooks/useResponsive';
 import { useAppDispatch, useAppSelector } from '@/store';
-import { addCoupon, clearCoupon } from '@/store/slices/cartSlice';
+import { addCoupon } from '@/store/slices/cartSlice';
 import { CartCouponBlockProps } from '@/types/pages/cart';
 import {
   discountMapping,
@@ -23,7 +23,7 @@ const loyaltyCouponsCodes = ['silver', 'gold', 'platinum'];
 
 const CartCouponBlock: FC<CartCouponBlockProps> = ({
   auth,
-  userLoyalityStatus,
+  userLoyaltyStatus,
   couponError,
   setCouponError,
   couponSuccess,
@@ -35,7 +35,7 @@ const CartCouponBlock: FC<CartCouponBlockProps> = ({
   const dispatch = useAppDispatch();
   const { cartItems } = useAppSelector(s => s.cartSlice);
 
-  const isValidStatus = userLoyalityStatusSchema.safeParse(userLoyalityStatus);
+  const isValidStatus = userLoyalityStatusSchema.safeParse(userLoyaltyStatus);
   const validStatus = isValidStatus.data;
 
   const { register, handleSubmit, setValue } = useForm();
@@ -49,13 +49,11 @@ const CartCouponBlock: FC<CartCouponBlockProps> = ({
   useEffect(() => {
     if (cartItems.length > 0) {
       setValue('couponCode', '');
-      dispatch(clearCoupon());
       setCouponError(false);
     }
-  }, [cartItems, dispatch, setValue, setCouponError]);
+  }, [cartItems, dispatch, setValue, setCouponError, userLoyaltyStatus]);
 
   const onSubmit = async (data: any) => {
-    console.log('coupone...', data);
     if (!data.couponCode || loyaltyCouponsCodes.includes(data.couponCode))
       return;
     dispatch(addCoupon({ couponCode: data.couponCode }));

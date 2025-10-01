@@ -12,7 +12,6 @@ import { NavLink } from '../../../menus/Nav/styles';
 import { NavButton, Slide, SliderWrapper } from './styles';
 
 const SlickSlider = React.forwardRef<Slider, SlickSettings>((props, ref) => (
-  // @ts-ignore
   <Slider ref={ref} {...props} />
 ));
 SlickSlider.displayName = 'SlickSlider';

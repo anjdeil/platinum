@@ -1,4 +1,3 @@
-// hooks/useCreateOrderHandler.ts
 import { useAppDispatch, useAppSelector } from '@/store';
 import { useCreateOrderMutation } from '@/store/rtk-queries/wooCustomApi';
 import { addCoupon, clearCoupon } from '@/store/slices/cartSlice';
@@ -6,11 +5,12 @@ import { CreateOrderRequestType, WooErrorType } from '@/types/services';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { useState } from 'react';
 
-export function useCreateOrderHandler(
+export const useCreateOrderHandler = (
     status: CreateOrderRequestType['status'],
     code: string,
-    userLoyaltyStatus?: string
-) {
+    userLoyaltyStatus?: string,
+    customerId?: number
+) => {
     const { cartItems, couponCode } = useAppSelector(s => s.cartSlice);
     const [createOrder, { data: orderItems, isLoading }] = useCreateOrderMutation();
     const dispatch = useAppDispatch();
@@ -26,6 +26,7 @@ export function useCreateOrderHandler(
             status,
             currency: code,
             coupon_lines: coupons,
+            ...(customerId ? { customer_id: customerId } : {}),
         };
 
         const { error } = await createOrder(requestData);

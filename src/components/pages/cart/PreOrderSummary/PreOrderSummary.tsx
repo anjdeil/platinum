@@ -35,10 +35,6 @@ const PreOrderSummary: FC<PreOrderSummaryProps> = ({
     userLoyaltyStatus
   );
 
-  console.log('subtotal...', subtotal);
-  console.log('discountAmount...', discountAmount);
-  console.log('total...', total);
-
   // Function for displaying the summary line
   const renderOrderTotal = () => {
     return (

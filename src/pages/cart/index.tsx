@@ -75,7 +75,12 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
     setCouponError,
     couponSuccess,
     setCouponSuccess,
-  } = useCreateOrderHandler(status, code, userLoyaltyStatus);
+  } = useCreateOrderHandler(
+    status,
+    code,
+    userLoyaltyStatus,
+    defaultCustomerData?.id
+  );
 
   useEffect(() => {
     if (!couponCode) return;
@@ -95,6 +100,12 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
     setCouponSuccess(false);
     if (orderItems) {
       setIsDirty(true);
+    }
+
+    if (userLoyaltyStatus) {
+      dispatch(addCoupon({ couponCode: userLoyaltyStatus }));
+    } else {
+      dispatch(clearCoupon());
     }
   }, [cartItems]);
 
@@ -233,7 +244,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
           </div>
 
           <CartCouponBlock
-            userLoyalityStatus={userLoyaltyStatus}
+            userLoyaltyStatus={userLoyaltyStatus}
             auth={auth}
             couponError={couponError}
             setCouponError={setCouponError}

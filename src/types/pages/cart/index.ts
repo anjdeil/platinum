@@ -37,7 +37,7 @@ export const BannerCartSchema = z.object({
   mobileImage: z.string(),
 });
 export const CartCouponBlockSchema = z.object({
-  userLoyalityStatus: z.string().optional(),
+  userLoyaltyStatus: z.string().optional(),
   auth: z.boolean(),
   couponError: z.boolean().optional(),
   setCouponError: z
