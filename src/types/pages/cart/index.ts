@@ -1,10 +1,11 @@
 import {
   ProductsMinimizedSchema,
   ProductsWithCartDataSchema,
+  ProductsWithCartDataSchemaWithFinalPrice,
 } from '@/types/components/shop/product/products';
+import { UserTotalsSchema } from '@/types/services/userTotals';
 import { OrderTypeSchema } from '@/types/services/wooCustomApi/customer';
 import {
-  CartItemSchema,
   lineOrderItemsSchema,
 } from '@/types/store/reducers/cartSlice';
 import { z } from 'zod';
@@ -17,7 +18,7 @@ export const CartProductWarningSchema = z.object({
 export const QuantityComponentSchema = z.object({
   disabled: z.boolean().optional(),
   resolveCount: z.number().optional(),
-  item: lineOrderItemsSchema || ProductsWithCartDataSchema,
+  item: lineOrderItemsSchema || ProductsWithCartDataSchema || ProductsWithCartDataSchemaWithFinalPrice,
   inputWidth: z.string().optional(),
   inputHeight: z.string().optional(),
   handleChangeQuantity: z
@@ -44,24 +45,31 @@ export const CartCouponBlockSchema = z.object({
     .args(z.boolean())
     .returns(z.void()),
   couponSuccess: z.boolean().optional(),
+  isLoading: z.boolean(),
+  setIsCouponAppliedManually: z
+    .function()
+    .args(z.boolean())
+    .returns(z.void()),
 });
 export const CartSummaryBlockSchema = z.object({
   symbol: z.string(),
   order: OrderTypeSchema.optional(),
   isLoading: z.boolean().optional(),
-  cartItems: z.array(CartItemSchema),
+  cartItems: z.array(ProductsWithCartDataSchemaWithFinalPrice),
   auth: z.boolean(),
+  userTotal: UserTotalsSchema.optional()
 });
 export const CartTableSchema = z.object({
-  symbol: z.string(),
+  symbol: z.string().optional(),
   order: OrderTypeSchema.optional(),
   filteredOutItems: z.array(lineOrderItemsSchema).optional(),
-  isLoadingOrder: z.boolean(),
-  firstLoad: z.boolean(),
-  innercartItems: z.array(z.any()),
-  productsSpecs: z.array(ProductsMinimizedSchema),
-  cartItems: z.array(z.any()),
-  roundedPrice: z.function().args(z.number()).returns(z.number()),
+  loading: z.boolean().optional(),
+  isLoadingOrder: z.boolean().optional(),
+  firstLoad: z.boolean().optional(),
+  innercartItems: z.array(z.any()).optional(),
+  productsSpecs: z.array(ProductsMinimizedSchema).optional(),
+  cartItems: z.array(z.any()).optional(),
+  roundedPrice: z.function().args(z.number()).returns(z.number()).optional(),
   hasConflict: z.boolean(),
   handleChangeQuantity: z
     .function()
@@ -77,6 +85,7 @@ export const CartTableSchema = z.object({
     .args(z.number(), z.number()) // productId, variationId
     .returns(z.void()),
   loadingItems: z.array(z.number()).optional(),
+  productsWithCartData: z.array(ProductsWithCartDataSchemaWithFinalPrice),
 });
 export const OrderBarSchema = z.object({
   subtotal: z.number().optional(),
@@ -92,8 +101,15 @@ export const OrderSummarySchema = z.object({
   isLoading: z.boolean().optional(),
   noPaymentMethod: z.boolean().optional(),
 });
+export const PreOrderSummarySchema = z.object({
+  cartItems: z.array(ProductsWithCartDataSchemaWithFinalPrice),
+  isLoading: z.boolean().optional(),
+  userTotal: UserTotalsSchema.optional()
+});
 
 export type OrderSummaryProps = z.infer<typeof OrderSummarySchema>;
+
+export type PreOrderSummaryProps = z.infer<typeof PreOrderSummarySchema>;
 
 export type OrderBarProps = z.infer<typeof OrderBarSchema>;
 

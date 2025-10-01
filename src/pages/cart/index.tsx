@@ -6,37 +6,32 @@ import CartTable from '@/components/pages/cart/CartTable/CartTable';
 import OrderBar from '@/components/pages/cart/OrderBar/OrderBar';
 import OrderProgress from '@/components/pages/cart/OrderProgress/OrderProgress';
 import { PageTitle } from '@/components/pages/pageTitle';
-import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
+import { useCartData } from '@/hooks/useCartData';
+import { useCreateOrderHandler } from '@/hooks/useCreateOrderHandler';
 import wpRestApi from '@/services/wpRestApi';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { useGetUserTotalsQuery } from '@/store/rtk-queries/userTotals/userTotals';
-import { useCreateOrderMutation } from '@/store/rtk-queries/wooCustomApi';
 import { useGetProductsMinimizedMutation } from '@/store/rtk-queries/wpCustomApi';
 import {
   addCoupon,
   clearConflictedItems,
-  clearCoupons,
-  clearPendingCoupon,
+  clearCoupon,
 } from '@/store/slices/cartSlice';
 import { CartPageWrapper } from '@/styles/cart/style';
 import { Container, FlexBox, StyledButton } from '@/styles/components';
-import { ProductsMinimizedType } from '@/types/components/shop/product/products';
-import { CreateOrderRequestType, WooErrorType } from '@/types/services';
+import { CreateOrderRequestType } from '@/types/services';
 import { JwtDecodedDataType } from '@/types/services/wpRestApi/auth';
-import { CartItem, lineOrderItems } from '@/types/store/reducers/cartSlice';
 import { WpUserType } from '@/types/store/rtk-queries/wpApi';
 import checkCartConflict from '@/utils/cart/checkCartConflict';
-import getCartTotals from '@/utils/cart/getCartTotals';
 import { handleQuantityChange } from '@/utils/cart/handleQuantityChange';
-import { roundedPrice } from '@/utils/cart/roundedPrice';
+import { LOYALTY_LEVELS } from '@/utils/consts';
 import { validateJwtDecode } from '@/utils/zodValidators/validateJwtDecode';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { decodeJwt } from 'jose';
 import { GetServerSidePropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import router from 'next/router';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 interface CartPageProps {
   defaultCustomerData: WpUserType | null;
@@ -45,134 +40,75 @@ interface CartPageProps {
 const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   const { name: code } = useAppSelector(state => state.currencySlice);
   const status: CreateOrderRequestType['status'] = 'on-hold';
-  const [symbol, setSymbol] = useState<string>('');
+  const [symbol, setSymbol] = useState<string>(code);
   const dispatch = useAppDispatch();
-  const [firstLoad, setfirstLoad] = useState<boolean>(false);
   const t = useTranslations('Cart');
-  const [isCouponsIgnored, setIsCouponsIgnored] = useState(false);
   const { data: userTotal } = useGetUserTotalsQuery(defaultCustomerData?.id);
 
   const [auth, setAuth] = useState<boolean>(false);
 
-  const [couponError, setCouponError] = useState(false);
-  const [couponSuccess, setCouponSuccess] = useState(false);
+  const [isDirty, setIsDirty] = useState(false);
+  const [isCouponAppliedManually, setIsCouponAppliedManually] = useState(false);
 
   const userLoyaltyStatus = userTotal?.loyalty_status;
-
-  const pendingCoupon = useAppSelector(s => s.cartSlice.pendingCoupon);
-  const pendingCouponRef = useRef(pendingCoupon);
-
-  useEffect(() => {
-    pendingCouponRef.current = pendingCoupon;
-  }, [pendingCoupon]);
 
   useEffect(() => {
     if (defaultCustomerData && userLoyaltyStatus) {
       setAuth(true);
       dispatch(addCoupon({ couponCode: userLoyaltyStatus }));
     } else {
-      dispatch(clearCoupons());
+      dispatch(clearCoupon());
       setAuth(false);
     }
   }, [defaultCustomerData, userLoyaltyStatus, dispatch]);
 
-  const [createOrder, { data: orderItems, isLoading: isLoadingOrder }] =
-    useCreateOrderMutation();
+  const { cartItems, couponCode } = useAppSelector(state => state.cartSlice);
 
-  const { cartItems, couponCodes } = useAppSelector(state => state.cartSlice);
-
-  const [getProductsMinimized, { data: productsMinimizedData }] =
+  const [getProductsMinimized, { isLoading: isLoadingProducts }] =
     useGetProductsMinimizedMutation();
-  const [productsMinimized, setProductsMinimized] = useState<
-    ProductsMinimizedType[]
-  >([]);
+
+  const {
+    handleCreateOrder,
+    orderItems,
+    isLoading,
+    couponError,
+    setCouponError,
+    couponSuccess,
+    setCouponSuccess,
+  } = useCreateOrderHandler(status, code, userLoyaltyStatus);
 
   useEffect(() => {
-    if (productsMinimizedData) {
-      setProductsMinimized(productsMinimizedData.data.items);
+    if (!couponCode) return;
+
+    const isLoyaltyCoupon = LOYALTY_LEVELS.some(
+      level => level.name === couponCode
+    );
+
+    if (!isLoyaltyCoupon && isCouponAppliedManually) {
+      handleCreateOrder();
+      setIsCouponAppliedManually(false);
     }
-  }, [productsMinimizedData]);
-
-  const [cachedOrderItems, setCachedOrderItems] = useState(orderItems);
-
-  const { convertCurrency } = useCurrencyConverter();
-
-  const { totalCost: cartCost } = getCartTotals(
-    productsMinimized,
-    cartItems,
-    convertCurrency
-  );
-
-  useEffect(() => {
-    const handleCreateOrder = async () => {
-      const coupons = couponCodes.map((code: string) => ({ code }));
-
-      const requestData = {
-        line_items: cartItems,
-        status: status,
-        currency: code,
-        ...(!isCouponsIgnored && { coupon_lines: coupons }),
-      };
-
-      const { error } = await createOrder(requestData);
-
-      if (error) {
-        const wooError = (error as FetchBaseQueryError).data;
-        if (
-          (wooError as WooErrorType)?.details?.code ===
-            'woocommerce_rest_invalid_coupon' ||
-          (wooError as WooErrorType)?.details?.code ===
-            'invalid_coupon_for_sale'
-        ) {
-          setCouponError(true);
-          setCouponSuccess(false);
-
-          dispatch(clearPendingCoupon());
-
-          if (userLoyaltyStatus) {
-            dispatch(addCoupon({ couponCode: userLoyaltyStatus }));
-          } else {
-            dispatch(clearCoupons());
-            setIsCouponsIgnored(true);
-          }
-        }
-      } else {
-        const pending = pendingCouponRef.current;
-        const requestHadPending = !!pending && !isCouponsIgnored;
-
-        if (requestHadPending) {
-          setCouponSuccess(true);
-        } else {
-          setCouponSuccess(false);
-        }
-        setIsCouponsIgnored(false);
-
-        if (userLoyaltyStatus) {
-          setCouponError(false);
-        }
-
-        dispatch(clearPendingCoupon());
-      }
-
-      setfirstLoad(true);
-    };
-    handleCreateOrder();
-  }, [cartItems, couponCodes, code, userLoyaltyStatus, isCouponsIgnored]);
+  }, [couponCode, isCouponAppliedManually]);
 
   useEffect(() => {
     setCouponError(false);
     setCouponSuccess(false);
+    if (orderItems) {
+      setIsDirty(true);
+    }
   }, [cartItems]);
 
   useEffect(() => {
     if (orderItems?.currency_symbol) {
       setSymbol(orderItems.currency_symbol);
-      setCachedOrderItems(orderItems);
+      setIsDirty(false);
     }
   }, [orderItems]);
 
+  const { productsWithCartData, totalCartPrice } = useCartData();
+
   const handleChangeQuantity = useCallback(
-    async (
+    (
       product_id: number,
       action: 'inc' | 'dec' | 'value',
       variation_id?: number,
@@ -183,6 +119,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
         dispatch,
         product_id,
         action,
+        productsWithCartData,
         variation_id,
         newQuantity
       );
@@ -193,16 +130,23 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   // Conflict detection
   const [hasConflict, setHasConflict] = useState(false);
 
-  /* Check cart conflict */
+  const [productsMinimized, setProductsMinimized] = useState<any[]>([]);
+
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchMinimizedData = async () => {
       const defaultLanguage = router.defaultLocale || 'pl';
       const productsMinimizedData = await getProductsMinimized({
         cartItems,
         lang: router.locale || defaultLanguage,
       });
-      const productsMinimized = productsMinimizedData?.data?.data?.items || [];
+      setProductsMinimized(productsMinimizedData?.data?.data?.items || []);
+    };
+    fetchMinimizedData();
+  }, []);
 
+  /* Check cart conflict */
+  useEffect(() => {
+    const fetchData = async () => {
       // remove simple products with variation_id
       const brokenItems = cartItems.filter(item => {
         const product = productsMinimized.find(p => p.id === item.product_id);
@@ -221,80 +165,19 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
       setHasConflict(checkCartConflict(cartItems, productsMinimized));
     };
 
-    if (cartItems.length) {
+    if (cartItems.length && productsMinimized.length) {
       fetchData();
     } else {
       router.push('/cart');
     }
-  }, [cartItems, router.locale]);
+  }, [cartItems, productsMinimized]);
 
-  const currentOrderItems = orderItems ?? cachedOrderItems;
-
-  const isLoading = isLoadingOrder;
-  const isLoadingCart = isLoadingOrder;
-
-  //check cart items and order coincidence
-
-  const [innercartItems, setInnerCartItems] = useState(
-    currentOrderItems?.line_items || []
+  const allItemAvailable = !productsWithCartData.some(
+    item => !item.isAvailable
   );
-
-  const [filteredOutItems, setFilteredOutItems] = useState<lineOrderItems[]>(
-    []
-  );
-
-  useEffect(() => {
-    if (isLoadingOrder || !currentOrderItems?.line_items) return;
-
-    const filteredItems = currentOrderItems.line_items.filter(lineItem =>
-      cartItems.some(
-        (cartItem: CartItem) =>
-          cartItem.product_id === lineItem.product_id &&
-          (!cartItem.variation_id ||
-            cartItem.variation_id === lineItem.variation_id)
-      )
-    );
-
-    const notFilteredItems = currentOrderItems.line_items.filter(
-      lineItem =>
-        !cartItems.some(
-          (cartItem: CartItem) =>
-            cartItem.product_id === lineItem.product_id &&
-            (!cartItem.variation_id ||
-              cartItem.variation_id === lineItem.variation_id)
-        )
-    );
-
-    setInnerCartItems(filteredItems);
-    setFilteredOutItems(notFilteredItems);
-  }, [currentOrderItems?.line_items, isLoadingOrder]);
 
   const handleDeleteItem = (productId: number, variationId: number) => {
-    const updatedCartItems = innercartItems.filter(
-      item => item.product_id !== productId || item.variation_id !== variationId
-    );
-    setInnerCartItems(updatedCartItems);
-
     handleChangeQuantity(productId, 'value', variationId, 0);
-
-    //Google Analytics
-    if (typeof window !== 'undefined') {
-      const itemToRemove = innercartItems.find(
-        item =>
-          item.product_id === productId && item.variation_id === variationId
-      );
-
-      if (itemToRemove) {
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({
-          event: 'remove_from_cart',
-          item_id: itemToRemove.id,
-          item_name: itemToRemove.name,
-          quantity: itemToRemove.quantity,
-          price: itemToRemove.price,
-        });
-      }
-    }
   };
 
   //fix  hydration
@@ -320,28 +203,21 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
         <CartPageWrapper>
           <div>
             <CartTable
-              symbol={symbol}
-              cartItems={cartItems}
-              innercartItems={innercartItems}
-              isLoadingOrder={isLoadingCart}
-              filteredOutItems={filteredOutItems}
-              order={currentOrderItems}
-              productsSpecs={productsMinimized}
-              roundedPrice={roundedPrice}
+              productsWithCartData={productsWithCartData}
+              loading={isLoadingProducts}
               hasConflict={hasConflict}
               handleChangeQuantity={handleChangeQuantity}
-              firstLoad={firstLoad}
               handleDeleteItem={handleDeleteItem}
             />
-            {(innercartItems.length > 0 || filteredOutItems?.length > 0) && (
+            {productsWithCartData.length > 0 && (
               <OrderBar
                 miniCart={false}
-                isLoadingOrder={isLoadingOrder}
-                subtotal={cartCost}
+                isLoadingOrder={isLoadingProducts}
+                subtotal={totalCartPrice}
                 symbol={symbol}
               />
             )}
-            {innercartItems.length == 0 && cartItems.length == 0 && (
+            {productsWithCartData.length == 0 && cartItems.length == 0 && (
               <FlexBox justifyContent="center">
                 <CartLink href="/">
                   <StyledButton
@@ -362,15 +238,18 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
             couponError={couponError}
             setCouponError={setCouponError}
             couponSuccess={couponSuccess}
+            isLoading={isLoading}
+            setIsCouponAppliedManually={setIsCouponAppliedManually}
           />
 
-          {innercartItems.length > 0 && filteredOutItems.length == 0 && (
+          {productsWithCartData.length > 0 && allItemAvailable && (
             <CartSummaryBlock
               auth={auth}
               symbol={symbol}
-              order={orderItems}
-              cartItems={cartItems}
-              isLoading={isLoading}
+              cartItems={productsWithCartData}
+              isLoading={isLoading || isLoadingProducts}
+              {...(orderItems && !isDirty ? { order: orderItems } : {})}
+              userTotal={userTotal}
             />
           )}
         </CartPageWrapper>

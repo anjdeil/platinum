@@ -51,7 +51,6 @@ import { RegistrationError } from '@/components/pages/checkout/RegistrationError
 import { PageTitle } from '@/components/pages/pageTitle';
 import { useGetCustomerData } from '@/hooks/useGetCustomerData';
 import { useRegisterUser } from '@/hooks/useRegisterUser';
-import { useLazyGetUserTotalsQuery } from '@/store/rtk-queries/userTotals/userTotals';
 import { RegistrationFormType } from '@/types/components/global/forms/registrationForm';
 import {
   BillingType,
@@ -91,7 +90,7 @@ export default function CheckoutPage() {
   /**
    * Calculate totals
    */
-  const { cartItems, couponCodes, commentToOrder } = useAppSelector(
+  const { cartItems, couponCode, commentToOrder } = useAppSelector(
     state => state.cartSlice
   );
   const [getProductsMinimized, { data: productsMinimizedData }] =
@@ -343,23 +342,23 @@ export default function CheckoutPage() {
    * Coupons and loyalty status
    */
   const [isCouponsIgnored, setIsCouponsIgnored] = useState(false);
-  const [coupons, setCoupons] = useState(couponCodes);
+  // const [coupons, setCoupons] = useState(couponCode);
 
-  const [fetchUserTotals, { data: userTotal }] = useLazyGetUserTotalsQuery();
-  useEffect(() => {
-    if (userData?.id) {
-      fetchUserTotals(userData?.id);
-    }
-  }, [userData?.id]);
+  // const [fetchUserTotals, { data: userTotal }] = useLazyGetUserTotalsQuery();
+  // useEffect(() => {
+  //   if (userData?.id) {
+  //     fetchUserTotals(userData?.id);
+  //   }
+  // }, [userData?.id]);
 
-  useEffect(() => {
-    if (userTotal?.total_spent) {
-      const level = userTotal?.loyalty_status;
-      if (level && !coupons?.includes(level)) {
-        setCoupons([...coupons, level]);
-      }
-    }
-  }, [userTotal]);
+  // useEffect(() => {
+  //   if (userTotal?.total_spent) {
+  //     const level = userTotal?.loyalty_status;
+  //     if (level && !coupons?.includes(level)) {
+  //       setCoupons([...coupons, level]);
+  //     }
+  //   }
+  // }, [userTotal]);
 
   /* Check cart conflict */
   useEffect(() => {
@@ -590,7 +589,8 @@ export default function CheckoutPage() {
       const wooError = (orderCreationError as FetchBaseQueryError).data;
       if (
         (wooError as WooErrorType)?.details?.code ===
-        'woocommerce_rest_invalid_coupon'
+          'woocommerce_rest_invalid_coupon' ||
+        (wooError as WooErrorType)?.details?.code === 'invalid_coupon_for_sale'
       ) {
         setIsCouponsIgnored(true);
       }
@@ -601,7 +601,7 @@ export default function CheckoutPage() {
   useEffect(() => {
     if (isUserDataLoading || cartItems.length === 0) return;
 
-    const couponLines = coupons.map(code => ({ code }));
+    const couponLines = couponCode ? [{ code: couponCode }] : [];
 
     const filteredMetaData = Array.isArray(formOrderData.metaData)
       ? formOrderData.metaData
@@ -630,7 +630,7 @@ export default function CheckoutPage() {
     });
   }, [
     cartItems,
-    coupons,
+    couponCode,
     orderStatus,
     currencyCode,
     userData,
