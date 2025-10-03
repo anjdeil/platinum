@@ -113,6 +113,8 @@ export async function modifySitemapUrls(
   const parsed = parser.parse(xmlContent);
 
   if (parsed.urlset && parsed.urlset.url) {
+    parsed.urlset.url = parsed.urlset.url.filter((url: any) => (!/\/(pl|uk|ru|en|de)(\/|$)/.test(url.loc.__cdata)))
+
     parsed.urlset.url.forEach((url: any) => {
       if (url.loc && url.loc.__cdata) {
         url.loc.__cdata = url.loc.__cdata.replace('/homepage', '');
