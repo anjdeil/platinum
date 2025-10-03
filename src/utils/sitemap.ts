@@ -119,7 +119,7 @@ export async function modifySitemapUrls(
       }
 
       if (url['xhtml:link'] && Array.isArray(url['xhtml:link'])) {
-        let default_url =''
+        let default_url = ''
 
         url['xhtml:link'].forEach((link) => {
           if (link['@_href'].includes('/homepage')) {
@@ -128,7 +128,7 @@ export async function modifySitemapUrls(
 
 
           if (link['@_hreflang'] === 'pl') {
-            link['@_href'] = link['@_href'].replace('/pl/', '/');
+            link['@_href'] = link['@_href'].replace(`https://${NEXT_DOMAIN}/pl`, `https://${NEXT_DOMAIN}`)
             default_url = link['@_href'];
           }
 
