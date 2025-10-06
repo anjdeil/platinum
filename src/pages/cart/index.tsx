@@ -38,9 +38,11 @@ interface CartPageProps {
 }
 
 const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
-  const { name: code } = useAppSelector(state => state.currencySlice);
+  const { name: code, code: currencySymbol } = useAppSelector(
+    state => state.currencySlice
+  );
   const status: CreateOrderRequestType['status'] = 'on-hold';
-  const [symbol, setSymbol] = useState<string>(code);
+  const [symbol, setSymbol] = useState<string>(currencySymbol);
   const dispatch = useAppDispatch();
   const t = useTranslations('Cart');
   const { data: userTotal } = useGetUserTotalsQuery(defaultCustomerData?.id);
