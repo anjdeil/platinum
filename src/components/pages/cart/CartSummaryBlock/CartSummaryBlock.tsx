@@ -1,7 +1,14 @@
 import { useAppDispatch, useAppSelector } from '@/store';
+import { setCommentToOrder } from '@/store/slices/cartSlice';
 import { StyledButton, Title } from '@/styles/components';
+import theme from '@/styles/theme';
+import { CartSummaryBlockProps } from '@/types/pages/cart';
+import debounce from 'lodash/debounce';
 import { useTranslations } from 'next-intl';
+import router from 'next/router';
 import React, { FC, useCallback, useEffect, useState } from 'react';
+import OrderSummary from '../OrderSummary/OrderSummary';
+import PreOrderSummary from '../PreOrderSummary/PreOrderSummary';
 import {
   CartCommentError,
   CartCommentHint,
@@ -13,12 +20,6 @@ import {
   CartSummaryTitleWrapper,
   CartSummaryWrapper,
 } from './style';
-import theme from '@/styles/theme';
-import debounce from 'lodash/debounce';
-import { setCommentToOrder } from '@/store/slices/cartSlice';
-import OrderSummary from '../OrderSummary/OrderSummary';
-import { CartSummaryBlockProps } from '@/types/pages/cart';
-import router from 'next/router';
 
 const MAX_LENGTH = 500;
 
@@ -28,6 +29,7 @@ const CartSummaryBlock: FC<CartSummaryBlockProps> = ({
   isLoading,
   cartItems,
   auth,
+  userTotal,
 }) => {
   const t = useTranslations('Cart');
   const dispatch = useAppDispatch();
@@ -86,16 +88,24 @@ const CartSummaryBlock: FC<CartSummaryBlockProps> = ({
       <CartSummaryWrapper>
         <CartSummaryTitleWrapper>
           <Title as="h2" textalign="center" uppercase>
-            {t('OrderSummary')}
+            {order ? t('OrderSummary') : t('PreOrderSummary')}
           </Title>
         </CartSummaryTitleWrapper>
         <CartSummaryCard>
-          <OrderSummary
-            symbol={symbol}
-            order={order}
-            isLoading={isLoading}
-            noPaymentMethod
-          />
+          {order ? (
+            <OrderSummary
+              symbol={symbol}
+              order={order}
+              isLoading={isLoading}
+              noPaymentMethod
+            />
+          ) : (
+            <PreOrderSummary
+              cartItems={cartItems}
+              isLoading={isLoading}
+              userTotal={userTotal}
+            />
+          )}
         </CartSummaryCard>
 
         {!isLoading && (
