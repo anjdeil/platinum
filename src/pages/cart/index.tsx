@@ -227,7 +227,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
                 miniCart={false}
                 isLoadingOrder={isLoadingProducts}
                 subtotal={totalCartPrice}
-                symbol={symbol}
+                symbol={currencySymbol}
               />
             )}
             {productsWithCartData.length == 0 && cartItems.length == 0 && (
