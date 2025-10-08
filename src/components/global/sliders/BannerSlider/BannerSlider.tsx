@@ -15,7 +15,8 @@ import {
   BannerWrapper,
   ContentWrapper,
   CustomSwiper,
-  ImageStyled, SliderPlaceholder,
+  ImageStyled,
+  SliderPlaceholder,
   StyledText,
 } from './styles';
 
@@ -36,16 +37,28 @@ const BannerSlider: React.FC<BannerSliderProps> = ({
         ? 768 / (mobileProportion || 0.65)
         : 1440 / (proportion || 2.74),
 
-      imageSrc: (slide: BannerSlideType | MainPageSlideType) => {
-        if ('image_desc' in slide && 'image_mob' in slide) {
-          return isMobile ? slide.image_mob : slide.image_desc;
-        }
-        console.log(slide, 'slide');
-        return isMobile ? slide.mobileImage : slide.image;
-      },
+      // imageSrc: (slide: BannerSlideType | MainPageSlideType) => {
+      //   if ('image_desc' in slide && 'image_mob' in slide) {
+      //     return isMobile ? slide.image_mob : slide.image_desc;
+      //   }
+      //   return isMobile ? slide.mobileImage : slide.image;
+      // },
     }),
     [isMobile, proportion, mobileProportion]
   );
+
+  const getSlideImages = (slide: BannerSlideType | MainPageSlideType) => {
+    if ('image_mob' in slide && 'image_desc' in slide) {
+      return {
+        mobile: slide.image_mob,
+        desktop: slide.image_desc,
+      };
+    }
+    return {
+      mobile: slide.mobileImage,
+      desktop: slide.image,
+    };
+  };
 
   return (
     <BannerWrapper
@@ -65,16 +78,24 @@ const BannerSlider: React.FC<BannerSliderProps> = ({
         </ContentWrapper>
       )}
 
-      {!isSliderInitialized && (
+      {!isSliderInitialized && slides[0] && (
         <SliderPlaceholder>
-          <ImageStyled
-            priority
-            fetchPriority={'high'}
-            src={imageConfig.imageSrc(slides[0])}
-            alt="Banner"
-            width={imageConfig.width}
-            height={Math.floor(imageConfig.height)}
-          />
+          {(() => {
+            const { mobile, desktop } = getSlideImages(slides[0]);
+            return (
+              <picture>
+                <source media="(max-width: 767px)" srcSet={mobile} />
+                <ImageStyled
+                  src={desktop}
+                  alt="Banner"
+                  width={imageConfig.width}
+                  height={Math.floor(imageConfig.height)}
+                  priority
+                  fetchPriority="high"
+                />
+              </picture>
+            );
+          })()}
         </SliderPlaceholder>
       )}
 
@@ -91,22 +112,38 @@ const BannerSlider: React.FC<BannerSliderProps> = ({
         onAfterInit={() => setIsSliderInitialized(true)}
       >
         {slides.map(
-          (slide: BannerSlideType | MainPageSlideType, index: number) => (
-            <SwiperSlide key={index}>
-              {isMainPage && (
-                <Link href={slide.url || '#'} passHref>
-                  <ImageStyled
-                    priority={index === 0}
-                    fetchPriority={index === 0 ? 'high' : 'auto'}
-                    src={imageConfig.imageSrc(slide)}
-                    alt="Banner"
-                    width={imageConfig.width}
-                    height={Math.floor(imageConfig.height)}
-                  />
-                </Link>
-              )}
-            </SwiperSlide>
-          )
+          (slide: BannerSlideType | MainPageSlideType, index: number) => {
+            const { mobile, desktop } = getSlideImages(slide);
+
+            return (
+              <SwiperSlide key={index}>
+                {isMainPage && (
+                  <Link href={slide.url || '#'} passHref>
+                    <picture>
+                      <source media="(max-width: 767px)" srcSet={mobile} />
+                      <ImageStyled
+                        src={desktop}
+                        alt="Banner"
+                        width={imageConfig.width}
+                        height={Math.floor(imageConfig.height)}
+                        priority={index === 0}
+                        fetchPriority={index === 0 ? 'high' : 'auto'}
+                      />
+                    </picture>
+                    {/* <ImageStyled
+                      key={isMobile ? 'mobile' : 'desktop'}
+                      priority={index === 0}
+                      fetchPriority={index === 0 ? 'high' : 'auto'}
+                      src={imageUrl}
+                      alt="Banner"
+                      width={imageConfig.width}
+                      height={Math.floor(imageConfig.height)}
+                    /> */}
+                  </Link>
+                )}
+              </SwiperSlide>
+            );
+          }
         )}
       </CustomSwiper>
     </BannerWrapper>
