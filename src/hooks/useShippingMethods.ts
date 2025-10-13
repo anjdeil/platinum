@@ -22,14 +22,23 @@ export default function useShippingMethods(countryCode?: string, allowedShipping
   const [currentShippingMethods, setCurrentShippingMethods] = useState<ShippingMethodType[]>([]);
 
   useEffect(() => {
-    if (!shippingZones || !countryCode) return;
+    if (!shippingZones || !countryCode) {
+      setCurrentShippingMethods([]);
+      return;
+    }
+
+    setCurrentShippingMethods([]);
+    setIsShippingMethodsLoading(true);
+
+    let isCancelled = false;
 
     const getTargetShippingZoneId = async () => {
-      setIsShippingMethodsLoading(true);
       let targetShippingZoneId: number = 0;
 
       for (const shippingZone of shippingZones) {
         const { data: locations = [] } = await getShippingLocations(shippingZone.id);
+        if (isCancelled) return;
+
         if (locations.some(({ code }) => countryCode === code)) {
           targetShippingZoneId = shippingZone.id;
           break;
@@ -37,12 +46,13 @@ export default function useShippingMethods(countryCode?: string, allowedShipping
       }
 
       if (!targetShippingZoneId) {
-        setCurrentShippingMethods([]);
+        if (!isCancelled) setCurrentShippingMethods([]);
         setIsShippingMethodsLoading(false);
         return;
       }
 
       const { data: methods = [] } = await getShippingMethods(targetShippingZoneId);
+      if (isCancelled) return;
 
       const filteredMethods = allowedShippingMethods && allowedShippingMethods.length
         ? methods.filter(method => {
@@ -54,12 +64,16 @@ export default function useShippingMethods(countryCode?: string, allowedShipping
         })
         : methods;
 
-      setCurrentShippingMethods(filteredMethods);
+      if (!isCancelled) setCurrentShippingMethods(filteredMethods);
       setIsShippingMethodsLoading(false);
 
     };
 
     getTargetShippingZoneId();
+
+    return () => {
+      isCancelled = true;
+    };
   }, [shippingZones, countryCode, allowedShippingMethods]);
 
   return {
