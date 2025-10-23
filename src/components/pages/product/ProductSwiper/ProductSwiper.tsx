@@ -4,9 +4,6 @@ import useProductSwiper from '@/hooks/useProductSwiper';
 import { SwiperProps } from '@/types/components/global/sliders/productSwiper';
 import React, { useEffect, useRef, useState } from 'react';
 import ReactPlayer from 'react-player';
-// import 'swiper/css';
-// import 'swiper/css/navigation';
-// import 'swiper/css/thumbs';
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 import { SwiperSlide } from 'swiper/react';
 import {
@@ -36,6 +33,7 @@ const ProductSwiper: React.FC<SwiperProps> = ({ data }) => {
   useEffect(() => {
     if (swiperRef.current && data.length > 0) {
       setTimeout(() => {
+        swiperRef.current?.swiper.update();
         swiperRef.current?.swiper.slideTo(0);
       }, 0);
     }
@@ -118,7 +116,7 @@ const ProductSwiper: React.FC<SwiperProps> = ({ data }) => {
       >
         {data.map((item, index) =>
           item.type === 'video' ? (
-            <SwiperSlide key={index}>
+            <SwiperSlide key={item.id || item.src}>
               <VideoWrapper>
                 <ReactPlayer
                   ref={player => {
@@ -141,9 +139,10 @@ const ProductSwiper: React.FC<SwiperProps> = ({ data }) => {
               </VideoWrapper>
             </SwiperSlide>
           ) : (
-            <SwiperSlide key={index} onClick={handlerOpen}>
+            <SwiperSlide key={item.id || item.src} onClick={handlerOpen}>
               <ImageWrapper>
                 <ImageStyled
+                  unoptimized
                   priority
                   src={item?.src || '/assets/images/not-found.webp'}
                   alt={`Product ${index + 1}`}
@@ -179,7 +178,7 @@ const ProductSwiper: React.FC<SwiperProps> = ({ data }) => {
           modules={[Navigation, Thumbs]}
         >
           {data.map((item, index) => (
-            <SwiperSlideStyled key={index}>
+            <SwiperSlideStyled key={item.id || item.src}>
               <ThumbnailWrapper>
                 <Thumbnail
                   src={
@@ -193,6 +192,7 @@ const ProductSwiper: React.FC<SwiperProps> = ({ data }) => {
                   alt={`Thumbnail ${index + 1}`}
                   width={92}
                   height={92}
+                  unoptimized
                 />
               </ThumbnailWrapper>
             </SwiperSlideStyled>
