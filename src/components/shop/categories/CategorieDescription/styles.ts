@@ -4,8 +4,10 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 100px;
+  font: ${({ theme }) => theme.fonts.bodyMiddleReg};
 
   @media ${({ theme }) => theme.media.large} {
+    font: ${({ theme }) => theme.fonts.bodypresmallReg}; 
     margin-bottom: 80px;
   }
 
@@ -49,8 +51,8 @@ export const StyledOrderedList = styled.ol`
   margin-left: 20px;
 `;
 
-export const StyledList = styled.ol`
-  list-style-type: none;
+export const StyledList = styled.ul`
+  list-style-type: disc;
   margin-left: 20px;
 `;
 
@@ -90,6 +92,9 @@ export const Wrapper = styled.div<{ height: number; expanded: boolean }>`
 
 export const Inner = styled.div`
   padding-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
 
   & > :first-child {
     margin-top: 0;

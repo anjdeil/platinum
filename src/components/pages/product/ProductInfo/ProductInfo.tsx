@@ -189,7 +189,7 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
     dispatch(popupSet({ popupType: 'add-comment' }));
   };
 
-  const galleryImages = (() => {
+  const galleryImages = useMemo(() => {
     const variationImage = currentVariation?.image;
     const hasValidVariationImage =
       variationImage?.id && variationImage?.name && variationImage?.src;
@@ -204,7 +204,13 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
       ? { id: thumbnail.id, name: thumbnail.name, src: thumbnail.src }
       : null;
 
-    const imageItems = baseImage ? [baseImage, ...images] : [...images];
+    const filteredImages = images.filter(
+      img => !baseImage || img.id !== baseImage.id
+    );
+
+    const imageItems = baseImage
+      ? [baseImage, ...filteredImages]
+      : [...filteredImages];
 
     const videoItems =
       videos?.map(video => ({
@@ -215,7 +221,7 @@ const ProductInfo: React.FC<ProductCardPropsType> = ({ product }) => {
       })) || [];
 
     return [...imageItems, ...videoItems];
-  })();
+  }, [currentVariation, images, thumbnail, videos]);
 
   useEffect(() => {
     if (stockQuantity === 0) {
