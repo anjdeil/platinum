@@ -7,7 +7,7 @@ import OrderBar from '@/components/pages/cart/OrderBar/OrderBar';
 import OrderProgress from '@/components/pages/cart/OrderProgress/OrderProgress';
 import { PageTitle } from '@/components/pages/pageTitle';
 import { useCartData } from '@/hooks/useCartData';
-import { useCreateOrderHandler } from '@/hooks/useCreateOrderHandler';
+import { useQuoteHandler } from '@/hooks/useQuoteHandler';
 import wpRestApi from '@/services/wpRestApi';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { useGetUserTotalsQuery } from '@/store/rtk-queries/userTotals/userTotals';
@@ -19,7 +19,6 @@ import {
 } from '@/store/slices/cartSlice';
 import { CartPageWrapper } from '@/styles/cart/style';
 import { Container, FlexBox, StyledButton } from '@/styles/components';
-import { CreateOrderRequestType } from '@/types/services';
 import { JwtDecodedDataType } from '@/types/services/wpRestApi/auth';
 import { WpUserType } from '@/types/store/rtk-queries/wpApi';
 import checkCartConflict from '@/utils/cart/checkCartConflict';
@@ -41,8 +40,6 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   const { name: code, code: currencySymbol } = useAppSelector(
     state => state.currencySlice
   );
-  const status: CreateOrderRequestType['status'] = 'on-hold';
-  const [symbol, setSymbol] = useState<string>(currencySymbol);
   const dispatch = useAppDispatch();
   const t = useTranslations('Cart');
   const { data: userTotal } = useGetUserTotalsQuery(defaultCustomerData?.id);
@@ -69,17 +66,20 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   const [getProductsMinimized, { isLoading: isLoadingProducts }] =
     useGetProductsMinimizedMutation();
 
+  // Conflict detection
+  const [hasConflict, setHasConflict] = useState(false);
+
   const {
-    handleCreateOrder,
-    orderItems,
+    handleGetQuote,
+    quoteData,
     isLoading,
     couponError,
     setCouponError,
     couponSuccess,
     setCouponSuccess,
-  } = useCreateOrderHandler(
-    status,
+  } = useQuoteHandler(
     code,
+    setHasConflict,
     userLoyaltyStatus,
     defaultCustomerData?.id
   );
@@ -92,15 +92,22 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
     );
 
     if (!isLoyaltyCoupon && isCouponAppliedManually) {
-      handleCreateOrder();
+      handleGetQuote();
       setIsCouponAppliedManually(false);
     }
-  }, [couponCode, isCouponAppliedManually]);
+  }, [couponCode, isCouponAppliedManually, handleGetQuote]);
+
+  // after change currency
+  useEffect(() => {
+    if (cartItems.length === 0 || isDirty || !couponCode || !quoteData) return;
+    handleGetQuote();
+  }, [code]);
 
   useEffect(() => {
     setCouponError(false);
     setCouponSuccess(false);
-    if (orderItems) {
+
+    if (quoteData) {
       setIsDirty(true);
     }
 
@@ -112,11 +119,8 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   }, [cartItems]);
 
   useEffect(() => {
-    if (orderItems?.currency_symbol) {
-      setSymbol(orderItems.currency_symbol);
-      setIsDirty(false);
-    }
-  }, [orderItems]);
+    setIsDirty(false);
+  }, [quoteData]);
 
   const { productsWithCartData, totalCartPrice } = useCartData();
 
@@ -140,22 +144,33 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
     [cartItems, dispatch]
   );
 
-  // Conflict detection
-  const [hasConflict, setHasConflict] = useState(false);
-
   const [productsMinimized, setProductsMinimized] = useState<any[]>([]);
 
+  const fetchMinimizedData = useCallback(async () => {
+    const defaultLanguage = router.defaultLocale || 'pl';
+    const productsMinimizedData = await getProductsMinimized({
+      cartItems,
+      lang: router.locale || defaultLanguage,
+    });
+    const items = productsMinimizedData?.data?.data?.items || [];
+    setProductsMinimized(items);
+    return items;
+  }, [getProductsMinimized, router.locale]);
+
   useEffect(() => {
-    const fetchMinimizedData = async () => {
-      const defaultLanguage = router.defaultLocale || 'pl';
-      const productsMinimizedData = await getProductsMinimized({
-        cartItems,
-        lang: router.locale || defaultLanguage,
-      });
-      setProductsMinimized(productsMinimizedData?.data?.data?.items || []);
-    };
     fetchMinimizedData();
-  }, []);
+  }, [fetchMinimizedData]);
+
+  useEffect(() => {
+    const updateOnConflict = async () => {
+      if (hasConflict) {
+        const updatedItems = await fetchMinimizedData();
+        const newConflict = checkCartConflict(cartItems, updatedItems);
+        setHasConflict(newConflict);
+      }
+    };
+    updateOnConflict();
+  }, [hasConflict, fetchMinimizedData]);
 
   /* Check cart conflict */
   useEffect(() => {
@@ -258,11 +273,12 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
           {productsWithCartData.length > 0 && allItemAvailable && (
             <CartSummaryBlock
               auth={auth}
-              symbol={symbol}
               cartItems={productsWithCartData}
               isLoading={isLoading || isLoadingProducts}
-              {...(orderItems && !isDirty ? { order: orderItems } : {})}
+              {...(quoteData && !isDirty ? { quote: quoteData } : {})}
               userTotal={userTotal}
+              handleGetQuote={handleGetQuote}
+              quoteData={quoteData}
             />
           )}
         </CartPageWrapper>

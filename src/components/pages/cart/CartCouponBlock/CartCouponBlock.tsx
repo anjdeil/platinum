@@ -90,7 +90,6 @@ const CartCouponBlock: FC<CartCouponBlockProps> = ({
         />
         <CouponButton type="submit" disabled={isLoading}>
           {t('CouponApplyBtn')}
-          {isLoading && <>...</>}
         </CouponButton>
       </CouponForm>
       {couponSuccess && !couponError && (

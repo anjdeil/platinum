@@ -7,7 +7,6 @@ import debounce from 'lodash/debounce';
 import { useTranslations } from 'next-intl';
 import router from 'next/router';
 import React, { FC, useCallback, useEffect, useState } from 'react';
-import OrderSummary from '../OrderSummary/OrderSummary';
 import PreOrderSummary from '../PreOrderSummary/PreOrderSummary';
 import {
   CartCommentError,
@@ -24,12 +23,13 @@ import {
 const MAX_LENGTH = 500;
 
 const CartSummaryBlock: FC<CartSummaryBlockProps> = ({
-  symbol,
-  order,
+  quote,
   isLoading,
   cartItems,
   auth,
   userTotal,
+  handleGetQuote,
+  quoteData,
 }) => {
   const t = useTranslations('Cart');
   const dispatch = useAppDispatch();
@@ -68,6 +68,19 @@ const CartSummaryBlock: FC<CartSummaryBlockProps> = ({
     debouncedChangeHandler(value);
   };
 
+  const showSummary = quote && quote.success;
+
+  const handleGotoCheckout = async () => {
+    if (quote) {
+      router.push('/checkout');
+    } else {
+      const newQuote = await handleGetQuote();
+      if (newQuote?.success) {
+        router.push('/checkout');
+      }
+    }
+  };
+
   return (
     <CartSummaryBlockWrapper>
       <CartCommentsWrapper>
@@ -88,24 +101,16 @@ const CartSummaryBlock: FC<CartSummaryBlockProps> = ({
       <CartSummaryWrapper>
         <CartSummaryTitleWrapper>
           <Title as="h2" textalign="center" uppercase>
-            {order ? t('OrderSummary') : t('PreOrderSummary')}
+            {showSummary ? t('OrderSummary') : t('PreOrderSummary')}
           </Title>
         </CartSummaryTitleWrapper>
         <CartSummaryCard>
-          {order ? (
-            <OrderSummary
-              symbol={symbol}
-              order={order}
-              isLoading={isLoading}
-              noPaymentMethod
-            />
-          ) : (
-            <PreOrderSummary
-              cartItems={cartItems}
-              isLoading={isLoading}
-              userTotal={userTotal}
-            />
-          )}
+          <PreOrderSummary
+            cartItems={cartItems}
+            isLoading={isLoading}
+            userTotal={userTotal}
+            {...(showSummary ? { summary: quote.summary } : {})}
+          />
         </CartSummaryCard>
 
         {!isLoading && (
@@ -116,9 +121,7 @@ const CartSummaryBlock: FC<CartSummaryBlockProps> = ({
               secondary={true}
               hoverColor={theme.colors.white}
               hoverBackgroundColor={theme.colors.primary}
-              onClick={() => {
-                router.push('/checkout');
-              }}
+              onClick={handleGotoCheckout}
               disabled={isLoading || cartItems.length === 0}
             >
               {t('Continue')}

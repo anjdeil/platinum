@@ -441,6 +441,35 @@ const CouponParamsSchema = z.object({
 
 export const ReviewsRespSchema = z.array(ReviewRespSchema);
 
+export const SummaryRespShema = z.object({
+  subtotal: z.string(),
+  discount_total: z.string(),
+  total: z.string(),
+  vat_total: z.string(),
+});
+
+export const QuoteResponseSchema = z.object({
+  success: z.boolean(),
+  normalized: z.object({
+    currency: z.string(),
+    coupon: z.string().optional(),
+    items: z.array(
+      z.object({
+        product_id: z.number(),
+        variation_id: z.number(),
+        quantity: z.number(),
+      })
+    ),
+  }),
+  errors: z.object({
+    valid: z.boolean(),
+    errors: z.array(z.string()),
+    coupon: z.string().nullable(),
+  }).optional(),
+  summary: SummaryRespShema,
+  warnings: z.array(z.string()),
+});
+
 export type OrderType = z.infer<typeof OrderTypeSchema>;
 export type AddressType = z.infer<typeof AddressTypeSchema>;
 export type BillingType = z.infer<typeof BillingTypeSchema>;
@@ -458,3 +487,6 @@ export type ReviewRespType = z.infer<typeof ReviewRespSchema>;
 export type ReviewsRespType = z.infer<typeof ReviewsRespSchema>;
 export type WooCustomerUpdateType = z.infer<typeof WooCustomerUpdateSchema>;
 export type CouponParamsType = z.infer<typeof CouponParamsSchema>;
+
+export type QuoteResponseType = z.infer<typeof QuoteResponseSchema>;
+export type QuoteRequestType = Omit<CreateOrderRequestType, 'status'>;

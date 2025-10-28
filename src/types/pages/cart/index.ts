@@ -4,7 +4,7 @@ import {
   ProductsWithCartDataSchemaWithFinalPrice,
 } from '@/types/components/shop/product/products';
 import { UserTotalsSchema } from '@/types/services/userTotals';
-import { OrderTypeSchema } from '@/types/services/wooCustomApi/customer';
+import { OrderTypeSchema, QuoteResponseSchema, SummaryRespShema } from '@/types/services/wooCustomApi/customer';
 import {
   lineOrderItemsSchema,
 } from '@/types/store/reducers/cartSlice';
@@ -52,12 +52,14 @@ export const CartCouponBlockSchema = z.object({
     .returns(z.void()),
 });
 export const CartSummaryBlockSchema = z.object({
-  symbol: z.string(),
-  order: OrderTypeSchema.optional(),
+  symbol: z.string().optional(),
+  quote: QuoteResponseSchema.optional(),
   isLoading: z.boolean().optional(),
   cartItems: z.array(ProductsWithCartDataSchemaWithFinalPrice),
   auth: z.boolean(),
-  userTotal: UserTotalsSchema.optional()
+  userTotal: UserTotalsSchema.optional(),
+  handleGetQuote: z.function().returns(z.promise(QuoteResponseSchema.optional())),
+  quoteData: QuoteResponseSchema.optional(),
 });
 export const CartTableSchema = z.object({
   symbol: z.string().optional(),
@@ -102,6 +104,7 @@ export const OrderSummarySchema = z.object({
   noPaymentMethod: z.boolean().optional(),
 });
 export const PreOrderSummarySchema = z.object({
+  summary: SummaryRespShema.optional(),
   cartItems: z.array(ProductsWithCartDataSchemaWithFinalPrice),
   isLoading: z.boolean().optional(),
   userTotal: UserTotalsSchema.optional()
