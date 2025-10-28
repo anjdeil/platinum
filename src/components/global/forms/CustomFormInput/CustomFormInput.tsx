@@ -1,4 +1,6 @@
+import { CustomFormInputType } from '@/types/components/global/forms/customFormInput';
 import { FC, useEffect, useMemo, useState } from 'react';
+import 'react-international-phone/style.css';
 import {
   CustomError,
   CustomInputContainer,
@@ -10,8 +12,6 @@ import {
   ShowPasswordImage,
   StyledPhoneInput,
 } from './styles';
-import { CustomFormInputType } from '@/types/components/global/forms/customFormInput';
-import 'react-international-phone/style.css';
 
 export const CustomFormInput: FC<CustomFormInputType> = ({
   errors,

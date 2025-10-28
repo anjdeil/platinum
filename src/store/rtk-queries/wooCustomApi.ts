@@ -9,6 +9,8 @@ import {
   couponRespType,
   CreateOrderRequestType,
   OrderType,
+  QuoteRequestType,
+  QuoteResponseType,
   retrieveCouponQueryType,
   reviewQueryType,
   ReviewsRespType,
@@ -45,6 +47,16 @@ export const wooCustomRktApi = createApi({
         url: `/orders`,
         method: 'POST',
         body: credentials,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }),
+    }),
+    getQuote: builder.mutation<QuoteResponseType, QuoteRequestType>({
+      query: (data) => ({
+        url: `/quote`,
+        method: 'POST',
+        body: data,
         headers: {
           'Content-Type': 'application/json',
         },
@@ -135,6 +147,7 @@ export const {
   useRegisterCustomerMutation,
   useFetchOrdersQuery,
   useCreateOrderMutation,
+  useGetQuoteMutation,
   useAddCommentMutation,
   useGetProductsReviewsQuery,
   useGetProductReviewsQuery,

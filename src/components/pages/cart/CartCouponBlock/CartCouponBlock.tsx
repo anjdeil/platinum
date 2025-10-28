@@ -1,20 +1,14 @@
 import { CustomFormInput } from '@/components/global/forms/CustomFormInput';
-import Notification from '@/components/global/Notification/Notification';
 import { useResponsive } from '@/hooks/useResponsive';
 import { useAppDispatch, useAppSelector } from '@/store';
-import { useLazyListAllCouponsQuery } from '@/store/rtk-queries/wooCustomApi';
-import {
-  addCoupon,
-  clearCoupons,
-  setPendingCoupon,
-} from '@/store/slices/cartSlice';
+import { addCoupon } from '@/store/slices/cartSlice';
 import { CartCouponBlockProps } from '@/types/pages/cart';
 import {
   discountMapping,
   userLoyalityStatusSchema,
 } from '@/types/store/rtk-queries/wpApi';
 import { useTranslations } from 'next-intl';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import {
   CouponBlock,
@@ -25,39 +19,26 @@ import {
   CouponText,
 } from './style';
 
-type CouponApplyingStatusType = {
-  isError: boolean;
-  message: string;
-};
-
 const loyaltyCouponsCodes = ['silver', 'gold', 'platinum'];
 
 const CartCouponBlock: FC<CartCouponBlockProps> = ({
   auth,
-  userLoyalityStatus,
+  userLoyaltyStatus,
   couponError,
   setCouponError,
   couponSuccess,
+  isLoading,
+  setIsCouponAppliedManually,
 }) => {
   const { isMobile } = useResponsive();
   const t = useTranslations('Cart');
   const dispatch = useAppDispatch();
+  const { cartItems } = useAppSelector(s => s.cartSlice);
 
-  const isValidStatus = userLoyalityStatusSchema.safeParse(userLoyalityStatus);
+  const isValidStatus = userLoyalityStatusSchema.safeParse(userLoyaltyStatus);
   const validStatus = isValidStatus.data;
 
-  const [
-    fetchCoupons,
-    { isLoading: isCouponsLoading, isFetching: isCouponsFetching },
-  ] = useLazyListAllCouponsQuery();
-  const isLoading = isCouponsLoading || isCouponsFetching;
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-  } = useForm();
+  const { register, handleSubmit, setValue } = useForm();
 
   useEffect(() => {
     if (couponError) {
@@ -65,60 +46,20 @@ const CartCouponBlock: FC<CartCouponBlockProps> = ({
     }
   }, [couponError, setValue]);
 
-  const { couponCodes } = useAppSelector(state => state.cartSlice);
-  const isCartLoyaltyIncluded = couponCodes.some(coupon =>
-    loyaltyCouponsCodes.includes(coupon)
-  );
-
-  const [applyingStatus, setApplyingStatus] =
-    useState<CouponApplyingStatusType>();
+  useEffect(() => {
+    if (cartItems.length > 0) {
+      setValue('couponCode', '');
+      setCouponError(false);
+    }
+  }, [cartItems, dispatch, setValue, setCouponError, userLoyaltyStatus]);
 
   const onSubmit = async (data: any) => {
-    if (isLoading) return;
-
+    if (!data.couponCode || loyaltyCouponsCodes.includes(data.couponCode))
+      return;
+    dispatch(addCoupon({ couponCode: data.couponCode }));
     setCouponError(false);
 
-    if (loyaltyCouponsCodes.includes(data.couponCode)) {
-      setApplyingStatus({
-        isError: true,
-        message: 'couponNotFound',
-      });
-      setValue('couponCode', '');
-      return;
-    }
-
-    const { data: coupons, error } = await fetchCoupons({
-      code: data.couponCode,
-    });
-
-    if (coupons) {
-      if (coupons.length !== 0 && coupons[0].code === data.couponCode) {
-        // setApplyingStatus({
-        //   isError: false,
-        //   message: 'couponApplied',
-        // });
-        setApplyingStatus(undefined);
-        dispatch(addCoupon({ couponCode: data.couponCode }));
-        dispatch(setPendingCoupon(data.couponCode));
-      } else {
-        setApplyingStatus({
-          isError: true,
-          message: 'couponNotFound',
-        });
-        setValue('couponCode', '');
-        dispatch(clearCoupons());
-        if (userLoyalityStatus) {
-          dispatch(addCoupon({ couponCode: userLoyalityStatus }));
-        }
-        return;
-      }
-    } else if (error) {
-      setApplyingStatus({
-        isError: true,
-        message: 'fetchError',
-      });
-      setValue('couponCode', '');
-    }
+    setIsCouponAppliedManually(true);
   };
 
   return (
@@ -140,30 +81,17 @@ const CartCouponBlock: FC<CartCouponBlockProps> = ({
           label={false}
           name="couponCode"
           register={register}
-          errors={errors}
           inputTag="input"
           inputType="text"
           setValue={setValue}
           placeholder={t('CouponInputPlaceholder')}
           height="100%"
+          disabled={isLoading}
         />
         <CouponButton type="submit" disabled={isLoading}>
           {t('CouponApplyBtn')}
-          {isLoading && <>...</>}
         </CouponButton>
       </CouponForm>
-
-      {!applyingStatus && !couponError && isCartLoyaltyIncluded && (
-        <Notification type={'warning'}>
-          {t('overrideLoyaltyDiscount')}
-        </Notification>
-      )}
-      {applyingStatus && !couponError && !applyingStatus.isError && (
-        <CouponSuccess>{t(applyingStatus.message)}</CouponSuccess>
-      )}
-      {applyingStatus && !couponError && applyingStatus.isError && (
-        <CouponError>{t(applyingStatus.message)}</CouponError>
-      )}
       {couponSuccess && !couponError && (
         <CouponSuccess>{t('couponApplied')}</CouponSuccess>
       )}

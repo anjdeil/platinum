@@ -1,15 +1,24 @@
-import wooCommerceRestApi from "@/services/wooCommerceRestApi";
 import { validateApiError } from "@/utils/validateApiError";
+import WooCommerceRestApi, { WooCommerceRestApiVersion } from "@woocommerce/woocommerce-rest-api";
 import { NextApiRequest, NextApiResponse } from "next";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse)
-{
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { path, ...params } = req.query;
 
     if (!path?.length)
         return res.status(400).json({ error: 'Failed to fetch, because slug is missing!' });
 
     const slug = typeof path === 'string' ? path : path.join('/');
+
+    const isHeadless = slug.startsWith("quote");
+    const version = isHeadless ? "wc-headless/v1" : "wc/v3";
+
+    const wooCommerceRestApi = new WooCommerceRestApi({
+        url: process.env.NEXT_PUBLIC_WP_URL || "",
+        consumerKey: process.env.WOO_CONSUMER_KEY || "",
+        consumerSecret: process.env.WOO_CONSUMER_SECRET || "",
+        version: (version as WooCommerceRestApiVersion),
+    });
 
     const { method, body, headers } = req;
 
@@ -18,18 +27,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     else
         await fetchData(method);
 
-    async function fetchData(method: string = "GET", body?: unknown, headers?: Record<string, string>)
-    {
+    async function fetchData(method: string = "GET", body?: unknown, headers?: Record<string, string>) {
         const maxRetries = 3;
         let attempt = 0;
         let response;
 
-        while (attempt < maxRetries)
-        {
-            try
-            {
-                switch (method)
-                {
+        while (attempt < maxRetries) {
+            try {
+                switch (method) {
                     case 'POST':
                         response = await wooCommerceRestApi.post(slug, body);
                         break;
@@ -48,18 +53,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                         return res.status(405).end(`Method ${method} Not Allowed`);
                 }
 
-                if (response.status !== 400)
-                {
+                if (response.status !== 400) {
                     return res.status(200).json(response.data);
-                } else
-                {
+                } else {
                     throw new Error(`Bad request: ${response.statusText}`);
                 }
-            } catch (error)
-            {
+            } catch (error) {
                 attempt++;
-                if (attempt >= maxRetries)
-                {
+                if (attempt >= maxRetries) {
                     validateApiError(error, res);
                     break;
                 }
