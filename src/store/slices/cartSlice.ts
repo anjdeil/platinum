@@ -5,8 +5,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const cartInitialState: CartState = {
   cartItems: getCartItemsFromLocalStorage() || [],
-  couponCodes: [],
-  pendingCoupon: null,
+  couponCode: null,
   commentToOrder: '',
   productsData: [],
   needsProductDataUpdate: false,
@@ -61,23 +60,10 @@ export const cartSlice = createSlice({
       state.productsData = action.payload;
     },
     addCoupon: (state, action: PayloadAction<{ couponCode: string }>) => {
-      const { couponCode } = action.payload;
-      if (!state.couponCodes.includes(couponCode)) {
-        state.couponCodes = [couponCode];
-      }
+      state.couponCode = action.payload.couponCode;
     },
-    setPendingCoupon(state, action: PayloadAction<string | null>) {
-      state.pendingCoupon = action.payload;
-    },
-    clearPendingCoupon(state) {
-      state.pendingCoupon = null;
-    },
-    clearCoupons: (state) => {
-      state.couponCodes = [];
-    },
-    removeCoupon: (state, action: PayloadAction<{ couponCode: string }>) => {
-      const { couponCode } = action.payload;
-      state.couponCodes = state.couponCodes.filter(code => code !== couponCode);
+    clearCoupon: (state) => {
+      state.couponCode = null;
     },
     setCommentToOrder: (state, action: PayloadAction<string>) => {
       state.commentToOrder = action.payload;
@@ -107,10 +93,7 @@ export const cartSlice = createSlice({
 export const {
   updateCart,
   addCoupon,
-  setPendingCoupon,
-  clearPendingCoupon,
-  removeCoupon,
-  clearCoupons,
+  clearCoupon,
   setCommentToOrder,
   clearCommentToOrder,
   initializeCart,
