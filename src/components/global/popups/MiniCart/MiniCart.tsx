@@ -17,6 +17,7 @@ import {
   ProducTitle,
   ProductPrice,
 } from '@/components/pages/cart/styles/index';
+import { useCartData } from '@/hooks/useCartData';
 import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { clearConflictedItems } from '@/store/slices/cartSlice';
@@ -25,11 +26,10 @@ import theme from '@/styles/theme';
 import checkCartConflict from '@/utils/cart/checkCartConflict';
 import getProductSlug from '@/utils/cart/getProductSlug';
 import { handleQuantityChange } from '@/utils/cart/handleQuantityChange';
-import { getProductPrice } from '@/utils/price/getProductPrice';
 import { Skeleton } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { CartLink, MiniCartContainer } from './style';
 
 interface MiniCartProps {
@@ -45,99 +45,28 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
   const [hasConflict, setHasConflict] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
-  const { currentCurrency, currencyCode, convertCurrency, formatPrice } =
-    useCurrencyConverter();
+  const { currentCurrency, currencyCode, formatPrice } = useCurrencyConverter();
 
-  const productsWithCartData = useMemo(() => {
-    if (!productsData || !cartItems) {
-      return [];
-    }
-
-    const cartItemsMap = new Map<string, (typeof cartItems)[0]>();
-
-    cartItems.forEach(cartItem => {
-      const key = cartItem.variation_id
-        ? `v-${cartItem.product_id}-${cartItem.variation_id}`
-        : `p-${cartItem.product_id}`;
-      cartItemsMap.set(key, cartItem);
-    });
-
-    return productsData
-      .map(product => {
-        const isVariation = product.parent_id !== 0;
-        const key = isVariation
-          ? `v-${product.parent_id}-${product.id}`
-          : `p-${product.id}`;
-
-        const cartItem = cartItemsMap.get(key) || undefined;
-
-        if (!cartItem) return undefined;
-
-        const quantity = cartItem ? cartItem.quantity || 0 : 0;
-        const { finalPrice } = getProductPrice(product.price);
-
-        const convertedFinalPrice = convertCurrency(finalPrice || 0);
-        const convertedTotalPrice = convertedFinalPrice * quantity;
-
-        const totalPrice = finalPrice ? finalPrice * quantity : 0;
-
-        return {
-          ...product,
-          finalPrice,
-          convertedFinalPrice,
-          quantity,
-          variation: cartItem?.variation_id || 0,
-          product_id: cartItem?.product_id || product.id,
-          totalPrice,
-          convertedTotalPrice,
-        };
-      })
-      .filter((item): item is NonNullable<typeof item> => !!item);
-  }, [productsData, cartItems, convertCurrency]);
-
-  const totalCartPrice = useMemo(
-    () =>
-      productsWithCartData.reduce(
-        (sum, item) => sum + item.convertedTotalPrice,
-        0
-      ),
-    [productsWithCartData]
-  );
+  const { productsWithCartData, totalCartPrice } = useCartData();
 
   const handleChangeQuantity = useCallback(
-    async (
+    (
       product_id: number,
       action: 'inc' | 'dec' | 'value',
       variation_id?: number,
       newQuantity?: number | boolean
     ) => {
-      const item = productsWithCartData.find(
-        cartItem =>
-          cartItem.product_id === product_id &&
-          cartItem.variation === variation_id
-      );
-
-      if (item && newQuantity === 0) {
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({
-          event: 'remove_from_cart',
-          item_id: item.id,
-          item_name: item.name,
-          quantity: item.quantity,
-          price: item.finalPrice ? item.finalPrice : 0,
-        });
-      }
-
       handleQuantityChange(
         cartItems,
         dispatch,
         product_id,
         action,
+        productsWithCartData,
         variation_id,
         newQuantity
       );
     },
-    [cartItems, dispatch]
+    [cartItems, dispatch, productsWithCartData]
   );
 
   const handleClose = useCallback(() => {
@@ -250,7 +179,7 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
                         handleChangeQuantity(
                           item.product_id,
                           'value',
-                          item.variation,
+                          item.variation_id,
                           0
                         )
                       }

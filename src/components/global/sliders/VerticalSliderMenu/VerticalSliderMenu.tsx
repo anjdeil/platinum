@@ -1,21 +1,20 @@
-import React, { FC, useContext } from 'react';
-import Slider, { Settings as SlickSettings } from 'react-slick';
-
-const SlickSlider = React.forwardRef<Slider, SlickSettings>((props, ref) => (
-  // @ts-ignore
-  <Slider ref={ref} {...props} />
-));
-SlickSlider.displayName = "SlickSlider";
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import { MenusContext } from '@/components/Layout/Layout';
+import { wpMenuProps } from '@/types/menus/WpMenus';
+import { menuItemsType } from '@/types/services/wpCustomApi/menus';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import React, { FC, useContext } from 'react';
+import Slider, { Settings as SlickSettings } from 'react-slick';
+import 'slick-carousel/slick/slick-theme.css';
+import 'slick-carousel/slick/slick.css';
+import { MenuSkeleton } from '../../../menus/MenuSkeleton';
 import { NavLink } from '../../../menus/Nav/styles';
 import { NavButton, Slide, SliderWrapper } from './styles';
-import { MenuSkeleton } from '../../../menus/MenuSkeleton';
-import { MenusContext } from '@/components/Layout/Layout';
-import { menuItemsType } from '@/types/services/wpCustomApi/menus';
-import { wpMenuProps } from '@/types/menus/WpMenus';
+
+const SlickSlider = React.forwardRef<Slider, SlickSettings>((props, ref) => (
+  <Slider ref={ref} {...props} />
+));
+SlickSlider.displayName = 'SlickSlider';
 
 const VerticalSlider: FC<wpMenuProps> = ({ menuId, skeleton }) => {
   const sliderRef: React.RefObject<Slider> = React.createRef();
