@@ -1,4 +1,3 @@
-import Signature from '@/components/global/signature/Signature';
 import VerticalSlider from '@/components/global/sliders/VerticalSliderMenu/VerticalSliderMenu';
 import Nav from '@/components/menus/Nav/Nav';
 import { Socials } from '@/components/menus/Socials';
@@ -476,8 +475,6 @@ export const Footer: FC = () => {
             </PaymentAndDeliveryMethods>
           </PaymentAndDeliveryMethodsContainer>
         )}
-
-        <Signature />
       </FooterContainer>
     </FooterWrapper>
   );
