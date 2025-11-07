@@ -21,7 +21,7 @@ import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
 import useGetAuthToken from '@/hooks/useGetAuthToken';
 import useInPostGeowidget from '@/hooks/useInPostGeowidget';
 import useShippingMethods from '@/hooks/useShippingMethods';
-import { useAppSelector } from '@/store';
+import { useAppDispatch, useAppSelector } from '@/store';
 import {
   useCreateOrderMutation,
   useUpdateCustomerMutation,
@@ -46,11 +46,21 @@ import router from 'next/router';
 import { useEffect, useState } from 'react';
 
 import Notification from '@/components/global/Notification/Notification';
+import PreOrderSummary from '@/components/pages/cart/PreOrderSummary/PreOrderSummary';
 import BillingWarnings from '@/components/pages/checkout/BillingWarnings';
 import { RegistrationError } from '@/components/pages/checkout/RegistrationError/RegistrationError';
 import { PageTitle } from '@/components/pages/pageTitle';
+import { useCartData } from '@/hooks/useCartData';
 import { useGetCustomerData } from '@/hooks/useGetCustomerData';
+import { useQuoteHandler } from '@/hooks/useQuoteHandler';
 import { useRegisterUser } from '@/hooks/useRegisterUser';
+import { useGetUserTotalsQuery } from '@/store/rtk-queries/userTotals/userTotals';
+import { addCoupon, clearCoupon } from '@/store/slices/cartSlice';
+import {
+  clearQuoteData,
+  setQuoteCurrency,
+  setQuoteData,
+} from '@/store/slices/quoteSlice';
 import { RegistrationFormType } from '@/types/components/global/forms/registrationForm';
 import {
   BillingType,
@@ -59,6 +69,7 @@ import {
 } from '@/types/services/wooCustomApi/customer';
 import getCartCheckoutTotals from '@/utils/cart/getCartCheckoutTotals';
 import checkCustomerDataChanges from '@/utils/checkCustomerDataChanges';
+import { LOYALTY_LEVELS } from '@/utils/consts';
 import { readNip } from '@/utils/readNip';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
@@ -70,12 +81,14 @@ export function getServerSideProps() {
 
 export default function CheckoutPage() {
   const t = useTranslations('Checkout');
+  const dispatch = useAppDispatch();
   const tMyAccount = useTranslations('MyAccount');
   const tCart = useTranslations('Cart');
   const { customer, refetch } = useGetCustomerData();
   const [allowedShippingMethods, setAllowedShippingMethods] = useState<
     string[]
   >([]);
+  const { name: currencyCode } = useAppSelector(state => state.currencySlice);
 
   const {
     currentCurrency: currency,
@@ -84,15 +97,74 @@ export default function CheckoutPage() {
     currencyCode: currencySymbol,
   } = useCurrencyConverter();
 
+  const { data: quoteFromStore, currency: quoteCurrency } = useAppSelector(
+    state => state.quoteSlice
+  );
+  const { data: userTotal, isLoading: isUserTotalsLoading } =
+    useGetUserTotalsQuery(customer?.id, {
+      skip: !customer?.id,
+    });
+  const userLoyaltyStatus = userTotal?.loyalty_status;
+  const { cartItems, couponCode, commentToOrder } = useAppSelector(
+    state => state.cartSlice
+  );
+
+  const {
+    handleGetQuote,
+    quoteData: quoteFromHook,
+    isLoading: isQuoteLoading,
+  } = useQuoteHandler(currencyCode, () => {}, userLoyaltyStatus, customer?.id);
+
+  const { productsWithCartData } = useCartData();
+
+  useEffect(() => {
+    const isLoyaltyCoupon = LOYALTY_LEVELS.some(
+      level => level.name === couponCode
+    );
+
+    if (
+      !quoteFromStore &&
+      cartItems.length > 0 &&
+      couponCode &&
+      !isLoyaltyCoupon
+    ) {
+      handleGetQuote();
+    }
+  }, [quoteFromStore, cartItems]);
+
+  useEffect(() => {
+    const isLoyaltyCoupon = LOYALTY_LEVELS.some(
+      level => level.name === couponCode
+    );
+
+    if (
+      quoteFromStore &&
+      cartItems.length > 0 &&
+      couponCode &&
+      !isLoyaltyCoupon &&
+      quoteCurrency !== currencyCode &&
+      !order
+    ) {
+      handleGetQuote();
+    } else if (quoteCurrency !== currencyCode && !order) {
+      dispatch(clearQuoteData());
+    }
+  }, [currencyCode]);
+
+  useEffect(() => {
+    if (quoteFromHook) {
+      dispatch(setQuoteData(quoteFromHook.summary));
+      dispatch(setQuoteCurrency(quoteFromHook.normalized?.currency));
+    }
+  }, [quoteFromHook, dispatch]);
+
   const [updateCustomer, { error: updateError, isSuccess: isUpdateSuccess }] =
     useUpdateCustomerMutation();
 
   /**
    * Calculate totals
    */
-  const { cartItems, couponCode, commentToOrder } = useAppSelector(
-    state => state.cartSlice
-  );
+
   const [getProductsMinimized, { data: productsMinimizedData }] =
     useGetProductsMinimizedMutation();
   const [{ totalCost, totalWeight }, setCartTotals] = useState({
@@ -293,7 +365,6 @@ export default function CheckoutPage() {
   }, [formOrderData.shipping?.country]);
 
   const authToken = useGetAuthToken();
-  const { name: currencyCode } = useAppSelector(state => state.currencySlice);
   const [
     createOrder,
     {
@@ -304,6 +375,18 @@ export default function CheckoutPage() {
   ] = useCreateOrderMutation();
   const [fetchUserData, { data: userData, isLoading: isUserDataLoading }] =
     useLazyFetchUserDataQuery();
+
+  useEffect(() => {
+    if (
+      userLoyaltyStatus &&
+      !couponCode &&
+      authToken &&
+      !isQuoteLoading &&
+      cartItems.length > 0
+    ) {
+      dispatch(addCoupon({ couponCode: userLoyaltyStatus }));
+    }
+  }, [userLoyaltyStatus, couponCode, authToken]);
 
   //GTM
   useEffect(() => {
@@ -337,28 +420,6 @@ export default function CheckoutPage() {
       }
     }
   }, [order, currencyCode]);
-
-  /**
-   * Coupons and loyalty status
-   */
-  const [isCouponsIgnored, setIsCouponsIgnored] = useState(false);
-  // const [coupons, setCoupons] = useState(couponCode);
-
-  // const [fetchUserTotals, { data: userTotal }] = useLazyGetUserTotalsQuery();
-  // useEffect(() => {
-  //   if (userData?.id) {
-  //     fetchUserTotals(userData?.id);
-  //   }
-  // }, [userData?.id]);
-
-  // useEffect(() => {
-  //   if (userTotal?.total_spent) {
-  //     const level = userTotal?.loyalty_status;
-  //     if (level && !coupons?.includes(level)) {
-  //       setCoupons([...coupons, level]);
-  //     }
-  //   }
-  // }, [userTotal]);
 
   /* Check cart conflict */
   useEffect(() => {
@@ -578,6 +639,7 @@ export default function CheckoutPage() {
     isOrderLoading ||
     orderStatus === 'pending' ||
     isLoading ||
+    !shippingLine ||
     !shippingMethod ||
     !shippingMethods.some(m => m.method_id === shippingMethod?.method_id);
 
@@ -587,19 +649,24 @@ export default function CheckoutPage() {
   useEffect(() => {
     if (orderCreationError) {
       const wooError = (orderCreationError as FetchBaseQueryError).data;
+      const errorCode = (wooError as WooErrorType)?.details?.code;
+
       if (
-        (wooError as WooErrorType)?.details?.code ===
-          'woocommerce_rest_invalid_coupon' ||
-        (wooError as WooErrorType)?.details?.code === 'invalid_coupon_for_sale'
+        errorCode === 'woocommerce_rest_invalid_coupon' ||
+        errorCode === 'invalid_coupon_for_sale'
       ) {
-        setIsCouponsIgnored(true);
+        if (userLoyaltyStatus) {
+          dispatch(addCoupon({ couponCode: userLoyaltyStatus }));
+        } else {
+          dispatch(clearCoupon());
+        }
       }
     }
   }, [orderCreationError]);
 
   /* Update an order */
   useEffect(() => {
-    if (isUserDataLoading || cartItems.length === 0) return;
+    if (!shippingMethod || isUserDataLoading || cartItems.length === 0) return;
 
     const couponLines = couponCode ? [{ code: couponCode }] : [];
 
@@ -607,38 +674,34 @@ export default function CheckoutPage() {
       ? formOrderData.metaData
       : [];
 
-    createOrder({
-      status: orderStatus,
-      line_items: cartItems,
-      meta_data: [
-        {
-          key: 'wpml_language',
-          value: router.locale || '',
-        },
-        ...(orderStatus === 'pending' ? filteredMetaData : []),
-      ],
-      ...(!isCouponsIgnored && { coupon_lines: couponLines }),
-      ...(currencyCode && { currency: currencyCode }),
-      ...(formOrderData.billing &&
-        orderStatus === 'pending' && { billing: formOrderData.billing }),
-      ...(formOrderData.shipping &&
-        isShippingAddressDifferent &&
-        orderStatus === 'pending' && { shipping: formOrderData.shipping }),
-      ...(userData?.id && { customer_id: userData.id }),
-      ...(shippingLine && { shipping_lines: [shippingLine] }),
-      ...(commentToOrder && { customer_note: commentToOrder }),
-    });
-  }, [
-    cartItems,
-    couponCode,
-    orderStatus,
-    currencyCode,
-    userData,
-    shippingLine,
-    router.locale,
-    isCouponsIgnored,
-    commentToOrder,
-  ]);
+    const create = async () => {
+      try {
+        await createOrder({
+          status: orderStatus,
+          line_items: cartItems,
+          meta_data: [
+            {
+              key: 'wpml_language',
+              value: router.locale || '',
+            },
+            ...(filteredMetaData || []),
+          ],
+          coupon_lines: couponLines,
+          ...(currencyCode && { currency: currencyCode }),
+          ...(formOrderData.billing && { billing: formOrderData.billing }),
+          ...(formOrderData.shipping &&
+            isShippingAddressDifferent && { shipping: formOrderData.shipping }),
+          ...(userData?.id && { customer_id: userData.id }),
+          ...(shippingLine && { shipping_lines: [shippingLine] }),
+          ...(commentToOrder && { customer_note: commentToOrder }),
+        }).unwrap();
+      } catch (error) {
+        // handleOrderError(error);
+      }
+    };
+
+    create();
+  }, [orderStatus, shippingLine, couponCode]);
 
   useEffect(() => {
     if (order?.status === 'pending' && order.payment_url) {
@@ -650,6 +713,12 @@ export default function CheckoutPage() {
       router.push(paymentUrlObj.toString());
     }
   }, [order]);
+
+  useEffect(() => {
+    if (!isValidForm && shippingMethod) {
+      setShippingMethod(undefined);
+    }
+  }, [isValidForm]);
 
   return (
     <>
@@ -717,17 +786,29 @@ export default function CheckoutPage() {
               parcelMachine={parcelMachine}
               onParcelMachineChange={handleParcelMachineChange}
               getCalculatedMethodCost={getCalculatedShippingMethodCost}
+              disabled={!isValidForm}
             />
           </CheckoutFormSection>
         </CheckoutFormsWrapper>
         <CheckoutSummaryWrapper>
           <CheckoutSummary>
-            <OrderSummary
-              symbol={currencySymbol}
-              order={order}
-              isLoading={isOrderLoading}
-              noPaymentMethod
-            />
+            {(isValidForm && order && shippingMethod) || isOrderLoading ? (
+              <OrderSummary
+                symbol={currencySymbol}
+                order={order}
+                isLoading={isOrderLoading}
+                noPaymentMethod
+              />
+            ) : (
+              <PreOrderSummary
+                cartItems={productsWithCartData}
+                isLoading={
+                  isQuoteLoading || isUserDataLoading || isUserTotalsLoading
+                }
+                userTotal={userTotal}
+                {...(quoteFromStore ? { summary: quoteFromStore } : {})}
+              />
+            )}
           </CheckoutSummary>
           <CheckoutPayButtonWrapper>
             <CheckoutPayButton

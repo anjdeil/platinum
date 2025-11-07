@@ -26,10 +26,10 @@ const CartSummaryBlock: FC<CartSummaryBlockProps> = ({
   quote,
   isLoading,
   cartItems,
-  auth,
   userTotal,
-  handleGetQuote,
+  auth,
   quoteData,
+  handleGetQuote,
 }) => {
   const t = useTranslations('Cart');
   const dispatch = useAppDispatch();
