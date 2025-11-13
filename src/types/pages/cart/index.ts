@@ -103,6 +103,14 @@ export const OrderSummarySchema = z.object({
   isLoading: z.boolean().optional(),
   noPaymentMethod: z.boolean().optional(),
 });
+
+export const QuoteSummarySchema = z.object({
+  quoteData: SummaryRespShema,
+  symbol: z.string(),
+  isLoading: z.boolean().optional(),
+});
+
+
 export const PreOrderSummarySchema = z.object({
   summary: SummaryRespShema.optional(),
   cartItems: z.array(ProductsWithCartDataSchemaWithFinalPrice),
@@ -111,6 +119,8 @@ export const PreOrderSummarySchema = z.object({
 });
 
 export type OrderSummaryProps = z.infer<typeof OrderSummarySchema>;
+
+export type QuoteSummaryProps = z.infer<typeof QuoteSummarySchema>;
 
 export type PreOrderSummaryProps = z.infer<typeof PreOrderSummarySchema>;
 

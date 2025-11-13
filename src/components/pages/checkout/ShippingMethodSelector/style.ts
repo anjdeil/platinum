@@ -11,6 +11,11 @@ export const ShippingMethodSelectorNotification = styled.p`
     color: ${({ theme }) => theme.colors.grey};
 `;
 
+export const ShippingMethodSelectorValidNotification = styled.p`
+    color: ${({ theme }) => theme.colors.error};
+    margin-top: 24px;
+`;
+
 export const ShippingMethodSelectorMethod = styled.label`
     margin-bottom: 10px;
     position: relative;

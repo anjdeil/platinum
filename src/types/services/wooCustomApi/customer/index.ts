@@ -490,3 +490,4 @@ export type CouponParamsType = z.infer<typeof CouponParamsSchema>;
 
 export type QuoteResponseType = z.infer<typeof QuoteResponseSchema>;
 export type QuoteRequestType = Omit<CreateOrderRequestType, 'status'>;
+export type SummaryRespType = z.infer<typeof SummaryRespShema>;

@@ -535,6 +535,7 @@
     "parcelLocker": "Paketstation",
     "selectParcelLocker": "Paketstation auswählen",
     "deliveryUnavailable": "Für die ausgewählte Region sind keine Liefermethoden verfügbar. Bitte überprüfen Sie Ihr Land.",
+    "cannotSelectUntilFormValid": "Bitte geben Sie Ihre Daten ein, bevor Sie eine Versandart auswählen.",
     "InPost Locker 24/7": "InPost Paczkomat ® 24/7",
     "InPost Courier": "InPost Kurier",
     "InPost Courier – Cash on delivery": "InPost Kurier – Nachnahme",

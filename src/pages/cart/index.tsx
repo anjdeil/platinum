@@ -17,6 +17,11 @@ import {
   clearConflictedItems,
   clearCoupon,
 } from '@/store/slices/cartSlice';
+import {
+  clearQuoteData,
+  setQuoteCurrency,
+  setQuoteData,
+} from '@/store/slices/quoteSlice';
 import { CartPageWrapper } from '@/styles/cart/style';
 import { Container, FlexBox, StyledButton } from '@/styles/components';
 import { JwtDecodedDataType } from '@/types/services/wpRestApi/auth';
@@ -110,6 +115,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
     if (quoteData) {
       setIsDirty(true);
     }
+    dispatch(clearQuoteData());
 
     if (userLoyaltyStatus) {
       dispatch(addCoupon({ couponCode: userLoyaltyStatus }));
@@ -120,6 +126,11 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
 
   useEffect(() => {
     setIsDirty(false);
+
+    if (quoteData) {
+      dispatch(setQuoteData(quoteData.summary));
+      dispatch(setQuoteCurrency(quoteData.normalized?.currency));
+    }
   }, [quoteData]);
 
   const { productsWithCartData, totalCartPrice } = useCartData();
