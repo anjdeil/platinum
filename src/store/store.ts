@@ -2,6 +2,7 @@ import SwiperModal from '@/store/slices/SwiperModal';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import storageSession from 'redux-persist/lib/storage/session';
 import cartListenerMiddleware from './listeners/cartSliceListener';
 import { contactForm7Api } from './rtk-queries/contactFrom7/contactFromApi7';
 import { instagramCustomRtkApi } from './rtk-queries/instagramMedia';
@@ -21,6 +22,7 @@ import languageSlice from './slices/languageSlice';
 import MenuCategoriesSlice from './slices/MenuCategoriesSlice';
 import PopupSlice from './slices/PopupSlice';
 import ProductSlice from './slices/ProductSlice';
+import quoteSlice from './slices/quoteSlice';
 import themeOptionsSlice from './slices/themeOptionsSlice';
 import userSlice from './slices/userSlice';
 
@@ -29,6 +31,13 @@ const persistConfig = {
   storage,
   whitelist: ['currencySlice', 'cartSlice'],
 };
+
+const quotePersistConfig = {
+  key: 'quote',
+  storage: storageSession,
+};
+
+const persistedQuoteReducer = persistReducer(quotePersistConfig, quoteSlice);
 
 const rootReducer = combineReducers({
   [wpCustomRtkApi.reducerPath]: wpCustomRtkApi.reducer,
@@ -43,6 +52,7 @@ const rootReducer = combineReducers({
   [instockNotifierAPI.reducerPath]: instockNotifierAPI.reducer,
   [passwordResetApi.reducerPath]: passwordResetApi.reducer,
   cartSlice: cartSlice,
+  quoteSlice: persistedQuoteReducer,
   languageSlice: languageSlice,
   currencySlice: currencySlice,
   categoriesSlice: categoriesSlice.reducer,

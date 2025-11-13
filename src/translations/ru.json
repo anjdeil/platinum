@@ -535,6 +535,7 @@
     "parcelLocker": "Почтомат",
     "selectParcelLocker": "Выбрать почтомат",
     "deliveryUnavailable": "Способы доставки недоступны для выбранного региона. Пожалуйста, проверьте свою страну.",
+    "cannotSelectUntilFormValid": "Сначала заполните свои данные, чтобы выбрать способ доставки.",
     "InPost Locker 24/7": "InPost Paczkomat ® 24/7",
     "InPost Courier": "InPost Kurier",
     "InPost Courier – Cash on delivery": "InPost Kurier – Наложенный платеж",

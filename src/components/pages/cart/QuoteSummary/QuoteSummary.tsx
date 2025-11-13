@@ -1,6 +1,5 @@
 import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
-import { PreOrderSummaryProps } from '@/types/pages/cart';
-import { calculateCartFront } from '@/utils/cart/calculateCartFront';
+import { QuoteSummaryProps } from '@/types/pages/cart';
 import { useTranslations } from 'next-intl';
 import { FC } from 'react';
 import OrderTotalsRowsSkeleton from '../../order/OrderTotals/OrderTotalsRowsSkeleton';
@@ -10,45 +9,38 @@ import {
   OrderSummaryLineCoupons,
   OrderSummaryLineName,
   OrderSummaryTotal,
+  OrderSummaryTotalTax,
   OrderSummaryTotalValue,
   OrderSummaryTotalWrapper,
   OrderSummaryWrapper,
 } from './style';
 
-const PreOrderSummary: FC<PreOrderSummaryProps> = ({
-  summary,
-  cartItems,
+const QuoteSummary: FC<QuoteSummaryProps> = ({
+  quoteData,
+  symbol,
   isLoading = false,
-  userTotal,
 }) => {
   const t = useTranslations('Cart');
+
   const { formatPrice } = useCurrencyConverter();
-
-  const userLoyaltyStatus = userTotal?.loyalty_status;
-
-  const subtotal = summary
-    ? +summary.subtotal + +summary.vat_total
-    : calculateCartFront(cartItems, userLoyaltyStatus).subtotal;
-  const discountAmount = summary
-    ? +summary.discount_total
-    : calculateCartFront(cartItems, userLoyaltyStatus).discountAmount;
-  const total = summary
-    ? +summary.total
-    : calculateCartFront(cartItems, userLoyaltyStatus).total;
-  // const vatTotal = summary ? +summary.vat_total : 0;
 
   // Function for displaying the summary line
   const renderOrderTotal = () => {
+    if (!quoteData?.total) {
+      return `—\u00A0${symbol}`;
+    }
+
+    const formattedPrice = formatPrice(+quoteData.total);
+    const formattedTax = formatPrice(+quoteData.vat_total);
+
     return (
       <OrderSummaryTotalWrapper>
-        <OrderSummaryTotalValue>{formatPrice(total)}</OrderSummaryTotalValue>
-        {/* {summary && vatTotal > 0 && (
-          <OrderSummaryTotalTax>
-            {t('includesVat', {
-              cost: formatPrice(vatTotal),
-            })}
-          </OrderSummaryTotalTax>
-        )} */}
+        <OrderSummaryTotalValue>{formattedPrice}</OrderSummaryTotalValue>
+        <OrderSummaryTotalTax>
+          {t('includesVat', {
+            cost: formattedTax,
+          })}
+        </OrderSummaryTotalTax>
       </OrderSummaryTotalWrapper>
     );
   };
@@ -62,26 +54,28 @@ const PreOrderSummary: FC<PreOrderSummaryProps> = ({
           {/* subtotal */}
           <OrderSummaryLine>
             <OrderSummaryLineName>{t('products')}</OrderSummaryLineName>
-            <span>{formatPrice(subtotal)}</span>
+            <span>
+              {formatPrice(+quoteData.subtotal + +quoteData.vat_total)}
+            </span>
           </OrderSummaryLine>
 
           {/* discount */}
-          {discountAmount > 0 && (
+          {+quoteData.discount_total > 0 && (
             <OrderSummaryLineCoupons>
               <OrderCouponWrapper>
                 <OrderSummaryLineName>{t('discount')}</OrderSummaryLineName>
-                <span>– {formatPrice(discountAmount)}</span>
+                <span>– {formatPrice(+quoteData.discount_total)}</span>
               </OrderCouponWrapper>
             </OrderSummaryLineCoupons>
           )}
 
-          {/*Order Summary Total */}
+          {/*Summary Total */}
           <OrderSummaryTotal>
             <OrderSummaryLineName>
               {t('OrderSummaryTotal')}
             </OrderSummaryLineName>
             <OrderSummaryTotalValue>
-              {total && renderOrderTotal()}
+              {quoteData?.total && renderOrderTotal()}
             </OrderSummaryTotalValue>
           </OrderSummaryTotal>
         </>
@@ -90,4 +84,4 @@ const PreOrderSummary: FC<PreOrderSummaryProps> = ({
   );
 };
 
-export default PreOrderSummary;
+export default QuoteSummary;

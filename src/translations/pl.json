@@ -535,6 +535,7 @@
     "parcelLocker": "Paczkomat",
     "selectParcelLocker": "Wybierz paczkomat",
     "deliveryUnavailable": "Metody dostawy nie są dostępne dla wybranego regionu. Sprawdź swój kraj.",
+    "cannotSelectUntilFormValid": "Najpierw wypełnij swoje dane, aby wybrać metodę dostawy.",
     "InPost Locker 24/7": "InPost Paczkomat ® 24/7",
     "InPost Courier": "InPost Kurier",
     "InPost Courier – Cash on delivery": "InPost Kurier – Płatność za pobraniem",
