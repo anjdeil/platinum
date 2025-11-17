@@ -481,6 +481,13 @@ export const BillingForm: FC<BillingFormProps> = ({
                   register={register}
                   errors={errors}
                   label={tCheckout('vatInvoice')}
+                  onChange={e => {
+                    const checked = e.target.checked;
+
+                    if (!checked) {
+                      trigger();
+                    }
+                  }}
                 />
                 {invoice && (
                   <StyledFormWrapper alignFlexEnd>
