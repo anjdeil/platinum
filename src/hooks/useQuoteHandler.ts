@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '@/store';
 import { useGetQuoteMutation } from '@/store/rtk-queries/wooCustomApi';
-import { addCoupon, clearCoupon } from '@/store/slices/cartSlice';
+import { addCoupon, clearCoupon, setIgnoreCoupon } from '@/store/slices/cartSlice';
 import { useState } from 'react';
 
 export const useQuoteHandler = (
@@ -9,7 +9,7 @@ export const useQuoteHandler = (
     userLoyaltyStatus?: string,
     customerId?: number,
 ) => {
-    const { cartItems, couponCode } = useAppSelector(s => s.cartSlice);
+    const { cartItems, couponCode, ignoreCoupon } = useAppSelector(s => s.cartSlice);
     const [getQuote, { data: quoteData, isLoading }] = useGetQuoteMutation();
     const dispatch = useAppDispatch();
 
@@ -17,7 +17,9 @@ export const useQuoteHandler = (
     const [couponSuccess, setCouponSuccess] = useState(false);
 
     const handleGetQuote = async () => {
-        const coupons = couponCode ? [{ code: couponCode }] : [];
+        const coupons = !ignoreCoupon && couponCode
+            ? [{ code: couponCode }]
+            : [];
 
         const requestData = {
             line_items: cartItems,
@@ -38,10 +40,13 @@ export const useQuoteHandler = (
                 if (response.warnings?.length) {
                     setHasConflict(true);
                 } else if (response.errors) {
-                    setCouponError(true);
+                    setCouponError(couponCode !== userLoyaltyStatus);
                     setCouponSuccess(false);
 
-                    if (userLoyaltyStatus) {
+                    if (couponCode === userLoyaltyStatus) {
+                        dispatch(setIgnoreCoupon(true));
+                        return response;
+                    } else if (userLoyaltyStatus) {
                         dispatch(addCoupon({ couponCode: userLoyaltyStatus }));
                     } else {
                         dispatch(clearCoupon());
