@@ -6,6 +6,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 const cartInitialState: CartState = {
   cartItems: getCartItemsFromLocalStorage() || [],
   couponCode: null,
+  ignoreCoupon: false,
   commentToOrder: '',
   productsData: [],
   needsProductDataUpdate: false,
@@ -65,6 +66,9 @@ export const cartSlice = createSlice({
     clearCoupon: (state) => {
       state.couponCode = null;
     },
+    setIgnoreCoupon(state, action) {
+      state.ignoreCoupon = action.payload;
+    },
     setCommentToOrder: (state, action: PayloadAction<string>) => {
       state.commentToOrder = action.payload;
     },
@@ -94,6 +98,7 @@ export const {
   updateCart,
   addCoupon,
   clearCoupon,
+  setIgnoreCoupon,
   setCommentToOrder,
   clearCommentToOrder,
   initializeCart,

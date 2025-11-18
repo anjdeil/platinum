@@ -16,6 +16,7 @@ import {
   addCoupon,
   clearConflictedItems,
   clearCoupon,
+  setIgnoreCoupon,
 } from '@/store/slices/cartSlice';
 import {
   clearQuoteData,
@@ -28,7 +29,6 @@ import { JwtDecodedDataType } from '@/types/services/wpRestApi/auth';
 import { WpUserType } from '@/types/store/rtk-queries/wpApi';
 import checkCartConflict from '@/utils/cart/checkCartConflict';
 import { handleQuantityChange } from '@/utils/cart/handleQuantityChange';
-import { LOYALTY_LEVELS } from '@/utils/consts';
 import { validateJwtDecode } from '@/utils/zodValidators/validateJwtDecode';
 import { decodeJwt } from 'jose';
 import { GetServerSidePropsContext } from 'next';
@@ -52,7 +52,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   const [auth, setAuth] = useState<boolean>(false);
 
   const [isDirty, setIsDirty] = useState(false);
-  const [isCouponAppliedManually, setIsCouponAppliedManually] = useState(false);
+  // const [isCouponAppliedManually, setIsCouponAppliedManually] = useState(false);
 
   const userLoyaltyStatus = userTotal?.loyalty_status;
 
@@ -60,13 +60,18 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
     if (defaultCustomerData && userLoyaltyStatus) {
       setAuth(true);
       dispatch(addCoupon({ couponCode: userLoyaltyStatus }));
+      if (ignoreCoupon) {
+        dispatch(setIgnoreCoupon(false));
+      }
     } else {
       dispatch(clearCoupon());
       setAuth(false);
     }
   }, [defaultCustomerData, userLoyaltyStatus, dispatch]);
 
-  const { cartItems, couponCode } = useAppSelector(state => state.cartSlice);
+  const { cartItems, couponCode, ignoreCoupon } = useAppSelector(
+    state => state.cartSlice
+  );
 
   const [getProductsMinimized, { isLoading: isLoadingProducts }] =
     useGetProductsMinimizedMutation();
@@ -90,23 +95,21 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   );
 
   useEffect(() => {
-    if (!couponCode) return;
-
-    const isLoyaltyCoupon = LOYALTY_LEVELS.some(
-      level => level.name === couponCode
-    );
-
-    if (!isLoyaltyCoupon && isCouponAppliedManually) {
-      handleGetQuote();
-      setIsCouponAppliedManually(false);
-    }
-  }, [couponCode, isCouponAppliedManually, handleGetQuote]);
+    if (!couponCode || isLoading) return;
+    handleGetQuote();
+  }, [couponCode, ignoreCoupon]);
 
   // after change currency
   useEffect(() => {
     if (cartItems.length === 0 || isDirty || !couponCode || !quoteData) return;
     handleGetQuote();
   }, [code]);
+
+  useEffect(() => {
+    if (ignoreCoupon && userLoyaltyStatus && cartItems.length > 0) {
+      dispatch(setIgnoreCoupon(false));
+    }
+  }, [cartItems]);
 
   useEffect(() => {
     setCouponError(false);
@@ -278,7 +281,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
             setCouponError={setCouponError}
             couponSuccess={couponSuccess}
             isLoading={isLoading}
-            setIsCouponAppliedManually={setIsCouponAppliedManually}
+            // setIsCouponAppliedManually={setIsCouponAppliedManually}
           />
 
           {productsWithCartData.length > 0 && allItemAvailable && (

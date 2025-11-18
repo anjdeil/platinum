@@ -46,10 +46,6 @@ export const CartCouponBlockSchema = z.object({
     .returns(z.void()),
   couponSuccess: z.boolean().optional(),
   isLoading: z.boolean(),
-  setIsCouponAppliedManually: z
-    .function()
-    .args(z.boolean())
-    .returns(z.void()),
 });
 export const CartSummaryBlockSchema = z.object({
   symbol: z.string().optional(),

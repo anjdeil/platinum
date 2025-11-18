@@ -55,7 +55,11 @@ import { useGetCustomerData } from '@/hooks/useGetCustomerData';
 import { useQuoteHandler } from '@/hooks/useQuoteHandler';
 import { useRegisterUser } from '@/hooks/useRegisterUser';
 import { useGetUserTotalsQuery } from '@/store/rtk-queries/userTotals/userTotals';
-import { addCoupon, clearCoupon } from '@/store/slices/cartSlice';
+import {
+  addCoupon,
+  clearCoupon,
+  setIgnoreCoupon,
+} from '@/store/slices/cartSlice';
 import {
   clearQuoteData,
   setQuoteCurrency,
@@ -69,7 +73,6 @@ import {
 } from '@/types/services/wooCustomApi/customer';
 import getCartCheckoutTotals from '@/utils/cart/getCartCheckoutTotals';
 import checkCustomerDataChanges from '@/utils/checkCustomerDataChanges';
-import { LOYALTY_LEVELS } from '@/utils/consts';
 import { readNip } from '@/utils/readNip';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
@@ -105,9 +108,8 @@ export default function CheckoutPage() {
       skip: !customer?.id,
     });
   const userLoyaltyStatus = userTotal?.loyalty_status;
-  const { cartItems, couponCode, commentToOrder } = useAppSelector(
-    state => state.cartSlice
-  );
+  const { cartItems, couponCode, ignoreCoupon, commentToOrder } =
+    useAppSelector(state => state.cartSlice);
 
   const {
     handleGetQuote,
@@ -118,30 +120,16 @@ export default function CheckoutPage() {
   const { productsWithCartData } = useCartData();
 
   useEffect(() => {
-    const isLoyaltyCoupon = LOYALTY_LEVELS.some(
-      level => level.name === couponCode
-    );
-
-    if (
-      !quoteFromStore &&
-      cartItems.length > 0 &&
-      couponCode &&
-      !isLoyaltyCoupon
-    ) {
+    if (!quoteFromStore && cartItems.length > 0 && couponCode) {
       handleGetQuote();
     }
   }, [quoteFromStore, cartItems]);
 
   useEffect(() => {
-    const isLoyaltyCoupon = LOYALTY_LEVELS.some(
-      level => level.name === couponCode
-    );
-
     if (
       quoteFromStore &&
       cartItems.length > 0 &&
       couponCode &&
-      !isLoyaltyCoupon &&
       quoteCurrency !== currencyCode &&
       !order
     ) {
@@ -377,6 +365,14 @@ export default function CheckoutPage() {
     useLazyFetchUserDataQuery();
 
   useEffect(() => {
+    if (customer && ignoreCoupon) {
+      dispatch(setIgnoreCoupon(false));
+    }
+  }, [customer]);
+
+  useEffect(() => {
+    if (ignoreCoupon) return;
+
     if (
       userLoyaltyStatus &&
       !couponCode &&
@@ -655,11 +651,8 @@ export default function CheckoutPage() {
         errorCode === 'woocommerce_rest_invalid_coupon' ||
         errorCode === 'invalid_coupon_for_sale'
       ) {
-        if (userLoyaltyStatus) {
-          dispatch(addCoupon({ couponCode: userLoyaltyStatus }));
-        } else {
-          dispatch(clearCoupon());
-        }
+        dispatch(clearCoupon());
+        dispatch(setIgnoreCoupon(true));
       }
     }
   }, [orderCreationError]);
@@ -668,7 +661,8 @@ export default function CheckoutPage() {
   useEffect(() => {
     if (!shippingMethod || isUserDataLoading || cartItems.length === 0) return;
 
-    const couponLines = couponCode ? [{ code: couponCode }] : [];
+    const couponLines =
+      !ignoreCoupon && couponCode ? [{ code: couponCode }] : [];
 
     const filteredMetaData = Array.isArray(formOrderData.metaData)
       ? formOrderData.metaData
