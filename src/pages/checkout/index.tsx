@@ -365,9 +365,13 @@ export default function CheckoutPage() {
     useLazyFetchUserDataQuery();
 
   useEffect(() => {
-    if (ignoreCoupon) {
+    if (customer && ignoreCoupon) {
       dispatch(setIgnoreCoupon(false));
     }
+  }, [customer]);
+
+  useEffect(() => {
+    if (ignoreCoupon) return;
 
     if (
       userLoyaltyStatus &&
@@ -648,6 +652,7 @@ export default function CheckoutPage() {
         errorCode === 'invalid_coupon_for_sale'
       ) {
         dispatch(clearCoupon());
+        dispatch(setIgnoreCoupon(true));
       }
     }
   }, [orderCreationError]);
