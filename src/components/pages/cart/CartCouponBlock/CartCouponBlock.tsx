@@ -1,7 +1,7 @@
 import { CustomFormInput } from '@/components/global/forms/CustomFormInput';
 import { useResponsive } from '@/hooks/useResponsive';
 import { useAppDispatch, useAppSelector } from '@/store';
-import { addCoupon } from '@/store/slices/cartSlice';
+import { addCoupon, setIgnoreCoupon } from '@/store/slices/cartSlice';
 import { CartCouponBlockProps } from '@/types/pages/cart';
 import {
   discountMapping,
@@ -28,7 +28,6 @@ const CartCouponBlock: FC<CartCouponBlockProps> = ({
   setCouponError,
   couponSuccess,
   isLoading,
-  setIsCouponAppliedManually,
 }) => {
   const { isMobile } = useResponsive();
   const t = useTranslations('Cart');
@@ -57,9 +56,8 @@ const CartCouponBlock: FC<CartCouponBlockProps> = ({
     if (!data.couponCode || loyaltyCouponsCodes.includes(data.couponCode))
       return;
     dispatch(addCoupon({ couponCode: data.couponCode }));
+    dispatch(setIgnoreCoupon(false));
     setCouponError(false);
-
-    setIsCouponAppliedManually(true);
   };
 
   return (
