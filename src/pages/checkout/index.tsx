@@ -242,6 +242,10 @@ export default function CheckoutPage() {
     setShippingMethod(undefined);
   }, [shippingMethods]);
 
+  useEffect(() => {
+    setWarnings([]);
+  }, [shippingMethod]);
+
   //Facebook Pixel: InitiateCheckout
   useEffect(() => {
     const cartKey = `fb-initiate-checkout-${btoa(JSON.stringify(cartItems))}`;

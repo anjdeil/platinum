@@ -250,6 +250,11 @@ template {
   display: none;
 }
 
+@keyframes autofillStart {}
+input:-webkit-autofill {
+  animation-name: autofillStart;
+}
+
 `;
 
 export default GlobalStyle;
