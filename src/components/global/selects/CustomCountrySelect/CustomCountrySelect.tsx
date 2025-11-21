@@ -1,13 +1,13 @@
-import React, { useRef } from 'react';
-import { Controller, Control } from 'react-hook-form';
-import dynamic from 'next/dynamic';
 import theme from '@/styles/theme';
 import { useTranslations } from 'next-intl';
-import { CustomSelectInput } from './styles';
+import dynamic from 'next/dynamic';
+import React, { useRef } from 'react';
+import { Control, Controller } from 'react-hook-form';
 import {
   CustomError,
   CustomRequired,
 } from '../../forms/CustomFormInput/styles';
+import { CustomSelectInput } from './styles';
 
 interface CustomSelectProps {
   name: string;
@@ -52,12 +52,16 @@ const CustomCountrySelect: React.FC<CustomSelectProps> = ({
         render={({ field }) => (
           <DynamicSelect
             {...field}
+            inputId={`${name}-input`}
             id={name}
             options={options}
             value={options.find(option => option.value === field.value) || null}
-            onChange={(selectedOption: any) =>
-              field.onChange(selectedOption?.value)
-            }
+            onChange={(selectedOption: any) => {
+              field.onChange(selectedOption?.value);
+              const input = document.getElementById(`${name}-input`);
+              input?.blur();
+              field.onBlur();
+            }}
             placeholder={placeholder || ''}
             ref={selectRef}
             styles={{

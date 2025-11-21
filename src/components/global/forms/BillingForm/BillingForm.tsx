@@ -1,3 +1,4 @@
+import { useAutofillSync } from '@/hooks/useAutofillSync';
 import { useGetCustomerData } from '@/hooks/useGetCustomerData';
 import { CustomForm, Title } from '@/styles/components';
 import { RegistrationFormType } from '@/types/components/global/forms/registrationForm';
@@ -93,6 +94,19 @@ export const BillingForm: FC<BillingFormProps> = ({
   useEffect(() => {
     clearErrors();
   }, [locale]);
+
+  useAutofillSync(
+    [
+      'first_name',
+      'last_name',
+      'email',
+      'country',
+      'city',
+      'address_1',
+      'postcode',
+    ],
+    setValue
+  );
 
   const watchedFields = useWatch({ control });
 
