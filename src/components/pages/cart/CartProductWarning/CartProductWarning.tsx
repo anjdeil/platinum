@@ -9,15 +9,18 @@ const CartProductWarning: React.FC<CartProductWarningProps> = ({
   resolveCount,
 }) => {
   const t = useTranslations('Cart');
+
+  const hasValidResolve = typeof resolveCount === 'number';
+
   return (
     <WarningWrapper>
-      {resolveCount === 0 && (
+      {hasValidResolve && resolveCount <= 0 && (
         <>
           <span>{t('productNotAvailable')}</span>
           <UpdateButton onClick={onUpdate}>{t('delete')}</UpdateButton>
         </>
       )}
-      {Boolean(resolveCount && resolveCount !== 0) && (
+      {hasValidResolve && resolveCount > 0 && (
         <>
           <div>
             <span>{t('productNotAvailableQuantity')}</span>
@@ -27,7 +30,7 @@ const CartProductWarning: React.FC<CartProductWarningProps> = ({
           </UpdateButton>
         </>
       )}
-      {!resolveCount && isProductError && (
+      {!hasValidResolve && isProductError && (
         <>
           <span>{t('errorFetchingProducts')}</span>
           <UpdateButton onClick={onUpdate}>{t('delete')}</UpdateButton>
