@@ -27,6 +27,7 @@ export const handleQuantityChange = (
       quantityToUpdate += 1;
       break;
     case 'dec':
+      if (quantityToUpdate <= 1) return;
       quantityToUpdate -= 1;
       break;
     case 'value':
@@ -38,18 +39,23 @@ export const handleQuantityChange = (
       return;
   }
 
-  if (quantityToUpdate >= 0) {
+  if (quantityToUpdate < 1) {
+    trackRemoveFromCart(updatedItem.product_id, updatedItem.variation_id, cartItems, productsWithCartData);
 
-    if (quantityToUpdate === 0) {
-      trackRemoveFromCart(updatedItem.product_id, updatedItem.variation_id, cartItems, productsWithCartData);
-    }
-
-    dispatch(
+    return dispatch(
       updateCart({
         product_id,
         variation_id,
-        quantity: quantityToUpdate,
+        quantity: 0,
       })
     );
   }
+
+  dispatch(
+    updateCart({
+      product_id,
+      variation_id,
+      quantity: quantityToUpdate,
+    })
+  );
 };

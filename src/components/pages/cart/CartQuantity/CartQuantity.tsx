@@ -2,7 +2,7 @@ import MinusIcon from '@/components/global/icons/MinusIcon/MinusIcon';
 import PlusIcon from '@/components/global/icons/PlusIcon/PlusIcon';
 import { QuantityComponentProps } from '@/types/pages/cart';
 import debounce from 'lodash/debounce';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { QuantityBlock, QuantityBtn, QuantityWrapper } from './style';
 
 export const adaptItemToCartQuantity = (
@@ -42,6 +42,10 @@ const CartQuantity: React.FC<QuantityComponentProps> = ({
   );
 
   const [inputValue, setInputValue] = useState(item.quantity);
+
+  useEffect(() => {
+    setInputValue(item.quantity);
+  }, [item.quantity]);
 
   const debouncedChangeHandler = useCallback(
     debounce((product_id, newQuantity, variation_id) => {
