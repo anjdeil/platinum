@@ -76,7 +76,7 @@ export class WpRestApi {
         } else {
           attempt++;
         }
-      } catch (error) {
+      } catch (error: any) {
 
         console.log('WP REST API REQUEST IN CATCH:', { attempt, method, fullUrl, params, body, Headers });
 
@@ -92,11 +92,11 @@ export class WpRestApi {
           throw new Error(`Could not fetch ${url}, received ${error}`);
         }
 
-        console.log('result', error);
-        attempt++;
-        if (attempt >= maxRetries) {
-          throw new Error(`Could not fetch ${url}, received ${error}`);
-        }
+        // console.log('result', error);
+        // attempt++;
+        // if (attempt >= maxRetries) {
+        //   throw new Error(`Could not fetch ${url}, received ${error}`);
+        // }
       }
     }
 
