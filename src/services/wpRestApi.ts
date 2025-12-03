@@ -42,19 +42,6 @@ export class WpRestApi {
       const fullUrl = this._apiBase + (v2 !== false ? wpV2 : '') + url;
 
       try {
-        console.log('WP REST API REQUEST:', {
-          attempt,
-          method,
-          fullUrl,
-          params,
-          body,
-          headers:
-          {
-            ...(authorization !== null && { Authorization: authorization || this.getBasicAuth() }),
-          },
-          Headers
-        });
-
         const response = await axios({
           method: method,
           url: fullUrl,
@@ -63,10 +50,6 @@ export class WpRestApi {
             ...(authorization !== null && { Authorization: authorization || this.getBasicAuth() }),
           },
           data: body,
-        });
-
-        console.log('WP REST API RESPONSE:', {
-          response
         });
 
         if (response.status >= 200 && response.status < 300) {
@@ -91,12 +74,6 @@ export class WpRestApi {
         if (attempt >= maxRetries) {
           throw new Error(`Could not fetch ${url}, received ${error}`);
         }
-
-        // console.log('result', error);
-        // attempt++;
-        // if (attempt >= maxRetries) {
-        //   throw new Error(`Could not fetch ${url}, received ${error}`);
-        // }
       }
     }
 
