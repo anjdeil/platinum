@@ -1,22 +1,10 @@
 import { FC, useEffect, useState } from 'react';
 
-import {
-  LoginFormSchema,
-  LoginFormType,
-} from '@/types/components/global/forms/LoginForm';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { useAppDispatch } from '@/store';
 import {
   useCheckTokenMutation,
   useGetTokenMutation,
 } from '@/store/rtk-queries/wpApi';
-import { CustomFormInput } from '../CustomFormInput';
-import {
-  ActiveText,
-  BottomWrapper,
-  LoginFormWrapper,
-  StyledCheckboxWrapper,
-} from './styles';
 import {
   CustomForm,
   FlexBox,
@@ -25,12 +13,24 @@ import {
   Title,
 } from '@/styles/components';
 import theme from '@/styles/theme';
-import { useRouter } from 'next/router';
-import { useTranslations } from 'next-intl';
-import Notification from '../../Notification/Notification';
+import {
+  LoginFormSchema,
+  LoginFormType,
+} from '@/types/components/global/forms/LoginForm';
 import { fetchUser } from '@/utils/auth/authService';
-import { useAppDispatch } from '@/store';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/router';
+import { useForm } from 'react-hook-form';
+import Notification from '../../Notification/Notification';
 import { CustomFormCheckbox } from '../CustomFormCheckbox';
+import { CustomFormInput } from '../CustomFormInput';
+import {
+  ActiveText,
+  BottomWrapper,
+  LoginFormWrapper,
+  StyledCheckboxWrapper,
+} from './styles';
 
 interface LoginFormProps {
   border?: boolean;
@@ -70,6 +70,21 @@ export const LoginForm: FC<LoginFormProps> = ({
     setCustomError('');
 
     try {
+      // const tokenResp = await fetch(
+      //   'https://admin.platinumchetvertinovskaya.com/wp-json/jwt-auth/v1/token',
+      //   {
+      //     method: 'POST',
+      //     headers: { 'Content-Type': 'application/json' },
+      //     body: JSON.stringify({
+      //       password: formData.password,
+      //       username: formData.email,
+      //       rememberMe: formData.rememberMe,
+      //     }),
+      //   }
+      // )
+      //   .then(r => r.json())
+      //   .then(console.log);
+
       const tokenResp = await fetchToken({
         password: formData.password,
         username: formData.email,

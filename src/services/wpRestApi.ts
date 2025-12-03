@@ -39,15 +39,34 @@ export class WpRestApi {
     let attempt = 0;
 
     while (attempt < maxRetries) {
+      const fullUrl = this._apiBase + (v2 !== false ? wpV2 : '') + url;
+
       try {
+        console.log('WP REST API REQUEST:', {
+          attempt,
+          method,
+          fullUrl,
+          params,
+          body,
+          headers:
+          {
+            ...(authorization !== null && { Authorization: authorization || this.getBasicAuth() }),
+          },
+          Headers
+        });
+
         const response = await axios({
           method: method,
-          url: this._apiBase + (v2 !== false ? wpV2 : '') + url,
+          url: fullUrl,
           params: params,
           headers: {
-            Authorization: authorization ? authorization : this.getBasicAuth(),
+            ...(authorization !== null && { Authorization: authorization || this.getBasicAuth() }),
           },
           data: body,
+        });
+
+        console.log('WP REST API RESPONSE:', {
+          response
         });
 
         if (response.status >= 200 && response.status < 300) {
@@ -58,6 +77,21 @@ export class WpRestApi {
           attempt++;
         }
       } catch (error) {
+
+        console.log('WP REST API REQUEST IN CATCH:', { attempt, method, fullUrl, params, body, Headers });
+
+        if (error.response) {
+          console.log('WP REST API RESPONSE STATUS:', error.response.status);
+          console.log('WP REST API RESPONSE DATA:', error.response.data);
+        } else {
+          console.log('WP REST API ERROR NO RESPONSE:', error.message);
+        }
+
+        attempt++;
+        if (attempt >= maxRetries) {
+          throw new Error(`Could not fetch ${url}, received ${error}`);
+        }
+
         console.log('result', error);
         attempt++;
         if (attempt >= maxRetries) {

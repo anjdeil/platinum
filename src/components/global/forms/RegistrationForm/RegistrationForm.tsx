@@ -27,7 +27,7 @@ import CustomCountrySelect from '../../selects/CustomCountrySelect/CustomCountry
 import { FormCheckbox } from '../BillingForm/FormCheckbox';
 import { FormCheckboxUnControlled } from '../BillingForm/FormCheckboxUnControlled';
 import { VariationFields } from '../BillingForm/style';
-import { CustomError } from '../CustomFormInput/styles';
+import { CustomRelativeError } from '../CustomFormInput/styles';
 import CustomTextField from '../CustomTextField/CustomTextField';
 import { ActiveText } from '../LoginForm/styles';
 import { CustomForm, StyledFieldsWrapper } from './styles';
@@ -116,6 +116,21 @@ export const RegistrationForm: FC = () => {
       const isResponseValid = await validateWooCustomer(resp.data);
       if (!isResponseValid)
         throw new Error('Customer response data validation failed.');
+
+      // const tokenResp = await fetch(
+      //   'https://admin.platinumchetvertinovskaya.com/wp-json/jwt-auth/v1/token',
+      //   {
+      //     method: 'POST',
+      //     headers: { 'Content-Type': 'application/json' },
+      //     body: JSON.stringify({
+      //       password: formData.password || '',
+      //       username: formData.email,
+      //       rememberMe: true,
+      //     }),
+      //   }
+      // )
+      //   .then(r => r.json())
+      //   .then(console.log);
 
       /** Fetching auth token */
       const tokenResp = await fetchToken({
@@ -315,11 +330,11 @@ export const RegistrationForm: FC = () => {
           {tMyAccount('register')}
         </StyledButton>
         {error && customError && (
-          <CustomError
+          <CustomRelativeError
             dangerouslySetInnerHTML={{
               __html: isAuthErrorResponseType(error || customError),
             }}
-          ></CustomError>
+          ></CustomRelativeError>
         )}
         {isSubmitSuccessful && !error && !customError && (
           <Notification type="success">
