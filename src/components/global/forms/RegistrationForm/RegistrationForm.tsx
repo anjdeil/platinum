@@ -117,21 +117,6 @@ export const RegistrationForm: FC = () => {
       if (!isResponseValid)
         throw new Error('Customer response data validation failed.');
 
-      // const tokenResp = await fetch(
-      //   'https://admin.platinumchetvertinovskaya.com/wp-json/jwt-auth/v1/token',
-      //   {
-      //     method: 'POST',
-      //     headers: { 'Content-Type': 'application/json' },
-      //     body: JSON.stringify({
-      //       password: formData.password || '',
-      //       username: formData.email,
-      //       rememberMe: true,
-      //     }),
-      //   }
-      // )
-      //   .then(r => r.json())
-      //   .then(console.log);
-
       /** Fetching auth token */
       const tokenResp = await fetchToken({
         password: formData.password || '',
