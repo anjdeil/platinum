@@ -1,5 +1,6 @@
 import { ProductOptionsPanelType } from '@/types/pages/product/productOptionsPanel';
 import { filterFirstAttributeOptions } from '@/utils/filterFirstAttributeOptions';
+import { getAvailableVariation } from '@/utils/getAvailableVariation';
 import { getSaleVariation } from '@/utils/getSaleVariation';
 import { useRouter } from 'next/router';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
@@ -111,12 +112,36 @@ export const ProductOptionsPanel: FC<ProductOptionsPanelType> = ({
 
     if (!hasUrlParams) {
       const saleVariation = getSaleVariation(variations);
-      if (saleVariation) {
+      if (saleVariation && Number(saleVariation.stock_quantity) > 0) {
         saleVariation.attributes.forEach(item =>
           newMap.set(item.slug, item.option)
         );
       } else {
-        defaultAttributes.forEach(item => newMap.set(item.slug, item.option));
+        const defaultVariation = variations.find(v =>
+          defaultAttributes.every(def =>
+            v.attributes.some(
+              a => a.slug === def.slug && a.option === def.option
+            )
+          )
+        );
+
+        if (defaultVariation && Number(defaultVariation.stock_quantity) > 0) {
+          defaultVariation.attributes.forEach(attr =>
+            newMap.set(attr.slug, attr.option)
+          );
+        } else {
+          const availableVariation = getAvailableVariation(variations);
+
+          if (availableVariation) {
+            availableVariation.attributes.forEach(attr =>
+              newMap.set(attr.slug, attr.option)
+            );
+          } else {
+            defaultAttributes.forEach(item =>
+              newMap.set(item.slug, item.option)
+            );
+          }
+        }
       }
     }
 
