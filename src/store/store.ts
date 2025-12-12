@@ -17,6 +17,7 @@ import { wpRtkApi } from './rtk-queries/wpApi';
 import { wpCustomRtkApi } from './rtk-queries/wpCustomApi';
 import cartSlice from './slices/cartSlice';
 import categoriesSlice from './slices/categoriesSlice';
+import checkoutSlice from './slices/checkoutSlice';
 import currencySlice from './slices/currencySlice';
 import languageSlice from './slices/languageSlice';
 import MenuCategoriesSlice from './slices/MenuCategoriesSlice';
@@ -32,10 +33,17 @@ const persistConfig = {
   whitelist: ['currencySlice', 'cartSlice'],
 };
 
+const checkoutPersistConfig = {
+  key: 'checkout',
+  storage,
+};
+
 const quotePersistConfig = {
   key: 'quote',
   storage: storageSession,
 };
+
+const persistedCheckoutReducer = persistReducer(checkoutPersistConfig, checkoutSlice);
 
 const persistedQuoteReducer = persistReducer(quotePersistConfig, quoteSlice);
 
@@ -52,6 +60,7 @@ const rootReducer = combineReducers({
   [instockNotifierAPI.reducerPath]: instockNotifierAPI.reducer,
   [passwordResetApi.reducerPath]: passwordResetApi.reducer,
   cartSlice: cartSlice,
+  checkoutSlice: persistedCheckoutReducer,
   quoteSlice: persistedQuoteReducer,
   languageSlice: languageSlice,
   currencySlice: currencySlice,
