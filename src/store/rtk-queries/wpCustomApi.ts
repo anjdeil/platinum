@@ -88,6 +88,7 @@ export const wpCustomRtkApi = createApi({
         params: lang ? { lang } : undefined,
       }),
     }),
+
   }),
 });
 

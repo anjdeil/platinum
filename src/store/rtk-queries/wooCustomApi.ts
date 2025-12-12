@@ -9,11 +9,12 @@ import {
   couponRespType,
   CreateOrderRequestType,
   OrderType,
-  QuoteRequestType,
-  QuoteResponseType,
+  // QuoteRequestType,
+  // QuoteResponseType,
   retrieveCouponQueryType,
   reviewQueryType,
   ReviewsRespType,
+  // Step1ResponseType,
   WooCustomerReqType,
   WooCustomerType,
 } from '@/types/services/wooCustomApi/customer';
@@ -52,7 +53,7 @@ export const wooCustomRktApi = createApi({
         },
       }),
     }),
-    getQuote: builder.mutation<QuoteResponseType, QuoteRequestType>({
+    getQuote: builder.mutation<any, any>({
       query: (data) => ({
         url: `/quote`,
         method: 'POST',

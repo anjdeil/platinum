@@ -2,6 +2,7 @@ import { LineItemSchema } from '@/types/components/shop/product/products';
 import { ShippingLineSchema } from '@/types/pages/checkout';
 import { lineOrderItemsSchema } from '@/types/store/reducers/cartSlice';
 import { z } from 'zod';
+import { ShippingMethodSchema } from '..';
 
 const currencies: [string, ...string[]] = ['EUR', 'USD', 'PLN'];
 
@@ -446,28 +447,94 @@ export const SummaryRespShema = z.object({
   discount_total: z.string(),
   total: z.string(),
   vat_total: z.string(),
+  shipping_total: z.string().optional(),
 });
 
-export const QuoteResponseSchema = z.object({
-  success: z.boolean(),
-  normalized: z.object({
-    currency: z.string(),
-    coupon: z.string().optional(),
-    items: z.array(
+export const Step1RequestSchema = z.object({
+  currency: z.string(),
+  line_items: z.array(LineItemReqSchema),
+  coupon_lines: z
+    .array(
       z.object({
-        product_id: z.number(),
-        variation_id: z.number(),
-        quantity: z.number(),
+        id: z.number().optional(),
+        code: z.string(),
+        discount: z.string().optional(),
+        discount_tax: z.string().optional(),
+        meta_data: z.array(metaDataSchema).optional(),
+        discount_type: z.string().optional(),
+        nominal_amount: z.number().optional(),
+        free_shipping: z.boolean().optional(),
       })
-    ),
+    )
+    .optional(),
+  email: z.string().email().nullable().optional(),
+  customer_id: z.number().nullable().optional(),
+});
+
+export const Step2RequestSchema = z.object({
+  token: z.string(),
+  currency: z.string().optional(),
+
+  use_billing_for_shipping: z.boolean().optional(),
+
+  billing_data: BillingTypeSchema,
+
+  shipping_data: ShippingTypeSchema.optional(),
+
+  shipping_method_id: z.string().optional(),
+});
+
+export const Step1ResponseSchema = z.object({
+  success: z.boolean(),
+  session_token: z.string(),
+  session: z.object({
+    id: z.string(),
+    session_token: z.string(),
+    cart_items: z.string(),
+    totals: z.string(),
+    expires_at: z.string(),
   }),
-  errors: z.object({
-    valid: z.boolean(),
-    errors: z.array(z.string()),
-    coupon: z.string().nullable(),
-  }).optional(),
-  summary: SummaryRespShema,
+  totals: z.object({
+    subtotal: z.string(),
+    discount_total: z.string(),
+    shipping_total: z.string(),
+    total: z.string(),
+  }),
   warnings: z.array(z.string()),
+  coupon_errors: z.array(z.string()),
+});
+
+export const Step2ResponseSchema = z.object({
+  success: z.boolean(),
+  errors: z.array(z.string()).optional(),
+
+  session_token: z.string().optional(),
+  session: z
+    .object({
+      id: z.string(),
+      session_token: z.string(),
+      cart_items: z.string(),
+      totals: z.string(),
+      expires_at: z.string(),
+    })
+    .optional(),
+
+  totals: z
+    .object({
+      subtotal: z.string(),
+      discount_total: z.string(),
+      shipping_total: z.string(),
+      vat_total: z.string(),
+      total: z.string(),
+    })
+    .optional(),
+
+  warnings: z.array(z.string()).optional(),
+
+  shipping_methods: z.array(ShippingMethodSchema).nullable().optional(),
+  selected_shipping_method: ShippingMethodSchema.nullable().optional(),
+
+  step: z.number().optional(),
 });
 
 export type OrderType = z.infer<typeof OrderTypeSchema>;
@@ -488,6 +555,8 @@ export type ReviewsRespType = z.infer<typeof ReviewsRespSchema>;
 export type WooCustomerUpdateType = z.infer<typeof WooCustomerUpdateSchema>;
 export type CouponParamsType = z.infer<typeof CouponParamsSchema>;
 
-export type QuoteResponseType = z.infer<typeof QuoteResponseSchema>;
-export type QuoteRequestType = Omit<CreateOrderRequestType, 'status'>;
+export type Step1RequestType = z.infer<typeof Step1RequestSchema>;
+export type Step1ResponseType = z.infer<typeof Step1ResponseSchema>;
+export type Step2RequestType = z.infer<typeof Step2RequestSchema>;
+export type Step2ResponseType = z.infer<typeof Step2ResponseSchema>;
 export type SummaryRespType = z.infer<typeof SummaryRespShema>;

@@ -1,5 +1,4 @@
 import { CartLink } from '@/components/global/popups/MiniCart/style';
-// import BannerCart from '@/components/pages/cart/BannerCart/BannerCart';
 import CartCouponBlock from '@/components/pages/cart/CartCouponBlock/CartCouponBlock';
 import CartSummaryBlock from '@/components/pages/cart/CartSummaryBlock/CartSummaryBlock';
 import CartTable from '@/components/pages/cart/CartTable/CartTable';
@@ -7,7 +6,7 @@ import OrderBar from '@/components/pages/cart/OrderBar/OrderBar';
 import OrderProgress from '@/components/pages/cart/OrderProgress/OrderProgress';
 import { PageTitle } from '@/components/pages/pageTitle';
 import { useCartData } from '@/hooks/useCartData';
-import { useQuoteHandler } from '@/hooks/useQuoteHandler';
+import { useCheckoutSession } from '@/hooks/useCheckoutSession';
 import wpRestApi from '@/services/wpRestApi';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { useGetUserTotalsQuery } from '@/store/rtk-queries/userTotals/userTotals';
@@ -18,11 +17,6 @@ import {
   clearCoupon,
   setIgnoreCoupon,
 } from '@/store/slices/cartSlice';
-import {
-  clearQuoteData,
-  setQuoteCurrency,
-  setQuoteData,
-} from '@/store/slices/quoteSlice';
 import { CartPageWrapper } from '@/styles/cart/style';
 import { Container, FlexBox, StyledButton } from '@/styles/components';
 import { JwtDecodedDataType } from '@/types/services/wpRestApi/auth';
@@ -35,7 +29,7 @@ import { GetServerSidePropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import router from 'next/router';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 interface CartPageProps {
   defaultCustomerData: WpUserType | null;
@@ -51,19 +45,18 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
 
   const [auth, setAuth] = useState<boolean>(false);
 
-  const [isDirty, setIsDirty] = useState(false);
-  // const [isCouponAppliedManually, setIsCouponAppliedManually] = useState(false);
-
   const userLoyaltyStatus = userTotal?.loyalty_status;
 
   useEffect(() => {
-    if (defaultCustomerData && userLoyaltyStatus) {
+    if (!defaultCustomerData) return;
+
+    if (userLoyaltyStatus && couponCode !== userLoyaltyStatus) {
       setAuth(true);
       dispatch(addCoupon({ couponCode: userLoyaltyStatus }));
       if (ignoreCoupon) {
         dispatch(setIgnoreCoupon(false));
       }
-    } else {
+    } else if (!userLoyaltyStatus && couponCode) {
       dispatch(clearCoupon());
       setAuth(false);
     }
@@ -80,61 +73,44 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   const [hasConflict, setHasConflict] = useState(false);
 
   const {
-    handleGetQuote,
-    quoteData,
-    isLoading,
+    initStep1,
+    recalcSessionSafe,
     couponError,
     setCouponError,
     couponSuccess,
-    setCouponSuccess,
-  } = useQuoteHandler(
-    code,
-    setHasConflict,
-    userLoyaltyStatus,
-    defaultCustomerData?.id
-  );
+    isLoading,
+  } = useCheckoutSession(userLoyaltyStatus, setHasConflict);
+
+  const step1LockedRef = useRef(false);
 
   useEffect(() => {
-    if (!couponCode || isLoading) return;
-    handleGetQuote();
-  }, [couponCode, ignoreCoupon]);
+    initStep1();
+  }, [initStep1]);
 
-  // after change currency
-  useEffect(() => {
-    if (cartItems.length === 0 || isDirty || !couponCode || !quoteData) return;
-    handleGetQuote();
-  }, [code]);
+  const lastCouponRef = useRef(couponCode);
 
   useEffect(() => {
-    if (ignoreCoupon && userLoyaltyStatus && cartItems.length > 0) {
-      dispatch(setIgnoreCoupon(false));
+    if (!cartItems.length) return;
+
+    const couponChanged = lastCouponRef.current !== couponCode;
+    lastCouponRef.current = couponCode;
+
+    if (!step1LockedRef.current || couponChanged) {
+      step1LockedRef.current = true;
+
+      const updateSession = async () => {
+        try {
+          await recalcSessionSafe();
+        } catch (err) {
+          console.error('Step1 session error', err);
+        } finally {
+          step1LockedRef.current = false;
+        }
+      };
+
+      updateSession();
     }
-  }, [cartItems]);
-
-  useEffect(() => {
-    setCouponError(false);
-    setCouponSuccess(false);
-
-    if (quoteData) {
-      setIsDirty(true);
-    }
-    dispatch(clearQuoteData());
-
-    if (userLoyaltyStatus) {
-      dispatch(addCoupon({ couponCode: userLoyaltyStatus }));
-    } else {
-      dispatch(clearCoupon());
-    }
-  }, [cartItems]);
-
-  useEffect(() => {
-    setIsDirty(false);
-
-    if (quoteData) {
-      dispatch(setQuoteData(quoteData.summary));
-      dispatch(setQuoteCurrency(quoteData.normalized?.currency));
-    }
-  }, [quoteData]);
+  }, [cartItems, couponCode, code]);
 
   const { productsWithCartData, totalCartPrice } = useCartData();
 
@@ -286,13 +262,8 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
 
           {productsWithCartData.length > 0 && allItemAvailable && (
             <CartSummaryBlock
-              auth={auth}
               cartItems={productsWithCartData}
-              isLoading={isLoading || isLoadingProducts}
-              {...(quoteData && !isDirty ? { quote: quoteData } : {})}
-              userTotal={userTotal}
-              handleGetQuote={handleGetQuote}
-              quoteData={quoteData}
+              isLoading={isLoading}
             />
           )}
         </CartPageWrapper>

@@ -19,7 +19,7 @@ import {
   CouponText,
 } from './style';
 
-const loyaltyCouponsCodes = ['silver', 'gold', 'platinum'];
+export const loyaltyCouponsCodes = ['silver', 'gold', 'platinum'];
 
 const CartCouponBlock: FC<CartCouponBlockProps> = ({
   auth,

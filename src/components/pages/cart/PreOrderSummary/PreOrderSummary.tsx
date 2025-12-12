@@ -1,6 +1,5 @@
 import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
 import { PreOrderSummaryProps } from '@/types/pages/cart';
-import { calculateCartFront } from '@/utils/cart/calculateCartFront';
 import { useTranslations } from 'next-intl';
 import { FC } from 'react';
 import OrderTotalsRowsSkeleton from '../../order/OrderTotals/OrderTotalsRowsSkeleton';
@@ -10,6 +9,7 @@ import {
   OrderSummaryLineCoupons,
   OrderSummaryLineName,
   OrderSummaryTotal,
+  OrderSummaryTotalTax,
   OrderSummaryTotalValue,
   OrderSummaryTotalWrapper,
   OrderSummaryWrapper,
@@ -17,55 +17,51 @@ import {
 
 const PreOrderSummary: FC<PreOrderSummaryProps> = ({
   summary,
-  cartItems,
   isLoading = false,
-  userTotal,
+  selectedShippingMethod,
 }) => {
   const t = useTranslations('Cart');
+  const tShipping = useTranslations('ShippingMethodSelector');
   const { formatPrice } = useCurrencyConverter();
 
-  const userLoyaltyStatus = userTotal?.loyalty_status;
+  const subtotal = +(summary?.subtotal ?? 0);
+  const discountAmount = +(summary?.discount_total ?? 0);
+  const vatTotal = +(summary?.vat_total ?? 0);
+  const total = +(summary?.total ?? 0);
+  const shippingTotal = +(summary?.shipping_total ?? 0);
 
-  const subtotal = summary
-    ? +summary.subtotal + +summary.vat_total
-    : calculateCartFront(cartItems, userLoyaltyStatus).subtotal;
-  const discountAmount = summary
-    ? +summary.discount_total
-    : calculateCartFront(cartItems, userLoyaltyStatus).discountAmount;
-  const total = summary
-    ? +summary.total
-    : calculateCartFront(cartItems, userLoyaltyStatus).total;
-  // const vatTotal = summary ? +summary.vat_total : 0;
+  function normalizeShippingLabel(label: string): string {
+    return label.replace(/\s*\(free\)\s*$/i, '').trim();
+  }
 
-  // Function for displaying the summary line
   const renderOrderTotal = () => {
     return (
       <OrderSummaryTotalWrapper>
         <OrderSummaryTotalValue>{formatPrice(total)}</OrderSummaryTotalValue>
-        {/* {summary && vatTotal > 0 && (
+        {summary && vatTotal > 0 && (
           <OrderSummaryTotalTax>
             {t('includesVat', {
               cost: formatPrice(vatTotal),
             })}
           </OrderSummaryTotalTax>
-        )} */}
+        )}
       </OrderSummaryTotalWrapper>
     );
   };
 
   return (
     <OrderSummaryWrapper>
-      {isLoading ? (
+      {!summary || isLoading ? (
         <OrderTotalsRowsSkeleton noPaymentMethod />
       ) : (
         <>
-          {/* subtotal */}
+          {/* products */}
           <OrderSummaryLine>
             <OrderSummaryLineName>{t('products')}</OrderSummaryLineName>
             <span>{formatPrice(subtotal)}</span>
           </OrderSummaryLine>
 
-          {/* discount */}
+          {/* discounts */}
           {discountAmount > 0 && (
             <OrderSummaryLineCoupons>
               <OrderCouponWrapper>
@@ -75,13 +71,25 @@ const PreOrderSummary: FC<PreOrderSummaryProps> = ({
             </OrderSummaryLineCoupons>
           )}
 
-          {/*Order Summary Total */}
+          {/* shipping */}
+          {selectedShippingMethod && (
+            <OrderSummaryLine>
+              <OrderSummaryLineName>
+                {tShipping(
+                  normalizeShippingLabel(selectedShippingMethod.label)
+                )}
+              </OrderSummaryLineName>
+              <span>{formatPrice(shippingTotal)}</span>
+            </OrderSummaryLine>
+          )}
+
+          {/* total */}
           <OrderSummaryTotal>
             <OrderSummaryLineName>
               {t('OrderSummaryTotal')}
             </OrderSummaryLineName>
             <OrderSummaryTotalValue>
-              {total && renderOrderTotal()}
+              {renderOrderTotal()}
             </OrderSummaryTotalValue>
           </OrderSummaryTotal>
         </>

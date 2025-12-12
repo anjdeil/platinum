@@ -23,13 +23,8 @@ import {
 const MAX_LENGTH = 500;
 
 const CartSummaryBlock: FC<CartSummaryBlockProps> = ({
-  quote,
   isLoading,
   cartItems,
-  userTotal,
-  auth,
-  quoteData,
-  handleGetQuote,
 }) => {
   const t = useTranslations('Cart');
   const dispatch = useAppDispatch();
@@ -40,6 +35,8 @@ const CartSummaryBlock: FC<CartSummaryBlockProps> = ({
   useEffect(() => {
     setInputValue(commentToOrder || '');
   }, [commentToOrder]);
+
+  const { totals } = useAppSelector(state => state.checkoutSlice);
 
   const validateComment = (value: string) => {
     if (value.length > MAX_LENGTH) {
@@ -68,16 +65,9 @@ const CartSummaryBlock: FC<CartSummaryBlockProps> = ({
     debouncedChangeHandler(value);
   };
 
-  const showSummary = quote && quote.success;
-
   const handleGotoCheckout = async () => {
-    if (quote) {
+    if (totals) {
       router.push('/checkout');
-    } else {
-      const newQuote = await handleGetQuote();
-      if (newQuote?.success) {
-        router.push('/checkout');
-      }
     }
   };
 
@@ -101,16 +91,11 @@ const CartSummaryBlock: FC<CartSummaryBlockProps> = ({
       <CartSummaryWrapper>
         <CartSummaryTitleWrapper>
           <Title as="h2" textalign="center" uppercase>
-            {showSummary ? t('OrderSummary') : t('PreOrderSummary')}
+            {t('OrderSummary')}
           </Title>
         </CartSummaryTitleWrapper>
         <CartSummaryCard>
-          <PreOrderSummary
-            cartItems={cartItems}
-            isLoading={isLoading}
-            userTotal={userTotal}
-            {...(showSummary ? { summary: quote.summary } : {})}
-          />
+          <PreOrderSummary isLoading={isLoading} summary={totals} />
         </CartSummaryCard>
 
         {!isLoading && (
@@ -122,7 +107,7 @@ const CartSummaryBlock: FC<CartSummaryBlockProps> = ({
               hoverColor={theme.colors.white}
               hoverBackgroundColor={theme.colors.primary}
               onClick={handleGotoCheckout}
-              disabled={isLoading || cartItems.length === 0}
+              disabled={!totals || cartItems.length === 0}
             >
               {t('Continue')}
             </StyledButton>

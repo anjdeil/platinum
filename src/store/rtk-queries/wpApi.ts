@@ -1,7 +1,8 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { WpUserType } from '@/types/store/rtk-queries/wpApi';
 import { JwtTokenResponseType } from '@/types/services';
+import { Step1RequestType, Step1ResponseType, Step2RequestType, Step2ResponseType } from '@/types/services/wooCustomApi/customer';
 import { AuthConfigType } from '@/types/services/wpRestApi/auth';
+import { WpUserType } from '@/types/store/rtk-queries/wpApi';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const getAuthTokenFromCookie = (cookies: string) => {
   const match = cookies.match(/authToken=([^;]+)/);
@@ -66,6 +67,32 @@ export const wpRtkApi = createApi({
       }),
       invalidatesTags: ['User'],
     }),
+    checkoutStep1: builder.mutation<
+      Step1ResponseType,
+      { payload: Step1RequestType }
+    >({
+      query: ({ payload }) => ({
+        url: `/platinum/v1/checkout/step1`,
+        method: 'POST',
+        body: payload,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }),
+    }),
+    checkoutStep2: builder.mutation<
+      Step2ResponseType,
+      { payload: Step2RequestType }
+    >({
+      query: ({ payload }) => ({
+        url: `/platinum/v1/checkout/step2`,
+        method: 'POST',
+        body: payload,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }),
+    }),
   }),
 });
 
@@ -74,4 +101,6 @@ export const {
   useCheckTokenMutation,
   useLazyFetchUserDataQuery,
   useFetchUserUpdateMutation,
+  useCheckoutStep1Mutation,
+  useCheckoutStep2Mutation,
 } = wpRtkApi;
