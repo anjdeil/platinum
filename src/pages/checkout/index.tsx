@@ -42,7 +42,7 @@ import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Link from 'next/link';
 import router from 'next/router';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import Notification from '@/components/global/Notification/Notification';
 import PreOrderSummary from '@/components/pages/cart/PreOrderSummary/PreOrderSummary';
@@ -105,32 +105,50 @@ export default function CheckoutPage() {
   } = useCheckoutSession(userLoyaltyStatus);
   const authToken = useGetAuthToken();
 
-  const isStep1LockedRef = useRef(false);
-  const isStep2LockedRef = useRef(false);
+  const step1DebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const step2DebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const triggerStep1 = async (force = false) => {
-    if (!force && (isStep1LockedRef.current || isStep1Loading)) return;
-
-    isStep1LockedRef.current = true;
-
-    try {
-      await recalcSessionSafe();
-    } finally {
-      isStep1LockedRef.current = false;
+  const debouncedTriggerStep1 = useCallback(() => {
+    if (step1DebounceRef.current) {
+      clearTimeout(step1DebounceRef.current);
     }
-  };
 
-  const triggerStep2 = async (payload: Step2RequestType) => {
-    if (isStep2LockedRef.current) return;
+    step1DebounceRef.current = setTimeout(async () => {
+      try {
+        await recalcSessionSafe();
+      } catch (err) {
+        console.error('Step1 session error (debounced)', err);
+      }
+    }, 300);
+  }, [recalcSessionSafe]);
 
-    isStep2LockedRef.current = true;
+  const debouncedTriggerStep2 = useCallback(
+    (payload: Step2RequestType) => {
+      if (step2DebounceRef.current) {
+        clearTimeout(step2DebounceRef.current);
+      }
 
-    try {
-      await recalcStep2(payload);
-    } finally {
-      isStep2LockedRef.current = false;
-    }
-  };
+      step2DebounceRef.current = setTimeout(async () => {
+        try {
+          await recalcStep2(payload);
+        } catch (err) {
+          console.error('Step2 error (debounced)', err);
+        }
+      }, 300);
+    },
+    [recalcStep2]
+  );
+
+  useEffect(() => {
+    return () => {
+      if (step1DebounceRef.current) {
+        clearTimeout(step1DebounceRef.current);
+      }
+      if (step2DebounceRef.current) {
+        clearTimeout(step2DebounceRef.current);
+      }
+    };
+  }, []);
 
   const [allowedShippingMethods, setAllowedShippingMethods] = useState<
     string[]
@@ -347,20 +365,15 @@ export default function CheckoutPage() {
   ]);
 
   useEffect(() => {
-    const step2DirectAccess = !checkout.token && !checkout.totals;
+    const shouldInitStep1 =
+      !checkout.token ||
+      !checkout.totals ||
+      checkout.session?.coupon_code !== couponCode;
 
-    if (!step2DirectAccess) return;
+    if (!shouldInitStep1) return;
 
-    const initStep1ForStep2 = async () => {
-      try {
-        await triggerStep1();
-      } catch (err) {
-        console.error('Step1 init error for direct step2 access', err);
-      }
-    };
-
-    initStep1ForStep2();
-  }, []);
+    debouncedTriggerStep1();
+  }, [couponCode]);
 
   useEffect(() => {
     const step2NotDone = !checkout.hasStep2Requested;
@@ -372,15 +385,7 @@ export default function CheckoutPage() {
 
     if (!currencyActuallyChanged) return;
 
-    const updateTotals = async () => {
-      try {
-        await triggerStep1(true);
-      } catch (err) {
-        console.error('Step1 session error on currency change', err);
-      }
-    };
-
-    updateTotals();
+    debouncedTriggerStep1();
 
     prevCurrencyRef.current = currencyCode;
   }, [currencyCode]);
@@ -391,17 +396,17 @@ export default function CheckoutPage() {
   useEffect(() => {
     if (cartItems.length === 0) return;
 
-    if (shippingMethod) {
+    if (shippingMethod && formOrderData.billing) {
       const payload: Step2RequestType = {
         token: checkout.token!,
         currency: currencyCode,
         use_billing_for_shipping: !isShippingAddressDifferent,
-        billing_data: formOrderData.billing!,
+        billing_data: formOrderData.billing,
         ...(isShippingAddressDifferent && { shipping: formOrderData.shipping }),
         shipping_method_id: `${shippingMethod.method_id}:${shippingMethod.id}`,
       };
 
-      triggerStep2(payload);
+      debouncedTriggerStep2(payload);
     } else if (checkout.hasStep2Requested && !shippingMethod) {
       let billingDataObj;
 
@@ -419,34 +424,9 @@ export default function CheckoutPage() {
         use_billing_for_shipping: true,
       };
 
-      triggerStep2(payload);
+      debouncedTriggerStep2(payload);
     }
-  }, [shippingMethod, couponCode, currency]);
-
-  useEffect(() => {
-    // Якщо step2 вже був запитаний
-    // і selectedShippingMethod став null
-    // => потрібно оновити totals без доставки
-    if (checkout.hasStep2Requested && !shippingMethod) {
-      let billingDataObj;
-
-      try {
-        billingDataObj = JSON.parse(checkout.billingData!);
-      } catch (e) {
-        console.warn('Invalid billing data JSON', checkout.billingData);
-        return;
-      }
-
-      const payload: Step2RequestType = {
-        token: checkout.token!,
-        currency: currencyCode,
-        billing_data: billingDataObj,
-        use_billing_for_shipping: true,
-      };
-
-      triggerStep2(payload);
-    }
-  }, [shippingMethod, checkout.hasStep2Requested]);
+  }, [shippingMethod, currencyCode]);
 
   const handlePayOrder = async () => {
     if (!order) return;
@@ -862,11 +842,12 @@ export default function CheckoutPage() {
         <CheckoutSummaryWrapper>
           <CheckoutSummary>
             <PreOrderSummary
-              isLoading={isStep1Loading || isStep2Loading}
+              isLoading={isStep1Loading || isStep2Loading || isUserDataLoading}
               summary={checkout.totals}
               selectedShippingMethod={
                 checkout.selectedShippingMethod ?? undefined
               }
+              session={checkout.session}
             />
           </CheckoutSummary>
           <CheckoutPayButtonWrapper>

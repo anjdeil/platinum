@@ -35,18 +35,8 @@ const checkoutSlice = createSlice({
         setCheckoutState: (state, action: PayloadAction<Partial<CheckoutState>>) => {
             Object.assign(state, action.payload);
         },
-        clearCheckoutState: state => {
-            state.token = null;
-            state.totals = null;
-            state.warnings = [];
-            state.couponErrors = [];
-            state.session = undefined;
-            state.billingData = undefined;
-            state.shippingData = undefined;
-            state.shippingMethods = undefined;
-            state.selectedShippingMethod = undefined;
-            state.step = 1;
-            state.expiresAt = null;
+        clearCheckoutState: (state) => {
+            Object.assign(state, initial);
         },
         setHasStep2Requested(state, action) {
             state.hasStep2Requested = action.payload;

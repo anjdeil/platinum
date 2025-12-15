@@ -4,6 +4,8 @@ import { useTranslations } from 'next-intl';
 import { FC } from 'react';
 import OrderTotalsRowsSkeleton from '../../order/OrderTotals/OrderTotalsRowsSkeleton';
 import {
+  OrderCouponName,
+  OrderCouponNamesBox,
   OrderCouponWrapper,
   OrderSummaryLine,
   OrderSummaryLineCoupons,
@@ -19,6 +21,7 @@ const PreOrderSummary: FC<PreOrderSummaryProps> = ({
   summary,
   isLoading = false,
   selectedShippingMethod,
+  session,
 }) => {
   const t = useTranslations('Cart');
   const tShipping = useTranslations('ShippingMethodSelector');
@@ -29,6 +32,7 @@ const PreOrderSummary: FC<PreOrderSummaryProps> = ({
   const vatTotal = +(summary?.vat_total ?? 0);
   const total = +(summary?.total ?? 0);
   const shippingTotal = +(summary?.shipping_total ?? 0);
+  // const subtotalDisplayed = total + discountAmount - shippingTotal;
 
   function normalizeShippingLabel(label: string): string {
     return label.replace(/\s*\(free\)\s*$/i, '').trim();
@@ -49,6 +53,16 @@ const PreOrderSummary: FC<PreOrderSummaryProps> = ({
     );
   };
 
+  const parsedSession =
+    session && typeof session === 'string'
+      ? JSON.parse(session)
+      : session ?? null;
+
+  const couponData =
+    parsedSession?.coupon_data && typeof parsedSession.coupon_data === 'string'
+      ? JSON.parse(parsedSession.coupon_data)
+      : parsedSession?.coupon_data ?? null;
+
   return (
     <OrderSummaryWrapper>
       {!summary || isLoading ? (
@@ -68,6 +82,13 @@ const PreOrderSummary: FC<PreOrderSummaryProps> = ({
                 <OrderSummaryLineName>{t('discount')}</OrderSummaryLineName>
                 <span>– {formatPrice(discountAmount)}</span>
               </OrderCouponWrapper>
+              {couponData?.amount && (
+                <OrderCouponNamesBox>
+                  <OrderCouponName>
+                    {t('coupon')} –{couponData.amount}% {couponData.code}
+                  </OrderCouponName>
+                </OrderCouponNamesBox>
+              )}
             </OrderSummaryLineCoupons>
           )}
 

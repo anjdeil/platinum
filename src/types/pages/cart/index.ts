@@ -119,6 +119,7 @@ export const PreOrderSummarySchema = z.object({
   summary: SummaryRespShema.optional(),
   isLoading: z.boolean().optional(),
   selectedShippingMethod: ShippingMethodSchema.optional().nullable(),
+  session: z.any().optional(),
 });
 
 export type OrderSummaryProps = z.infer<typeof OrderSummarySchema>;

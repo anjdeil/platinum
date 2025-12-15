@@ -88,27 +88,70 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   }, [initStep1]);
 
   const lastCouponRef = useRef(couponCode);
+  const lastCurrencyRef = useRef(code);
+  const initialLoadRef = useRef(true);
+
+  const step1DebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const lastCartRef = useRef<string>(JSON.stringify(cartItems));
+
+  const debouncedRecalcSessionSafe = useCallback(() => {
+    if (step1DebounceRef.current) {
+      clearTimeout(step1DebounceRef.current);
+    }
+
+    step1DebounceRef.current = setTimeout(async () => {
+      try {
+        await recalcSessionSafe();
+      } catch (err) {
+        console.error('Step1 session error (debounced)', err);
+      }
+    }, 300);
+  }, [recalcSessionSafe]);
+
+  useEffect(() => {
+    return () => {
+      if (step1DebounceRef.current) {
+        clearTimeout(step1DebounceRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (!cartItems.length) return;
 
+    const currentCart = JSON.stringify(cartItems);
+
+    const cartChanged = lastCartRef.current !== currentCart;
     const couponChanged = lastCouponRef.current !== couponCode;
+    const currencyChanged = lastCurrencyRef.current !== code;
+
+    lastCartRef.current = currentCart;
     lastCouponRef.current = couponCode;
+    lastCurrencyRef.current = code;
 
-    if (!step1LockedRef.current || couponChanged) {
-      step1LockedRef.current = true;
+    if (initialLoadRef.current) {
+      if (!step1LockedRef.current) {
+        step1LockedRef.current = true;
 
-      const updateSession = async () => {
-        try {
-          await recalcSessionSafe();
-        } catch (err) {
-          console.error('Step1 session error', err);
-        } finally {
-          step1LockedRef.current = false;
-        }
-      };
+        (async () => {
+          try {
+            await recalcSessionSafe();
+          } finally {
+            step1LockedRef.current = false;
+            initialLoadRef.current = false;
+          }
+        })();
+      }
+      return;
+    }
 
-      updateSession();
+    if (couponChanged && couponCode === userLoyaltyStatus) {
+      recalcSessionSafe().catch(console.error);
+      return;
+    }
+
+    if (cartChanged || couponChanged || currencyChanged) {
+      debouncedRecalcSessionSafe();
     }
   }, [cartItems, couponCode, code]);
 

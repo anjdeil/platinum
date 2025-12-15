@@ -4,7 +4,7 @@ import { useCheckoutStep1Mutation, useCheckoutStep2Mutation } from '@/store/rtk-
 import { addCoupon, clearCoupon } from '@/store/slices/cartSlice';
 import { clearCheckoutState, setCheckoutState, setHasStep2Requested } from '@/store/slices/checkoutSlice';
 import { UserLoyalityStatusType } from '@/types/store/rtk-queries/wpApi';
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 export function useCheckoutSession(
     userLoyaltyStatus?: UserLoyalityStatusType,
@@ -21,6 +21,21 @@ export function useCheckoutSession(
 
     const [couponError, setCouponError] = useState(false);
     const [couponSuccess, setCouponSuccess] = useState(false);
+
+    const requestIdRef = useRef(0);
+    const requestIdStep2Ref = useRef(0);
+
+    const guardedStep1 = useCallback(async (action: () => Promise<any>) => {
+        const id = ++requestIdRef.current;
+
+        const resp = await action();
+
+        if (id !== requestIdRef.current) {
+            return null;
+        }
+
+        return resp;
+    }, []);
 
     const buildPayload = useCallback(() => ({
         token: checkout.token,
@@ -81,7 +96,7 @@ export function useCheckoutSession(
     };
 
     const updateStateFromResp = useCallback((resp: any) => {
-        const session = normalizeSession(resp.session);
+        const session = normalizeSession(resp.session) || {};
         const totals = normalizeTotals(resp.totals) ?? session?.totals ?? null;
 
         const warnings = Array.isArray(resp.warnings) ? resp.warnings : [];
@@ -216,8 +231,18 @@ export function useCheckoutSession(
             selectedShippingMethod: null,
         }));
 
-        const payload = buildPayload();
-        const resp = await checkoutStep1({ payload }).unwrap();
+        const payload = {
+            ...buildPayload(),
+            token: undefined,
+        };
+        const resp = await guardedStep1(() =>
+            checkoutStep1({ payload }).unwrap()
+        );
+
+        if (!resp) {
+            return null;
+        }
+
         if (resp?.session_token) {
             return updateStateFromResp(resp);
         }
@@ -239,7 +264,12 @@ export function useCheckoutSession(
 
         const payload = buildPayload();
         try {
-            const resp = await checkoutStep1({ payload }).unwrap();
+            const resp = await guardedStep1(() => checkoutStep1({ payload }).unwrap());
+
+            if (!resp) {
+                return null;
+            }
+
             if (resp.session_token) {
                 return updateStateFromResp(resp);
             }
@@ -267,7 +297,12 @@ export function useCheckoutSession(
             if (!token || !expiresAt || new Date(expiresAt) <= new Date()) {
                 resp = await createSession();
             } else {
-                resp = await checkoutStep1({ payload }).unwrap();
+                resp = await guardedStep1(() => checkoutStep1({ payload }).unwrap());
+
+                if (!resp) {
+                    return null;
+                }
+
                 if (!resp.session_token) {
                     throw new Error('Failed to recalc checkout session');
                 }
@@ -284,6 +319,7 @@ export function useCheckoutSession(
 
     const recalcStep2 = useCallback(
         async (payload: any) => {
+            const requestId = ++requestIdStep2Ref.current;
 
             try {
                 let resp = await checkoutStep2({ payload }).unwrap();
@@ -306,6 +342,10 @@ export function useCheckoutSession(
                     const newPayload = { ...payload, token: step1Resp.session.session_token };
 
                     resp = await checkoutStep2({ payload: newPayload }).unwrap();
+                }
+
+                if (requestId !== requestIdStep2Ref.current) {
+                    return null;
                 }
 
                 return updateStep2StateFromResp(resp);
