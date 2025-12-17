@@ -448,6 +448,7 @@ export const SummaryRespShema = z.object({
   total: z.string(),
   vat_total: z.string(),
   shipping_total: z.string().optional(),
+  items_subtotal_incl_tax: z.string().optional(),
 });
 
 export const Step1RequestSchema = z.object({
@@ -482,6 +483,11 @@ export const Step2RequestSchema = z.object({
   shipping_data: ShippingTypeSchema.optional(),
 
   shipping_method_id: z.string().optional(),
+});
+
+export const Step3RequestSchema = z.object({
+  token: z.string(),
+  order_id: z.number(),
 });
 
 export const Step1ResponseSchema = z.object({
@@ -537,6 +543,10 @@ export const Step2ResponseSchema = z.object({
   step: z.number().optional(),
 });
 
+export const Step3ResponseSchema = z.object({
+
+});
+
 export type OrderType = z.infer<typeof OrderTypeSchema>;
 export type AddressType = z.infer<typeof AddressTypeSchema>;
 export type BillingType = z.infer<typeof BillingTypeSchema>;
@@ -557,6 +567,11 @@ export type CouponParamsType = z.infer<typeof CouponParamsSchema>;
 
 export type Step1RequestType = z.infer<typeof Step1RequestSchema>;
 export type Step1ResponseType = z.infer<typeof Step1ResponseSchema>;
+
 export type Step2RequestType = z.infer<typeof Step2RequestSchema>;
 export type Step2ResponseType = z.infer<typeof Step2ResponseSchema>;
+
+export type Step3RequestType = z.infer<typeof Step3RequestSchema>;
+export type Step3ResponseType = z.infer<typeof Step3ResponseSchema>;
+
 export type SummaryRespType = z.infer<typeof SummaryRespShema>;

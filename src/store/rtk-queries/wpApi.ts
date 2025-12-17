@@ -1,5 +1,5 @@
 import { JwtTokenResponseType } from '@/types/services';
-import { Step1RequestType, Step1ResponseType, Step2RequestType, Step2ResponseType } from '@/types/services/wooCustomApi/customer';
+import { Step1RequestType, Step1ResponseType, Step2RequestType, Step2ResponseType, Step3RequestType, Step3ResponseType } from '@/types/services/wooCustomApi/customer';
 import { AuthConfigType } from '@/types/services/wpRestApi/auth';
 import { WpUserType } from '@/types/store/rtk-queries/wpApi';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
@@ -93,6 +93,19 @@ export const wpRtkApi = createApi({
         },
       }),
     }),
+    checkoutConfirm: builder.mutation<
+      Step3ResponseType,
+      { payload: Step3RequestType }
+    >({
+      query: ({ payload }) => ({
+        url: `/platinum/v1/checkout/confirm`,
+        method: 'POST',
+        body: payload,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }),
+    }),
   }),
 });
 
@@ -103,4 +116,5 @@ export const {
   useFetchUserUpdateMutation,
   useCheckoutStep1Mutation,
   useCheckoutStep2Mutation,
+  useCheckoutConfirmMutation,
 } = wpRtkApi;

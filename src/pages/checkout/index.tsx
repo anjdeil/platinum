@@ -37,7 +37,6 @@ import checkCartConflict from '@/utils/cart/checkCartConflict';
 import getCalculatedMethodCostByWeight from '@/utils/checkout/getCalculatedMethodCostByWeight';
 import getShippingMethodFixedCost from '@/utils/checkout/getShippingMethodFixedCost';
 import parcelMachinesMethods from '@/utils/checkout/parcelMachinesMethods';
-import validateOrder from '@/utils/checkout/validateOrder';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -102,11 +101,15 @@ export default function CheckoutPage() {
     recalcStep2,
     isLoading: isStep1Loading,
     isStep2Loading,
+    finalizeCheckoutSession,
   } = useCheckoutSession(userLoyaltyStatus);
+
   const authToken = useGetAuthToken();
 
   const step1DebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const step2DebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const [isStep2Pending, setIsStep2Pending] = useState(false);
 
   const debouncedTriggerStep1 = useCallback(() => {
     if (step1DebounceRef.current) {
@@ -130,7 +133,15 @@ export default function CheckoutPage() {
 
       step2DebounceRef.current = setTimeout(async () => {
         try {
-          await recalcStep2(payload);
+          const result = await recalcStep2(payload);
+
+          console.log('result.shippingError...', result?.shippingError);
+
+          if (result?.shippingError) {
+            setWarnings(['shippingMethodUnavailable', 'shippingMethod']);
+            setIsWarningsShown(true);
+            setShippingMethod(undefined);
+          }
         } catch (err) {
           console.error('Step2 error (debounced)', err);
         }
@@ -191,9 +202,7 @@ export default function CheckoutPage() {
     totalWeight: 0,
   });
 
-  const [orderStatus, setOrderStatus] = useState<'on-hold' | 'pending'>(
-    'on-hold'
-  );
+  const [isCreatingOrder, setIsCreatingOrder] = useState(false);
 
   const [registrationErrorWarning, setRegistrationErrorWarning] = useState<
     string | null
@@ -270,6 +279,7 @@ export default function CheckoutPage() {
         },
       });
 
+      setWarnings([]);
       setGeowidgetShown(false);
     }
   }, [pointDetail]);
@@ -282,7 +292,20 @@ export default function CheckoutPage() {
   }, [shippingMethods]);
 
   useEffect(() => {
-    setWarnings([]);
+    if (shippingMethod) {
+      setWarnings([]);
+      setValidationErrors(null);
+    }
+
+    if (!phoneTrigger) return;
+
+    if (
+      !shippingMethod ||
+      !shippingMethod.method_title.includes('InPost Locker 24/7')
+    ) {
+      setPhoneTrigger(false);
+      setPhoneWarnings(null);
+    }
   }, [shippingMethod]);
 
   useEffect(() => {
@@ -397,6 +420,8 @@ export default function CheckoutPage() {
     if (cartItems.length === 0) return;
 
     if (shippingMethod && formOrderData.billing) {
+      setIsStep2Pending(true);
+
       const payload: Step2RequestType = {
         token: checkout.token!,
         currency: currencyCode,
@@ -428,70 +453,20 @@ export default function CheckoutPage() {
     }
   }, [shippingMethod, currencyCode]);
 
-  const handlePayOrder = async () => {
-    if (!order) return;
-
-    setIsWarningsShown(true);
-
-    let isOrderValid = true;
-
-    if (
-      !isValidForm ||
-      !formOrderData.billing ||
-      (isShippingAddressDifferent && !formOrderData.shipping)
-    ) {
-      setValidationErrors('validationErrorsFields');
-
-      isOrderValid = false;
+  useEffect(() => {
+    if (!isStep2Loading) {
+      setIsStep2Pending(false);
     }
+  }, [isStep2Loading]);
 
-    const shippingValidationResult = validateOrder(order);
-    if (!shippingValidationResult.isValid) {
-      setWarnings(shippingValidationResult.messageKeys);
+  useEffect(() => {
+    if (!phoneTrigger) return;
 
-      isOrderValid = false;
-    } else {
-      setWarnings([]);
-    }
+    setPhoneTrigger(false);
+    setPhoneWarnings(null);
+  }, [formOrderData.billing?.phone]);
 
-    // Inpost & phone number starts with +48
-    if (
-      shippingMethod?.method_title === 'InPost Locker 24/7' &&
-      !formOrderData?.billing?.phone?.startsWith('+48')
-    ) {
-      setPhoneTrigger(true);
-      setPhoneWarnings('inpostPhoneRequired');
-      isOrderValid = false;
-    } else {
-      setPhoneTrigger(false);
-      setPhoneWarnings(null);
-    }
-
-    setRegistrationErrorWarning(null);
-
-    if (isRegistration && registrationData && isOrderValid) {
-      setIsRegistrationSuccessful(false);
-
-      const registrationError = await registerUser(registrationData);
-
-      if (!registrationError) {
-        setIsRegistrationSuccessful(true);
-        setRegistrationErrorWarning(null);
-        setRegistrationData(null);
-      } else {
-        isOrderValid = false;
-        setRegistrationErrorWarning(registrationError);
-
-        if (
-          registrationError.includes(
-            'An account is already registered with your email address.'
-          )
-        ) {
-          setRegistrationData(null);
-        }
-      }
-    }
-
+  const updateCustomerDataIfNeeded = async () => {
     if (customer && customer?.billing && formOrderData?.billing) {
       const { isNipChanged, hasChanges } = checkCustomerDataChanges(
         formOrderData.billing,
@@ -583,28 +558,96 @@ export default function CheckoutPage() {
 
           await refetch();
         } catch (error) {
-          console.error(error);
+          console.error('Update customer failed', error);
+        }
+      }
+    }
+  };
+
+  const validateCheckoutBeforeOrder = () => {
+    // 1. shipping method
+    if (!shippingMethod) {
+      setValidationErrors('validationErrorsFields');
+      setIsWarningsShown(true);
+      return false;
+    }
+
+    // 2. parcel machine
+    if (
+      parcelMachinesMethods.includes(shippingMethod.method_id) &&
+      !parcelMachine
+    ) {
+      setWarnings(['parcelLocker']);
+      setIsWarningsShown(true);
+      return false;
+    }
+
+    // 3. form validity
+    if (!isValidForm) {
+      setValidationErrors('validationErrorsFields');
+      setIsWarningsShown(true);
+      return false;
+    }
+
+    // 4. phone (InPost)
+    if (
+      shippingMethod.method_title.includes('InPost Locker 24/7') &&
+      !formOrderData.billing?.phone?.startsWith('+48')
+    ) {
+      setPhoneTrigger(true);
+      setPhoneWarnings('inpostPhoneRequired');
+      setIsWarningsShown(true);
+      return false;
+    }
+
+    setWarnings([]);
+    setValidationErrors(null);
+
+    return true;
+  };
+
+  const createOrderHandler = async () => {
+    if (isCreatingOrder) return;
+
+    if (!validateCheckoutBeforeOrder()) return;
+
+    setIsCreatingOrder(true);
+
+    let canProceed = true;
+
+    if (isRegistration && registrationData) {
+      setIsRegistrationSuccessful(false);
+
+      const registrationError = await registerUser(registrationData);
+
+      if (!registrationError) {
+        setIsRegistrationSuccessful(true);
+        setRegistrationErrorWarning(null);
+        setRegistrationData(null);
+      } else {
+        canProceed = false;
+        setRegistrationErrorWarning(registrationError);
+
+        if (
+          registrationError.includes(
+            'An account is already registered with your email address.'
+          )
+        ) {
+          setRegistrationData(null);
         }
       }
     }
 
-    if (isOrderValid) {
-      setOrderStatus('pending');
+    if (!canProceed) {
+      setIsCreatingOrder(false);
+      return;
     }
-  };
 
-  const isPayButtonDisabled =
-    isOrderLoading ||
-    orderStatus === 'pending' ||
-    isLoading ||
-    !shippingLine ||
-    !shippingMethod ||
-    !shippingMethods.some(m => m.method_id === shippingMethod?.method_id) ||
-    isStep2Loading;
-
-  /* Update an order */
-  useEffect(() => {
-    if (!shippingMethod || isUserDataLoading || cartItems.length === 0) return;
+    try {
+      await updateCustomerDataIfNeeded();
+    } catch (error) {
+      console.warn('Update customer failed, but continuing order', error);
+    }
 
     const couponLines =
       !ignoreCoupon && couponCode ? [{ code: couponCode }] : [];
@@ -613,35 +656,56 @@ export default function CheckoutPage() {
       ? formOrderData.metaData
       : [];
 
-    const create = async () => {
-      try {
-        await createOrder({
-          status: orderStatus,
-          line_items: cartItems,
-          meta_data: [
-            {
-              key: 'wpml_language',
-              value: router.locale || '',
-            },
-            ...(filteredMetaData || []),
-          ],
-          coupon_lines: couponLines,
-          ...(currencyCode && { currency: currencyCode }),
-          ...(formOrderData.billing && { billing: formOrderData.billing }),
-          ...(formOrderData.shipping &&
-            isShippingAddressDifferent && { shipping: formOrderData.shipping }),
-          ...(userData?.id && { customer_id: userData.id }),
-          ...(shippingLine && { shipping_lines: [shippingLine] }),
-          ...(commentToOrder && { customer_note: commentToOrder }),
-        }).unwrap();
-      } catch (error) {
-        // handleOrderError(error);
-        console.error('Order creation failed', error);
-      }
+    const orderPayload = {
+      status: 'pending' as const,
+      line_items: cartItems,
+      meta_data: [
+        {
+          key: 'wpml_language',
+          value: router.locale || '',
+        },
+        ...(filteredMetaData || []),
+      ],
+      coupon_lines: couponLines,
+      ...(currencyCode && { currency: currencyCode }),
+      ...(formOrderData.billing && { billing: formOrderData.billing }),
+      ...(formOrderData.shipping &&
+        isShippingAddressDifferent && { shipping: formOrderData.shipping }),
+      ...(userData?.id && { customer_id: userData.id }),
+      ...(shippingLine && { shipping_lines: [shippingLine] }),
+      ...(commentToOrder && { customer_note: commentToOrder }),
     };
 
-    if (orderStatus === 'pending') create();
-  }, [orderStatus]);
+    try {
+      const createdOrder = await createOrder(orderPayload).unwrap();
+
+      // step3
+      await finalizeCheckoutSession(checkout.token, createdOrder.id);
+
+      if (createdOrder.payment_url) {
+        const paymentUrlObj = new URL(createdOrder.payment_url);
+        const langCode = router.locale === 'en' ? '' : router.locale;
+        paymentUrlObj.pathname = '/' + langCode + paymentUrlObj.pathname;
+        router.push(paymentUrlObj.toString());
+
+        return;
+      }
+      setIsCreatingOrder(false);
+    } catch (error) {
+      console.error('Order creation failed', error);
+      setIsCreatingOrder(false);
+    }
+  };
+
+  const isPayButtonDisabled =
+    isCreatingOrder ||
+    isOrderLoading ||
+    isLoading ||
+    !shippingLine ||
+    !shippingMethod ||
+    !shippingMethods.some(m => m.method_id === shippingMethod?.method_id) ||
+    isStep2Loading ||
+    isStep2Pending;
 
   const [updateCustomer, { error: updateError, isSuccess: isUpdateSuccess }] =
     useUpdateCustomerMutation();
@@ -757,17 +821,6 @@ export default function CheckoutPage() {
   }, [orderCreationError]);
 
   useEffect(() => {
-    if (order?.status === 'pending' && order.payment_url) {
-      const paymentUrlObj = new URL(order.payment_url);
-
-      const langCode = router.locale === 'en' ? '' : router.locale;
-      paymentUrlObj.pathname = '/' + langCode + paymentUrlObj.pathname;
-
-      router.push(paymentUrlObj.toString());
-    }
-  }, [order]);
-
-  useEffect(() => {
     if (!isValidForm && shippingMethod) {
       setShippingMethod(undefined);
     }
@@ -785,6 +838,10 @@ export default function CheckoutPage() {
         <CheckoutFormsWrapper>
           {/* Billing and shipping forms */}
           {validationErrors && <BillingWarnings message={validationErrors} />}
+
+          {phoneWarnings && isWarningsShown && (
+            <BillingWarnings message={phoneWarnings} />
+          )}
 
           {registrationErrorWarning && (
             <RegistrationError
@@ -828,7 +885,7 @@ export default function CheckoutPage() {
 
             <ShippingMethodSelector
               methods={shippingMethods}
-              isLoading={isLoading}
+              isLoading={isLoading || isCreatingOrder}
               currentMethodId={shippingMethod?.method_id}
               onChange={method => setShippingMethod(method)}
               parcelMachinesMethods={parcelMachinesMethods}
@@ -853,7 +910,7 @@ export default function CheckoutPage() {
           <CheckoutPayButtonWrapper>
             <CheckoutPayButton
               disabled={isPayButtonDisabled}
-              onClick={handlePayOrder}
+              onClick={createOrderHandler}
             >
               {tCart('Continue')}
             </CheckoutPayButton>

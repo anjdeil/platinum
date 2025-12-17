@@ -27,12 +27,11 @@ const PreOrderSummary: FC<PreOrderSummaryProps> = ({
   const tShipping = useTranslations('ShippingMethodSelector');
   const { formatPrice } = useCurrencyConverter();
 
-  const subtotal = +(summary?.subtotal ?? 0);
+  const subtotal = +(summary?.items_subtotal_incl_tax ?? 0);
   const discountAmount = +(summary?.discount_total ?? 0);
   const vatTotal = +(summary?.vat_total ?? 0);
   const total = +(summary?.total ?? 0);
   const shippingTotal = +(summary?.shipping_total ?? 0);
-  // const subtotalDisplayed = total + discountAmount - shippingTotal;
 
   function normalizeShippingLabel(label: string): string {
     return label.replace(/\s*\(free\)\s*$/i, '').trim();

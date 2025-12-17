@@ -1,10 +1,13 @@
 import { loyaltyCouponsCodes } from '@/components/pages/cart/CartCouponBlock';
 import { useAppDispatch, useAppSelector } from '@/store';
-import { useCheckoutStep1Mutation, useCheckoutStep2Mutation } from '@/store/rtk-queries/wpApi';
+import { useCheckoutConfirmMutation, useCheckoutStep1Mutation, useCheckoutStep2Mutation } from '@/store/rtk-queries/wpApi';
 import { addCoupon, clearCoupon } from '@/store/slices/cartSlice';
 import { clearCheckoutState, setCheckoutState, setHasStep2Requested } from '@/store/slices/checkoutSlice';
 import { UserLoyalityStatusType } from '@/types/store/rtk-queries/wpApi';
 import { useCallback, useRef, useState } from 'react';
+
+const SHIPPING_METHOD_UNAVAILABLE =
+    'Selected shipping method is not available for this address.';
 
 export function useCheckoutSession(
     userLoyaltyStatus?: UserLoyalityStatusType,
@@ -18,6 +21,7 @@ export function useCheckoutSession(
 
     const [checkoutStep1, { isLoading }] = useCheckoutStep1Mutation();
     const [checkoutStep2, { isLoading: isStep2Loading }] = useCheckoutStep2Mutation();
+    const [checkoutConfirm] = useCheckoutConfirmMutation();
 
     const [couponError, setCouponError] = useState(false);
     const [couponSuccess, setCouponSuccess] = useState(false);
@@ -143,7 +147,7 @@ export function useCheckoutSession(
     }, [dispatch, couponCode, userLoyaltyStatus, setHasConflict, checkout.token]);
 
     const updateStep2StateFromResp = useCallback((resp: any) => {
-        const normalizedSession = normalizeSession(resp.session);
+        const normalizedSession = normalizeSession(resp.session) ?? checkout.session;
         const normalizedStep = normalizeStep(resp.step ?? normalizedSession.step ?? 2);
 
         const normalizedTotals =
@@ -167,7 +171,7 @@ export function useCheckoutSession(
         const hasShippingMethodError =
             !success &&
             errors.length > 0 &&
-            !selectedShippingMethod;
+            errors.includes(SHIPPING_METHOD_UNAVAILABLE);
 
         // ------------------------
         // 1. Error shipping method
@@ -207,11 +211,6 @@ export function useCheckoutSession(
             })
         );
 
-        // warnings
-        if (setHasConflict && warnings.length > 0) {
-            setHasConflict(true);
-        }
-
         dispatch(setHasStep2Requested(true));
 
         return {
@@ -248,38 +247,6 @@ export function useCheckoutSession(
         }
         throw new Error('Failed to create checkout session');
     }, [buildPayload, checkoutStep1, updateStateFromResp]);
-
-    const recalcSession = useCallback(async () => {
-        const token = checkout.token;
-        let expiresAt = checkout.expiresAt;
-
-        if (typeof expiresAt === 'string') {
-            try { expiresAt = JSON.parse(expiresAt); } catch { }
-        }
-
-        if (!token || !expiresAt || new Date(expiresAt) <= new Date()) {
-            const resp = await createSession();
-            return updateStateFromResp(resp);
-        }
-
-        const payload = buildPayload();
-        try {
-            const resp = await guardedStep1(() => checkoutStep1({ payload }).unwrap());
-
-            if (!resp) {
-                return null;
-            }
-
-            if (resp.session_token) {
-                return updateStateFromResp(resp);
-            }
-            throw new Error('Failed to recalc checkout session');
-        } catch {
-            dispatch(clearCheckoutState());
-            const resp = await createSession();
-            return updateStateFromResp(resp);
-        }
-    }, [checkout.token, checkout.expiresAt, checkoutStep1, buildPayload, updateStateFromResp, dispatch, createSession]);
 
     const recalcSessionSafe = useCallback(async () => {
         const token = checkout.token;
@@ -364,11 +331,37 @@ export function useCheckoutSession(
         setCouponSuccess(false);
     }, [dispatch]);
 
+    const finalizeCheckoutSession = async (
+        token: string | null,
+        orderId: number
+    ) => {
+        if (!token) return;
+
+        const attempt = async () => {
+            await checkoutConfirm({
+                payload: { token, order_id: orderId },
+            }).unwrap();
+        };
+
+        try {
+            await attempt();
+        } catch (e: any) {
+            const status = e?.status;
+
+            clearSession();
+
+            if (status === 500) {
+                try { await attempt(); } catch { }
+            }
+
+            console.error('STEP 3 finalize error', status, e);
+        }
+    };
+
     return {
         initStep1,
         updateStateFromResp,
         updateStep2StateFromResp,
-        recalcSession,
         recalcSessionSafe,
         recalcStep2,
         clearSession,
@@ -377,5 +370,6 @@ export function useCheckoutSession(
         couponSuccess,
         isLoading,
         isStep2Loading,
+        finalizeCheckoutSession,
     };
 }
