@@ -4,7 +4,7 @@ import { useCheckoutConfirmMutation, useCheckoutStep1Mutation, useCheckoutStep2M
 import { addCoupon, clearCoupon } from '@/store/slices/cartSlice';
 import { clearCheckoutState, setCheckoutState, setHasStep2Requested } from '@/store/slices/checkoutSlice';
 import { UserLoyalityStatusType } from '@/types/store/rtk-queries/wpApi';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 const SHIPPING_METHOD_UNAVAILABLE =
     'Selected shipping method is not available for this address.';
@@ -29,6 +29,15 @@ export function useCheckoutSession(
     const requestIdRef = useRef(0);
     const requestIdStep2Ref = useRef(0);
 
+    // for actual data
+    const cartRef = useRef(cartItems);
+    const couponRef = useRef(couponCode);
+    const currencyRef = useRef(currency);
+
+    useEffect(() => { cartRef.current = cartItems }, [cartItems]);
+    useEffect(() => { couponRef.current = couponCode }, [couponCode]);
+    useEffect(() => { currencyRef.current = currency }, [currency]);
+
     const guardedStep1 = useCallback(async (action: () => Promise<any>) => {
         const id = ++requestIdRef.current;
 
@@ -43,13 +52,13 @@ export function useCheckoutSession(
 
     const buildPayload = useCallback(() => ({
         token: checkout.token,
-        currency,
-        line_items: cartItems.map(item => ({
+        currency: currencyRef.current,
+        line_items: cartRef.current.map(item => ({
             product_id: item.product_id,
             variation_id: item.variation_id ?? 0,
             quantity: item.quantity,
         })),
-        coupon_lines: (!ignoreCoupon && couponCode ? [{ code: couponCode }] : []),
+        coupon_lines: (!ignoreCoupon && couponRef.current ? [{ code: couponRef.current }] : []),
         email: user?.email ?? undefined,
         customer_id: user?.id ? Number(user.id) : undefined
     }), [cartItems, couponCode, currency, user, ignoreCoupon, checkout.session]);

@@ -21,6 +21,7 @@ const initial: CheckoutState = {
     success: null,
     token: null,
     totals: null,
+    session: null,
     warnings: [],
     couponErrors: [],
     step: 1,

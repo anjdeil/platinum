@@ -121,6 +121,8 @@ export const ShippingTypeSchema = z.object({
   state: z.string().optional(),
   postcode: z.string(),
   country: z.string(),
+  email: z.string().optional(),
+  phone: z.string().optional(),
 });
 
 export const BillingTypeSchema = ShippingTypeSchema.extend({

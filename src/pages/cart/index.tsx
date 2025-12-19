@@ -90,6 +90,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   const lastCouponRef = useRef(couponCode);
   const lastCurrencyRef = useRef(code);
   const initialLoadRef = useRef(true);
+  const needsRecalcAfterInit = useRef(false);
 
   const step1DebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastCartRef = useRef<string>(JSON.stringify(cartItems));
@@ -139,8 +140,15 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
           } finally {
             step1LockedRef.current = false;
             initialLoadRef.current = false;
+
+            if (needsRecalcAfterInit.current) {
+              needsRecalcAfterInit.current = false;
+              recalcSessionSafe().catch(console.error);
+            }
           }
         })();
+      } else {
+        needsRecalcAfterInit.current = true;
       }
       return;
     }

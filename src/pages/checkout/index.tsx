@@ -135,8 +135,6 @@ export default function CheckoutPage() {
         try {
           const result = await recalcStep2(payload);
 
-          console.log('result.shippingError...', result?.shippingError);
-
           if (result?.shippingError) {
             setWarnings(['shippingMethodUnavailable', 'shippingMethod']);
             setIsWarningsShown(true);
@@ -422,12 +420,32 @@ export default function CheckoutPage() {
     if (shippingMethod && formOrderData.billing) {
       setIsStep2Pending(true);
 
+      const shippingData: ShippingType = {
+        first_name:
+          formOrderData.shipping?.first_name ||
+          formOrderData.billing.first_name,
+        last_name:
+          formOrderData.shipping?.last_name || formOrderData.billing.last_name,
+        address_1:
+          formOrderData.shipping?.address_1 || formOrderData.billing.address_1,
+        address_2:
+          formOrderData.shipping?.address_2 || formOrderData.billing.address_2,
+        city: formOrderData.shipping?.city || formOrderData.billing.city,
+        postcode:
+          formOrderData.shipping?.postcode || formOrderData.billing.postcode,
+        country:
+          formOrderData.shipping?.country || formOrderData.billing.country,
+        state: formOrderData.shipping?.state || formOrderData.billing.state,
+        email: formOrderData.shipping?.email || formOrderData.billing.email,
+        phone: formOrderData.shipping?.phone || formOrderData.billing.phone,
+      };
+
       const payload: Step2RequestType = {
         token: checkout.token!,
         currency: currencyCode,
         use_billing_for_shipping: !isShippingAddressDifferent,
         billing_data: formOrderData.billing,
-        ...(isShippingAddressDifferent && { shipping: formOrderData.shipping }),
+        ...(isShippingAddressDifferent && { shipping_data: shippingData }),
         shipping_method_id: `${shippingMethod.method_id}:${shippingMethod.id}`,
       };
 

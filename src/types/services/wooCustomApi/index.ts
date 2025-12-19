@@ -40,6 +40,7 @@ export const WooCustomerSchema = z.object({
     country: z.string(),
     state: z.string(),
     phone: z.string(),
+    email: z.string().optional(),
   }),
   is_paying_customer: z.boolean(),
   avatar_url: z.string(),
