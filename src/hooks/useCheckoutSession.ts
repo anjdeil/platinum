@@ -50,8 +50,8 @@ export function useCheckoutSession(
         return resp;
     }, []);
 
-    const buildPayload = useCallback(() => ({
-        token: checkout.token,
+    const buildPayload = useCallback((token?: string) => ({
+        token: token ?? checkout.token,
         currency: currencyRef.current,
         line_items: cartRef.current.map(item => ({
             product_id: item.product_id,
@@ -61,7 +61,7 @@ export function useCheckoutSession(
         coupon_lines: (!ignoreCoupon && couponRef.current ? [{ code: couponRef.current }] : []),
         email: user?.email ?? undefined,
         customer_id: user?.id ? Number(user.id) : undefined
-    }), [cartItems, couponCode, currency, user, ignoreCoupon, checkout.session]);
+    }), [cartItems, couponCode, currency, user, checkout.token, ignoreCoupon]);
 
     const safeParse = (value: any) => {
         if (typeof value === 'string') {
@@ -109,6 +109,11 @@ export function useCheckoutSession(
     };
 
     const updateStateFromResp = useCallback((resp: any) => {
+        if (!resp || !resp.session) {
+            console.warn('Empty session received', resp);
+            return null;
+        }
+
         const session = normalizeSession(resp.session) || {};
         const totals = normalizeTotals(resp.totals) ?? session?.totals ?? null;
 
@@ -258,14 +263,14 @@ export function useCheckoutSession(
     }, [buildPayload, checkoutStep1, updateStateFromResp]);
 
     const recalcSessionSafe = useCallback(async () => {
-        const token = checkout.token;
+        const token: string | null = checkout.token;
         let expiresAt = checkout.expiresAt;
 
         if (typeof expiresAt === 'string') {
             try { expiresAt = JSON.parse(expiresAt); } catch { }
         }
 
-        const payload = buildPayload();
+        const payload = buildPayload(token ?? undefined);
 
         try {
             let resp;

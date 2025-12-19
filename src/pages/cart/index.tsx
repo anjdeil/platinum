@@ -82,6 +82,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   } = useCheckoutSession(userLoyaltyStatus, setHasConflict);
 
   const step1LockedRef = useRef(false);
+  const checkout = useAppSelector(s => s.checkoutSlice);
 
   useEffect(() => {
     initStep1();
@@ -273,7 +274,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
           <div>
             <CartTable
               productsWithCartData={productsWithCartData}
-              loading={isLoadingProducts}
+              loading={isLoadingProducts || !checkout.token}
               hasConflict={hasConflict}
               handleChangeQuantity={handleChangeQuantity}
               handleDeleteItem={handleDeleteItem}
