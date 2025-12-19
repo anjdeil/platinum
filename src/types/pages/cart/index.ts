@@ -4,7 +4,7 @@ import {
   ProductsWithCartDataSchemaWithFinalPrice,
 } from '@/types/components/shop/product/products';
 import { UserTotalsSchema } from '@/types/services/userTotals';
-import { OrderTypeSchema, QuoteResponseSchema, SummaryRespShema } from '@/types/services/wooCustomApi/customer';
+import { OrderTypeSchema, SummaryRespShema } from '@/types/services/wooCustomApi/customer';
 import {
   lineOrderItemsSchema,
 } from '@/types/store/reducers/cartSlice';
@@ -49,13 +49,13 @@ export const CartCouponBlockSchema = z.object({
 });
 export const CartSummaryBlockSchema = z.object({
   symbol: z.string().optional(),
-  quote: QuoteResponseSchema.optional(),
+  // quote: QuoteResponseSchema.optional(),
   isLoading: z.boolean().optional(),
   cartItems: z.array(ProductsWithCartDataSchemaWithFinalPrice),
-  auth: z.boolean(),
+  // auth: z.boolean(),
   userTotal: UserTotalsSchema.optional(),
-  handleGetQuote: z.function().returns(z.promise(QuoteResponseSchema.optional())),
-  quoteData: QuoteResponseSchema.optional(),
+  // handleGetQuote: z.function().returns(z.promise(QuoteResponseSchema.optional())),
+  // quoteData: QuoteResponseSchema.optional(),
 });
 export const CartTableSchema = z.object({
   symbol: z.string().optional(),
@@ -106,12 +106,20 @@ export const QuoteSummarySchema = z.object({
   isLoading: z.boolean().optional(),
 });
 
+export const ShippingMethodSchema = z.object({
+  id: z.string(),
+  method_id: z.string(),
+  label: z.string(),
+  cost: z.number(),
+  tax: z.number(),
+  instance_id: z.number(),
+});
 
 export const PreOrderSummarySchema = z.object({
   summary: SummaryRespShema.optional(),
-  cartItems: z.array(ProductsWithCartDataSchemaWithFinalPrice),
   isLoading: z.boolean().optional(),
-  userTotal: UserTotalsSchema.optional()
+  selectedShippingMethod: ShippingMethodSchema.optional().nullable(),
+  session: z.any().optional(),
 });
 
 export type OrderSummaryProps = z.infer<typeof OrderSummarySchema>;

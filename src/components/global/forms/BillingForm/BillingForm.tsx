@@ -309,20 +309,37 @@ export const BillingForm: FC<BillingFormProps> = ({
         metaData: null,
       });
     }
-  }, [isValid, different_address, company, nip, watchedFields]);
+  }, [
+    isValid,
+    different_address,
+    company,
+    nip,
+    watchedFields.first_name,
+    watchedFields.last_name,
+    watchedFields.email,
+    watchedFields.phone,
+    watchedFields.country,
+    watchedFields.city,
+    watchedFields.address_1,
+    watchedFields.address_2,
+    watchedFields.postcode,
+    watchedFields.shipping_first_name,
+    watchedFields.shipping_last_name,
+    watchedFields.shipping_country,
+    watchedFields.shipping_city,
+    watchedFields.shipping_address_1,
+    watchedFields.shipping_address_2,
+    watchedFields.shipping_postcode,
+  ]);
 
   useEffect(() => {
-    if (!isValid && isWarningsShown) {
-      trigger(undefined, { shouldFocus: true }).then(() => {
-        setValidationErrors('validationErrorsFields');
-        setFormOrderData({
-          billing: null,
-          shipping: null,
-          metaData: null,
-        });
-      });
-    }
-  }, [isValid, isWarningsShown, locale]);
+    if (!isWarningsShown) return;
+    if (isValid) return;
+
+    trigger(undefined, { shouldFocus: true }).then(() => {
+      setValidationErrors('validationErrorsFields');
+    });
+  }, [isWarningsShown]);
 
   const addressFields = (form: string) => (
     <>

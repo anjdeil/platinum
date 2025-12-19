@@ -394,6 +394,7 @@
     "PasswordsDoNotMatch": "Passwords do not match",
     "parcelLocker": "Please, select a parcel locker",
     "shippingMethod": "Please, select a shipping method",
+    "shippingMethodUnavailable": "The selected shipping method is not available for this address",
     "noChanges": "There's no change in your data",
     "noBillingInformation": "Please, field the billing/shipping information",
     "isRequired": "field is required",

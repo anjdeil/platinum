@@ -63,7 +63,6 @@ export const CustomFormInput: FC<CustomFormInputType> = ({
 
   useEffect(() => {
     if (!errors || !name) {
-      console.error("Either 'errors' or 'name' is undefined");
       setError(false);
       return;
     }
