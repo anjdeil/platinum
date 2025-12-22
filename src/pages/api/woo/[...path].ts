@@ -28,7 +28,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         await fetchData(method);
 
     async function fetchData(method: string = "GET", body?: unknown, headers?: Record<string, string>) {
-        const maxRetries = 3;
+        const isCreateOrder =
+            method === 'POST' && slug.startsWith('orders');
+
+        const maxRetries = isCreateOrder ? 1 : 3;
         let attempt = 0;
         let response;
 
@@ -53,8 +56,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                         return res.status(405).end(`Method ${method} Not Allowed`);
                 }
 
-                if (response.status !== 400) {
-                    return res.status(200).json(response.data);
+                if (response.status >= 200 && response.status < 300) {
+                    return res.status(response.status).json(response.data);
                 } else {
                     throw new Error(`Bad request: ${response.statusText}`);
                 }

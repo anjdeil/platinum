@@ -211,6 +211,7 @@ export default function CheckoutPage() {
   >(null);
 
   const [warnings, setWarnings] = useState<string[]>();
+  const [couponError, setCouponError] = useState<boolean>(false);
   const [phoneWarnings, setPhoneWarnings] = useState<string | null>(null);
   const [validationErrors, setValidationErrors] = useState<string | null>(null);
   const [phoneTrigger, setPhoneTrigger] = useState(false);
@@ -827,6 +828,7 @@ export default function CheckoutPage() {
     if (orderCreationError) {
       const wooError = (orderCreationError as FetchBaseQueryError).data;
       const errorCode = (wooError as WooErrorType)?.details?.code;
+      setShippingMethod(undefined);
 
       if (
         errorCode === 'woocommerce_rest_invalid_coupon' ||
@@ -834,6 +836,8 @@ export default function CheckoutPage() {
       ) {
         dispatch(clearCoupon());
         dispatch(setIgnoreCoupon(true));
+        setCouponError(true);
+        setIsWarningsShown(true);
       }
     }
   }, [orderCreationError]);
@@ -859,6 +863,12 @@ export default function CheckoutPage() {
 
           {phoneWarnings && isWarningsShown && (
             <BillingWarnings message={phoneWarnings} />
+          )}
+
+          {couponError && isWarningsShown && (
+            <Notification type="warning">
+              {tCart('couponIsNotApplied')}
+            </Notification>
           )}
 
           {registrationErrorWarning && (
@@ -905,7 +915,10 @@ export default function CheckoutPage() {
               methods={shippingMethods}
               isLoading={isLoading || isCreatingOrder}
               currentMethodId={shippingMethod?.method_id}
-              onChange={method => setShippingMethod(method)}
+              onChange={method => {
+                setShippingMethod(method);
+                setCouponError(false);
+              }}
               parcelMachinesMethods={parcelMachinesMethods}
               parcelMachine={parcelMachine}
               onParcelMachineChange={handleParcelMachineChange}
