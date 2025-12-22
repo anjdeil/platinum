@@ -4,8 +4,10 @@ import AccountLinkBlockList from '@/components/pages/account/AccountLinkBlockLis
 import OrderTable from '@/components/pages/order/OrderTable/OrderTable';
 import wooCommerceRestApi from '@/services/wooCommerceRestApi';
 import wpRestApi from '@/services/wpRestApi';
+import { useAppSelector } from '@/store';
 import { useGetUserTotalsQuery } from '@/store/rtk-queries/userTotals/userTotals';
 import { useFetchOrdersQuery } from '@/store/rtk-queries/wooCustomApi';
+import { addCoupon, setIgnoreCoupon } from '@/store/slices/cartSlice';
 import { setUser } from '@/store/slices/userSlice';
 import { AccountInfoWrapper } from '@/styles/components';
 import { JwtDecodedDataType } from '@/types/services/wpRestApi/auth';
@@ -18,7 +20,7 @@ import { validateJwtDecode } from '@/utils/zodValidators/validateJwtDecode';
 import { decodeJwt } from 'jose';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { useTranslations } from 'next-intl';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 // Delete this interface when we have a user type
@@ -90,6 +92,17 @@ const MyAccount: FC<MyAccountPropsType> = ({ user }) => {
   const userLocal = getUserFromLocalStorage();
 
   const level = userTotal?.loyalty_status;
+
+  const { couponCode, ignoreCoupon } = useAppSelector(state => state.cartSlice);
+
+  useEffect(() => {
+    if (level && !couponCode) {
+      dispatch(addCoupon({ couponCode: level }));
+      if (ignoreCoupon) {
+        dispatch(setIgnoreCoupon(false));
+      }
+    }
+  }, [level, dispatch, couponCode, ignoreCoupon]);
 
   if (!userLocal) {
     const userData = {

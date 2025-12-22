@@ -1,24 +1,34 @@
-import { Container, FormPageWrapper } from '@/styles/components';
-import { GetServerSidePropsContext } from 'next';
-import wpRestApi from '@/services/wpRestApi';
+import Breadcrumbs from '@/components/global/Breadcrumbs/Breadcrumbs';
 import { LoginForm } from '@/components/global/forms/LoginForm';
 import { FormContainer } from '@/components/pages/account/styles';
-import { useTranslations } from 'next-intl';
-import Breadcrumbs from '@/components/global/Breadcrumbs/Breadcrumbs';
-import { removeUserFromLocalStorage } from '@/utils/auth/userLocalStorage';
-import { useAppDispatch } from '@/store';
-import { clearUser } from '@/store/slices/userSlice';
 import { PageTitle } from '@/components/pages/pageTitle';
-import { useRouter } from 'next/router';
+import wpRestApi from '@/services/wpRestApi';
+import { useAppDispatch } from '@/store';
+import { clearCoupon } from '@/store/slices/cartSlice';
+import { clearCheckoutState } from '@/store/slices/checkoutSlice';
+import { clearUser } from '@/store/slices/userSlice';
+import { Container, FormPageWrapper } from '@/styles/components';
+import { removeUserFromLocalStorage } from '@/utils/auth/userLocalStorage';
+import { GetServerSidePropsContext } from 'next';
+import { useTranslations } from 'next-intl';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 export default function Login() {
   const { locale } = useRouter();
   const t = useTranslations('MyAccount');
   const tBreadcrumbs = useTranslations('Breadcrumbs');
   const dispatch = useAppDispatch();
-  dispatch(clearUser());
-  removeUserFromLocalStorage();
+
+  useEffect(() => {
+    dispatch(clearUser());
+
+    dispatch(clearCoupon());
+    dispatch(clearCheckoutState());
+    removeUserFromLocalStorage();
+  }, [dispatch]);
+
   const breadcrumbsLinks = [
     { name: tBreadcrumbs('homePage'), url: `/${locale}` },
     { name: tBreadcrumbs('myAccount'), url: `/${locale}/my-account` },

@@ -394,6 +394,7 @@
     "PasswordsDoNotMatch": "Hasła nie są zgodne",
     "parcelLocker": "Wybierz paczkomat",
     "shippingMethod": "Wybierz metodę wysyłki",
+    "shippingMethodUnavailable": "Wybrana metoda dostawy jest niedostępna dla tego adresu",
     "noChanges": "Dane nie uległy zmianie",
     "noBillingInformation": "Proszę o podanie informacji rozliczeniowych",
     "isRequired": "Pole jest wymagane",

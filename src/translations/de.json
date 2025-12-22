@@ -394,6 +394,7 @@
     "PasswordsDoNotMatch": "Passwörter stimmen nicht überein",
     "parcelLocker": "Bitte wählen Sie ein Paketfach",
     "shippingMethod": "Bitte wählen Sie eine Versandart",
+    "shippingMethodUnavailable": "Die ausgewählte Versandart ist für diese Adresse nicht verfügbar",
     "noChanges": "Ihre Daten haben sich nicht geändert",
     "noBillingInformation": "Keine Rechnungsinformationen",
     "isRequired": "Feld ist erforderlich",
