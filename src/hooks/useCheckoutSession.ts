@@ -171,6 +171,7 @@ export function useCheckoutSession(
 
         const warnings = Array.isArray(resp.warnings) ? resp.warnings : [];
         const errors = Array.isArray(resp.errors) ? resp.errors : [];
+        const couponErrors = Array.isArray(resp.coupon_errors) ? resp.coupon_errors : [];
 
         const shippingMethods = Array.isArray(resp.shipping_methods)
             ? resp.shipping_methods
@@ -182,57 +183,106 @@ export function useCheckoutSession(
 
         const success = Boolean(resp.success);
 
+        const hasCouponErrorFromErrors =
+            !success &&
+            errors.some((e: any) =>
+                e.toLowerCase().includes('coupon')
+            );
+
+        const couponErrorsFromErrors = hasCouponErrorFromErrors
+            ? errors.filter((e: any) => e.toLowerCase().includes('coupon'))
+            : [];
+
+        const normalizedCouponErrors = [
+            ...couponErrors,
+            ...couponErrorsFromErrors,
+        ];
+
         const hasShippingMethodError =
             !success &&
             errors.length > 0 &&
             errors.includes(SHIPPING_METHOD_UNAVAILABLE);
 
+        const shippingErrors = hasShippingMethodError
+            ? errors.filter((e: any) => e === SHIPPING_METHOD_UNAVAILABLE)
+            : [];
+
+        const hasCouponErrors = normalizedCouponErrors.length > 0;
+
+        const nextCheckoutState = {
+            token: resp.session_token ?? checkout.token,
+            totals: normalizedTotals,
+            warnings,
+            success,
+            session: normalizedSession,
+            expiresAt: normalizedSession.expires_at ?? checkout.expiresAt,
+            shippingMethods,
+            billingData: normalizedSession.billing_data ?? checkout.billingData,
+        };
+
         // ------------------------
-        // 1. Error shipping method
+        // 1. Update coupon error state
         // ------------------------
-        if (hasShippingMethodError) {
+        if (hasCouponErrors) {
+            setCouponError(couponCode !== userLoyaltyStatus);
+            setCouponSuccess(false);
+
+            if (userLoyaltyStatus) {
+                dispatch(addCoupon({ couponCode: userLoyaltyStatus }));
+            } else {
+                dispatch(clearCoupon());
+            }
+        } else {
+            setCouponError(hasCouponErrors);
+            setCouponSuccess(!!couponCode && !loyaltyCouponsCodes.includes(couponCode));
+        }
+
+        // ------------------------
+        // 2. Error shipping method or couponErrors
+        // ------------------------
+        if (hasShippingMethodError || hasCouponErrors || errors.length > 0) {
             dispatch(
                 setCheckoutState({
                     ...checkout,
-                    shippingMethods,
-                    selectedShippingMethod: null,
+                    ...nextCheckoutState,
                     step: 2,
+                    selectedShippingMethod: hasShippingMethodError
+                        ? null
+                        : checkout.selectedShippingMethod,
                 })
             );
 
             return {
-                success: false,
-                shippingError: errors,
+                success: success,
+                shippingError: shippingErrors,
                 shippingMethods,
+                couponErrors: normalizedCouponErrors,
+                warnings,
             };
         }
 
+
         // ------------------------
-        // 2. Success → ipdate checkout
+        // 3. Success → ipdate checkout
         // ------------------------
         dispatch(
             setCheckoutState({
-                token: resp.session_token ?? checkout.token,
-                totals: normalizedTotals,
-                warnings,
-                success,
-                session: normalizedSession,
+                ...checkout,
+                ...nextCheckoutState,
                 step: normalizedStep,
-                expiresAt: normalizedSession.expires_at ?? checkout.expiresAt,
-                shippingMethods,
                 selectedShippingMethod,
-                billingData: normalizedSession.billing_data,
             })
         );
 
         dispatch(setHasStep2Requested(true));
 
         return {
-            success: true,
+            success: success,
             totals: normalizedTotals,
             selectedShippingMethod,
             shippingMethods,
             warnings,
+            couponErrors: normalizedCouponErrors,
             step: normalizedStep,
         };
     }, [dispatch, checkout, setHasConflict]);

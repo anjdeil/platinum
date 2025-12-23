@@ -485,6 +485,7 @@ export const Step2RequestSchema = z.object({
   shipping_data: ShippingTypeSchema.optional(),
 
   shipping_method_id: z.string().optional(),
+  final_check: z.boolean().optional(),
 });
 
 export const Step3RequestSchema = z.object({
