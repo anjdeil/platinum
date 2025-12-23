@@ -625,12 +625,79 @@ export default function CheckoutPage() {
     return true;
   };
 
+  const [getProductsMinimized, { data: productsMinimizedData }] =
+    useGetProductsMinimizedMutation();
+
   const createOrderHandler = async () => {
     if (isCreatingOrder) return;
 
     if (!validateCheckoutBeforeOrder()) return;
 
     setIsCreatingOrder(true);
+
+    // Step2 final check before order creation
+    if (shippingMethod && formOrderData.billing) {
+      const shippingData: ShippingType = {
+        first_name:
+          formOrderData.shipping?.first_name ||
+          formOrderData.billing.first_name,
+        last_name:
+          formOrderData.shipping?.last_name || formOrderData.billing.last_name,
+        address_1:
+          formOrderData.shipping?.address_1 || formOrderData.billing.address_1,
+        address_2:
+          formOrderData.shipping?.address_2 || formOrderData.billing.address_2,
+        city: formOrderData.shipping?.city || formOrderData.billing.city,
+        postcode:
+          formOrderData.shipping?.postcode || formOrderData.billing.postcode,
+        country:
+          formOrderData.shipping?.country || formOrderData.billing.country,
+        state: formOrderData.shipping?.state || formOrderData.billing.state,
+        email: formOrderData.shipping?.email || formOrderData.billing.email,
+        phone: formOrderData.shipping?.phone || formOrderData.billing.phone,
+      };
+
+      const step2Payload: Step2RequestType = {
+        token: checkout.token!,
+        currency: currencyCode,
+        use_billing_for_shipping: !isShippingAddressDifferent,
+        billing_data: formOrderData.billing,
+        ...(isShippingAddressDifferent && { shipping_data: shippingData }),
+        shipping_method_id: `${shippingMethod.method_id}:${shippingMethod.id}`,
+        final_check: true,
+      };
+
+      try {
+        const step2Result = await recalcStep2(step2Payload);
+
+        if (!step2Result?.success) {
+          if (
+            step2Result?.shippingError &&
+            step2Result?.shippingError.length > 0
+          ) {
+            setWarnings(['shippingMethodUnavailable', 'shippingMethod']);
+            setIsWarningsShown(true);
+            setShippingMethod(undefined);
+          }
+
+          if (
+            step2Result?.couponErrors &&
+            step2Result.couponErrors.length > 0
+          ) {
+            setShippingMethod(undefined);
+            setCouponError(true);
+            setIsWarningsShown(true);
+          }
+
+          setIsCreatingOrder(false);
+          return;
+        }
+      } catch (err) {
+        console.error('Step2 final check failed', err);
+        setIsCreatingOrder(false);
+        return;
+      }
+    }
 
     let canProceed = true;
 
@@ -675,9 +742,21 @@ export default function CheckoutPage() {
       ? formOrderData.metaData
       : [];
 
+    const productsMap = new Map(
+      productsMinimizedData?.data.items.map(item => [item.id, item.name])
+    );
+
+    const enrichedCartItems = cartItems.map(item => {
+      const name = productsMap.get(item.variation_id || item.product_id);
+      return {
+        ...item,
+        ...(name ? { name } : {}),
+      };
+    });
+
     const orderPayload = {
       status: 'pending' as const,
-      line_items: cartItems,
+      line_items: enrichedCartItems,
       meta_data: [
         {
           key: 'wpml_language',
@@ -728,9 +807,6 @@ export default function CheckoutPage() {
 
   const [updateCustomer, { error: updateError, isSuccess: isUpdateSuccess }] =
     useUpdateCustomerMutation();
-
-  const [getProductsMinimized, { data: productsMinimizedData }] =
-    useGetProductsMinimizedMutation();
 
   useEffect(() => {
     const productsMinimized = productsMinimizedData?.data?.items;
