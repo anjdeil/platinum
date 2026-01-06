@@ -109,16 +109,17 @@ export const AddressTypeSchema = z.object({
   address_1: z.string(),
   address_2: z.string(),
   city: z.string(),
-  state: z.string(),
+  state: z.string().optional(),
   postcode: z.string(),
   country: z.string(),
-  company: z.string().optional(),
   email: z.string().optional(),
   phone: z.string().optional(),
+  company: z.string().optional(),
+  nip: z.string().optional(),
 });
 
 const metaDataSchema = z.object({
-  id: z.number(),
+  id: z.number().optional(),
   key: z.string(),
   value: z.string(),
 });
