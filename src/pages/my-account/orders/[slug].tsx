@@ -27,7 +27,9 @@ export const getServerSideProps: GetServerSideProps = async (
   const { slug } = context.query;
 
   try {
-    const orderResponse = await wooCommerceRestApi.get(`orders/${slug}`);
+    const orderResponse = await wooCommerceRestApi.get(
+      `orders/${slug}?lang=${locale}`
+    );
     const order = orderResponse.data;
 
     if (order.customer_id === 0) {

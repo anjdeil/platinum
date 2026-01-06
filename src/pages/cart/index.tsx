@@ -1,5 +1,4 @@
 import { CartLink } from '@/components/global/popups/MiniCart/style';
-// import BannerCart from '@/components/pages/cart/BannerCart/BannerCart';
 import CartCouponBlock from '@/components/pages/cart/CartCouponBlock/CartCouponBlock';
 import CartSummaryBlock from '@/components/pages/cart/CartSummaryBlock/CartSummaryBlock';
 import CartTable from '@/components/pages/cart/CartTable/CartTable';
@@ -7,7 +6,7 @@ import OrderBar from '@/components/pages/cart/OrderBar/OrderBar';
 import OrderProgress from '@/components/pages/cart/OrderProgress/OrderProgress';
 import { PageTitle } from '@/components/pages/pageTitle';
 import { useCartData } from '@/hooks/useCartData';
-import { useQuoteHandler } from '@/hooks/useQuoteHandler';
+import { useCheckoutSession } from '@/hooks/useCheckoutSession';
 import wpRestApi from '@/services/wpRestApi';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { useGetUserTotalsQuery } from '@/store/rtk-queries/userTotals/userTotals';
@@ -18,11 +17,6 @@ import {
   clearCoupon,
   setIgnoreCoupon,
 } from '@/store/slices/cartSlice';
-import {
-  clearQuoteData,
-  setQuoteCurrency,
-  setQuoteData,
-} from '@/store/slices/quoteSlice';
 import { CartPageWrapper } from '@/styles/cart/style';
 import { Container, FlexBox, StyledButton } from '@/styles/components';
 import { JwtDecodedDataType } from '@/types/services/wpRestApi/auth';
@@ -35,7 +29,7 @@ import { GetServerSidePropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import router from 'next/router';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 interface CartPageProps {
   defaultCustomerData: WpUserType | null;
@@ -51,19 +45,18 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
 
   const [auth, setAuth] = useState<boolean>(false);
 
-  const [isDirty, setIsDirty] = useState(false);
-  // const [isCouponAppliedManually, setIsCouponAppliedManually] = useState(false);
-
   const userLoyaltyStatus = userTotal?.loyalty_status;
 
   useEffect(() => {
-    if (defaultCustomerData && userLoyaltyStatus) {
+    if (!defaultCustomerData) return;
+
+    if (userLoyaltyStatus && couponCode !== userLoyaltyStatus) {
       setAuth(true);
       dispatch(addCoupon({ couponCode: userLoyaltyStatus }));
       if (ignoreCoupon) {
         dispatch(setIgnoreCoupon(false));
       }
-    } else {
+    } else if (!userLoyaltyStatus && couponCode) {
       dispatch(clearCoupon());
       setAuth(false);
     }
@@ -80,61 +73,96 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   const [hasConflict, setHasConflict] = useState(false);
 
   const {
-    handleGetQuote,
-    quoteData,
-    isLoading,
+    initStep1,
+    recalcSessionSafe,
     couponError,
     setCouponError,
     couponSuccess,
-    setCouponSuccess,
-  } = useQuoteHandler(
-    code,
-    setHasConflict,
-    userLoyaltyStatus,
-    defaultCustomerData?.id
-  );
+    isLoading,
+  } = useCheckoutSession(userLoyaltyStatus, setHasConflict);
+
+  const step1LockedRef = useRef(false);
+  const checkout = useAppSelector(s => s.checkoutSlice);
 
   useEffect(() => {
-    if (!couponCode || isLoading) return;
-    handleGetQuote();
-  }, [couponCode, ignoreCoupon]);
+    initStep1();
+  }, [initStep1]);
 
-  // after change currency
-  useEffect(() => {
-    if (cartItems.length === 0 || isDirty || !couponCode || !quoteData) return;
-    handleGetQuote();
-  }, [code]);
+  const lastCouponRef = useRef(couponCode);
+  const lastCurrencyRef = useRef(code);
+  const initialLoadRef = useRef(true);
+  const needsRecalcAfterInit = useRef(false);
 
-  useEffect(() => {
-    if (ignoreCoupon && userLoyaltyStatus && cartItems.length > 0) {
-      dispatch(setIgnoreCoupon(false));
+  const step1DebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const lastCartRef = useRef<string>(JSON.stringify(cartItems));
+
+  const debouncedRecalcSessionSafe = useCallback(() => {
+    if (step1DebounceRef.current) {
+      clearTimeout(step1DebounceRef.current);
     }
-  }, [cartItems]);
+
+    step1DebounceRef.current = setTimeout(async () => {
+      try {
+        await recalcSessionSafe();
+      } catch (err) {
+        console.error('Step1 session error (debounced)', err);
+      }
+    }, 300);
+  }, [recalcSessionSafe]);
 
   useEffect(() => {
-    setCouponError(false);
-    setCouponSuccess(false);
-
-    if (quoteData) {
-      setIsDirty(true);
-    }
-    dispatch(clearQuoteData());
-
-    if (userLoyaltyStatus) {
-      dispatch(addCoupon({ couponCode: userLoyaltyStatus }));
-    } else {
-      dispatch(clearCoupon());
-    }
-  }, [cartItems]);
+    return () => {
+      if (step1DebounceRef.current) {
+        clearTimeout(step1DebounceRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
-    setIsDirty(false);
+    if (!cartItems.length) return;
 
-    if (quoteData) {
-      dispatch(setQuoteData(quoteData.summary));
-      dispatch(setQuoteCurrency(quoteData.normalized?.currency));
+    const currentCart = JSON.stringify(cartItems);
+
+    const cartChanged = lastCartRef.current !== currentCart;
+    const couponChanged = lastCouponRef.current !== couponCode;
+    const currencyChanged = lastCurrencyRef.current !== code;
+
+    lastCartRef.current = currentCart;
+    lastCouponRef.current = couponCode;
+    lastCurrencyRef.current = code;
+
+    if (initialLoadRef.current) {
+      if (!step1LockedRef.current) {
+        step1LockedRef.current = true;
+
+        (async () => {
+          try {
+            await recalcSessionSafe();
+          } finally {
+            step1LockedRef.current = false;
+            initialLoadRef.current = false;
+
+            if (needsRecalcAfterInit.current) {
+              needsRecalcAfterInit.current = false;
+              recalcSessionSafe().catch(console.error);
+            }
+          }
+        })();
+      } else {
+        needsRecalcAfterInit.current = true;
+      }
+      return;
     }
-  }, [quoteData]);
+
+    if (couponChanged && couponCode === userLoyaltyStatus) {
+      recalcSessionSafe().catch(console.error);
+      return;
+    }
+
+    if (cartChanged || couponChanged || currencyChanged) {
+      debouncedRecalcSessionSafe();
+    }
+  }, [cartItems, couponCode, code]);
 
   const { productsWithCartData, totalCartPrice } = useCartData();
 
@@ -246,7 +274,7 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
           <div>
             <CartTable
               productsWithCartData={productsWithCartData}
-              loading={isLoadingProducts}
+              loading={isLoadingProducts || !checkout.token}
               hasConflict={hasConflict}
               handleChangeQuantity={handleChangeQuantity}
               handleDeleteItem={handleDeleteItem}
@@ -286,13 +314,8 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
 
           {productsWithCartData.length > 0 && allItemAvailable && (
             <CartSummaryBlock
-              auth={auth}
               cartItems={productsWithCartData}
-              isLoading={isLoading || isLoadingProducts}
-              {...(quoteData && !isDirty ? { quote: quoteData } : {})}
-              userTotal={userTotal}
-              handleGetQuote={handleGetQuote}
-              quoteData={quoteData}
+              isLoading={isLoading}
             />
           )}
         </CartPageWrapper>
