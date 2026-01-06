@@ -3,6 +3,7 @@ import { lineOrderItems } from '@/types/store/reducers/cartSlice';
 import getSubtotalByLineItems from '@/utils/cart/getSubtotalByLineItems';
 import { formatPrice } from '@/utils/price/formatPrice';
 import { readNip } from '@/utils/readNip';
+import { uniteOptionsIntoString } from '@/utils/uniteOptionsIntoString';
 import {
   Document,
   Font,
@@ -187,7 +188,11 @@ const OrderPdf = ({
             {order?.line_items?.map(item => (
               <View key={item.id} style={styles.productTableRow}>
                 <View style={styles.productTableTwoColumn}>
-                  <Text style={styles.name}>{item.name}</Text>
+                  <Text style={styles.name}>
+                    {item.name}
+                    {uniteOptionsIntoString(item.meta_data) !== '' &&
+                      ` - ${uniteOptionsIntoString(item.meta_data)}`}
+                  </Text>
                 </View>
                 <View style={styles.productTableColumnMiddle}>
                   <Text style={styles.text}>

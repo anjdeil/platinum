@@ -2,6 +2,7 @@ import { OrderType } from '@/types/services';
 import { lineOrderItems } from '@/types/store/reducers/cartSlice';
 import getSubtotalByLineItems from '@/utils/cart/getSubtotalByLineItems';
 import { formatPrice } from '@/utils/price/formatPrice';
+import { uniteOptionsIntoString } from '@/utils/uniteOptionsIntoString';
 import {
   Document,
   Font,
@@ -100,22 +101,6 @@ const styles = StyleSheet.create({
   },
 });
 
-type MetaData = {
-  display_key: string;
-  display_value: string;
-  id: number;
-  key: string;
-  value: string;
-};
-
-function uniteOptionsIntoString(meta_data: MetaData[]) {
-  const options = meta_data.filter(({ key }) => key !== '_reduced_stock');
-  return options.reduce(
-    (acc, { display_value }) => acc + ', ' + display_value,
-    ''
-  );
-}
-
 const OrderPdf = ({ order }: { order: OrderType }) => {
   const subtotal = order?.line_items
     ? getSubtotalByLineItems(order.line_items)
@@ -165,7 +150,7 @@ const OrderPdf = ({ order }: { order: OrderType }) => {
                   <Text style={styles.name}>
                     {item.name}
                     {uniteOptionsIntoString(item.meta_data) !== '' &&
-                      uniteOptionsIntoString(item.meta_data)}
+                      ` - ${uniteOptionsIntoString(item.meta_data)}`}
                   </Text>
                   <View style={styles.splitMiddle}>
                     <Text style={styles.text}>{item.sku}</Text>

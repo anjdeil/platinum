@@ -6,8 +6,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { StyledOrderButton } from './styles';
 
-const PDFDownloadButton: React.FC<PDFDownloadButtonProps> = ({ item }) =>
-{
+const PDFDownloadButton: React.FC<PDFDownloadButtonProps> = ({ item }) => {
   const t = useTranslations('MyAccount');
   const tCheckout = useTranslations('Checkout');
   const tShipping = useTranslations('ShippingMethodSelector');

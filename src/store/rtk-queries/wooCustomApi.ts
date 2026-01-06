@@ -43,6 +43,12 @@ export const wooCustomRktApi = createApi({
         },
       }),
     }),
+    fetchOrderById: builder.query<OrderType, { id: number; lang: string }>({
+      query: ({ id, lang }) => ({
+        url: `/orders/${id}?lang=${lang}`,
+        method: 'GET',
+      }),
+    }),
     createOrder: builder.mutation<OrderType, CreateOrderRequestType>({
       query: credentials => ({
         url: `/orders`,
@@ -147,6 +153,7 @@ export const wooCustomRktApi = createApi({
 export const {
   useRegisterCustomerMutation,
   useFetchOrdersQuery,
+  useLazyFetchOrderByIdQuery,
   useCreateOrderMutation,
   useGetQuoteMutation,
   useAddCommentMutation,
