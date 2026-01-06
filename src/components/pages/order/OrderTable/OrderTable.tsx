@@ -1,10 +1,11 @@
-import PDFDownloadButton from '@/components/global/buttons/PDFDownloadButton/PDFDownloadButton';
+import FetchAndDownloadButton from '@/components/global/buttons/FetchAndDownloadButton/FetchAndDownloadButton';
 import { AccountTitle, StyledButton } from '@/styles/components';
 import { TableProps } from '@/types/pages/account';
 import { formatPrice } from '@/utils/price/formatPrice';
 import { useTheme } from '@emotion/react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { SkeletonOrderTable } from './SkeletonOrderTable';
 import {
   StyledActionsTd,
@@ -28,7 +29,6 @@ import {
   StyledTotalSpan,
   StyledTr,
 } from './styles';
-import { useRouter } from 'next/router';
 
 const OrderTable: React.FC<TableProps> = ({ orderList, title }) => {
   const theme = useTheme();
@@ -135,7 +135,7 @@ const OrderTable: React.FC<TableProps> = ({ orderList, title }) => {
                           />
                         </StyledOrderButton>
                       </StyledLinkDesktopButton>
-                      <PDFDownloadButton item={item} />
+                      <FetchAndDownloadButton item={item} />
                     </StyledActionsTd>
                   </StyledBodyTr>
                 );

@@ -56,7 +56,22 @@ const OrderProductList: React.FC<OrderProductListProps> = ({
                 src={product.image?.src || DEFAULT_IMAGE}
                 alt="product image"
               />
-              <StyledValue>{product.name}</StyledValue>
+              <StyledValue>
+                {product.name}
+                {product.meta_data &&
+                  product.meta_data.some(meta =>
+                    meta.key.startsWith('pa_')
+                  ) && (
+                    <>
+                      {' '}
+                      -{' '}
+                      {product.meta_data
+                        .filter(meta => meta.key.startsWith('pa_'))
+                        .map(meta => meta.display_value)
+                        .join(', ')}
+                    </>
+                  )}
+              </StyledValue>
             </WrapperBlock>
             <WrapperBlockInfo>
               <BlockInfo>
