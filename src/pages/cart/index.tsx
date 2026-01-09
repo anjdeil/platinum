@@ -1,3 +1,4 @@
+import Notification from '@/components/global/Notification/Notification';
 import { CartLink } from '@/components/global/popups/MiniCart/style';
 import CartCouponBlock from '@/components/pages/cart/CartCouponBlock/CartCouponBlock';
 import CartSummaryBlock from '@/components/pages/cart/CartSummaryBlock/CartSummaryBlock';
@@ -17,6 +18,10 @@ import {
   clearCoupon,
   setIgnoreCoupon,
 } from '@/store/slices/cartSlice';
+import {
+  languageSymbols,
+  setCurrentLanguage,
+} from '@/store/slices/languageSlice';
 import { CartPageWrapper } from '@/styles/cart/style';
 import { Container, FlexBox, StyledButton } from '@/styles/components';
 import { JwtDecodedDataType } from '@/types/services/wpRestApi/auth';
@@ -44,6 +49,8 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   const { data: userTotal } = useGetUserTotalsQuery(defaultCustomerData?.id);
 
   const [auth, setAuth] = useState<boolean>(false);
+
+  const [cartFatalError, setCartFatalError] = useState(false);
 
   const userLoyaltyStatus = userTotal?.loyalty_status;
 
@@ -96,17 +103,25 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   const step1DebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastCartRef = useRef<string>(JSON.stringify(cartItems));
 
+  const handleCheckoutResult = (result: { ok: boolean; fatal?: boolean }) => {
+    if (!result.ok && result.fatal) {
+      setCartFatalError(true);
+      if (step1DebounceRef.current) clearTimeout(step1DebounceRef.current);
+      return false;
+    }
+    return true;
+  };
+
   const debouncedRecalcSessionSafe = useCallback(() => {
     if (step1DebounceRef.current) {
       clearTimeout(step1DebounceRef.current);
     }
 
     step1DebounceRef.current = setTimeout(async () => {
-      try {
-        await recalcSessionSafe();
-      } catch (err) {
-        console.error('Step1 session error (debounced)', err);
-      }
+      if (cartFatalError) return;
+      const result = await recalcSessionSafe();
+
+      if (!handleCheckoutResult(result)) return;
     }, 300);
   }, [recalcSessionSafe]);
 
@@ -136,16 +151,16 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
         step1LockedRef.current = true;
 
         (async () => {
-          try {
-            await recalcSessionSafe();
-          } finally {
-            step1LockedRef.current = false;
-            initialLoadRef.current = false;
+          const result = await recalcSessionSafe();
 
-            if (needsRecalcAfterInit.current) {
-              needsRecalcAfterInit.current = false;
-              recalcSessionSafe().catch(console.error);
-            }
+          step1LockedRef.current = false;
+          initialLoadRef.current = false;
+
+          if (!handleCheckoutResult(result)) return;
+
+          if (needsRecalcAfterInit.current) {
+            needsRecalcAfterInit.current = false;
+            recalcSessionSafe();
           }
         })();
       } else {
@@ -155,8 +170,13 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
     }
 
     if (couponChanged && couponCode === userLoyaltyStatus) {
-      recalcSessionSafe().catch(console.error);
-      return;
+      (async () => {
+        const result = await recalcSessionSafe();
+
+        if (!handleCheckoutResult(result)) return;
+
+        return;
+      })();
     }
 
     if (cartChanged || couponChanged || currencyChanged) {
@@ -206,11 +226,19 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
   useEffect(() => {
     const updateOnConflict = async () => {
       if (hasConflict) {
+        // trigger cart update for check cartConflict with actual data for allItemAvailable
+        const defaultLanguage = router.defaultLocale || 'pl';
+        const currentLanguage =
+          languageSymbols.find(lang => lang.code === router.locale)?.name ||
+          defaultLanguage;
+        dispatch(setCurrentLanguage({ name: currentLanguage }));
+
         const updatedItems = await fetchMinimizedData();
         const newConflict = checkCartConflict(cartItems, updatedItems);
         setHasConflict(newConflict);
       }
     };
+
     updateOnConflict();
   }, [hasConflict, fetchMinimizedData]);
 
@@ -270,6 +298,14 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
       <OrderProgress />
 
       <Container>
+        {cartFatalError && (
+          <Notification type="warning">
+            <p>{t('cartFatal')}</p>
+            <StyledButton onClick={() => router.reload()} width="fit-content">
+              {t('reloadPage')}
+            </StyledButton>
+          </Notification>
+        )}
         <CartPageWrapper>
           <div>
             <CartTable
@@ -312,12 +348,14 @@ const CartPage: React.FC<CartPageProps> = ({ defaultCustomerData }) => {
             // setIsCouponAppliedManually={setIsCouponAppliedManually}
           />
 
-          {productsWithCartData.length > 0 && allItemAvailable && (
-            <CartSummaryBlock
-              cartItems={productsWithCartData}
-              isLoading={isLoading}
-            />
-          )}
+          {productsWithCartData.length > 0 &&
+            allItemAvailable &&
+            !cartFatalError && (
+              <CartSummaryBlock
+                cartItems={productsWithCartData}
+                isLoading={isLoading}
+              />
+            )}
         </CartPageWrapper>
       </Container>
     </>

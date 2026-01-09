@@ -235,6 +235,7 @@
     "size": "Size",
     "thickness": "thickness",
     "twist": "Twist",
+    "scent": "Scent",
     "view": "View",
     "volume": "Volume",
     "volumes": "Volumes",
@@ -308,7 +309,9 @@
     "overrideLoyaltyDiscount": "Applying the coupon, will override the discount your loyalty status gives you",
     "OrderCommentTooLong": "Your comment is too long, max 500 characters",
     "OrderCommentInvalidChars": "Your comment contains invalid characters",
-    "OrderCommentError": "Please, fill in the comment field correctly"
+    "OrderCommentError": "Please, fill in the comment field correctly",
+    "cartFatal": "Something went wrong while processing your cart. Please reload the page and try again.",
+    "reloadPage": "Reload"
   },
   "Contacts": {
     "contacts": "Contacts",

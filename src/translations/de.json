@@ -235,6 +235,7 @@
     "size": "Größe",
     "thickness": "Dicke",
     "twist": "Twist",
+    "scent": "Duft",
     "view": "Ansicht",
     "volume": "Volumen",
     "volumes": "Bände",
@@ -308,7 +309,9 @@
     "overrideLoyaltyDiscount": "Die Anwendung des Coupons hebt den Rabatt auf, den Ihnen Ihr Treuestatus gewährt.",
     "OrderCommentTooLong": "Ihr Kommentar ist zu lang, maximal 500 Zeichen",
     "OrderCommentInvalidChars": "Ihr Kommentar enthält ungültige Zeichen",
-    "OrderCommentError": "Bitte füllen Sie das Kommentarfeld korrekt aus"
+    "OrderCommentError": "Bitte füllen Sie das Kommentarfeld korrekt aus",
+    "cartFatal": "Beim Verarbeiten Ihres Warenkorbs ist ein Fehler aufgetreten. Bitte laden Sie die Seite neu und versuchen Sie es erneut.",
+    "reloadPage": "Neu laden"
   },
   "Contacts": {
     "contacts": "Kontakte",

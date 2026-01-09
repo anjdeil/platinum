@@ -41,7 +41,15 @@ export const QuantityBtn = styled.button`
   border: none;
   cursor: pointer;
   transition: all 0.2s ease;
-  &:hover {
+
+  &:disabled {
+    cursor: auto;
+    & path {
+      fill: ${({ theme }) => theme.colors.grey};
+    }
+  }
+
+  &:not(:disabled):hover {
     scale: 1.2;
   }
 `;
