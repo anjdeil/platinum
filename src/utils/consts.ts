@@ -9,6 +9,9 @@ export const LOYALTY_LEVELS = [
   { name: 'platinum' as const, amount: 20000 },
 ];
 
+// max quantity item for order
+export const MAX_QUANTITY = 50;
+
 export const DEFAULT_IMAGE = '/assets/images/not-found.webp';
 
 export const BASE_URL = 'https://platinumchetvertinovskaya.com';

@@ -1,6 +1,7 @@
 import MinusIcon from '@/components/global/icons/MinusIcon/MinusIcon';
 import PlusIcon from '@/components/global/icons/PlusIcon/PlusIcon';
 import { ProductQuantityProps } from '@/types/components/shop/product/productQuantity';
+import { MAX_QUANTITY } from '@/utils/consts';
 import { QuantityButton, QuantityContainer, QuantityInput } from './styles';
 
 const ProductQuantity: React.FC<ProductQuantityProps> = ({
@@ -10,11 +11,11 @@ const ProductQuantity: React.FC<ProductQuantityProps> = ({
 }) => {
   const maxCount = Math.min(
     stockQuantity ?? Number.MAX_SAFE_INTEGER,
-    Number.MAX_SAFE_INTEGER
+    MAX_QUANTITY
   );
 
   const handleDecrease = () => {
-    if (quantity > 0) {
+    if (quantity > 1) {
       onChange(quantity - 1);
     }
   };
@@ -36,15 +37,17 @@ const ProductQuantity: React.FC<ProductQuantityProps> = ({
 
   return (
     <QuantityContainer>
-      <QuantityButton onClick={handleDecrease} disabled={quantity === 1}>
+      <QuantityButton onClick={handleDecrease} disabled={quantity <= 1}>
         <MinusIcon />
       </QuantityButton>
       <QuantityInput
         type="number"
         value={quantity}
         onChange={handleInputChange}
+        min={1}
+        max={maxCount}
       />
-      <QuantityButton onClick={handleIncrease}>
+      <QuantityButton onClick={handleIncrease} disabled={quantity >= maxCount}>
         <PlusIcon />
       </QuantityButton>
     </QuantityContainer>

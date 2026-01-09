@@ -57,6 +57,7 @@ import {
   clearCoupon,
   setIgnoreCoupon,
 } from '@/store/slices/cartSlice';
+import { StyledButton } from '@/styles/components';
 import { RegistrationFormType } from '@/types/components/global/forms/registrationForm';
 import {
   BillingType,
@@ -111,17 +112,27 @@ export default function CheckoutPage() {
 
   const [isStep2Pending, setIsStep2Pending] = useState(false);
 
+  const [checkoutFatalError, setCheckoutFatalError] = useState(false);
+
+  const handleCheckoutResult = (result: { ok: boolean; fatal?: boolean }) => {
+    if (!result.ok && result.fatal) {
+      setCheckoutFatalError(true);
+      if (step1DebounceRef.current) clearTimeout(step1DebounceRef.current);
+      return false;
+    }
+    return true;
+  };
+
   const debouncedTriggerStep1 = useCallback(() => {
     if (step1DebounceRef.current) {
       clearTimeout(step1DebounceRef.current);
     }
 
     step1DebounceRef.current = setTimeout(async () => {
-      try {
-        await recalcSessionSafe();
-      } catch (err) {
-        console.error('Step1 session error (debounced)', err);
-      }
+      if (checkoutFatalError) return;
+      const result = await recalcSessionSafe();
+
+      if (!handleCheckoutResult(result)) return;
     }, 300);
   }, [recalcSessionSafe]);
 
@@ -394,6 +405,8 @@ export default function CheckoutPage() {
 
     if (!shouldInitStep1) return;
 
+    if (checkoutFatalError) return;
+
     debouncedTriggerStep1();
   }, [couponCode]);
 
@@ -406,6 +419,8 @@ export default function CheckoutPage() {
     if (!step2NotDone) return;
 
     if (!currencyActuallyChanged) return;
+
+    if (checkoutFatalError) return;
 
     debouncedTriggerStep1();
 
@@ -803,7 +818,8 @@ export default function CheckoutPage() {
     !shippingMethod ||
     !shippingMethods.some(m => m.method_id === shippingMethod?.method_id) ||
     isStep2Loading ||
-    isStep2Pending;
+    isStep2Pending ||
+    checkoutFatalError;
 
   const [updateCustomer, { error: updateError, isSuccess: isUpdateSuccess }] =
     useUpdateCustomerMutation();
@@ -934,6 +950,16 @@ export default function CheckoutPage() {
       <OrderProgress />
       <CheckoutContainer>
         <CheckoutFormsWrapper>
+          {/* Error */}
+          {checkoutFatalError && (
+            <Notification type="warning">
+              <p>{tCart('cartFatal')}</p>
+              <StyledButton onClick={() => router.reload()} width="fit-content">
+                {tCart('reloadPage')}
+              </StyledButton>
+            </Notification>
+          )}
+
           {/* Billing and shipping forms */}
           {validationErrors && <BillingWarnings message={validationErrors} />}
 

@@ -27,11 +27,14 @@ export const QuantityButton = styled.button`
     align-items: center;
     transition: all 0.2s ease;
 
-    &:disabled path {
+    &:disabled {
+        cursor: auto;
+        & path {
         fill: ${({ theme }) => theme.colors.grey};
+        }
     }
 
-    &:hover {
+    &:not(:disabled):hover {
         scale: 1.2;
     }
 `;

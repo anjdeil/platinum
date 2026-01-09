@@ -1,7 +1,7 @@
 import { loyaltyCouponsCodes } from '@/components/pages/cart/CartCouponBlock';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { useCheckoutConfirmMutation, useCheckoutStep1Mutation, useCheckoutStep2Mutation } from '@/store/rtk-queries/wpApi';
-import { addCoupon, clearCoupon } from '@/store/slices/cartSlice';
+import { addCoupon, clearCoupon, initializeCart } from '@/store/slices/cartSlice';
 import { clearCheckoutState, setCheckoutState, setHasStep2Requested } from '@/store/slices/checkoutSlice';
 import { UserLoyalityStatusType } from '@/types/store/rtk-queries/wpApi';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -9,11 +9,23 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 const SHIPPING_METHOD_UNAVAILABLE =
     'Selected shipping method is not available for this address.';
 
+class AbortError extends Error {
+    constructor() {
+        super('Aborted');
+        this.name = 'AbortError';
+    }
+}
+
+type RecalcResult =
+    | { ok: true }
+    | { ok: false; fatal: true };
+
 export function useCheckoutSession(
     userLoyaltyStatus?: UserLoyalityStatusType,
     setHasConflict?: (flag: boolean) => void,
 ) {
     const dispatch = useAppDispatch();
+
     const { cartItems, couponCode, ignoreCoupon } = useAppSelector(s => s.cartSlice);
     const { name: currency } = useAppSelector(s => s.currencySlice);
     const user = useAppSelector(s => s.userSlice?.user);
@@ -44,7 +56,7 @@ export function useCheckoutSession(
         const resp = await action();
 
         if (id !== requestIdRef.current) {
-            return null;
+            throw new AbortError();
         }
 
         return resp;
@@ -61,7 +73,7 @@ export function useCheckoutSession(
         coupon_lines: (!ignoreCoupon && couponRef.current ? [{ code: couponRef.current }] : []),
         email: user?.email ?? undefined,
         customer_id: user?.id ? Number(user.id) : undefined
-    }), [cartItems, couponCode, currency, user, checkout.token, ignoreCoupon]);
+    }), [user, checkout.token, ignoreCoupon]);
 
     const safeParse = (value: any) => {
         if (typeof value === 'string') {
@@ -109,9 +121,9 @@ export function useCheckoutSession(
     };
 
     const updateStateFromResp = useCallback((resp: any) => {
-        if (!resp || !resp.session) {
+        if (!resp.session) {
             console.warn('Empty session received', resp);
-            return null;
+            return;
         }
 
         const session = normalizeSession(resp.session) || {};
@@ -137,6 +149,8 @@ export function useCheckoutSession(
         }
 
         if (setHasConflict && warnings.length > 0) {
+            // triger to recalc cartConflict
+            dispatch(initializeCart());
             setHasConflict(true);
         }
 
@@ -151,13 +165,6 @@ export function useCheckoutSession(
                 expiresAt: session.expires_at,
             })
         );
-
-        return {
-            session,
-            warnings,
-            couponErrors,
-            totals,
-        };
     }, [dispatch, couponCode, userLoyaltyStatus, setHasConflict, checkout.token]);
 
     const updateStep2StateFromResp = useCallback((resp: any) => {
@@ -285,7 +292,7 @@ export function useCheckoutSession(
             couponErrors: normalizedCouponErrors,
             step: normalizedStep,
         };
-    }, [dispatch, checkout, setHasConflict]);
+    }, [dispatch, checkout]);
 
     const createSession = useCallback(async () => {
         dispatch(setCheckoutState({
@@ -302,17 +309,14 @@ export function useCheckoutSession(
             checkoutStep1({ payload }).unwrap()
         );
 
-        if (!resp) {
-            return null;
-        }
-
         if (resp?.session_token) {
-            return updateStateFromResp(resp);
+            updateStateFromResp(resp);
+            return resp;
         }
         throw new Error('Failed to create checkout session');
-    }, [buildPayload, checkoutStep1, updateStateFromResp]);
+    }, [checkout, buildPayload, guardedStep1, checkoutStep1, updateStateFromResp]);
 
-    const recalcSessionSafe = useCallback(async () => {
+    const recalcSessionSafe = useCallback(async (): Promise<RecalcResult> => {
         const token: string | null = checkout.token;
         let expiresAt = checkout.expiresAt;
 
@@ -323,28 +327,22 @@ export function useCheckoutSession(
         const payload = buildPayload(token ?? undefined);
 
         try {
-            let resp;
-
             if (!token || !expiresAt || new Date(expiresAt) <= new Date()) {
-                resp = await createSession();
+                await createSession();
             } else {
-                resp = await guardedStep1(() => checkoutStep1({ payload }).unwrap());
-
-                if (!resp) {
-                    return null;
-                }
-
-                if (!resp.session_token) {
-                    throw new Error('Failed to recalc checkout session');
-                }
+                const resp = await guardedStep1(() => checkoutStep1({ payload }).unwrap());
+                updateStateFromResp(resp);
             }
 
-            return updateStateFromResp(resp);
+            return { ok: true };
         } catch (e) {
+            if (e instanceof AbortError) {
+                return { ok: true };
+            }
+
             console.error('Step1 error', e);
             dispatch(clearCheckoutState());
-            const resp = await createSession();
-            return updateStateFromResp(resp);
+            return { ok: false, fatal: true };
         }
     }, [checkout.token, checkout.expiresAt, checkoutStep1, buildPayload, createSession, updateStateFromResp, dispatch]);
 
@@ -366,11 +364,11 @@ export function useCheckoutSession(
                 ) {
                     const step1Resp = await recalcSessionSafe();
 
-                    if (!step1Resp?.session?.session_token) {
+                    if (!step1Resp.ok) {
                         throw new Error('Failed to refresh Step1 session before Step2');
                     }
 
-                    const newPayload = { ...payload, token: step1Resp.session.session_token };
+                    const newPayload = { ...payload, token: checkout.token };
 
                     resp = await checkoutStep2({ payload: newPayload }).unwrap();
                 }
@@ -424,8 +422,6 @@ export function useCheckoutSession(
 
     return {
         initStep1,
-        updateStateFromResp,
-        updateStep2StateFromResp,
         recalcSessionSafe,
         recalcStep2,
         clearSession,
