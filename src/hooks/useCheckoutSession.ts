@@ -1,9 +1,10 @@
 import { loyaltyCouponsCodes } from '@/components/pages/cart/CartCouponBlock';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { useCheckoutConfirmMutation, useCheckoutStep1Mutation, useCheckoutStep2Mutation } from '@/store/rtk-queries/wpApi';
-import { addCoupon, clearCoupon, initializeCart } from '@/store/slices/cartSlice';
+import { addCoupon, clearConflictedItems, clearCoupon, initializeCart } from '@/store/slices/cartSlice';
 import { clearCheckoutState, setCheckoutState, setHasStep2Requested } from '@/store/slices/checkoutSlice';
 import { UserLoyalityStatusType } from '@/types/store/rtk-queries/wpApi';
+import router from 'next/router';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 const SHIPPING_METHOD_UNAVAILABLE =
@@ -120,6 +121,37 @@ export function useCheckoutSession(
         };
     };
 
+    const getUnpurchasableProductIds = (warnings: string[]): number[] => {
+        return warnings
+            .map(w => {
+                // Product ... not purchasable
+                let match = w.match(/^Product (\d+) not purchasable$/);
+                if (match) return Number(match[1]);
+
+                // Product ... not found
+                match = w.match(/^Product (\d+) not found$/);
+                if (match) return Number(match[1]);
+
+                // Parent product not found for variation ...
+                match = w.match(/^Parent product not found for variation (\d+)$/);
+                if (match) return Number(match[1]);
+
+                return null;
+            })
+            .filter((v): v is number => v !== null);
+    };
+
+    const getRemovableUnpurchasableItems = (
+        cartItems: typeof cartRef.current,
+        warnings: string[]
+    ) => {
+        const brokenIds = new Set(getUnpurchasableProductIds(warnings));
+
+        return cartItems.filter(item =>
+            brokenIds.has(item.product_id)
+        );
+    };
+
     const updateStateFromResp = useCallback((resp: any) => {
         if (!resp.session) {
             console.warn('Empty session received', resp);
@@ -131,6 +163,15 @@ export function useCheckoutSession(
 
         const warnings = Array.isArray(resp.warnings) ? resp.warnings : [];
         const couponErrors = Array.isArray(resp.coupon_errors) ? resp.coupon_errors : [];
+
+        // delete "death" products
+        if (warnings.length > 0) {
+            const removableItems = getRemovableUnpurchasableItems(cartRef.current, warnings);
+            if (removableItems.length) {
+                dispatch(clearConflictedItems(removableItems));
+                console.log('removableItems...', removableItems);
+            }
+        }
 
         const hasCouponErrors = couponErrors.length > 0;
 
@@ -295,6 +336,7 @@ export function useCheckoutSession(
     }, [dispatch, checkout]);
 
     const createSession = useCallback(async () => {
+
         dispatch(setCheckoutState({
             ...checkout,
             shippingMethods: [],
@@ -362,19 +404,59 @@ export function useCheckoutSession(
                             e.includes('Checkout session has expired')
                     )
                 ) {
-                    const step1Resp = await recalcSessionSafe();
+                    try {
+                        const step1Resp = await recalcSessionSafe();
 
-                    if (!step1Resp.ok) {
-                        throw new Error('Failed to refresh Step1 session before Step2');
+                        if (!step1Resp.ok) {
+                            clearSession();
+                            console.warn('Step1 refresh failed during Step2 recalc');
+                            return {
+                                success: false,
+                                totals: checkout.totals,
+                                selectedShippingMethod: null,
+                                shippingMethods: [],
+                                warnings: [],
+                                couponErrors: [],
+                                shippingError: [],
+                                step: 2,
+                            };
+                        }
+
+                        const newPayload = { ...payload, token: checkout.token };
+
+                        resp = await checkoutStep2({ payload: newPayload }).unwrap();
+                    } catch (e) {
+                        clearSession();
+                        console.warn('Step2 recalc failed due to Step1 error', e);
+                        return {
+                            success: false,
+                            totals: checkout.totals,
+                            selectedShippingMethod: null,
+                            shippingMethods: [],
+                            warnings: [],
+                            couponErrors: [],
+                            shippingError: [],
+                            step: 2,
+                        };
                     }
-
-                    const newPayload = { ...payload, token: checkout.token };
-
-                    resp = await checkoutStep2({ payload: newPayload }).unwrap();
                 }
 
                 if (requestId !== requestIdStep2Ref.current) {
                     return null;
+                }
+
+                if (resp?.warnings && resp?.warnings?.length > 0) {
+                    router.push('/cart');
+                    return {
+                        totals: checkout.totals,
+                        selectedShippingMethod: null,
+                        shippingMethods: [],
+                        success: false,
+                        warnings: resp.warnings,
+                        shippingError: [],
+                        couponErrors: [],
+                        step: 2,
+                    };
                 }
 
                 return updateStep2StateFromResp(resp);

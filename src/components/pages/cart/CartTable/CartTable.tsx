@@ -61,7 +61,7 @@ const CartTable: FC<CartTableProps> = ({
           <CartCardWrapper isLoadingItem={loading}>
             <CartImgWrapper>
               <CartItemImg
-                src={item.image?.src || 'assets/images/no-image.webp'}
+                src={item.image?.src || '/assets/images/not-found.webp'}
                 alt={item.name}
                 width="50"
                 height="50"
@@ -139,7 +139,7 @@ const CartTable: FC<CartTableProps> = ({
                 </DeleteCell>
                 <CartImgWrapper>
                   <CartItemImg
-                    src={item.image?.src || 'assets/images/no-image.webp'}
+                    src={item.image?.src || '/assets/images/not-found.webp'}
                     alt={item.name}
                     width="50"
                     height="50"
