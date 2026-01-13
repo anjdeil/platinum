@@ -48,7 +48,7 @@ import PreOrderSummary from '@/components/pages/cart/PreOrderSummary/PreOrderSum
 import BillingWarnings from '@/components/pages/checkout/BillingWarnings';
 import { RegistrationError } from '@/components/pages/checkout/RegistrationError/RegistrationError';
 import { PageTitle } from '@/components/pages/pageTitle';
-import { useCheckoutSession } from '@/hooks/useCheckoutSession';
+import { Step2Result, useCheckoutSession } from '@/hooks/useCheckoutSession';
 import { useGetCustomerData } from '@/hooks/useGetCustomerData';
 import { useRegisterUser } from '@/hooks/useRegisterUser';
 import { useGetUserTotalsQuery } from '@/store/rtk-queries/userTotals/userTotals';
@@ -99,7 +99,7 @@ export default function CheckoutPage() {
   const checkout = useAppSelector(s => s.checkoutSlice);
   const {
     recalcSessionSafe,
-    recalcStep2,
+    recalcStep2Safe,
     isLoading: isStep1Loading,
     isStep2Loading,
     finalizeCheckoutSession,
@@ -144,9 +144,10 @@ export default function CheckoutPage() {
 
       step2DebounceRef.current = setTimeout(async () => {
         try {
-          const result = await recalcStep2(payload);
+          const result = await recalcStep2Safe(payload);
+          if (!handleStep2Result(result)) return;
 
-          if (result?.shippingError) {
+          if (result.ok && result.data?.shippingError) {
             setWarnings(['shippingMethodUnavailable', 'shippingMethod']);
             setIsWarningsShown(true);
             setShippingMethod(undefined);
@@ -156,8 +157,17 @@ export default function CheckoutPage() {
         }
       }, 300);
     },
-    [recalcStep2]
+    [recalcStep2Safe]
   );
+
+  const handleStep2Result = (result: Step2Result) => {
+    if (!result.ok && result.fatal) {
+      setCheckoutFatalError(true);
+      if (step2DebounceRef.current) clearTimeout(step2DebounceRef.current);
+      return false;
+    }
+    return true;
+  };
 
   useEffect(() => {
     return () => {
@@ -683,12 +693,22 @@ export default function CheckoutPage() {
       };
 
       try {
-        const step2Result = await recalcStep2(step2Payload);
+        const step2Result = await recalcStep2Safe(step2Payload);
 
-        if (!step2Result?.success) {
+        if (!handleStep2Result(step2Result)) {
+          setIsCreatingOrder(false);
+          return;
+        }
+
+        if (!step2Result.ok) {
+          setIsCreatingOrder(false);
+          return;
+        }
+
+        if (!step2Result?.data.success) {
           if (
-            step2Result?.shippingError &&
-            step2Result?.shippingError.length > 0
+            step2Result?.data.shippingError &&
+            step2Result?.data.shippingError.length > 0
           ) {
             setWarnings(['shippingMethodUnavailable', 'shippingMethod']);
             setIsWarningsShown(true);
@@ -696,8 +716,8 @@ export default function CheckoutPage() {
           }
 
           if (
-            step2Result?.couponErrors &&
-            step2Result.couponErrors.length > 0
+            step2Result?.data.couponErrors &&
+            step2Result.data.couponErrors.length > 0
           ) {
             setShippingMethod(undefined);
             setCouponError(true);

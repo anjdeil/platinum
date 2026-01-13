@@ -18,8 +18,12 @@ class AbortError extends Error {
 }
 
 type RecalcResult =
-    | { ok: true }
-    | { ok: false; fatal: true };
+    | { ok: true; data?: any }
+    | { ok: false; fatal: boolean };
+
+export type Step2Result =
+    | { ok: true; data: any }
+    | { ok: false; fatal: boolean };
 
 export function useCheckoutSession(
     userLoyaltyStatus?: UserLoyalityStatusType,
@@ -169,7 +173,6 @@ export function useCheckoutSession(
             const removableItems = getRemovableUnpurchasableItems(cartRef.current, warnings);
             if (removableItems.length) {
                 dispatch(clearConflictedItems(removableItems));
-                console.log('removableItems...', removableItems);
             }
         }
 
@@ -358,7 +361,7 @@ export function useCheckoutSession(
         throw new Error('Failed to create checkout session');
     }, [checkout, buildPayload, guardedStep1, checkoutStep1, updateStateFromResp]);
 
-    const recalcSessionSafe = useCallback(async (): Promise<RecalcResult> => {
+    const recalcSessionSafe = useCallback(async (create: boolean = false): Promise<RecalcResult> => {
         const token: string | null = checkout.token;
         let expiresAt = checkout.expiresAt;
 
@@ -369,14 +372,18 @@ export function useCheckoutSession(
         const payload = buildPayload(token ?? undefined);
 
         try {
-            if (!token || !expiresAt || new Date(expiresAt) <= new Date()) {
-                await createSession();
+            let respData;
+
+            if (!token || !expiresAt || new Date(expiresAt) <= new Date() || create) {
+                const resp = await createSession();
+                respData = resp;
             } else {
                 const resp = await guardedStep1(() => checkoutStep1({ payload }).unwrap());
                 updateStateFromResp(resp);
+                respData = resp;
             }
 
-            return { ok: true };
+            return { ok: true, data: respData };
         } catch (e) {
             if (e instanceof AbortError) {
                 return { ok: true };
@@ -405,67 +412,56 @@ export function useCheckoutSession(
                     )
                 ) {
                     try {
-                        const step1Resp = await recalcSessionSafe();
+                        const step1Resp = await recalcSessionSafe(true);
 
                         if (!step1Resp.ok) {
-                            clearSession();
-                            console.warn('Step1 refresh failed during Step2 recalc');
-                            return {
-                                success: false,
-                                totals: checkout.totals,
-                                selectedShippingMethod: null,
-                                shippingMethods: [],
-                                warnings: [],
-                                couponErrors: [],
-                                shippingError: [],
-                                step: 2,
-                            };
+                            console.warn('Step2 failed due to Step1 refresh');
+                            return null;
                         }
 
-                        const newPayload = { ...payload, token: checkout.token };
+                        const newToken = step1Resp.data?.session_token ?? checkout.token;
+                        const newPayload = { ...payload, token: newToken };
 
                         resp = await checkoutStep2({ payload: newPayload }).unwrap();
                     } catch (e) {
-                        clearSession();
-                        console.warn('Step2 recalc failed due to Step1 error', e);
-                        return {
-                            success: false,
-                            totals: checkout.totals,
-                            selectedShippingMethod: null,
-                            shippingMethods: [],
-                            warnings: [],
-                            couponErrors: [],
-                            shippingError: [],
-                            step: 2,
-                        };
+                        console.warn('Step2 failed due to Step1 refresh');
+                        return null;
                     }
                 }
 
-                if (requestId !== requestIdStep2Ref.current) {
-                    return null;
-                }
+                if (requestId !== requestIdStep2Ref.current) return null;
 
                 if (resp?.warnings && resp?.warnings?.length > 0) {
                     router.push('/cart');
-                    return {
-                        totals: checkout.totals,
-                        selectedShippingMethod: null,
-                        shippingMethods: [],
-                        success: false,
-                        warnings: resp.warnings,
-                        shippingError: [],
-                        couponErrors: [],
-                        step: 2,
-                    };
+                    return null;
                 }
 
                 return updateStep2StateFromResp(resp);
             } catch (err) {
                 console.warn('Step2 failed', err);
-                throw err;
+                return null;
             }
         },
         [checkoutStep2, recalcSessionSafe, updateStep2StateFromResp]
+    );
+
+    const recalcStep2Safe = useCallback(
+        async (payload: any): Promise<Step2Result> => {
+            try {
+                const resp = await recalcStep2(payload);
+
+                if (!resp) {
+                    return { ok: false, fatal: false };
+                }
+
+                return { ok: true, data: resp };
+            } catch (e) {
+                console.error('Step2 fatal error', e);
+                dispatch(clearCheckoutState());
+                return { ok: false, fatal: true };
+            }
+        },
+        [recalcStep2, dispatch]
     );
 
     const clearSession = useCallback(() => {
@@ -505,7 +501,7 @@ export function useCheckoutSession(
     return {
         initStep1,
         recalcSessionSafe,
-        recalcStep2,
+        recalcStep2Safe,
         clearSession,
         couponError,
         setCouponError,
