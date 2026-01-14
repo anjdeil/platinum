@@ -10,13 +10,6 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 const SHIPPING_METHOD_UNAVAILABLE =
     'Selected shipping method is not available for this address.';
 
-class AbortError extends Error {
-    constructor() {
-        super('Aborted');
-        this.name = 'AbortError';
-    }
-}
-
 type RecalcResult =
     | { ok: true; data?: any }
     | { ok: false; fatal: boolean };
@@ -61,7 +54,7 @@ export function useCheckoutSession(
         const resp = await action();
 
         if (id !== requestIdRef.current) {
-            throw new AbortError();
+            return null;
         }
 
         return resp;
@@ -157,7 +150,7 @@ export function useCheckoutSession(
     };
 
     const updateStateFromResp = useCallback((resp: any) => {
-        if (!resp.session) {
+        if (!resp || !resp.session) {
             console.warn('Empty session received', resp);
             return;
         }
@@ -212,6 +205,11 @@ export function useCheckoutSession(
     }, [dispatch, couponCode, userLoyaltyStatus, setHasConflict, checkout.token]);
 
     const updateStep2StateFromResp = useCallback((resp: any) => {
+        if (!resp) {
+            console.warn('Step2 received null response');
+            return null;
+        }
+
         const normalizedSession = normalizeSession(resp.session) ?? checkout.session;
         const normalizedStep = normalizeStep(resp.step ?? normalizedSession.step ?? 2);
 
@@ -384,12 +382,30 @@ export function useCheckoutSession(
             }
 
             return { ok: true, data: respData };
-        } catch (e) {
-            if (e instanceof AbortError) {
-                return { ok: true };
+        } catch (error: any) {
+
+            const status = error?.status;
+            const code = error?.data?.details?.code;
+
+            const sessionErrors = [
+                'checkout_session_expired',
+                'checkout_session_not_found',
+            ];
+
+            if (status === 410 || (code && sessionErrors.includes(code))) {
+                console.warn('Session expired or invalid, creating new session...', error);
+
+                try {
+                    const newResp = await createSession();
+                    return { ok: true, data: newResp };
+                } catch (createErr) {
+                    console.error('Failed to create new session after expiration', createErr);
+                    dispatch(clearCheckoutState());
+                    return { ok: false, fatal: true };
+                }
             }
 
-            console.error('Step1 error', e);
+            console.error('Step1 error', error);
             dispatch(clearCheckoutState());
             return { ok: false, fatal: true };
         }

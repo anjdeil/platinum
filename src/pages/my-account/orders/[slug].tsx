@@ -10,6 +10,7 @@ import wooCommerceRestApi from '@/services/wooCommerceRestApi';
 import wpRestApi from '@/services/wpRestApi';
 import { useAppDispatch } from '@/store';
 import { clearCart } from '@/store/slices/cartSlice';
+import { clearCheckoutState } from '@/store/slices/checkoutSlice';
 import { AccountInfoWrapper, AccountTitle } from '@/styles/components';
 import { MetaDataType, OrderType } from '@/types/services/wooCustomApi/shop';
 import areBillingAndShippingEqual from '@/utils/areBillingAndShippingEqual';
@@ -100,6 +101,7 @@ const Order: FC<OrderPropsType> = ({ order }) => {
     const clearCartParam = router.query['clear-cart'];
     if (clearCartParam === 'true') {
       dispatch(clearCart());
+      dispatch(clearCheckoutState());
 
       //Google Analytics
       if (
