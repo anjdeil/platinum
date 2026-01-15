@@ -1,19 +1,29 @@
 import { loyaltyCouponsCodes } from '@/components/pages/cart/CartCouponBlock';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { useCheckoutConfirmMutation, useCheckoutStep1Mutation, useCheckoutStep2Mutation } from '@/store/rtk-queries/wpApi';
-import { addCoupon, clearCoupon } from '@/store/slices/cartSlice';
+import { addCoupon, clearConflictedItems, clearCoupon, initializeCart } from '@/store/slices/cartSlice';
 import { clearCheckoutState, setCheckoutState, setHasStep2Requested } from '@/store/slices/checkoutSlice';
 import { UserLoyalityStatusType } from '@/types/store/rtk-queries/wpApi';
+import router from 'next/router';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 const SHIPPING_METHOD_UNAVAILABLE =
     'Selected shipping method is not available for this address.';
+
+type RecalcResult =
+    | { ok: true; data?: any }
+    | { ok: false; fatal: boolean };
+
+export type Step2Result =
+    | { ok: true; data: any }
+    | { ok: false; fatal: boolean };
 
 export function useCheckoutSession(
     userLoyaltyStatus?: UserLoyalityStatusType,
     setHasConflict?: (flag: boolean) => void,
 ) {
     const dispatch = useAppDispatch();
+
     const { cartItems, couponCode, ignoreCoupon } = useAppSelector(s => s.cartSlice);
     const { name: currency } = useAppSelector(s => s.currencySlice);
     const user = useAppSelector(s => s.userSlice?.user);
@@ -61,7 +71,7 @@ export function useCheckoutSession(
         coupon_lines: (!ignoreCoupon && couponRef.current ? [{ code: couponRef.current }] : []),
         email: user?.email ?? undefined,
         customer_id: user?.id ? Number(user.id) : undefined
-    }), [cartItems, couponCode, currency, user, checkout.token, ignoreCoupon]);
+    }), [user, checkout.token, ignoreCoupon]);
 
     const safeParse = (value: any) => {
         if (typeof value === 'string') {
@@ -108,10 +118,41 @@ export function useCheckoutSession(
         };
     };
 
+    const getUnpurchasableProductIds = (warnings: string[]): number[] => {
+        return warnings
+            .map(w => {
+                // Product ... not purchasable
+                let match = w.match(/^Product (\d+) not purchasable$/);
+                if (match) return Number(match[1]);
+
+                // Product ... not found
+                match = w.match(/^Product (\d+) not found$/);
+                if (match) return Number(match[1]);
+
+                // Parent product not found for variation ...
+                match = w.match(/^Parent product not found for variation (\d+)$/);
+                if (match) return Number(match[1]);
+
+                return null;
+            })
+            .filter((v): v is number => v !== null);
+    };
+
+    const getRemovableUnpurchasableItems = (
+        cartItems: typeof cartRef.current,
+        warnings: string[]
+    ) => {
+        const brokenIds = new Set(getUnpurchasableProductIds(warnings));
+
+        return cartItems.filter(item =>
+            brokenIds.has(item.product_id)
+        );
+    };
+
     const updateStateFromResp = useCallback((resp: any) => {
         if (!resp || !resp.session) {
             console.warn('Empty session received', resp);
-            return null;
+            return;
         }
 
         const session = normalizeSession(resp.session) || {};
@@ -119,6 +160,14 @@ export function useCheckoutSession(
 
         const warnings = Array.isArray(resp.warnings) ? resp.warnings : [];
         const couponErrors = Array.isArray(resp.coupon_errors) ? resp.coupon_errors : [];
+
+        // delete "death" products
+        if (warnings.length > 0) {
+            const removableItems = getRemovableUnpurchasableItems(cartRef.current, warnings);
+            if (removableItems.length) {
+                dispatch(clearConflictedItems(removableItems));
+            }
+        }
 
         const hasCouponErrors = couponErrors.length > 0;
 
@@ -137,6 +186,8 @@ export function useCheckoutSession(
         }
 
         if (setHasConflict && warnings.length > 0) {
+            // triger to recalc cartConflict
+            dispatch(initializeCart());
             setHasConflict(true);
         }
 
@@ -151,16 +202,14 @@ export function useCheckoutSession(
                 expiresAt: session.expires_at,
             })
         );
-
-        return {
-            session,
-            warnings,
-            couponErrors,
-            totals,
-        };
     }, [dispatch, couponCode, userLoyaltyStatus, setHasConflict, checkout.token]);
 
     const updateStep2StateFromResp = useCallback((resp: any) => {
+        if (!resp) {
+            console.warn('Step2 received null response');
+            return null;
+        }
+
         const normalizedSession = normalizeSession(resp.session) ?? checkout.session;
         const normalizedStep = normalizeStep(resp.step ?? normalizedSession.step ?? 2);
 
@@ -285,9 +334,10 @@ export function useCheckoutSession(
             couponErrors: normalizedCouponErrors,
             step: normalizedStep,
         };
-    }, [dispatch, checkout, setHasConflict]);
+    }, [dispatch, checkout]);
 
     const createSession = useCallback(async () => {
+
         dispatch(setCheckoutState({
             ...checkout,
             shippingMethods: [],
@@ -302,17 +352,14 @@ export function useCheckoutSession(
             checkoutStep1({ payload }).unwrap()
         );
 
-        if (!resp) {
-            return null;
-        }
-
         if (resp?.session_token) {
-            return updateStateFromResp(resp);
+            updateStateFromResp(resp);
+            return resp;
         }
         throw new Error('Failed to create checkout session');
-    }, [buildPayload, checkoutStep1, updateStateFromResp]);
+    }, [checkout, buildPayload, guardedStep1, checkoutStep1, updateStateFromResp]);
 
-    const recalcSessionSafe = useCallback(async () => {
+    const recalcSessionSafe = useCallback(async (create: boolean = false): Promise<RecalcResult> => {
         const token: string | null = checkout.token;
         let expiresAt = checkout.expiresAt;
 
@@ -323,28 +370,44 @@ export function useCheckoutSession(
         const payload = buildPayload(token ?? undefined);
 
         try {
-            let resp;
+            let respData;
 
-            if (!token || !expiresAt || new Date(expiresAt) <= new Date()) {
-                resp = await createSession();
+            if (!token || !expiresAt || new Date(expiresAt) <= new Date() || create) {
+                const resp = await createSession();
+                respData = resp;
             } else {
-                resp = await guardedStep1(() => checkoutStep1({ payload }).unwrap());
+                const resp = await guardedStep1(() => checkoutStep1({ payload }).unwrap());
+                updateStateFromResp(resp);
+                respData = resp;
+            }
 
-                if (!resp) {
-                    return null;
-                }
+            return { ok: true, data: respData };
+        } catch (error: any) {
 
-                if (!resp.session_token) {
-                    throw new Error('Failed to recalc checkout session');
+            const status = error?.status;
+            const code = error?.data?.details?.code;
+
+            const sessionErrors = [
+                'checkout_session_expired',
+                'checkout_session_not_found',
+            ];
+
+            if (status === 410 || (code && sessionErrors.includes(code))) {
+                console.warn('Session expired or invalid, creating new session...', error);
+
+                try {
+                    const newResp = await createSession();
+                    return { ok: true, data: newResp };
+                } catch (createErr) {
+                    console.error('Failed to create new session after expiration', createErr);
+                    dispatch(clearCheckoutState());
+                    return { ok: false, fatal: true };
                 }
             }
 
-            return updateStateFromResp(resp);
-        } catch (e) {
-            console.error('Step1 error', e);
+            console.error('Step1 error', error);
             dispatch(clearCheckoutState());
-            const resp = await createSession();
-            return updateStateFromResp(resp);
+            return { ok: false, fatal: true };
         }
     }, [checkout.token, checkout.expiresAt, checkoutStep1, buildPayload, createSession, updateStateFromResp, dispatch]);
 
@@ -364,28 +427,57 @@ export function useCheckoutSession(
                             e.includes('Checkout session has expired')
                     )
                 ) {
-                    const step1Resp = await recalcSessionSafe();
+                    try {
+                        const step1Resp = await recalcSessionSafe(true);
 
-                    if (!step1Resp?.session?.session_token) {
-                        throw new Error('Failed to refresh Step1 session before Step2');
+                        if (!step1Resp.ok) {
+                            console.warn('Step2 failed due to Step1 refresh');
+                            return null;
+                        }
+
+                        const newToken = step1Resp.data?.session_token ?? checkout.token;
+                        const newPayload = { ...payload, token: newToken };
+
+                        resp = await checkoutStep2({ payload: newPayload }).unwrap();
+                    } catch (e) {
+                        console.warn('Step2 failed due to Step1 refresh');
+                        return null;
                     }
-
-                    const newPayload = { ...payload, token: step1Resp.session.session_token };
-
-                    resp = await checkoutStep2({ payload: newPayload }).unwrap();
                 }
 
-                if (requestId !== requestIdStep2Ref.current) {
+                if (requestId !== requestIdStep2Ref.current) return null;
+
+                if (resp?.warnings && resp?.warnings?.length > 0) {
+                    router.push('/cart');
                     return null;
                 }
 
                 return updateStep2StateFromResp(resp);
             } catch (err) {
                 console.warn('Step2 failed', err);
-                throw err;
+                return null;
             }
         },
         [checkoutStep2, recalcSessionSafe, updateStep2StateFromResp]
+    );
+
+    const recalcStep2Safe = useCallback(
+        async (payload: any): Promise<Step2Result> => {
+            try {
+                const resp = await recalcStep2(payload);
+
+                if (!resp) {
+                    return { ok: false, fatal: false };
+                }
+
+                return { ok: true, data: resp };
+            } catch (e) {
+                console.error('Step2 fatal error', e);
+                dispatch(clearCheckoutState());
+                return { ok: false, fatal: true };
+            }
+        },
+        [recalcStep2, dispatch]
     );
 
     const clearSession = useCallback(() => {
@@ -424,10 +516,8 @@ export function useCheckoutSession(
 
     return {
         initStep1,
-        updateStateFromResp,
-        updateStep2StateFromResp,
         recalcSessionSafe,
-        recalcStep2,
+        recalcStep2Safe,
         clearSession,
         couponError,
         setCouponError,

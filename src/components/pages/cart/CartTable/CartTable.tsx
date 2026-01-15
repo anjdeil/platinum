@@ -9,6 +9,7 @@ import theme from '@/styles/theme';
 import { ProductsWithCartDataTypeWithFinalPrice } from '@/types/components/shop/product/products';
 import { CartTableProps } from '@/types/pages/cart';
 import getProductSlug from '@/utils/cart/getProductSlug';
+import { MAX_QUANTITY } from '@/utils/consts';
 import { useTranslations } from 'next-intl';
 import { FC } from 'react';
 import CartProductWarning from '../CartProductWarning/CartProductWarning';
@@ -60,7 +61,7 @@ const CartTable: FC<CartTableProps> = ({
           <CartCardWrapper isLoadingItem={loading}>
             <CartImgWrapper>
               <CartItemImg
-                src={item.image?.src || 'assets/images/no-image.webp'}
+                src={item.image?.src || '/assets/images/not-found.webp'}
                 alt={item.name}
                 width="50"
                 height="50"
@@ -108,10 +109,10 @@ const CartTable: FC<CartTableProps> = ({
                   item.product_id,
                   'value',
                   item.variation_id,
-                  item.resolveCount
+                  Math.min(item.resolveCount, MAX_QUANTITY)
                 )
               }
-              resolveCount={item.resolveCount}
+              resolveCount={Math.min(item.resolveCount, MAX_QUANTITY)}
               isProductError={!item.isAvailable}
             />
           )}
@@ -138,7 +139,7 @@ const CartTable: FC<CartTableProps> = ({
                 </DeleteCell>
                 <CartImgWrapper>
                   <CartItemImg
-                    src={item.image?.src || 'assets/images/no-image.webp'}
+                    src={item.image?.src || '/assets/images/not-found.webp'}
                     alt={item.name}
                     width="50"
                     height="50"
@@ -176,10 +177,10 @@ const CartTable: FC<CartTableProps> = ({
                       item.product_id,
                       'value',
                       item.variation_id,
-                      item.resolveCount
+                      Math.min(item.resolveCount, MAX_QUANTITY)
                     )
                   }
-                  resolveCount={item.resolveCount}
+                  resolveCount={Math.min(item.resolveCount, MAX_QUANTITY)}
                   isProductError={!item.isAvailable}
                 />
               )}

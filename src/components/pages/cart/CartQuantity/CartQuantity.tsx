@@ -1,6 +1,7 @@
 import MinusIcon from '@/components/global/icons/MinusIcon/MinusIcon';
 import PlusIcon from '@/components/global/icons/PlusIcon/PlusIcon';
 import { QuantityComponentProps } from '@/types/pages/cart';
+import { MAX_QUANTITY } from '@/utils/consts';
 import debounce from 'lodash/debounce';
 import React, { useCallback, useEffect, useState } from 'react';
 import { QuantityBlock, QuantityBtn, QuantityWrapper } from './style';
@@ -38,7 +39,7 @@ const CartQuantity: React.FC<QuantityComponentProps> = ({
 }) => {
   const maxCount = Math.min(
     resolveCount ?? Number.MAX_SAFE_INTEGER,
-    Number.MAX_SAFE_INTEGER
+    MAX_QUANTITY
   );
 
   const [inputValue, setInputValue] = useState(item.quantity);
@@ -92,7 +93,7 @@ const CartQuantity: React.FC<QuantityComponentProps> = ({
         value={inputValue}
         onChange={handleInputChange}
         min="1"
-        max={resolveCount?.toString()}
+        max={maxCount}
       />
       <QuantityBtn onClick={handleIncrease} disabled={inputValue >= maxCount}>
         <PlusIcon />

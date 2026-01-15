@@ -153,7 +153,7 @@ const MiniCart: React.FC<MiniCartProps> = ({ onClose }) => {
               <CartCardWrapper key={item.id} marginBottom="68px" gap="16px">
                 <CartImgWrapper maxHeight="140px" maxWidth="140px">
                   <CartItemImg
-                    src={item.image?.src}
+                    src={item.image?.src || '/assets/images/not-found.webp'}
                     alt={item.name}
                     width="50"
                     height="50"
