@@ -437,6 +437,13 @@ export default function CheckoutPage() {
     prevCurrencyRef.current = currencyCode;
   }, [currencyCode]);
 
+  useEffect(() => {
+    if (!cartItems.length) return;
+    if (checkoutFatalError) return;
+
+    debouncedTriggerStep1();
+  }, [cartItems]);
+
   // -----------------------------
   // Step 2: trigger on shipping/coupon change/currency
   // -----------------------------
