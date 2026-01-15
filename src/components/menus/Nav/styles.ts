@@ -14,7 +14,7 @@ export const NavList = styled.ul<NavListProps>`
   display: flex;
   flex-direction: ${({ direction = 'row' }) => direction};
   padding: 0;
-  column-gap: ${({ gap = '75px' }) => gap};
+  column-gap: ${({ gap = '24px' }) => gap};
   row-gap: 24px;
   justify-content: ${({ justify = 'center' }) => justify};
   list-style: none;
@@ -25,7 +25,7 @@ export const NavList = styled.ul<NavListProps>`
   }
 
   @media ${({ theme }) => theme.media.large} {
-    gap: ${({ mobGap = '48px' }) => mobGap};
+    gap: ${({ mobGap = '24px' }) => mobGap};
   }
 
   @media ${({ theme }) => theme.media.mediumLarge} {
@@ -39,7 +39,7 @@ export const CustomNav = styled.nav`
 
 export const NavLink = styled(Link, {
   shouldForwardProp: prop => prop !== 'lineHeight',
-})<NavLinkProps>`
+}) <NavLinkProps>`
   display: inline-block;
   font: ${({ theme }) => theme.fonts.bodyMiddleReg};
   font-size: ${({ fontSize }) => fontSize};

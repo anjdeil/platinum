@@ -72,7 +72,7 @@ export class WpRestApi {
 
         attempt++;
         if (attempt >= maxRetries) {
-          throw new Error(`Could not fetch ${url}, received ${error}`);
+          throw error;
         }
       }
     }

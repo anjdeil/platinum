@@ -235,6 +235,7 @@
     "size": "Rozmiar",
     "thickness": "Grubość",
     "twist": "Skręt",
+    "scent": "Zapach",
     "view": "Widok",
     "volume": "Pojemność",
     "volumes": "Objętość",
@@ -308,7 +309,9 @@
     "overrideLoyaltyDiscount": "Zastosowanie kuponu spowoduje unieważnienie zniżki przyznanej w ramach statusu lojalnościowego",
     "OrderCommentTooLong": "Twój komentarz jest za długi, maksymalnie 500 znaków",
     "OrderCommentInvalidChars": "Twój komentarz zawiera nieprawidłowe znaki",
-    "OrderCommentError": "Prosimy o poprawne wypełnienie pola komentarza"
+    "OrderCommentError": "Prosimy o poprawne wypełnienie pola komentarza",
+    "cartFatal": "Coś poszło nie tak podczas przetwarzania koszyka. Proszę odświeżyć stronę i spróbować ponownie.",
+    "reloadPage": "Odśwież"
   },
   "Contacts": {
     "contacts": "Kontakty",
