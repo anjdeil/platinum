@@ -1,4 +1,5 @@
 import Layout from '@/components/Layout/Layout';
+import Maintenance from '@/components/Maintenance/Maintenance';
 import MetaPixel from '@/components/metaPixel/MetaPixel';
 import ProgressBar from '@/components/progressBar/ProgressBar';
 import { setupStore } from '@/store';
@@ -17,6 +18,13 @@ const { store, persistor } = setupStore();
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { locale } = useRouter();
+
+  // maintenance mode
+  const isMaintenance = process.env.NEXT_PUBLIC_MAINTENANCE_MODE === 'true';
+
+  if (isMaintenance) {
+    return <Maintenance />;
+  }
 
   return (
     <NextIntlClientProvider
