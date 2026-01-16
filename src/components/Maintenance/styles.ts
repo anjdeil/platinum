@@ -43,7 +43,6 @@ export const ContentContainer = styled.div`
     margin: 0;
     margin-bottom: 12px;
   }
-
   
   & p {
     font-family: 'Montserrat', sans-serif;
