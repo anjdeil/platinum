@@ -23,6 +23,8 @@ function MyApp({ Component, pageProps }: AppProps) {
   const isMaintenance = process.env.NEXT_PUBLIC_MAINTENANCE_MODE === 'true';
 
   if (isMaintenance) {
+    console.log('MAINTENANCE MODE:', process.env.NEXT_PUBLIC_MAINTENANCE_MODE);
+
     return <Maintenance />;
   }
 
