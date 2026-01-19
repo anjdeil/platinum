@@ -965,6 +965,17 @@ export default function CheckoutPage() {
     }
   }, [isValidForm]);
 
+  // scrolltop when errors
+  useEffect(() => {
+    if (!isWarningsShown) return;
+
+    const id = setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 50);
+
+    return () => clearTimeout(id);
+  }, [isWarningsShown]);
+
   return (
     <>
       <PageTitle nameSpace={'Cart'} spaceKey={'PersonalInformation'} />
