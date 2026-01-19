@@ -54,9 +54,13 @@ export function useCheckoutSession(
             step: 1 | 2;
             correlationId: string;
             data?: Record<string, any>;
+            important?: boolean;
         }
     ) => {
         try {
+            const doLog = payload.important || Math.random() < 0.3;
+            if (!doLog) return;
+
             await fetch('/api/checkout-log', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -182,6 +186,7 @@ export function useCheckoutSession(
                     warnings: resp.warnings,
                     couponErrors: resp.coupon_errors,
                 },
+                important: true,
             });
         }
 
@@ -249,6 +254,7 @@ export function useCheckoutSession(
                     warnings: resp.warnings,
                     couponErrors: resp.coupon_errors,
                 },
+                important: true,
             });
         }
 
@@ -416,6 +422,7 @@ export function useCheckoutSession(
                 data: {
                     warningsCount: resp.warnings?.length ?? 0,
                 },
+                important: true,
             });
 
             updateStateFromResp(resp);
@@ -428,6 +435,7 @@ export function useCheckoutSession(
             data: {
                 reason: 'no-session-token',
             },
+            important: true,
         });
 
         throw new Error('Failed to create checkout session');
@@ -487,6 +495,7 @@ export function useCheckoutSession(
                         status,
                         code,
                     },
+                    important: true,
                 });
 
                 try {
@@ -535,6 +544,7 @@ export function useCheckoutSession(
                         event: 'step2-refresh-step1',
                         step: 2,
                         correlationId: payload.token,
+                        important: true,
                     });
 
                     try {
@@ -566,6 +576,7 @@ export function useCheckoutSession(
                             errors: resp.errors,
                             warnings: resp.warnings,
                         },
+                        important: true,
                     });
 
                     router.push('/cart');
@@ -626,7 +637,7 @@ export function useCheckoutSession(
                 event: 'step3-finalize-success',
                 step: 2,
                 correlationId: token,
-                data: { orderId }
+                data: { orderId },
             });
 
         } catch (e: any) {
@@ -647,6 +658,7 @@ export function useCheckoutSession(
                 data: {
                     status,
                 },
+                important: true,
             });
         }
     };
