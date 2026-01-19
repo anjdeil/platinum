@@ -48,6 +48,24 @@ export function useCheckoutSession(
     useEffect(() => { couponRef.current = couponCode }, [couponCode]);
     useEffect(() => { currencyRef.current = currency }, [currency]);
 
+    const logCheckout = async (
+        payload: {
+            event: string;
+            step: 1 | 2;
+            correlationId: string;
+            data?: Record<string, any>;
+        }
+    ) => {
+        try {
+            await fetch('/api/checkout-log', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+            });
+        } catch {
+        }
+    };
+
     const guardedStep1 = useCallback(async (action: () => Promise<any>) => {
         const id = ++requestIdRef.current;
 
@@ -155,6 +173,18 @@ export function useCheckoutSession(
             return;
         }
 
+        if (resp?.warnings?.length || resp?.coupon_errors?.length) {
+            void logCheckout({
+                event: 'step1-warnings-or-coupons',
+                step: 1,
+                correlationId: resp.session_token ?? checkout.token ?? 'no-token',
+                data: {
+                    warnings: resp.warnings,
+                    couponErrors: resp.coupon_errors,
+                },
+            });
+        }
+
         const session = normalizeSession(resp.session) || {};
         const totals = normalizeTotals(resp.totals) ?? session?.totals ?? null;
 
@@ -208,6 +238,18 @@ export function useCheckoutSession(
         if (!resp) {
             console.warn('Step2 received null response');
             return null;
+        }
+
+        if (resp?.warnings?.length || resp?.coupon_errors?.length) {
+            void logCheckout({
+                event: 'step2-warnings-or-coupons',
+                step: 2,
+                correlationId: checkout.token || 'no-token',
+                data: {
+                    warnings: resp.warnings,
+                    couponErrors: resp.coupon_errors,
+                },
+            });
         }
 
         const normalizedSession = normalizeSession(resp.session) ?? checkout.session;
@@ -338,6 +380,20 @@ export function useCheckoutSession(
 
     const createSession = useCallback(async () => {
 
+        void logCheckout({
+            event: 'step1-create-start',
+            step: 1,
+            correlationId: checkout.token ?? 'no-token',
+            data: {
+                currency: currencyRef.current,
+                cart: cartRef.current.map(i => ({
+                    product_id: i.product_id,
+                    qty: i.quantity,
+                })),
+                hasCoupon: Boolean(couponRef.current),
+            },
+        });
+
         dispatch(setCheckoutState({
             ...checkout,
             shippingMethods: [],
@@ -353,9 +409,27 @@ export function useCheckoutSession(
         );
 
         if (resp?.session_token) {
+            void logCheckout({
+                event: 'step1-create-success',
+                step: 1,
+                correlationId: resp.session_token,
+                data: {
+                    warningsCount: resp.warnings?.length ?? 0,
+                },
+            });
+
             updateStateFromResp(resp);
             return resp;
         }
+        void logCheckout({
+            event: 'step1-create-failed',
+            step: 1,
+            correlationId: checkout.token ?? 'no-token',
+            data: {
+                reason: 'no-session-token',
+            },
+        });
+
         throw new Error('Failed to create checkout session');
     }, [checkout, buildPayload, guardedStep1, checkoutStep1, updateStateFromResp]);
 
@@ -368,6 +442,16 @@ export function useCheckoutSession(
         }
 
         const payload = buildPayload(token ?? undefined);
+
+        void logCheckout({
+            event: 'step1-recalc-start',
+            step: 1,
+            correlationId: token ?? 'no-token',
+            data: {
+                expired: !expiresAt || new Date(expiresAt) <= new Date(),
+                forceCreate: create,
+            },
+        });
 
         try {
             let respData;
@@ -395,6 +479,16 @@ export function useCheckoutSession(
             if (status === 410 || (code && sessionErrors.includes(code))) {
                 console.warn('Session expired or invalid, creating new session...', error);
 
+                void logCheckout({
+                    event: 'step1-session-expired',
+                    step: 1,
+                    correlationId: 'no-token',
+                    data: {
+                        status,
+                        code,
+                    },
+                });
+
                 try {
                     const newResp = await createSession();
                     return { ok: true, data: newResp };
@@ -412,8 +506,18 @@ export function useCheckoutSession(
     }, [checkout.token, checkout.expiresAt, checkoutStep1, buildPayload, createSession, updateStateFromResp, dispatch]);
 
     const recalcStep2 = useCallback(
+
         async (payload: any) => {
             const requestId = ++requestIdStep2Ref.current;
+
+            void logCheckout({
+                event: 'step2-start',
+                step: 2,
+                correlationId: payload.token,
+                data: {
+                    selectedShippingMethod: payload.shipping_method_id,
+                },
+            });
 
             try {
                 let resp = await checkoutStep2({ payload }).unwrap();
@@ -427,6 +531,12 @@ export function useCheckoutSession(
                             e.includes('Checkout session has expired')
                     )
                 ) {
+                    void logCheckout({
+                        event: 'step2-refresh-step1',
+                        step: 2,
+                        correlationId: payload.token,
+                    });
+
                     try {
                         const step1Resp = await recalcSessionSafe(true);
 
@@ -448,6 +558,16 @@ export function useCheckoutSession(
                 if (requestId !== requestIdStep2Ref.current) return null;
 
                 if (resp?.warnings && resp?.warnings?.length > 0) {
+                    void logCheckout({
+                        event: 'step2-error',
+                        step: 2,
+                        correlationId: payload.token,
+                        data: {
+                            errors: resp.errors,
+                            warnings: resp.warnings,
+                        },
+                    });
+
                     router.push('/cart');
                     return null;
                 }
@@ -501,6 +621,14 @@ export function useCheckoutSession(
 
         try {
             await attempt();
+
+            void logCheckout({
+                event: 'step3-finalize-success',
+                step: 2,
+                correlationId: token,
+                data: { orderId }
+            });
+
         } catch (e: any) {
             const status = e?.status;
 
@@ -511,6 +639,15 @@ export function useCheckoutSession(
             }
 
             console.error('STEP 3 finalize error', status, e);
+
+            void logCheckout({
+                event: 'step3-finalize-error',
+                step: 2,
+                correlationId: token,
+                data: {
+                    status,
+                },
+            });
         }
     };
 
