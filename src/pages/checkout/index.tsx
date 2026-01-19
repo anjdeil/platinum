@@ -618,7 +618,8 @@ export default function CheckoutPage() {
   const validateCheckoutBeforeOrder = () => {
     // 1. shipping method
     if (!shippingMethod) {
-      setValidationErrors('validationErrorsFields');
+      setValidationErrors('shippingMethod');
+      setWarnings(['shippingMethod']);
       setIsWarningsShown(true);
       return false;
     }
@@ -841,9 +842,6 @@ export default function CheckoutPage() {
     isCreatingOrder ||
     isOrderLoading ||
     isLoading ||
-    !shippingLine ||
-    !shippingMethod ||
-    !shippingMethods.some(m => m.method_id === shippingMethod?.method_id) ||
     isStep2Loading ||
     isStep2Pending ||
     checkoutFatalError;
