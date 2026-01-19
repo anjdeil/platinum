@@ -149,7 +149,7 @@ export default function CheckoutPage() {
 
           if (result.ok && result.data?.shippingError) {
             setWarnings(['shippingMethodUnavailable', 'shippingMethod']);
-            setIsWarningsShown(true);
+            triggerWarnings();
             setShippingMethod(undefined);
           }
         } catch (err) {
@@ -241,6 +241,11 @@ export default function CheckoutPage() {
 
   const { inPostHead, InPostGeowidget, pointDetail } = useInPostGeowidget();
   const [isGeowidgetShown, setGeowidgetShown] = useState(false);
+
+  const triggerWarnings = () => {
+    setIsWarningsShown(false);
+    setTimeout(() => setIsWarningsShown(true), 0);
+  };
 
   const [
     createOrder,
@@ -620,7 +625,7 @@ export default function CheckoutPage() {
     if (!shippingMethod) {
       setValidationErrors('shippingMethod');
       setWarnings(['shippingMethod']);
-      setIsWarningsShown(true);
+      triggerWarnings();
       return false;
     }
 
@@ -630,14 +635,14 @@ export default function CheckoutPage() {
       !parcelMachine
     ) {
       setWarnings(['parcelLocker']);
-      setIsWarningsShown(true);
+      triggerWarnings();
       return false;
     }
 
     // 3. form validity
     if (!isValidForm) {
       setValidationErrors('validationErrorsFields');
-      setIsWarningsShown(true);
+      triggerWarnings();
       return false;
     }
 
@@ -648,7 +653,7 @@ export default function CheckoutPage() {
     ) {
       setPhoneTrigger(true);
       setPhoneWarnings('inpostPhoneRequired');
-      setIsWarningsShown(true);
+      triggerWarnings();
       return false;
     }
 
@@ -719,7 +724,7 @@ export default function CheckoutPage() {
             step2Result?.data.shippingError.length > 0
           ) {
             setWarnings(['shippingMethodUnavailable', 'shippingMethod']);
-            setIsWarningsShown(true);
+            triggerWarnings();
             setShippingMethod(undefined);
           }
 
@@ -729,7 +734,7 @@ export default function CheckoutPage() {
           ) {
             setShippingMethod(undefined);
             setCouponError(true);
-            setIsWarningsShown(true);
+            triggerWarnings();
           }
 
           setIsCreatingOrder(false);
@@ -954,7 +959,7 @@ export default function CheckoutPage() {
         dispatch(clearCoupon());
         dispatch(setIgnoreCoupon(true));
         setCouponError(true);
-        setIsWarningsShown(true);
+        triggerWarnings();
       }
     }
   }, [orderCreationError]);
