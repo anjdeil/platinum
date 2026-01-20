@@ -544,6 +544,7 @@
     "InPost Courier": "InPost Kurier",
     "InPost Courier – Cash on delivery": "InPost Kurier – Cash on delivery",
     "Pickup": "Pickup",
+    "pickup": "Pickup",
     "Poczta Polska": "Poczta Polska",
     "Express Delivery": "Express delivery",
     "GLS": "GLS",
@@ -597,7 +598,8 @@
     "summaryOrder": "Summary Order",
     "orderValue": "Subtotal",
     "apartmentNumber": "# apartment/office",
-    "shipping_apartmentNumber": "# apartment/office"
+    "shipping_apartmentNumber": "# apartment/office",
+    "orderCreationFailedGeneric": "We couldn’t create your order. Please check all details and try again."
   },
   "Footer": {
     "myAccount": "My account",

@@ -544,6 +544,7 @@
     "InPost Courier": "InPost Kurier",
     "InPost Courier – Cash on delivery": "InPost Kurier – Накладений платіж",
     "Pickup": "Самовивіз",
+    "pickup": "Самовивіз",
     "Poczta Polska": "Poczta Polska",
     "Express Delivery": "Експрес-доставка",
     "GLS": "GLS",
@@ -597,7 +598,8 @@
     "summaryOrder": "Підсумок замовлення",
     "orderValue": "Проміжний підсумок",
     "apartmentNumber": "Номер квартири/офісу",
-    "shipping_apartmentNumber": "Номер квартири/офісу"
+    "shipping_apartmentNumber": "Номер квартири/офісу",
+    "orderCreationFailedGeneric": "Не вдалося створити замовлення. Перевірте всі дані та спробуйте ще раз."
   },
   "Footer": {
     "myAccount": "Мій акаунт",

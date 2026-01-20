@@ -544,6 +544,7 @@
     "InPost Courier": "InPost Kurier",
     "InPost Courier – Cash on delivery": "InPost Kurier – Наложенный платеж",
     "Pickup": "Самовывоз",
+    "pickup": "Самовывоз",
     "Poczta Polska": "Poczta Polska",
     "Express Delivery": "Экспресс-доставка",
     "GLS": "GLS",
@@ -597,7 +598,8 @@
     "summaryOrder": "Итоги заказа",
     "orderValue": "Подытог",
     "apartmentNumber": "Номер квартиры/офиса",
-    "shipping_apartmentNumber": "Номер квартиры/офиса"
+    "shipping_apartmentNumber": "Номер квартиры/офиса",
+    "orderCreationFailedGeneric": "Не удалось создать заказ. Пожалуйста, проверьте все данные и попробуйте ещё раз."
   },
   "Footer": {
     "myAccount": "Мой аккаунт",

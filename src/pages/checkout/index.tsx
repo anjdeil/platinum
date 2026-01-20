@@ -67,6 +67,7 @@ import {
 } from '@/types/services/wooCustomApi/customer';
 import getCartCheckoutTotals from '@/utils/cart/getCartCheckoutTotals';
 import checkCustomerDataChanges from '@/utils/checkCustomerDataChanges';
+import { logOrderError } from '@/utils/checkout/logOrderError';
 import { readNip } from '@/utils/readNip';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
@@ -149,7 +150,7 @@ export default function CheckoutPage() {
 
           if (result.ok && result.data?.shippingError) {
             setWarnings(['shippingMethodUnavailable', 'shippingMethod']);
-            setIsWarningsShown(true);
+            triggerWarnings();
             setShippingMethod(undefined);
           }
         } catch (err) {
@@ -222,6 +223,7 @@ export default function CheckoutPage() {
   });
 
   const [isCreatingOrder, setIsCreatingOrder] = useState(false);
+  const [genericOrderError, setGenericOrderError] = useState(false);
 
   const [registrationErrorWarning, setRegistrationErrorWarning] = useState<
     string | null
@@ -241,6 +243,11 @@ export default function CheckoutPage() {
 
   const { inPostHead, InPostGeowidget, pointDetail } = useInPostGeowidget();
   const [isGeowidgetShown, setGeowidgetShown] = useState(false);
+
+  const triggerWarnings = () => {
+    setIsWarningsShown(false);
+    setTimeout(() => setIsWarningsShown(true), 0);
+  };
 
   const [
     createOrder,
@@ -618,8 +625,9 @@ export default function CheckoutPage() {
   const validateCheckoutBeforeOrder = () => {
     // 1. shipping method
     if (!shippingMethod) {
-      setValidationErrors('validationErrorsFields');
-      setIsWarningsShown(true);
+      setValidationErrors('shippingMethod');
+      setWarnings(['shippingMethod']);
+      triggerWarnings();
       return false;
     }
 
@@ -629,14 +637,14 @@ export default function CheckoutPage() {
       !parcelMachine
     ) {
       setWarnings(['parcelLocker']);
-      setIsWarningsShown(true);
+      triggerWarnings();
       return false;
     }
 
     // 3. form validity
     if (!isValidForm) {
       setValidationErrors('validationErrorsFields');
-      setIsWarningsShown(true);
+      triggerWarnings();
       return false;
     }
 
@@ -647,7 +655,7 @@ export default function CheckoutPage() {
     ) {
       setPhoneTrigger(true);
       setPhoneWarnings('inpostPhoneRequired');
-      setIsWarningsShown(true);
+      triggerWarnings();
       return false;
     }
 
@@ -718,7 +726,7 @@ export default function CheckoutPage() {
             step2Result?.data.shippingError.length > 0
           ) {
             setWarnings(['shippingMethodUnavailable', 'shippingMethod']);
-            setIsWarningsShown(true);
+            triggerWarnings();
             setShippingMethod(undefined);
           }
 
@@ -728,7 +736,7 @@ export default function CheckoutPage() {
           ) {
             setShippingMethod(undefined);
             setCouponError(true);
-            setIsWarningsShown(true);
+            triggerWarnings();
           }
 
           setIsCreatingOrder(false);
@@ -833,6 +841,18 @@ export default function CheckoutPage() {
       setIsCreatingOrder(false);
     } catch (error) {
       console.error('Order creation failed', error);
+
+      await logOrderError({
+        error,
+        orderPayload,
+        extraInfo: {
+          userId: userData?.id,
+          couponCode,
+          shippingMethod: shippingMethod?.method_id,
+          currency: currencyCode,
+        },
+      });
+
       setIsCreatingOrder(false);
     }
   };
@@ -841,9 +861,6 @@ export default function CheckoutPage() {
     isCreatingOrder ||
     isOrderLoading ||
     isLoading ||
-    !shippingLine ||
-    !shippingMethod ||
-    !shippingMethods.some(m => m.method_id === shippingMethod?.method_id) ||
     isStep2Loading ||
     isStep2Pending ||
     checkoutFatalError;
@@ -944,21 +961,24 @@ export default function CheckoutPage() {
    * Handle order creation error
    */
   useEffect(() => {
-    if (orderCreationError) {
-      const wooError = (orderCreationError as FetchBaseQueryError).data;
-      const errorCode = (wooError as WooErrorType)?.details?.code;
-      setShippingMethod(undefined);
+    if (!orderCreationError) return;
 
-      if (
-        errorCode === 'woocommerce_rest_invalid_coupon' ||
-        errorCode === 'invalid_coupon_for_sale'
-      ) {
-        dispatch(clearCoupon());
-        dispatch(setIgnoreCoupon(true));
-        setCouponError(true);
-        setIsWarningsShown(true);
-      }
+    const wooError = (orderCreationError as FetchBaseQueryError).data;
+    const errorCode = (wooError as WooErrorType)?.details?.code;
+    setShippingMethod(undefined);
+
+    if (
+      errorCode === 'woocommerce_rest_invalid_coupon' ||
+      errorCode === 'invalid_coupon_for_sale'
+    ) {
+      dispatch(clearCoupon());
+      dispatch(setIgnoreCoupon(true));
+      setCouponError(true);
+    } else {
+      setGenericOrderError(true);
     }
+
+    triggerWarnings();
   }, [orderCreationError]);
 
   useEffect(() => {
@@ -966,6 +986,17 @@ export default function CheckoutPage() {
       setShippingMethod(undefined);
     }
   }, [isValidForm]);
+
+  // scrolltop when errors
+  useEffect(() => {
+    if (!isWarningsShown) return;
+
+    const id = setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 50);
+
+    return () => clearTimeout(id);
+  }, [isWarningsShown]);
 
   return (
     <>
@@ -984,6 +1015,13 @@ export default function CheckoutPage() {
               <StyledButton onClick={() => router.reload()} width="fit-content">
                 {tCart('reloadPage')}
               </StyledButton>
+            </Notification>
+          )}
+
+          {/* Order error */}
+          {genericOrderError && (
+            <Notification type="warning">
+              <p>{t('orderCreationFailedGeneric')}</p>
             </Notification>
           )}
 
@@ -1047,6 +1085,7 @@ export default function CheckoutPage() {
               onChange={method => {
                 setShippingMethod(method);
                 setCouponError(false);
+                setGenericOrderError(false);
               }}
               parcelMachinesMethods={parcelMachinesMethods}
               parcelMachine={parcelMachine}
