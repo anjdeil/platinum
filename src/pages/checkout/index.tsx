@@ -67,6 +67,7 @@ import {
 } from '@/types/services/wooCustomApi/customer';
 import getCartCheckoutTotals from '@/utils/cart/getCartCheckoutTotals';
 import checkCustomerDataChanges from '@/utils/checkCustomerDataChanges';
+import { logOrderError } from '@/utils/checkout/logOrderError';
 import { readNip } from '@/utils/readNip';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
@@ -840,6 +841,18 @@ export default function CheckoutPage() {
       setIsCreatingOrder(false);
     } catch (error) {
       console.error('Order creation failed', error);
+
+      await logOrderError({
+        error,
+        orderPayload,
+        extraInfo: {
+          userId: userData?.id,
+          couponCode,
+          shippingMethod: shippingMethod?.method_id,
+          currency: currencyCode,
+        },
+      });
+
       setIsCreatingOrder(false);
     }
   };
