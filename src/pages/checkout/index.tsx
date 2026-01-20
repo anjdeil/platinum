@@ -222,6 +222,7 @@ export default function CheckoutPage() {
   });
 
   const [isCreatingOrder, setIsCreatingOrder] = useState(false);
+  const [genericOrderError, setGenericOrderError] = useState(false);
 
   const [registrationErrorWarning, setRegistrationErrorWarning] = useState<
     string | null
@@ -947,21 +948,24 @@ export default function CheckoutPage() {
    * Handle order creation error
    */
   useEffect(() => {
-    if (orderCreationError) {
-      const wooError = (orderCreationError as FetchBaseQueryError).data;
-      const errorCode = (wooError as WooErrorType)?.details?.code;
-      setShippingMethod(undefined);
+    if (!orderCreationError) return;
 
-      if (
-        errorCode === 'woocommerce_rest_invalid_coupon' ||
-        errorCode === 'invalid_coupon_for_sale'
-      ) {
-        dispatch(clearCoupon());
-        dispatch(setIgnoreCoupon(true));
-        setCouponError(true);
-        triggerWarnings();
-      }
+    const wooError = (orderCreationError as FetchBaseQueryError).data;
+    const errorCode = (wooError as WooErrorType)?.details?.code;
+    setShippingMethod(undefined);
+
+    if (
+      errorCode === 'woocommerce_rest_invalid_coupon' ||
+      errorCode === 'invalid_coupon_for_sale'
+    ) {
+      dispatch(clearCoupon());
+      dispatch(setIgnoreCoupon(true));
+      setCouponError(true);
+    } else {
+      setGenericOrderError(true);
     }
+
+    triggerWarnings();
   }, [orderCreationError]);
 
   useEffect(() => {
@@ -998,6 +1002,13 @@ export default function CheckoutPage() {
               <StyledButton onClick={() => router.reload()} width="fit-content">
                 {tCart('reloadPage')}
               </StyledButton>
+            </Notification>
+          )}
+
+          {/* Order error */}
+          {genericOrderError && (
+            <Notification type="warning">
+              <p>{t('orderCreationFailedGeneric')}</p>
             </Notification>
           )}
 
@@ -1061,6 +1072,7 @@ export default function CheckoutPage() {
               onChange={method => {
                 setShippingMethod(method);
                 setCouponError(false);
+                setGenericOrderError(false);
               }}
               parcelMachinesMethods={parcelMachinesMethods}
               parcelMachine={parcelMachine}

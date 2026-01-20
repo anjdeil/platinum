@@ -598,7 +598,8 @@
     "summaryOrder": "Итоги заказа",
     "orderValue": "Подытог",
     "apartmentNumber": "Номер квартиры/офиса",
-    "shipping_apartmentNumber": "Номер квартиры/офиса"
+    "shipping_apartmentNumber": "Номер квартиры/офиса",
+    "orderCreationFailedGeneric": "Не удалось создать заказ. Пожалуйста, проверьте все данные и попробуйте ещё раз."
   },
   "Footer": {
     "myAccount": "Мой аккаунт",

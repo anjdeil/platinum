@@ -598,7 +598,8 @@
     "summaryOrder": "Bestellübersicht",
     "orderValue": "Zwischensumme",
     "apartmentNumber": "Wohnung/Büro Nr.",
-    "shipping_apartmentNumber": "Wohnung/Büro Nr."
+    "shipping_apartmentNumber": "Wohnung/Büro Nr.",
+    "orderCreationFailedGeneric": "Die Bestellung konnte nicht erstellt werden. Bitte überprüfen Sie alle Angaben und versuchen Sie es erneut."
   },
   "Footer": {
     "myAccount": "Mein Konto",

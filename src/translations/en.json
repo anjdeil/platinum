@@ -598,7 +598,8 @@
     "summaryOrder": "Summary Order",
     "orderValue": "Subtotal",
     "apartmentNumber": "# apartment/office",
-    "shipping_apartmentNumber": "# apartment/office"
+    "shipping_apartmentNumber": "# apartment/office",
+    "orderCreationFailedGeneric": "We couldn’t create your order. Please check all details and try again."
   },
   "Footer": {
     "myAccount": "My account",
