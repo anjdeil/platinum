@@ -850,6 +850,7 @@ export default function CheckoutPage() {
           couponCode,
           shippingMethod: shippingMethod?.method_id,
           currency: currencyCode,
+          token: checkout.token,
         },
       });
 
