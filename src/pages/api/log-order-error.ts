@@ -23,13 +23,13 @@ export default async function handler(
     try {
         const { error, orderPayload, extraInfo } = req.body;
 
-        console.log('Order creation error:', JSON.stringify({ error, orderPayload, extraInfo }, null, 2));
-
         const filteredPayload = {
             ...orderPayload,
             billing: { ...orderPayload.billing, email: undefined, phone: undefined },
             shipping: { ...orderPayload.shipping, email: undefined, phone: undefined },
         };
+
+        console.log('Order creation error:', JSON.stringify({ error, orderPayload: filteredPayload, extraInfo }, null, 2));
 
         const logEntry = {
             timestamp: new Date().toISOString(),
