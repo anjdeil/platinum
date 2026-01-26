@@ -150,7 +150,7 @@ export default function CheckoutPage() {
 
           if (result.ok && result.data?.shippingError) {
             setWarnings(['shippingMethodUnavailable', 'shippingMethod']);
-            triggerWarnings();
+            setIsWarningsShown(true);
             setShippingMethod(undefined);
           }
         } catch (err) {
@@ -243,11 +243,6 @@ export default function CheckoutPage() {
 
   const { inPostHead, InPostGeowidget, pointDetail } = useInPostGeowidget();
   const [isGeowidgetShown, setGeowidgetShown] = useState(false);
-
-  const triggerWarnings = () => {
-    setIsWarningsShown(false);
-    setTimeout(() => setIsWarningsShown(true), 0);
-  };
 
   const [
     createOrder,
@@ -625,9 +620,8 @@ export default function CheckoutPage() {
   const validateCheckoutBeforeOrder = () => {
     // 1. shipping method
     if (!shippingMethod) {
-      setValidationErrors('shippingMethod');
       setWarnings(['shippingMethod']);
-      triggerWarnings();
+      setIsWarningsShown(true);
       return false;
     }
 
@@ -637,14 +631,14 @@ export default function CheckoutPage() {
       !parcelMachine
     ) {
       setWarnings(['parcelLocker']);
-      triggerWarnings();
+      setIsWarningsShown(true);
       return false;
     }
 
     // 3. form validity
     if (!isValidForm) {
       setValidationErrors('validationErrorsFields');
-      triggerWarnings();
+      setIsWarningsShown(true);
       return false;
     }
 
@@ -655,7 +649,7 @@ export default function CheckoutPage() {
     ) {
       setPhoneTrigger(true);
       setPhoneWarnings('inpostPhoneRequired');
-      triggerWarnings();
+      setIsWarningsShown(true);
       return false;
     }
 
@@ -726,7 +720,7 @@ export default function CheckoutPage() {
             step2Result?.data.shippingError.length > 0
           ) {
             setWarnings(['shippingMethodUnavailable', 'shippingMethod']);
-            triggerWarnings();
+            setIsWarningsShown(true);
             setShippingMethod(undefined);
           }
 
@@ -736,7 +730,7 @@ export default function CheckoutPage() {
           ) {
             setShippingMethod(undefined);
             setCouponError(true);
-            triggerWarnings();
+            setIsWarningsShown(true);
           }
 
           setIsCreatingOrder(false);
@@ -979,7 +973,7 @@ export default function CheckoutPage() {
       setGenericOrderError(true);
     }
 
-    triggerWarnings();
+    setIsWarningsShown(true);
   }, [orderCreationError]);
 
   useEffect(() => {
@@ -987,17 +981,6 @@ export default function CheckoutPage() {
       setShippingMethod(undefined);
     }
   }, [isValidForm]);
-
-  // scrolltop when errors
-  useEffect(() => {
-    if (!isWarningsShown) return;
-
-    const id = setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 50);
-
-    return () => clearTimeout(id);
-  }, [isWarningsShown]);
 
   return (
     <>
@@ -1070,10 +1053,6 @@ export default function CheckoutPage() {
               <CheckoutWarnings messages={warnings}></CheckoutWarnings>
             )}
 
-            {phoneWarnings && isWarningsShown && (
-              <BillingWarnings message={phoneWarnings} />
-            )}
-
             <FreeShippingNotifications
               methods={shippingMethods}
               totalCost={totalCost}
@@ -1114,6 +1093,54 @@ export default function CheckoutPage() {
             >
               {tCart('Continue')}
             </CheckoutPayButton>
+
+            {/* duplicate all errors */}
+
+            {warnings && isWarningsShown && (
+              <CheckoutWarnings messages={warnings}></CheckoutWarnings>
+            )}
+
+            {phoneWarnings && isWarningsShown && (
+              <BillingWarnings message={phoneWarnings} />
+            )}
+
+            {checkoutFatalError && (
+              <Notification type="warning">
+                <p>{tCart('cartFatal')}</p>
+                <StyledButton
+                  onClick={() => router.reload()}
+                  width="fit-content"
+                >
+                  {tCart('reloadPage')}
+                </StyledButton>
+              </Notification>
+            )}
+
+            {/* Order error */}
+            {genericOrderError && (
+              <Notification type="warning">
+                <p>{t('orderCreationFailedGeneric')}</p>
+              </Notification>
+            )}
+
+            {/* Billing and shipping forms */}
+            {validationErrors && <BillingWarnings message={validationErrors} />}
+
+            {couponError && isWarningsShown && (
+              <Notification type="warning">
+                {tCart('couponIsNotApplied')}
+              </Notification>
+            )}
+
+            {registrationErrorWarning && (
+              <RegistrationError
+                message={registrationErrorWarning}
+                setIsUserAlreadyExist={setIsUserAlreadyExist}
+              />
+            )}
+
+            {/* duplicate all errors */}
+
             <CheckoutAgreementWrapper>
               <CheckIcon />
               <CheckoutAgreement>
